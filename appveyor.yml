@@ -30,4 +30,4 @@ test: off
 
 branches:
   only:
-  - data
+    - data
