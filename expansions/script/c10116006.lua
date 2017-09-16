@@ -69,7 +69,7 @@ function c10116006.endop(e,tp,eg,ep,ev,re,r,rp)
 	local g,mg=Duel.GetMatchingGroup(c10116006.desfilter,tp,LOCATION_MZONE,0,nil),e:GetLabelObject()
 	Duel.Destroy(g,REASON_EFFECT)
 	local tg,ft,sg=mg:Filter(c10116006.spfilter,nil,e,tp),Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if ft<=0 or tg:GetCount()<=0 then	 
+	if ft<=0 or tg:GetCount()<=0 then	
 	   mg:DeleteGroup()
 	   e:Reset()
 	return 
