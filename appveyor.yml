@@ -15,6 +15,8 @@ install:
  - rm -rf ygopro-7210srv
  - git checkout master
  - git pull origin master
+ - rm -rf expansions
+ - rm -rf lflist.conf
  - cp -rf temp/* .
  - rm -rf temp
  - git add . -A
