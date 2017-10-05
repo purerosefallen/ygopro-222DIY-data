@@ -21,8 +21,6 @@ install:
  - rm -rf temp
  - git add . -A
  - git commit -m "Push by Appveyor"
- - git tag NoBuild HEAD
- - git push --tag
  - git push %Smile%purerosefallen/ygopro-222DIY master
 
 build: off
