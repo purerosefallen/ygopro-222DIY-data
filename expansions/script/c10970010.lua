@@ -21,8 +21,8 @@ function c10970010.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_DESTROYED)
 	e3:SetCategory(CATEGORY_DAMAGE)
-	e3:SetTarget(c10970007.damtg)
-	e3:SetOperation(c10970007.damop)
+	e3:SetTarget(c10970010.damtg)
+	e3:SetOperation(c10970010.damop)
 	c:RegisterEffect(e3)
 end
 function c10970010.filter(c)
@@ -55,13 +55,13 @@ function c10970010.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ShuffleDeck(tp)
 	end
 end
-function c10970007.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c10970010.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(2000)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,0,0,tp,2000)
 end
-function c10970007.damop(e,tp,eg,ep,ev,re,r,rp)
+function c10970010.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Damage(p,d,REASON_EFFECT)
 end
