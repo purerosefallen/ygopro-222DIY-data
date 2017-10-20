@@ -3,6 +3,7 @@ local m=33700501
 local cm=_G["c"..m]
 cm.dfc_front_side=m
 cm.dfc_back_side=m+1
+cm.card_code_list={33700056}
 function cm.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
