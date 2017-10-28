@@ -3,7 +3,7 @@ irrKlang.dll	84b47454249faad68d3ad96cab202e21
 lflist.conf	eba65c2d1eb2494e04dfe0befb033c4f
 README.md	63ae9822bb3b7ea7b91c4023bacbdb7e
 ygopro_222.exe	91f0e16234fb770e2d4aed9a79376418
-expansions/222DIY.cdb	32d6bbb0dea7729ecb47206705733c4a
+expansions/222DIY.cdb	f785a5311d206cb8a898cd219c722bb2
 expansions/strings.conf	bdf8ffde9d3e48d30025fb32d4b1c3ee
 expansions/pics/1000600.jpg	781f31575736ed458b301f99cdf7cc55
 expansions/pics/1000601.jpg	32d5947b25a84bcff00f043e5761f46d
@@ -3770,7 +3770,7 @@ expansions/script/c33700068.lua	d5a006c5a09d857c11ba4c829fc9bab3
 expansions/script/c33700069.lua	cdd6c34dd23fdc30c5bfe6c4f143e9eb
 expansions/script/c33700070.lua	cceaef93dbaccb1dc78579bd521b570b
 expansions/script/c33700071.lua	ff171296f454182d838fbda643af862a
-expansions/script/c33700072.lua	68b82b31abf59a92c16136333bfc88c7
+expansions/script/c33700072.lua	9d66c055b68bdc9baea3c42e2553cb60
 expansions/script/c33700073.lua	b6502890855a06bda33818578d41beaf
 expansions/script/c33700074.lua	af3f9e2b9caf8f48ca38889150344fae
 expansions/script/c33700075.lua	83bd6ae15252b608ab5a12a2a88f1475
@@ -3783,7 +3783,7 @@ expansions/script/c33700081.lua	f9c1e1f5fdc1859bde1d519ed80dbb20
 expansions/script/c33700082.lua	f7e9342c34a16af4c89495ef632b2bf9
 expansions/script/c33700083.lua	b1f1573274c766265ed4d34c26071e36
 expansions/script/c33700084.lua	039bd7ccf8eda1705dda19ae976b9634
-expansions/script/c33700085.lua	396ffc29182b80b9cee0e057f6818b13
+expansions/script/c33700085.lua	ba7702312374cdafb1fa95e0ffcfdca2
 expansions/script/c33700086.lua	228117e146dd950a1ee321210a729478
 expansions/script/c33700087.lua	770931d791e2e147e1268111e07582ef
 expansions/script/c33700088.lua	b3833f81d87b12ce14bdabbc28b3dce0
@@ -4935,4 +4935,8 @@ sound/custom/vo_103041010_4.wav	b8176282ed757cb278ad7eba1d1fc2a3
 sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
+update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
+update/filelist.txt	d91bf1fc1b727a7be3e7dcc5c3bebade
+update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
 update/update-server.bat	906682e2c43e33f9f06a058cea7da7bf
+update/version.txt	ff816c561fc561b2e1fc71281928e7a5
