@@ -1,8 +1,8 @@
 ﻿ikpMP3.dll	a5d45925d4d1331a4728ec5bf5d95534
 irrKlang.dll	84b47454249faad68d3ad96cab202e21
-lflist.conf	eba65c2d1eb2494e04dfe0befb033c4f
+lflist.conf	531ffc2a6115d798083191f9ffaf3685
 README.md	63ae9822bb3b7ea7b91c4023bacbdb7e
-ygopro_222.exe	02124bed487f33404e9569bf62faec72
+ygopro_222.exe	a1bdeba638f348aa32887949228f048f
 expansions/222DIY.cdb	f785a5311d206cb8a898cd219c722bb2
 expansions/strings.conf	bdf8ffde9d3e48d30025fb32d4b1c3ee
 expansions/pics/1000600.jpg	781f31575736ed458b301f99cdf7cc55
@@ -3489,7 +3489,7 @@ expansions/script/c17060838.lua	89194feffc8525b52915b94f25f630d9
 expansions/script/c17060839.lua	788c015a6c8425901fcfc58fdeb93cb7
 expansions/script/c17060843.lua	ad63d494a30312d91239640f9e91911b
 expansions/script/c17060844.lua	c4128df9a4ac8d7aae2a12e4b76035cc
-expansions/script/c17060845.lua	4184f9467d469e31f4a4ec0cd862ad7b
+expansions/script/c17060845.lua	4f798e253e6a17cb750d67b680c68370
 expansions/script/c17060846.lua	936f655447e4bc22652be0f3bf7788e5
 expansions/script/c17060849.lua	840d65e8e7295edec7fb1acf4bf27c70
 expansions/script/c17060850.lua	c36504c69dd619788f226435ca86bbb7
@@ -4936,7 +4936,7 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	ba475f08988078cc530f83a1095675f1
+update/filelist.txt	cd44664befc5b56e8fbbd6dc968d4890
 update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
 update/update-server.bat	9d0fefd8697d19b107d63588625b8fb6
-update/version.txt	34a596d8b12e2f6ad7356ea4c3343816
+update/version.txt	b0b8a1b20230388c67ef1edd2ec26d3c
