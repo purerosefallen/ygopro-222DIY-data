@@ -2,7 +2,6 @@
 ikpMP3.dll	a5d45925d4d1331a4728ec5bf5d95534
 irrKlang.dll	84b47454249faad68d3ad96cab202e21
 lflist.conf	eba65c2d1eb2494e04dfe0befb033c4f
-LICENSE	ffa10f40b98be2c2bc9608f56827ed23
 README.md	63ae9822bb3b7ea7b91c4023bacbdb7e
 ygopro_222.exe	91f0e16234fb770e2d4aed9a79376418
 expansions/222DIY.cdb	095473c59240996b5ec888ff0cc09a0e
