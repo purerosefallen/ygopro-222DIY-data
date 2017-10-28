@@ -1,1 +1,1 @@
-﻿# 删除列表 (编码为UTF-8，采用相对路径)
+﻿# Delete List (Codepage is UTF-8, please use TAB to seperate entries, Use Relative Address.)
