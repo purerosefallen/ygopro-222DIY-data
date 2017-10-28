@@ -2,7 +2,8 @@
 irrKlang.dll	84b47454249faad68d3ad96cab202e21
 lflist.conf	531ffc2a6115d798083191f9ffaf3685
 README.md	63ae9822bb3b7ea7b91c4023bacbdb7e
-ygopro_222.exe	a1bdeba638f348aa32887949228f048f
+ygopro-222DIY-data.7z	a09b38f583f4bf1373790af295e6eb06
+ygopro_222.exe	388979f8a99998819f78d5e4d811f430
 expansions/222DIY.cdb	f785a5311d206cb8a898cd219c722bb2
 expansions/strings.conf	bdf8ffde9d3e48d30025fb32d4b1c3ee
 expansions/pics/1000600.jpg	781f31575736ed458b301f99cdf7cc55
@@ -3910,7 +3911,7 @@ expansions/script/c37564035.lua	c4095371ff42ef3a0b79c0fbb083621d
 expansions/script/c37564036.lua	625c1d0ee71db0de82672d3f941ea9eb
 expansions/script/c37564037.lua	28875fc8a5fede5301a37388c4922a13
 expansions/script/c37564038.lua	9f26b3cb05e752d57d059f39dd2a104b
-expansions/script/c37564039.lua	9c44d20da8ec3ad5e74200895f8dba56
+expansions/script/c37564039.lua	1bc3b730fef159f9e0fd68a7a1803a5e
 expansions/script/c37564040.lua	773bb91d7351830c1c45155cedcfa3c7
 expansions/script/c37564041.lua	b99fe5ac8cfb9fc96b44e3cdaf363bbd
 expansions/script/c37564042.lua	da1924be46aec805348eaef937f600c1
@@ -4753,7 +4754,7 @@ expansions/script/c98600001.lua	aaaaebec81d969bfe959c8cebd349c6b
 expansions/script/c98600002.lua	c4cf7ef46ac1dd9837014171819433fb
 expansions/script/c98600003.lua	71919e4338035e1cfbc78df6ebd3b87d
 expansions/script/c98600004.lua	a7860be4ba148703059927b5fdbdf09d
-expansions/script/c98600005.lua	c0979d0972669e8bdaa324c545dcfac9
+expansions/script/c98600005.lua	1e073cfb46c404b97bf6efae333785ce
 expansions/script/c98600006.lua	ae12b2728fa0d6dadf2c94aa478473fe
 expansions/script/c99600001.lua	5a06d6f6f44c9a890d9450728eec8995
 expansions/script/c99600002.lua	84db1b231ac90582787f2fc534d25a4d
@@ -4936,7 +4937,7 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	cd44664befc5b56e8fbbd6dc968d4890
+update/filelist.txt	386dec3ebecc9182982d5b14edec7115
 update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
 update/update-server.bat	9d0fefd8697d19b107d63588625b8fb6
-update/version.txt	b0b8a1b20230388c67ef1edd2ec26d3c
+update/version.txt	910da343ed8f1c65d255c7b08031865f
