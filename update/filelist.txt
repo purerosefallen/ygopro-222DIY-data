@@ -1,7 +1,7 @@
 ﻿appveyor.yml	64ffb936eb3b80e7629647c46bb75304
 ikpMP3.dll	a5d45925d4d1331a4728ec5bf5d95534
 irrKlang.dll	84b47454249faad68d3ad96cab202e21
-lflist.conf	662d68a6c9ac4f1747d1708f68df992e
+lflist.conf	eba65c2d1eb2494e04dfe0befb033c4f
 LICENSE	ffa10f40b98be2c2bc9608f56827ed23
 README.md	63ae9822bb3b7ea7b91c4023bacbdb7e
 ygopro_222.exe	91f0e16234fb770e2d4aed9a79376418
@@ -4853,7 +4853,7 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	c9b2ae557a77257e12e9a5599336afeb
-update/filelist.txt	12b8d85fbf4597fa1a34e22d92239a77
+update/filelist.txt	e8cfe1a5ca1084ad2d473ea130ac1fc6
 update/rename.txt	cbfaccc657e73040ec051233017b2c4d
 update/update-server.bat	425d7061cf8ae3c9ea1c1fddee14770c
-update/version.txt	205d799cfc81af3facfecdafdac70c3e
+update/version.txt	8491813dd7f2d7d9a8f9b60644d10675
