@@ -2,7 +2,6 @@
 irrKlang.dll	84b47454249faad68d3ad96cab202e21
 lflist.conf	531ffc2a6115d798083191f9ffaf3685
 README.md	63ae9822bb3b7ea7b91c4023bacbdb7e
-ygopro-222DIY-data.7z	a09b38f583f4bf1373790af295e6eb06
 ygopro_222.exe	388979f8a99998819f78d5e4d811f430
 expansions/222DIY.cdb	f785a5311d206cb8a898cd219c722bb2
 expansions/strings.conf	bdf8ffde9d3e48d30025fb32d4b1c3ee
@@ -3093,14 +3092,14 @@ expansions/script/c12000037.lua	4b39a41c30a66b4c61c3809fea3e6229
 expansions/script/c1200004.lua	051b0a0122fad61b76f54d6fdbeac8d1
 expansions/script/c1200005.lua	0395811b5c04b9b9597231cde74bd422
 expansions/script/c12000054.lua	a0b4aa7fca85afc8fc1882403f2b195e
-expansions/script/c1200006.lua	8f65aa2beac1a145511a34ee44291b3e
+expansions/script/c1200006.lua	049cc153de18011cf4617b9c2561f014
 expansions/script/c1200007.lua	160a9842e95217dd7b5d1c831377328e
 expansions/script/c1200011.lua	73abf8e4c5445c9d2421664d8fec8335
 expansions/script/c1200012.lua	74a87d109a651fa2f5afc85c5f4b7a47
 expansions/script/c1200013.lua	169bcb3dcb6e4d60493359b167675ef3
 expansions/script/c1200014.lua	e70f4d48fa92d6489c87486e1cbcc20a
 expansions/script/c1200015.lua	cf74cbe7413c6e752a21b81a34e5cd29
-expansions/script/c1200016.lua	5802216c4b0e5487317296b6bd1f69b1
+expansions/script/c1200016.lua	37892b04ba9fa8d187933e1797336265
 expansions/script/c1200021.lua	47cc7d0fc9be22f230b06365519c761c
 expansions/script/c1200022.lua	3bfc7ad14988d3a19eba182451faacba
 expansions/script/c1200023.lua	358c6f7c01e3860f0dd17e92a93253ad
@@ -3126,10 +3125,10 @@ expansions/script/c1200047.lua	3acb6905876ea1240f78d0c5d193eda4
 expansions/script/c1200048.lua	bdc00c59672c54c61d44953015c5c9e6
 expansions/script/c1200049.lua	09ef9519a7324410825beaeed0d019bf
 expansions/script/c1200050.lua	43c1e26d62da5d212e5d42bebbbeafd8
-expansions/script/c1200051.lua	5ce34ea728a0d2a8f0009adf42748912
+expansions/script/c1200051.lua	0223bdea9e16050e9e859493e0faaf9f
 expansions/script/c1200052.lua	476670ba1de6e4cf8e21049bdc3c81ec
 expansions/script/c1200053.lua	1242a9c56475390e07a11280e0e19737
-expansions/script/c1200055.lua	d5ab1c43834b37236631c5029781a9f3
+expansions/script/c1200055.lua	db9ec76a723164901ddd47cbb83775b6
 expansions/script/c1200056.lua	95adf0114432d5339c17f70da1ce617f
 expansions/script/c12001000.lua	73a1a6a4b105ae997eaea26638f59bba
 expansions/script/c12001001.lua	e2806c96d8a346420905cb1e8ad32813
@@ -3482,7 +3481,7 @@ expansions/script/c17060829.lua	8811b380ba1fcf6b2306388c00c10eb6
 expansions/script/c17060830.lua	45dc0e1e7c0a3ba81191c61d9d232062
 expansions/script/c17060831.lua	decc989c8c7e4598e77387df2afd7f88
 expansions/script/c17060832.lua	559831f5b728673e20e81e79e575646c
-expansions/script/c17060833.lua	15dc5b6b16dfba53c723fa0bda7d9845
+expansions/script/c17060833.lua	455b5b7b4f40771969df3fc947988eac
 expansions/script/c17060834.lua	92638ceb5c25ec422935ba25911f54e4
 expansions/script/c17060835.lua	cf8eadea642f18287ceab32fcae088f3
 expansions/script/c17060836.lua	eb6705ac9a79753f07d8670d97f9101a
@@ -3540,7 +3539,7 @@ expansions/script/c17060908.lua	07b2d18745febe663472dc01928d9999
 expansions/script/c17082101.lua	4d20c826c8c65a3e9daeca41d9214cee
 expansions/script/c17082102.lua	a263ec62db3feb39227f9d16d7a5d9b1
 expansions/script/c17082104.lua	b28210873519db4976886c6a3de175f6
-expansions/script/c17082105.lua	299772d896c1eb6b6f9f6c6aeebe596e
+expansions/script/c17082105.lua	b8db1ac1d6de4051f91908ae35d04b27
 expansions/script/c17091001.lua	d83f4e5de08b9e83a06a4b784c5570c2
 expansions/script/c17091002.lua	271bc6a8edbce807cd930a42b925d56e
 expansions/script/c17091003.lua	23f8be60a76323ed402d1b6c1d840baf
@@ -4937,7 +4936,7 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	386dec3ebecc9182982d5b14edec7115
+update/filelist.txt	bad9b5cfe5eb4ca7d9c775ffa261d394
 update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
 update/update-server.bat	9d0fefd8697d19b107d63588625b8fb6
-update/version.txt	910da343ed8f1c65d255c7b08031865f
+update/version.txt	00a44796aebdb392ebbc5af3b568251a
