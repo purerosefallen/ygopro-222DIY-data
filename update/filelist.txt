@@ -3,7 +3,7 @@ irrKlang.dll	84b47454249faad68d3ad96cab202e21
 lflist.conf	0372635c86f2512ca0a3217be3f6a859
 README.md	63ae9822bb3b7ea7b91c4023bacbdb7e
 ygopro_222.exe	388979f8a99998819f78d5e4d811f430
-expansions/222DIY.cdb	8346acfadd6f07d4147bb75df6f01e22
+expansions/222DIY.cdb	574f3bc6c8973ef0364a9da49031d5d2
 expansions/strings.conf	ad2a962f441323df88af9d2f9149c7ce
 expansions/pics/1000600.jpg	781f31575736ed458b301f99cdf7cc55
 expansions/pics/1000601.jpg	32d5947b25a84bcff00f043e5761f46d
@@ -2876,7 +2876,7 @@ expansions/script/c1111203.lua	c6a3af489ef898f90efce1f94765e100
 expansions/script/c1111301.lua	3a58c1b3b367f506e95e1f64dc22927d
 expansions/script/c11113129.lua	b1f4b83d5325dcf03187442ffa74569b
 expansions/script/c11113130.lua	b44581a6707c146caec7c603285bc4ed
-expansions/script/c11113135.lua	f46650555820b92eb4fba4f05158244c
+expansions/script/c11113135.lua	7076f9fb0d91f4d1d2ba781ce08e3f9e
 expansions/script/c1111401.lua	03e931cc4f416e4f188c7fd6beda84a8
 expansions/script/c1111402.lua	4e916eaa910913b69423f6e44f37bd26
 expansions/script/c1111403.lua	1657634728e550d367fc24906613cdbc
@@ -3935,7 +3935,7 @@ expansions/script/c33700186.lua	16a5efe75f777395ab8250039738a779
 expansions/script/c33700187.lua	152ee22940949aa2f3122e8ee2cb48da
 expansions/script/c33700188.lua	a8c5c3bb800dfd7e1fb071924eb9b4b2
 expansions/script/c33700189.lua	5045a8b29231bc3d11d1a8fb50ce1754
-expansions/script/c33700190.lua	ad8c9a8723ef208829840e1c25b3f4f6
+expansions/script/c33700190.lua	0697818fc3efd1d5db46e96f76c4c224
 expansions/script/c33700501.lua	fe58222e32726b9b8bcd26c0ee2b96de
 expansions/script/c33700502.lua	bf887ca2b1b4cb9c0d25f9b4c53bcf53
 expansions/script/c37564001.lua	97eaec5b11446946153eee7c9d073125
@@ -4913,8 +4913,10 @@ sound/BGM/custom/Covered Core.mp3	4851ceefcf4a705c21ed5dc38fb061c3
 sound/BGM/custom/Crystal Core.mp3	ef4aa7102444884624537e16b6a861ad
 sound/BGM/custom/Destroy Them All.mp3	52303538aa95c4a9b7269f28607d4363
 sound/BGM/custom/DON'T CUT.mp3	a4b2a116009cdbf32d5dccc8bf4cb4b9
+sound/BGM/custom/EncounterOneShot.mp3	6aa02ff220ab2fedd8ddac0b5f616040
 sound/BGM/custom/Fighter Blood.mp3	4d0562792b720e42cceaf9ae9f1f209e
 sound/BGM/custom/Final Shot.mp3	652ab8261373a7e4ea89b94c5503cf8a
+sound/BGM/custom/Ghost in the MachineOneShot.mp3	fca62145ab5c2f1cbbcbca144243673e
 sound/BGM/custom/Glass.mp3	61e8b775ebc559071e54cb3d7a2fdc6e
 sound/BGM/custom/GR3Boss.mp3	53456376db2daf5dd2f7ad33230c86eb
 sound/BGM/custom/GR3CrystalWorld.mp3	a90a1133771a0e21cde3ff7931233043
@@ -5007,7 +5009,7 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	d8be18b7d8cb5d68651610fa703e01fc
+update/filelist.txt	1f02a52d9324c2f3827f26e739f22bdf
 update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
 update/update-server.bat	9d0fefd8697d19b107d63588625b8fb6
-update/version.txt	20eb7ba01438b178619c3725bb3283cf
+update/version.txt	dda9d58883c972e7d0a13a96c79e4228
