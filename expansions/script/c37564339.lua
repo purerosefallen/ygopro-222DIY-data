@@ -3,9 +3,9 @@ local m=37564339
 local cm=_G["c"..m]
 xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 function cm.initial_effect(c)
-	local p=c:GetControler()
-	Senya.AddXyzProcedureCustom(c,function(c) return c:GetOwner()==1-p end,nil,2,2)
+	Senya.AddXyzProcedureCustom(c,function(c,xyzc) return c:GetOwner()==1-xyzc:GetControler() end,nil,2,2)
 	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(m,1))
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e4:SetRange(LOCATION_MZONE)
