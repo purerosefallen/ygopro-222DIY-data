@@ -1,6 +1,6 @@
 ﻿ikpMP3.dll	a5d45925d4d1331a4728ec5bf5d95534
 irrKlang.dll	84b47454249faad68d3ad96cab202e21
-lflist.conf	014979f0389cd37d3ab36e22c0edf1c1
+lflist.conf	3f70fcab2520e11570b0efbdeb785e6d
 README.md	63ae9822bb3b7ea7b91c4023bacbdb7e
 ygopro_222.exe	d051d251b46266eaf3e53a0175d239c2
 expansions/222DIY.cdb	574f3bc6c8973ef0364a9da49031d5d2
@@ -5009,7 +5009,8 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	777b690eaa1764a8e97a19e633bca13c
+update/filelist.txt	61906a41b53e6813a394db4ac6728b0c
 update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
 update/update-server.bat	9d0fefd8697d19b107d63588625b8fb6
-update/version.txt	aff510126f87eebdd0f89aee769af642
+update/update.exe.config	91ceaa16f91b40d9c171a5458d11ceac
+update/version.txt	85b3fea5d9af832dc300a85cebc9df9e
