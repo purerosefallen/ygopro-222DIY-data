@@ -1,8 +1,8 @@
-﻿README.md	f4b8777a37f202c2263b2125b74666c9
-ikpMP3.dll	a5d45925d4d1331a4728ec5bf5d95534
+﻿ikpMP3.dll	a5d45925d4d1331a4728ec5bf5d95534
 irrKlang.dll	84b47454249faad68d3ad96cab202e21
 lflist.conf	059d842bd1abefecf8ec03f54ee1b9e8
-ygopro_222.exe	406b01bca7443ac0fb5f55bbb789014f
+README.md	f4b8777a37f202c2263b2125b74666c9
+ygopro_222.exe	1a507b688e08b1a305422a5b43a2e964
 expansions/222DIY.cdb	574f3bc6c8973ef0364a9da49031d5d2
 expansions/strings.conf	0e6a546db870158a84a5d4c8ec71ff02
 expansions/pics/1000600.jpg	781f31575736ed458b301f99cdf7cc55
@@ -4886,66 +4886,66 @@ sound/summon.wav	b9292ee2280bf3938a0b0eb9615240e7
 sound/target.wav	da816f758fe0209ffffacdaa53fbb174
 sound/token.wav	5cc11cfc680533c041537309ca90d061
 sound/BGM/advantage/monosu.mp3	5e991304c845aeaac09c77fb1c073a01
-sound/BGM/custom/(Maru)BLACK HOLE.mp3	794ff08d14adc316c546758ce9e92419
 sound/BGM/custom/(Maru)Beginning Of The History.mp3	85b9b3de5673ee7222a4fba41a4f0313
-sound/BGM/custom/(Maru)CRYSTAL.mp3	a1af417c35c8677058e0f8c16619e84b
+sound/BGM/custom/(Maru)BLACK HOLE.mp3	794ff08d14adc316c546758ce9e92419
 sound/BGM/custom/(Maru)Challenger 1985.mp3	5f2cf00a758daf588959c53b2caf5370
+sound/BGM/custom/(Maru)CRYSTAL.mp3	a1af417c35c8677058e0f8c16619e84b
 sound/BGM/custom/(Maru)Gradius Boss NEO-MIX - remix.mp3	8c3d525ba03ce1d941c1b7472fd06543
 sound/BGM/custom/(Maru)Hector87.mp3	6145a22f31886115f26df8ec107e3c34
+sound/BGM/custom/(Maru)out of the blue from the hyperspace jump.mp3	1e11852910c1ca062b6a8d751746a37e
 sound/BGM/custom/(Maru)Space Traveler.mp3	1132deebfa9cc48da6f6cbf01fe47c87
 sound/BGM/custom/(Maru)Star Soldier.mp3	35b29d31705ae95f5a02b6f317884784
 sound/BGM/custom/(Maru)Starfield.mp3	6a7b85f8a63f9c7cbcd7268a9cf460ec
 sound/BGM/custom/(Maru)TEARS BEGAN GUSHING.mp3	f9c586c81463890379fd571ef0bfabd5
-sound/BGM/custom/(Maru)TWINBEE'S HOME TOWN SONG.mp3	a5aeb68bf50f30d418e456b83c838c9b
 sound/BGM/custom/(Maru)Tragedy flame.mp3	9bd9f5f672e3f7e4021844ab5f260468
-sound/BGM/custom/(Maru)out of the blue from the hyperspace jump.mp3	1e11852910c1ca062b6a8d751746a37e
+sound/BGM/custom/(Maru)TWINBEE'S HOME TOWN SONG.mp3	a5aeb68bf50f30d418e456b83c838c9b
 sound/BGM/custom/(Maru)unkai.mp3	5ec2a4f52b321bca8ec6501b701e9951
 sound/BGM/custom/A FIGHTER.mp3	75910f3a6a1605ae448f9ca3e76ca870
 sound/BGM/custom/Aircraft Carrier.mp3	7c48ef5836619684982ec8fd4c0a503d
-sound/BGM/custom/BIGCORE Mk-III.mp3	48c5924c27af79e88ea243fc94299b28
-sound/BGM/custom/BOSS-RUSH #2.mp3	0ee18cc8ac61bcb5e4eb848f2de292d7
 sound/BGM/custom/Bad Apple.mp3	d311848fb68c40452d5a19b65b35f47d
+sound/BGM/custom/BIGCORE Mk-III.mp3	48c5924c27af79e88ea243fc94299b28
+sound/BGM/custom/blossom.mp3	62111baccd6ea94472aeff7d230d5320
+sound/BGM/custom/BOSS-RUSH #2.mp3	0ee18cc8ac61bcb5e4eb848f2de292d7
+sound/BGM/custom/bubbles.mp3	26ae0c57dddf179b9ab9d0f4f2032fcc
 sound/BGM/custom/CLICK.mp3	15eb752986698a681070b14ecd8e00ce
 sound/BGM/custom/Close Quarters.mp3	e5f7dd71857660e852c9491d60137969
 sound/BGM/custom/Covered Core.mp3	4851ceefcf4a705c21ed5dc38fb061c3
 sound/BGM/custom/Crystal Core.mp3	ef4aa7102444884624537e16b6a861ad
-sound/BGM/custom/DON'T CUT.mp3	a4b2a116009cdbf32d5dccc8bf4cb4b9
 sound/BGM/custom/Destroy Them All.mp3	52303538aa95c4a9b7269f28607d4363
+sound/BGM/custom/DON'T CUT.mp3	a4b2a116009cdbf32d5dccc8bf4cb4b9
 sound/BGM/custom/EncounterOneShot.mp3	6aa02ff220ab2fedd8ddac0b5f616040
 sound/BGM/custom/Fighter Blood.mp3	4d0562792b720e42cceaf9ae9f1f209e
 sound/BGM/custom/Final Shot.mp3	652ab8261373a7e4ea89b94c5503cf8a
-sound/BGM/custom/GR3Boss.mp3	53456376db2daf5dd2f7ad33230c86eb
-sound/BGM/custom/GR3CrystalWorld.mp3	a90a1133771a0e21cde3ff7931233043
 sound/BGM/custom/Ghost in the MachineOneShot.mp3	fca62145ab5c2f1cbbcbca144243673e
 sound/BGM/custom/Glass.mp3	61e8b775ebc559071e54cb3d7a2fdc6e
+sound/BGM/custom/GR3Boss.mp3	53456376db2daf5dd2f7ad33230c86eb
+sound/BGM/custom/GR3CrystalWorld.mp3	a90a1133771a0e21cde3ff7931233043
 sound/BGM/custom/Gradius V STAGE BOSS.mp3	fc18007d57912d0b95a256abf7f8d8b5
 sound/BGM/custom/Heavy Blow.mp3	a5a045bac98c554d6a3b5cac2f87eec6
+sound/BGM/custom/hikari.mp3	c75ba504405c979b9ef2843a27d30db5
+sound/BGM/custom/idol.mp3	953f3b9bcb50da3d64a40bd9780cadb8
+sound/BGM/custom/inaba.mp3	ed2072644579d816975d53a9645b3291
 sound/BGM/custom/Karin - Sweet Rain.mp3	f74627d5390afb0a3514185e5d311c7a
+sound/BGM/custom/kimisekai.mp3	329995a85147c13f7e8650e69455e555
+sound/BGM/custom/kyoshikyoku.mp3	332ffe2d5144e5d3848f3d43cbf39663
 sound/BGM/custom/Last Dance.mp3	5c23999f2ed831421dc0da3abc3ad8d0
 sound/BGM/custom/Mk-II.mp3	2dc76e6e343097979f25454fd32cc5d8
 sound/BGM/custom/Moonspin.mp3	291c0f19aaa4496bc8d6f34faf597169
 sound/BGM/custom/My Friend.mp3	86774f3a02f7504aee3a5f543ffcef3c
+sound/BGM/custom/neon core.mp3	90baeb3510baf0a5f730fb245f612291
 sound/BGM/custom/Oozora Dreamer.mp3	d7d0710b8d47a1c1b62c79b8e1e56a57
+sound/BGM/custom/pastel.mp3	ff898d6cc2206f93834a45a8101449fd
 sound/BGM/custom/SAKURA.mp3	8dafed3f56be72a2ea24399269b5e3ea
+sound/BGM/custom/soku.mp3	5742bbdac0dcba58ea744faddfd7a18a
 sound/BGM/custom/SSpeed.mp3	63849f7661f39a9d114842cc5ee6aebc
 sound/BGM/custom/Sweets Time.mp3	d77d6fda103ead3f194a5a29c65ba745
 sound/BGM/custom/TETO RAN.mp3	dddf49dbda7646b40f6b8ddae23b595a
+sound/BGM/custom/under the illusion.mp3	d89eeb8481723638deba2cba01c6f88a
 sound/BGM/custom/UNICORN GUNDAM.mp3	8912a00be07560abe94c1bd1c577b241
 sound/BGM/custom/UNICORN.mp3	10660641b77e89ce593f637269e456af
 sound/BGM/custom/Welcome to Japari Park.mp3	df3f3bcd9e0cafd1dc99f2e6b4439ecf
 sound/BGM/custom/Yaezakura.mp3	d6928bb6216667d5bf64b213f1fc4c35
 sound/BGM/custom/Your Song.mp3	be7e5796217f4b803829cfdab95eb3f2
-sound/BGM/custom/blossom.mp3	62111baccd6ea94472aeff7d230d5320
-sound/BGM/custom/bubbles.mp3	26ae0c57dddf179b9ab9d0f4f2032fcc
-sound/BGM/custom/hikari.mp3	c75ba504405c979b9ef2843a27d30db5
-sound/BGM/custom/idol.mp3	953f3b9bcb50da3d64a40bd9780cadb8
-sound/BGM/custom/inaba.mp3	ed2072644579d816975d53a9645b3291
-sound/BGM/custom/kimisekai.mp3	329995a85147c13f7e8650e69455e555
-sound/BGM/custom/kyoshikyoku.mp3	332ffe2d5144e5d3848f3d43cbf39663
-sound/BGM/custom/neon core.mp3	90baeb3510baf0a5f730fb245f612291
-sound/BGM/custom/pastel.mp3	ff898d6cc2206f93834a45a8101449fd
-sound/BGM/custom/soku.mp3	5742bbdac0dcba58ea744faddfd7a18a
-sound/BGM/custom/under the illusion.mp3	d89eeb8481723638deba2cba01c6f88a
 sound/BGM/deck/saisou.mp3	f39aa99ddd830d2e86a515ad23b156d3
 sound/BGM/disadvantage/shijyo.mp3	1afa8a4694572e0a99f5b7665223292b
 sound/BGM/duel/ayakashi.mp3	0b5e4950ea8b307f92b982b725f71f73
@@ -5009,8 +5009,7 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	59e2bddc60f3d7b5d607285a70476143
+update/filelist.txt	69060b5e529b72005a827e30a523ea5f
 update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
 update/update-server.bat	03d18c769f88fee730ac237d8ef95631
-update/update.exe.config	9d4a8a302337779963cf0fa91dfd1b25
-update/version.txt	209fd8c118b23bd9e372fd74f853dd1b
+update/version.txt	f885f01c5b514cfc143dfa581ddedb92
