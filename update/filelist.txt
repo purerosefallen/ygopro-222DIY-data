@@ -4629,9 +4629,9 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	09fd9c9e78b045e0894d9166f6593443
+update/filelist.txt	c3ae17a2da4427abbe421ce132f9c820
 update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
 update/update-server.bat	03d18c769f88fee730ac237d8ef95631
 update/update.exe.config	9d4a8a302337779963cf0fa91dfd1b25
-update/version.txt	013583f499f93a69bb7541b469ae1408
+update/version.txt	4e5e9ca78c183f65362061f624b61aab
 update/version_new.txt	eb4eaa10f060b5104dd4c43ec10e10b4
