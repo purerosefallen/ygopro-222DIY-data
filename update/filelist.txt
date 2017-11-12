@@ -1,5 +1,4 @@
-﻿README.md	f4b8777a37f202c2263b2125b74666c9
-ikpMP3.dll	a5d45925d4d1331a4728ec5bf5d95534
+﻿ikpMP3.dll	a5d45925d4d1331a4728ec5bf5d95534
 irrKlang.dll	84b47454249faad68d3ad96cab202e21
 lflist.conf	0f912258266dd79e6eefc1f23fcbfafb
 update.exe	423478860ce03be7e4ccf38bf485bb70
@@ -4630,9 +4629,8 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	71b174adaa7390a72d10c9acdfaa7bad
+update/filelist.txt	228cfe0d635da78969c990569ca6833b
 update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
-update/update-server.bat	03d18c769f88fee730ac237d8ef95631
 update/update.exe.config	9d4a8a302337779963cf0fa91dfd1b25
-update/version.txt	0fe673d645e29cac5a452928fabcdfb8
+update/version.txt	d7e8188d635ebd590c3e3ab30c50516e
 update/version_new.txt	eb4eaa10f060b5104dd4c43ec10e10b4
