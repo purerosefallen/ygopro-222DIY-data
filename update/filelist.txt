@@ -2,8 +2,8 @@
 irrKlang.dll	84b47454249faad68d3ad96cab202e21
 lflist.conf	85db1abb0fa3d7efa20e566247427cc1
 ygopro_222.exe	78edeeddbc18b130cef2dfa4b79224d0
-expansions/222DIY.cdb	69cad94efa634bdd254427032615d757
-expansions/strings.conf	4bc0182c5a0afabb3faa343bab4d4b59
+expansions/222DIY.cdb	cb4d585d814150bdf8c3fbd0713d1ba6
+expansions/strings.conf	c9c8ad04bd57341b32599eb399809c4c
 expansions/pics/1000600.jpg	781f31575736ed458b301f99cdf7cc55
 expansions/pics/1000601.jpg	32d5947b25a84bcff00f043e5761f46d
 expansions/pics/1000602.jpg	9ec8edb09150690a3743e04a3ff08928
@@ -1872,7 +1872,6 @@ expansions/pics/57330011.jpg	bab9aa76f41a1a0e6c085badf4e12ed2
 expansions/pics/57330012.jpg	796cb6a8d4949b8667ad66807516f2a3
 expansions/pics/57330013.jpg	8e94acb0a2d2994866d7e92ba628ef8b
 expansions/pics/5800031.jpg	f13ed674dfdf695a88fd7fdd766bae1d
-expansions/pics/580043.jpg	74a4a516231f4bc92543b48f13a1f5fc
 expansions/pics/60150501.jpg	5ca14930061b9b6d69c52e67674a6966
 expansions/pics/60150503.jpg	99e5a1880b0ac8b55c408ab828616b20
 expansions/pics/60150504.jpg	0182dc736438a4a3dcd3eb0dded53c89
@@ -4205,7 +4204,6 @@ expansions/script/c57330011.lua	6cc2a549c22848fa13231a03d205acd8
 expansions/script/c57330012.lua	7b0afe5fefa6f25f138563c54c78832c
 expansions/script/c57330013.lua	daa2f7e82ed355fe0202efeed1310748
 expansions/script/c5800031.lua	fda95d2744ebe61e99c16d63ce615b54
-expansions/script/c580043.lua	9185eba468da304a43cf6b97830dcc4a
 expansions/script/c60150501.lua	acd910a2383bf82c66f4d154e6df32b6
 expansions/script/c60150503.lua	bdb6eaa8497b12131ac582c1cec3471b
 expansions/script/c60150504.lua	4c1e46e5a9f94484be221c6221436415
@@ -4722,7 +4720,7 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	c9de1886b9c5fc408d87f909547d4e7f
+update/filelist.txt	3acee602f9a1248b6b00beafd4bdf560
 update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
-update/version.txt	dc6a008cc3a1efb8dcbbee98f15a6285
+update/version.txt	53064c632b936c6b565a55574e5e98a0
 update/version_new.txt	eb4eaa10f060b5104dd4c43ec10e10b4
