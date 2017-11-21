@@ -1,7 +1,6 @@
 version: '{build}'
-skip_tags: true
 
-install:
+build_script:
  - git config --global user.name "Smile-DK"
  - git config --global user.email "2236141431@qq.com"
  - git pull origin data
@@ -9,10 +8,6 @@ install:
  - cp -rf expansions temp
  - rm -rf temp/expansions/pics
  - cp -rf lflist.conf temp
- - git clone https://github.com/purerosefallen/ygopro-7210srv
- - cp -rf ygopro-7210srv/cards.cdb temp
- - cp -rf ygopro-7210srv/strings.conf temp
- - rm -rf ygopro-7210srv
  - git checkout master
  - git pull origin master
  - rm -rf expansions
@@ -22,10 +17,6 @@ install:
  - git add . -A
  - git commit -m "Push by Appveyor"
  - git push %Smile%purerosefallen/ygopro-222DIY master
-
-build: off
-
-after_build:
 
 test: off
 
