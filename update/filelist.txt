@@ -1,7 +1,7 @@
 ﻿lflist.conf	c62af7ed43a9a9cae086fa24e3e884c5
-ygopro_222.exe	58414cb1c3a67b08088acf1ea8811767
+ygopro_222.exe	b72eda22d897c6e4b69561feb5a3f59e
 expansions/222DIY.cdb	53edf912484ac935446bb03525097f6a
-expansions/strings.conf	c4e2194ba50c88dee41c964167528a08
+expansions/strings.conf	c60d2ec07a501107bc8343188515317e
 expansions/pics/1000600.jpg	781f31575736ed458b301f99cdf7cc55
 expansions/pics/1000601.jpg	32d5947b25a84bcff00f043e5761f46d
 expansions/pics/1000602.jpg	9ec8edb09150690a3743e04a3ff08928
@@ -4902,7 +4902,7 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	1f016c9deb5e6def299c55b548cdfad3
+update/filelist.txt	318859e191f59b7f4900d81fea2478f4
 update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
-update/version.txt	2a7c0554bff3fec72cfc6106111d0d52
+update/version.txt	299825369982eb477df9127e1cbd9b0c
 update/version_new.txt	eb4eaa10f060b5104dd4c43ec10e10b4
