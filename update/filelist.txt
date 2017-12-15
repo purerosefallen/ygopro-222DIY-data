@@ -1,6 +1,6 @@
 ﻿lflist.conf	c62af7ed43a9a9cae086fa24e3e884c5
 ygopro_222.exe	f6850734a5ae0bc47782bc194cfc7d17
-expansions/222DIY.cdb	53edf912484ac935446bb03525097f6a
+expansions/222DIY.cdb	43999ecb614751ebdb1f8d36586a0d45
 expansions/strings.conf	c60d2ec07a501107bc8343188515317e
 expansions/pics/1000600.jpg	781f31575736ed458b301f99cdf7cc55
 expansions/pics/1000601.jpg	32d5947b25a84bcff00f043e5761f46d
@@ -1959,7 +1959,7 @@ expansions/pics/57320009.jpg	7baf52072362e15387ad81b800bd78d5
 expansions/pics/57320010.jpg	00374baccee6c1ba8487eaa5751243d4
 expansions/pics/57320011.jpg	e2dc6d9296fe47ff65f94e7dfdc43097
 expansions/pics/57320012.jpg	1e34fe1d04c226e9a91687384e71f812
-expansions/pics/57320013.jpg	3f4d7739466b7b52b90d059c0f84bb8c
+expansions/pics/57320013.jpg	c8040751f559ed4518bfc056f6caf789
 expansions/pics/57330001.jpg	29d9a49924f9052d5f5670cec8ac5108
 expansions/pics/57330002.jpg	aa93e412282692d1ead7249811f9600e
 expansions/pics/57330003.jpg	ce5b1dee793299e65f13bd598c0c7e7b
@@ -4167,12 +4167,12 @@ expansions/script/c37564902.lua	b8c5a1270cc8134cbdd8875fd83278ca
 expansions/script/c37564903.lua	93a04cfb6801050541b0affd8a1a726e
 expansions/script/c37564904.lua	8c8dff6c8f46a442621f306b3787cf06
 expansions/script/c37564905.lua	b31f577a9736dcc057cf14fa6afb1ff9
-expansions/script/c37564906.lua	e2a9214e183ca5bd6a805d94e3adf02d
+expansions/script/c37564906.lua	2173db4cf251fc1f3a87bdb019746f0f
 expansions/script/c37564907.lua	ec34611e1d54a0c69c37e11cf170ea7b
 expansions/script/c37564908.lua	af324cbf904e77e1c770f6978604c50b
 expansions/script/c37564909.lua	fbfbc086bc9246fa7d98b31809ad5471
 expansions/script/c37564910.lua	a1d0344f01741d0e58c8a672c40d39ab
-expansions/script/c37564911.lua	046fe69455c9d63e34d2a9ec4ff4d6ca
+expansions/script/c37564911.lua	d515f7c58daf6596fcb860fa2f9f8fa7
 expansions/script/c37564912.lua	ca5a61f125daf5378eabc892792f7818
 expansions/script/c37564913.lua	7cc159ae48f3209053ddc41dd5bd6972
 expansions/script/c37564914.lua	9ce975bfade26692c3b311ef681b17dd
@@ -4788,6 +4788,7 @@ sound/BGM/custom/(Maru)TWINBEE'S HOME TOWN SONG.mp3	a5aeb68bf50f30d418e456b83c83
 sound/BGM/custom/(Maru)unkai.mp3	5ec2a4f52b321bca8ec6501b701e9951
 sound/BGM/custom/A FIGHTER.mp3	75910f3a6a1605ae448f9ca3e76ca870
 sound/BGM/custom/Aircraft Carrier.mp3	7c48ef5836619684982ec8fd4c0a503d
+sound/BGM/custom/amazing once more.mp3	6b19f039782ea9ba7b53e3a54fbf49ae
 sound/BGM/custom/Bad Apple.mp3	d311848fb68c40452d5a19b65b35f47d
 sound/BGM/custom/BIGCORE Mk-III.mp3	48c5924c27af79e88ea243fc94299b28
 sound/BGM/custom/blossom.mp3	62111baccd6ea94472aeff7d230d5320
@@ -4826,6 +4827,7 @@ sound/BGM/custom/Rise to be.mp3	8f0b9cbe7a9cbf9b02e68f3a33037532
 sound/BGM/custom/SAKURA.mp3	8dafed3f56be72a2ea24399269b5e3ea
 sound/BGM/custom/soku.mp3	5742bbdac0dcba58ea744faddfd7a18a
 sound/BGM/custom/SSpeed.mp3	63849f7661f39a9d114842cc5ee6aebc
+sound/BGM/custom/Sweet Little Sister.mp3	6b9b9de77e58331af1bf257161df5029
 sound/BGM/custom/Sweets Time.mp3	d77d6fda103ead3f194a5a29c65ba745
 sound/BGM/custom/TETO RAN.mp3	dddf49dbda7646b40f6b8ddae23b595a
 sound/BGM/custom/under the illusion.mp3	d89eeb8481723638deba2cba01c6f88a
@@ -4902,7 +4904,7 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	f3a6ffac692d2c17060ed4372a606730
+update/filelist.txt	7f09867a8db7f9dadbef26171b370256
 update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
-update/version.txt	83b3abe78ac11d9d795eff555b030e2f
+update/version.txt	3c4ec5c31ab5392dc86e4cba3d6201d3
 update/version_new.txt	eb4eaa10f060b5104dd4c43ec10e10b4
