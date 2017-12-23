@@ -17,6 +17,9 @@ build_script:
  - git add . -A
  - git commit -m "Push by Appveyor"
  - git push %Smile%purerosefallen/ygopro-222DIY master
+ - git checkout beta
+ - git merge master
+ - git push %Smile%purerosefallen/ygopro-222DIY beta
 
 test: off
 
