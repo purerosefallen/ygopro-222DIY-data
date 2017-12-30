@@ -112,18 +112,18 @@ function cm.SelfSpsummonOperation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=eg:GetFirst()
 	if tc and e:GetHandler():IsRelateToEffect(e) and Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
-		cm.Copy(c,code)
+		cm.Copy(c,tc)
 		Duel.SpecialSummonComplete()
 	end
 end
 function cm.copyfilter(c)
-	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_SPECIAL)
+	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_SPECIAL) and not c:IsCode(m)
 end
 function cm.copytg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and cm.copyfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(cm.copyfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and e:GetHandler():GetFlagEffect(m-700000)==0 end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and cm.copyfilter(chkc) and c~=e:GetHandler() end
+	if chk==0 then return Duel.IsExistingTarget(cm.copyfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) and e:GetHandler():GetFlagEffect(m-700000)==0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,cm.copyfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	Duel.SelectTarget(tp,cm.copyfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler())
 end
 function cm.copyop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
