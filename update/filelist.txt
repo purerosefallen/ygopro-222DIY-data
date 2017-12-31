@@ -1,7 +1,7 @@
 ﻿ygopro_222.exe	ecfd60c521286771bea7465ca3de8085
-expansions/222DIY.cdb	10b7c2770cf2562584e743b51becadf7
-expansions/lflist.conf	6e500f28d6fc5f798c69577e4f7047c6
-expansions/strings.conf	7f78958b96b78cddf7a719866736675a
+expansions/222DIY.cdb	b666304d1a29cf77630763c12a302c49
+expansions/lflist.conf	4583131745a8949adbbe8fcb54c1da3f
+expansions/strings.conf	386f5b8e4a2d792359006000514811d2
 expansions/pics/08209710.jpg	ed0e60085631bfa641ffeebd6abbd910
 expansions/pics/1000600.jpg	781f31575736ed458b301f99cdf7cc55
 expansions/pics/1000601.jpg	32d5947b25a84bcff00f043e5761f46d
@@ -4950,7 +4950,7 @@ sound/BGM/custom/Bad Apple.mp3	d311848fb68c40452d5a19b65b35f47d
 sound/BGM/custom/BIGCORE Mk-III.mp3	48c5924c27af79e88ea243fc94299b28
 sound/BGM/custom/blossom.mp3	62111baccd6ea94472aeff7d230d5320
 sound/BGM/custom/border_of_life.mp3	ad78fff1571cc33cf9428589cae35807
-sound/BGM/custom/BOSS-RUSH #2.mp3	0ee18cc8ac61bcb5e4eb848f2de292d7
+sound/BGM/custom/BOSS-RUSH 2.mp3	0ee18cc8ac61bcb5e4eb848f2de292d7
 sound/BGM/custom/bubbles.mp3	26ae0c57dddf179b9ab9d0f4f2032fcc
 sound/BGM/custom/CLICK.mp3	15eb752986698a681070b14ecd8e00ce
 sound/BGM/custom/Close Quarters.mp3	e5f7dd71857660e852c9491d60137969
@@ -5090,7 +5090,7 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	b9164a215fb09a86c4781da36457e3e1
+update/filelist.txt	1cb63dfb19506e12c7ea324d37987204
 update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
 update/update-without-sound.bat	22d7b973d79ef9311213aeff61d93d7c
-update/version.txt	4c390eba408c20132eb98dc4dcfd8411
+update/version.txt	349df588f5b86090c4ad0db3410ae0ee
