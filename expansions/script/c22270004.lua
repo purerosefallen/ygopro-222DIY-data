@@ -19,8 +19,11 @@ function c22270004.IsShouMetsuToShi(c)
 	local m=_G["c"..c:GetCode()]
 	return m and m.named_with_ShouMetsu_ToShi
 end
+function c22270004.filterx(c)
+	return c22270004.IsShouMetsuToShi(c) and c:IsRace(RACE_MACHINE)
+end
 function c22270004.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(Card.IsRace,1,nil,RACE_MACHINE)
+	return eg:IsExists(c22270004.filterx,1,nil)
 end
 function c22270004.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
