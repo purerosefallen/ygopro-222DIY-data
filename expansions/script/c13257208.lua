@@ -48,7 +48,7 @@ function c13257208.thfilter(c)
 end
 function c13257208.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.Hint(11,0,aux.Stringid(13257208,4))
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257208,4))
 end
 function c13257208.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

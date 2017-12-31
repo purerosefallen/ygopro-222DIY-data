@@ -42,7 +42,7 @@ function c13257224.initial_effect(c)
 end
 function c13257224.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.Hint(11,0,aux.Stringid(13257224,4))
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257224,4))
 end
 function c13257224.etarget(e,c)
 	return c:IsAttribute(ATTRIBUTE_FIRE)

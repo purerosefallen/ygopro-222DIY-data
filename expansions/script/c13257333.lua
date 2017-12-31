@@ -138,5 +138,5 @@ function c13257333.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return c:IsLocation(LOCATION_EXTRA)
 end
 function c13257333.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(13257333,7))
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257333,7))
 end

@@ -97,14 +97,14 @@ end
 function c17082104.daop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttackTarget()
 	Duel.Damage(1-tp,bc:GetAttack(),REASON_EFFECT)
-	Duel.Hint(12,0,aux.Stringid(17082104,11))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17082104,11))
 end
 function c17082104.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()
 end
 function c17082104.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,1600,REASON_EFFECT)
-	Duel.Hint(12,0,aux.Stringid(17082104,11))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17082104,11))
 end
 function c17082104.repfilter(c,tp)
 	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE)
@@ -127,11 +127,11 @@ function c17082104.descon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_MZONE+LOCATION_SZONE) and c:IsFaceup()
 end
 function c17082104.sumsuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(12,0,aux.Stringid(17082104,8))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17082104,8))
 end	
 function c17082104.atksuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(12,0,aux.Stringid(17082104,9))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17082104,9))
 end
 function c17082104.dessuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(12,0,aux.Stringid(17082104,10))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17082104,10))
 end

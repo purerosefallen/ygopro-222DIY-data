@@ -6,7 +6,7 @@ function c33700056.initial_effect(c)
 	e1:SetCountLimit(1,33700056+EFFECT_COUNT_CODE_OATH)
 	e1:SetCost(function(e,tp,eg,ep,ev,re,r,rp,chk)
 		if chk==0 then return true end
-		Duel.Hint(11,0,33700056*16)
+		Duel.Hint(HINT_MUSIC,0,33700056*16)
 	end)
 	c:RegisterEffect(e1)
 	--Activate

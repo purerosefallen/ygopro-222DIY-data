@@ -84,7 +84,7 @@ end
 function c17082102.reop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttackTarget()
 	Duel.Recover(tp,bc:GetAttack(),REASON_EFFECT)
-	Duel.Hint(12,0,aux.Stringid(17082102,11))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17082102,11))
 end
 function c17082102.changetg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -97,14 +97,14 @@ function c17082102.changeop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tcode=c.dfc_back_side
 	c:SetEntityCode(tcode,true)
 	c:ReplaceEffect(tcode,0,0)
-	Duel.Hint(12,0,aux.Stringid(17082102,12))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17082102,12))
 end
 function c17082102.reccon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer()
 end
 function c17082102.recop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(tp,1600,REASON_EFFECT)
-	Duel.Hint(12,0,aux.Stringid(17082102,11))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17082102,11))
 end
 function c17082102.repfilter(c,tp)
 	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE)
@@ -127,11 +127,11 @@ function c17082102.descon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_MZONE+LOCATION_SZONE) and c:IsFaceup()
 end
 function c17082102.sumsuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(12,0,aux.Stringid(17082102,8))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17082102,8))
 end	
 function c17082102.atksuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(12,0,aux.Stringid(17082102,9))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17082102,9))
 end
 function c17082102.dessuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(12,0,aux.Stringid(17082102,10))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17082102,10))
 end

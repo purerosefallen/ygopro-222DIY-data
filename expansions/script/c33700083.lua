@@ -68,7 +68,7 @@ function c33700083.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	  local sg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 	 local tg=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_GRAVE,0,nil)
 	if chk==0 then return  sg:GetCount()>0 and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_GRAVE,0,sg:GetCount(),nil) and not Duel.IsExistingMatchingCard(c33700083.cfilter,tp,LOCATION_HAND,0,1,nil)  end
-	Duel.Hint(12,0,aux.Stringid(33700083,3))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(33700083,3))
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,sg,sg:GetCount(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,tg,sg:GetCount(),0,0)
 end

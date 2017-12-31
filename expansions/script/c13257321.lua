@@ -155,5 +155,5 @@ function c13257321.bombop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257321.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(13257321,7))
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257321,7))
 end

@@ -9,7 +9,7 @@ function cm.initial_effect(c)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	e0:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
 		if chk==0 then return true end
-		Duel.Hint(11,0,m*16+1)
+		Duel.Hint(HINT_MUSIC,0,m*16+1)
 	end)
 	c:RegisterEffect(e0)
 	local e1=Effect.CreateEffect(c)

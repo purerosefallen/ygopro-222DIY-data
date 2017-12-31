@@ -80,7 +80,7 @@ function c13257214.splimit(e,c)
 	return not c:IsSetCard(0x353)
 end
 function c13257214.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(13257214,4))
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257214,4))
 end
 function c13257214.indct(e,re,r,rp)
 	if bit.band(r,REASON_BATTLE+REASON_EFFECT)~=0 then

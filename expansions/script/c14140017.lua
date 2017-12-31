@@ -129,7 +129,7 @@ function cm.fsop(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf)
 	Duel.SetFusionMaterial(sg)
 end
 function cm.SetMaterial(c,g)
-	Duel.Hint(11,0,m*16+10)
+	Duel.Hint(HINT_MUSIC,0,m*16+10)
 	Card.SetMaterial(c,g)
 	if not g then return end
 	local rg=g:Filter(function(c) return c:GetFlagEffect(m-20000)>0 end,nil)

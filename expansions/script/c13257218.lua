@@ -207,5 +207,5 @@ function c13257218.splimit(e,c,tp,sumtp,sumpos)
 	return not c:IsSetCard(0x356)
 end
 function c13257218.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(13257218,4))
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257218,4))
 end

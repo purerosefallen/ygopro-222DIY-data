@@ -588,7 +588,7 @@ function cm.AddSummonMusic(c,desc,stype)
 		e1:SetCondition(cm.SummonTypeCondition(stype))
 	end
 	e1:SetOperation(function()
-		Duel.Hint(11,0,desc)
+		Duel.Hint(HINT_MUSIC,0,desc)
 	end)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()

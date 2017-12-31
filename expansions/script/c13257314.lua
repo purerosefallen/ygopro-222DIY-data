@@ -99,5 +99,5 @@ function c13257314.pcop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257314.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(13257314,7))
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257314,7))
 end

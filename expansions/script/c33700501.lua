@@ -66,7 +66,7 @@ function cm.initial_effect(c)
 		c:SetEntityCode(tcode,true)
 		c:ReplaceEffect(tcode,0,0)
 		Duel.SetMetatable(c,_G["c"..tcode])
-		Duel.Hint(11,0,m*16+3)
+		Duel.Hint(HINT_MUSIC,0,m*16+3)
 	end)
 	c:RegisterEffect(e4)
 end

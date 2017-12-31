@@ -38,7 +38,7 @@ function c33700173.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(c33700173.cgfilter,tp,LOCATION_MZONE,0,nil)
 	if chk==0 then return ct>0 and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 	end
-	Duel.Hint(12,0,aux.Stringid(33700173,3))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(33700173,3))
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,ct,0,0)
 end
 function c33700173.op(e,tp,eg,ep,ev,re,r,rp)

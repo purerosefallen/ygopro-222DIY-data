@@ -35,7 +35,7 @@ function c33700085.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local result=g:FilterCount(Card.IsAbleToHand,nil)>0
 		return result
 	end
-	Duel.Hint(12,0,aux.Stringid(33700093,2))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(33700093,2))
 	Duel.SetTargetPlayer(tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end

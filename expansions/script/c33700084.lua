@@ -55,7 +55,7 @@ end
 function c33700084.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp)
 		and Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,nil) end
-	Duel.Hint(12,0,aux.Stringid(33700084,5))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(33700084,5))
 	Duel.SetTargetPlayer(tp)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
 end

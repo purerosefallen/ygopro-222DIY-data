@@ -40,7 +40,7 @@ function c13257227.initial_effect(c)
 end
 function c13257227.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.Hint(11,0,aux.Stringid(13257227,4))
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257227,4))
 end
 function c13257227.etarget(e,c)
 	return c:IsRace(RACE_ROCK)

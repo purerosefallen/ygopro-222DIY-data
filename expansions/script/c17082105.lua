@@ -83,7 +83,7 @@ function c17082105.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		return ft>-1 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
-	Duel.Hint(11,0,aux.Stringid(17082105,8))
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(17082105,8))
 end
 function c17082105.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -153,11 +153,11 @@ function c17082105.descon1(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_MZONE+LOCATION_SZONE) and c:IsFaceup()
 end
 function c17082105.sumsuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(12,0,aux.Stringid(17082105,5))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17082105,5))
 end	
 function c17082105.atksuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(12,0,aux.Stringid(17082105,6))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17082105,6))
 end
 function c17082105.dessuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(12,0,aux.Stringid(17082105,7))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17082105,7))
 end

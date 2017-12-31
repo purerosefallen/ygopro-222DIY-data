@@ -137,11 +137,11 @@ function cm.descon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_MZONE+LOCATION_SZONE) and c:IsFaceup()
 end
 function cm.sumsuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(12,0,aux.Stringid(m,5))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(m,5))
 end	
 function cm.atksuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(12,0,aux.Stringid(m,6))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(m,6))
 end
 function cm.dessuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(12,0,aux.Stringid(m,7))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(m,7))
 end

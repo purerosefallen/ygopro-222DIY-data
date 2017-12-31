@@ -91,7 +91,7 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetOperation(cm.disop)
 		c:RegisterEffect(e3,true)
 		Duel.SpecialSummonComplete()
-		Duel.Hint(11,0,aux.Stringid(m,3))
+		Duel.Hint(HINT_MUSIC,0,aux.Stringid(m,3))
 	end
 end
 function cm.discon(e,tp,eg,ep,ev,re,r,rp)

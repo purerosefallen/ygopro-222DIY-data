@@ -48,7 +48,7 @@ end
 function c13257304.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		Duel.Hint(11,0,aux.Stringid(13257304,7))
+		Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257304,7))
 		local a=Duel.GetAttacker()
 		if a:IsAttackable() and not a:IsImmuneToEffect(e) then
 			local e1=Effect.CreateEffect(c)
@@ -171,5 +171,5 @@ function c13257304.atlimit(e,c)
 	return c:GetCode()~=e:GetHandler():GetCode() and c:IsFaceup() and c:IsSetCard(0x351)
 end
 function c13257304.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(13257304,7))
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257304,7))
 end

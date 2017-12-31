@@ -67,7 +67,7 @@ function c13257322.spop(e,tp,eg,ep,ev,re,r,rp)
 			g:AddCard(token)
 		end
 		Duel.SpecialSummonComplete()
-		Duel.Hint(11,0,aux.Stringid(13257322,0))
+		Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257322,0))
 		g:KeepAlive()
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

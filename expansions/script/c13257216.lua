@@ -102,5 +102,5 @@ function c13257216.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257216.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(13257216,4))
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257216,4))
 end

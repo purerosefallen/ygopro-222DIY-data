@@ -259,7 +259,7 @@ function cm.synop(e,tp,eg,ep,ev,re,r,rp,c,tuner,mg)
 	c:SetMaterial(g)
 	Duel.SendtoGrave(g,REASON_MATERIAL+REASON_SYNCHRO)
 	g:DeleteGroup()
-	Duel.Hint(11,0,m*16+2)
+	Duel.Hint(HINT_MUSIC,0,m*16+2)
 end
 function cm.valcheck(e,c)
 	local g=c:GetMaterial():Filter(Card.IsType,nil,TYPE_XYZ)

@@ -67,7 +67,7 @@ function c13257319.spcon(e,c)
 	return Duel.GetMZoneCount(tp)>0
 end
 function c13257319.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(11,0,aux.Stringid(13257319,7))
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257319,7))
 end
 function c13257319.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReason(REASON_EFFECT+REASON_BATTLE)

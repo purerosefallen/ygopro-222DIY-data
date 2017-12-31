@@ -70,7 +70,7 @@ function cm.changeop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tcode=c.dfc_back_side
 	c:SetEntityCode(tcode,true)
 	c:ReplaceEffect(tcode,0,0)
-	Duel.Hint(12,0,aux.Stringid(m,8))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(m,8))
 end
 function cm.tfcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -150,11 +150,11 @@ function cm.descon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_MZONE+LOCATION_SZONE) and c:IsFaceup()
 end
 function cm.sumsuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(12,0,aux.Stringid(m,5))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(m,5))
 end	
 function cm.atksuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(12,0,aux.Stringid(m,6))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(m,6))
 end
 function cm.dessuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(12,0,aux.Stringid(m,7))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(m,7))
 end

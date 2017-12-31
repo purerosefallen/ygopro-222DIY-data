@@ -45,9 +45,9 @@ function c17091001.negop(e,tp,eg,ep,ev,re,r,rp)
 		local tcode=c.dfc_back_side
 		c:SetEntityCode(tcode,true)
 		c:ReplaceEffect(tcode,0,0)
-		Duel.Hint(11,0,aux.Stringid(17091001,3))
+		Duel.Hint(HINT_MUSIC,0,aux.Stringid(17091001,3))
 	end
 end
 function c17091001.sumsuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(17091001,2))
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(17091001,2))
 end	

@@ -116,5 +116,5 @@ function c13257206.damcon2(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp
 end
 function c13257206.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(13257206,4))
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257206,4))
 end

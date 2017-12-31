@@ -46,7 +46,7 @@ function c13257317.spcon(e,c)
 	return g:GetCount()==1 and tc:IsSetCard(0x351)
 end
 function c13257317.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(11,0,aux.Stringid(13257317,7))
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257317,7))
 end
 function c13257317.eqfilter(c,ec)
 	return c:IsSetCard(0x352) and c:IsType(TYPE_MONSTER) and c:CheckEquipTarget(ec)
@@ -188,5 +188,5 @@ function c13257317.upop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257317.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(13257317,7))
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257317,7))
 end

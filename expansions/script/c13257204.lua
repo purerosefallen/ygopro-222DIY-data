@@ -86,5 +86,5 @@ function c13257204.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x1f,1)
 end
 function c13257204.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(13257204,4))
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257204,4))
 end

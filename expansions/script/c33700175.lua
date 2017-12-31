@@ -6,7 +6,7 @@ function c33700175.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
 		if chk==0 then return true end
-		Duel.Hint(12,0,aux.Stringid(33700175,1))
+		Duel.Hint(HINT_SOUND,0,aux.Stringid(33700175,1))
 	end)
 	c:RegisterEffect(e1)   
 	--set

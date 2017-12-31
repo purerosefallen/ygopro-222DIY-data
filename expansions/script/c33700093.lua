@@ -36,7 +36,7 @@ function c33700093.thfilter(c)
 end
 function c33700093.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c33700093.thfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.Hint(12,0,aux.Stringid(33700093,0))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(33700093,0))
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c33700093.operation(e,tp,eg,ep,ev,re,r,rp)
