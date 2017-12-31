@@ -52,7 +52,7 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 			c:ReleaseEffectRelation(e)
 		end
 		Duel.SpecialSummonComplete()
-		Duel.Hint(11,0,m*16+2)
+		Duel.Hint(HINT_MUSIC,0,m*16+2)
 	end
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -73,7 +73,7 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	c:ReplaceEffect(tcode,0,0)
 	c:SetEntityCode(tcode,true)
 	Duel.SetMetatable(c,_G["c"..tcode])
-	Duel.Hint(11,0,m*16+3)
+	Duel.Hint(HINT_MUSIC,0,m*16+3)
 	Duel.Hint(HINT_CARD,0,m+1)
 	Duel.ConfirmCards(tp,Group.FromCards(c))
 	Duel.ConfirmCards(1-tp,Group.FromCards(c))	
