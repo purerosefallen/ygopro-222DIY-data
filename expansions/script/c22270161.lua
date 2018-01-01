@@ -37,7 +37,7 @@ end
 function c22270161.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) end
 	if chk==0 then return Duel.IsExistingTarget(c22270161.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,c22270161.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 end
 function c22270161.op(e,tp,eg,ep,ev,re,r,rp)

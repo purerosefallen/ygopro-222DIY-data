@@ -38,12 +38,6 @@ end
 function c22270162.disfilter(c,e,tp,zone)
 	return c:IsDestructable() and c:IsRace(RACE_MACHINE) and Duel.IsExistingMatchingCard(c22270162.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,zone,c:GetCode()) and c:IsLevelBelow(5)
 end
-function c22270162.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return zone~=0 and Duel.IsExistingMatchingCard(c22270162.disfilter,tp,LOCATION_HAND,0,1,nil,e,tp,zone) end
-
-	Duel.Destroy(tc,REASON_COST)
-	e:SetLabel(tc:GetCode())
-end
 function c22270162.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zone=e:GetHandler():GetLinkedZone(tp)
 	if chk==0 then
@@ -63,20 +57,19 @@ function c22270162.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP,zone)
 	end
 end
-function c22270162.rfilter(c,e)
-	local tc=e:GetHandler()
-	local g=Duel.GetFieldGroup(tp,LOCATION_GRAVE,0):Filter(Card.IsAbleToRemoveAsCost,nil):Filter(Card.IsRace,nil,RACE_MACHINE):Filter(Card.IsCode,nil,c:GetCode())
-	if g:IsContains(c) then g:RemoveCard(c) end
-	if g:IsContains(tc) then g:RemoveCard(tc) end
-	return g:GetCount()>0
+function c22270162.costfilter(c,tc)
+	local code=c:GetCode()
+	local g=Duel.GetFieldGroup(tp,LOCATION_GRAVE,0)
+	return c:IsRace(RACE_MACHINE) and c:IsAbleToRemoveAsCost() and ((g:FilterCount(Card.IsCode,tc,code)>1 and tc:IsCode(code)) or (g:FilterCount(Card.IsCode,nil,code)>1 and not tc:IsCode(code)))
 end
 function c22270162.spcost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return  Duel.IsExistingMatchingCard(c22270162.rfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler(),e) end
-	local rc=Duel.SelectMatchingCard(tp,c22270162.rfilter,tp,LOCATION_GRAVE,0,1,1,e:GetHandler(),e):GetFirst()
-	local g=Duel.GetFieldGroup(tp,LOCATION_GRAVE,0):Filter(Card.IsAbleToRemoveAsCost,nil):Filter(Card.IsRace,nil,RACE_MACHINE):Filter(Card.IsCode,nil,rc:GetCode())
-	if g:IsContains(e:GetHandler()) then g:RemoveCard(e:GetHandler()) end
-	local rg=g:RandomSelect(tp,2)
-	Duel.Remove(rg,POS_FACEUP,REASON_COST)
+	local c=e:GetHandler()
+	if chk==0 then return Duel.IsExistingMatchingCard(c22270162.costfilter,tp,LOCATION_GRAVE,0,1,c,c) end
+	local g=Duel.SelectMatchingCard(tp,c22270162.costfilter,tp,LOCATION_GRAVE,0,1,1,c,c)
+	local rc=g:GetFirst()
+	local g2=Duel.GetFieldGroup(tp,LOCATION_GRAVE,0):Filter(Card.IsCode,c,rc:GetCode()):Filter(Card.IsCode,rc,rc:GetCode()):Select(tp,1,1,rc)
+	g:Merge(g2)
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c22270162.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end

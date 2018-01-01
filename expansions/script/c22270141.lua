@@ -36,7 +36,7 @@ function c22270141.initial_effect(c)
 		Duel.RegisterEffect(e4,0)
 		local e5=Effect.CreateEffect(c)
 		e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-		e5:SetCode(EVENT_DESTROY)
+		e5:SetCode(EVENT_DESTROYED)
 		e5:SetOperation(c22270141.addcount)
 		Duel.RegisterEffect(e5,0)
 	end
@@ -76,7 +76,8 @@ function c22270141.resetcount(e,tp,eg,ep,ev,re,r,rp)
 	c22270141[1]=0
 end
 function c22270141.addcount(e,tp,eg,ep,ev,re,r,rp)
-	c22270141[rp]=c22270141[rp]+eg:FilterCount(Card.IsRace,nil,RACE_MACHINE)
+	local x=eg:FilterCount(Card.IsRace,nil,RACE_MACHINE)
+	c22270141[rp]=c22270141[rp]+x
 end
 function c22270141.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return c22270141[tp]+c22270141[1-tp]>3 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end

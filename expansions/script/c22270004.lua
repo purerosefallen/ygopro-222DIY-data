@@ -19,11 +19,11 @@ function c22270004.IsShouMetsuToShi(c)
 	local m=_G["c"..c:GetCode()]
 	return m and m.named_with_ShouMetsu_ToShi
 end
-function c22270004.filterx(c)
-	return c22270004.IsShouMetsuToShi(c) and c:IsRace(RACE_MACHINE)
+function c22270004.xfilter(c)
+	return c:IsRace(RACE_MACHINE) and c22270004.IsShouMetsuToShi(c) and c:IsFaceup()
 end
 function c22270004.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c22270004.filterx,1,nil)
+	return eg:IsExists(c22270004.xfilter,1,nil)
 end
 function c22270004.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -46,7 +46,7 @@ function c22270004.spop(e,tp,eg,ep,ev,re,r,rp)
 				Duel.SendtoHand(g,nil,REASON_EFFECT)
 				if g:GetFirst():IsLocation(LOCATION_HAND) then Duel.ConfirmCards(1-tp,g) end
 			end
-		else
+		elseif coin==0 then
 			local e3=Effect.CreateEffect(c)
 			e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e3:SetRange(LOCATION_MZONE)
