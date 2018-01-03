@@ -49,7 +49,7 @@ function cm.initial_effect(c)
 		end)
 		e1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-			local g=Duel.SelectMatchingCard(tp,function(c) return c:IsRace(RACE_SEASERPENT) and c:IsAbleToDeck() end,tp,LOCATION_GRAVE,0,3,3,nil)
+			local g=Duel.SelectMatchingCard(tp,function(c) return c:IsRace(RACE_SEASERPENT) and c:IsAbleToDeck() end,tp,LOCATION_GRAVE,0,1,3,nil)
 			Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
 			local og=Duel.GetOperatedGroup()
 			for _,p in ipairs({tp,1-tp}) do
