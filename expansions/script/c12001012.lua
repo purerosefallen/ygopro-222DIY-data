@@ -29,7 +29,7 @@ function c12001012.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
 end
 function c12001012.operation(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsPlayerCanDiscardDeck(tp,1) then return end
+	if not Duel.IsPlayerCanDiscardDeck(tp,1) and not e:GetHandler():isrelatedtoeffect(e) then return end
 	Duel.ConfirmDecktop(tp,1)
 	local g=Duel.GetDecktopGroup(tp,1)
 	local tc=g:GetFirst()
