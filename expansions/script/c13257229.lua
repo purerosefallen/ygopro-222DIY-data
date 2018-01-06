@@ -45,7 +45,10 @@ function c13257229.initial_effect(c)
 end
 function c13257229.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257229,4))
+	Duel.Hint(11,0,aux.Stringid(13257229,4))
+end
+function c13257229.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function c13257229.spfilter(c,e,tp)
 	return c:IsSetCard(0x353) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -71,6 +74,9 @@ function c13257229.drcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13257229.cfilter1(c,tp)
 	return c:IsPreviousLocation(LOCATION_GRAVE) and c:GetPreviousControler()==tp
+end
+function c13257229.gfilter1(c)
+	return c:IsFaceup() and c:IsRace(RACE_FIEND)
 end
 function c13257229.drcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c13257229.gfilter1,1,nil,tp) and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0
