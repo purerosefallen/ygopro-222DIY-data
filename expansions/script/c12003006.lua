@@ -7,6 +7,7 @@ function cm.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE+LOCATION_HAND)
+	e2:SetCountLimit(1,12003106)
 	e2:SetCost(cm.spcost)
 	e2:SetTarget(cm.sptg)
 	e2:SetOperation(cm.spop)
@@ -120,8 +121,8 @@ end
 function cm.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local mg=Duel.GetMatchingGroup(function(c) return c:IsRace(RACE_SEASERPENT) and c:IsReleasable() and c:IsLevelBelow(4) end,tp,LOCATION_HAND+LOCATION_MZONE,0,c)
-	if chk==0 then return cm.CheckGroup(mg,cm.CheckFieldFilter,nil,2,63,tp,c) end
-	local sg=cm.SelectGroup(tp,HINTMSG_RELEASE,mg,cm.CheckFieldFilter,nil,2,63,tp,c)
+	if chk==0 then return cm.CheckGroup(mg,cm.CheckFieldFilter,nil,3,63,tp,c) end
+	local sg=cm.SelectGroup(tp,HINTMSG_RELEASE,mg,cm.CheckFieldFilter,nil,3,63,tp,c)
 	if sg:IsExists(Card.IsOnField,3,nil) then
 		e:SetLabel(1)
 	else
