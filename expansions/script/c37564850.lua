@@ -36,7 +36,7 @@ function cm.SetMaterial(c,g)
 	if efg:GetCount()>0 then
 		Duel.Hint(HINT_CARD,0,m)
 		Duel.Hint(HINT_SELECTMSG,tp,m*16)
-		local tg=efg:Select(tp,1,1,nil)
+		local tg=efg:Select(c:GetControler(),1,1,nil)
 		local tc=tg:GetFirst()
 		Duel.HintSelection(tg)
 		c:RegisterFlagEffect(m,0xfe1000,0,1,tc:GetOriginalCode())
