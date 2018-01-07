@@ -73,12 +73,15 @@ function cm.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetLabelObject()
 	return ec==nil or ec:GetFlagEffect(m)==0
 end
+function cm.eqfilter(c)
+	return c:IsAbleToChangeControler() and c:IsFaceup()
+end
 function cm.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsAbleToChangeControler() end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and cm.eqfilter(chkc) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(Card.IsAbleToChangeControler,tp,0,LOCATION_MZONE,1,nil) end
+		and Duel.IsExistingTarget(cm.eqfilter,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectTarget(tp,Card.IsAbleToChangeControler,tp,0,LOCATION_MZONE,1,1,nil)
+	local g=Duel.SelectTarget(tp,cm.eqfilter,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
 end
 function cm.eqlimit(e,c)
