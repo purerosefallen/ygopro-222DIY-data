@@ -1,6 +1,7 @@
 --库拉丽丝-牡丹
 local m=57300027
 local cm=_G["c"..m]
+xpcall(function() require("expansions/script/c57300000") end,function() require("script/c57300000") end)
 function cm.initial_effect(c)
 	miyuki.AddSummonMusic(c,m*16+1,SUMMON_TYPE_LINK)
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0x570),2,2)
