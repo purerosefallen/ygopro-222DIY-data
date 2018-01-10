@@ -104,7 +104,7 @@ function c13257230.ctop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13257230.catg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsChainAttackable(0,true) end
+	if chk==0 then return c:IsChainAttackable() end
 end
 function c13257230.caop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -133,5 +133,5 @@ function c13257230.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257230.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257230,4))
+	Duel.Hint(11,0,aux.Stringid(13257230,4))
 end

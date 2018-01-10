@@ -24,7 +24,7 @@ function c1200056.initial_effect(c)
 end
 function c1200056.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsSummonType(SUMMON_TYPE_LINK)
+	return c:GetSummonType()==SUMMON_TYPE_LINK 
 end
 function c1200056.matfilter(c)
 	return c:IsSetCard(0xfba)
@@ -37,8 +37,7 @@ function c1200056.filter(c,e,tp)
 	return c:IsSetCard(0xfba) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c1200056.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-		and Duel.IsExistingMatchingCard(c1200056.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return ((e:GetHandler():GetSequence()>4 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) or e:GetHandler():GetSequence()<5) and Duel.IsExistingMatchingCard(c1200056.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function c1200056.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -47,5 +46,5 @@ function c1200056.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c1200056.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-end
+	end
 end
