@@ -75,7 +75,7 @@ function c13257228.filter2(c,atk)
 	return c:IsFaceup() and c:IsDefenseBelow(atk)
 end
 function c13257228.destg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler():GetEquipTarget()
+	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(c13257228.filter2,tp,0,LOCATION_MZONE,1,c,c:GetAttack()) end
 	local g=Duel.GetMatchingGroup(c13257228.filter2,tp,0,LOCATION_MZONE,c,c:GetAttack())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
