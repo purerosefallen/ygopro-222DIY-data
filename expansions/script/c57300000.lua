@@ -578,6 +578,11 @@ function cm.SanaeCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.SelectMatchingCard(tp,cm.SanaeCostFilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
+function cm.SummonTypeCondition(t,con)
+return function(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(t) and (not con or con(e,tp,eg,ep,ev,re,r,rp))
+end
+end
 function cm.AddSummonMusic(c,desc,stype)
 	if c:IsStatus(STATUS_COPYING_EFFECT) then return end
 	local e1=Effect.CreateEffect(c)
