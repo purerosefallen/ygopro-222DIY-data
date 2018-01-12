@@ -33,7 +33,7 @@ end
 function c13254113.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c13254113.costfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.GetCurrentPhase()==PHASE_MAIN1 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c13254113.costfilter,tp,LOCATION_GRAVE,0,1,3,nil)
+	local g=Duel.SelectMatchingCard(tp,c13254113.costfilter,tp,LOCATION_GRAVE,0,1,5,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	e:SetLabel(g:GetCount())
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -50,7 +50,7 @@ function c13254113.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(ct)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,ct)
-	if ct==3 then Duel.SetChainLimit(aux.FALSE) end
+	if ct>=3 then Duel.SetChainLimit(aux.FALSE) end
 end
 function c13254113.operation(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)

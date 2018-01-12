@@ -88,23 +88,29 @@ function c13254121.drcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13254121.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
-	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,1-tp,ct)
+	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,1-tp,5)
 end
 function c13254121.drop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)==0 or Duel.SelectYesNo(1-tp,aux.Stringid(13254121,2)) then
+	if Duel.SelectYesNo(1-tp,aux.Stringid(13254121,2)) then
 		Duel.Draw(tp,2,REASON_EFFECT)
 		if Duel.IsChainDisablable(0) then
 			Duel.NegateEffect(0)
 			return
 		end
 	end
-	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
-	local g=Duel.GetDecktopGroup(1-tp,ct)
+	local g=Duel.GetDecktopGroup(1-tp,5)
 	Duel.DisableShuffleCheck()
 	Duel.SendtoGrave(g,REASON_EFFECT)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
+	e1:SetTargetRange(1,1)
+	e1:SetValue(c13254121.aclimit1)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
 end
 function c13254121.setlimit(e,c,tp)
 	return c:IsType(TYPE_FIELD)
