@@ -20,7 +20,7 @@ function c22202001.filter(c)
 end
 function c22202001.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local a=Duel.GetMatchingGroupCount(c22202001.filter,tp,0,LOCATION_SZONE,nil)
-	if chk==0 then return a+b>0 end
+	if chk==0 then return a>0 end
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		Duel.SetChainLimit(c22202001.chainlimit)
 	end
