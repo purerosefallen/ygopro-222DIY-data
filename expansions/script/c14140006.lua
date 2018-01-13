@@ -66,7 +66,7 @@ function cm.atkval(e,c)
 	return c:GetOverlayCount()*300
 end
 function cm.filter(c,atk)
-	return c:IsFaceup() and c:IsAttackBelow(atk) and c:IsDestructable()
+	return c:IsFaceup() and c:IsAttackBelow(atk)
 end
 function cm.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
