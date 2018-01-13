@@ -11,6 +11,7 @@ function c50000500.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetCountLimit(1,50000500)
+	e1:SetCost(c50000500.thcost)
 	e1:SetCondition(c50000500.thcon)
 	e1:SetTarget(c50000500.thtg)
 	e1:SetOperation(c50000500.thop)
@@ -30,6 +31,10 @@ function c50000500.initial_effect(c)
 end
 function c50000500.linkfilter(c)
 	return c:IsLevelBelow(4) and c:IsLinkSetCard(0x50e)
+end
+function c50000500.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function c50000500.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
