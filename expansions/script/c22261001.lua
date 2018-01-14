@@ -37,18 +37,20 @@ function c22261001.IsKuMaKawa(c)
 	local m=_G["c"..c:GetCode()]
 	return m and m.named_with_KuMaKawa
 end
-function c22261001.cfilter(c)
+function c22261001.confilter(c)
 	return c:IsFacedown() or c:GetBaseAttack()~=0
 end
 function c22261001.con(e,c)
-	return not Duel.IsExistingMatchingCard(c22261001.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	local tp=e:GetHandler():GetControler()
+	if Duel.IsExistingMatchingCard(c22261001.confilter,tp,LOCATION_MZONE,0,1,nil) then return false end
+	return true
 end
 function c22261001.cfilterx(c)
 	return c:IsCode(22269999) and c:IsReleasable()
 end
 function c22261001.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,c22261001.cfilterx,1,nil) end
-	local g=Duel.SelectReleaseGroup(tp,c22261001.cfilterx,1,1,nil)
+	if chk==0 then return Duel.IsExistingMatchingCard(c22261001.cfilterx,tp,LOCATION_MZONE,0,1,nil) end
+	local g=Duel.IsExistingMatchingCard(c22261001.cfilterx,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.Release(g,REASON_COST)
 end
 function c22261001.rmfilter(c,p)

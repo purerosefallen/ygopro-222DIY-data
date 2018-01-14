@@ -34,7 +34,7 @@ function c13254122.initial_effect(c)
 end
 function c13254122.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,1000) end
-	local rt=Duel.GetTargetCount(Card.IsAbleToDeck,tp,LOCATION_ONFIELD,LOCATION_GRAVE,LOCATION_ONFIELD,LOCATION_GRAVE,nil)
+	local rt=Duel.GetTargetCount(Card.IsAbleToDeck,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,nil)
 	local lp=Duel.GetLP(tp)
 	local t={}
 	local m=math.floor(math.min(lp,rt*1000)/1000)
@@ -47,10 +47,10 @@ function c13254122.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c13254122.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsAbleToDeck() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToDeck,tp,LOCATION_ONFIELD,LOCATION_GRAVE,LOCATION_ONFIELD,LOCATION_GRAVE,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToDeck,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,nil) end
 	local ct=e:GetLabel()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local tg=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,LOCATION_ONFIELD,LOCATION_GRAVE,LOCATION_ONFIELD,LOCATION_GRAVE,ct,ct,nil)
+	local tg=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,ct,ct,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,tg,ct,0,0)
 end
 function c13254122.operation(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -70,7 +70,7 @@ function c13257223.negop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateActivation(ev)
 end
 function c13257223.filter(c)
-	return c:IsSetCard(0x2a) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+	return c:IsSetCard(0x353) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
 function c13257223.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetAttackAnnouncedCount()==0 end
@@ -102,5 +102,5 @@ function c13257223.drop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257223.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257223,4))
+	Duel.Hint(11,0,aux.Stringid(13257223,4))
 end
