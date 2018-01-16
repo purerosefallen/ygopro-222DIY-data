@@ -41,12 +41,9 @@ end
 function cm.add(rg)
 	return function(tc)
 		local te=tc:GetActivateEffect()
-		if not te then return end
-		local pr1,pr2=te:GetProperty()
-		if (pr2 & EFFECT_FLAG2_COF)~=0 then return end
-		pr2=(pr2 | EFFECT_FLAG2_COF)
+		if not te or te:IsHasType(EFFECT_TYPE_QUICK_O) then return end
 		te:SetHintTiming(0,0x1e0)
-		te:SetProperty(pr1,pr2)
+		te:SetType(te:GetType() | EFFECT_TYPE_QUICK_O)
 		rg:AddCard(tc)
 	end
 end
@@ -54,10 +51,8 @@ function cm.rmv(rg)
 	return function(tc)
 		local te=tc:GetActivateEffect()
 		if not te then return end
-		local pr1,pr2=te:GetProperty()
-		pr2=pr2 & ~EFFECT_FLAG2_COF
-		te:SetProperty(pr1,pr2)
 		te:SetHintTiming(0,0)
+		te:SetType(te:GetType() & ~EFFECT_TYPE_QUICK_O)
 		rg:RemoveCard(tc)
 	end
 end
