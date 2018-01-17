@@ -48,6 +48,7 @@ function c12001002.operation(e,tp,eg,ep,ev,re,r,rp)
 		  if g:GetCount()>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
+			Duel.ShuffleHand(tp)
 		  end
 	else
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
