@@ -11,16 +11,18 @@ function c22261102.initial_effect(c)
 	e1:SetOperation(c22261102.activate)
 	c:RegisterEffect(e1)
 end
+function c22261102.tdfilter(c)
+	return c:IsFaceup() and c:IsAbleToDeck()
+end
 function c22261102.sfilter(c,tp)
 	return c:IsLocation(LOCATION_DECK) and c:IsControler(tp)
 end
 function c22261102.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsAbleToDeck() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToDeck,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,22269999,nil,0x4011,0,0,1,RACE_MACHINE,ATTRIBUTE_EARTH) end
+	if chk==0 then return Duel.IsExistingTarget(c22261102.tdfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,22269999,nil,0x4011,0,0,1,RACE_MACHINE,ATTRIBUTE_EARTH) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,1,nil)
+	local g=Duel.SelectTarget(tp,c22261102.tdfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c22261102.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)

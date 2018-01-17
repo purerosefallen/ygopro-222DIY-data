@@ -27,13 +27,14 @@ function c22260101.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
+	e3:SetCountLimit(1,22260101)
 	e3:SetCondition(c22260101.ccon)
 	e3:SetTarget(c22260101.ctg)
 	e3:SetOperation(c22260101.cop)
 	c:RegisterEffect(e3)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(22260101,1))
+	e2:SetDescription(aux.Stringid(22260101,1))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
@@ -79,7 +80,6 @@ end
 function c22260101.ctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_HAND,2,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,2,1-tp,LOCATION_HAND)
-	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
 end
 function c22260101.cop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_HAND,nil)
