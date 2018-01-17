@@ -58,13 +58,8 @@ function c22250004.spop(e,tp,eg,ep,ev,re,r,rp)
 	local sc=sg:GetCount()
 	if sc<ct then ct=sc end 
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-		local spc=sg:GetFirst()
-		local i=0
-		while i<ct and spc do
-			Duel.SpecialSummon(spc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
-			i=i+1
-			spc=sg:GetNext()
-		end
+		local ssg=sg:Select(tp,ct,ct,nil)
+		Duel.SpecialSummon(ssg,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end
 function c22250004.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
