@@ -40,7 +40,7 @@ function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
-function cm.filter1(c)
+function cm.filter1(c,tp)
 	return not c:IsPublic() and c:IsType(TYPE_MONSTER) and Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
 end
 function cm.filter(c,code)
