@@ -62,7 +62,7 @@ function cm.thop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()<1 then return end
 	Duel.SendtoHand(g,nil,REASON_EFFECT)
 	Duel.ConfirmCards(1-tp,g)
-	if Duel.IsExistingMatchingCard(cm.aux.NecroValleyFilter(cm.ritfilter),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,g:GetFirst()) and Duel.SelectYesNo(tp,aux.Stringid(m,0)) then
+	if Duel.IsExistingMatchingCard(aux.NecroValleyFilter(cm.ritfilter),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,g:GetFirst()) and Duel.SelectYesNo(tp,aux.Stringid(m,0)) then
 		Duel.BreakEffect()
 		local rc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(cm.ritfilter),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,g:GetFirst()):GetFirst()
 		if not rc then return end

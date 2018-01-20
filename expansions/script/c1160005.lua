@@ -102,7 +102,7 @@ function c1160005.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 --
 function c1160005.tfilter2(c,e,tp)
-	return c:GetLevel()==1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsFaceup()
+	return c:GetLevel()==1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsFaceup() and c:GetAttack()>399 and c:IsRace(RACE_WARRIOR)
 end
 function c1160005.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -136,6 +136,7 @@ function c1160005.op2(e,tp,eg,ep,ev,re,r,rp)
 		if gn2:GetCount()>0 then
 			local tc2=gn2:GetFirst()
 			while tc2 do
+--
 				local e2_1=Effect.CreateEffect(c)
 				e2_1:SetType(EFFECT_TYPE_SINGLE)
 				e2_1:SetCode(EFFECT_DISABLE)
@@ -146,6 +147,7 @@ function c1160005.op2(e,tp,eg,ep,ev,re,r,rp)
 				e2_2:SetCode(EFFECT_DISABLE_EFFECT)
 				e2_2:SetReset(RESET_EVENT+0xfe0000)
 				tc2:RegisterEffect(e2_2)
+--
 				tc2=gn2:GetNext()
 			end
 		end
