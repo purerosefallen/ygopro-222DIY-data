@@ -32,7 +32,7 @@ function c12001015.initial_effect(c)
 	e2:SetOperation(c12001015.tpop)
 	c:RegisterEffect(e2)
 end
-function c37991342.splimit(e,c)
+function c12001015.splimit(e,c)
 	return not c:IsSetCard(0xfb0)
 end
 function c12001015.filter(c,e,tp)
