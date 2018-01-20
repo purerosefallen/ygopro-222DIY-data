@@ -1,6 +1,9 @@
 --六曜 赤口的完红丘依儿
 function c12001018.initial_effect(c)
---
+	--pendulum summon
+	aux.EnablePendulumAttribute(c)
+	--
+
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(12001018,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_DECKDES+CATEGORY_TODECK)
@@ -12,7 +15,7 @@ function c12001018.initial_effect(c)
 	e1:SetCost(c12001018.cost1)
 	e1:SetOperation(c12001018.op1)
 	c:RegisterEffect(e1)
---	
+--  
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(12001018,2))
 	e2:SetCategory(CATEGORY_TOGRAVE)
