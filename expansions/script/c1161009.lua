@@ -24,7 +24,7 @@ function c1161009.initial_effect(c)
 end
 --
 function c1161009.counterfilter(c)
-	return c:GetLevel()==1 or c:GetPreviousLocation()==LOCATION_EXTRA 
+	return c:GetLevel()==1 or c:IsLocation(LOCATION_EXTRA)
 end
 --
 function c1161009.tfilter1(c)

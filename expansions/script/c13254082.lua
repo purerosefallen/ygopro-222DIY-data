@@ -136,7 +136,7 @@ function c13254082.drop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13254082.aclimit(e,re,tp)
 	local loc=re:GetActivateLocation()
-	return loc==LOCATION_GRAVE and re:GetHandler():IsSetCard(0x356) and re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
+	return loc==LOCATION_GRAVE and re:GetHandler():IsSetCard(0x356) and not re:GetHandler():IsImmuneToEffect(e)
 end
 function c13254082.tgfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
@@ -153,9 +153,9 @@ function c13254082.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()<3 then return end
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
 	local g1=g:Select(1-tp,3,3,nil)
-	local sg=Duel.GetMatchingGroup(c13254082.spfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,e,tp)
-	if Duel.SendtoGrave(g1,REASON_EFFECT)==3 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and sg:GetCount()>0 then
-		if Duel.SelectYesNo(tp,aux.Stringid(13254082,4)) then
+	if Duel.SendtoGrave(g1,REASON_EFFECT)==3 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+		local sg=Duel.GetMatchingGroup(c13254082.spfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,e,tp)
+		if sg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(13254082,4)) then
 			local tc=sg:Select(tp,1,1,nil)
 			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		end

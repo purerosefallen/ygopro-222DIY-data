@@ -27,6 +27,7 @@ function c13254085.initial_effect(c)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e3:SetRange(LOCATION_MZONE)
+	e3:SetCost(c13254085.cost)
 	e3:SetCondition(c13254085.condition)
 	e3:SetTarget(c13254085.target)
 	e3:SetOperation(c13254085.operation)
@@ -107,6 +108,16 @@ function c13254085.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 		Duel.ConfirmCards(1-tp,cg)
 	end
 	Duel.Release(sg,REASON_COST)
+end
+function c13254085.filter(c)
+	return c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER)
+end
+function c13254085.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	local ct=Duel.GetMatchingGroupCount(c13254085.filter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil)
+	local d=math.floor(ct/4)
+	if chk==0 then return c:GetFlagEffect(13254085)<=d end
+	c:RegisterFlagEffect(13254085,RESET_EVENT+0x1fe0000+EVENT_SPSUMMON_SUCCESS,0,1)
 end
 function c13254085.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

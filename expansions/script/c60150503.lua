@@ -26,7 +26,7 @@ function c60150503.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c60150503.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)+1
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
 end
 function c60150503.desop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -51,7 +51,7 @@ function c60150503.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c60150503.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsLocation(LOCATION_GRAVE)
+	return c:IsLocation(LOCATION_GRAVE) and not c:IsSetCard(0xab20)
 end
 function c60150503.efcon(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_XYZ

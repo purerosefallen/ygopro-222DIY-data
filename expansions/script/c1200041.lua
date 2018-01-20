@@ -1,5 +1,6 @@
 --LA SGA  仁慈的貝露塔
 function c1200041.initial_effect(c)
+	c:SetUniqueOnField(1,0,1200041)
 	--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcFun2(c,c1200041.ffilter,aux.FilterBoolFunction(Card.IsAttackBelow,2000),true)
@@ -19,7 +20,7 @@ function c1200041.initial_effect(c)
 	e1:SetDescription(aux.Stringid(1200041,1))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetCountLimit(1)
+	e1:SetCountLimit(1,1200141)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCost(c1200041.spcost)
 	e1:SetTarget(c1200041.sptg)

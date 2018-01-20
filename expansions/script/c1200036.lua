@@ -33,12 +33,21 @@ function c1200036.initial_effect(c)
 	e4:SetTarget(c1200036.retg)
 	e4:SetOperation(c1200036.reop)
 	c:RegisterEffect(e4)
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid1200036,2))
+	e2:SetCategory(CATEGORY_DRAW)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e2:SetCode(EVENT_LEAVE_FIELD)
+	e2:SetCondition(c1200036.drcon)
+	e2:SetTarget(c1200036.drtg)
+	e2:SetOperation(c1200036.drop)
+	c:RegisterEffect(e2)
 end
 function c1200036.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_END and Duel.GetLP(tp)>Duel.GetLP(1-tp)
 end
 function c1200036.thfilter(c,lp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfba) and c:IsAbleToHand() and c:GetDefense()<lp
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfba) and c:IsAbleToHand()
 end
 function c1200036.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local lp1=Duel.GetLP(tp)
@@ -88,4 +97,18 @@ function c1200036.reop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Recover(tp,tc:GetBaseAttack()*2,REASON_EFFECT)
 		end
 	end
+end
+function c1200036.drcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return rp~=tp and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP) and not c:IsLocation(LOCATION_DECK) and c:GetPreviousControler()==tp
+end
+function c1200036.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetTargetPlayer(tp)
+	Duel.SetTargetParam(1)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
+end
+function c1200036.drop(e,tp,eg,ep,ev,re,r,rp)
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	Duel.Draw(p,d,REASON_EFFECT)
 end

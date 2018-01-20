@@ -33,11 +33,26 @@ function c13254112.initial_effect(c)
 	c:RegisterEffect(e4)
 	
 end
+function c13254112.filter(c)
+	return c:IsSetCard(0x356) and not c:IsPublic()
+end
 function c13254112.addcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and r==REASON_RULE 
+	return ep==tp
 end
 function c13254112.addc(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x356,1)
+	if eg:IsExists(c13254112.filter,1,nil) then
+		local g=eg:Filter(c13254112.filter,nil)
+		if g:GetCount()==1 then
+			Duel.ConfirmCards(1-tp,g)
+			Duel.ShuffleHand(tp)
+		else
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
+			local sg=g:Select(tp,1,1,nil)
+			Duel.ConfirmCards(1-tp,sg)
+			Duel.ShuffleHand(tp)
+		end
+		e:GetHandler():AddCounter(0x356,1)
+	end
 end
 function c13254112.efilter(e,re)
 	return e:GetOwnerPlayer()~=re:GetOwnerPlayer()

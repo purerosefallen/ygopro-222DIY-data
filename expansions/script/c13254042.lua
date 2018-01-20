@@ -36,7 +36,7 @@ function c13254042.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c13254042.filter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:GetControler()==tp
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x356) and c:GetControler()==tp
 end
 function c13254042.operation(e,tp,eg,ep,ev,re,r,rp)
 	local ct=eg:FilterCount(c13254042.filter,nil,tp)
@@ -45,8 +45,8 @@ function c13254042.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13254042.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x356,2,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x356,2,REASON_COST)
+	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x356,1,REASON_COST) end
+	e:GetHandler():RemoveCounter(tp,0x356,1,REASON_COST)
 end
 function c13254042.netg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return re:GetHandler():IsDestructable() end
@@ -59,7 +59,7 @@ function c13254042.neop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13254042.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousPosition(POS_FACEUP) and c:GetCounter(0x356)==4
+	return rp~=tp and c:GetCounter(0x356)==4
 end
 function c13254042.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end

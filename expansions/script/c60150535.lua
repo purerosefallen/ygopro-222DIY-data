@@ -35,7 +35,7 @@ function c60150535.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c60150535.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and e:GetHandler():GetOverlayGroup():IsExists(Card.IsType,1,nil,TYPE_XYZ)
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ and e:GetHandler():GetOverlayGroup():IsExists(Card.IsType,1,nil,TYPE_XYZ)
 end
 function c60150535.filter(c)
 	return c:IsRace(RACE_FIEND) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToHand()
@@ -81,7 +81,7 @@ function c60150535.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterFlagEffect(tp,EFFECT_SPSUM_EFFECT_ACTIVATED,RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
 end
 function c60150535.thop2(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetMZoneCount(tp)<=0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
 	if not Duel.IsPlayerCanSpecialSummonMonster(tp,60150512,0,0x4011,-2,-2,10,RACE_FIEND,ATTRIBUTE_LIGHT) then return end
 	local token=Duel.CreateToken(tp,60150512)

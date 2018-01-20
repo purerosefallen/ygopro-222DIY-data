@@ -11,6 +11,7 @@ function c1161021.initial_effect(c)
 --  
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(1161021,1))
+	e2:SetCategory(CATEGORY_EQUIP)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)
@@ -62,6 +63,7 @@ function c1161021.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetOperationInfo(ev,CATEGORY_DISABLE) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingTarget(c1161021.tfilter2,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,c1161021.tfilter2,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 end
 --
 function c1161021.op2(e,tp,eg,ep,ev,re,r,rp)

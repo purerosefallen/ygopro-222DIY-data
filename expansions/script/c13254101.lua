@@ -10,7 +10,7 @@ function c13254101.initial_effect(c)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(13254101,0))
-	e2:SetCategory(CATEGORY_DRAW)
+	e2:SetCategory(CATEGORY_DRAW+CATEGORY_DESTROY)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_TO_GRAVE)
@@ -61,7 +61,7 @@ function c13254101.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13254101.cfilter(c,tp)
-	return c:GetPreviousLocation()==LOCATION_HAND and c:IsCode(13254031) and c:GetPreviousControler()==tp
+	return c:GetPreviousLocation()==LOCATION_HAND and c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER) and c:GetPreviousControler()==tp
 end
 function c13254101.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c13254101.cfilter,1,nil,tp)
@@ -75,7 +75,13 @@ end
 function c13254101.drop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Draw(p,d,REASON_EFFECT)
+	if Duel.Draw(p,d,REASON_EFFECT)~=0 then
+		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
+		if g:GetCount()>0 and eg:IsExists(Card.IsCode,1,nil,13254031) and Duel.SelectYesNo(tp,aux.Stringid(13254101,2)) then
+			local sg=g:Select(tp,1,1,nil)
+			Duel.Destroy(sg,REASON_EFFECT)
+		end
+	end
 end
 function c13254101.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

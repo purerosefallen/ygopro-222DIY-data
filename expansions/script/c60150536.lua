@@ -44,14 +44,14 @@ function c60150536.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1)
 	e1:SetCondition(c60150536.actcon)
+    e1:SetCost(c60150536.cost)
 	e1:SetTarget(c60150536.thtg)
 	e1:SetOperation(c60150536.thop)
 	c:RegisterEffect(e1)
 end
 function c60150536.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and e:GetHandler():GetOverlayGroup():IsExists(Card.IsType,1,nil,TYPE_XYZ)
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ and e:GetHandler():GetOverlayGroup():IsExists(Card.IsType,1,nil,TYPE_XYZ)
 end
 function c60150536.filter(c)
 	return c:IsRace(RACE_FIEND) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToHand()
@@ -71,7 +71,7 @@ function c60150536.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c60150536.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetOverlayCount()~=0
+	return 
 end
 function c60150536.atktarget(e,c)
 	return c:IsAttackPos()
@@ -81,6 +81,10 @@ function c60150536.atktarget2(e,c)
 end
 function c60150536.actcon(e)
 	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,60150514)
+end
+function c60150536.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+    if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
+    e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c60150536.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end

@@ -89,7 +89,7 @@ end
 function c13254121.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
-	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,1-tp,5)
+	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,1-tp,10)
 end
 function c13254121.drop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -100,7 +100,7 @@ function c13254121.drop(e,tp,eg,ep,ev,re,r,rp)
 			return
 		end
 	end
-	local g=Duel.GetDecktopGroup(1-tp,5)
+	local g=Duel.GetDecktopGroup(1-tp,10)
 	Duel.DisableShuffleCheck()
 	Duel.SendtoGrave(g,REASON_EFFECT)
 	local e1=Effect.CreateEffect(e:GetHandler())
