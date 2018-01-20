@@ -1,7 +1,7 @@
 --幻想曲的破灭之骸
 function c60150544.initial_effect(c)
 	--link summon
-    aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xab20),2)
+    aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xab20),3)
     c:EnableReviveLimit()
 	--summon
     local e21=Effect.CreateEffect(c)

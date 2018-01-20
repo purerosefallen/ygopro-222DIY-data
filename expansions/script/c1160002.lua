@@ -216,8 +216,8 @@ function c1160002.op6_1(e,tp,eg,ep,ev,re,r,rp)
 		else nseq=4 end
 		Duel.MoveSequence(c,nseq)
 	end
-	local g=tc:GetColumnGroup()
-	local sg=g:Filter(c1160002.ofilter6_1,tc,tp)
+	local g=c:GetColumnGroup()
+	local sg=g:Filter(c1160002.ofilter6_1,nil,tp)
 	if sg:GetCount()>0 then
 		Duel.Destroy(sg,REASON_EFFECT)
 	end
