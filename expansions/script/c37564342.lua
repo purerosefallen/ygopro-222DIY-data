@@ -56,26 +56,13 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-	if Duel.GetMZoneCount(tp)<=0 then return false end
-		local c=e:GetHandler()
-		local tcode=c.dfc_front_side
-		if not tcode then return false end
-		local tempc=Senya.IgnoreActionCheck(Duel.CreateToken,tp,tcode)
-		return tempc:IsCanBeSpecialSummoned(e,0,tp,true,true)
-	end
+	if chk==0 then return Duel.GetMZoneCount(tp)>0 and Senya.IsDFCTransformable(e:GetHandler()) and Senya.GetDFCBackSideCard(e:GetHandler()):IsCanBeSpecialSummoned(e,0,tp,true,true) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not cm.target(e,tp,eg,ep,ev,re,r,rp,0) or c:IsFacedown() or not c:IsRelateToEffect(e) or c:IsControler(1-tp) or c:IsImmuneToEffect(e) then return end
-	local tcode=c.dfc_front_side
-	c:ReplaceEffect(tcode,0,0)
-	c:SetEntityCode(tcode,true)
-	Duel.SetMetatable(c,_G["c"..tcode])
+	if not cm.target(e,tp,eg,ep,ev,re,r,rp,0) then return end
 	Duel.Hint(HINT_MUSIC,0,m*16+3)
-	Duel.Hint(HINT_CARD,0,m+1)
-	Duel.ConfirmCards(tp,Group.FromCards(c))
-	Duel.ConfirmCards(1-tp,Group.FromCards(c))	
+	Senya.TransformDFCCard(c)
 	Duel.SpecialSummon(c,0,tp,tp,true,true,POS_FACEUP)
 end

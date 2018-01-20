@@ -3,6 +3,7 @@ local m=33700501
 local cm=_G["c"..m]
 cm.dfc_front_side=m+1
 cm.card_code_list={33700056}
+xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 function cm.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -56,17 +57,14 @@ function cm.initial_effect(c)
 	end)
 	e4:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
-		if chk==0 then return c.dfc_front_side end
+		if chk==0 then return Senya.IsDFCTransformable(c) end
 		Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	end)
 	e4:SetOperation(function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local c=e:GetHandler()
 		if not c:IsRelateToEffect(e) or c:IsFacedown() or c:IsImmuneToEffect(e) then return end
-		local tcode=c.dfc_front_side
-		c:SetEntityCode(tcode,true)
-		c:ReplaceEffect(tcode,0,0)
-		Duel.SetMetatable(c,_G["c"..tcode])
 		Duel.Hint(HINT_MUSIC,0,m*16+3)
+		Senya.TransformDFCCard(c)
 	end)
 	c:RegisterEffect(e4)
 end

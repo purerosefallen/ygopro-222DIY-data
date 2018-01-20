@@ -1645,7 +1645,7 @@ function cm.FusionFilter_3L(c,fc,mf,sub)
 end
 function cm.FusionCheck_3L(g,min,tp,fc,f,chkf,sub)
 		--check sayuri_3L
-	if not Senya.master_rule_3_flag and g:IsExists(aux.FCheckTuneMagicianX,1,nil,g) then return false end
+	if g:IsExists(aux.FCheckTuneMagicianX,1,nil,g) then return false end
 	if chkf~=PLAYER_NONE and Duel.GetLocationCountFromEx(chkf,tp,g,fc)<=0 then return false end
 	if aux.FCheckAdditional and not aux.FCheckAdditional(tp,g,fc) then return false end
 	local ct=g:GetCount()
@@ -2319,11 +2319,7 @@ function cm.CloneTable(t)
 	return rt
 end
 function cm.GetPendulumCard(tp,seq)
-	if cm.master_rule_3_flag then
-		return Duel.GetFieldCard(tp,LOCATION_SZONE,seq+6)
-	else
-		return Duel.GetFieldCard(tp,LOCATION_PZONE,seq)
-	end
+	return Duel.GetFieldCard(tp,LOCATION_PZONE,seq)
 end
 function cm.CheckPendulum(c)
 	local tp=c:GetControler()
@@ -2393,7 +2389,7 @@ function cm.CheckPlayerEffect(p,code,...)
 	return false
 end
 function cm.AddSummonMusic(c,desc,stype)
-	if c:IsStatus(STATUS_COPYING_EFFECT) or Senya.master_rule_3_flag then return end
+	if c:IsStatus(STATUS_COPYING_EFFECT) then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
@@ -2426,6 +2422,26 @@ function cm.IgnoreActionCheck(f,...)
 	return table.unpack(ret)
 end
 --no front side common effects
+function cm.IsDFCTransformable(c)
+	return c.dfc_front_side
+end
+function cm.GetDFCBackSideCard(c)
+	if not cm.IsDFCTransformable(c) then return end
+	return cm.IgnoreActionCheck(Duel.CreateToken,c:GetControler(),c.dfc_front_side)
+end
+function cm.TransformDFCCard(c)
+	if not cm.IsDFCTransformable(c) then return false end
+	local tcode=c.dfc_front_side
+	c:SetEntityCode(tcode,true)
+	c:ReplaceEffect(tcode,0,0)
+	Duel.SetMetatable(c,_G["c"..tcode])
+	Duel.Hint(HINT_CARD,0,tcode)
+	Duel.ConfirmCards(c:GetControler(),Group.FromCards(c))
+	if c:IsLocation(LOCATION_DECK) then
+		Duel.ConfirmCards(1-c:GetControler(),Group.FromCards(c))
+	end
+	return true
+end
 function cm.DFCBackSideCommonEffect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -2439,13 +2455,21 @@ function cm.DFCBackSideCommonEffect(c)
 	e2:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		local tcode=c.dfc_back_side
+		if not tcode then return end
 		c:SetEntityCode(tcode)
 		Duel.ConfirmCards(tp,Group.FromCards(c))
-		Duel.ConfirmCards(1-tp,Group.FromCards(c))
+		if c:IsLocation(LOCATION_DECK) then
+			Duel.ConfirmCards(1-tp,Group.FromCards(c))
+		end
 		c:ReplaceEffect(tcode,0,0)
 		Duel.SetMetatable(c,_G["c"..tcode])
 	end)
 	c:RegisterEffect(e2)	
+	local e3=e2:Clone()
+	e3:SetRange(0)
+	e3:SetCode(EVENT_LEAVE_FIELD)
+	e3:SetCode(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	c:RegisterEffect(e3)
 end
 --for ritual update
 function cm.CheckRitualMaterialGoal(g,c,tp,lv,f,gt)
@@ -2495,7 +2519,7 @@ function cm.SelectRitualMaterial(c,g,tp,lv,f,gt)
 end
 --for anifriends sound effects
 function cm.AddSummonSE(c,desc)
-	if c:IsStatus(STATUS_COPYING_EFFECT) or Senya.master_rule_3_flag then return end
+	if c:IsStatus(STATUS_COPYING_EFFECT) then return end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
