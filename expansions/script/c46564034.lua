@@ -40,6 +40,7 @@ function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local mg=Duel.GetRitualMaterial(tp):Filter(Card.IsAttribute,c,ATTRIBUTE_WATER)
 		local mg2=Duel.GetMatchingGroup(cm.mfilter,tp,LOCATION_GRAVE,0,nil)
 		mg:Merge(mg2)
+		mg=mg:Filter(Card.IsCanBeRitualMaterial,c,c)
 		if c.mat_filter then
 			mg=mg:Filter(c.mat_filter,nil)
 		end
