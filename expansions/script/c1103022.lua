@@ -109,7 +109,7 @@ function c1103022.eqop(e,tp,eg,ep,ev,re,r,rp)
             e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
             e1:SetCode(EFFECT_EQUIP_LIMIT)
             e1:SetReset(RESET_EVENT+0x1fe0000)
-            e1:SetValue(c64631466.eqlimit)
+            e1:SetValue(c1103022.eqlimit)
             tc:RegisterEffect(e1)
             --substitute
             local e2=Effect.CreateEffect(c)
