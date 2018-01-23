@@ -96,32 +96,31 @@ function c1103022.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
 end
 function c1103022.eqop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
-	local c=e:GetHandler()
-	local tc=Duel.GetFirstTarget()
-	if not (tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsType(TYPE_EFFECT)) then return end
-	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		local atk=tc:GetTextAttack()
-		if atk<0 then atk=0 end
-		if Duel.Equip(tp,tc,c)==0 then return end
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_EQUIP)
-		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(atk)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
-		tc:RegisterEffect(e1)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_UPDATE_DEFENSE)
-		c:RegisterEffect(e2)
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e3:SetCode(EFFECT_EQUIP_LIMIT)
-		e3:SetValue(c1103016.eqlimit)
-		e3:SetReset(RESET_EVENT+0x1fe0000)
-		tc:RegisterEffect(e3)
-	else Duel.SendtoGrave(tc,REASON_EFFECT) end
+    local c=e:GetHandler()
+    local tc=Duel.GetFirstTarget()
+    if tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) and tc:IsControler(1-tp) then
+        if c:IsFaceup() and c:IsRelateToEffect(e) then
+            if not Duel.Equip(tp,tc,c,false) then return end
+            --Add Equip limit
+            --tc:RegisterFlagEffect(1103022,RESET_EVENT+0x1fe0000,0,0)
+            e:SetLabelObject(tc)
+            local e1=Effect.CreateEffect(c)
+            e1:SetType(EFFECT_TYPE_SINGLE)
+            e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
+            e1:SetCode(EFFECT_EQUIP_LIMIT)
+            e1:SetReset(RESET_EVENT+0x1fe0000)
+            e1:SetValue(c64631466.eqlimit)
+            tc:RegisterEffect(e1)
+            --substitute
+            local e2=Effect.CreateEffect(c)
+            e2:SetType(EFFECT_TYPE_EQUIP)
+            e2:SetCode(EFFECT_DESTROY_SUBSTITUTE)
+            e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+            e2:SetReset(RESET_EVENT+0x1fe0000)
+            e2:SetValue(c64631466.repval)
+            tc:RegisterEffect(e2)
+        else Duel.SendtoGrave(tc,REASON_EFFECT) end
+    end
 end
 function c1103022.eqlimit(e,c)
 	return e:GetOwner()==c
