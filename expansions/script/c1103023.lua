@@ -60,7 +60,7 @@ function c1103023.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c1103023.spfilter(c,e,tp)
-	return c:GetCode(1103023) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetCode(1103022) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c1103023.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE+LOCATION_DECK) and c1103023.spfilter(chkc,e,tp) end
