@@ -27,6 +27,10 @@ function cm.sprcon(e,c)
 	return Duel.GetMZoneCount(c:GetControler())>0 and
 		Duel.IsExistingMatchingCard(cm.filter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
+function cm.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsReleasable() end
+	Duel.Release(e:GetHandler(),REASON_COST)
+end
 function cm.spfilter(c,e,tp)
 	return c:IsCode(m-1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
