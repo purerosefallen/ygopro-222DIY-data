@@ -84,44 +84,43 @@ function c1103022.spop(e,tp,eg,ep,ev,re,r,rp)
 		sc:CompleteProcedure()
 	end
 end
-function c1103022.eqfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_EFFECT) and c:IsAbleToChangeControler()
-end
 function c1103022.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c1103022.eqfilter(chkc) and chkc~=e:GetHandler() end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(c1103022.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectTarget(tp,c1103022.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler())
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
+    if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsAbleToChangeControler() end
+    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+        and Duel.IsExistingTarget(Card.IsAbleToChangeControler,tp,0,LOCATION_MZONE,1,nil) end
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+    local g=Duel.SelectTarget(tp,Card.IsAbleToChangeControler,tp,0,LOCATION_MZONE,1,1,nil)
+    Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
 end
 function c1103022.eqop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     local tc=Duel.GetFirstTarget()
-    if tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER) and tc:IsControler(1-tp) then
-        if c:IsFaceup() and c:IsRelateToEffect(e) then
-            if not Duel.Equip(tp,tc,c,false) then return end
-            --Add Equip limit
-            --tc:RegisterFlagEffect(1103022,RESET_EVENT+0x1fe0000,0,0)
-            e:SetLabelObject(tc)
-            local e1=Effect.CreateEffect(c)
-            e1:SetType(EFFECT_TYPE_SINGLE)
-            e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
-            e1:SetCode(EFFECT_EQUIP_LIMIT)
-            e1:SetReset(RESET_EVENT+0x1fe0000)
-            e1:SetValue(c1103022.eqlimit)
-            tc:RegisterEffect(e1)
-            --substitute
-            local e2=Effect.CreateEffect(c)
-            e2:SetType(EFFECT_TYPE_EQUIP)
-            e2:SetCode(EFFECT_DESTROY_SUBSTITUTE)
-            e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
-            e2:SetReset(RESET_EVENT+0x1fe0000)
-            e2:SetValue(c64631466.repval)
-            tc:RegisterEffect(e2)
-        else Duel.SendtoGrave(tc,REASON_EFFECT) end
+    if c:IsFaceup() and c:IsRelateToEffect(e) then
+    local atk=tc:GetTextAttack()
+    if tc:IsFacedown() then atk=0 end
+    if atk<0 then atk=0 end
+    if not Duel.Equip(tp,tc,c,false) then return end
+    --Add Equip limit
+    tc:RegisterFlagEffect(1000712,RESET_EVENT+0x1fe0000,0,0)
+    e:SetLabelObject(tc)
+    local e1=Effect.CreateEffect(c)
+    e1:SetType(EFFECT_TYPE_SINGLE)
+    e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_OWNER_RELATE)
+    e1:SetCode(EFFECT_EQUIP_LIMIT)
+    e1:SetReset(RESET_EVENT+0x1fe0000)
+    e1:SetValue(c1103022.eqlimit)
+    tc:RegisterEffect(e1)
+    if atk>0 then
+    local e2=Effect.CreateEffect(c)
+    e2:SetType(EFFECT_TYPE_EQUIP)
+    e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_OWNER_RELATE)
+    e2:SetCode(EFFECT_UPDATE_ATTACK)
+    e2:SetReset(RESET_EVENT+0x1fe0000)
+    e2:SetValue(atk)
+    tc:RegisterEffect(e2)
     end
+    else Duel.SendtoGrave(tc,REASON_EFFECT) end
 end
 function c1103022.eqlimit(e,c)
-	return e:GetOwner()==c
+    return e:GetOwner()==c
 end
