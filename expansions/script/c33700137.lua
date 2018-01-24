@@ -27,7 +27,7 @@ function c33700137.desfilter(c,eg)
 	return  eg:IsExists(c33700137.tyfilter,1,nil,c)
 end
 function c33700137.tyfilter(c,g)
-	return  c:GetType()==g:GetType()
+	return (c:GetType() & g:GetType() & 0x7)>0
 end
 function c33700137.activate(e,tp,eg,ep,ev,re,r,rp)
 	if  eg:GetCount()>0 then
