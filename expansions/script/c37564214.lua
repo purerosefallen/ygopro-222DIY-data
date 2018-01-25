@@ -67,42 +67,13 @@ function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
-function cm.con(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,LOCATION_EXTRA,0)==0
-end
-function cm.filter(c,e)
-	if not e:GetHandler():IsLocation(LOCATION_MZONE) then return false end
-	if not c:IsAbleToDeck() then return false end
-	local s1=e:GetHandler():GetSequence()
-	local s2=c:GetSequence()
-	if c:IsLocation(LOCATION_SZONE) then
-		if s2>=5 then return false end
-		if s1<5 then
-			return s1+s2==4
-		else
-			return (s1==5 and s2==3) or (s1==6 and s2==1)
-		end
-	end
-	if s1<5 then
-		if s2<5 then
-			return s1+s2==4
-		else
-			return (s2==5 and s1==3) or (s2==6 and s1==1)
-		end
-	else
-		if s2<5 then
-			return (s1==5 and s2==3) or (s1==6 and s2==1)
-		else
-			return false
-		end
-	end
-end
 function cm.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(cm.filter,tp,0,LOCATION_ONFIELD,1,nil,e) end
-	local g=Duel.GetMatchingGroup(cm.filter,tp,0,LOCATION_ONFIELD,nil,e)
+	local g=e:GetHandler():GetColumnGroup():Filter(function(c) return c:IsControler(1-tp) and c:IsAbleToDeck() end,nil)
+	if chk==0 then return g:GetCount()>0 end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
 end
 function cm.op(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(cm.filter,tp,0,LOCATION_ONFIELD,nil,e)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
+	local g=e:GetHandler():GetColumnGroup():Filter(function(c) return c:IsControler(1-tp) and c:IsAbleToDeck() end,nil)
 	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 end
