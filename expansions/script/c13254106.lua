@@ -37,7 +37,7 @@ function c13254106.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13254106.cfilter(c)
-	return c:IsSetCard(0x6356) and c:IsAbleToDeckAsCost()
+	return c:IsSetCard(0x6356) and c:IsAbleToExtraAsCost()
 end
 function c13254106.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c13254106.cfilter,tp,LOCATION_MZONE,0,1,nil) end
