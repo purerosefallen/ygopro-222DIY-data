@@ -86,26 +86,26 @@ function c33700069.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	_replace_count=_replace_count+1
 	if _replace_count<=_replace_max  then
-	 Duel.ConfirmDecktop(tp,5)
-	local g=Duel.GetDecktopGroup(tp,5)
-	if g:GetCount()>0 then
-	 if g:GetClassCount(Card.GetCode)==g:GetCount() then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local sg=g:Select(tp,2,2,nil)
-			Duel.SendtoHand(sg,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,sg)
-			Duel.ShuffleHand(tp)
-		Duel.ShuffleDeck(tp)
-   else 
-	 if c:IsRelateToEffect(e) and c:IsAbleToDeck() then
-	 g:AddCard(c)
-	 local tg=g:GetFirst()
-	  while tg do
-	 Duel.MoveSequence(tg,1)
-	 tg=g:GetNext()
-	 end
-   end
-end
-end
-end
+		Duel.ConfirmDecktop(tp,5)
+		local g=Duel.GetDecktopGroup(tp,5)
+		if g:GetCount()>0 then
+			if g:GetClassCount(Card.GetCode)==g:GetCount() then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+				local sg=g:Select(tp,2,2,nil)
+				Duel.SendtoHand(sg,nil,REASON_EFFECT)
+				Duel.ConfirmCards(1-tp,sg)
+				Duel.ShuffleHand(tp)
+				Duel.ShuffleDeck(tp)
+			else 
+				local tc=g:GetFirst()
+				while tc do
+					Duel.MoveSequence(tc,1)
+					tc=g:GetNext()
+				end
+				if c:IsRelateToEffect(e) and c:IsAbleToDeck() then
+					Duel.SendtoDeck(c,nil,1,REASON_EFFECT)
+				end
+			end
+		end
+	end
 end
