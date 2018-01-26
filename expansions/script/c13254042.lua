@@ -21,6 +21,7 @@ function c13254042.initial_effect(c)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCost(c13254042.cost)
+	e3:SetCondition(c13254042.necon)
 	e3:SetTarget(c13254042.netg)
 	e3:SetOperation(c13254042.neop)
 	c:RegisterEffect(e3)
@@ -47,6 +48,9 @@ end
 function c13254042.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x356,1,REASON_COST) end
 	e:GetHandler():RemoveCounter(tp,0x356,1,REASON_COST)
+end
+function c13254042.necon(e,tp,eg,ep,ev,re,r,rp)
+	return re:GetHandler()~=e:GetHandler()
 end
 function c13254042.netg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return re:GetHandler():IsDestructable() end
