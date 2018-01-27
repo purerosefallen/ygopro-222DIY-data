@@ -371,6 +371,7 @@ function cm.XyzProcedureCustomTarget(func,gf,minct,maxct,ext_params)
 				minc=math.max(minc,min)
 				maxc=math.min(maxc,max)
 			end
+			local sg=Group.CreateGroup()
 			local ce={Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_XMATERIAL)}
 			for _,te in ipairs(ce) do
 				local tc=te:GetHandler()
