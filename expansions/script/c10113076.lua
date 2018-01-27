@@ -27,7 +27,7 @@ function c10113076.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function c10113076.tdfilter(c)
-	return c:IsType(TYPE_SYNCHRO+TYPE_XYZ) and c:IsAbleToExtra()
+	return c:IsAbleToExtra()
 end
 function c10113076.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c10113076.tdfilter(chkc) end
