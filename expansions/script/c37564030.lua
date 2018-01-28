@@ -66,7 +66,7 @@ function cm.desop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,e:GetHandler()) then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,nil)
-		if g:GetCount()>0 then
+		if #g>0 then
 			Duel.HintSelection(g)
 			Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
 		end
@@ -103,7 +103,7 @@ function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
 			if Duel.SelectYesNo(tp,aux.Stringid(37564030,3)) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 				local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,bc)
-				if g:GetCount()>0 then
+				if #g>0 then
 					Duel.HintSelection(g)
 					Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 				end
@@ -122,7 +122,7 @@ function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
 			if Duel.SelectYesNo(tp,aux.Stringid(37564030,4)) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 				local g=Duel.SelectMatchingCard(tp,cm.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
-				if g:GetCount()>0 then
+				if #g>0 then
 					local tc=g:GetFirst()
 					Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 				end

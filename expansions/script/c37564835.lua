@@ -129,7 +129,7 @@ function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	g:ForEach(function(c)
 		ct=ct+c:GetMaterialCount()
 	end)
-	if chk==0 then return g:GetCount()>0 and Duel.IsPlayerCanDraw(tp,ct) end
+	if chk==0 then return #g>0 and Duel.IsPlayerCanDraw(tp,ct) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetTargetParam(ct)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,ct)

@@ -38,10 +38,10 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,cm.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	if g:GetCount()>0 then
+	if #g>0 then
 		if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 and Duel.IsExistingMatchingCard(cm.filter2,tp,LOCATION_DECK,0,1,nil,g:GetFirst():GetCode()) then
 			local g1=Duel.SelectMatchingCard(tp,cm.filter2,tp,LOCATION_DECK,0,1,1,nil,g:GetFirst():GetCode())
-			if g1:GetCount()>0 then
+			if #g1>0 then
 				Duel.BreakEffect()
 				Duel.SendtoHand(g1,nil,REASON_EFFECT)
 				Duel.ConfirmCards(1-tp,g1)

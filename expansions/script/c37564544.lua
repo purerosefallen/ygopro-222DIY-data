@@ -34,9 +34,9 @@ function cm.setfilter(c,e,tp)
 end
 function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=eg:Filter(cm.filter,nil,e,1-tp)
-	if sg:GetCount()>0 and Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)>0 then
+	if #sg>0 and Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)>0 then
 		local og=Duel.GetOperatedGroup():Filter(cm.setfilter,nil,e,tp)
-		if Senya.NanahiraExistingCondition(true)(e,tp) and og:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(90809975,4)) then
+		if Senya.NanahiraExistingCondition(true)(e,tp) and #og>0 and Duel.SelectYesNo(tp,aux.Stringid(90809975,4)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 			local rc=og:Select(tp,1,1,nil):GetFirst()
 			Duel.BreakEffect()

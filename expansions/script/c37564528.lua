@@ -36,7 +36,7 @@ end
 function cm.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	if g:GetCount()>1 and not g:IsExists(cm.cf,1,nil,e) then
+	if #g>1 and not g:IsExists(cm.cf,1,nil,e) then
 		local tc=g:GetFirst()
 		local sc=g:GetNext()
 		local ac=e:GetLabelObject()

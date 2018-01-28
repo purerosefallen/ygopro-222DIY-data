@@ -82,13 +82,13 @@ function cm.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,nil)
 	local g3=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_HAND,nil)
 	local sg=Group.CreateGroup()
-	if g1:GetCount()>0 and (g3:GetCount()==0 or Duel.SelectYesNo(tp,aux.Stringid(m,0))) then
+	if #g1>0 and (#g3==0 or Duel.SelectYesNo(tp,aux.Stringid(m,0))) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local sg1=g1:Select(tp,1,1,nil)
 		Duel.HintSelection(sg1)
 		sg:Merge(sg1)
 	end
-	if g3:GetCount()>0 and (sg:GetCount()==0 or Duel.SelectYesNo(tp,aux.Stringid(m,1))) then
+	if #g3>0 and (#sg==0 or Duel.SelectYesNo(tp,aux.Stringid(m,1))) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local sg3=g3:RandomSelect(tp,1)
 		sg:Merge(sg3)

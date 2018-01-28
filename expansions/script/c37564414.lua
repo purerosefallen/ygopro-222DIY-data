@@ -21,8 +21,7 @@ function cm.initial_effect(c)
 			return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 and c:CheckRemoveOverlayCard(tp,1,REASON_COST) and c:GetFlagEffect(m)==0
 		end
 		c:RemoveOverlayCard(tp,1,99,REASON_COST)
-		local ct=Duel.GetOperatedGroup():GetCount()
-		e:SetLabel(ct)
+		e:SetLabel(#Duel.GetOperatedGroup())
 		c:RegisterFlagEffect(m,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_DAMAGE_CAL,0,1)
 	end)
 	e3:SetOperation(Senya.PrismDamageCheckOperation)

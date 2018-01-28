@@ -35,17 +35,15 @@ function cm.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.CheckLocation(tp,LOCATION_PZONE,0) then b1=b1+1 end
 	if Duel.CheckLocation(tp,LOCATION_PZONE,1) then b1=b1+1 end
 	local g=Duel.GetMatchingGroup(cm.dfilter,tp,0,LOCATION_SZONE,nil,e)
-	local ct=g:GetCount()
-	if chk==0 then return b1>0 and ct>0 end
+	if chk==0 then return b1>0 and #g>0 end
 end
 function cm.desop(e,tp,eg,ep,ev,re,r,rp)
 	local b1=0
 	if Duel.CheckLocation(tp,LOCATION_PZONE,0) then b1=b1+1 end
 	if Duel.CheckLocation(tp,LOCATION_PZONE,1) then b1=b1+1 end
 	local g=Duel.GetMatchingGroup(cm.dfilter,tp,0,LOCATION_PZONE,nil,e)
-	local ct=g:GetCount()
-	if not (b1>0 and ct>0) then return end
-	if b1>=ct then
+	if not (b1>0 and #g>0) then return end
+	if b1>=#g then
 		local tc=g:GetFirst()
 		while tc do
 			--Senya.ExileCard(tc)
@@ -65,7 +63,7 @@ end
 function cm.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_PZONE,0,1,nil) end
 	local g=Duel.GetMatchingGroup(cm.filter,tp,LOCATION_PZONE,0,nil)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 end
 function cm.op(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(cm.filter,tp,LOCATION_PZONE,0,nil)

@@ -34,7 +34,7 @@ function cm.target0(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,cm.filter,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,1,1,e:GetHandler(),tp)
 	local gg=g:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
-	if gg:GetCount()>0 then
+	if #gg>0 then
 		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,gg,1,0,LOCATION_GRAVE)
 	end
 end

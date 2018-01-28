@@ -69,8 +69,8 @@ function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function cm.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetHandler():GetColumnGroup():Filter(function(c) return c:IsControler(1-tp) and c:IsAbleToDeck() end,nil)
-	if chk==0 then return g:GetCount()>0 end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
+	if chk==0 then return #g>0 end
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 end
 function cm.op(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

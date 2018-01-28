@@ -31,7 +31,7 @@ function cm.initial_effect(c)
 	e3:SetCountLimit(1,m)
 	e3:SetCost(function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local g=Duel.GetMatchingGroup(cm.f,tp,LOCATION_PZONE,0,nil)
-		if chk==0 then return g:GetCount()>=2 end
+		if chk==0 then return #g>=2 end
 		Duel.Release(g,REASON_COST)
 	end)
 	e3:SetTarget(Senya.DrawTarget(1))
@@ -61,7 +61,7 @@ end
 function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,cm.thfilter,tp,LOCATION_EXTRA,0,1,1,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end

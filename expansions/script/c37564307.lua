@@ -131,7 +131,7 @@ end
 function cm.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,1,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.HintSelection(g)
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
@@ -141,8 +141,8 @@ function cm.spptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local mg=c:GetMaterial()
 	local sumtype=c:GetSummonType()
 	if chk==0 then   
-		return not ((sumtype & SUMMON_TYPE_FUSION)~=SUMMON_TYPE_FUSION or mg:GetCount()==0
-		or mg:GetCount()>Duel.GetMZoneCount(tp)
+		return not ((sumtype & SUMMON_TYPE_FUSION)~=SUMMON_TYPE_FUSION or #mg==0
+		or #mg>Duel.GetMZoneCount(tp)
 		or mg:IsExists(cm.mgfilter,1,nil,e,tp,c))
 	end
 	mg:KeepAlive()
@@ -162,8 +162,8 @@ function cm.sppop(e,tp,eg,ep,ev,re,r,rp)
 	local mg=e:GetLabelObject()
 	local g=mg:Clone()
 	mg:DeleteGroup()
-	if not (g:GetCount()==0
-		or g:GetCount()>Duel.GetMZoneCount(tp)
+	if not (#g==0
+		or #g>Duel.GetMZoneCount(tp)
 		or g:IsExists(cm.mgfilterx,1,nil,e,tp,c)) then
 		local tc=g:GetFirst()
 		while tc do

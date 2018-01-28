@@ -86,7 +86,7 @@ function cm.operation2(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetMZoneCount(tp)
 	local g1=e:GetHandler():GetOverlayGroup()
 	local sg=g1:Filter(cm.filter7,nil,e,tp)
-	if ft==0 or sg:GetCount()==0 then return end
+	if ft==0 or #sg==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local mg=sg:Select(tp,ft,ft,nil)
 	local fid=e:GetHandler():GetFieldID()

@@ -40,8 +40,8 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g1=Duel.GetMatchingGroup(cm.tdfilter,tp,LOCATION_DECK,0,nil)
 	local g2=Duel.GetMatchingGroup(cm.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
-	local gc1=(g1:GetCount()>0)
-	local gc2=(g2:GetCount()>0) and Duel.GetMZoneCount(tp)>0
+	local gc1=(#g1>0)
+	local gc2=(#g2>0) and Duel.GetMZoneCount(tp)>0
 	local ch1=false
 	local ch2=false
 	if gc1 and not gc2 then ch1=(Duel.SelectYesNo(tp,aux.Stringid(m,0))) end

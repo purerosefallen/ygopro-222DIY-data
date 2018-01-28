@@ -53,7 +53,7 @@ end
 function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
 	local g1=Duel.SelectMatchingCard(tp,cm.filter1,tp,LOCATION_HAND,0,1,1,nil,tp)
-	if g1:GetCount()>0 then
+	if #g1>0 then
 		Duel.ConfirmCards(1-tp,g1)
 		local tc=g1:GetFirst()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

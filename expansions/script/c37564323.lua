@@ -44,7 +44,7 @@ end
 function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(cm.tgfilter,tp,LOCATION_DECK,0,nil)
-	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(m,0)) then
+	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(m,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.SendtoGrave(sg,REASON_EFFECT)
@@ -60,8 +60,7 @@ function cm.mgfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeXyzMaterial(nil) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 end
 function cm.filtergoal(g,xyzc,tp)
-	local ct=g:GetCount()
-	return Duel.GetLocationCountFromEx(tp,tp,g,xyzc)>0 and xyzc:IsXyzSummonable(g,ct,ct)
+	return Duel.GetLocationCountFromEx(tp,tp,g,xyzc)>0 and xyzc:IsXyzSummonable(g,#g,#g)
 end
 function cm.xfilter(c,mg,tp)
 	return c:IsRace(RACE_FAIRY) and c:IsAttribute(ATTRIBUTE_LIGHT) and Senya.CheckGroup(mg,cm.filtergoal,nil,1,63,c,tp)
@@ -79,7 +78,7 @@ end,
 [2]=function(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mg=Duel.GetMatchingGroup(cm.mgfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
 	local g=Duel.GetMatchingGroup(cm.xfilter,tp,LOCATION_EXTRA,0,nil,mg,tp)
-	if chk==0 then return g:GetCount()>0 end
+	if chk==0 then return #g>0 end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end,
 [3]=function(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -129,7 +128,7 @@ end,
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local mg=Duel.GetMatchingGroup(cm.mgfilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
 	local g=Duel.GetMatchingGroup(cm.xfilter,tp,LOCATION_EXTRA,0,nil,mg,tp)
-	if g:GetCount()==0 then return end
+	if #g==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local tc=g:Select(tp,1,1,nil):GetFirst()
 	local sg=Senya.SelectGroup(tp,HINTMSG_XMATERIAL,mg,cm.filtergoal,nil,1,63,tc,tp)
@@ -150,7 +149,7 @@ end,
 		local mf=ce:GetValue()
 		sg2=Duel.GetMatchingGroup(cm.ffilter,tp,LOCATION_EXTRA,0,nil,e,tp,mg2,mf,chkf)
 	end
-	if sg1:GetCount()>0 or (sg2~=nil and sg2:GetCount()>0) then
+	if #sg1>0 or (sg2~=nil and #sg2>0) then
 		local sg=sg1:Clone()
 		if sg2 then sg:Merge(sg2) end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

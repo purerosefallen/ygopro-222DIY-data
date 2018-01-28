@@ -26,8 +26,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function cm.xyzcheck(g,xyzc)
-	local ct=g:GetCount()
-	if ct==1 and cm.ovfilter(g:GetFirst()) then return true end
+	if #g==1 and cm.ovfilter(g:GetFirst()) then return true end
 	if g:IsExists(function(c) return not c:IsXyzLevel(xyzc,5) end,1,nil) then return false end
 	return Senya.PrismXyzCheck(3,3)(g)
 end

@@ -44,7 +44,7 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 		local g=Duel.SelectMatchingCard(tp,cm.filter,tp,LOCATION_DECK,0,1,1,nil,false)
-		if g:GetCount()>0 then
+		if #g>0 then
 			Duel.SSet(tp,g:GetFirst())
 			Duel.ConfirmCards(1-tp,g)
 			--[[if tc:GetOriginalCode()==37564765 and Duel.GetMZoneCount(tp)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) then

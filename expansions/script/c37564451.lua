@@ -25,7 +25,7 @@ end
 function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,cm.filter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		if Duel.SendtoHand(g,nil,REASON_EFFECT)>0 and e:GetHandler():IsRelateToEffect(e) then
 			Duel.ConfirmCards(1-tp,g)
 			Duel.ShuffleDeck(tp)
@@ -40,7 +40,7 @@ function cm.bm_check_operation(e,tp,eg,ep,ev,re,r,rp)
 			if Duel.SelectYesNo(tp,aux.Stringid(37564765,1)) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 				local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,e:GetHandler())
-				if g:GetCount()>0 then
+				if #g>0 then
 					Duel.HintSelection(g)
 					Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 				end

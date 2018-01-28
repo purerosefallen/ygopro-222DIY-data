@@ -24,9 +24,9 @@ function cm.condition1(e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(Card.IsAbleToRemove,nil)
-	if chk==0 then return g:GetCount()>0 and e:GetHandler():IsAbleToRemove() end
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE_SUMMON,g,g:GetCount(),0,0)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,g:GetCount(),0,0)
+	if chk==0 then return #g>0 and e:GetHandler():IsAbleToRemove() end
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE_SUMMON,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 end
 function cm.activate1(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(Card.IsAbleToRemove,nil)

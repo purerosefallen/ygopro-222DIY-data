@@ -74,7 +74,7 @@ end
 function cm.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,cm.filter,tp,0,LOCATION_ONFIELD,1,2,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.HintSelection(g)
 		if e:GetHandler():GetFlagEffect(60151298)>0 then
 			Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(m,2))

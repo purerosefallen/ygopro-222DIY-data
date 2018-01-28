@@ -63,7 +63,7 @@ function cm.repop(e,tp,eg,ep,ev,re,r,rp)
 	if ((t & TYPE_CONTINUOUS+TYPE_FIELD)~=0 or (t & TYPE_SPELL+TYPE_PENDULUM)==TYPE_SPELL+TYPE_PENDULUM) and not e:GetHandler():IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,1,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
 end

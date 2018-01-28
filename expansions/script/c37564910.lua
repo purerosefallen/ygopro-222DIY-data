@@ -86,7 +86,7 @@ function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not (c:IsFaceup() and c:IsRelateToEffect(e)) then return end
 	local g=Duel.GetMatchingGroup(cm.rmfilter,tp,0,LOCATION_EXTRA,nil)
-	if g:GetCount()==0 then return end
+	if #g==0 then return end
 	local gc=g:RandomSelect(tp,1):GetFirst()
 	Duel.Remove(gc,POS_FACEUP,REASON_EFFECT)
 	local tc=Duel.GetOperatedGroup():GetFirst()

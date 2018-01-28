@@ -39,7 +39,7 @@ end
 function cm.rmop(e,tp,eg,ep,ev,re,r,rp)
  local ac=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
  local g=ac:Filter(Card.IsRelateToEffect,nil,e)
-  if g:GetCount()>0 then
+  if #g>0 then
 	if Duel.Remove(g,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
 		local og=Duel.GetOperatedGroup()
 		og:KeepAlive()

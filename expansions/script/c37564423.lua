@@ -55,7 +55,7 @@ function cm.tdop(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 		local sg=ag:Filter(cm.tfilter,nil,e,tp)
-		if sg:GetCount()>0 and Duel.GetMZoneCount(tp)>=sg:GetCount() and not (sg:GetCount()>1 and Duel.IsPlayerAffectedByEffect(tp,59822133)) then
+		if #sg>0 and Duel.GetMZoneCount(tp)>=#sg and not (#sg>1 and Duel.IsPlayerAffectedByEffect(tp,59822133)) then
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 			local cval=math.floor(val[1]/2)
 			Duel.BreakEffect()

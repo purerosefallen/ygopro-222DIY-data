@@ -31,11 +31,11 @@ function cm.op(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetMatchingGroupCount(cm.effilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil)
 	if ct==0 then return end
 	local hg=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
-	if hg:GetCount()==0 then return end
+	if #hg==0 then return end
 	Duel.ConfirmCards(tp,hg)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	local sg=hg:Select(tp,1,ct,nil)
-	local g=sg:GetCount()
+	local g=#sg
 	local dr=g-1
 	Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
 	Duel.ShuffleHand(1-tp)

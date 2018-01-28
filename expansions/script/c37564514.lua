@@ -44,7 +44,7 @@ end
 function cm.op2(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetMZoneCount(tp)
 	local tg=Duel.GetMatchingGroup(cm.filter1,tp,LOCATION_GRAVE,0,nil,e,tp)
-	if ft<=0 or tg:GetCount()==0 or (ft>1 and tg:GetCount()>1 and Duel.IsPlayerAffectedByEffect(tp,59822133)) then return end
+	if ft<=0 or #tg==0 or (ft>1 and #tg>1 and Duel.IsPlayerAffectedByEffect(tp,59822133)) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=tg:Select(tp,ft,ft,nil)
 	for tc in aux.Next(g) do

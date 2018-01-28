@@ -39,7 +39,7 @@ function cm.desop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local g=Duel.SelectMatchingCard(tp,cm.drfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-			if g:GetCount()>0 then
+			if #g>0 then
 				Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 			end
 		end

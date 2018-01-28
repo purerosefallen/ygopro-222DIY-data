@@ -51,11 +51,11 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 			local g=tg:Select(tp,1,ct,nil)
 			tg:Sub(g)
 			sg:Merge(g)
-			ft=ft-g:GetCount()
+			ft=ft-#g
 			ect=ect-g:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
 		until ft==0 or ect==0 or not Duel.SelectYesNo(tp,210)
 		local hg=tg:Filter(Card.IsLocation,nil,LOCATION_HAND)
-		if ft>0 and ect==0 and hg:GetCount()>0 and Duel.SelectYesNo(tp,210) then
+		if ft>0 and ect==0 and #hg>0 and Duel.SelectYesNo(tp,210) then
 			local g=hg:Select(tp,1,ft,nil)
 			sg:Merge(g)
 		end

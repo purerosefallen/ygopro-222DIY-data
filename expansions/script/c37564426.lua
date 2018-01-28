@@ -81,14 +81,14 @@ function cm.desop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsPlayerCanDraw(tp) or ct==0 then return end
 	for i=1,ct do
 		local g=Duel.GetFieldGroup(tp,LOCATION_DECK,0)
-		if g:GetCount()==0 then break end
+		if #g==0 then break end
 		local tc=g:GetMinGroup(Card.GetSequence):GetFirst()
 		Duel.MoveSequence(tc,0)
 	end
 	local dct=ct-Duel.Draw(tp,ct,REASON_EFFECT)
 	if dct>0 then
 		local g=Duel.GetDecktopGroup(tp,dct)
-		if g:GetCount()==0 then return end
+		if #g==0 then return end
 		for tc in aux.Next(g) do
 			Duel.MoveSequence(tc,1)
 		end

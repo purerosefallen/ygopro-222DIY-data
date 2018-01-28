@@ -58,7 +58,7 @@ function cm.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
 		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,c)
-		if g:GetCount()==0 then return false end
+		if #g==0 then return false end
 		local g1,atk=g:GetMaxGroup(Card.GetAttack)
 		return c:GetAttack()~=atk and c:GetFlagEffect(37560310)==0
 	end
@@ -67,7 +67,7 @@ end
 function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,c)
-	if g:GetCount()==0 then return end
+	if #g==0 then return end
 	local g1,atk=g:GetMaxGroup(Card.GetAttack)
 	if c:IsRelateToEffect(e) and c:IsFaceup() and atk>0 then
 		local e1=Effect.CreateEffect(c)
@@ -114,11 +114,11 @@ end
 function cm.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.rmfilter,tp,0,LOCATION_MZONE,1,nil) end
 	local g=Duel.GetMatchingGroup(cm.rmfilter,tp,0,LOCATION_MZONE,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 end
 function cm.operation1(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(cm.rmfilter,tp,0,LOCATION_MZONE,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 	end
 end

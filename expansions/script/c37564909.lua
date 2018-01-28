@@ -54,7 +54,7 @@ end
 function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local mg=Duel.GetMatchingGroup(cm.filter1,tp,LOCATION_DECK,0,nil,tc:GetAttribute())
-	if tc:IsRelateToEffect(e) and tc:IsAbleToGrave() and not tc:IsImmuneToEffect(e) and mg:GetCount()>0 then
+	if tc:IsRelateToEffect(e) and tc:IsAbleToGrave() and not tc:IsImmuneToEffect(e) and #mg>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=mg:Select(tp,1,1,nil)
 		g:AddCard(tc)

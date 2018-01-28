@@ -47,7 +47,7 @@ function cm.tg2(c)
 end
 function cm.droperation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(cm.tg2,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 	end
 end

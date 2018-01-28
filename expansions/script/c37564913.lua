@@ -149,9 +149,9 @@ function cm.retop(e,tp,eg,ep,ev,re,r,rp)
 			local g=Group.CreateGroup()
 			cm.getf(co+i,loc,g,e,tp)
 			cm.getf(co-i,loc,g,e,tp)
-			if g:GetCount()==1 then
+			if #g==1 then
 				cm.move(g:GetFirst(),co,e)
-			elseif g:GetCount()==2 then
+			elseif #g==2 then
 				Duel.Hint(HINT_SELECTMSG,1-tp,m*16+2)
 				local tc1=g:Select(1-tp,1,1,nil):GetFirst()
 				g:RemoveCard(tc1)

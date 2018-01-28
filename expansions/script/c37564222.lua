@@ -29,14 +29,14 @@ function cm.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(cm.filter,1,e:GetHandler(),tp) end
 	local g=eg:Filter(cm.filter,nil,tp)
 	Duel.SetTargetCard(eg)
-	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_CONTROL,g,#g,0,0)
 end
 function cm.filter2(c,e,tp)
 	return c:IsRelateToEffect(e) and c:IsPreviousLocation(LOCATION_EXTRA) and (not c:IsType(TYPE_PENDULUM)) and c:IsControlerCanBeChanged() and c:GetSummonPlayer()==1-tp
 end
 function cm.op(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(cm.filter2,nil,e,tp)
-	if Duel.GetMZoneCount(tp)<g:GetCount() then return end
+	if Duel.GetMZoneCount(tp)<#g then return end
 	local tc=g:GetFirst()
 	while tc do
 		if Duel.GetControl(tc,tp) then

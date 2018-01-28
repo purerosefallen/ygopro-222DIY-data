@@ -38,7 +38,7 @@ function cm.initial_effect(c)
 		local c=e:GetHandler()
 		local g=Duel.GetMatchingGroup(cm.f,tp,LOCATION_ONFIELD,0,c,pend)
 		e:SetLabel(1)
-		if chk==0 then return g:GetCount()>0 and c:IsReleasable() end
+		if chk==0 then return #g>0 and c:IsReleasable() end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 		local sg=g:Select(tp,1,1,nil)
 		sg:AddCard(c)

@@ -109,7 +109,7 @@ function cm.drop(e,tp,eg,ep,ev,re,r,rp)
 			tc:CancelToGrave()
 		end
 		local og=tc:GetOverlayGroup()
-		if og:GetCount()>0 then
+		if #og>0 then
 			Duel.SendtoGrave(og,REASON_RULE)
 		end
 		Duel.Overlay(c,Group.FromCards(tc))

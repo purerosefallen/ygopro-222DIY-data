@@ -33,7 +33,7 @@ function cm.spcfilter(c,tp)
 		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousSequence()>4
 end
 function cm.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:GetCount()==1 and eg:IsExists(cm.spcfilter,1,nil,tp)
+	return #eg==1 and eg:IsExists(cm.spcfilter,1,nil,tp)
 end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -57,7 +57,7 @@ function cm.operation1(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) then
 		local se=tc:IsCode(37564765)
 		local g=Duel.GetMatchingGroup(cm.sfilter,tp,LOCATION_DECK,0,nil)
-		if Duel.Destroy(tc,REASON_EFFECT)>0 and se and g:GetCount()>0 and Duel.SelectYesNo(tp,m*16+1) then
+		if Duel.Destroy(tc,REASON_EFFECT)>0 and se and #g>0 and Duel.SelectYesNo(tp,m*16+1) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 			local sg=g:Select(tp,1,1,nil)
 			Duel.SSet(tp,sg:GetFirst())

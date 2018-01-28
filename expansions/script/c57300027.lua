@@ -39,9 +39,9 @@ function cm.initial_effect(c)
 		if not c:IsType(TYPE_XYZ) or not c:IsSetCard(0x570) or Duel.GetFlagEffect(e:GetHandlerPlayer(),m)>0 then return end
 		local rg=e:GetLabelObject():GetLabelObject()
 		local g=c:GetMaterial()
-		local check1=c:IsXyzSummonable(g,g:GetCount(),g:GetCount())
+		local check1=c:IsXyzSummonable(g,#g,#g)
 		rg:Merge(g)
-		local check2=c:IsXyzSummonable(g,g:GetCount(),g:GetCount())
+		local check2=c:IsXyzSummonable(g,#g,#g)
 		rg:Clear()	
 		if check1 and not check2 then
 			Duel.RegisterFlagEffect(e:GetHandlerPlayer(),m,RESET_PHASE+PHASE_END,0,1)

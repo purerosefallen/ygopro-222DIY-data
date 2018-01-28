@@ -35,9 +35,9 @@ function cm.filter(c,e,tp)
 end
 function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=eg:Filter(cm.filter,nil,e,1-tp)
-	if sg:GetCount()==0 then
+	if #sg==0 then
 	local ct=0
-	elseif sg:GetCount()==1 then
+	elseif #sg==1 then
 		ct=Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 	else
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DISCARD)

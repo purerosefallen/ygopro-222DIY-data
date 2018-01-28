@@ -43,7 +43,7 @@ function cm.rmop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.MoveSequence(c,nseq)
 		end
 		local g=c:GetColumnGroup():Filter(function(c) return c:IsControler(1-tp) end,nil)
-		if g:GetCount()>0 then
+		if #g>0 then
 			Duel.BreakEffect()
 			for tc in aux.Next(g) do
 				if tc:IsFaceup() and not tc:IsDisabled() then

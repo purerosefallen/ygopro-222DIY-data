@@ -25,12 +25,12 @@ function cm.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler()
 	if tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) or tc:IsImmuneToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,0,LOCATION_EXTRA,nil)
-	if g:GetCount()==0 then return end
+	if #g==0 then return end
 	local gc=g:RandomSelect(tp,1):GetFirst()
 	Duel.ConfirmCards(tp,gc)
 	if gc:IsType(TYPE_XYZ) and gc:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false) and Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(e:GetHandler()),gc)>0 and Senya.MustMaterialCheck(e:GetHandler(),tp,EFFECT_MUST_BE_XMATERIAL) then
 	   local mg=tc:GetOverlayGroup()
-		if mg:GetCount()~=0 then
+		if #mg~=0 then
 			Duel.Overlay(gc,mg)
 		end
 		gc:SetMaterial(Group.FromCards(tc))

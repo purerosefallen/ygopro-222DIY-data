@@ -39,7 +39,7 @@ function cm.sayuri_trigger_operation(c,e,tp,eg,ep,ev,re,r,rp)
 	local dg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_DECK,nil)
 	Duel.ConfirmCards(tp,dg)
 	local g=dg:FilterSelect(tp,Card.IsAbleToHand,1,1,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.SendtoHand(g,1-tp,REASON_EFFECT)
 		Duel.ConfirmCards(tp,g)
 		Duel.ShuffleDeck(1-tp)
@@ -58,7 +58,7 @@ function cm.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function cm.thop(e,tp,eg,ep,ev,re,r,rp)
 	local hg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_HAND,nil)
-	if hg:GetCount()==0 then return end
+	if #hg==0 then return end
 	local sg=hg:RandomSelect(tp,1)
 	Duel.ConfirmCards(tp,sg)
 	if not Duel.IsExistingMatchingCard(cm.thfilter,tp,LOCATION_DECK,0,1,nil,sg:GetFirst()) or not Duel.SelectYesNo(tp,m*16+1) then
@@ -67,7 +67,7 @@ function cm.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,cm.thfilter,tp,LOCATION_DECK,0,1,1,nil,sg:GetFirst())
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
@@ -111,7 +111,7 @@ function cm.disop(e,tp,eg,ep,ev,re,r,rp)
 	end)
 	e1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(cm.cf,tp,0,LOCATION_HAND,nil)
-		if g:GetCount()>0 then
+		if #g>0 then
 			Duel.Hint(HINT_CARD,0,e:GetHandler():GetOriginalCode())
 			Duel.ConfirmCards(tp,g)
 			local tg=g:Filter(cm.df,nil,e:GetLabel())

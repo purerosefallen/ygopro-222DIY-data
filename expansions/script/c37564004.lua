@@ -30,7 +30,7 @@ end
 function cm.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(cm.filter,1,e:GetHandler(),tp) end
 	Duel.SetTargetCard(eg)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,eg:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,#eg,0,0)
 end
 function cm.filter2(c,e,tp)
 	return c:IsRelateToEffect(e) and c:IsPreviousLocation(LOCATION_EXTRA) and (not c:IsType(TYPE_PENDULUM))

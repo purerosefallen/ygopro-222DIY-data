@@ -37,7 +37,7 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,cm.spfilter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc:GetCode(),tc:GetRank())
 		local mg=sg:GetFirst()
-		  if sg:GetCount()>0 and Duel.SpecialSummon(mg,0,tp,tp,false,false,POS_FACEUP)~=0 then
+		  if #sg>0 and Duel.SpecialSummon(mg,0,tp,tp,false,false,POS_FACEUP)~=0 then
 			if e:GetHandler():IsRelateToEffect(e) and e:IsHasType(EFFECT_TYPE_ACTIVATE) then
 				e:GetHandler():CancelToGrave()
 				Duel.Overlay(mg,Group.FromCards(e:GetHandler()))

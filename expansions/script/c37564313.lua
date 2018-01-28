@@ -52,7 +52,7 @@ function cm.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() or c:IsControler(1-tp) then return end
 	local hg=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
-	if hg:GetCount()==0 then return end
+	if #hg==0 then return end
 	Duel.ConfirmCards(tp,hg)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)
 	local sg=hg:Select(tp,1,1,nil)

@@ -53,7 +53,7 @@ function cm.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function cm.xyzop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(cm.xyzfilter,tp,LOCATION_EXTRA,0,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local tg=g:Select(tp,1,1,nil)
 		Duel.XyzSummon(tp,tg:GetFirst(),nil)

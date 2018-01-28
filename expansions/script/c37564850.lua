@@ -33,7 +33,7 @@ function cm.effect_operation_3L(c)
 end
 function cm.SetMaterial(c,g)
 	local efg=g:Filter(function(c) return c.effect_operation_3L end,nil)
-	if efg:GetCount()>0 then
+	if #efg>0 then
 		Duel.Hint(HINT_CARD,0,m)
 		Duel.Hint(HINT_SELECTMSG,tp,m*16)
 		local tg=efg:Select(c:GetControler(),1,1,nil)

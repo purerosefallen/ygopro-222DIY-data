@@ -56,7 +56,7 @@ function cm.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function cm.drop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsFacedown,tp,0,LOCATION_EXTRA,nil)
-	if g:GetCount()<2 then return end
+	if #g<2 then return end
 	local sg=g:RandomSelect(tp,2)
 	Duel.ConfirmCards(tp,sg)
 	local s1=sg:GetFirst():GetOriginalCode()
@@ -109,7 +109,7 @@ function cm.FOperationCode2(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf)
 				local mg=eg:Filter(Auxiliary.FConditionFilterMix,c,c,sub,table.unpack(funs))
 				local sg=Group.CreateGroup()
 				if gc then sg:AddCard(gc) end
-				while sg:GetCount()<#funs do
+				while #sg<#funs do
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
 					local g=mg:FilterSelect(tp,Auxiliary.FSelectMix,1,1,sg,tp,mg,sg,c,sub,table.unpack(funs))
 					sg:Merge(g)

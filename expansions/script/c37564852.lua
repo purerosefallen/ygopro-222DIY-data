@@ -72,7 +72,7 @@ function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		for p=0,1 do
 			for seq=0,4 do
 				local g=cm.GetCrossGroup(p,seq)
-				if g:GetCount()>0 then zones[p]=zones[p] | (0x1 << seq) end
+				if #g>0 then zones[p]=zones[p] | (0x1 << seq) end
 			end
 			res[p]=zones[p]>0 and Duel.GetMZoneCount(p,nil,tp,LOCATION_REASON_TOFIELD,zones[p])>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK,p,zones[p])
 		end
@@ -86,8 +86,8 @@ function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		end
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,g:GetCount()*500)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,#g*500)
 end
 function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -97,7 +97,7 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 		for p=0,1 do
 			for seq=0,4 do
 				local g=cm.GetCrossGroup(p,seq)
-				if g:GetCount()>0 then zones[p]=zones[p] | (0x1 << seq) end
+				if #g>0 then zones[p]=zones[p] | (0x1 << seq) end
 			end
 			res[p]=zones[p]>0 and Duel.GetMZoneCount(p,nil,tp,LOCATION_REASON_TOFIELD,zones[p])>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK,p,zones[p])
 		end

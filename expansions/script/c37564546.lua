@@ -36,7 +36,7 @@ function cm.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then tg:AddCard(tc) end
 	if e:GetHandler():IsRelateToEffect(e) then tg:AddCard(e:GetHandler()) end
-	if tg:GetCount()>0 then
+	if #tg>0 then
 		Duel.Destroy(tg,REASON_EFFECT)
 	end
 end

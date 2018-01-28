@@ -33,7 +33,7 @@ function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 	local g=Duel.GetMatchingGroup(cm.rmfilter,tp,0,LOCATION_EXTRA,nil)
-	if g:GetCount()==0 then return end
+	if #g==0 then return end
 	local gc=g:RandomSelect(tp,1):GetFirst()
 	for i=0,3 do
 		Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(m,i))

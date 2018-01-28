@@ -43,7 +43,7 @@ function cm.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(cm.filter,1,e:GetHandler()) end
 	local g=eg:Filter(cm.filter,e:GetHandler(),tp)
 	Duel.SetTargetCard(g)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0)
 end
 function cm.filter2(c,e)
 	return c:IsAbleToGrave() and c:IsRelateToEffect(e) and not c:IsImmuneToEffect(e)

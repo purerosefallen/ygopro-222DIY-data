@@ -20,9 +20,9 @@ function cm.OverlayFilter(c,nchk)
 	return nchk or not c:IsType(TYPE_TOKEN)
 end
 function cm.OverlayGroup(c,g,xm,nchk)
-	if not nchk and (not c:IsLocation(LOCATION_MZONE) or c:IsFacedown() or g:GetCount()<=0 or not c:IsType(TYPE_XYZ)) then return end
+	if not nchk and (not c:IsLocation(LOCATION_MZONE) or c:IsFacedown() or #g<=0 or not c:IsType(TYPE_XYZ)) then return end
 	local tg=g:Filter(cm.OverlayFilter,nil,nchk)
-	if tg:GetCount()==0 then return end
+	if #tg==0 then return end
 	local og=Group.CreateGroup()
 	for tc in aux.Next(tg) do
 		if tc:IsStatus(STATUS_LEAVE_CONFIRMED) then
@@ -30,7 +30,7 @@ function cm.OverlayGroup(c,g,xm,nchk)
 		end
 		og:Merge(tc:GetOverlayGroup())
 	end
-	if og:GetCount()>0 then
+	if #og>0 then
 		if xm then
 			Duel.Overlay(c,og)
 		else
@@ -184,63 +184,40 @@ function cm.ClariSXyzValue(c)
 end
 function cm.ClariSXyzCheck(ct)
 return function(g,xyzc)
-	local i=g:GetCount()
-	if not g:CheckWithSumEqual(cm.ClariSXyzValue,ct,i,i) then return false end
+	if not g:CheckWithSumEqual(cm.ClariSXyzValue,ct,#g,#g) then return false end
 	return Duel.GetLocationCountFromEx(tp,tp,g,xyzc)>0 
 end
 end
 function cm.CheckGroupRecursive(c,sg,g,f,min,max,ext_params)
 	sg:AddCard(c)
-	local ct=sg:GetCount()
-	local res=(ct>=min and ct<= max and f(sg,table.unpack(ext_params)))
-		or (ct<max and g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params))
+	local res=(#sg>=min and #sg<=max and f(sg,table.unpack(ext_params)))
+		or (#sg<max and g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params))
 	sg:RemoveCard(c)
 	return res
 end
 function cm.CheckGroup(g,f,cg,min,max,...)
 	local min=min or 1
-	local max=max or g:GetCount()
+	local max=max or #g
 	if min>max then return false end
 	local ext_params={...}
 	local sg=Group.CreateGroup()
 	if cg then sg:Merge(cg) end
-	local ct=sg:GetCount()
-	if ct>=min and ct<=max and f(sg,...) then return true end
-	return g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params)
-end
-function cm.CheckGroupRecursive(c,sg,g,f,min,max,ext_params)
-	sg:AddCard(c)
-	local ct=sg:GetCount()
-	local res=(ct>=min and ct<=max and f(sg,table.unpack(ext_params)))
-		or (ct<max and g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params))
-	sg:RemoveCard(c)
-	return res
-end
-function cm.CheckGroup(g,f,cg,min,max,...)
-	local min=min or 1
-	local max=max or g:GetCount()
-	if min>max then return false end
-	local ext_params={...}
-	local sg=Group.CreateGroup()
-	if cg then sg:Merge(cg) end
-	local ct=sg:GetCount()
-	if ct>=min and ct<=max and f(sg,...) then return true end
+	if #sg>=min and #sg<=max and f(sg,...) then return true end
 	return g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params)
 end
 function cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
 	local min=min or 1
-	local max=max or g:GetCount()
+	local max=max or #g
 	local ext_params={...}
 	local sg=Group.CreateGroup()
 	local cg=cg or Group.CreateGroup()
 	sg:Merge(cg)
-	local ct=sg:GetCount()
 	local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
-	while ct<max and ag:GetCount()>0 do
-		local finish=(ct>=min and ct<=max and f(sg,...))
+	while #sg<max and #ag>0 do
+		local finish=(#sg>=min and #sg<=max and f(sg,...))
 		local seg=sg:Clone()
-		local dmin=min-cg:GetCount()
-		local dmax=math.min(max-cg:GetCount(),g:GetCount())
+		local dmin=#sg
+		local dmax=math.min(max-#cg,#g)
 		seg:Sub(cg)
 		Duel.Hint(HINT_SELECTMSG,tp,desc)
 		local tc=ag:SelectUnselect(seg,tp,finish,finish,dmin,dmax)
@@ -250,26 +227,24 @@ function cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
 		else
 			sg:AddCard(tc)
 		end
-		ct=sg:GetCount()
 		ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)
 	end
 	return sg
 end
 function cm.SelectGroupWithCancel(tp,desc,g,f,cg,min,max,...)
 	local min=min or 1
-	local max=max or g:GetCount()
+	local max=max or #g
 	local ext_params={...}
 	local sg=Group.CreateGroup()
 	local cg=cg or Group.CreateGroup()
 	sg:Merge(cg)
-	local ct=sg:GetCount()
 	local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
-	while ct<max and ag:GetCount()>0 do
-		local finish=(ct>=min and ct<=max and f(sg,...))
-		local cancel=finish or ct==0
+	while #sg<max and #ag>0 do
+		local finish=(#sg>=min and #sg<=max and f(sg,...))
+		local cancel=finish or #sg==0
 		local seg=sg:Clone()
-		local dmin=min-cg:GetCount()
-		local dmax=math.min(max-cg:GetCount(),g:GetCount())
+		local dmin=#sg
+		local dmax=math.min(max-#cg,#g)
 		seg:Sub(cg)
 		Duel.Hint(HINT_SELECTMSG,tp,desc)
 		local tc=ag:SelectUnselect(seg,tp,finish,cancel,dmin,dmax)
@@ -282,7 +257,6 @@ function cm.SelectGroupWithCancel(tp,desc,g,f,cg,min,max,...)
 		else
 			sg:AddCard(tc)
 		end
-		ct=sg:GetCount()
 		ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)
 	end
 	return sg
@@ -565,7 +539,7 @@ function cm.WindbotSSOperation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,cm.WindbotSSFilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	end
 end

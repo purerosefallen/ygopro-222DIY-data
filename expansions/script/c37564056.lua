@@ -18,7 +18,7 @@ function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function cm.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local hg=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
-	if hg:GetCount()==0 then return end
+	if #hg==0 then return end
 	local tc=hg:RandomSelect(tp,1):GetFirst()
 	if tc:GetFlagEffect(m)>0 then return end
 	tc:RegisterFlagEffect(m,0x1fe1000+RESET_PHASE+PHASE_END,0,1)

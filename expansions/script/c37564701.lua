@@ -68,7 +68,7 @@ function cm.xyzcon(e,c,og,min,max)
 		else
 			mg=Duel.GetMatchingGroup(cm.xyzfilter,tp,LOCATION_MZONE,0,nil,c)
 			local exg=Duel.GetMatchingGroup(cm.xyzfilter1,tp,LOCATION_PZONE,0,nil,c)
-			if exg:GetCount()==2 and Duel.GetLocationCountFromEx(tp,tp,exg,c)>0 and Duel.GetFlagEffect(tp,m)==0 and not Duel.IsPlayerAffectedByEffect(EFFECT_MUST_BE_XMATERIAL) then return true end
+			if #exg==2 and Duel.GetLocationCountFromEx(tp,tp,exg,c)>0 and Duel.GetFlagEffect(tp,m)==0 and not Duel.IsPlayerAffectedByEffect(EFFECT_MUST_BE_XMATERIAL) then return true end
 		end
 		local sg=Group.CreateGroup()
 		local ce={Duel.IsPlayerAffectedByEffect(EFFECT_MUST_BE_XMATERIAL)}
@@ -96,7 +96,7 @@ function cm.xyzop(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
 		else
 			mg=Duel.GetMatchingGroup(cm.xyzfilter,tp,LOCATION_MZONE,0,nil,c)
 			local exg=Duel.GetMatchingGroup(cm.xyzfilter1,tp,LOCATION_PZONE,0,nil,c)
-			if exg:GetCount()==2 and Duel.GetLocationCountFromEx(tp,tp,exg,c)>0 and Duel.GetFlagEffect(tp,m)==0 and not Duel.IsPlayerAffectedByEffect(EFFECT_MUST_BE_XMATERIAL) and (not Senya.CheckGroup(mg,Senya.CheckFieldFilter,nil,minc,maxc,tp,c) or Duel.SelectYesNo(tp,m*16)) then
+			if #exg==2 and Duel.GetLocationCountFromEx(tp,tp,exg,c)>0 and Duel.GetFlagEffect(tp,m)==0 and not Duel.IsPlayerAffectedByEffect(EFFECT_MUST_BE_XMATERIAL) and (not Senya.CheckGroup(mg,Senya.CheckFieldFilter,nil,minc,maxc,tp,c) or Duel.SelectYesNo(tp,m*16)) then
 				Duel.HintSelection(exg)
 				Duel.RegisterFlagEffect(tp,m,RESET_PHASE+PHASE_END,0,1)
 				c:SetMaterial(exg)
@@ -144,7 +144,7 @@ function cm.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,m)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,cm.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
@@ -200,26 +200,26 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 					if ct1>ft1 then ct=math.min(ct,ft1) end
 					if ct2>ft2 then ct=math.min(ct,ft2) end
 					if ct<=0 then break end
-					if sg:GetCount()>0 and not Duel.SelectYesNo(tp,210) then ft=0 break end
+					if #sg>0 and not Duel.SelectYesNo(tp,210) then ft=0 break end
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 					local g=tg:Select(tp,1,ct,nil)
 					tg:Sub(g)
 					sg:Merge(g)
-					if g:GetCount()<ct then ft=0 break end
-					ft=ft-g:GetCount()
+					if #g<ct then ft=0 break end
+					ft=ft-#g
 					ft1=ft1-g:FilterCount(Card.IsLocation,nil,LOCATION_HAND)
 					ft2=ft2-g:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
 				end
 				if ft>0 then
 					local tg1=tg:Filter(Card.IsLocation,nil,LOCATION_HAND)
 					local tg2=tg:Filter(Card.IsLocation,nil,LOCATION_EXTRA)
-					if ft1>0 and ft2==0 and tg1:GetCount()>0 and (sg:GetCount()==0 or Duel.SelectYesNo(tp,210)) then
+					if ft1>0 and ft2==0 and #tg1>0 and (#sg==0 or Duel.SelectYesNo(tp,210)) then
 						local ct=math.min(ft1,ft)
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 						local g=tg1:Select(tp,1,ct,nil)
 						sg:Merge(g)
 					end
-					if ft1==0 and ft2>0 and tg2:GetCount()>0 and (sg:GetCount()==0 or Duel.SelectYesNo(tp,210)) then
+					if ft1==0 and ft2>0 and #tg2>0 and (#sg==0 or Duel.SelectYesNo(tp,210)) then
 						local ct=math.min(ft2,ft)
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 						local g=tg2:Select(tp,1,ct,nil)
@@ -244,7 +244,7 @@ end
 function cm.activate2(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
-	if sg:GetCount()>0 then
+	if #sg>0 then
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,sg)
 	end

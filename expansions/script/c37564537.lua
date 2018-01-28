@@ -77,7 +77,7 @@ function cm.disop(e,tp,eg,ep,ev,re,r,rp)
 	end)
 	e1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(cm.cf,tp,0,LOCATION_HAND,nil)
-		if g:GetCount()>0 then
+		if #g>0 then
 			Duel.Hint(HINT_CARD,0,e:GetHandler():GetOriginalCode())
 			Duel.ConfirmCards(tp,g)
 			local tg=g:Filter(Card.IsCode,nil,e:GetLabel())
@@ -98,7 +98,7 @@ end
 function cm.gainop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local mg=c:GetOverlayGroup()
-	if mg:GetCount()<1 then return end
+	if #mg<1 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local sg=mg:FilterSelect(tp,Card.IsAbleToHand,1,1,nil)
 	Duel.SendtoHand(sg,tp,REASON_EFFECT)

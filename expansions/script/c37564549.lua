@@ -68,7 +68,7 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 		local mf=ce:GetValue()
 		sg2=Duel.GetMatchingGroup(cm.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg2,mf,chkf)
 	end
-	if sg1:GetCount()>0 or (sg2~=nil and sg2:GetCount()>0) then
+	if #sg1>0 or (sg2~=nil and #sg2>0) then
 		local sg=sg1:Clone()
 		if sg2 then sg:Merge(sg2) end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -114,7 +114,7 @@ function cm.desop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc or tc:IsFacedown() or not tc:IsRelateToEffect(e) or not tc:IsAbleToExtra() or tc:IsImmuneToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=Duel.SelectMatchingCard(tp,cm.f2,tp,LOCATION_EXTRA,0,1,1,tc,e,tp,tc)
-	if sg:GetCount()>0 then
+	if #sg>0 then
 		Duel.SendtoDeck(tc,nil,0,REASON_EFFECT)
 		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end

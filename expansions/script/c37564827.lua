@@ -61,16 +61,16 @@ function cm.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(cm.filter,tp,LOCATION_GRAVE+LOCATION_MZONE,LOCATION_GRAVE+LOCATION_MZONE,1,e:GetHandler()) and e:GetHandler():IsType(TYPE_XYZ) and ct>0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 	local g=Duel.SelectTarget(tp,cm.filter,tp,LOCATION_GRAVE+LOCATION_MZONE,LOCATION_GRAVE+LOCATION_MZONE,1,ct,e:GetHandler())
-	local rct=g:GetCount()
+	local rct=#g
 	e:GetHandler():RemoveOverlayCard(tp,rct,rct,REASON_COST)
 	local gg=g:Filter(Card.IsLocation,nil,LOCATION_GRAVE)
-	if gg:GetCount()==0 then return end
-	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,gg,gg:GetCount(),0,LOCATION_GRAVE)
+	if #gg==0 then return end
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,gg,#gg,0,LOCATION_GRAVE)
 end
 function cm.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local tg=g:Filter(Card.IsRelateToEffect,nil,e)
-	if tg:GetCount()>0 and e:GetHandler():IsRelateToEffect(e) then
+	if #tg>0 and e:GetHandler():IsRelateToEffect(e) then
 		Duel.Overlay(e:GetHandler(),tg)
 	end
 end

@@ -122,8 +122,7 @@ function cm.goal(g,tp,lv,syncard,tuc)
 	for _,te in ipairs(pe) do
 		if not g:IsContains(te:GetHandler()) then return false end
 	end
-	local ct=g:GetCount()
-	return g:CheckWithSumEqual(cm.val,lv,ct,ct,syncard)
+	return g:CheckWithSumEqual(cm.val,lv,#g,#g,syncard)
 end
 function cm.syncon(e,c,tuner,mg)
 	if c==nil then return true end

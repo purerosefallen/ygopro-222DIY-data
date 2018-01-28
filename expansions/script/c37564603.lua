@@ -29,7 +29,7 @@ function cm.initial_effect(c)
 		if chk==0 then return eg:IsExists(cm.tfilter,1,e:GetHandler(),tp) end
 		local g=eg:Filter(cm.tfilter,nil,tp)
 		Duel.SetTargetCard(eg)
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,g:GetCount(),0,0)
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
 	end)
 	e2:SetOperation(cm.op)
 	c:RegisterEffect(e2)
@@ -82,7 +82,7 @@ end
 function cm.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject():Filter(cm.rfilter,nil,e,tp)
 	local tc=g:GetFirst()
-	if Duel.GetMZoneCount(tp)<g:GetCount() then
+	if Duel.GetMZoneCount(tp)<#g then
 		Duel.SpecialSummon(g,0,tp,tp,true,true,POS_FACEUP)
 	end
 	e:Reset()
@@ -96,10 +96,10 @@ end
 function cm.op(e,tp,eg,ep,ev,re,r,rp)
 		local g=eg:Filter(cm.filter2,nil,e,tp)
 		local sg=g:Filter(cm.ef,nil)
-		if g:GetCount()>0 then
+		if #g>0 then
 			if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0 then
 				local og=Duel.GetOperatedGroup():Filter(cm.cf,nil,sg)
-				if og:GetCount()>0 then
+				if #og>0 then
 					og:KeepAlive()
 					local e1=Effect.CreateEffect(e:GetHandler())
 					e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

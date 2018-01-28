@@ -82,7 +82,7 @@ function cm.seop(e,tp,eg,ep,ev,re,r,rp)
 	if dc and dc:IsSetCard(0x777) and Duel.IsExistingMatchingCard(prim.sefilter2,tp,LOCATION_DECK,0,1,nil) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local g=Duel.SelectMatchingCard(tp,prim.sefilter2,tp,LOCATION_DECK,0,1,1,nil)
-		if g:GetCount()>0 then
+		if #g>0 then
 			if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 then
 				Duel.Draw(tp,1,REASON_EFFECT)
 			end

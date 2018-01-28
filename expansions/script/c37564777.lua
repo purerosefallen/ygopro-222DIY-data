@@ -166,7 +166,7 @@ return function(e,tp,eg,ep,ev,re,r,rp)
 	if dc and dc:IsSetCard(0x777) and Duel.IsExistingMatchingCard(prim.sefilter2,tp,LOCATION_DECK,0,1,nil) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local g=Duel.SelectMatchingCard(tp,prim.sefilter2,tp,LOCATION_DECK,0,1,1,nil)
-		if g:GetCount()>0 then
+		if #g>0 then
 			if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)>0 then
 				Duel.Draw(tp,1,REASON_EFFECT)
 			end
@@ -176,7 +176,7 @@ return function(e,tp,eg,ep,ev,re,r,rp)
 	if at1==ATTRIBUTE_WIND and Duel.IsExistingMatchingCard(prim.sefilter3,tp,LOCATION_DECK,0,1,nil) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,prim.sefilter3,tp,LOCATION_DECK,0,1,1,nil)
-		if g:GetCount()>0 then
+		if #g>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
 		end
@@ -190,14 +190,14 @@ return function(e,tp,eg,ep,ev,re,r,rp)
 	if at1==ATTRIBUTE_EARTH and Duel.IsExistingMatchingCard(prim.sefilter4,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetMZoneCount(tp)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,prim.sefilter4,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-		if g:GetCount()>0 then
+		if #g>0 then
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
 	if at1==ATTRIBUTE_WATER and Duel.IsExistingMatchingCard(prim.sefilter5,tp,LOCATION_DECK,0,1,nil,e,tp) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,prim.sefilter5,tp,LOCATION_DECK,0,1,1,nil)
-		if g:GetCount()>0 then
+		if #g>0 then
 			Duel.SendtoGrave(g,REASON_EFFECT)
 		end
 	end
@@ -250,8 +250,8 @@ function prim.ses(c,at)
 	e2:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local spg=Duel.GetMatchingGroup(prim.sesspfilter,tp,LOCATION_DECK,0,nil,e,tp,m)
 		local rmg=Duel.GetMatchingGroup(prim.sessrfilter,tp,LOCATION_DECK,0,nil,at)
-		local sp=Duel.GetMZoneCount(tp)>0 and spg:GetCount()>0
-		local dr=Duel.IsPlayerCanDraw(tp,1) and rmg:GetCount()>0
+		local sp=Duel.GetMZoneCount(tp)>0 and #spg>0
+		local dr=Duel.IsPlayerCanDraw(tp,1) and #rmg>0
 		if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() and Duel.IsExistingMatchingCard(prim.sesscfilter,tp,LOCATION_HAND,0,1,e:GetHandler(),at,sp,dr) end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 		local g=Duel.SelectMatchingCard(tp,prim.sesscfilter,tp,LOCATION_HAND,0,1,1,e:GetHandler(),at,sp,dr)
@@ -320,7 +320,7 @@ function prim.ses(c,at)
 	end)
 	e2:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local rmg=Duel.GetMatchingGroup(prim.sessrfilter,tp,LOCATION_DECK,0,nil,at)
-		if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and rmg:GetCount()>0 end
+		if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and #rmg>0 end
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_DECK)
 		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 	end)

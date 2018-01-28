@@ -41,12 +41,12 @@ function cm.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function cm.disop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,0,LOCATION_EXTRA,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
 		sg=g:Select(1-tp,1,1,nil)
 		Duel.SendtoGrave(sg,REASON_EFFECT)
 		local og=Duel.GetOperatedGroup()
-		if og:GetCount()>0 then
+		if #og>0 then
 			local tc=og:GetFirst()
 			if tc:IsLocation(LOCATION_GRAVE) then
 				tc:RegisterFlagEffect(37564225,RESET_EVENT+0x1fe0000,0,1)

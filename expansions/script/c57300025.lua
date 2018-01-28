@@ -88,10 +88,9 @@ function c57300025.val(c)
 	return (0x10000*c:GetOverlayCount())+1
 end
 function c57300025.fgoal(g,fc,tp,chkf)
-	local ct=g:GetCount()
 	if chkf~=PLAYER_NONE and Duel.GetLocationCountFromEx(chkf,tp,g,fc)<=0 then return false end
 	if aux.FCheckAdditional and not aux.FCheckAdditional(tp,g,fc) then return false end
-	return g:CheckWithSumEqual(c57300025.val,5,ct,ct)
+	return g:CheckWithSumEqual(c57300025.val,5,#g,#g)
 end
 function c57300025.fsop(e,tp,eg,ep,ev,re,r,rp,gc,chkfnf)
 	local sg=Group.CreateGroup()

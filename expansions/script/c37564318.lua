@@ -124,7 +124,7 @@ end,
 end,
 [LOCATION_GRAVE]=function(e,tp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,nil)
-	if g:GetCount()>0 then
+	if #g>0 then
 		Senya.order_table[e:GetLabel()][LOCATION_GRAVE]=2
 		Duel.Hint(HINT_CARD,0,m)
 		local sg=g:RandomSelect(tp,1)

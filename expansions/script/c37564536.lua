@@ -34,7 +34,7 @@ function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		g:Remove(cm.filter1,nil,sg:GetFirst():GetOriginalCode())
 	end
 	Duel.SetTargetCard(tg)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,tg,tg:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,tg,#tg,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 end
 function cm.activate(e,tp,eg,ep,ev,re,r,rp)

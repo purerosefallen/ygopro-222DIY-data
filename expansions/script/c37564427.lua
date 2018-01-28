@@ -38,23 +38,23 @@ function cm.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=e:GetHandler():GetLinkedGroup():Filter(Card.IsAbleToHand,nil)
 	local z=e:GetHandler():GetLinkedZone()
 	local sg=Duel.GetMatchingGroup(cm.sfilter,tp,LOCATION_HAND,0,nil,e,tp)
-	local ct=sg:GetCount()
+	local ct=#sg
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=math.min(ct,1) end
 	if chk==0 then return z~=0 and ct>0 and Senya.CheckGroup(g,cm.thgcheck,nil,1,ct,tp,z) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,g:GetCount(),0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,g:GetCount(),tp,LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,#g,tp,LOCATION_HAND)
 end
 function cm.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if not cm.tdtg(e,tp,eg,ep,ev,re,r,rp,0) or not e:GetHandler():IsRelateToEffect(e) then return end
 	local z=e:GetHandler():GetLinkedZone()
 	local sg=Duel.GetMatchingGroup(cm.sfilter,tp,LOCATION_HAND,0,nil,e,tp)
 	local tg=e:GetHandler():GetLinkedGroup():Filter(Card.IsAbleToHand,nil)
-	local ct=sg:GetCount()
+	local ct=#sg
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=math.min(ct,1) end
 	local g1=Senya.SelectGroup(tp,HINTMSG_RTOHAND,tg,cm.thgcheck,nil,1,ct,tp,z)
 	local rct=Duel.SendtoHand(g1,nil,REASON_EFFECT)
 	local tsg=Duel.GetMatchingGroup(cm.sfilter,tp,LOCATION_HAND,0,nil,e,tp)
-	local minct=math.min(tsg:GetCount(),rct)
+	local minct=math.min(#tsg,rct)
 	minct=math.min(minct,Duel.GetMZoneCount(tp,nil,tp,LOCATION_REASON_TOFIELD,z))
 	if minct<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -63,7 +63,7 @@ function cm.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local og=Duel.GetOperatedGroup()
 	if og:FilterCount(Senya.check_set_prism,nil)==2 then
 		local rg=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)
-		if rg:GetCount()>0 and Duel.SelectYesNo(tp,m*16+1) then
+		if #rg>0 and Duel.SelectYesNo(tp,m*16+1) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 			local trg=rg:Select(tp,1,1,nil)
 			Duel.BreakEffect()

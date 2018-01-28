@@ -55,7 +55,7 @@ function cm.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local tg=g:Filter(Card.IsRelateToEffect,nil,e)
 	local c=e:GetHandler()
-	if tg:GetCount()>0 and c:IsRelateToEffect(e) then
+	if #tg>0 and c:IsRelateToEffect(e) then
 		Duel.Overlay(c,tg)
 	end
 end
@@ -69,7 +69,7 @@ function cm.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.filter,tp,0,LOCATION_MZONE,1,c,c:GetAttack()) end
 	local g=Duel.GetMatchingGroup(cm.filter,tp,0,LOCATION_MZONE,c,c:GetAttack())
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function cm.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

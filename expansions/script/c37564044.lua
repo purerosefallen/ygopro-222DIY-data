@@ -89,7 +89,7 @@ end
 function cm.sppop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetMZoneCount(tp)<=0 then return end
 	local g=Duel.GetMatchingGroup(cm.fffilter,tp,LOCATION_EXTRA,LOCATION_EXTRA,nil,e,tp)
-	if g:GetCount()>0 then
+	if #g>0 then
 		for i=0,9 do
 			Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(m,i))
 		end
@@ -109,7 +109,7 @@ end
 function cm.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local g=eg:Filter(cm.filter,nil,1-tp)
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE_SUMMON,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE_SUMMON,g,#g,0,0)
 end
 function cm.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()  

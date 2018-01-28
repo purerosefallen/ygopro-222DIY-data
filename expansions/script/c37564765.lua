@@ -143,37 +143,34 @@ function cm.GetValueType(v)
 end
 function cm.CheckGroupRecursive(c,sg,g,f,min,max,ext_params)
 	sg:AddCard(c)
-	local ct=sg:GetCount()
-	local res=(ct>=min and ct<=max and f(sg,table.unpack(ext_params)))
-		or (ct<max and g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params))
+	local res=(#sg>=min and #sg<=max and f(sg,table.unpack(ext_params)))
+		or (#sg<max and g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params))
 	sg:RemoveCard(c)
 	return res
 end
 function cm.CheckGroup(g,f,cg,min,max,...)
 	local min=min or 1
-	local max=max or g:GetCount()
+	local max=max or #g
 	if min>max then return false end
 	local ext_params={...}
 	local sg=Group.CreateGroup()
 	if cg then sg:Merge(cg) end
-	local ct=sg:GetCount()
-	if ct>=min and ct<=max and f(sg,...) then return true end
+	if #sg>=min and #sg<=max and f(sg,...) then return true end
 	return g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params)
 end
 function cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
 	local min=min or 1
-	local max=max or g:GetCount()
+	local max=max or #g
 	local ext_params={...}
 	local sg=Group.CreateGroup()
 	local cg=cg or Group.CreateGroup()
 	sg:Merge(cg)
-	local ct=sg:GetCount()
 	local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
-	while ct<max and ag:GetCount()>0 do
-		local finish=(ct>=min and ct<=max and f(sg,...))
+	while #sg<max and #ag>0 do
+		local finish=(#sg>=min and #sg<=max and f(sg,...))
 		local seg=sg:Clone()
-		local dmin=min-cg:GetCount()
-		local dmax=math.min(max-cg:GetCount(),g:GetCount())
+		local dmin=#sg
+		local dmax=math.min(max-#cg,#g)
 		seg:Sub(cg)
 		Duel.Hint(HINT_SELECTMSG,tp,desc)
 		local tc=ag:SelectUnselect(seg,tp,finish,finish,dmin,dmax)
@@ -183,26 +180,24 @@ function cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
 		else
 			sg:AddCard(tc)
 		end
-		ct=sg:GetCount()
 		ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)
 	end
 	return sg
 end
 function cm.SelectGroupWithCancel(tp,desc,g,f,cg,min,max,...)
 	local min=min or 1
-	local max=max or g:GetCount()
+	local max=max or #g
 	local ext_params={...}
 	local sg=Group.CreateGroup()
 	local cg=cg or Group.CreateGroup()
 	sg:Merge(cg)
-	local ct=sg:GetCount()
 	local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
-	while ct<max and ag:GetCount()>0 do
-		local finish=(ct>=min and ct<=max and f(sg,...))
-		local cancel=finish or ct==0
+	while #sg<max and #ag>0 do
+		local finish=(#sg>=min and #sg<=max and f(sg,...))
+		local cancel=finish or #sg==0
 		local seg=sg:Clone()
-		local dmin=min-cg:GetCount()
-		local dmax=math.min(max-cg:GetCount(),g:GetCount())
+		local dmin=#sg
+		local dmax=math.min(max-#cg,#g)
 		seg:Sub(cg)
 		Duel.Hint(HINT_SELECTMSG,tp,desc)
 		local tc=ag:SelectUnselect(seg,tp,finish,cancel,dmin,dmax)
@@ -215,7 +210,6 @@ function cm.SelectGroupWithCancel(tp,desc,g,f,cg,min,max,...)
 		else
 			sg:AddCard(tc)
 		end
-		ct=sg:GetCount()
 		ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)
 	end
 	return sg
@@ -241,9 +235,9 @@ function cm.OverlayFilter(c,nchk)
 	return nchk or not c:IsType(TYPE_TOKEN)
 end
 function cm.OverlayGroup(c,g,xm,nchk)
-	if not nchk and (not c:IsLocation(LOCATION_MZONE) or c:IsFacedown() or g:GetCount()<=0 or not c:IsType(TYPE_XYZ)) then return end
+	if not nchk and (not c:IsLocation(LOCATION_MZONE) or c:IsFacedown() or #g<=0 or not c:IsType(TYPE_XYZ)) then return end
 	local tg=g:Filter(cm.OverlayFilter,nil,nchk)
-	if tg:GetCount()==0 then return end
+	if #tg==0 then return end
 	local og=Group.CreateGroup()
 	for tc in aux.Next(tg) do
 		if tc:IsStatus(STATUS_LEAVE_CONFIRMED) then
@@ -251,7 +245,7 @@ function cm.OverlayGroup(c,g,xm,nchk)
 		end
 		og:Merge(tc:GetOverlayGroup())
 	end
-	if og:GetCount()>0 then
+	if #og>0 then
 		if xm then
 			Duel.Overlay(c,og)
 		else
@@ -829,7 +823,7 @@ function cm.PrismDamageCheckOperation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmDecktop(tp,ct)
 		local g=Duel.GetDecktopGroup(tp,ct)
 		local ag=g:Filter(cm.CheckPrism,nil)
-		if ag:GetCount()>0 then
+		if #ag>0 then
 			local val={0}
 			for tc in aux.Next(ag) do
 				val[1]=val[1]+tc:GetTextAttack()
@@ -848,7 +842,7 @@ function cm.PrismDamageCheckOperation(e,tp,eg,ep,ev,re,r,rp)
 			end
 			if Duel.SelectYesNo(tp,aux.Stringid(37564765,2)) then
 				local thg=ag:Filter(cm.PrismCheckAddHand,nil)
-				if thg:GetCount()>0 then
+				if #thg>0 then
 					local thc=thg:Select(tp,1,1,nil)
 					Duel.SendtoHand(thc,nil,REASON_EFFECT)
 					Duel.ConfirmCards(1-tp,thc)
@@ -945,9 +939,8 @@ function cm.PrismXyzFilter(c,xyzc)
 end
 function cm.PrismXyzCheck(min,max)
 	return function(g)
-		local ct=g:GetCount()
-		for i=min,math.min(max,ct*2) do
-			if g:CheckWithSumEqual(cm.PrismXyzValue,i,ct,ct) then return true end
+		for i=min,math.min(max,#g*2) do
+			if g:CheckWithSumEqual(cm.PrismXyzValue,i,#g,#g) then return true end
 		end
 		return false
 	end
@@ -1108,7 +1101,7 @@ function cm.PendConditionNanahira()
 				end
 				if mft<=0 then g=g:Filter(Card.IsLocation,nil,LOCATION_EXTRA) end
 				if eft<=0 then g:Remove(Card.IsLocation,nil,LOCATION_EXTRA) end
-				return g:GetCount()>0
+				return #g>0
 			end
 end
 function cm.PendCheckNanahira(g,mft,maxlist)
@@ -1351,8 +1344,8 @@ end
 function cm.NegateSummonTarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local g=eg:Filter(cm.filter,nil,e,1-tp)
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE_SUMMON,g,g:GetCount(),0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE_SUMMON,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,#g,0,0)
 end
 function cm.NegateSummonOperation(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(cm.NegateSummonFilter,nil,e,1-tp)
@@ -1649,9 +1642,8 @@ function cm.FusionCheck_3L(g,min,tp,fc,f,chkf,sub)
 	if g:IsExists(aux.FCheckTuneMagicianX,1,nil,g) then return false end
 	if chkf~=PLAYER_NONE and Duel.GetLocationCountFromEx(chkf,tp,g,fc)<=0 then return false end
 	if aux.FCheckAdditional and not aux.FCheckAdditional(tp,g,fc) then return false end
-	local ct=g:GetCount()
-	if ct==1 and fc:GetLevel()==7 and g:GetFirst():IsHasEffect(37564914) then return true end
-	return ct>=min and (not f or f(g,fc,sub))
+	if #g==1 and fc:GetLevel()==7 and g:GetFirst():IsHasEffect(37564914) then return true end
+	return #g>=min and (not f or f(g,fc,sub))
 end
 function cm.FusionCondition_3L(mf,f,min,max,myon,sub)
 return function(e,g,gc,chkfnf)
@@ -2474,8 +2466,7 @@ function cm.DFCBackSideCommonEffect(c)
 end
 --for ritual update
 function cm.CheckRitualMaterialGoal(g,c,tp,lv,f,gt)
-	local ct=g:GetCount()
-	return cm.CheckSummonLocation(c,tp,g) and (g:CheckWithSumEqual(f,lv,ct,ct,c) or (gt and cm.CheckGreaterExact(g,f,lv,c)))
+	return cm.CheckSummonLocation(c,tp,g) and (g:CheckWithSumEqual(f,lv,#g,#g,c) or (gt and cm.CheckGreaterExact(g,f,lv,c)))
 end
 function cm.DivideValueMax(f,...)
 	local ext_params={...}

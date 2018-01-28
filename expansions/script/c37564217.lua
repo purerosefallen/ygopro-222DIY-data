@@ -24,7 +24,7 @@ end
 function cm.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetOverlayGroup(tp,0,1)
-	local val=g:GetCount()*300
+	local val=#g*300
 	if val~=0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
 		Duel.BreakEffect()

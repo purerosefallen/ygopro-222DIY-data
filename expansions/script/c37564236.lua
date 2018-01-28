@@ -27,7 +27,7 @@ function cm.op(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
 	Duel.ConfirmCards(tp,g)
 	local tg=g:Filter(Card.IsCode,nil,cd)
-	if tg:GetCount()>0 then
+	if #tg>0 then
 		Duel.Remove(tg,POS_FACEUP,REASON_EFFECT)
 	end
 end

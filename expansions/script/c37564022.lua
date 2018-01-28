@@ -59,10 +59,10 @@ function cm.retop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,cm.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-	if g:GetCount()>0 and not g:GetFirst():IsHasEffect(EFFECT_NECRO_VALLEY) then
+	if #g>0 and not g:GetFirst():IsHasEffect(EFFECT_NECRO_VALLEY) then
 		if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)>0 then 
 		local g2=Duel.GetMatchingGroup(cm.filter2,tp,LOCATION_HAND+LOCATION_GRAVE,0,nil)
-			if g2:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(m,0)) then
+			if #g2>0 and Duel.SelectYesNo(tp,aux.Stringid(m,0)) then
 				Duel.BreakEffect()
 				Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(m,2))
 				local sg2=g2:Select(tp,1,1,nil)

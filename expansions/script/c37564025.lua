@@ -38,7 +38,7 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 		or ac:IsImmuneToEffect(e) or not ac:IsRelateToEffect(e) then return end
 	if tc:IsType(TYPE_XYZ) then
 		local og=ac:GetOverlayGroup()
-		if og:GetCount()>0 then
+		if #og>0 then
 			Duel.SendtoGrave(og,REASON_RULE)
 		end
 		Duel.Overlay(tc,Group.FromCards(ac))

@@ -62,7 +62,7 @@ function cm.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 			e:Reset()
 		end)
 		Duel.RegisterEffect(e1,tp)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,sg:GetCount())
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,#sg)
 end
 function cm.drop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -120,7 +120,7 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 			local g=Duel.SelectMatchingCard(tp,cm.dfilter,tp,LOCATION_DECK,0,1,1,nil,tc)
-			if g:GetCount()>0 then
+			if #g>0 then
 				Duel.SendtoGrave(g,REASON_EFFECT)
 			end
 		end

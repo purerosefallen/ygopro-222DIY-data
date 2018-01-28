@@ -22,7 +22,7 @@ function cm.cfilter(c)
 end
 function cm.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(cm.cfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil)
-	return g:GetCount()>6 and g:IsExists(Card.IsType,3,nil,TYPE_XYZ)
+	return #g>6 and g:IsExists(Card.IsType,3,nil,TYPE_XYZ)
 end
 function cm.rfilter(c,e)
 	if e and c:IsImmuneToEffect(e) then return false end
@@ -37,13 +37,13 @@ function cm.scheck(g,c,tp)
 end
 function cm.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(cm.rfilter,tp,LOCATION_MZONE,0,e:GetHandler())
-	if chk==0 then return g:GetCount()>0 and Duel.IsExistingMatchingCard(cm.sfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil,e,tp,g) end
+	if chk==0 then return #g>0 and Duel.IsExistingMatchingCard(cm.sfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil,e,tp,g) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_EXTRA)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,#g,0,0)
 end
 function cm.gcheck(g,mft,eft)
 	local ect=g:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)
-	return ect<=eft and g:GetCount()-ect<=mft
+	return ect<=eft and #g-ect<=mft
 end
 function cm.RegisterBuff(c,ec)
 	local e1=Effect.CreateEffect(ec)
@@ -73,7 +73,7 @@ function cm.RegisterBuff(c,ec)
 end
 function cm.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(cm.rfilter,tp,LOCATION_MZONE,0,e:GetHandler(),e)
-	if g:GetCount()==0 or not Duel.IsExistingMatchingCard(cm.sfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil,e,tp,g) then return end
+	if #g==0 or not Duel.IsExistingMatchingCard(cm.sfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil,e,tp,g) then return end
 	local ct=Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
 	local sg=Duel.GetMatchingGroup(cm.sfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,nil,e,tp)

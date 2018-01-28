@@ -36,7 +36,7 @@ function cm.tdop(e,tp,eg,ep,ev,re,r,rp)
 	if not (ar and cm.dtchk(tp) and c:IsRelateToEffect(e)) then return end
 	if (ar & LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA)~=0 then
 		local g1=Duel.GetMatchingGroup(cm.filter,tp,0,ar,nil)
-		if g1:GetCount()>0 then
+		if #g1>0 then
 			if ar==LOCATION_HAND then
 				g=g1:RandomSelect(tp,1)
 			else
@@ -52,7 +52,7 @@ function cm.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc and not tc:IsImmuneToEffect(e) then
 		local og=tc:GetOverlayGroup()
-		if og:GetCount()>0 then
+		if #og>0 then
 			Duel.SendtoGrave(og,REASON_RULE)
 		end
 		if tc:IsFaceup() and tc:IsType(TYPE_SPELL+TYPE_TRAP) and ar==LOCATION_SZONE then

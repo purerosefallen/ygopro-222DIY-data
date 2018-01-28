@@ -65,7 +65,7 @@ function cm.initial_effect(c)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			g=Duel.SelectMatchingCard(tp,cm.tfilter,tp,LOCATION_REMOVED,0,1,2,nil,1)
 		end
-		if g:GetCount()>0 then
+		if #g>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 		end
 	end)   

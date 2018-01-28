@@ -117,7 +117,7 @@ function cm.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
 		local g=Duel.SelectMatchingCard(tp,cm.drfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,tc,e,tp)
-		if g:GetCount()>0 then
+		if #g>0 then
 			Duel.HintSelection(g)
 			Senya.OverlayGroup(c,g)
 		end

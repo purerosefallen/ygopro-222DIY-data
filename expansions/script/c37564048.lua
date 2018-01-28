@@ -41,7 +41,7 @@ function cm.xmop(e,tp,eg,ep,ev,re,r,rp)
 			  if Duel.SelectYesNo(tp,aux.Stringid(m,2)) then
 					Duel.BreakEffect()
 					local og=tc:GetOverlayGroup()
-					if og:GetCount()>0 then
+					if #og>0 then
 						Duel.SendtoGrave(og,REASON_RULE)
 					end
 					Duel.Overlay(ssc,Group.FromCards(tc))
