@@ -45,7 +45,7 @@ function c13254125.spop(e,tp,eg,ep,ev,re,r,rp)
 			e11:SetRange(LOCATION_MZONE)
 			e11:SetCode(EFFECT_CANNOT_TRIGGER)
 			e11:SetReset(RESET_EVENT+0x1fe0000+EVENT_SPSUMMON_SUCCESS)
-			tc:RegisterEffect(e11)
+			--tc:RegisterEffect(e11)
 		end
 	end
 end
@@ -74,7 +74,7 @@ function c13254125.spop1(e,tp,eg,ep,ev,re,r,rp)
 			e11:SetRange(LOCATION_MZONE)
 			e11:SetCode(EFFECT_CANNOT_TRIGGER)
 			e11:SetReset(RESET_EVENT+0x1fe0000+EVENT_SPSUMMON_SUCCESS)
-			tc:RegisterEffect(e11)
+			--tc:RegisterEffect(e11)
 		end
 	end
 end
