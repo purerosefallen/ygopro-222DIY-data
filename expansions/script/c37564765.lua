@@ -168,10 +168,9 @@ function cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
 	local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
 	while #sg<max and #ag>0 do
 		local finish=(#sg>=min and #sg<=max and f(sg,...))
-		local seg=sg:Clone()
-		local dmin=#sg
+		local seg=sg-cg
+		local dmin=#seg
 		local dmax=math.min(max-#cg,#g)
-		seg:Sub(cg)
 		Duel.Hint(HINT_SELECTMSG,tp,desc)
 		local tc=ag:SelectUnselect(seg,tp,finish,finish,dmin,dmax)
 		if not tc then break end
@@ -195,10 +194,9 @@ function cm.SelectGroupWithCancel(tp,desc,g,f,cg,min,max,...)
 	while #sg<max and #ag>0 do
 		local finish=(#sg>=min and #sg<=max and f(sg,...))
 		local cancel=finish or #sg==0
-		local seg=sg:Clone()
-		local dmin=#sg
+		local seg=sg-cg
+		local dmin=#seg
 		local dmax=math.min(max-#cg,#g)
-		seg:Sub(cg)
 		Duel.Hint(HINT_SELECTMSG,tp,desc)
 		local tc=ag:SelectUnselect(seg,tp,finish,cancel,dmin,dmax)
 		if not tc then
