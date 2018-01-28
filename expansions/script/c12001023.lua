@@ -152,15 +152,18 @@ function c12001023.disop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.DisableShuffleCheck()
 		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
 		if not e:GetHandler():IsRelateToEffect(e) then return end
+		local check=false
 		for i=1,ev do
-		local te=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_EFFECT)
-		if te:GetOwnerPlayer()~=tp then
-			Duel.NegateActivation(i)
+			local te=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_EFFECT)
+			if te:GetOwnerPlayer()~=tp then
+				check=Duel.NegateActivation(i) or check
+			end
 		end
-		Duel.Destroy(e:GetHandler(),REASON_EFFECT)
-	end
+		if check then
+			Duel.Destroy(e:GetHandler(),REASON_EFFECT)
+		end
 	else
 		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
 		Duel.ShuffleDeck(nil)
-end
+	end
 end
