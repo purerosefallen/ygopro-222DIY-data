@@ -161,8 +161,8 @@ function c12001023.disop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		if check then
 			Duel.BreakEffect()
-			Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 		end
+		Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 	else
 		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
 		Duel.ShuffleDeck(tp)
