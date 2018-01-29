@@ -271,9 +271,9 @@ function cm.MustMaterialCheck(v,tp,code)
 	return true
 end
 --xyz summon of prim
-function cm.AddXyzProcedureRank(c,rk,f,minct,maxct,xm,...)
+function cm.AddXyzProcedureRank(c,rk,f,minct,maxct,xm,exop,...)
 	local ext_params={...}
-	return cm.AddXyzProcedureCustom(c,cm.XyzProcedureRankFilter(rk,f,ext_params),cm.XyzProcedureRankCheck,minct,maxct,xm)
+	return cm.AddXyzProcedureCustom(c,cm.XyzProcedureRankFilter(rk,f,ext_params),cm.XyzProcedureRankCheck,minct,maxct,xm,exop)
 end
 function cm.XyzProcedureRankFilter(rk,f,ext_params)
 return function(c,xyzc)
@@ -298,7 +298,7 @@ function cm.XyzProcedureCustomCheck(g,xyzc,tp,gf)
 	if g:IsExists(cm.XyzProcedureCustomTuneMagicianCheck,1,nil,g) then return false end
 	return not gf or gf(g,xyzc,tp)
 end
-function cm.AddXyzProcedureCustom(c,func,gf,minc,maxc,xm,...)
+function cm.AddXyzProcedureCustom(c,func,gf,minc,maxc,xm,exop,...)
 	local ext_params={...}
 	c:EnableReviveLimit()
 	local maxc=maxc or minc
@@ -309,7 +309,7 @@ function cm.AddXyzProcedureCustom(c,func,gf,minc,maxc,xm,...)
 	e1:SetRange(LOCATION_EXTRA)
 	e1:SetCondition(cm.XyzProcedureCustomCondition(func,gf,minc,maxc,ext_params))
 	e1:SetTarget(cm.XyzProcedureCustomTarget(func,gf,minc,maxc,ext_params))
-	e1:SetOperation(cm.XyzProcedureCustomOperation(xm))
+	e1:SetOperation(cm.XyzProcedureCustomOperation(xm,exop))
 	e1:SetValue(SUMMON_TYPE_XYZ)
 	c:RegisterEffect(e1)
 	return e1
@@ -378,9 +378,10 @@ function cm.XyzProcedureCustomTarget(func,gf,minct,maxct,ext_params)
 		else return false end
 	end
 end
-function cm.XyzProcedureCustomOperation(xm)
+function cm.XyzProcedureCustomOperation(xm,exop)
 	return function(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
 		local g=e:GetLabelObject()
+		if exop then exop(e,tp,g,c) end
 		c:SetMaterial(g)
 		cm.OverlayGroup(c,g,xm,true)
 		g:DeleteGroup()
