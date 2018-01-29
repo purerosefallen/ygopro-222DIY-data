@@ -44,7 +44,7 @@ function c13254036.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 end
 function c13254036.adfilter(c)
-	return (c:GetAttack()>0 or c:IsAttackPos()) and not c:IsType(TYPE_LINK) and c:IsFaceup()
+	return (c:GetAttack()>0 or c:IsAttackPos()) and c:IsCanChangePosition() and c:IsFaceup()
 end
 function c13254036.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c13254036.adfilter,tp,0,LOCATION_MZONE,1,nil) end

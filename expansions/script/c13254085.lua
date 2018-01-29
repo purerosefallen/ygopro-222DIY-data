@@ -117,7 +117,7 @@ function c13254085.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(c13254085.filter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,nil)
 	local d=math.floor(ct/4)
 	if chk==0 then return c:GetFlagEffect(13254085)<d end
-	c:RegisterFlagEffect(13254085,RESET_EVENT+0x1fe0000+EVENT_SPSUMMON_SUCCESS,0,1)
+	c:RegisterFlagEffect(13254085,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 end
 function c13254085.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
