@@ -1,5 +1,5 @@
 ﻿ygopro_222.exe	fd0290f672b82797aed4ef40fbe84b01
-expansions/222DIY.cdb	47d9e8770847584e86ed5813ab92a088
+expansions/222DIY.cdb	b7de94e3dd3f94f7d538ef08fe005002
 expansions/lflist.conf	ffe375d0386b059485cd2a0d859baca0
 expansions/strings.conf	26d7c2edd8357f3cdc8468d4f86554b2
 expansions/pics/08209710.jpg	ed0e60085631bfa641ffeebd6abbd910
@@ -1366,6 +1366,7 @@ expansions/pics/22251101.jpg	b897a581563ca99b9318ee18acef8296
 expansions/pics/22251102.jpg	b39d7a1f9e1fc7b87b408fa19c8a74f5
 expansions/pics/22251201.jpg	e21da7e03432a99f311bce28bc5c8d0b
 expansions/pics/22251501.jpg	a598d30dbc307704c59fc27db0db4f51
+expansions/pics/22251502.jpg	0bcce6b9abe4e45aba98b2db049ba9f1
 expansions/pics/22252001.jpg	f3cf900623cc82d83b2c64e13a6091c9
 expansions/pics/22252101.jpg	09bd00dcb2e9f23dd6b23dce102ea3bd
 expansions/pics/22252201.jpg	ddcc5b33193a49f85cdb79b5ab9795dc
@@ -3879,6 +3880,7 @@ expansions/script/c22251101.lua	258e365737b8f1ce609e6bde8cbb838a
 expansions/script/c22251102.lua	525c6f1cc77b97e0f4f8d08f2e983abc
 expansions/script/c22251201.lua	d80d14f8eab16081369cf3b8f9999d0b
 expansions/script/c22251501.lua	de395ab4e5245dcf5ec37b5f73ef666b
+expansions/script/c22251502.lua	5cdf8c7e0918462a560cced60cc0147e
 expansions/script/c22252001.lua	981ce1c6b39c9305c4820a6b4483da7a
 expansions/script/c22252101.lua	e7c0c5a6f23b60110d140db694e18974
 expansions/script/c22252201.lua	fe94ed058a5fcee600b3832174b716d8
@@ -5236,7 +5238,7 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	d6dde72e59a3382404d432381cce72ca
+update/filelist.txt	c41019f7ad7b84b188b11bc0ea4f6ea5
 update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
 update/update-without-sound.bat	22d7b973d79ef9311213aeff61d93d7c
-update/version.txt	9a2c767dea23188b62a65d861f95461b
+update/version.txt	5c766c36777850493b0430275ad8c6eb
