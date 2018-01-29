@@ -38,14 +38,15 @@ function c13254125.spop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 then
 			local tc=g:GetFirst()
+			local p=Duel.GetCurrentPhase()
 			--cannot release
 			local e11=Effect.CreateEffect(e:GetHandler())
 			e11:SetType(EFFECT_TYPE_SINGLE)
 			e11:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 			e11:SetRange(LOCATION_MZONE)
 			e11:SetCode(EFFECT_CANNOT_TRIGGER)
-			e11:SetReset(RESET_EVENT+0x1fe0000+EVENT_SPSUMMON_SUCCESS)
-			--tc:RegisterEffect(e11)
+			e11:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+p)
+			tc:RegisterEffect(e11)
 		end
 	end
 end
@@ -67,14 +68,15 @@ function c13254125.spop1(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 then
 			local tc=g:GetFirst()
+			local p=Duel.GetCurrentPhase()
 			--cannot release
 			local e11=Effect.CreateEffect(e:GetHandler())
 			e11:SetType(EFFECT_TYPE_SINGLE)
 			e11:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 			e11:SetRange(LOCATION_MZONE)
 			e11:SetCode(EFFECT_CANNOT_TRIGGER)
-			e11:SetReset(RESET_EVENT+0x1fe0000+EVENT_SPSUMMON_SUCCESS)
-			--tc:RegisterEffect(e11)
+			e11:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+p)
+			tc:RegisterEffect(e11)
 		end
 	end
 end

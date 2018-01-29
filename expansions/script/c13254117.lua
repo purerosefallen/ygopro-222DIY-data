@@ -34,6 +34,15 @@ function c13254117.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetValue(c13254117.efilter)
 	c:RegisterEffect(e4)
+	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(13254117,1))
+	e5:SetType(EFFECT_TYPE_QUICK_O)
+	e5:SetRange(LOCATION_SZONE)
+	e5:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e5:SetCondition(c13254117.descon)
+	e5:SetCost(c13254117.descost)
+	e5:SetOperation(c13254117.desop)
+	c:RegisterEffect(e5)
 	
 end
 function c13254117.lfilter(c)
@@ -64,4 +73,23 @@ function c13254117.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 end
 function c13254117.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
+end
+function c13254117.descon(e,tp,eg,ep,ev,re,r,rp)
+	return tp~=Duel.GetTurnPlayer()
+end
+function c13254117.filter(c)
+	return c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER)
+end
+function c13254117.descost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	local lg=e:GetHandler():GetLinkedGroup()
+	local ct=lg:FilterCount(c13254117.filter,nil)
+	if chk==0 then return c:GetFlagEffect(13254117)<ct end
+	c:RegisterFlagEffect(13254117,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+end
+function c13254117.desop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetAttacker()
+	if tc:IsRelateToEffect(e) and tc:IsAttackable() and not tc:IsStatus(STATUS_ATTACK_CANCELED) then
+		Duel.Destroy(tc,REASON_EFFECT)
+	end
 end

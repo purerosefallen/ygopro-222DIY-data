@@ -32,7 +32,7 @@ end
 function c13254113.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c13254113.costfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.GetCurrentPhase()~=PHASE_MAIN2 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c13254113.costfilter,tp,LOCATION_GRAVE,0,1,5,nil)
+	local g=Duel.SelectMatchingCard(tp,c13254113.costfilter,tp,LOCATION_GRAVE,0,1,4,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 	e:SetLabel(g:GetCount())
 	local e1=Effect.CreateEffect(e:GetHandler())

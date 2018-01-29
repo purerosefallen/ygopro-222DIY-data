@@ -155,14 +155,18 @@ function c13257332.spop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)==0 then return end
 		local sg=e:GetLabelObject()
-		if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
+		if Duel.GetLocationCount(tp,LOCATION_SZONE)>1 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-			local tc=sg:Select(tp,1,1,nil)
-			Duel.Equip(tp,tc:GetFirst(),g:GetFirst(),true,true)
+			local eg1=sg:Select(tp,2,2,nil)
+			local tc=eg1:GetFirst()
+			while tc do
+				Duel.Equip(tp,tc,g:GetFirst(),true,true)
+				tc=sg:GetNext()
+			end
 			Duel.EquipComplete()
 		end
 	end
 end
 function c13257332.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257332,7))
+	Duel.Hint(11,0,aux.Stringid(13257332,7))
 end

@@ -1,80 +1,81 @@
---回锅白泽球
+--白沢球的就寝
 function c22221102.initial_effect(c)
-	--Activate
+	--buff
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_DISABLE+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCategory(CATEGORY_TOHAND)
-	e1:SetCountLimit(1,22221102)
 	e1:SetTarget(c22221102.target)
 	e1:SetOperation(c22221102.operation)
 	c:RegisterEffect(e1)
-	--search
+	--to hand
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_REMOVE)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
-	e2:SetCode(EVENT_REMOVE)
-	e2:SetCountLimit(1)
-	e2:SetTarget(c22221102.shtg)
-	e2:SetOperation(c22221102.shop)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCost(aux.bfgcost)
+	e2:SetOperation(c22221102.op)
 	c:RegisterEffect(e2)
-
-end
-
-c22221102.named_with_Shirasawa_Tama=1
-function c22221102.IsShirasawaTama(c)
-	local m=_G["c"..c:GetCode()]
-	return m and m.named_with_Shirasawa_Tama
 end
 function c22221102.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMatchingGroupCount(Card.IsAbleToRemove, tp, LOCATION_DECK, 0, nil) > 2 end
+	if chk==0 then return true end
+	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
+		Duel.SetChainLimit(c22221102.chlimit)
+	end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
-
-function c22221102.filter(c)
-	return c22221102.IsShirasawaTama(c) and c:IsFaceup()
+function c22221102.chlimit(e,ep,tp)
+	return not e:IsActiveType(TYPE_MONSTER)
 end
-
-function c22221102.pfilter(c)
-	return c22221102.IsShirasawaTama(c) and c:IsAbleToRemove()
-end
-
 function c22221102.operation(e,tp,eg,ep,ev,re,r,rp)
-	local c = e:GetHandler()
-	Duel.ConfirmDecktop(tp,3)
-	local sg = Duel.GetDecktopGroup(tp,3)
-	local pg = sg:Filter(c22221102.pfilter, nil)
-	if pg:GetCount() > 0 then
-		local tc=pg:GetFirst()
-		while tc do
-			Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
-			if tc:IsType(TYPE_MONSTER) then tc:CompleteProcedure() end
-			tc=pg:GetNext()
-		end
-		Duel.ShuffleDeck(tp)
-		if Duel.IsExistingMatchingCard(c22221102.filter,tp,LOCATION_ONFIELD,0,1,e:GetHandler()) and Duel.IsExistingMatchingCard(c22221102.sfilter,tp,LOCATION_DECK,0,1,nil) then
-			Duel.BreakEffect()
-			local ssg=Duel.SelectMatchingCard(tp,c22221102.sfilter,tp,LOCATION_DECK,0,1,1,nil)
-			if ssg:GetCount()>0 then
-				Duel.SendtoHand(ssg,nil,REASON_EFFECT)
-				Duel.ConfirmCards(1-tp,ssg)
-				Duel.ShuffleHand(tp)
-			end
-		end
+	local c=e:GetHandler()
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_IMMUNE_EFFECT)
+	e1:SetTargetRange(LOCATION_MZONE,0)
+	e1:SetReset(RESET_PHASE+PHASE_STANDBY)
+	e1:SetTarget(c22221102.tg)
+	e1:SetValue(c22221102.efilter)
+	Duel.RegisterEffect(e1,tp)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_DISABLE)
+	e2:SetTargetRange(LOCATION_MZONE,0)
+	e2:SetReset(RESET_PHASE+PHASE_STANDBY)
+	e2:SetTarget(c22221102.tg)
+	Duel.RegisterEffect(e2,tp)
+	if Duel.IsExistingMatchingCard(c22221102.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetMZoneCount(tp)>0 and Duel.SelectYesNo(tp,aux.Stringid(22221102,0)) then
+		Duel.BreakEffect()
+		local sg=Duel.SelectMatchingCard(tp,c22221102.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function c22221102.sfilter(c)
-	return c22221102.IsShirasawaTama(c) and c:IsAbleToHand()
+function c22221102.spfilter(c,e,tp)
+	return c:IsSetCard(0x50f) and c:IsType(TYPE_SPIRIT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c22221102.shtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c22221102.sfilter,tp,LOCATION_DECK+LOCATION_REMOVED,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_REMOVED)
+function c22221102.tg(e,c)
+	return c:IsSetCard(0x50f)
 end
-function c22221102.shop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c22221102.sfilter,tp,LOCATION_DECK+LOCATION_REMOVED,0,1,1,nil)
-	if g:GetCount()>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
-	end
+function c22221102.efilter(e,re)
+	return e:GetHandlerPlayer()~=re:GetHandlerPlayer()
+end
+function c22221102.op(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CANNOT_DISEFFECT)
+	e1:SetCondition(c22221102.effectcon)
+	e1:SetValue(c22221102.effectfilter)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+end
+function c22221102.confilter(c)
+	return c:IsSetCard(0x50f) and c:IsType(TYPE_SPIRIT) and c:IsFaceup()
+end
+function c22221102.effectcon(e,c)
+	return Duel.IsExistingMatchingCard(c22221102.confilter,tp,LOCATION_MZONE,0,1,nil,ft)
+end
+function c22221102.effectfilter(e,ct)
+	local te=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT)
+	local tc=te:GetHandler()
+	return tc:IsSetCard(0x50f) and tc:IsType(TYPE_MONSTER)
 end
