@@ -48,13 +48,12 @@ function c61107.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c61107.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,eg:GetCount(),0,0)
 end
 function c61107.operation(e,tp,eg,ep,ev,re,r,rp)
 	local sg=eg:Filter(c61107.cfilter,nil,1-tp)
 	if sg:GetCount()>0 then
-		local g=eg:Select(tp,1,1,nil)
-		Duel.Destroy(g,REASON_EFFECT)
+		Duel.Destroy(sg,REASON_EFFECT)
 	end
 end
 function c61107.drcost(e,tp,eg,ep,ev,re,r,rp,chk)

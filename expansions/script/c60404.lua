@@ -24,7 +24,6 @@ function c60404.initial_effect(c)
 	e2:SetCost(c60404.drcost)
 	e2:SetTarget(c60404.drtg)
 	e2:SetOperation(c60404.drop)
-	e2:SetCountLimit(1)
 	c:RegisterEffect(e2)
 end
 c60404.DescSetName = 0x229

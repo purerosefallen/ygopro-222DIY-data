@@ -29,7 +29,7 @@ c60605.DescSetName = 0x229
 function c60605.umbfilter(c,e,tp)
 	local code=c:GetOriginalCode()
 	local mt=_G["c" .. code]
-	return c:GetAttack()==400 and c:GetDefense()==1000 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:GetAttack()==400 and c:IsAttribute(ATTRIBUTE_WATER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and not Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,c:GetCode())
 end
 function c60605.cfilter(c,tp)

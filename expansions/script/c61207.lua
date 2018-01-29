@@ -30,7 +30,7 @@ c61207.DescSetName = 0x229
 function c61207.umbfilter(c)
 	local code=c:GetOriginalCode()
 	local mt=_G["c" .. code]
-	return not c:IsLevelAbove(5) and c:IsDiscardable()
+	return c:IsDiscardable()
 end
 function c61207.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()

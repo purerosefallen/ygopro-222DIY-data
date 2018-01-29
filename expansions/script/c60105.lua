@@ -19,7 +19,7 @@ end
 c60105.DescSetName = 0x229
 function c60105.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainNegatable(ev) then return false end
-	local ex=Duel.GetOperationInfo(ev,CATEGORY_NEGATE)
+	local ex=Duel.GetOperationInfo(ev,CATEGORY_DISABLE)
 	return ex
 end
 function c60105.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -32,6 +32,7 @@ function c60105.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 	end
+	Duel.SetChainLimit(aux.FALSE)
 end
 function c60105.negop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re)then
