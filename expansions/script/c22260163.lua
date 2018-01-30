@@ -59,7 +59,7 @@ function c22260163.IsKuMaKawa(c)
 end
 function c22260163.mlimit(e,c)
 	if not c then return false end
-	return c:GetAttack()~=0
+	return c:GetBaseAttack()~=0
 end
 function c22260163.mfilter(c,lc)
 	return c:GetBaseAttack()==0 and c:IsCanBeLinkMaterial(lc)

@@ -12,7 +12,7 @@ function c22261102.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c22261102.tdfilter(c)
-	return c:IsFaceup() and c:IsAbleToDeck()
+	return c:IsAbleToDeck()
 end
 function c22261102.sfilter(c,tp)
 	return c:IsLocation(LOCATION_DECK) and c:IsControler(tp)

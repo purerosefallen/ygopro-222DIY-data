@@ -63,7 +63,6 @@ function c22221102.op(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_DISEFFECT)
-	e1:SetCondition(c22221102.effectcon)
 	e1:SetValue(c22221102.effectfilter)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
@@ -71,11 +70,9 @@ end
 function c22221102.confilter(c)
 	return c:IsSetCard(0x50f) and c:IsType(TYPE_SPIRIT) and c:IsFaceup()
 end
-function c22221102.effectcon(e,c)
-	return Duel.IsExistingMatchingCard(c22221102.confilter,tp,LOCATION_MZONE,0,1,nil,ft)
-end
-function c22221102.effectfilter(e,ct)
-	local te=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT)
+function c22221102.effectfilter(e,tp,eg,ep,ev,re,r,rp,ct)
+	local te,tp=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER)
 	local tc=te:GetHandler()
-	return tc:IsSetCard(0x50f) and tc:IsType(TYPE_MONSTER)
+	local p=e:GetHandler():GetControler()
+	return tc:IsSetCard(0x50f) and tc:IsType(TYPE_MONSTER) and p==tp and Duel.IsExistingMatchingCard(c22221102.confilter,tp,LOCATION_MZONE,0,1,nil)
 end

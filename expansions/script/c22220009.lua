@@ -29,13 +29,13 @@ function c22220009.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c22220009.cfilter2(c,code)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x50f) and (not c:IsPublic()) and (not c:IsCode(22220009) and (not c:IsCode(code)))
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x50f) and (not c:IsPublic()) and (not c:IsCode(22220009)) and (not c:IsCode(code))
 end
-function c22220009.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x50f) and Duel.IsExistingMatchingCard(c22220009.cfilter2,tp,LOCATION_HAND,0,1,nil,c:GetCode()) and (not c:IsPublic()) and (not c:IsCode(22220009))
+function c22220009.cfilter(c,tp)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x50f) and (not c:IsPublic()) and (not c:IsCode(22220009)) and Duel.IsExistingMatchingCard(c22220009.cfilter2,tp,LOCATION_HAND,0,1,nil,c:GetCode()) 
 end
 function c22220009.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c22220009.cfilter,tp,LOCATION_HAND,0,1,nil) and Duel.GetMZoneCount(tp)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c22220009.cfilter,tp,LOCATION_HAND,0,1,nil,tp) and Duel.GetMZoneCount(tp)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_HANDES,0,1,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
@@ -43,11 +43,11 @@ function c22220009.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c22220009.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not Duel.IsExistingMatchingCard(c22220009.cfilter,tp,LOCATION_HAND,0,1,nil) then return end
-	local tc1=Duel.SelectMatchingCard(tp,c22220009.cfilter,tp,LOCATION_HAND,0,1,1,nil):GetFirst()
-	local g1=Duel.GetFieldGroup(tp,LOCATION_HAND,0):Filter(Card.IsCode,nil,tc1:GetCode()):Filter(c22220009.cfilter,nil)
+	if not Duel.IsExistingMatchingCard(c22220009.cfilter,tp,LOCATION_HAND,0,1,nil,tp) then return end
+	local tc1=Duel.SelectMatchingCard(tp,c22220009.cfilter,tp,LOCATION_HAND,0,1,1,nil,tp):GetFirst()
+	local g1=Duel.GetFieldGroup(tp,LOCATION_HAND,0):Filter(Card.IsCode,nil,tc1:GetCode()):Filter(c22220009.cfilter,nil,tp)
 	local tc2=Duel.SelectMatchingCard(tp,c22220009.cfilter2,tp,LOCATION_HAND,0,1,1,nil,tc1:GetCode()):GetFirst()
-	local g2=Duel.GetFieldGroup(tp,LOCATION_HAND,0):Filter(Card.IsCode,nil,tc2:GetCode()):Filter(c22220009.cfilter2,nil)
+	local g2=Duel.GetFieldGroup(tp,LOCATION_HAND,0):Filter(Card.IsCode,nil,tc2:GetCode()):Filter(c22220009.cfilter2,nil,tc1:GetCode())
 	local g=Group.CreateGroup()
 	g:Merge(g1)
 	g:Merge(g2)
