@@ -74,7 +74,7 @@ function cm.initial_effect(c)
 				table.insert(cm.check[ep],tc:GetCode())
 			end
 		end)
-		Duel.RegisterEffect(ge1)
+		Duel.RegisterEffect(ge1,0)
 		local ge1=Effect.GlobalEffect()
 		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		ge1:SetCode(EVENT_PHASE_START+PHASE_DRAW)
