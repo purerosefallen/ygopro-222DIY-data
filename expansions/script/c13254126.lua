@@ -1,4 +1,4 @@
---盛燃的乌金飞球
+﻿--盛燃的乌金飞球
 function c13254126.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -63,7 +63,8 @@ function c13254126.actlimit(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e4,tp)
 end
 function c13254126.aclimit3(e,re,tp)
-	return (loc==LOCATION_GRAVE or loc==LOCATION_HAND) and not re:GetHandler():IsImmuneToEffect(e)
+    local loc=re:GetHandler():GetLocation()
+    return (loc==LOCATION_GRAVE or loc==LOCATION_HAND) and not re:GetHandler():IsImmuneToEffect(e)
 end
 function c13254126.splimit(e,c)
 	return not c:IsSetCard(0x356)
