@@ -54,6 +54,7 @@ function cm.seqop(e,tp,eg,ep,ev,re,r,rp)
 			local nseq=math.log(s,2)
 			Duel.MoveSequence(c,nseq)
 		end
+	end
 end
 
 

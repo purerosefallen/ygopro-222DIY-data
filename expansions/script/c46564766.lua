@@ -43,28 +43,28 @@ end
 function c46564764.splimit(e,se,sp,st)
 	return e:GetHandler():GetLocation()~=LOCATION_EXTRA
 end
-function c22638495.rfilter(c,fc)
+function c46564764.rfilter(c,fc)
 	return c:IsAttribute(ATTRIBUTE_WATER) and c:IsType(TYPE_TUNER) and c:IsCanBeFusionMaterial(fc)
 end
-function c22638495.spfilter1(c,tp,g)
-	return g:IsExists(c22638495.spfilter2,1,c,tp,c)
+function c46564764.spfilter1(c,tp,g)
+	return g:IsExists(c46564764.spfilter2,1,c,tp,c)
 end
-function c22638495.spfilter2(c,tp,mc)
+function c46564764.spfilter2(c,tp,mc)
 	return Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(c,mc))>0
 end
-function c22638495.spcon(e,c)
+function c46564764.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local rg=Duel.GetReleaseGroup(tp):Filter(c22638495.rfilter,nil,c)
-	return rg:IsExists(c22638495.spfilter1,1,nil,tp,rg)
+	local rg=Duel.GetReleaseGroup(tp):Filter(c46564764.rfilter,nil,c)
+	return rg:IsExists(c46564764.spfilter1,1,nil,tp,rg)
 end
-function c22638495.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetReleaseGroup(tp):Filter(c22638495.rfilter,nil,c)
+function c46564764.sprop(e,tp,eg,ep,ev,re,r,rp,c)
+	local rg=Duel.GetReleaseGroup(tp):Filter(c46564764.rfilter,nil,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g1=rg:FilterSelect(tp,c22638495.spfilter1,1,1,nil,tp,rg)
+	local g1=rg:FilterSelect(tp,c46564764.spfilter1,1,1,nil,tp,rg)
 	local mc=g1:GetFirst()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local g2=rg:FilterSelect(tp,c22638495.spfilter2,1,1,mc,tp,mc)
+	local g2=rg:FilterSelect(tp,c46564764.spfilter2,1,1,mc,tp,mc)
 	g1:Merge(g2)
 	c:SetMaterial(g1)
 	Duel.Release(g1,REASON_COST+REASON_FUSION+REASON_MATERIAL)

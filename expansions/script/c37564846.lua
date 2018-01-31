@@ -33,7 +33,7 @@ function cm.battlecheck(c,tp)
 end
 function cm.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then	  
-		if rp==tp or #eg~= then return false end
+		if rp==tp or #eg~=1 then return false end
 		local tc=eg:GetFirst()
 		if not Senya.check_set_3L(tc) or not tc:IsType(TYPE_MONSTER) or not tc:IsLocation(LOCATION_GRAVE) or not tc:IsAbleToRemove() or not cm.battlecheck(tc,tp) then return false end
 		local mg=Duel.GetMatchingGroup(cm.mfilter,tp,LOCATION_DECK,0,nil)
