@@ -161,7 +161,7 @@ function c13257332.spop(e,tp,eg,ep,ev,re,r,rp)
 			local tc=eg1:GetFirst()
 			while tc do
 				Duel.Equip(tp,tc,g:GetFirst(),true,true)
-				tc=sg:GetNext()
+				tc=eg1:GetNext()
 			end
 			Duel.EquipComplete()
 		end
