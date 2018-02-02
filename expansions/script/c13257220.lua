@@ -107,12 +107,14 @@ function c13257220.dreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		local e4=Effect.CreateEffect(c)
 		e4:SetType(EFFECT_TYPE_SINGLE)
 		e4:SetCode(EFFECT_DISABLE)
+		e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e4:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e4,true)
 		local e5=Effect.CreateEffect(c)
 		e5:SetType(EFFECT_TYPE_SINGLE)
 		e5:SetCode(EFFECT_DISABLE_EFFECT)
 		e5:SetValue(RESET_TURN_SET)
+		e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e5:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e5,true)
 		return true
@@ -140,5 +142,5 @@ function c13257220.opdisable(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257220.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257220,4))
+	Duel.Hint(11,0,aux.Stringid(13257220,4))
 end

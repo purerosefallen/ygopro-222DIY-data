@@ -96,11 +96,13 @@ function c13257225.negop(e,tp,eg,ep,ev,re,r,rp)
 	while tc do
 		local e6=Effect.CreateEffect(c)
 		e6:SetType(EFFECT_TYPE_SINGLE)
+		e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e6:SetCode(EFFECT_DISABLE)
 		e6:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e6)
 		local e7=Effect.CreateEffect(c)
 		e7:SetType(EFFECT_TYPE_SINGLE)
+		e7:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e7:SetCode(EFFECT_DISABLE_EFFECT)
 		e7:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e7)
@@ -120,5 +122,5 @@ function c13257225.tdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257225.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257225,4))
+	Duel.Hint(11,0,aux.Stringid(13257225,4))
 end

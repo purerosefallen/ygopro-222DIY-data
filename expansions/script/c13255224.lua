@@ -58,7 +58,7 @@ function c13255224.initial_effect(c)
 	
 end
 function c13255224.spfilter(c)
-	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAbleToDeckAsCost()
+	return c:IsCode(13255222) and c:IsAbleToDeckAsCost()
 end
 function c13255224.spcon(e,c)
 	if c==nil then return true end
