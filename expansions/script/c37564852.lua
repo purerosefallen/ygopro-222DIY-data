@@ -51,18 +51,13 @@ function cm.MergeCard(g,p,loc,seq)
 	end
 end
 function cm.GetCrossGroup(p,seq)
-	local g=Duel.GetMatchingGroup(function(c) return c:GetSequence()~=seq and c:GetSequence()<5 end,p,LOCATION_MZONE,0,nil)
-	cm.MergeCard(g,p,LOCATION_SZONE,seq)
-	cm.MergeCard(g,1-p,LOCATION_MZONE,4-seq)
-	cm.MergeCard(g,1-p,LOCATION_SZONE,4-seq)
+	local zone=(0x1f & ~(0x1 << seq)) | (0x0100 << seq) | (0x01010000 << 4-seq)
 	if seq==1 then
-		cm.MergeCard(g,p,LOCATION_MZONE,5)
-		cm.MergeCard(g,1-p,LOCATION_MZONE,6)
+		zone=zone | 0x00400020
 	elseif seq==3 then
-		cm.MergeCard(g,p,LOCATION_MZONE,6)
-		cm.MergeCard(g,1-p,LOCATION_MZONE,5)
+		zone=zone | 0x00200040
 	end
-	return g
+	return Duel.GetCardsInZone(p,zone)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
