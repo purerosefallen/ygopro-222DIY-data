@@ -31,6 +31,7 @@ function c13257334.initial_effect(c)
 	e11:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e11:SetOperation(c13257334.bgmop)
 	c:RegisterEffect(e11)
+	c13257334[c]=e2
 	
 end
 function c13257334.spcon(e,c)

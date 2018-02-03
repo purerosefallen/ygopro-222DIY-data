@@ -159,6 +159,6 @@ function cm.op(e,tp,eg,ep,ev,re,r,rp)
         tc:RegisterEffect(e2_1)
     end
 end
-function cm.val2_1(e,te)
+function cm.val2_1(e,re)
     return e:GetOwnerPlayer()~=re:GetOwnerPlayer()
 end

@@ -57,7 +57,7 @@ function c22220162.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c22220162.matfilter(c)
-	return not c:IsCode(22220162)
+	return c:IsSetCard(0x50f) and not c:IsCode(22220162)
 end
 function c22220162.eqlimit(e,c)
 	return c:IsSetCard(0x50f) or e:GetHandler():GetEquipTarget()==c
