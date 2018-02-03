@@ -88,6 +88,10 @@ function c22240008.chcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c22240008.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return re:GetHandler():IsReleasableByEffect() end
+	Duel.SetChainLimit(c22240008.chlimit)
+end
+function c22240008.chlimit(re,ep,tp)
+	return not re:GetHandler():IsType(TYPE_MONSTER)
 end
 function c22240008.chop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Group.CreateGroup()
