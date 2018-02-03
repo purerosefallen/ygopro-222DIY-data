@@ -76,7 +76,7 @@ function c71400016.aclimit(e,re,tp)
 end
 function c71400016.slcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE) and rp==tp and not ec:IsSetCard(0x714)
+	return (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and rp==tp and not ec:IsSetCard(0x714)
 end
 function c71400016.slop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

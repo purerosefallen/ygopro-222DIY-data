@@ -121,7 +121,7 @@ function c71400014.operation3(e,tp,eg,ep,ev,re,r,rp)
 end
 function c71400014.slcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE) and rp==tp and not ec:IsSetCard(0x714)
+	return (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and rp==tp and not ec:IsSetCard(0x714)
 end
 function c71400014.slop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
