@@ -1,4 +1,4 @@
---怨灵鬼恋鬼 红莲骑 
+--灾厄恋鬼 红莲骑
 function c14801074.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -11,7 +11,7 @@ function c14801074.initial_effect(c)
 	--fusion summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(14801074,1))
-	e2:SetCategory(CATEGORY_FUSION_SUMMON)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -68,7 +68,7 @@ function c14801074.filter1(c,e)
 	return c:IsOnField() and not c:IsImmuneToEffect(e)
 end
 function c14801074.filter2(c,e,tp,m,f,gc,chkf)
-	return c:IsType(TYPE_FUSION) and (not f or f(c))
+	return  c:IsType(TYPE_FUSION) and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,gc,chkf)
 end
 function c14801074.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

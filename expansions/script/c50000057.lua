@@ -44,7 +44,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function cm.ovfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x50c) and not c:IsCode(m)
+	return c:IsFaceup() and c:IsSetCard(0x50c) and c:IsType(TYPE_RITUAL) and not c:IsCode(m)
 end
 function cm.xyzop(e,tp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,m)==0 end

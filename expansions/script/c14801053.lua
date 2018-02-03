@@ -1,8 +1,8 @@
---硫酸怪兽 霍
+--灾厄冥硫 霍
 function c14801053.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,c14801053.ffilter,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK),true)
+	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x4800),aux.FilterBoolFunction(Card.IsFusionAttribute,ATTRIBUTE_DARK),true)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -43,9 +43,6 @@ function c14801053.initial_effect(c)
 	e4:SetTarget(c14801053.negtg)
 	e4:SetOperation(c14801053.negop)
 	c:RegisterEffect(e4)
-end
-function c14801053.ffilter(c)
-	return c:IsFusionSetCard(0x4800)
 end
 function c14801053.decon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)

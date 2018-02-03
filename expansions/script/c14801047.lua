@@ -1,8 +1,8 @@
---古代怪兽 哥莫拉
+--灾厄古兽 哥莫拉
 function c14801047.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,c14801047.ffilter,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_EARTH),false)
+	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x4800),aux.FilterBoolFunction(Card.IsFusionAttribute,ATTRIBUTE_EARTH),true)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -45,9 +45,6 @@ function c14801047.initial_effect(c)
 	e4:SetCost(aux.bfgcost)
 	e4:SetOperation(c14801047.operation)
 	c:RegisterEffect(e4)
-end
-function c14801047.ffilter(c)
-	return c:IsFusionSetCard(0x4800)
 end
 function c14801047.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)

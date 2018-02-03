@@ -1,7 +1,7 @@
 --白沢球的顶点
 function c22220162.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x50f),1,1)
+	aux.AddLinkProcedure(c,c22220162.matfilter,1)
 	c:EnableReviveLimit()
 	--equip
 	local e0=Effect.CreateEffect(c)
@@ -55,6 +55,9 @@ function c22220162.initial_effect(c)
 	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e5:SetValue(c22220162.eqlimit)
 	c:RegisterEffect(e5)
+end
+function c22220162.matfilter(c)
+	return not c:IsCode(22220162)
 end
 function c22220162.eqlimit(e,c)
 	return c:IsSetCard(0x50f) or e:GetHandler():GetEquipTarget()==c

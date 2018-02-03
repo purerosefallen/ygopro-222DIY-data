@@ -1,8 +1,8 @@
- --深海怪兽 古维拉
+ --灾厄深渊 古维拉
 function c14801059.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,c14801059.ffilter,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_WATER),false)
+	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x4800),aux.FilterBoolFunction(Card.IsFusionAttribute,ATTRIBUTE_WATER),true)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -43,10 +43,6 @@ function c14801059.initial_effect(c)
 	e4:SetCondition(c14801059.atkcon)
 	e4:SetOperation(c14801059.atkop)
 	c:RegisterEffect(e4)
-	
-end
-function c14801059.ffilter(c)
-	return c:IsFusionSetCard(0x4800)
 end
 function c14801059.pocon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)

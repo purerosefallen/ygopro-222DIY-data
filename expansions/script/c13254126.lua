@@ -1,4 +1,4 @@
-﻿--盛燃的乌金飞球
+--盛燃的乌金飞球
 function c13254126.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -27,12 +27,13 @@ function c13254126.initial_effect(c)
 	c:RegisterEffect(e3)
 	--Burn!
 	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_DAMAGE+CATEGORY_DRAW)
+	e4:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e4:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e4:SetCode(EVENT_DESTROYED)
-	e4:SetCondition(c13254126.damcon)
-	e4:SetTarget(c13254126.damtg)
-	e4:SetOperation(c13254126.damop)
+	e4:SetCondition(c13254126.spcon)
+	e4:SetTarget(c13254126.sptg)
+	e4:SetOperation(c13254126.spop)
 	c:RegisterEffect(e4)
 	
 end
@@ -63,21 +64,37 @@ function c13254126.actlimit(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e4,tp)
 end
 function c13254126.aclimit3(e,re,tp)
-    local loc=re:GetHandler():GetLocation()
-    return (loc==LOCATION_GRAVE or loc==LOCATION_HAND) and not re:GetHandler():IsImmuneToEffect(e)
+	local loc=re:GetHandler():GetLocation()
+	return (loc==LOCATION_GRAVE or loc==LOCATION_HAND) and not re:GetHandler():IsImmuneToEffect(e)
 end
 function c13254126.splimit(e,c)
 	return not c:IsSetCard(0x356)
 end
-function c13254126.damcon(e,tp,eg,ep,ev,re,r,rp)
+function c13254126.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(r,REASON_EFFECT)~=0 and re:GetHandler():IsAttribute(ATTRIBUTE_FIRE)
 end
-function c13254126.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,2000)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
+function c13254126.tgfilter(c)
+	return c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end
-function c13254126.damop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Damage(1-tp,2000,REASON_EFFECT)
-	Duel.Draw(tp,2,REASON_EFFECT)
+function c13254126.spfilter(c,e,tp)
+	return c:IsCode(13254049) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
+end
+function c13254126.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c13254126.tgfilter,tp,LOCATION_DECK,0,1,nil) and Duel.GetLocationCountFromEx(tp)>0 and Duel.IsExistingMatchingCard(c13254126.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+end
+function c13254126.spop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,c13254126.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
+	if g:GetCount()>0 then
+		if Duel.SendtoGrave(g,REASON_EFFECT)~=0 and Duel.GetLocationCountFromEx(tp)>0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local sg=Duel.SelectMatchingCard(tp,c13254126.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
+			if sg:GetCount()>0 then
+				Duel.SpecialSummon(sg,0,tp,tp,true,true,POS_FACEUP)
+				sg:GetFirst():CompleteProcedure()
+			end
+		end
+	end
 end

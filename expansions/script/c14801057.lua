@@ -1,4 +1,4 @@
---宇宙怪兽 百慕达 强化
+--灾厄疾兽 百慕达
 function c14801057.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

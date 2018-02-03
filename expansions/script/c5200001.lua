@@ -29,7 +29,7 @@ function c5200001.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_TO_GRAVE)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e4:SetCountLimit(1,5200001)
+	e4:SetCountLimit(1,52000011)
 	e4:SetCondition(c5200001.gthcon)
 	e4:SetTarget(c5200001.gthtg)
 	e4:SetOperation(c5200001.gthop)
@@ -49,6 +49,9 @@ function c5200001.initial_effect(c)
 	e6:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
 	e6:SetValue(c5200001.splimit)
 	c:RegisterEffect(e6) 
+	local e7=e6:Clone()
+	e8:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+	c:RegisterEffect(e7)
 	local e8=e6:Clone()
 	e8:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
 	c:RegisterEffect(e8)
@@ -97,7 +100,7 @@ function c5200001.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
 		and Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)>0
-		and Duel.GetMZoneCount(c:GetControler())>0
+		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function c5200001.splimit(e,c)
 	if not c then return false end

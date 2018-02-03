@@ -1,8 +1,8 @@
---双头怪兽 庞墩
+--灾厄炎双 庞墩
 function c14801051.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,c14801051.ffilter,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_FIRE),false)
+	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x4800),aux.FilterBoolFunction(Card.IsFusionAttribute,ATTRIBUTE_FIRE),true)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -44,9 +44,6 @@ function c14801051.initial_effect(c)
 	e4:SetTarget(c14801051.dambtg)
 	e4:SetOperation(c14801051.dambop)
 	c:RegisterEffect(e4)
-end
-function c14801051.ffilter(c)
-	return c:IsFusionSetCard(0x4800)
 end
 function c14801051.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()

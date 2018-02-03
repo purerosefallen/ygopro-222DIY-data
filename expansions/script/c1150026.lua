@@ -10,10 +10,10 @@ function c1150026.initial_effect(c)
 	c:RegisterEffect(e1)	  
 --
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCategory(CATEGORY_FLIP)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_CUSTOM+1150026)
-	e2:SetRange(LOCATION_ONFIELD)
+	e2:SetRange(LOCATION_FZONE)
 	e2:SetTarget(c1150026.tg2)
 	e2:SetOperation(c1150026.op2)
 	c:RegisterEffect(e2)
@@ -37,6 +37,7 @@ function c1150026.initial_effect(c)
 	e3:SetValue(1)
 	e3:SetCondition(c1150026.con3)
 	c:RegisterEffect(e3)
+--
 end
 --
 function c1150026.con1(e,tp,eg,ep,ev,re,r,rp)
@@ -62,7 +63,7 @@ function c1150026.op2_1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1150026.tfilter2(c)
-	return c:IsFaceup() and c:IsCanTurnSet()
+	return c:IsFaceup() and c:IsCanTurnSet() and c:IsLocation(LOCATION_MZONE)
 end
 function c1150026.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(c1150026.tfilter2,1,nil) end
@@ -81,6 +82,6 @@ function c1150026.op2(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1150026.con3(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
+	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
 end
 --

@@ -1,4 +1,4 @@
---骷髅怪兽 雷德王
+--灾厄岩兽 雷德王
 function c14801037.initial_effect(c)
 	--to hand
 	local e1=Effect.CreateEffect(c)

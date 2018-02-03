@@ -1,4 +1,4 @@
---保镖怪兽 布莱克王
+--灾厄猛兽 布莱克王
 function c14801035.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

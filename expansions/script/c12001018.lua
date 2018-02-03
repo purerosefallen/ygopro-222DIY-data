@@ -6,7 +6,7 @@ function c12001018.initial_effect(c)
 
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(12001018,0))
-	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_DECKDES+CATEGORY_TODECK)
+	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_DECKDES)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,0x1c0)
@@ -119,7 +119,7 @@ function c12001018.op1_3(e,tp,eg,ep,ev,re,r,rp)
 		else
 			if c:IsLocation(LOCATION_GRAVE) and tc:IsAbleToHand() then
 				Duel.DisableShuffleCheck()
-				Duel.SendtoHand(tc,nil,REASON_EFFECT)
+				Duel.SendtoDeck(tc,nil,1,REASON_EFFECT)
 				Duel.SendtoDeck(c,nil,0,REASON_EFFECT)
 				Duel.ShuffleHand(tp)
 			else

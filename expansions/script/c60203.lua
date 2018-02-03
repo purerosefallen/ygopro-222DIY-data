@@ -57,9 +57,6 @@ end
 function c60203.drop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(tp,1,REASON_EFFECT)
 end
-function c60203.exfilter(c)
-	return c:IsFaceup() and not c:IsDisabled()
-end
 function c60203.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:IsAbleToDeckAsCost() end

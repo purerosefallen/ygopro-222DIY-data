@@ -1,8 +1,8 @@
---宇宙机器人 金谷乔
+--灾厄守卫 金古乔
 function c14801075.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFun2(c,c14801075.ffilter,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_WIND),false)
+	aux.AddFusionProcFun2(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x4800),aux.FilterBoolFunction(Card.IsFusionAttribute,ATTRIBUTE_WIND),true)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -36,9 +36,6 @@ function c14801075.initial_effect(c)
 	e4:SetTarget(c14801075.sptg)
 	e4:SetOperation(c14801075.spop)
 	c:RegisterEffect(e4)
-end
-function c14801075.ffilter(c)
-	return c:IsFusionSetCard(0x4800)
 end
 function c14801075.imtg(e,c)
 	return c:IsSetCard(0x4800) and not c:IsCode(14801075)

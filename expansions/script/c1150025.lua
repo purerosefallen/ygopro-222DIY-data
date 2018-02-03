@@ -28,6 +28,7 @@ function c1150025.initial_effect(c)
 	c:RegisterEffect(e2)  
 --
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(1150025,0))
 	e3:SetCategory(CATEGORY_TOGRAVE)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
@@ -69,29 +70,29 @@ function c1150025.tg3(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,c1150025.tfilter3,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
 end
-function c1150025.ofilter3(c,e,tp,tap,tc)
-	return c:IsSSetable() and not c:IsHasEffect(EFFECT_NECRO_VALLEY) and c:GetOwner()==tap and c~=tc and c:IsType(TYPE_SPELL+TYPE_TRAP)
+function c1150025.ofilter3(c)
+	return c:IsSSetable() and c~=tc and c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function c1150025.op3(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() and e:GetHandler():IsRelateToEffect(e) then
-		if Duel.SendtoGrave(tc,REASON_EFFECT)~=0 then
-			local tap=tc:GetOwner()
-			local g=Duel.SelectMatchingCard(tap,c1150025.ofilter3,tap,LOCATION_GRAVE,LOCATION_GRAVE,1,1,e:GetHandler(),e,tp,tap,tc)
-			if g:GetCount()>0 then
-				local tc2=g:GetFirst()
-				Duel.SSet(tap,g,tap)
-				local e3_1=Effect.CreateEffect(e:GetHandler())
-				e3_1:SetType(EFFECT_TYPE_SINGLE)
-				e3_1:SetCode(EFFECT_CANNOT_TRIGGER)
-				e3_1:SetReset(RESET_EVENT+0x17a0000+RESET_PHASE+PHASE_END)
-				tc2:RegisterEffect(e3_1)				
+		if Duel.IsPlayerAffectedByEffect(tp,EFFECT_NECRO_VALLEY_IM) then
+			if Duel.IsChainDisablable(0) then Duel.NegateEffect(0) end
+		else
+			if Duel.SendtoGrave(tc,REASON_EFFECT)~=0 then
+				local tap=tc:GetOwner()
+				local g=Duel.SelectMatchingCard(tap,c1150025.ofilter3,tap,LOCATION_GRAVE,0,1,1,tc)
+				if g:GetCount()>0 then
+					local tc2=g:GetFirst()
+					Duel.SSet(tap,g,tap)
+					local e3_1=Effect.CreateEffect(e:GetHandler())
+					e3_1:SetType(EFFECT_TYPE_SINGLE)
+					e3_1:SetCode(EFFECT_CANNOT_TRIGGER)
+					e3_1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+					tc2:RegisterEffect(e3_1)				
+				end
 			end
 		end
 	end
 end
-
-
-
-
-
+--

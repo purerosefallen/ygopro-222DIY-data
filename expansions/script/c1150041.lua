@@ -20,9 +20,9 @@ function c1150041.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_IMMUNE_EFFECT)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetTargetRange(LOCATION_FZONE,LOCATION_FZONE)
+	e2:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
 	e2:SetTarget(c1150041.tg2)
-	e2:SetValue(1)
+	e2:SetValue(c1150041.efilter2)
 	c:RegisterEffect(e2)
 --  
 end
@@ -88,16 +88,14 @@ function c1150041.op1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1150041.limit1_1(e,re,tp)
-	return re:GetHandler():GetType()==TYPE_SPELL and re:GetHandler():GetType()~=TYPE_CONTINUOUS and re:GetHandler():GetType()~=TYPE_EQUIP and re:GetHandler():GetType()~=TYPE_FIELD and re:GetHandler():GetType()~=TYPE_QUICKPLAY and re:GetHandler():GetType()~=TYPE_RITUAL and re:GetHandler():GetType()~=TYPE_PENDULUM and re:GetHandler():GetType()~=TYPE_UNION 
+	return re:GetHandler():GetType()==TYPE_SPELL 
 end
 --
-function c1150041.tfilter2(c)
-	return c:IsFaceup() and c:IsType(TYPE_FIELD) and c:IsType(TYPE_SPELL)
-end
 function c1150041.tg2(e,c)
-	local g=Duel.GetMatchingGroup(c1150041.tfilter2,tp,LOCATION_FZONE,LOCATION_FZONE,nil)
-	return g
+	return c:IsFaceup() and c:IsType(TYPE_FIELD)
 end
 --
-
-
+function c1150041.efilter2(e,te)
+	return te:GetOwner()~=e:GetOwner()
+end
+--

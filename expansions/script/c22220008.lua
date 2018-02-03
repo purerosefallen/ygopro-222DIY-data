@@ -28,7 +28,7 @@ function c22220008.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c22220008.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x50f) and (not c:IsPublic()) and (not c:IsCode(22220008))
+	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_SPIRIT) and c:IsSetCard(0x50f) and (not c:IsPublic()) and (not c:IsCode(22220008))
 end
 function c22220008.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c22220008.cfilter,tp,LOCATION_HAND,0,1,nil) and Duel.GetMZoneCount(tp)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end

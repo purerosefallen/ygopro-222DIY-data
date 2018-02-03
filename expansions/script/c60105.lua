@@ -19,15 +19,14 @@ end
 c60105.DescSetName = 0x229
 function c60105.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainNegatable(ev) then return false end
-	local ex=Duel.GetOperationInfo(ev,CATEGORY_DISABLE)
-	return ex
+	return re:IsHasCategory(CATEGORY_DISABLE) or re:IsHasCategory(CATEGORY_SPECIAL_SUMMON)
 end
 function c60105.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function c60105.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return ep~=tp end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)

@@ -1,4 +1,4 @@
---宇宙怪兽 艾雷王
+--灾厄雷兽 艾雷王
 function c14801039.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
