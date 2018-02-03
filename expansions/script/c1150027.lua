@@ -55,7 +55,7 @@ function c1150027.initial_effect(c)
 --
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(1150027,1))
-	e4:SetCategory(CATEGORY_TOGRAVE+CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_RECOVER)
+	e4:SetCategory(CATEGORY_TOGRAVE+CATEGORY_TOHAND+CATEGORY_RECOVER)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_FZONE)
 	e4:SetCountLimit(1,1150029)
@@ -124,7 +124,7 @@ function c1150027.op3(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 --
-function c1150027.con3(e,tp,eg,ep,ev,re,r,rp)
+function c1150027.con4(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnCount()~=1
 end
 --
@@ -145,13 +145,13 @@ function c1150027.ofilter4(c,opt)
 		end
 	end
 end
-function c1160027.ofilter4_1(c)
+function c1150027.ofilter4_1(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
-function c1160027.ofilter4_2(c)
+function c1150027.ofilter4_2(c)
 	return c:IsType(TYPE_SPELL) and c:IsAbleToHand()
 end
-function c1160027.ofilter4_3(c)
+function c1150027.ofilter4_3(c)
 	return c:IsType(TYPE_TRAP) and c:IsAbleToHand()
 end
 function c1150027.op4(e,tp,eg,ep,ev,re,r,rp)
@@ -175,7 +175,7 @@ function c1150027.op4(e,tp,eg,ep,ev,re,r,rp)
 					if gn:GetCount()>0 then
 						Duel.SendtoHand(gn,nil,REASON_EFFECT)
 						Duel.ConfirmCards(tp,gn)
-					end			  
+					end		
 				else 
 					if opt==1 and Duel.GetMatchingGroup(c1150027.ofilter4_2,1-tp,LOCATION_GRAVE,0,nil) and Duel.SelectYesNo(1-tp,aux.Stringid(1150027,2)) then
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
@@ -183,7 +183,7 @@ function c1150027.op4(e,tp,eg,ep,ev,re,r,rp)
 						if gn:GetCount()>0 then
 							Duel.SendtoHand(gn,nil,REASON_EFFECT)
 							Duel.ConfirmCards(tp,gn)
-						end			  
+						end		
 					else 
 						if opt==2 and Duel.GetMatchingGroup(c1150027.ofilter4_3,1-tp,LOCATION_GRAVE,0,nil) and Duel.SelectYesNo(1-tp,aux.Stringid(1150027,2)) then
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
