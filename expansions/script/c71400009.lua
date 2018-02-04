@@ -20,6 +20,7 @@ function c71400009.initial_effect(c)
 	e1:SetOperation(c71400009.operation)
 	c:RegisterEffect(e1)
 	if not c71400009.global_check then
+		c71400009.global_check=true
 		local e4=Effect.GlobalEffect()
 		e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e4:SetRange(LOCATION_FZONE)
