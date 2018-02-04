@@ -91,7 +91,7 @@ function c71400014.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 --Select Xyz Materials
 function c71400014.xyzfilter(c)
-	return c:IsSetCard(0x714)
+	return c:IsFaceup() and c:IsCanBeXyzMaterial(nil)
 end
 --Select Xyz Monsters
 function c71400014.xyz2filter(c,mg)
