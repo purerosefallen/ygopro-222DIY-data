@@ -75,5 +75,5 @@ function c13257217.posop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257217.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257217,4))
+	Duel.Hint(11,0,aux.Stringid(13257217,4))
 end

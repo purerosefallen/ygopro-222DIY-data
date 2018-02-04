@@ -70,9 +70,9 @@ function c22220162.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c22220162.eqfilter(chkc) end
 	if chk==0 then return c:GetFlagEffect(22220162)==0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(c22220162.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,c) end
+		and Duel.IsExistingTarget(c22220162.eqfilter,tp,LOCATION_MZONE,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectTarget(tp,c22220162.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c)
+	local g=Duel.SelectTarget(tp,c22220162.eqfilter,tp,LOCATION_MZONE,0,1,1,c)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
 	c:RegisterFlagEffect(22220162,RESET_EVENT+0x7e0000+RESET_PHASE+PHASE_END,0,1)
 end
