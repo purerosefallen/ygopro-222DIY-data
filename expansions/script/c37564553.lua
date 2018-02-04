@@ -48,7 +48,7 @@ function cm.cnegcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP) and rc.Senya_desc_with_nanahira and rc:IsRelateToEffect(re)
 end
-function cm.cnegcon(e,tp,eg,ep,ev,re,r,rp)
+function cm.cnegop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,e:GetHandler():GetOriginalCode())
 	Senya.OverlayCard(e:GetHandler(),re:GetHandler())
 end
