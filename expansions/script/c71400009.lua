@@ -45,13 +45,6 @@ function c71400009.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,1-tp,LOCATION_ONFIELD)
 end
 function c71400009.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	for tc in aux.Next(eg) do
-		c71400009[tc]=tc:GetOverlayCount()
-	end
-	return false
-end
-function c71400009.repval(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(Card.IsOnField,1,nil) end
 	local g=eg:Filter(Card.IsOnField,nil)
 	for tc in aux.Next(g) do
