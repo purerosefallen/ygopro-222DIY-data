@@ -70,6 +70,7 @@ function cm.spcon(e,c)
 	return Senya.CheckGroup(g,Senya.CheckFieldFilter,nil,3,3,tp,c)
 end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=Duel.GetMatchingGroup(cm.spfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,nil)
 	local g=Senya.SelectGroup(tp,HINTMSG_TOGRAVE,g,Senya.CheckFieldFilter,nil,3,3,tp,c)
 	c:SetMaterial(g)
 	Duel.SendtoGrave(g,REASON_COST)
