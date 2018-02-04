@@ -66,7 +66,8 @@ function c71400014.operation2(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
-		Duel.XyzSummon(tp,xyz,mg)
+		Duel.BreakEffect()
+		Duel.XyzSummon(tp,xyz,mg,1,63)
 	end
 end
 function c71400014.filter2(c,e,tp)
@@ -94,7 +95,7 @@ function c71400014.xyzfilter(c)
 end
 --Select Xyz Monsters
 function c71400014.xyz2filter(c,mg)
-	return c:IsSetCard(0x714) and c:IsXyzSummonable(mg)
+	return c:IsSetCard(0x714) and c:IsXyzSummonable(mg,1,63)
 end
 function c71400014.condition3(e,tp,eg,ep,ev,re,r,rp)
 	local tg=eg:GetFirst()
