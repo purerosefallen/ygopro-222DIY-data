@@ -1,5 +1,5 @@
 ﻿ygopro_222.exe	59c6b8be72195862d931d37c1486734f
-expansions/222DIY.cdb	c0166e40a94a3f4e00e89b6c477334f0
+expansions/222DIY.cdb	8e5c93270d55d96838f8838c420d6fed
 expansions/lflist.conf	2de00a131fc4135d3c28df421346d2c9
 expansions/strings.conf	b0ba5cfa282e0188caa10ee0ab2aec6a
 expansions/pics/08209710.jpg	ed0e60085631bfa641ffeebd6abbd910
@@ -4390,7 +4390,7 @@ expansions/script/c37564534.lua	04e6aa55f0a06a0a8265362c5c01e03e
 expansions/script/c37564535.lua	30cdb806424abd9332106a798321cc39
 expansions/script/c37564536.lua	369d65162ece2b9e3cf98b1cf7c3eea0
 expansions/script/c37564537.lua	7a781a42ec955d52c3a8b1120b360457
-expansions/script/c37564538.lua	016a6672e177c651d0c0111803ed9fd1
+expansions/script/c37564538.lua	0295c4fe2e12a5b2cc2efcbc3d0ab88b
 expansions/script/c37564539.lua	9a061033928baed7226eaf6c36dfd490
 expansions/script/c37564540.lua	e87d8138fa7a5960cb8db88bc84986ca
 expansions/script/c37564541.lua	f81bf5a94560a6b9f09ce2d8c4bb7050
@@ -5338,7 +5338,7 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	40dd089e19725d2696f233be30a9513f
+update/filelist.txt	8593ac054554ec9762cf25ffc97138a7
 update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
 update/update-without-sound.bat	22d7b973d79ef9311213aeff61d93d7c
-update/version.txt	3e665c7941b77afac65d9f6340b93d5c
+update/version.txt	46f269fc46e027e6d22576a35c22144f
