@@ -65,7 +65,7 @@ function c71400013.operation1(e,tp,eg,ep,ev,re,r,rp)
 		local cost=te:GetCost()
 		if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
 		Duel.RaiseEvent(tc,71400013,te,0,tp,tp,Duel.GetCurrentChain())
-		local dg=Duel.GetMatchingGroup(c71400013.filter1a,tp,0,LOCATION_MZONE,nil)
+		local dg=Duel.GetMatchingGroup(c71400013.filter1a,tp,0,LOCATION_ONFIELD,nil)
 		if dg:GetCount()>0 and flag and Duel.SelectYesNo(tp,aux.Stringid(71400013,3)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 			local des=dg:Select(tp,1,1,nil)
