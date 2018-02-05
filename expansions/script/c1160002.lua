@@ -209,10 +209,10 @@ function c1160002.op6_1(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(1160002,3)) then
 		local s=Duel.SelectDisableField(tp,1,LOCATION_SZONE,0,0)
 		local nseq=0
-		if s==1 then nseq=0
-		elseif s==2 then nseq=1
-		elseif s==4 then nseq=2
-		elseif s==8 then nseq=3
+		if s==256 then nseq=0
+		elseif s==512 then nseq=1
+		elseif s==1024 then nseq=2
+		elseif s==2048 then nseq=3
 		else nseq=4 end
 		Duel.MoveSequence(c,nseq)
 	end
