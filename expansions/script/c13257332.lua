@@ -154,13 +154,14 @@ function c13257332.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c13257332.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
 		if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)==0 then return end
+		local smc=g:GetFirst()
 		local sg=e:GetLabelObject()
 		if Duel.GetLocationCount(tp,LOCATION_SZONE)>1 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 			local eg1=sg:Select(tp,2,2,nil)
 			local tc=eg1:GetFirst()
 			while tc do
-				Duel.Equip(tp,tc,g:GetFirst(),true,true)
+				Duel.Equip(tp,tc,smc,true,true)
 				tc=eg1:GetNext()
 			end
 			Duel.EquipComplete()
