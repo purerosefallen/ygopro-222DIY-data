@@ -1,13 +1,13 @@
 --梦之书中的公式证明图表
 function c71400009.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,4,2)
+	aux.AddXyzProcedure(c,function() return Duel.IsExistingMatchingCard(function(tc) return tc:IsFaceup() and tc:IsSetCard(0x3714) end,c:GetControler(),LOCATION_FZONE,0,1,nil) end,4,2)
 	c:EnableReviveLimit()
 	--summon limit
 	local el1=Effect.CreateEffect(c)
 	el1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	el1:SetType(EFFECT_TYPE_SINGLE)
-	el1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	el1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	el1:SetCondition(c71400009.sumlimit)
 	c:RegisterEffect(el1)
 	--destroy

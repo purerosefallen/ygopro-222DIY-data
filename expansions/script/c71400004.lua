@@ -11,7 +11,7 @@ function c71400004.initial_effect(c)
 	el2:SetCode(EFFECT_CANNOT_MSET)
 	c:RegisterEffect(el2)
 	local el3=el1:Clone()
-	el3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	el3:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(el3)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -47,6 +47,7 @@ function c71400004.condition1(e,c)
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
+		and not c71400004.sumlimit(e)
 		and Duel.IsExistingMatchingCard(c71400004.filter1,tp,LOCATION_MZONE,0,1,nil)
 end
 function c71400004.filter2(c)

@@ -1,13 +1,13 @@
 --梦之迷宫的剧面人
 function c71400012.initial_effect(c)
 	--synchro summon
-	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)
+	aux.AddSynchroProcedure(c,function() return Duel.IsExistingMatchingCard(function(tc) return tc:IsFaceup() and tc:IsSetCard(0x3714) end,c:GetControler(),LOCATION_FZONE,0,1,nil) end,aux.NonTuner(nil),1)
 	c:EnableReviveLimit()
 	--summon limit
 	local el1=Effect.CreateEffect(c)
 	el1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	el1:SetType(EFFECT_TYPE_SINGLE)
-	el1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	el1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	el1:SetCondition(c71400012.sumlimit)
 	c:RegisterEffect(el1)
 	--cannot be target

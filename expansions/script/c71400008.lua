@@ -1,13 +1,13 @@
 --梦之书中的三足怪物
 function c71400008.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,4,3)
+	aux.AddXyzProcedure(c,function() return Duel.IsExistingMatchingCard(function(tc) return tc:IsFaceup() and tc:IsSetCard(0x3714) end,c:GetControler(),LOCATION_FZONE,0,1,nil) end,4,3)
 	c:EnableReviveLimit()
 	--summon limit
 	local el1=Effect.CreateEffect(c)
 	el1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	el1:SetType(EFFECT_TYPE_SINGLE)
-	el1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	el1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	el1:SetCondition(c71400008.sumlimit)
 	c:RegisterEffect(el1)
 	--nuke

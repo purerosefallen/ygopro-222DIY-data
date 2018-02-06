@@ -11,7 +11,7 @@ function c71400007.initial_effect(c)
 	el2:SetCode(EFFECT_CANNOT_MSET)
 	c:RegisterEffect(el2)
 	local el3=el1:Clone()
-	el3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	el3:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(el3)
 	--summon success
 	local e1=Effect.CreateEffect(c)
