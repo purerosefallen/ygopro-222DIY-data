@@ -144,6 +144,7 @@ function c710237.spop(e,tp,eg,ep,ev,re,r,rp)
 		c:AddMonsterAttribute(TYPE_NORMAL)
 		Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
 		c:AddMonsterAttributeComplete()
+		Duel.SpecialSummonComplete()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,c710237.spfilter2,tp,LOCATION_HAND,0,1,1,nil)
 		if g:GetCount()>0 then
