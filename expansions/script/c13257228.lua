@@ -42,6 +42,14 @@ function c13257228.initial_effect(c)
 	e5:SetTarget(c13257228.destg2)
 	e5:SetOperation(c13257228.desop2)
 	c:RegisterEffect(e5)
+	local e12=Effect.CreateEffect(c)
+	e12:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e12:SetCode(EVENT_SUMMON_SUCCESS)
+	e12:SetOperation(c13257228.bgmop)
+	c:RegisterEffect(e12)
+	local e13=e12:Clone()
+	e13:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e13)
 	
 end
 function c13257228.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -71,19 +79,22 @@ function c13257228.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
-function c13257228.filter2(c,atk)
-	return c:IsFaceup() and c:IsDefenseBelow(atk)
+function c13257228.filter2(c,def)
+	return c:IsFaceup() and c:IsAttackBelow(def)
 end
 function c13257228.destg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(c13257228.filter2,tp,0,LOCATION_MZONE,1,c,c:GetAttack()) end
-	local g=Duel.GetMatchingGroup(c13257228.filter2,tp,0,LOCATION_MZONE,c,c:GetAttack())
+	if chk==0 then return Duel.IsExistingMatchingCard(c13257228.filter2,tp,0,LOCATION_MZONE,1,c,c:GetDefense()) end
+	local g=Duel.GetMatchingGroup(c13257228.filter2,tp,0,LOCATION_MZONE,c,c:GetDefense())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
 function c13257228.desop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		local g=Duel.GetMatchingGroup(c13257228.filter2,tp,0,LOCATION_MZONE,c,c:GetAttack())
+		local g=Duel.GetMatchingGroup(c13257228.filter2,tp,0,LOCATION_MZONE,c,c:GetDefense())
 		Duel.Destroy(g,REASON_EFFECT)
 	end
+end
+function c13257228.bgmop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(11,0,aux.Stringid(13257228,4))
 end
