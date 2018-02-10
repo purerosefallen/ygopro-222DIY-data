@@ -3,6 +3,7 @@ function c12006006.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_TRIGGER_F+EFFECT_TYPE_SINGLE)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetCountLimit(1)
 	e2:SetOperation(c12006006.thop)
 	c:RegisterEffect(e2)
 	--special summon
