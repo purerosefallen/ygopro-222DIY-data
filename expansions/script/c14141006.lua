@@ -2,39 +2,39 @@
 local m=14141006
 local cm=_G["c"..m]
 if cm then
-scorp.named_with_hana=true
-function scorp.initial_effect(c)
+cm.named_with_hana=true
+function cm.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TODECK)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,m+EFFECT_COUNT_CODE_OATH)
-	e1:SetTarget(scorp.target)
-	e1:SetOperation(scorp.operation)
+	e1:SetTarget(cm.target)
+	e1:SetOperation(cm.operation)
 	c:RegisterEffect(e1)
 end
-function scorp.filter(c,e,tp)
-	return c:IsFaceup() and scorp.check_set_hana(c) and c:IsAbleToDeck()
-		and Duel.IsExistingMatchingCard(scorp.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
+function cm.filter(c,e,tp)
+	return c:IsFaceup() and cm.check_set_hana(c) and c:IsAbleToDeck()
+		and Duel.IsExistingMatchingCard(cm.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
-function scorp.spfilter(c,e,tp,code)
-	return scorp.check_set_hana(c) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function cm.spfilter(c,e,tp,code)
+	return cm.check_set_hana(c) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function scorp.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and scorp.filter(chkc,e,tp) end
+function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and cm.filter(chkc,e,tp) end
 	if chk==0 then return Duel.GetMZoneCount(tp)>0
-		and Duel.IsExistingTarget(scorp.filter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
+		and Duel.IsExistingTarget(cm.filter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,scorp.filter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
+	local g=Duel.SelectTarget(tp,cm.filter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
-function scorp.operation(e,tp,eg,ep,ev,re,r,rp)
+function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetMZoneCount(tp)<=0 then return end
 	local tc=Duel.GetFirstTarget()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,scorp.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc:GetCode())
+	local g=Duel.SelectMatchingCard(tp,cm.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc:GetCode())
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		if tc:IsRelateToEffect(e) and tc:IsFaceup() then
@@ -261,7 +261,7 @@ function scorp.SelectGroupWithCancel(tp,desc,g,f,cg,min,max,...)
 	return sg
 end
 --updated overlay
-function cm.OverlayCard(c,tc,xm,nchk)
+function scorp.OverlayCard(c,tc,xm,nchk)
 	if not nchk and (not c:IsLocation(LOCATION_MZONE) or c:IsFacedown() or not c:IsType(TYPE_XYZ) or tc:IsType(TYPE_TOKEN)) then return end
 	if tc:IsStatus(STATUS_LEAVE_CONFIRMED) then
 		tc:CancelToGrave()
@@ -276,12 +276,12 @@ function cm.OverlayCard(c,tc,xm,nchk)
 	end
 	Duel.Overlay(c,tc)
 end
-function cm.OverlayFilter(c,nchk)
+function scorp.OverlayFilter(c,nchk)
 	return nchk or not c:IsType(TYPE_TOKEN)
 end
-function cm.OverlayGroup(c,g,xm,nchk)
+function scorp.OverlayGroup(c,g,xm,nchk)
 	if not nchk and (not c:IsLocation(LOCATION_MZONE) or c:IsFacedown() or #g<=0 or not c:IsType(TYPE_XYZ)) then return end
-	local tg=g:Filter(cm.OverlayFilter,nil,nchk)
+	local tg=g:Filter(scorp.OverlayFilter,nil,nchk)
 	if #tg==0 then return end
 	local og=Group.CreateGroup()
 	for tc in aux.Next(tg) do
@@ -300,7 +300,7 @@ function cm.OverlayGroup(c,g,xm,nchk)
 	Duel.Overlay(c,tg)
 end
 --end
-function cm.GetValueType(v)
+function scorp.GetValueType(v)
 	local t=type(v)
 	if t=="userdata" then
 		local mt=getmetatable(v)
