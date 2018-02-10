@@ -102,6 +102,9 @@ end
 function c12001008.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
+function c12001008.cfilter(c,tp)
+	return c:GetSummonLocation()==LOCATION_EXTRA and c:GetPreviousControler()==1-tp
+end
 function c12001008.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c12001008.cfilter,1,nil,tp)
 end

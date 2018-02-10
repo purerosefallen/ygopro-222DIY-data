@@ -58,13 +58,13 @@ function c12001025.rcon(e)
 	return e:GetOwner():IsHasCardTarget(e:GetHandler())
 end
 function c12001025.repfilter(c)
-	return c:GetSequence()<5 and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
+	return c:GetSequence()<5 and ( c:IsType(TYPE_CONTINUOUS) or c:IsFacedown() ) and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
 function c12001025.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return not c:IsReason(REASON_REPLACE) and c:IsOnField() and c:IsFaceup()
 		and Duel.IsExistingMatchingCard(c12001025.repfilter,tp,LOCATION_SZONE,0,1,c) end
-	if Duel.SelectYesNo(tp,aux.Stringid(12001025,0)) then
+	if Duel.SelectYesNo(tp,aux.Stringid(12001025,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
 		local g=Duel.SelectMatchingCard(tp,c12001025.repfilter,tp,LOCATION_SZONE,0,1,1,c)
 		e:SetLabelObject(g:GetFirst())
