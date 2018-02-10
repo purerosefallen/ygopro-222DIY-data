@@ -16,8 +16,8 @@ function c14804812.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_BATTLE_DESTROYED)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetCode(EVENT_DESTROYED)
+	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e2:SetRange(LOCATION_PZONE)
 	e2:SetCondition(c14804812.spcon)
 	e2:SetTarget(c14804812.sptg)
@@ -46,7 +46,7 @@ function c14804812.splimit(e,c,tp,sumtp,sumpos)
 	return not c:IsRace(RACE_FAIRY) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function c14804812.pcfilter(c,tp)
-	return c:IsSetCard(0x4848) and c:IsType(TYPE_PENDULUM) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
+	return c:IsSetCard(0x4848) and c:IsType(TYPE_PENDULUM) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
 end
 function c14804812.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c14804812.pcfilter,1,nil,tp)
