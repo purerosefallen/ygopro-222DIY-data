@@ -2,7 +2,7 @@
 xpcall(function() require("expansions/script/c71400001") end,function() require("script/c71400001") end)
 function c71400024.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,yume.YumeCheck(c),4,3,c71400024.ovfiltergen(c),aux.Stringid(71400024,0),3,c71400024.xyzop)
+	aux.AddXyzProcedureLevelFree(c,c71400024.mfilter,yume.YumeCheck(c),2,2)
 	c:EnableReviveLimit()
 	--summon limit
 	yume.AddYumeSummonLimit(c,1)
@@ -22,14 +22,6 @@ function c71400024.initial_effect(c)
 	e2:SetCost(c71400024.cost)
 	e2:SetOperation(c71400024.op)
 	c:RegisterEffect(e2)
-end
-function c71400024.ovfiltergen(v)
-	local function f(c) return c:IsFaceup() and c:IsSetCard(0x3714) end
-	return function(c) return Duel.IsExistingMatchingCard(f,v:GetControler(),LOCATION_FZONE,0,1,nil) and c:IsFaceup() and c:IsSetCard(0x715) and c:IsType(TYPE_XYZ) and not c:IsCode(71400024) end
-end
-function c71400024.xyzop(e,tp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,71400024)==0 end
-	Duel.RegisterFlagEffect(tp,71400024,RESET_PHASE+PHASE_END,0,1)
 end
 function c71400024.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x3715)
