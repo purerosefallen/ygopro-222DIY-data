@@ -18,7 +18,6 @@ function c12006004.initial_effect(c)
 	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_CHAINING)
-	e3:SetCountLimit(1)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(c12006004.discon)
@@ -48,8 +47,7 @@ function c12006004.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c12006004.disop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
-		Duel.Destroy(eg,REASON_EFFECT)
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)>0 then
 		if not e:GetHandler():IsRelateToEffect(e) then return end
 		Duel.GetControl(e:GetHandler(),1-tp)
 	end
