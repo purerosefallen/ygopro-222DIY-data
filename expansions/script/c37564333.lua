@@ -76,7 +76,6 @@ function cm.mtop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.filter1(c,e,tp,og)
-	if ft==0 and c:GetSequence()>4 then return false end
 	return c:IsFaceup() and Duel.IsExistingTarget(cm.filter2,tp,0,LOCATION_MZONE,1,nil,e,tp,og,c)
 end
 function cm.filter2(c,e,tp,og,mc)
@@ -92,7 +91,7 @@ function cm.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(cm.filter1,tp,LOCATION_MZONE,0,1,c,e,tp,og) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-	local g1=Duel.SelectTarget(tp,cm.filter1,tp,LOCATION_MZONE,0,1,1,c,e,tp,og,ft)
+	local g1=Duel.SelectTarget(tp,cm.filter1,tp,LOCATION_MZONE,0,1,1,c,e,tp,og)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
 	local g2=Duel.SelectTarget(tp,cm.filter2,tp,0,LOCATION_MZONE,1,1,nil,e,tp,og,g1:GetFirst())
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,og,1,0,0)
