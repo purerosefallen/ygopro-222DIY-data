@@ -68,7 +68,7 @@ end
 function c13257307.catg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local ec=c:GetEquipTarget()
-	if chk==0 then return ec:IsChainAttackable(0,true) end
+	if chk==0 then return ec:IsChainAttackable() end
 end
 function c13257307.caop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
