@@ -143,12 +143,12 @@ end
 function c13254085.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMatchingGroupCount(c13254085.damfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)>0  end
 	Duel.SetTargetPlayer(1-tp)
-	local dam=Duel.GetMatchingGroupCount(c13254085.damfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)*200
+	local dam=Duel.GetMatchingGroupCount(c13254085.damfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)*100
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
 end
 function c13254085.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local dam=Duel.GetMatchingGroupCount(c13254085.damfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)*200
+	local dam=Duel.GetMatchingGroupCount(c13254085.damfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,nil)*100
 	Duel.Damage(p,dam,REASON_EFFECT)
 end
 

@@ -110,12 +110,8 @@ function c13254035.cfilter1(c)
 end
 function c13254035.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return not e:GetHandler():IsPublic() and Duel.IsExistingMatchingCard(c13254035.cfilter1,tp,LOCATION_HAND,0,1,c) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local g=Duel.SelectMatchingCard(tp,c13254035.cfilter1,tp,LOCATION_HAND,0,1,1,c)
-	g:AddCard(c)
-	Duel.ConfirmCards(1-tp,g)
-	Duel.ShuffleHand(tp)
+	if chk==0 then return c:IsDiscardable() end
+	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 function c13254035.sptarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFacedown,tp,0,LOCATION_ONFIELD,1,nil) or Duel.GetFieldGroupCount(tp,0,LOCATION_HAND) end
@@ -127,5 +123,22 @@ function c13254035.spoperation(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.ConfirmCards(p,g)
 		Duel.ShuffleHand(1-p)
+		local e11=Effect.CreateEffect(e:GetHandler())
+		e11:SetType(EFFECT_TYPE_FIELD)
+		e11:SetCode(EFFECT_PUBLIC)
+		e11:SetTargetRange(LOCATION_HAND,0)
+		Duel.RegisterEffect(e11,1-p)
+		local e12=Effect.CreateEffect(c)
+		e12:SetType(EFFECT_TYPE_FIELD)
+		e12:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+		e12:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e12:SetTargetRange(1,0)
+		e12:SetTarget(c13254035.splimit)
+		e12:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e12,tp)
 	end
+end
+function c13254035.aclimit3(e,re,tp)
+	local loc=re:GetHandler():GetLocation()
+	return (loc==LOCATION_GRAVE or loc==LOCATION_HAND) and not re:GetHandler():IsImmuneToEffect(e)
 end

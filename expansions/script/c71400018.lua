@@ -23,7 +23,7 @@ function c71400018.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,c71400018.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) then
-		Duel.SetChainLimit(aux.FALSE)
+		Duel.SetChainLimit(c71400018.limit(g:GetFirst()))
 	end
 end
 function c71400018.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -42,4 +42,9 @@ end
 function c71400018.condition(e,tp,eg,ep,ev,re,r,rp)
 	tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 	return tc and tc:IsFaceup() and tc:IsSetCard(0x3714)
+end
+function c71400018.limit(c)
+	return  function (e,lp,tp)
+				return e:GetHandler()~=c
+			end
 end

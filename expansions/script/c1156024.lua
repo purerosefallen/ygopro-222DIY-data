@@ -62,7 +62,7 @@ end
 --
 function c1156024.lkfilter(c,lc,tp)
 	local flag=c:IsFaceup() and c:IsCanBeLinkMaterial(lc) and c:IsType(TYPE_MONSTER) and c:GetControler()==tp
-	return flag and c:GetPreviousLocation(LOCATION_EXTRA) and c:GetLink()~=1
+	return flag and c:GetSummonLocation()==LOCATION_EXTRA and c:GetLink()~=1
 end
 function c1156024.lvfilter(c)
 	if c:IsType(TYPE_LINK) and c:GetLink()>1 then
@@ -133,7 +133,7 @@ end
 function c1156024.lkfilter1(c,lc,tp)
 	local flag=c:IsFaceup() and c:IsCanBeLinkMaterial(lc) and c:IsType(TYPE_MONSTER)
 	if c:GetControler()==tp then
-		return flag and c:GetPreviousLocation(LOCATION_EXTRA) and c:GetLink()~=1
+		return flag and c:GetSummonLocation()==LOCATION_EXTRA and c:GetLink()~=1
 	else
 		return flag
 	end
@@ -215,7 +215,7 @@ end
 --
 function c1156024.lkfilter2(c,lc,tp)
 	local flag=c:IsFaceup() and c:IsCanBeLinkMaterial(lc) and c:IsType(TYPE_MONSTER) and c:GetControler()==tp
-	return flag and c:GetPreviousLocation(LOCATION_EXTRA) and c:GetLink()~=1
+	return flag and c:GetSummonLocation()==LOCATION_EXTRA and c:GetLink()~=1
 end
 function c1156024.lvfilter2(c)
 	if c:IsType(TYPE_LINK) and c:GetLink()>1 then

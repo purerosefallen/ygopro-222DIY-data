@@ -13,7 +13,7 @@ function c13257212.initial_effect(c)
 	e2:SetDescription(aux.Stringid(13257212,0))
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCategory(CATEGORY_DESTROY)
-	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetTarget(c13257212.destg)
@@ -84,7 +84,7 @@ function c13257212.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c13257212.thfilter(c)
-	return c:IsSetCard(0x353) and c:IsAbleToHand()
+	return c:IsCode(13257229) and c:IsAbleToHand()
 end
 function c13257212.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c13257212.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -99,5 +99,5 @@ function c13257212.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257212.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257212,4))
+	Duel.Hint(11,0,aux.Stringid(13257212,4))
 end

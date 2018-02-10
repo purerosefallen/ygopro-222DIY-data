@@ -103,7 +103,7 @@ function c61221.atkval(e,c)
 	if dc~=wc then
 		dif=(dc>wc) and (dc-wc) or (wc-dc)
 	end
-	return dif*-1000
+	return dif*-1200
 end
 function c61221.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local e0 = e:GetLabelObject()

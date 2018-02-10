@@ -41,6 +41,7 @@ function c13254117.initial_effect(c)
 	e5:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e5:SetCondition(c13254117.descon)
 	e5:SetCost(c13254117.descost)
+	e5:SetTarget(c13254117.destg)
 	e5:SetOperation(c13254117.desop)
 	c:RegisterEffect(e5)
 	
@@ -78,7 +79,7 @@ function c13254117.descon(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer()
 end
 function c13254117.filter(c)
-	return c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER)
 end
 function c13254117.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -87,9 +88,13 @@ function c13254117.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:GetFlagEffect(13254117)<ct end
 	c:RegisterFlagEffect(13254117,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 end
+function c13254117.destg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return not e:GetHandler():IsStatus(STATUS_CHAINING) end
+	Duel.SetTargetCard(Duel.GetAttacker())
+end
 function c13254117.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetAttacker()
-	if tc:IsRelateToEffect(e) and tc:IsAttackable() and not tc:IsStatus(STATUS_ATTACK_CANCELED) then
+	if tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end

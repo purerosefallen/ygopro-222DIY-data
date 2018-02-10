@@ -1,133 +1,165 @@
 --玫瑰花园
 function c1150032.initial_effect(c)
 --
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_ACTIVATE)
+	e0:SetCode(EVENT_FREE_CHAIN)
+	c:RegisterEffect(e0)
+--
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,1150032+EFFECT_COUNT_CODE_OATH)
-	e1:SetCondition(c1150032.con1)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetRange(LOCATION_FZONE)
+	e1:SetCountLimit(1,1150032)
 	e1:SetCost(c1150032.cost1)
 	e1:SetTarget(c1150032.tg1)
 	e1:SetOperation(c1150032.op1)
 	c:RegisterEffect(e1)	
 --
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_DRAW)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCountLimit(1,1150033)
-	e2:SetCondition(aux.exccon)
-	e2:SetCost(c1150033.cost2)
-	e2:SetTarget(c1150033.tg2)
-	e2:SetOperation(c1150033.op2)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_LEAVE_FIELD)
+	e2:SetRange(LOCATION_FZONE)
+	e2:SetTarget(c1150032.tg2)
+	e2:SetOperation(c1150032.op2)
 	c:RegisterEffect(e2)
 --
 end
 --
 function c1150032.cfilter1(c)
-	return c:IsFaceup() and c:IsRace(RACE_PLANT) and c:GetLevel()>7 and c:IsSummonType(SUMMON_TYPE_ADVANCE) 
-end
-function c1150032.con1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c1150032.cfilter1,tp,LOCATION_ONFIELD,0,1,nil)
-end
---
-function c1150032.costfilter1(c)
-	return c:IsRace(RACE_PLANT) and c:IsAbleToRemoveAsCost()
+	return c:IsRace(RACE_PLANT) and c:IsReleasable()
 end
 function c1150032.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c1150032.costfilter1,tp,LOCATION_GRAVE,0,1,nil) end
-	local g=Duel.GetFieldGroup(tp,LOCATION_GRAVE,0)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local sg=g:FilterSelect(tp,c1150032.costfilter1,1,1,nil)
-	Duel.Remove(sg,POS_FACEUP,REASON_COST)
+	if chk==0 then return Duel.IsExistingMatchingCard(c1150032.cfilter1,tp,LOCATION_HAND+LOCATION_MZONE,0,2,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	local g=Duel.SelectMatchingCard(tp,c1150032.cfilter1,tp,LOCATION_HAND+LOCATION_MZONE,0,2,2,nil)
+	Duel.Release(g,REASON_COST)
 end
 --
 function c1150032.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ct=Duel.GetMZoneCount(tp)+Duel.GetMZoneCount(1-tp)
-	if chk==0 then return ct>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,1150034,0,0x4011,0,0,1,RACE_PLANT,ATTRIBUTE_FIRE) end
+	local ct=Duel.GetLocationCount(tp,LOCATION_MZONE)+Duel.GetLocationCount(1-tp,LOCATION_MZONE)
+	if chk==0 then return ct>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,1150034,0,0x4011,0,0,1,RACE_PLANT,ATTRIBUTE_DARK) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,ct,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,ct,0,0)
 end
 --
 function c1150032.op1(e,tp,eg,ep,ev,re,r,rp)
-	local ct1=Duel.GetMZoneCount(tp)
-	local ct2=Duel.GetMZoneCount(1-tp)
-	if ct1+ct2>0 then 
-		if Duel.IsPlayerCanSpecialSummonMonster(tp,1150034,0,0x4011,0,0,1,RACE_PLANT,ATTRIBUTE_FIRE) then
+	local ct1=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ct2=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
+	if (ct1>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,1150034,0,0x4011,0,0,1,RACE_PLANT,ATTRIBUTE_DARK)) and (ct2>0 and Duel.IsPlayerCanSpecialSummonMonster(1-tp,1150034,0,0x4011,0,0,1,RACE_PLANT,ATTRIBUTE_DARK)) then
+		local i=0
+		if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct1=1 end
+		for i=1,ct1 do
+			local token=Duel.CreateToken(tp,1150034)
+			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
+			local e1_2=Effect.CreateEffect(e:GetHandler())
+			e1_2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+			e1_2:SetType(EFFECT_TYPE_SINGLE)
+			e1_2:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+			e1_2:SetValue(1)
+			token:RegisterEffect(e1_2,true)
+		end
+		if Duel.IsPlayerAffectedByEffect(1-tp,59822133) then ct2=1 end
+		for i=1,ct2 do
+			local token=Duel.CreateToken(1-tp,1150034)
+			Duel.SpecialSummonStep(token,0,1-tp,1-tp,false,false,POS_FACEUP)
+			local e1_2=Effect.CreateEffect(e:GetHandler())
+			e1_2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+			e1_2:SetType(EFFECT_TYPE_SINGLE)
+			e1_2:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+			e1_2:SetValue(1)
+			token:RegisterEffect(e1_2,true)
+		end
+		Duel.SpecialSummonComplete()
+		local e1_1=Effect.CreateEffect(e:GetHandler())
+		e1_1:SetType(EFFECT_TYPE_FIELD)
+		e1_1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
+		e1_1:SetTargetRange(LOCATION_HAND,0)
+		e1_1:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_PLANT))
+		e1_1:SetValue(0x1)
+		e1_1:SetReset(EVENT_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1_1,tp)
+	else
+		if ct1>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,1150034,0,0x4011,0,0,1,RACE_PLANT,ATTRIBUTE_DARK) then
 			local i=0
-			if Duel.IsPlayerAffectedByEffect(tp,59822133) then
-				ct1=1
-				ct2=1
-			end
+			if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct1=1 end
 			for i=1,ct1 do
 				local token=Duel.CreateToken(tp,1150034)
-				if Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP) then
-					local e1_1=Effect.CreateEffect(c)
-					e1_1:SetType(EFFECT_TYPE_FIELD)
-					e1_1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-					e1_1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-					e1_1:SetRange(LOCATION_MZONE)
-					e1_1:SetTarget(c1150034.splimit1_1)
-					e1_1:SetCondition(c1150034.con1_1)
-					e1_1:SetReset(RESET_EVENT+0x1fe0000)
-					token:RegisterEffect(e1_1,true)
-				end
-			end
-			for i=1,ct2 do
-				local token=Duel.CreateToken(tp,1150034)
-				if Duel.SpecialSummonStep(token,0,1-tp,1-tp,false,false,POS_FACEUP) then
-					local e1_1=Effect.CreateEffect(c)
-					e1_1:SetType(EFFECT_TYPE_FIELD)
-					e1_1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-					e1_1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-					e1_1:SetRange(LOCATION_MZONE)
-					e1_1:SetTarget(c1150034.splimit1_1)
-					e1_1:SetCondition(c1150034.con1_1)
-					e1_1:SetReset(RESET_EVENT+0x1fe0000)
-					token:RegisterEffect(e1_1,true)
-				end
+				Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
+				local e1_2=Effect.CreateEffect(e:GetHandler())
+				e1_2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+				e1_2:SetType(EFFECT_TYPE_SINGLE)
+				e1_2:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+				e1_2:SetValue(1)
+				token:RegisterEffect(e1_2,true)
 			end
 			Duel.SpecialSummonComplete()
+			local e1_1=Effect.CreateEffect(e:GetHandler())
+			e1_1:SetType(EFFECT_TYPE_FIELD)
+			e1_1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
+			e1_1:SetTargetRange(LOCATION_HAND,0)
+			e1_1:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_PLANT))
+			e1_1:SetValue(0x1)
+			e1_1:SetReset(EVENT_PHASE+PHASE_END)
+			Duel.RegisterEffect(e1_1,tp)
+		else
+			if ct2>0 and Duel.IsPlayerCanSpecialSummonMonster(1-tp,1150034,0,0x4011,0,0,1,RACE_PLANT,ATTRIBUTE_DARK) then
+				local i=0
+				if Duel.IsPlayerAffectedByEffect(1-tp,59822133) then ct2=1 end
+				for i=1,ct2 do
+					local token=Duel.CreateToken(1-tp,1150034)
+					Duel.SpecialSummonStep(token,0,1-tp,1-tp,false,false,POS_FACEUP)
+					local e1_2=Effect.CreateEffect(e:GetHandler())
+					e1_2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+					e1_2:SetType(EFFECT_TYPE_SINGLE)
+					e1_2:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+					e1_2:SetValue(1)
+					token:RegisterEffect(e1_2,true)
+				end
+				Duel.SpecialSummonComplete()
+				local e1_1=Effect.CreateEffect(e:GetHandler())
+				e1_1:SetType(EFFECT_TYPE_FIELD)
+				e1_1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
+				e1_1:SetTargetRange(LOCATION_HAND,0)
+				e1_1:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_PLANT))
+				e1_1:SetValue(0x1)
+				e1_1:SetReset(EVENT_PHASE+PHASE_END)
+				Duel.RegisterEffect(e1_1,tp)
+			end
 		end
 	end
 end
 --
-function c1150032.splimit1_1(e,c)
-	return c:IsLocation(LOCATION_EXTRA) and c:IsType(TYPE_LINK)
-end
---
-function c1150032.cfilter1_1(c)
-	return c:IsFaceup() and c:IsCode(1150032)
-end
-function c1150032.con1_1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c1150032.cfilter1_1,tp,LOCATION_ONFIELD,0,2,nil)
-end
---
-function c1150032.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
-end
---
 function c1150032.tfilter2(c)
-	return c:IsFaceup() and c:IsRace(RACE_PLANT)
+	return c:IsType(TYPE_MONSTER) and not c:IsRace(RACE_PLANT)
 end
-function c1150032.tg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c69584564.tfilter2(chkc) end
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
-		and Duel.IsExistingTarget(c1150032.tfilter2,tp,LOCATION_MZONE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,c1150032.tfilter2,tp,LOCATION_MZONE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+function c1150032.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
+	return eg:IsExists(c1150032.tfilter2,1,nil)
 end
 --
 function c1150032.op2(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and Duel.Destroy(tc,REASON_EFFECT)~=0 then
-		Duel.Draw(tp,1,REASON_EFFECT)
+	local sg=eg:Filter(c1150032.tfilter2,nil)
+	local tc=sg:GetFirst()
+	local check1=0
+	local check2=0
+	while tc do
+		local p=tc:GetPreviousControler()
+		if p==tp then check1=1 end
+		if p~=tp then check2=1 end
+		tc=sg:GetNext()
+	end
+	if check1==1 then 
+		local lp=Duel.GetLP(tp)
+		if lp>300 then lp=lp-300
+		else lp=0 end
+		Duel.SetLP(tp,lp)
+	end
+	if check2==1 then
+		local lp=Duel.GetLP(1-tp)
+		if lp>300 then lp=lp-300
+		else lp=0 end
+		Duel.SetLP(1-tp,lp)
 	end
 end
 --
-
-

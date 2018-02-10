@@ -25,7 +25,7 @@ function c13257305.initial_effect(c)
 	e3:SetDescription(aux.Stringid(13257305,5))
 	e3:SetCategory(CATEGORY_DISABLE+CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
-	e3:SetCode(EVENT_CHAINING)
+	e3:SetCode(EVENT_BECOME_TARGET)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(c13257305.discon)
@@ -56,7 +56,7 @@ function c13257305.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoHand(g,nil,REASON_COST)
 end
 function c13257305.netg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMZoneCount(tp)>-1 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingMatchingCard(c13257305.eqfilter,tp,LOCATION_EXTRA,0,1,nil,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
@@ -64,9 +64,9 @@ end
 function c13257305.neop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.NegateActivation(ev)
-	if Duel.GetMZoneCount(tp)>0 and c:IsRelateToEffect(e) then
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsRelateToEffect(e) then
 		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
-			Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257305,7))
+			Duel.Hint(11,0,aux.Stringid(13257305,7))
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 			local g=Duel.SelectMatchingCard(tp,c13257305.eqfilter,tp,LOCATION_EXTRA,0,1,1,nil,c)
 			local tc=g:GetFirst()
@@ -79,7 +79,7 @@ end
 function c13257305.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local t1=Duel.IsExistingMatchingCard(c13257305.eqfilter,tp,LOCATION_EXTRA,0,1,nil,c) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-	local t2=Duel.GetMZoneCount(tp)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,93130022,0,0x4011,c:GetAttack(),c:GetDefense(),c:GetLevel(),c:GetRace(),c:GetAttribute())
+	local t2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,93130022,0,0x4011,c:GetAttack(),c:GetDefense(),c:GetLevel(),c:GetRace(),c:GetAttribute())
 	if chk==0 then return t1 or t2 end
 	local op=0
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(13257305,1))
@@ -116,7 +116,7 @@ function c13257305.pcop(e,tp,eg,ep,ev,re,r,rp)
 		local lv=c:GetLevel()
 		local race=c:GetRace()
 		local att=c:GetAttribute()
-		if Duel.GetMZoneCount(tp)<=0 or not c:IsRelateToEffect(e) or c:IsFacedown()
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not c:IsRelateToEffect(e) or c:IsFacedown()
 			or not Duel.IsPlayerCanSpecialSummonMonster(tp,93130022,0,0x4011,atk,def,lv,race,att) then return end
 		local token=Duel.CreateToken(tp,93130022)
 		c:CreateRelation(token,RESET_EVENT+0x1fe0000)
@@ -158,6 +158,7 @@ function c13257305.pcop(e,tp,eg,ep,ev,re,r,rp)
 		e6:SetReset(RESET_EVENT+0xfe0000)
 		token:RegisterEffect(e6,true)
 		Duel.SpecialSummonComplete()
+		c:SetCardTarget(token)
 	end
 end
 function c13257305.tokenatk(e,c)
@@ -178,27 +179,25 @@ end
 function c13257305.tokendes(e)
 	return not e:GetOwner():IsRelateToCard(e:GetHandler())
 end
+function c13257305.tgfilter(c,tp)
+	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsSetCard(0x351)
+end
 function c13257305.discon(e,tp,eg,ep,ev,re,r,rp)
-	if rp==tp or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
-	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	if not g or g:GetCount()==0 then return false end
-	local tg=g:GetFirst()
-	local c=e:GetHandler()
-	return tg:IsFaceup() and tg:IsSetCard(0x351) and tg:IsType(TYPE_MONSTER)
+	return eg:IsExists(c13257305.tgfilter,1,nil,tp)
 end
 function c13257305.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE,re:GetHandler(),1,0,0)
 	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
-		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,re:GetHandler(),1,0,0)
 	end
 end
 function c13257305.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateActivation(ev)
 	if re:GetHandler():IsRelateToEffect(re) then
-		Duel.Destroy(eg,REASON_EFFECT)
+		Duel.Destroy(re:GetHandler(),REASON_EFFECT)
 	end
 end
 function c13257305.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257305,7))
+	Duel.Hint(11,0,aux.Stringid(13257305,7))
 end

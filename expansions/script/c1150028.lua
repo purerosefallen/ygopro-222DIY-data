@@ -23,17 +23,20 @@ end
 function c1150028.con0(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ct=Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
-	return ev==ct and eg:IsContains(c)
+	return ct<2
 end
 --
 function c1150028.op0(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local e0_1=Effect.CreateEffect(c)
-	e0_1:SetType(EFFECT_TYPE_SINGLE)
-	e0_1:SetCode(EFFECT_PUBLIC)
-	e0_1:SetReset(RESET_EVENT+0x1fe0000)
-	c:RegisterEffect(e0_1)
-	c:RegisterFlagEffect(1150028,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,0,66)
+	if c:IsLocation(LOCATION_HAND) then
+		Duel.Hint(HINT_CARD,0,c:GetCode())
+		local e0_1=Effect.CreateEffect(c)
+		e0_1:SetType(EFFECT_TYPE_SINGLE)
+		e0_1:SetCode(EFFECT_PUBLIC)
+		e0_1:SetReset(RESET_EVENT+0x1fe0000)
+		c:RegisterEffect(e0_1)
+		c:RegisterFlagEffect(1150028,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,0,66)
+	end
 end
 --
 function c1150028.con1(e,tp,eg,ep,ev,re,r,rp)
@@ -54,7 +57,7 @@ end
 --
 function c1150028.op1(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>2 then
-		Duel.ConfirmDecktop(tp,3)	   
+		Duel.ConfirmDecktop(tp,3)	
 		local g=Duel.GetDecktopGroup(tp,3)
 		local gn=Group.CreateGroup()
 		if g:GetCount()>0 then
@@ -76,8 +79,8 @@ function c1150028.op1(e,tp,eg,ep,ev,re,r,rp)
 			local stc=sg:GetFirst()
 			while stc do
 				Duel.SpecialSummonStep(stc,0,tp,tp,false,false,POS_FACEUP)
+				g:RemoveCard(stc)
 				stc=sg:GetNext()
-				g:Remove(stc)
 			end
 			Duel.SpecialSummonComplete()
 		end

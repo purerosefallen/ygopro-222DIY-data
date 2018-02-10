@@ -59,7 +59,7 @@ function c13257327.efilter(e,re)
 	return e:GetHandlerPlayer()~=re:GetOwnerPlayer()
 end
 function c13257327.desfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsFaceup()
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsFaceup() and not c:IsDisabled()
 end
 function c13257327.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c13257327.desfilter,tp,0,LOCATION_ONFIELD,1,nil) end
@@ -67,13 +67,66 @@ function c13257327.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c13257327.desop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(c13257327.desfilter,tp,0,LOCATION_ONFIELD,nil)
-	if e:GetHandler():IsRelateToEffect(e) and g:GetCount()>0 then
+	if c:IsRelateToEffect(e) and g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local dg=g:Select(tp,1,1,nil)
-		Duel.HintSelection(dg)
-		Duel.Destroy(dg,REASON_EFFECT)
+		if dg:GetCount()>0 then
+			Duel.HintSelection(dg)
+			local tc=dg:GetFirst()
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_DISABLE)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetReset(RESET_EVENT+0x1fe0000)
+			tc:RegisterEffect(e1)
+			local e2=e1:Clone()
+			e2:SetCode(EFFECT_DISABLE_EFFECT)
+			e2:SetValue(RESET_TURN_SET)
+			tc:RegisterEffect(e2)
+			if tc:IsType(TYPE_TRAPMONSTER) then
+				local e3=Effect.CreateEffect(c)
+				e3:SetType(EFFECT_TYPE_SINGLE)
+				e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+				e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
+				e3:SetReset(RESET_EVENT+0x1fe0000)
+				tc:RegisterEffect(e3)
+			end
+			Duel.AdjustInstantly()
+			if Duel.Destroy(dg,REASON_EFFECT)>0 then
+				local e4=Effect.CreateEffect(c)
+				e4:SetType(EFFECT_TYPE_FIELD)
+				e4:SetCode(EFFECT_DISABLE)
+				e4:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
+				e4:SetTarget(c13257327.distg)
+				e4:SetLabel(tc:GetOriginalCode())
+				e4:SetReset(RESET_PHASE+PHASE_END)
+				Duel.RegisterEffect(e4,tp)
+				local e5=Effect.CreateEffect(c)
+				e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+				e5:SetCode(EVENT_CHAIN_SOLVING)
+				e5:SetCondition(c13257327.discon)
+				e5:SetOperation(c13257327.disop)
+				e5:SetLabel(tc:GetOriginalCode())
+				e5:SetReset(RESET_PHASE+PHASE_END)
+				Duel.RegisterEffect(e5,tp)
+			end
+		end
 	end
+end
+function c13257327.distg(e,c)
+	local code=e:GetLabel()
+	local code1,code2=c:GetOriginalCodeRule()
+	return code1==code or code2==code
+end
+function c13257327.discon(e,tp,eg,ep,ev,re,r,rp)
+	local code=e:GetLabel()
+	local code1,code2=re:GetHandler():GetOriginalCodeRule()
+	return code1==code or code2==code
+end
+function c13257327.disop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.NegateEffect(ev)
 end
 function c13257327.cfilter(c,tp)
 	return c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)

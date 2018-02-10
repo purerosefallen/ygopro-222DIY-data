@@ -1,18 +1,8 @@
 --梦医院的梦之患者
+xpcall(function() require("expansions/script/c71400001") end,function() require("script/c71400001") end)
 function c71400006.initial_effect(c)
 	--summon limit
-	local el1=Effect.CreateEffect(c)
-	el1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	el1:SetType(EFFECT_TYPE_SINGLE)
-	el1:SetCode(EFFECT_CANNOT_SUMMON)
-	el1:SetCondition(c71400006.sumlimit)
-	c:RegisterEffect(el1)
-	local el2=el1:Clone()
-	el2:SetCode(EFFECT_CANNOT_MSET)
-	c:RegisterEffect(el2)
-	local el3=el1:Clone()
-	el3:SetCode(EFFECT_SPSUMMON_CONDITION)
-	c:RegisterEffect(el3)
+	yume.AddYumeSummonLimit(c)
 	--summon success
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(71400006,0))
@@ -37,12 +27,6 @@ function c71400006.initial_effect(c)
 	e2:SetTarget(c71400006.target2)
 	e2:SetOperation(c71400006.operation2)
 	c:RegisterEffect(e2)
-end
-function c71400006.lfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3714)
-end
-function c71400006.sumlimit(e)
-	return not Duel.IsExistingMatchingCard(c71400006.lfilter,e:GetHandlerPlayer(),LOCATION_FZONE,0,1,nil)
 end
 function c71400006.filter1(c,e,tp)
 	return c:IsLevelBelow(4) and c:IsSetCard(0x714) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

@@ -9,7 +9,6 @@ function c1150027.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_RECOVER)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_TO_HAND)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCondition(c1150027.con2)
@@ -71,14 +70,14 @@ function c1150027.op0(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1150027.con2(e,tp,eg,ep,ev,re,r,rp)
-	return not re:IsHasType(EFFECT_TYPE_ACTIONS) or re:IsHasType(EFFECT_TYPE_CONTINUOUS)
+	return re and (not re:IsHasType(EFFECT_TYPE_ACTIONS) or re:IsHasType(EFFECT_TYPE_CONTINUOUS))
 end
 function c1150027.op2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(tp,100,REASON_EFFECT)
 end
 --
 function c1150027.con2_2(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsHasType(EFFECT_TYPE_ACTIONS) and not re:IsHasType(EFFECT_TYPE_CONTINUOUS)
+	return re and re:IsHasType(EFFECT_TYPE_ACTIONS) and not re:IsHasType(EFFECT_TYPE_CONTINUOUS)
 end
 function c1150027.op2_2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(tp,1150027,RESET_CHAIN,0,1)
@@ -157,12 +156,13 @@ end
 function c1150027.op4(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) and Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)~=0 then
 		local g=Duel.GetFieldGroup(1-tp,LOCATION_HAND,0,nil)
-		local hg=g:RandomSelect(1-tp,1)
-		Duel.ConfirmCards(tp,hg)
+		local tc=g:RandomSelect(1-tp,1):GetFirst()
+		Duel.ConfirmCards(tp,tc)
+		Duel.ShuffleHand(1-tp)
 		local opt=e:GetLabel()
 		if (opt==0 and tc:IsType(TYPE_MONSTER)) or (opt==1 and tc:IsType(TYPE_SPELL)) or (opt==2 and tc:IsType(TYPE_TRAP)) then
 			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
-			local sg=Duel.SelectMatchingCard(1-tp,c1150027.ofilter4,1-tp,LOCATION_HAND,0,nil,opt)
+			local sg=Duel.SelectMatchingCard(1-tp,c1150027.ofilter4,1-tp,LOCATION_HAND,0,1,1,nil,opt)
 			if sg:GetCount()>0 then
 				Duel.SendtoGrave(sg,REASON_EFFECT)
 				Duel.Recover(1-tp,800,REASON_EFFECT)
@@ -171,23 +171,23 @@ function c1150027.op4(e,tp,eg,ep,ev,re,r,rp)
 			if Duel.Recover(tp,300,REASON_EFFECT)>0 then
 				if opt==0 and Duel.GetMatchingGroup(c1150027.ofilter4_1,1-tp,LOCATION_GRAVE,0,nil) and Duel.SelectYesNo(1-tp,aux.Stringid(1150027,2)) then
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
-					local gn=Duel.SelectMatchingCard(1-tp,c1150027.ofilter4_1,1-tp,LOCATION_GRAVE,0,nil)
+					local gn=Duel.SelectMatchingCard(1-tp,c1150027.ofilter4_1,1-tp,LOCATION_GRAVE,0,1,1,nil)
 					if gn:GetCount()>0 then
 						Duel.SendtoHand(gn,nil,REASON_EFFECT)
 						Duel.ConfirmCards(tp,gn)
-					end		
+					end	 
 				else 
 					if opt==1 and Duel.GetMatchingGroup(c1150027.ofilter4_2,1-tp,LOCATION_GRAVE,0,nil) and Duel.SelectYesNo(1-tp,aux.Stringid(1150027,2)) then
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
-						local gn=Duel.SelectMatchingCard(1-tp,c1150027.ofilter4_2,1-tp,LOCATION_GRAVE,0,nil)
+						local gn=Duel.SelectMatchingCard(1-tp,c1150027.ofilter4_2,1-tp,LOCATION_GRAVE,0,1,1,nil)
 						if gn:GetCount()>0 then
 							Duel.SendtoHand(gn,nil,REASON_EFFECT)
 							Duel.ConfirmCards(tp,gn)
-						end		
+						end	 
 					else 
 						if opt==2 and Duel.GetMatchingGroup(c1150027.ofilter4_3,1-tp,LOCATION_GRAVE,0,nil) and Duel.SelectYesNo(1-tp,aux.Stringid(1150027,2)) then
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
-							local gn=Duel.SelectMatchingCard(1-tp,c1150027.ofilter4_3,1-tp,LOCATION_GRAVE,0,nil)
+							local gn=Duel.SelectMatchingCard(1-tp,c1150027.ofilter4_3,1-tp,LOCATION_GRAVE,0,1,1,nil)
 							if gn:GetCount()>0 then
 								Duel.SendtoHand(gn,nil,REASON_EFFECT)
 								Duel.ConfirmCards(tp,gn)

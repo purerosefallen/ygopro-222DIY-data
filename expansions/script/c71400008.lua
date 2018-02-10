@@ -1,15 +1,11 @@
 --梦之书中的三足怪物
+xpcall(function() require("expansions/script/c71400001") end,function() require("script/c71400001") end)
 function c71400008.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,function() return Duel.IsExistingMatchingCard(function(tc) return tc:IsFaceup() and tc:IsSetCard(0x3714) end,c:GetControler(),LOCATION_FZONE,0,1,nil) end,4,3)
+	aux.AddXyzProcedure(c,yume.YumeCheck(c),4,3)
 	c:EnableReviveLimit()
 	--summon limit
-	local el1=Effect.CreateEffect(c)
-	el1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	el1:SetType(EFFECT_TYPE_SINGLE)
-	el1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	el1:SetCondition(c71400008.sumlimit)
-	c:RegisterEffect(el1)
+	yume.AddYumeSummonLimit(c,1)
 	--nuke
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(71400008,0))
@@ -22,12 +18,6 @@ function c71400008.initial_effect(c)
 	e1:SetTarget(c71400008.target)
 	e1:SetOperation(c71400008.operation)
 	c:RegisterEffect(e1)
-end
-function c71400008.lfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3714)
-end
-function c71400008.sumlimit(e)
-	return not Duel.IsExistingMatchingCard(c71400008.lfilter,e:GetHandlerPlayer(),LOCATION_FZONE,0,1,nil)
 end
 function c71400008.condition(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp
@@ -45,6 +35,6 @@ function c71400008.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,e:GetHandler())
 	if Duel.Destroy(g,REASON_EFFECT)>0 then
 		Duel.BreakEffect()
-		Duel.SetLP(tp,math.ceil(Duel.GetLP(tp)/2))
+		Duel.SetLP(tp,Duel.GetLP(tp)-1000)
 	end
 end

@@ -34,6 +34,22 @@ function c13257217.initial_effect(c)
 	e4:SetTarget(c13257217.postg)
 	e4:SetOperation(c13257217.posop)
 	c:RegisterEffect(e4)
+	--immune
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetCode(EFFECT_IMMUNE_EFFECT)
+	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_UNCOPYABLE)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetValue(c13257217.efilter)
+	c:RegisterEffect(e5)
+	local e12=Effect.CreateEffect(c)
+	e12:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e12:SetCode(EVENT_SUMMON_SUCCESS)
+	e12:SetOperation(c13257217.bgmop)
+	c:RegisterEffect(e12)
+	local e13=e12:Clone()
+	e13:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e13)
 	
 end
 function c13257217.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -76,4 +92,12 @@ function c13257217.posop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13257217.bgmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(11,0,aux.Stringid(13257217,4))
+end
+function c13257217.efilter(e,te)
+	if te:IsActiveType(TYPE_MONSTER) then
+		local att=e:GetHandler():GetAttack()
+		local ec=te:GetOwner()
+		return ec:GetAttack()<att
+	else return false
+	end
 end

@@ -7,6 +7,7 @@ function c1150041.initial_effect(c)
 	c:RegisterEffect(e0)
 --
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(1150041,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_SZONE)

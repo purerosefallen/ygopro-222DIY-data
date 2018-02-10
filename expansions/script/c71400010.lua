@@ -1,15 +1,11 @@
 --梦之书中的脑女
+xpcall(function() require("expansions/script/c71400001") end,function() require("script/c71400001") end)
 function c71400010.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,function() return Duel.IsExistingMatchingCard(function(tc) return tc:IsFaceup() and tc:IsSetCard(0x3714) end,c:GetControler(),LOCATION_FZONE,0,1,nil) end,4,2)
+	aux.AddXyzProcedure(c,yume.YumeCheck(c),4,2)
 	c:EnableReviveLimit()
 	--summon limit
-	local el1=Effect.CreateEffect(c)
-	el1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	el1:SetType(EFFECT_TYPE_SINGLE)
-	el1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	el1:SetCondition(c71400010.sumlimit)
-	c:RegisterEffect(el1)
+	yume.AddYumeSummonLimit(c,1)
 	--get all
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_CONTROL+CATEGORY_DAMAGE)
@@ -32,12 +28,6 @@ function c71400010.initial_effect(c)
 	e2:SetOperation(c71400010.operation2)
 	e2:SetCondition(c71400010.condition2)
 	c:RegisterEffect(e2)
-end
-function c71400010.lfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3714)
-end
-function c71400010.sumlimit(e)
-	return not Duel.IsExistingMatchingCard(c71400010.lfilter,e:GetHandlerPlayer(),LOCATION_FZONE,0,1,nil)
 end
 function c71400010.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
@@ -75,7 +65,7 @@ function c71400010.operation1(e,tp,eg,ep,ev,re,r,rp)
 		tc=og:GetNext()
 	end
 	Duel.BreakEffect()
-	Duel.Damage(tp,atk,REASON_EFFECT)
+	Duel.Damage(tp,atk/2,REASON_EFFECT)
 end
 function c71400010.condition2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

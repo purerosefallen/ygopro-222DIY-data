@@ -1,15 +1,11 @@
 --梦之书中的公式证明图表
+xpcall(function() require("expansions/script/c71400001") end,function() require("script/c71400001") end)
 function c71400009.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,function() return Duel.IsExistingMatchingCard(function(tc) return tc:IsFaceup() and tc:IsSetCard(0x3714) end,c:GetControler(),LOCATION_FZONE,0,1,nil) end,4,2)
+	aux.AddXyzProcedure(c,yume.YumeCheck(c),4,2)
 	c:EnableReviveLimit()
 	--summon limit
-	local el1=Effect.CreateEffect(c)
-	el1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	el1:SetType(EFFECT_TYPE_SINGLE)
-	el1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	el1:SetCondition(c71400009.sumlimit)
-	c:RegisterEffect(el1)
+	yume.AddYumeSummonLimit(c,1)
 	--destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_REMOVE)
@@ -29,12 +25,6 @@ function c71400009.initial_effect(c)
 		e4:SetValue(aux.TRUE)
 		Duel.RegisterEffect(e4,0)
 	end
-end
-function c71400009.lfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3714)
-end
-function c71400009.sumlimit(e)
-	return not Duel.IsExistingMatchingCard(c71400009.lfilter,e:GetHandlerPlayer(),LOCATION_FZONE,0,1,nil)
 end
 function c71400009.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

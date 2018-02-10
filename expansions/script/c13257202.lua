@@ -27,7 +27,6 @@ function c13257202.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1)
-	e4:SetTarget(c13257202.postg)
 	e4:SetOperation(c13257202.posop)
 	c:RegisterEffect(e4)
 	local e12=Effect.CreateEffect(c)
@@ -54,25 +53,24 @@ end
 function c13257202.thfilter(c)
 	return c:IsSetCard(0x353) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
-function c13257202.postg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAttackPos,tp,0,LOCATION_MZONE,1,nil) and Duel.IsExistingMatchingCard(c13257202.thfilter,tp,LOCATION_DECK,0,1,nil) end
-	local g=Duel.GetMatchingGroup(Card.IsAttackPos,tp,0,LOCATION_MZONE,nil)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,g:GetCount(),0,0)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-end
+--function c13257202.postg(e,tp,eg,ep,ev,re,r,rp,chk)
+--	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAttackPos,tp,0,LOCATION_MZONE,1,nil) and Duel.IsExistingMatchingCard(c13257202.thfilter,tp,LOCATION_DECK,0,1,nil) end
+--	local g=Duel.GetMatchingGroup(Card.IsAttackPos,tp,0,LOCATION_MZONE,nil)
+--	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,g:GetCount(),0,0)
+--	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+--end
 function c13257202.posop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAttackPos,tp,0,LOCATION_MZONE,nil)
 	if g:GetCount()>0 then
-		if Duel.ChangePosition(g,POS_FACEUP_DEFENSE)==0 then return end
-		Duel.BreakEffect()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local sg=Duel.SelectMatchingCard(tp,c13257202.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-		if sg:GetCount()>0 then
-			Duel.SendtoHand(sg,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,sg)
-		end
+		Duel.ChangePosition(g,POS_FACEUP_DEFENSE)
+	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local sg=Duel.SelectMatchingCard(tp,c13257202.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+	if sg:GetCount()>0 then
+		Duel.SendtoHand(sg,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,sg)
 	end
 end
 function c13257202.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257202,4))
+	Duel.Hint(11,0,aux.Stringid(13257202,4))
 end

@@ -44,9 +44,9 @@ function c13257222.initial_effect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e6:SetProperty(EFFECT_FLAG_DELAY)
 	e6:SetCode(EVENT_LEAVE_FIELD)
-	e6:SetCondition(c13257222.tkcon)
-	e6:SetTarget(c13257222.tktg)
-	e6:SetOperation(c13257222.tkop)
+	e6:SetCondition(c13257222.ttcon)
+	e6:SetTarget(c13257222.tttg)
+	e6:SetOperation(c13257222.ttop)
 	c:RegisterEffect(e6)
 	local e7=Effect.CreateEffect(c)
 	e7:SetType(EFFECT_TYPE_SINGLE)
@@ -55,6 +55,16 @@ function c13257222.initial_effect(c)
 	e7:SetCode(EFFECT_ADD_SETCODE)
 	e7:SetValue(0x353)
 	c:RegisterEffect(e7)
+	--special summon
+	local e8=Effect.CreateEffect(c)
+	e8:SetDescription(aux.Stringid(13257222,1))
+	e8:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
+	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e8:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e8:SetTarget(c13257222.tktg)
+	e8:SetOperation(c13257222.tkop)
+	c:RegisterEffect(e8)
 	local e12=Effect.CreateEffect(c)
 	e12:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e12:SetCode(EVENT_SUMMON_SUCCESS)
@@ -77,17 +87,17 @@ end
 function c13257222.sdcon(e)
 	return Duel.GetTurnPlayer()~=e:GetOwnerPlayer() and Duel.GetCurrentPhase()==PHASE_END
 end
-function c13257222.tkcon(e,tp,eg,ep,ev,re,r,rp)
+function c13257222.ttcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetLocation()~=LOCATION_DECK
 end
 function c13257222.tdfilter(c)
 	return c:IsRace(RACE_FIEND) and c:IsLevelAbove(5)
 end
-function c13257222.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c13257222.tttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c13257222.tdfilter,tp,LOCATION_DECK,0,1,nil)
 		and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>1 end
 end
-function c13257222.tkop(e,tp,eg,ep,ev,re,r,rp)
+function c13257222.ttop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(13257222,0))
 	local g=Duel.SelectMatchingCard(tp,c13257222.tdfilter,tp,LOCATION_DECK,0,1,1,nil)
 	local tc=g:GetFirst()
@@ -97,6 +107,40 @@ function c13257222.tkop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmDecktop(tp,1)
 	end
 end
+function c13257222.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsPlayerCanSpecialSummonMonster(tp,13257232,0,0x4011,500,500,3,RACE_MACHINE,ATTRIBUTE_LIGHT) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
+end
+function c13255222.tkop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if ft>0 then
+		if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
+		if Duel.IsPlayerCanSpecialSummonMonster(tp,13257232,0,0x4011,500,500,3,RACE_MACHINE,ATTRIBUTE_LIGHT) then
+			local ctn=true
+			while ft>0 and ctn do
+				local token=Duel.CreateToken(tp,13257232)
+				Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
+				ft=ft-1
+				if ft<=0 or not Duel.SelectYesNo(tp,aux.Stringid(13255222,2)) then ctn=false end
+			end
+		end
+	end
+	Duel.SpecialSummonComplete()
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
+	e1:SetTargetRange(1,0)
+	e1:SetTarget(c13255222.splimit)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+end
+function c13255222.splimit(e,c,sump,sumtype,sumpos,targetp,se)
+	return c:IsLocation(LOCATION_EXTRA)
+end
 function c13257222.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257222,4))
+	Duel.Hint(HINT_MESSAGE,1-tp,aux.Stringid(13257222,1))
+	Duel.Hint(11,0,aux.Stringid(13257222,4))
 end

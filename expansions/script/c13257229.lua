@@ -75,16 +75,16 @@ function c13257229.cfilter1(c,tp)
 	return c:IsPreviousLocation(LOCATION_GRAVE) and c:GetPreviousControler()==tp
 end
 function c13257229.gfilter1(c)
-	return c:IsFaceup() and c:IsRace(RACE_FIEND)
+	return c:IsFaceup() and c:IsRace(RACE_FIEND) and c:IsLevelAbove(5)
 end
 function c13257229.drcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c13257229.gfilter1,1,nil,tp) and Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0
 end
 function c13257229.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
 	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(1)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	Duel.SetTargetParam(2)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 end
 function c13257229.drop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

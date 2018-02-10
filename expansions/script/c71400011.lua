@@ -1,15 +1,11 @@
 --梦之书的管理员
+xpcall(function() require("expansions/script/c71400001") end,function() require("script/c71400001") end)
 function c71400011.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,function() return Duel.IsExistingMatchingCard(function(tc) return tc:IsFaceup() and tc:IsSetCard(0x3714) end,c:GetControler(),LOCATION_FZONE,0,1,nil) end,4,2)
+	aux.AddXyzProcedure(c,yume.YumeCheck(c),4,2)
 	c:EnableReviveLimit()
 	--summon limit
-	local el1=Effect.CreateEffect(c)
-	el1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	el1:SetType(EFFECT_TYPE_SINGLE)
-	el1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	el1:SetCondition(c71400011.sumlimit)
-	c:RegisterEffect(el1)
+	yume.AddYumeSummonLimit(c,1)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(71400011,0))
@@ -25,12 +21,6 @@ function c71400011.initial_effect(c)
 	c:RegisterEffect(e1)
 	--fly away
 	--currently null
-end
-function c71400011.lfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3714)
-end
-function c71400011.sumlimit(e)
-	return not Duel.IsExistingMatchingCard(c71400011.lfilter,e:GetHandlerPlayer(),LOCATION_FZONE,0,1,nil)
 end
 function c71400011.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

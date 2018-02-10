@@ -1,18 +1,8 @@
 --梦之公寓的圆盘人
+xpcall(function() require("expansions/script/c71400001") end,function() require("script/c71400001") end)
 function c71400004.initial_effect(c)
 	--summon limit
-	local el1=Effect.CreateEffect(c)
-	el1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	el1:SetType(EFFECT_TYPE_SINGLE)
-	el1:SetCode(EFFECT_CANNOT_SUMMON)
-	el1:SetCondition(c71400004.sumlimit)
-	c:RegisterEffect(el1)
-	local el2=el1:Clone()
-	el2:SetCode(EFFECT_CANNOT_MSET)
-	c:RegisterEffect(el2)
-	local el3=el1:Clone()
-	el3:SetCode(EFFECT_SPSUMMON_CONDITION)
-	c:RegisterEffect(el3)
+	yume.AddYumeSummonLimit(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -33,12 +23,6 @@ function c71400004.initial_effect(c)
 	e2:SetOperation(c71400004.operation2)
 	c:RegisterEffect(e2)
 end
-function c71400004.lfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3714) 
-end
-function c71400004.sumlimit(e)
-	return not Duel.IsExistingMatchingCard(c71400004.lfilter,e:GetHandlerPlayer(),LOCATION_FZONE,0,1,nil)
-end
 function c71400004.filter1(c)
 	return c:IsSetCard(0x714) and c:IsFaceup() and c:IsType(TYPE_TUNER)
 end
@@ -47,8 +31,7 @@ function c71400004.condition1(e,c)
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
-		and not c71400004.sumlimit(e)
-		and Duel.IsExistingMatchingCard(c71400004.filter1,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(c71400004.filter1,tp,LOCATION_MZONE,0,1,nil) and yume.YumeCheck(c)
 end
 function c71400004.filter2(c)
 	return c:IsSetCard(0xe714) and c:IsAbleToHand()

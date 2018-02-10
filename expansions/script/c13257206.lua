@@ -59,6 +59,18 @@ function c13257206.initial_effect(c)
 	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e8:SetCondition(c13257206.damcon2)
 	c:RegisterEffect(e8)
+	--damage
+	local e9=Effect.CreateEffect(c)
+	e9:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e9:SetCode(EVENT_TO_HAND)
+	e9:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CANNOT_DISABLE)
+	e9:SetRange(LOCATION_MZONE)
+	e9:SetCondition(c13257206.damcon3)
+	e9:SetOperation(c13257206.damop1)
+	c:RegisterEffect(e9)
+	local e10=e9:Clone()
+	e10:SetCode(EVENT_TO_GRAVE)
+	c:RegisterEffect(e10)
 	local e12=Effect.CreateEffect(c)
 	e12:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e12:SetCode(EVENT_SUMMON_SUCCESS)
@@ -115,6 +127,14 @@ end
 function c13257206.damcon2(e,tp,eg,ep,ev,re,r,rp)
 	return rp~=tp
 end
+function c13257206.damcon3(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(Card.IsControler,1,nil,1-tp) and e:GetHandler():GetCounter(0x1f)==0
+end
+function c13257206.damop1(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,0,13257206)
+	local ct=eg:FilterCount(Card.IsControler,nil,1-tp)
+	Duel.Damage(1-tp,ct*500,REASON_EFFECT)
+end
 function c13257206.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257206,4))
+	Duel.Hint(11,0,aux.Stringid(13257206,4))
 end

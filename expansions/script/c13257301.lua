@@ -147,6 +147,7 @@ function c13257301.pcop(e,tp,eg,ep,ev,re,r,rp)
 		e6:SetReset(RESET_EVENT+0xfe0000)
 		token:RegisterEffect(e6,true)
 		Duel.SpecialSummonComplete()
+		c:SetCardTarget(token)
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local g=Duel.SelectMatchingCard(tp,c13257301.thfilter,tp,LOCATION_DECK,0,1,1,nil)

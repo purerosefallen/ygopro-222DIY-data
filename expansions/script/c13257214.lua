@@ -26,6 +26,14 @@ function c13257214.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e4:SetValue(c13257214.indct)
 	c:RegisterEffect(e4)
+	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(13257214,2))
+	e5:SetType(EFFECT_TYPE_QUICK_F)
+	e5:SetCode(EVENT_CHAINING)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetCondition(c13257214.condition)
+	e5:SetOperation(c13257214.operation)
+	c:RegisterEffect(e5)
 	local e12=Effect.CreateEffect(c)
 	e12:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e12:SetCode(EVENT_SUMMON_SUCCESS)
@@ -79,8 +87,18 @@ end
 function c13257214.splimit(e,c)
 	return not c:IsSetCard(0x353)
 end
+function c13257214.condition(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:GetOwner()~=c:GetControler() and re:GetHandler():IsSetCard(0x353)
+end
+function c13257214.operation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) and c:GetOwner()~=c:GetControler() then
+		Duel.GetControl(c,tp)
+	end
+end
 function c13257214.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257214,4))
+	Duel.Hint(11,0,aux.Stringid(13257214,4))
 end
 function c13257214.indct(e,re,r,rp)
 	if bit.band(r,REASON_BATTLE+REASON_EFFECT)~=0 then

@@ -125,6 +125,7 @@ function c13257334.pcop(e,tp,eg,ep,ev,re,r,rp)
 		e6:SetReset(RESET_EVENT+0xfe0000)
 		token:RegisterEffect(e6,true)
 		Duel.SpecialSummonComplete()
+		c:SetCardTarget(token)
 	end
 end
 function c13257334.tokenatk(e,c)
