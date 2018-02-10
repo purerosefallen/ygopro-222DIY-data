@@ -112,7 +112,7 @@ function c13257222.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
-function c13255222.tkop(e,tp,eg,ep,ev,re,r,rp)
+function c13257222.tkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft>0 then
@@ -123,7 +123,7 @@ function c13255222.tkop(e,tp,eg,ep,ev,re,r,rp)
 				local token=Duel.CreateToken(tp,13257232)
 				Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 				ft=ft-1
-				if ft<=0 or not Duel.SelectYesNo(tp,aux.Stringid(13255222,2)) then ctn=false end
+				if ft<=0 or not Duel.SelectYesNo(tp,aux.Stringid(13257222,2)) then ctn=false end
 			end
 		end
 	end
@@ -133,11 +133,11 @@ function c13255222.tkop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
 	e1:SetTargetRange(1,0)
-	e1:SetTarget(c13255222.splimit)
+	e1:SetTarget(c13257222.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
-function c13255222.splimit(e,c,sump,sumtype,sumpos,targetp,se)
+function c13257222.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA)
 end
 function c13257222.bgmop(e,tp,eg,ep,ev,re,r,rp)
