@@ -29,50 +29,25 @@ function cm.MergeCard(g,p,loc,seq)
 		return false
 	end
 end
-function cm.GetCrossGroup(p,seq)
-	local zone=(0x0100 << seq) | (0x01010000 << 4-seq)
-	if seq==1 then
-		zone=zone | 0x00400020
-	elseif seq==3 then
-		zone=zone | 0x00200040
-	end
-	return Duel.GetCardsInZone(p,zone)
-end
 function cm.filter(c,e,tp,zones)
-	return c:IsSetCard(0xfbd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK,1-tp,zones)
+	return c:IsSetCard(0xfbd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK,1-tp)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
-		local res={}
-		local zones=0
-		for seq=0,4 do
-			local g=cm.GetCrossGroup(1-tp,seq)
-			if #g>0 then zones=zones | (0x1 << seq) end
-		end
-		return zones>0 and Duel.GetMZoneCount(1-tp,nil,tp,LOCATION_REASON_TOFIELD,zones)>0 and Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_DECK,0,1,nil,e,tp,zones)
+		return Duel.GetMZoneCount(1-tp,nil,tp)>0 and Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_DECK,0,1,nil,e,tp)
 	end
-	local g=Group.CreateGroup()
-	for seq=0,4 do
-		local tg=cm.GetCrossGroup(1-tp,seq)
-		if Duel.CheckLocation(1-tp,LOCATION_MZONE,seq) then g:Merge(tg) end
-	end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,#g,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,0,LOCATION_REMOVED)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not cm.target(e,tp,eg,ep,ev,re,r,rp,0) then return end
-	local zones=0
-	for seq=0,4 do
-		local g=cm.GetCrossGroup(1-tp,seq)
-		if #g>0 then zones=zones | (0x1 << seq) end
-	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,cm.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp,zones)
+	local g=Duel.SelectMatchingCard(tp,cm.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
-	if tc and Duel.SpecialSummon(tc,0,tp,1-tp,false,false,POS_FACEUP_ATTACK,zones)>0 then
-		local dg=cm.GetCrossGroup(1-tp,tc:GetSequence())
-		if #dg>0 then
+	if tc and Duel.SpecialSummon(tc,0,tp,1-tp,false,false,POS_FACEUP_ATTACK)>0 then
+		local dg=tc:GetColumnGroup()-tc
+		if #dg>0 and Duel.SelectYesNo(tp,m*16+1) then
 			Duel.BreakEffect()
 			Duel.Remove(dg,POS_FACEUP,REASON_EFFECT)
 		end
