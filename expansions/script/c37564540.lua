@@ -13,6 +13,7 @@ function cm.initial_effect(c)
 	e1:SetValue(aux.synlimit)
 	c:RegisterEffect(e1)
 	local e3=Effect.CreateEffect(c)
+	e3:SetCategory(CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
@@ -50,13 +51,19 @@ function cm.DiscardHandCost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function cm.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	--if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,rp,LOCATION_ONFIELD+LOCATION_HAND,0,1,nil) end
-	return true
+	if chk==0 then return true end
+	if re:GetHandler():IsRelateToEffect(re) then
+		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,0)
+	end
 end
 function cm.disop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Group.CreateGroup()
 	Duel.ChangeTargetCard(ev,g)
 	--Duel.ChangeChainOperation(ev,cm.repop)
 	Duel.ChangeChainOperation(ev,aux.NULL)
+	if re:GetHandler():IsRelateToEffect(re) then
+		Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)
+	end
 end
 function cm.repop(e,tp,eg,ep,ev,re,r,rp)
 	local t=e:GetActiveType()

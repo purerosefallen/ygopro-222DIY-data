@@ -1,6 +1,7 @@
 --Subterranean Rose
 local m=37564054
 local cm=_G["c"..m]
+xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 cm.Senya_name_with_rose=true
 function cm.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
