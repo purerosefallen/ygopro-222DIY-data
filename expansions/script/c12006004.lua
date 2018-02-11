@@ -47,7 +47,9 @@ function c12006004.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c12006004.disop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)>0 then
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
+		Duel.Destroy(eg,REASON_EFFECT)
+		Duel.BreakEffect()
 		if not e:GetHandler():IsRelateToEffect(e) then return end
 		Duel.GetControl(e:GetHandler(),1-tp)
 	end
@@ -56,7 +58,7 @@ end
 function c12006004.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return (c:IsReason(REASON_BATTLE)
-		or rp~=tp and c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp)
+		or rp~=tp and c:IsReason(REASON_DESTROY))
 		and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c12006004.filter(c,e,tp)

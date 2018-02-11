@@ -23,6 +23,9 @@ function c71400024.initial_effect(c)
 	e2:SetOperation(c71400024.op)
 	c:RegisterEffect(e2)
 end
+function c71400024.mfilter(c,xyzc)
+	return c:IsXyzType(TYPE_XYZ) and c:GetRank()==4
+end
 function c71400024.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x3715)
 end
