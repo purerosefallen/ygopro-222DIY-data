@@ -89,7 +89,7 @@ function c13257214.splimit(e,c)
 end
 function c13257214.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetOwner()~=c:GetControler() and re:GetHandler():IsSetCard(0x353)
+	return c:GetOwner()~=c:GetControler() and re:GetHandler():IsSetCard(0x353) and re:GetHandler()~=c
 end
 function c13257214.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
