@@ -15,11 +15,11 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function cm.filter(c,e,tp)
-	return c:IsFaceup() and cm.check_set_hana(c) and c:IsAbleToDeck()
+	return c:IsFaceup() and scorp.check_set_hana(c) and c:IsAbleToDeck()
 		and Duel.IsExistingMatchingCard(cm.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,c:GetCode())
 end
 function cm.spfilter(c,e,tp,code)
-	return cm.check_set_hana(c) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return scorp.check_set_hana(c) and not c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and cm.filter(chkc,e,tp) end
