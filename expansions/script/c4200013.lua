@@ -1,7 +1,7 @@
 --link2
 function c4200013.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_UNION),1)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_UNION),2)
 	c:EnableReviveLimit()
 	--spirit
 	aux.EnableSpiritReturn(c,EVENT_SPSUMMON_SUCCESS,EVENT_FLIP)
@@ -38,7 +38,6 @@ function c4200013.eqop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
-	--local mg=c:GetMaterial()
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<sg:GetCount() then return end
     if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	local tc=sg:GetFirst()

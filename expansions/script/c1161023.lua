@@ -69,7 +69,7 @@ function c1161023.tfilter1(c)
 	return c:IsType(TYPE_LINK) and c:IsType(TYPE_MONSTER) and c1161023.CheckGroup(c):GetCount()>0 and c:IsDestructable()
 end
 function c1161023.tg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingTarget(c1161023.tfilter1,tp, LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c1161023.tfilter1,tp, LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,2,0,LOCATION_ONFIELD)
 end
 --

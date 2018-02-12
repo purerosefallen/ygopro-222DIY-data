@@ -1,7 +1,7 @@
 --link2
 function c4200012.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_UNION),1)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_UNION),2)
 	c:EnableReviveLimit()
 	--spirit
 	aux.EnableSpiritReturn(c,EVENT_SPSUMMON_SUCCESS,EVENT_FLIP)
@@ -17,7 +17,7 @@ function c4200012.initial_effect(c)
 	c:RegisterEffect(e1)	
 end
 function c4200012.filter(c,e,sp)
-	return c:IsType(TYPE_UNION) and c:GetLevel()<=4 and c:IsCanBeSpecialSummoned(e,0,sp,true,true)
+	return c:IsType(TYPE_UNION) and c:GetLevel()<=4 and c:IsCanBeSpecialSummoned(e,0,sp,true,false)
 end
 function c4200012.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
@@ -33,7 +33,7 @@ function c4200012.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c4200012.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp,zone)
 	if g:GetCount()>0 then
-		Duel.SpecialSummon(g,0,tp,tp,true,true,POS_FACEUP,zone)
+		Duel.SpecialSummon(g,0,tp,tp,true,false,POS_FACEUP,zone)
 	end
 end
 

@@ -62,7 +62,7 @@ function c4200015.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 			return true
 		else
 			return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-				and Duel.IsPlayerCanSpecialSummonMonster(tp,4200010,0,0x4611,0,0,4,RACE_MACHINE,ATTRIBUTE_LIGHT)
+				and Duel.IsPlayerCanSpecialSummonMonster(tp,4200010,0,0x4611,0,0,3,RACE_MACHINE,ATTRIBUTE_LIGHT)
 		end
 	end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
@@ -73,7 +73,7 @@ function c4200015.retop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() and Duel.SendtoHand(c,nil,REASON_EFFECT)~=0
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,4200010,0,0x4611,0,0,4,RACE_MACHINE,ATTRIBUTE_LIGHT) then
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,4200010,0,0x4611,0,0,3,RACE_MACHINE,ATTRIBUTE_LIGHT) then
 		local token=Duel.CreateToken(tp,4200010)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		Duel.SpecialSummonComplete()
