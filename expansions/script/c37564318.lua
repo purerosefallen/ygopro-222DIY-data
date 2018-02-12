@@ -57,26 +57,44 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	e3:SetOperation(cm.drop2)
 	e3:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e3,tp)
+	local e4=e3:Clone()
+	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e4:SetOperation(cm.drop3)
+	Duel.RegisterEffect(e4,tp)
+	local e5=e3:Clone()
+	e5:SetCode(EVENT_CHAIN_SOLVING)
+	e5:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
+		return re:GetCode()==EVENT_SPSUMMON
+	end)
+	e5:SetOperation(cm.drop3)
+	Duel.RegisterEffect(e5,tp)
 end
 function cm.filter(c,tp,l)
 	return c:IsPreviousLocation(l) and c:GetPreviousControler()==tp
 end
 function cm.drcon1(e,tp,eg,ep,ev,re,r,rp)
+	if re:GetCode()==EFFECT_SPSUMMON_PROC then return false end
 	return not re or not re:IsHasType(EFFECT_TYPE_ACTIONS) or re:IsHasType(EFFECT_TYPE_CONTINUOUS)
 end
 function cm.drop1(e,tp,eg,ep,ev,re,r,rp)
 	local t=Senya.order_table[e:GetLabel()]
 	for loc,sct in pairs(t) do
-		if eg:IsExists(cm.filter,1,nil,tp,loc) and sct<2 then cm.op[loc](e,tp) end
+		if eg:IsExists(cm.filter,1,nil,tp,loc) and sct~=2 then cm.op[loc](e,tp) end
 	end
 end
 function cm.regcon(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:IsHasType(EFFECT_TYPE_ACTIONS) and not re:IsHasType(EFFECT_TYPE_CONTINUOUS)
+	return re and ((re:IsHasType(EFFECT_TYPE_ACTIONS) and not re:IsHasType(EFFECT_TYPE_CONTINUOUS)) or re:GetCode()==EFFECT_SPSUMMON_PROC)
 end
 function cm.regop(e,tp,eg,ep,ev,re,r,rp)
 	local t=Senya.order_table[e:GetLabel()]
 	for loc,sct in pairs(t) do
-		if eg:IsExists(cm.filter,1,nil,tp,loc) and sct<2 then t[loc]=1 end
+		if eg:IsExists(cm.filter,1,nil,tp,loc) and sct~=2 then
+			if re:GetCode()==EFFECT_SPSUMMON_PROC then
+				t[loc]=3
+			else
+				t[loc]=1
+			end
+		end
 	end
 end
 function cm.drop2(e,tp,eg,ep,ev,re,r,rp)
@@ -84,7 +102,16 @@ function cm.drop2(e,tp,eg,ep,ev,re,r,rp)
 	for loc,sct in pairs(t) do
 		if sct==1 then
 			cm.op[loc](e,tp)
-			if t[loc]<2 then t[loc]=0 end
+			if t[loc]~=2 then t[loc]=0 end
+		end
+	end
+end
+function cm.drop3(e,tp,eg,ep,ev,re,r,rp)
+	local t=Senya.order_table[e:GetLabel()]
+	for loc,sct in pairs(t) do
+		if sct==3 then
+			cm.op[loc](e,tp)
+			if t[loc]~=2 then t[loc]=0 end
 		end
 	end
 end
