@@ -271,7 +271,7 @@ function c1111403.op3_3(e,tp,eg,ep,ev,re,r,rp)
 		local num2=Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 		Duel.BreakEffect()
 		if num2>0 then
-			Duel.Recover(tp,400*num2,REASON_EFFECT)
+			Duel.Recover(1-tp,400*num2,REASON_EFFECT)
 		end
 	end
 end
