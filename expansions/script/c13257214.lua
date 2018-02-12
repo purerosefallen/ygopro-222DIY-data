@@ -28,8 +28,8 @@ function c13257214.initial_effect(c)
 	c:RegisterEffect(e4)
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(13257214,2))
-	e5:SetType(EFFECT_TYPE_QUICK_F)
-	e5:SetCode(EVENT_CHAINING)
+	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e5:SetCode(EVENT_CHAIN_SOLVING)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetCondition(c13257214.condition)
 	e5:SetOperation(c13257214.operation)
@@ -88,12 +88,12 @@ function c13257214.splimit(e,c)
 	return not c:IsSetCard(0x353)
 end
 function c13257214.condition(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:GetOwner()~=c:GetControler() and re:GetHandler():IsSetCard(0x353) and re:GetHandler()~=c
+	return re:GetHandler():IsSetCard(0x353) and e:GetHandler():GetFlagEffect(13257214)==0
 end
 function c13257214.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and c:GetOwner()~=c:GetControler() then
+	c:RegisterFlagEffect(13257214,RESET_EVENT+0x1fe0000,0,1)
+	if c:GetOwner()~=c:GetControler() then
 		Duel.GetControl(c,tp)
 	end
 end
