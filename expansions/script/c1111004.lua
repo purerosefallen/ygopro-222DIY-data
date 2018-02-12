@@ -46,7 +46,7 @@ function c1111004.ofilter1(c,atk)
 	return c:IsAbleToHand() and c:GetBaseAttack()<=atk and c:IsFaceup() and c:IsType(TYPE_MONSTER)
 end
 function c1111004.op1(e,tp,eg,ep,ev,re,r,rp)
-	if e:SetLabel() and e:SetLabel()~=0 then
+	if e:GetLabel() and e:GetLabel()~=0 then
 		local atk=e:GetLabel()*1500
 		local g=Duel.GetMatchingGroup(c1111004.ofilter1,tp,0,LOCATION_MZONE,nil,atk)
 		if g:GetCount()>0 then

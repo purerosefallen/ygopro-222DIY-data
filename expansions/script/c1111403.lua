@@ -30,7 +30,7 @@ function c1111403.IsLd(c)
 	return m and m.named_with_Ld
 end
 c1111403.named_with_Lw=1
-function c1111403.IsLeisp(c)
+function c1111403.IsLw(c)
 	local m=_G["c"..c:GetCode()]
 	return c.named_with_Lw
 end
@@ -271,7 +271,7 @@ function c1111403.op3_3(e,tp,eg,ep,ev,re,r,rp)
 		local num2=Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 		Duel.BreakEffect()
 		if num2>0 then
-			Duel.Recover(1-tp,400*num2,REASON_EFFECT)
+			Duel.Recover(tp,400*num2,REASON_EFFECT)
 		end
 	end
 end
