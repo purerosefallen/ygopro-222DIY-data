@@ -1,5 +1,5 @@
 --绯樱的神剑姬 厄琳
-function c12100001.initial_effect(c)
+function c121000001.initial_effect(c)
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)
 	c:EnableReviveLimit()
 	local e3=Effect.CreateEffect(c)
