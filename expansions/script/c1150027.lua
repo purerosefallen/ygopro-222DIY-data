@@ -7,21 +7,11 @@ function c1150027.initial_effect(c)
 	c:RegisterEffect(e1)
 -- 
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_RECOVER)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e2:SetCode(EVENT_TO_HAND)
 	e2:SetRange(LOCATION_FZONE)
-	e2:SetCondition(c1150027.con2)
 	e2:SetOperation(c1150027.op2)
 	c:RegisterEffect(e2)
---  
-	local e2_2=Effect.CreateEffect(c)
-	e2_2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e2_2:SetCode(EVENT_TO_HAND)
-	e2_2:SetRange(LOCATION_FZONE)
-	e2_2:SetCondition(c1150027.con2_2)
-	e2_2:SetOperation(c1150027.op2_2)
-	c:RegisterEffect(e2_2)
 	local e2_3=Effect.CreateEffect(c)
 	e2_3:SetCategory(CATEGORY_RECOVER)
 	e2_3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
@@ -69,17 +59,7 @@ function c1150027.op0(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(rp,1150029,RESET_PHASE+PHASE_END,0,1)
 end
 --
-function c1150027.con2(e,tp,eg,ep,ev,re,r,rp)
-	return re and (not re:IsHasType(EFFECT_TYPE_ACTIONS) or re:IsHasType(EFFECT_TYPE_CONTINUOUS))
-end
 function c1150027.op2(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Recover(tp,100,REASON_EFFECT)
-end
---
-function c1150027.con2_2(e,tp,eg,ep,ev,re,r,rp)
-	return re and re:IsHasType(EFFECT_TYPE_ACTIONS) and not re:IsHasType(EFFECT_TYPE_CONTINUOUS)
-end
-function c1150027.op2_2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(tp,1150027,RESET_CHAIN,0,1)
 end
 function c1150027.con2_3(e,tp,eg,ep,ev,re,r,rp)
@@ -175,7 +155,7 @@ function c1150027.op4(e,tp,eg,ep,ev,re,r,rp)
 					if gn:GetCount()>0 then
 						Duel.SendtoHand(gn,nil,REASON_EFFECT)
 						Duel.ConfirmCards(tp,gn)
-					end	 
+					end  
 				else 
 					if opt==1 and Duel.GetMatchingGroup(c1150027.ofilter4_2,1-tp,LOCATION_GRAVE,0,nil) and Duel.SelectYesNo(1-tp,aux.Stringid(1150027,2)) then
 						Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
@@ -183,7 +163,7 @@ function c1150027.op4(e,tp,eg,ep,ev,re,r,rp)
 						if gn:GetCount()>0 then
 							Duel.SendtoHand(gn,nil,REASON_EFFECT)
 							Duel.ConfirmCards(tp,gn)
-						end	 
+						end  
 					else 
 						if opt==2 and Duel.GetMatchingGroup(c1150027.ofilter4_3,1-tp,LOCATION_GRAVE,0,nil) and Duel.SelectYesNo(1-tp,aux.Stringid(1150027,2)) then
 							Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
