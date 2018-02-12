@@ -42,7 +42,7 @@ function c33700066.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c33700066.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_EFFECT) and e:GetHandler():IsPreviousLocation(LOCATION_DECK) and e:GetHandler():GetPreviousControler()==tp and re:GetHandler():IsSetCard(0x442)
+	return e:GetHandler():IsReason(REASON_EFFECT) and e:GetHandler():IsPreviousLocation(LOCATION_DECK) and e:GetHandler():GetPreviousControler()==tp and re:GetHandler():IsSetCard(0x442) and not (Duel.GetTurnCount()==1 and Duel.GetCurrentPhase()==PHASE_DRAW)
 end
 function c33700066.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetMZoneCount(tp)>0
@@ -77,7 +77,7 @@ function c33700066.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c33700066.cfilter(chkc) and chkc:IsControler(tp) end
 	if chk==0 then return Duel.IsExistingTarget(c33700066.cfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,c33700066.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function c33700066.operation1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
