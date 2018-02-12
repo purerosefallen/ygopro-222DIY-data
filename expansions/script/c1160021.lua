@@ -76,6 +76,7 @@ end
 --
 function c1160021.op2(e,tp,eg,ep,ev,re,r,rp)
 	if c1160021[rp]<=1 then
+		Duel.RegisterFlagEffect(rp,1160022,RESET_PHASE+PHASE_END,0,1)
 		Duel.RegisterFlagEffect(rp,1160021,RESET_PHASE+PHASE_END,0,2)
 	else
 		c1160021[rp]=c1160021[rp]-1
@@ -90,7 +91,7 @@ function c1160021.tfilter4(c,e,tp)
 	return c:GetLevel()==1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c1160021.tg4(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c1160021.tfilter4,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetFlagEffect(1-tp,1160021)>0 and e:GetHandler():IsLocation(LOCATION_HAND) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c1160021.tfilter4,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetFlagEffect(1-tp,1160021)~=Duel.GetFlagEffect(1-tp,1160022) and e:GetHandler():IsLocation(LOCATION_HAND) end
 end
 --
 function c1160021.op4(e,tp,eg,ep,ev,re,r,rp)

@@ -87,13 +87,14 @@ function c1160005.clear4(e,tp,eg,ep,ev,re,r,rp)
 	c1160005[1]=3
 end
 function c1160005.op5(e,tp,eg,ep,ev,re,r,rp)
+	Duel.RegisterFlagEffect(rp,1160006,RESET_PHASE+PHASE_END,0,1)
 	Duel.RegisterFlagEffect(rp,1160005,RESET_PHASE+PHASE_END,0,2)
 end
 --
 function c1160005.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetFlagEffect(1-tp,1160005)>0 or c:IsAbleToHandAsCost() end
-	if Duel.GetFlagEffect(1-tp,1160005)>0 and Duel.SelectYesNo(tp,aux.Stringid(1160005,2)) then
+	if chk==0 then return Duel.GetFlagEffect(1-tp,1160005)~=Duel.GetFlagEffect(1-tp,1160006) or c:IsAbleToHandAsCost() end
+	if Duel.GetFlagEffect(1-tp,1160005)~=Duel.GetFlagEffect(1-tp,1160006) and Duel.SelectYesNo(tp,aux.Stringid(1160005,2)) then
 		e:SetLabel(0)
 	else
 		e:SetLabel(1)

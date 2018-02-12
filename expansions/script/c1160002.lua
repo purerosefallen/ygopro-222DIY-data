@@ -64,7 +64,7 @@ end
 --
 function c1160002.op2(e,tp,eg,ep,ev,re,r,rp)
 	if c1160002[rp]<=1 then
-		Duel.RegisterFlagEffect(rp,1160002,RESET_PHASE+PHASE_END,0,1)
+		Duel.RegisterFlagEffect(rp,1160003,RESET_PHASE+PHASE_END,0,1)
 		Duel.RegisterFlagEffect(rp,1160002,RESET_PHASE+PHASE_END,0,2)
 	else
 		c1160002[rp]=c1160002[rp]-1
@@ -109,7 +109,7 @@ function c1160002.op1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1160002.con4(e)
-	return Duel.GetFlagEffect(1-e:GetHandler():GetControler(),1160002)>0 and Duel.GetFlagEffect(1-e:GetHandler():GetControler(),1160002)<2
+	return Duel.GetFlagEffect(1-e:GetHandler():GetControler(),1160002)~=Duel.GetFlagEffect(1-e:GetHandler():GetControler(),1160002)
 end
 --
 function c1160002.cfilter5(c)
