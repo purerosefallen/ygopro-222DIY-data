@@ -30,12 +30,15 @@ function c12009014.initial_effect(c)
 	e1:SetOperation(c12009014.reop)
 	c:RegisterEffect(e1)
 end
+function c12009014.efilter(e,te)
+	return te:IsActiveType(TYPE_MONSTER)
+end
 function c12009014.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return (Duel.CheckLocation(1-tp,LOCATION_PZONE,0) or Duel.CheckLocation(1-tp,LOCATION_PZONE,1))
 	end 
 end
 function c12009014.recon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and  re:IsHasType(EFFECT_TYPE_ACTIVATE) 
+	return ep~=tp and  re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL)
 		and Duel.IsChainNegatable(ev)
 end
 function c12009014.reop(e,tp,eg,ep,ev,re,r,rp)

@@ -8,7 +8,7 @@ function c12009013.initial_effect(c)
 
 
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetDescription(aux.Stringid(12009013,3))
@@ -49,7 +49,7 @@ function c12009013.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c12009013.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
+	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,5) end
 end
 function c12009013.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsPlayerCanDiscardDeck(tp,1) then return end
@@ -62,7 +62,7 @@ function c12009013.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.ConfirmDecktop(tp,ac)
 	local g=Duel.GetDecktopGroup(tp,ac)
-	local sg=g:Filter(Card.IsType,nil,TYPE_CONTINUOUS,TYPE_SPELL)
+	local sg=g:Filter(Card.IsType,nil,TYPE_CONTINUOUS+TYPE_SPELL)
 	if sg:GetCount()>0 then
 		Duel.DisableShuffleCheck()
 		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_REVEAL)
