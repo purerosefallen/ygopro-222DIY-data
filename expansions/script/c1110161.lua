@@ -7,8 +7,8 @@ function c1110161.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(1110161,1))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetProperty(EFFECT_FLAG_NO_TURN_RESET+EFFECT_FLAG_CARD_TARGET)
+	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,1110161)
 	e1:SetTarget(c1110161.tg1)
@@ -37,20 +37,23 @@ function c1110161.lfilter(c)
 	return c:GetLevel()==3
 end
 --
-function c1110161.tfilter1(c,g,e,tp,zone)
-	return g:IsContains(c) and Duel.IsExistingMatchingCard(c1110161.tfilter1x1,0,LOCATION_GRAVE,0,1,nil,e,tp,zone,c) and not c:IsType(TYPE_XYZ) and not c:IsType(TYPE_LINK)
+function c1110161.tfilter1_1(c,g,e,tp,zone)
+	return g:IsContains(c) and c:GetLevel()>0 and Duel.IsExistingMatchingCard(c1110161.tfilter1_2,0,LOCATION_GRAVE,0,1,nil,e,tp,zone,c)
 end
-function c1110161.tfilter1x1(c,e,tp,zone,tc)
-	return c:GetLevel()==tc:GetLevel() and c:GetCode()~=tc:GetCode() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone) and c1110161.IsLd(c)
+function c1110161.tfilter1_2(c,e,tp,zone,tc)
+	return c:GetLevel()==tc:GetLevel() and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone) and c1110161.IsLd(c) and not c:IsCode(tc:GetCode())
 end
+--
 function c1110161.tg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local zone=e:GetHandler():GetLinkedZone()
+	local zone=e:GetHandler():GetLinkedZone(tp)
 	local g=e:GetHandler():GetLinkedGroup()
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c1110161.tfilter1(chkc,g,e,tp,zone) end
-	if chk==0 then return zone~=0 and Duel.IsExistingTarget(c1110161.tfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,g,e,tp,zone) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c1110161.tfilter1_1(chkc,g,e,tp,zone) end
+	if chk==0 then return Duel.IsExistingTarget(c1110161.tfilter1_1,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,g,e,tp,zone) end
+
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(1110161,0))
-	local g=Duel.SelectTarget(tp,c1110161.tfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,g,e,tp,zone)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_GRAVE)
+	local g=Duel.SelectTarget(tp,c1110161.tfilter1_1,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,g,e,tp,zone)
+--
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 --
 function c1110161.op1(e,tp,eg,ep,ev,re,r,rp)
@@ -59,7 +62,7 @@ function c1110161.op1(e,tp,eg,ep,ev,re,r,rp)
 		local tc=Duel.GetFirstTarget()
 		if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sg=Duel.SelectMatchingCard(tp,c1110161.tfilter1x1,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,zone,tc)
+			local sg=Duel.SelectMatchingCard(tp,c1110161.tfilter1_2,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,zone,tc)
 			local tc2=sg:GetFirst()
 			if tc2 then
 				Duel.SpecialSummon(tc2,0,tp,tp,false,false,POS_FACEUP,zone)
