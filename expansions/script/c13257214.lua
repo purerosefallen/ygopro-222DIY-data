@@ -94,7 +94,7 @@ function c13257214.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	c:RegisterFlagEffect(13257214,RESET_EVENT+0x1fe0000,0,1)
 	if c:GetOwner()~=c:GetControler() then
-		Duel.GetControl(c,tp)
+		Duel.GetControl(c,c:GetControler())
 	end
 end
 function c13257214.bgmop(e,tp,eg,ep,ev,re,r,rp)
