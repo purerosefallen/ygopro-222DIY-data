@@ -25,7 +25,7 @@ function c12003001.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_SEASERPENT) and not c:IsCode(12003001)
 end
 function c12003001.spfilter(c)
-	return c:IsRace(RACE_SEASERPENT)
+	return c:IsRace(RACE_SEASERPENT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c12003001.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c12003001.filter(chkc) end

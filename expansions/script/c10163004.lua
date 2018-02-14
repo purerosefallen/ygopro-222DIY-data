@@ -24,7 +24,6 @@ function c10163004.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	--e3:SetCountLimit(1,10163004)
 	e3:SetCost(c10163004.rmcost)
 	e3:SetTarget(c10163004.rmtg)
 	e3:SetOperation(c10163004.rmop)
@@ -45,43 +44,20 @@ function c10163004.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
 end
-function c10163004.rmtg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMZoneCount(tp)>0
-		and Duel.IsExistingMatchingCard(c10163004.spfilter2,tp,0x13,0,1,nil,e,tp)
-	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,0x13)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
-end
-function c10163004.rmop2(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetMZoneCount(tp)<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.SelectMatchingCard(tp,c10163004.spfilter2,tp,0x13,0,1,1,nil,e,tp):GetFirst()
-	if tc and not tc:IsHasEffect(EFFECT_NECRO_VALLEY) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)~=0 then
-		   Duel.BreakEffect()
-		   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		   local rg=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
-		   if rg:GetCount()>0 then
-			  Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
-		   end
-	end
-end
-function c10163004.spfilter2(c,e,tp)
-	return c:IsType(TYPE_NORMAL) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE,tp) and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,c)
-end
 function c10163004.spfilter(c,tp)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetCode(),nil,0x11,0,0,0,0,0) and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,c)
 end
 function c10163004.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMZoneCount(tp)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c10163004.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,tp)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 end
 function c10163004.rmop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsPlayerAffectedByEffect(tp,59822133) or Duel.GetMZoneCount(tp)<=0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local tc=Duel.SelectMatchingCard(tp,c10163004.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c10163004.spfilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
 	if tc then
 		local e1=Effect.CreateEffect(tc)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -115,36 +91,39 @@ function c10163004.rmop(e,tp,eg,ep,ev,re,r,rp)
 		   Duel.ConfirmCards(1-tp,tc)
 		   Duel.BreakEffect()
 		   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		   local rg=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+		   local rg=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 		   if rg:GetCount()>0 then
 			  Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
 		   end
 		end
 end
-function c10163004.rfilter(c,tp,ct,ec)
-	return (c:IsLevelAbove(8) or c:IsAttribute(ATTRIBUTE_FIRE)) and ((ct==1 and Duel.CheckReleaseGroupEx(tp,c10163004.rfilter,1,c,tp,0)) or ct==0) and c~=ec
+function c10163004.cfilter(c)
+	return c:IsLevelAbove(8) or c:IsAttribute(ATTRIBUTE_FIRE)
 end
 function c10163004.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local ft=Duel.GetMZoneCount(tp)
-	if ft>0 then return Duel.CheckReleaseGroupEx(tp,c10163004.rfilter,2,c,tp,0,c)
-	else return Duel.CheckReleaseGroup(tp,c10163004.rfilter2,1,c,tp,1,c)
-	end
-	return false
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local g=Duel.GetReleaseGroup(tp,true):Filter(c10163004.cfilter,c)
+	return g:GetCount()>=2 and ft>-2 and g:FilterCount(Card.IsLocation,nil,LOCATION_MZONE)>-ft
 end
 function c10163004.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local ft=Duel.GetMZoneCount(tp)
-	if ft>0 then
-	   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	   local g1=Duel.SelectReleaseGroupEx(tp,c10163004.rfilter,2,2,c,tp,0,c)
-	   Duel.Release(g1,REASON_COST)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ct=-ft+1
+	local g=Duel.GetReleaseGroup(tp,true):Filter(c10163004.cfilter,c)
+	local sg=nil
+	if ft<=0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+		sg=g:FilterSelect(tp,Card.IsLocation,ct,ct,nil,LOCATION_MZONE)
+		if ct<2 then
+			g:Sub(sg)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+			local sg1=g:Select(tp,2-ct,2-ct,nil)
+			sg:Merge(sg1)
+		end
 	else
-	   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	   local g1=Duel.SelectReleaseGroup(tp,c10163004.rfilter,1,1,c,tp,1,c)
-	   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	   local g2=Duel.SelectReleaseGroupEx(tp,c10163004.rfilter,1,1,g1:GetFirst(),tp,0,c)
-	   g1:Merge(g2)
-	   Duel.Release(g1,REASON_COST)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+		sg=g:Select(tp,2,2,nil)
 	end
+	Duel.SendtoGrave(sg,REASON_COST)
 end
