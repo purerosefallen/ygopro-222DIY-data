@@ -63,7 +63,7 @@ function c14804802.regop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>=2 then
 		local e2=Effect.CreateEffect(c)
 		e2:SetDescription(aux.Stringid(14804802,0))
-		e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+		e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DRAW)
 		e2:SetType(EFFECT_TYPE_IGNITION)
 		e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 		e2:SetRange(LOCATION_MZONE)
@@ -108,8 +108,9 @@ function c14804802.filter(c,e,tp)
 end
 function c14804802.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMZoneCount(tp)>0
-		and Duel.IsExistingMatchingCard(c14804802.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+		and Duel.IsPlayerCanDraw(1-tp,1) and  Duel.IsExistingMatchingCard(c14804802.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,1)
 end
 function c14804802.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
@@ -117,8 +118,10 @@ function c14804802.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c14804802.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		Duel.BreakEffect()
 		Duel.Draw(1-tp,1,REASON_EFFECT)
 	end
+	
 end
 
 function c14804802.imtg(e,c)

@@ -27,7 +27,7 @@ function c14804829.initial_effect(c)
 	c:RegisterEffect(e4)
 
 	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD+CATEGORY_DRAW)
 	e5:SetCode(EVENT_TO_HAND)
 	e5:SetRange(LOCATION_SZONE)
 	e5:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
@@ -73,8 +73,16 @@ function c14804829.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local cet=e:GetHandler():GetEquipTarget()
 	return ep~=tp and ((eg and eg:GetFirst() == cet) or (re and re:GetHandler() == cet)) and eg:IsExists(c14804829.cfilter,1,nil,1-tp)
 end
+function c14804829.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chk==0 then return Duel.IsPlayerCanDraw(1-tp,1) end
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,1)
+end
 function c14804829.atkop(e,tp,eg,ep,ev,re,r,rp)
+	local ct=Duel.GetOperatedGroup():FilterCount(Card.IsLocation,nil,LOCATION_HAND)
+	if ct==1 then
+	Duel.BreakEffect()
 	Duel.Draw(1-tp,1,REASON_EFFECT)
+	end
 end
 
 function c14804829.tdfilter(c)

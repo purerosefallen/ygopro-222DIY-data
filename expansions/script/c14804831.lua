@@ -61,7 +61,7 @@ function c14804831.regop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>=2 then
 		local e2=Effect.CreateEffect(c)
 		e2:SetDescription(aux.Stringid(14804831,0))
-		e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+		e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DRAW)
 		e2:SetType(EFFECT_TYPE_IGNITION)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetCountLimit(1)
@@ -106,15 +106,17 @@ end
 function c14804831.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_PZONE) and chkc:IsControler(tp) and c14804831.spfilter(chkc,e,tp) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c14804831.spfilter,tp,LOCATION_PZONE,0,1,nil,e,tp) end
+		and Duel.IsPlayerCanDraw(1-tp,1) and Duel.IsExistingTarget(c14804831.spfilter,tp,LOCATION_PZONE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c14804831.spfilter,tp,LOCATION_PZONE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,1)
 end
 function c14804831.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+		Duel.BreakEffect()
 		Duel.Draw(1-tp,1,REASON_EFFECT)
 	end
 end

@@ -14,6 +14,7 @@ function c14804808.initial_effect(c)
 	c:RegisterEffect(e1)
 	--scale change
 	local e2=Effect.CreateEffect(c)
+	e2:SetCategory(CATEGORY_DRAW)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_PZONE)
 	e2:SetCountLimit(1)
@@ -22,7 +23,7 @@ function c14804808.initial_effect(c)
 	c:RegisterEffect(e2)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DRAW)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
@@ -48,7 +49,8 @@ function c14804808.splimit(e,c,tp,sumtp,sumpos)
 	return not c:IsRace(RACE_FAIRY) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function c14804808.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetLeftScale()<12 end
+	if chk==0 then return Duel.IsPlayerCanDraw(1-tp,1) and e:GetHandler():GetLeftScale()<12 end
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,1)
 end
 function c14804808.scop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -62,6 +64,7 @@ function c14804808.scop(e,tp,eg,ep,ev,re,r,rp)
 	local e2=e1:Clone()
 	e2:SetCode(EFFECT_UPDATE_RSCALE)
 	c:RegisterEffect(e2)
+	Duel.BreakEffect()
 	Duel.Draw(1-tp,1,REASON_EFFECT)
 end
 function c14804808.spfilter1(c,e,tp)
@@ -69,8 +72,9 @@ function c14804808.spfilter1(c,e,tp)
 end
 function c14804808.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c14804808.spfilter1,tp,LOCATION_DECK,0,1,nil,e,tp) end
+		and Duel.IsPlayerCanDraw(1-tp,1) and Duel.IsExistingMatchingCard(c14804808.spfilter1,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,1)
 end
 function c14804808.spop(e,tp,eg,ep,ev,re,r,rp)
    if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
@@ -78,6 +82,7 @@ function c14804808.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c14804808.spfilter1,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		Duel.BreakEffect()
 		Duel.Draw(1-tp,1,REASON_EFFECT)
 	end
 end

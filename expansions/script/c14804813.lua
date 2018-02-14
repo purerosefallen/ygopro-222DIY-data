@@ -14,6 +14,7 @@ function c14804813.initial_effect(c)
 	c:RegisterEffect(e1)
 	--pendulum set
 	local e3=Effect.CreateEffect(c)
+	e3:SetCategory(CATEGORY_DRAW)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_PZONE)
 	e3:SetCountLimit(1)
@@ -50,7 +51,8 @@ function c14804813.pcfilter(c)
 end
 function c14804813.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
-		and Duel.IsExistingMatchingCard(c14804813.pcfilter,tp,LOCATION_DECK,0,1,nil) end
+		and Duel.IsPlayerCanDraw(1-tp,1) and Duel.IsExistingMatchingCard(c14804813.pcfilter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,1)
 end
 function c14804813.pcop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -59,6 +61,7 @@ function c14804813.pcop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c14804813.pcfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		Duel.BreakEffect()
 		Duel.Draw(1-tp,1,REASON_EFFECT)
 	end
 end

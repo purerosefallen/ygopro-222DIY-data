@@ -63,7 +63,7 @@ function c14804832.regop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>=2 then
 		local e2=Effect.CreateEffect(c)
 		e2:SetDescription(aux.Stringid(14804832,0))
-		e2:SetCategory(CATEGORY_TOHAND)
+		e2:SetCategory(CATEGORY_TOHAND+CATEGORY_DRAW)
 		e2:SetType(EFFECT_TYPE_IGNITION)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -92,15 +92,17 @@ function c14804832.thfilter(c)
 end
 function c14804832.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_PZONE) and chkc:IsControler(tp) and c14804832.thfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c14804832.thfilter,tp,LOCATION_PZONE,0,1,nil) end
+	if chk==0 then return Duel.IsPlayerCanDraw(1-tp,1) and Duel.IsExistingTarget(c14804832.thfilter,tp,LOCATION_PZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectTarget(tp,c14804832.thfilter,tp,LOCATION_PZONE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,1)
 end
 function c14804832.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
+		Duel.BreakEffect()
 		Duel.Draw(1-tp,1,REASON_EFFECT)
 	end
 end

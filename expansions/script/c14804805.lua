@@ -61,7 +61,7 @@ function c14804805.regop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>=2 then
 		local e2=Effect.CreateEffect(c)
 		e2:SetDescription(aux.Stringid(14804805,0))
-		e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+		e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DRAW)
 		e2:SetType(EFFECT_TYPE_IGNITION)
 		e2:SetProperty(EFFECT_FLAG_DELAY)
 		e2:SetRange(LOCATION_MZONE)
@@ -88,8 +88,9 @@ function c14804805.thfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x4848) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function c14804805.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c14804805.thfilter,tp,LOCATION_EXTRA,0,1,nil) end
+	if chk==0 then return Duel.IsPlayerCanDraw(1-tp,1) and Duel.IsExistingMatchingCard(c14804805.thfilter,tp,LOCATION_EXTRA,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,1)
 end
 function c14804805.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -97,6 +98,7 @@ function c14804805.thop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
+		Duel.BreakEffect()
 		Duel.Draw(1-tp,1,REASON_EFFECT)
 	end
 end

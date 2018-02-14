@@ -15,7 +15,7 @@ function c14804819.initial_effect(c)
 	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(14804819,0))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DRAW)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_PZONE)
 	e2:SetCountLimit(1)
@@ -25,13 +25,16 @@ function c14804819.initial_effect(c)
 	--extra summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(14804819,1))
+	e3:SetCategory(CATEGORY_DRAW)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
 	e3:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTarget(c14804819.extg)
-	e3:SetOperation(c14804819.exop)
 	c:RegisterEffect(e3)
+	local e4=e3:Clone()
+	e4:SetCode(EFFECT_EXTRA_SET_COUNT)
+	c:RegisterEffect(e4)
 	--effect gain
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -56,10 +59,11 @@ end
 function c14804819.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_PZONE) and chkc:IsControler(tp) and c14804819.scfilter(chkc) end
 	if chk==0 then return Duel.GetMZoneCount(tp)>0
-		and Duel.IsExistingMatchingCard(c14804819.filter,tp,LOCATION_HAND,0,1,nil,e,tp) and Duel.IsExistingTarget(c14804819.scfilter,tp,LOCATION_PZONE,0,1,nil) end
+		and Duel.IsPlayerCanDraw(1-tp,1) and Duel.IsExistingMatchingCard(c14804819.filter,tp,LOCATION_HAND,0,1,nil,e,tp) and Duel.IsExistingTarget(c14804819.scfilter,tp,LOCATION_PZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 	Duel.SelectTarget(tp,c14804819.scfilter,tp,LOCATION_PZONE,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,1)
 end
 function c14804819.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
@@ -79,15 +83,12 @@ function c14804819.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c14804819.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-		 Duel.Draw(1-tp,1,REASON_EFFECT)
+		Duel.BreakEffect()
+		Duel.Draw(1-tp,1,REASON_EFFECT)
 	end 
 end
-		
 function c14804819.extg(e,c)
-	return c:IsSetCard(0x4848)
-end
-function c14804819.exop(e,tp,eg,ep,ev,re,r,rp)
-   Duel.Draw(1-tp,1,REASON_EFFECT)
+	 return c:IsSetCard(0x4848)
 end
 function c14804819.efcon(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_LINK
@@ -97,7 +98,7 @@ function c14804819.efop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=c:GetReasonCard()
 	if not rc:IsRace(RACE_FAIRY) then return end
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(14804819,1))
+	e3:SetDescription(aux.Stringid(14804819,3))
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
 	e3:SetCode(EFFECT_EXTRA_SUMMON_COUNT)

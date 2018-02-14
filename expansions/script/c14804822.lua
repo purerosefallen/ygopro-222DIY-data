@@ -15,10 +15,12 @@ function c14804822.initial_effect(c)
 	--Activate
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(14804821,0))
+	e2:SetCategory(CATEGORY_DRAW)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_PZONE)
 	e2:SetCountLimit(1)
-	e2:SetOperation(c14804822.activate)
+	e2:SetTarget(c14804822.leveltg)
+	e2:SetOperation(c14804822.levelop)
 	c:RegisterEffect(e2)
    --level
 	local e4=Effect.CreateEffect(c)
@@ -43,10 +45,14 @@ end
 function c14804822.splimit(e,c,tp,sumtp,sumpos)
 	return not c:IsRace(RACE_FAIRY) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
+function c14804822.leveltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chk==0 then return Duel.IsPlayerCanDraw(1-tp,1) end
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,1-tp,1)
+end
 function c14804822.hlvfilter2(c,tp)
 	return c:IsSetCard(0x4848)
 end
-function c14804822.activate(e,tp,eg,ep,ev,re,r,rp)
+function c14804822.levelop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0):Filter(c14804822.hlvfilter2,nil,1)
 	local tc=hg:GetFirst()
@@ -58,6 +64,8 @@ function c14804822.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0xfe0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 		tc=hg:GetNext()
+		Duel.BreakEffect()
+		Duel.Draw(1-tp,1,REASON_EFFECT)
 	end
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -65,7 +73,6 @@ function c14804822.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	e2:SetOperation(c14804822.hlvop)
 	Duel.RegisterEffect(e2,tp)
-	Duel.Draw(1-tp,1,REASON_EFFECT)
 end
 function c14804822.hlvfilter(c,tp)
 	return c:IsLevelAbove(1) and c:IsControler(tp)
