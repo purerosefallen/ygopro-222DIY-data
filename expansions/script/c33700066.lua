@@ -65,7 +65,7 @@ function c33700066.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 end
 function c33700066.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x3442)
+	return c:IsFaceup() and c:IsSetCard(0x442)
 end
 function c33700066.spfilter(c,e,tp)
 	return c:IsSetCard(0x442) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
