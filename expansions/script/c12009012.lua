@@ -38,7 +38,7 @@ function c12009012.sgop(e,tp,eg,ep,ev,re,r,rp)
 	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DESTROY)
 	local g=Duel.SelectTarget(1-tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
-		Duel.SendtoHand(g,nil,REASON_RULE)
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.Recover(tp,2000,REASON_EFFECT)
 end
 end
