@@ -51,9 +51,9 @@ function c710205.operation(e,tp,eg,ep,ev,re,r,rp)
 			local sel=0
 			if v1 and v2 then
 				sel=Duel.SelectOption(tp,aux.Stringid(710205,0),aux.Stringid(710205,1))+1
-			else if v1 and not v2 then
+			elseif v1 and not v2 then
 				sel=Duel.SelectOption(tp,aux.Stringid(710205,0))+1
-			else v2 and not v1 then
+			elseif v2 and not v1 then
 				sel=Duel.SelectOption(tp,aux.Stringid(710205,1))+2
 			end
 			if sel==1 then
