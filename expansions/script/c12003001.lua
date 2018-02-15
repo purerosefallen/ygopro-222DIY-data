@@ -22,16 +22,16 @@ function c12003001.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c12003001.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_SEASERPENT) and not c:IsCode(12003001)
+	return c:IsFaceup() and c:IsRace(RACE_SEASERPENT) and not c:IsCode(12003001) and Duel.GetMZoneCount(tp,c,tp)>0
 end
-function c12003001.spfilter(c)
+function c12003001.spfilter(c,e,tp)
 	return c:IsRace(RACE_SEASERPENT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c12003001.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c12003001.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c12003001.filter,tp,LOCATION_MZONE,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c12003001.filter(chkc,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c12003001.filter,tp,LOCATION_MZONE,0,1,nil,tp) and Duel.IsExistingMatchingCard(c12003001.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	Duel.SelectTarget(tp,c12003001.filter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SelectTarget(tp,c12003001.filter,tp,LOCATION_MZONE,0,1,1,nil,tp)
 end
 function c12003001.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -46,35 +46,24 @@ function c12003001.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c12003001.costfilter(c)
-	return c:IsFaceup() and c:IsAbleToHandAsCost() and c:IsRace(RACE_SEASERPENT)
+function c12003001.costfilter(c,tp)
+	return c:IsFaceup() and c:IsAbleToHandAsCost() and c:IsRace(RACE_SEASERPENT) and Duel.GetMZoneCount(tp,c,tp)>0
 end
 function c12003001.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if chk==0 then
-		if ft<0 then return false end
-		if ft==0 then
-			return Duel.IsExistingMatchingCard(c12003001.costfilter,tp,LOCATION_MZONE,0,1,nil)
-		else
-			return Duel.IsExistingMatchingCard(c12003001.costfilter,tp,LOCATION_ONFIELD,0,1,nil)
-		end
+		return Duel.IsExistingMatchingCard(c12003001.costfilter,tp,LOCATION_ONFIELD,0,1,nil,tp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	if ft==0 then
-		local g=Duel.SelectMatchingCard(tp,c12003001.costfilter,tp,LOCATION_MZONE,0,1,1,nil)
-		Duel.SendtoHand(g,nil,REASON_COST)
-	else
-		local g=Duel.SelectMatchingCard(tp,c12003001.costfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
-		Duel.SendtoHand(g,nil,REASON_COST)
-	end
+	local g=Duel.SelectMatchingCard(tp,c12003001.costfilter,tp,LOCATION_ONFIELD,0,1,1,nil,tp)
+	Duel.SendtoHand(g,nil,REASON_COST)
 end
 function c12003001.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,700)
 end
 function c12003001.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP) 
-end
+	if c:IsRelateToEffect(e) then
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP) 
+	end
 end
