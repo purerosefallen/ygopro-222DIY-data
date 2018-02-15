@@ -38,7 +38,7 @@ function c13257335.initial_effect(c)
 	e11:SetCode(EVENT_SUMMON_SUCCESS)
 	e11:SetOperation(c13257335.bgmop)
 	c:RegisterEffect(e11)
-	c13257335[c]=e2
+	c13257335[c]=e3
 	
 end
 function c13257335.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -53,7 +53,7 @@ function c13257335.spop(e,tp,eg,ep,ev,re,r,rp)
 	local lv=c:GetLevel()
 	local race=c:GetRace()
 	local att=c:GetAttribute()
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not c:IsRelateToEffect(e)
 		or not Duel.IsPlayerCanSpecialSummonMonster(tp,93130022,0,0x4011,atk,def,lv,race,att) then return end
 	local token=Duel.CreateToken(tp,93130022)
 		c:CreateRelation(token,RESET_EVENT+0x1fe0000)
@@ -149,7 +149,7 @@ function c13257335.pcop(e,tp,eg,ep,ev,re,r,rp)
 		local g=eq:Filter(Card.IsAbleToDeck,nil)
 		local op=0
 		if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
-		if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(13257335,4)) then op=1
+		if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and g:GetCount()>0 and (not Duel.IsExistingMatchingCard(c13257335.eqfilter,tp,LOCATION_EXTRA,0,1,nil,c) or Duel.SelectYesNo(tp,aux.Stringid(13257335,4))) then op=1
 		elseif Duel.GetLocationCount(tp,LOCATION_SZONE)==0 and g:GetCount()>0 then op=1
 		end
 		if op==1 then

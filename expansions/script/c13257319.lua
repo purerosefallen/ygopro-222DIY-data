@@ -39,11 +39,19 @@ function c13257319.initial_effect(c)
 	e4:SetTarget(c13257319.pctg)
 	e4:SetOperation(c13257319.pcop)
 	c:RegisterEffect(e4)
+	local e13=Effect.CreateEffect(c)
+	e13:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e13:SetCode(EVENT_SUMMON_SUCCESS)
+	e13:SetOperation(c13257319.bgmop)
+	c:RegisterEffect(e13)
+	local e14=e13:Clone()
+	e14:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e14)
 	c13257319[c]=e4
 	
 end
 function c13257319.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp and (c:IsSetCard(0x351) or c:IsSetCard(0x15))
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp and (c:IsSetCard(0x351) or c:IsSetCard(0x353))
 end
 function c13257319.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -64,10 +72,10 @@ end
 function c13257319.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetMZoneCount(tp)>0
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 function c13257319.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257319,7))
+	Duel.Hint(11,0,aux.Stringid(13257319,7))
 end
 function c13257319.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReason(REASON_EFFECT+REASON_BATTLE)
@@ -94,7 +102,7 @@ function c13257319.pcop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eq:Filter(Card.IsAbleToDeck,nil)
 	local op=0
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(13257321,3)) then op=1
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and g:GetCount()>0 and (not Duel.IsExistingMatchingCard(c13257319.eqfilter,tp,LOCATION_EXTRA,0,1,nil,c) Duel.SelectYesNo(tp,aux.Stringid(13257319,3))) then op=1
 	elseif Duel.GetLocationCount(tp,LOCATION_SZONE)==0 and g:GetCount()>0 then op=1
 	end
 	if op==1 then
@@ -109,4 +117,7 @@ function c13257319.pcop(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.Equip(tp,tc,c)
 	end
+end
+function c13257319.bgmop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(11,0,aux.Stringid(13257319,7))
 end
