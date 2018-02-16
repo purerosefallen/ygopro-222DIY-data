@@ -41,7 +41,7 @@ function c12003001.operation(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,c12003001.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 		if g:GetCount()>0 then
 			Duel.BreakEffect()
-			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 			Duel.SendtoHand(c,nil,REASON_EFFECT)
 		end
 	end
