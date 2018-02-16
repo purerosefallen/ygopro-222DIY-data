@@ -33,7 +33,7 @@ function c33700063.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c33700063.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_EFFECT) and e:GetHandler():IsPreviousLocation(LOCATION_DECK) and e:GetHandler():GetPreviousControler()==tp and re:GetHandler():IsSetCard(0x442) and not (Duel.GetTurnCount()==1 and Duel.GetCurrentPhase()==PHASE_DRAW)
+	return e:GetHandler():IsReason(REASON_EFFECT) and e:GetHandler():IsPreviousLocation(LOCATION_DECK) and e:GetHandler():GetPreviousControler()==tp and re:GetHandler():IsSetCard(0x442) and not (Duel.GetTurnCount()<=1 and Duel.GetCurrentPhase()==PHASE_DRAW) and Duel.GetMZoneCount(tp)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c33700063.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetMZoneCount(tp)>0
