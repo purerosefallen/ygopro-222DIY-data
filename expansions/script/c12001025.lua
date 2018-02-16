@@ -28,7 +28,7 @@ function c12001025.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c12001025.filter3(c)
-	return c:IsFaceup() and not c:IsSetCard(0xfb0)
+	return c:IsFaceup() and not c:IsCode(12001025)
 end
 function c12001025.distg3(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(c12001025.filter3,1,nil) end
@@ -49,9 +49,6 @@ function c12001025.disop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		e1:SetCondition(c12001025.rcon)
 		tc:RegisterEffect(e1,true)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
-		tc:RegisterEffect(e2,true)
 	end
 end
 function c12001025.rcon(e)
