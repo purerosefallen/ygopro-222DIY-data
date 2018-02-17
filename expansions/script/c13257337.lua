@@ -55,7 +55,6 @@ function c13257337.efilter(e,re)
 end
 function c13257337.efilter1(e,te)
 	return te:GetOwnerPlayer()~=e:GetHandlerPlayer()
-		and not te:IsHasProperty(EFFECT_FLAG_CARD_TARGET)
 end
 function c13257337.sdcon(e)
 	return e:GetHandler():GetEquipTarget() and Duel.GetCurrentPhase()==PHASE_END 

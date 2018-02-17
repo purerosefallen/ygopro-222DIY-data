@@ -8,6 +8,7 @@ function c10102010.initial_effect(c)
 	e1:SetDescription(aux.Stringid(10102010,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,10102010)
 	e1:SetCost(c10102010.spcost)
 	e1:SetTarget(c10102010.sptg)
@@ -32,29 +33,28 @@ function c10102010.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(100)
 	return true
 end
-function c10102010.filter1(c,e,tp,ft)
-	return c:IsSetCard(0x9330) and c:IsType(TYPE_MONSTER) and (ft>0 or c:IsOnField())
+function c10102010.filter1(c,e,tp)
+	return c:IsSetCard(0x9330) and c:IsType(TYPE_MONSTER) and Duel.GetMZoneCount(tp,c)>0
 		and Duel.IsExistingMatchingCard(c10102010.filter2,tp,LOCATION_DECK,0,1,nil,c:GetCode(),e,tp)
 end
 function c10102010.filter2(c,code,e,tp)
 	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c10102010.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
-		return Duel.CheckReleaseGroupEx(tp,c10102010.filter1,1,nil,e,tp,ft)
+		return Duel.CheckReleaseGroupEx(tp,c10102010.filter1,1,nil,e,tp)
 	end
 	local g=Duel.SelectReleaseGroup(tp,c10102010.filter1,1,1,nil,e,tp,ft)
-	e:SetLabel(g:GetFirst():GetCode())
+	e:SetValue(g:GetFirst():GetCode())
 	Duel.Release(g,REASON_COST)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c10102010.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c10102010.filter2,tp,LOCATION_DECK,0,1,1,nil,e:GetLabel(),e,tp)
+	local g=Duel.SelectMatchingCard(tp,c10102010.filter2,tp,LOCATION_DECK,0,1,1,nil,e:GetValue(),e,tp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end

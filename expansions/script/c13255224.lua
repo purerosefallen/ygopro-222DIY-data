@@ -72,7 +72,7 @@ function c13255224.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function c13255224.desfilter(c)
-	return c:IsFaceup() and not c:IsDisabled()
+	return c:IsFaceup()
 end
 function c13255224.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and c13255224.desfilter(chkc) end
