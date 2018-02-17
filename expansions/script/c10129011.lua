@@ -25,9 +25,8 @@ function c10129011.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_SUMMON_COST)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetTargetRange(0xff,0xff)
-	e3:SetTarget(c10129011.sumtg)
-	e3:SetCondition(c10129011.sumcon)
+	e3:SetTargetRange(0,0xff)
+	e3:SetCost(c10129011.costchk)
 	e3:SetOperation(c10129011.sumop)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
@@ -41,24 +40,31 @@ function c10129011.initial_effect(c)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetValue(c10129011.atkval)
 	c:RegisterEffect(e5)
+	--accumulate
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_FIELD)
+	e6:SetCode(0x10000000+10129011)
+	e6:SetRange(LOCATION_MZONE)
+	e6:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e6:SetTargetRange(0,1)
+	c:RegisterEffect(e6)
 end
+c10129011.outhell_fusion=true
 function c10129011.atkval(e,c)
-	return Duel.GetMatchingGroupCount(c10129011.atkfilter,c:GetControler(),LOCATION_GRAVE+LOCATION_REMOVED,0,nil)*800
+	return Duel.GetMatchingGroupCount(c10129011.atkfilter,c:GetControler(),LOCATION_MZONE,0,nil)*1000
 end
 function c10129011.atkfilter(c)
 	return c:IsRace(RACE_ZOMBIE) and c:IsFaceup()
 end
-function c10129011.sumcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetActivityCount(Duel.GetTurnPlayer(),ACTIVITY_SUMMON)+Duel.GetActivityCount(Duel.GetTurnPlayer(),ACTIVITY_SPSUMMON)>=2
-end
-function c10129011.sumtg(e,c)
-	return c:GetSummonPlayer()==Duel.GetTurnPlayer()
+function c10129011.costchk(e,te_or_c,tp)
+	local ct=Duel.GetFlagEffect(tp,10129011)
+	return Duel.CheckLPCost(tp,ct*800) and tp~=e:GetHandlerPlayer()
 end
 function c10129011.sumop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
+	Duel.PayLPCost(tp,800)
 end
 function c10129011.recon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
 function c10129011.retg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

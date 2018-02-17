@@ -14,8 +14,10 @@ function c10129009.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(10129009,0))
 	e1:SetCategory(CATEGORY_EQUIP)
-	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetHintTiming(0,TIMING_BATTLE_START)
+	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,10129009)
 	e1:SetCondition(c10129009.eqcon)
@@ -35,16 +37,17 @@ function c10129009.initial_effect(c)
 	e2:SetOperation(c10129009.spop)
 	c:RegisterEffect(e2)
 end
+c10129009.outhell_fusion=true
 function c10129009.splimit(e,se,sp,st)
 	return st==SUMMON_TYPE_FUSION+101
 end
 function c10129009.spfilter(c,e,tp,ec)
-	return c:GetEquipTarget()==ec and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,tp)
+	return c:GetEquipTarget()==ec and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsFaceup()
 end
 function c10129009.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and c10129009.spfilter(chkc,e,tp,c) end
-	if chk==0 then return Duel.GetMZoneCount(tp)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c10129009.spfilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil,e,tp,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c10129009.spfilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,nil,e,tp,c)
@@ -53,23 +56,22 @@ end
 function c10129009.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)~=0 then
-	   local e1=Effect.CreateEffect(c)
-	   e1:SetType(EFFECT_TYPE_SINGLE)
-	   e1:SetCode(EFFECT_DISABLE)
-	   e1:SetReset(RESET_EVENT+0xfe0000)
-	   tc:RegisterEffect(e1)
-	   local e2=e1:Clone()
-	   e2:SetCode(EFFECT_DISABLE_EFFECT)
-	   tc:RegisterEffect(e2)
-	   local e3=e1:Clone()
+	if tc:IsRelateToEffect(e) and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 then
+	   local e3=Effect.CreateEffect(c)
+	   e3:SetType(EFFECT_TYPE_SINGLE)
 	   e3:SetCode(EFFECT_CHANGE_RACE)
+	   e3:SetReset(RESET_EVENT+0xfe0000)
 	   e3:SetValue(RACE_ZOMBIE)
 	   tc:RegisterEffect(e3)
 	end
 end
 function c10129009.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
+	local ph=Duel.GetCurrentPhase()
+	if Duel.GetTurnPlayer()==tp then
+		return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
+	else
+		return (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)
+	end
 end
 function c10129009.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsAbleToChangeControler() and chkc~=e:GetHandler() end

@@ -27,19 +27,27 @@ function c10129013.initial_effect(c)
 	e3:SetTarget(c10129013.drtg)
 	e3:SetOperation(c10129013.drop)
 	c:RegisterEffect(e3) 
-	--spsummon limit
+	--race
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e4:SetTargetRange(1,0)
-	e4:SetTarget(c10129013.sumlimit)
-	c:RegisterEffect(e4)  
+	e4:SetRange(LOCATION_SZONE)
+	e4:SetTargetRange(LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE)
+	e4:SetCode(EFFECT_CHANGE_RACE)
+	e4:SetTarget(c10129013.racetg)
+	e4:SetValue(RACE_ZOMBIE)
+	c:RegisterEffect(e4) 
+	--code
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e5:SetRange(LOCATION_SZONE)
+	e5:SetCode(EFFECT_CHANGE_CODE)
+	e5:SetValue(10129007)
+	c:RegisterEffect(e5)
 end
 c10129013.card_code_list={10129007}
-function c10129013.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsLocation(LOCATION_EXTRA) and not c:IsRace(RACE_ZOMBIE)
+function c10129013.racetg(e,c)
+	return c:IsLocation(LOCATION_GRAVE) or (c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_SPECIAL))
 end
 function c10129013.costfilter(c)
 	return c:IsRace(RACE_ZOMBIE) and c:GetLevel()==1 and c:IsAbleToDeckOrExtraAsCost()
@@ -57,7 +65,7 @@ function c10129013.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 end
 function c10129013.drop(e,tp,eg,ep,ev,re,r,rp)
-    if not e:GetHandler():IsRelateToEffect(e) then return end
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
@@ -66,7 +74,7 @@ function c10129013.accost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 end
 function c10129013.acfilter(c,e,tp,eg,ep,ev,re,r,rp)
-    if aux.IsCodeListed(c,10129007) and c:GetType()==TYPE_SPELL and c:IsAbleToGraveAsCost() then
+	if aux.IsCodeListed(c,10129007) and c:GetType()==TYPE_SPELL and c:IsAbleToGraveAsCost() then
 		   if c:CheckActivateEffect(true,true,false)~=nil then return true end
 		   local te=c:GetActivateEffect()
 		   local con=te:GetCondition()

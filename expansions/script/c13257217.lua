@@ -69,6 +69,7 @@ end
 function c13257217.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	e:GetHandler():RegisterFlagEffect(13257217,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,g:GetCount(),0,0)
 end
 function c13257217.posop(e,tp,eg,ep,ev,re,r,rp)
@@ -94,7 +95,7 @@ function c13257217.bgmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(11,0,aux.Stringid(13257217,4))
 end
 function c13257217.efilter(e,te)
-	if te:IsActiveType(TYPE_MONSTER) then
+	if te:IsActiveType(TYPE_MONSTER) and e:GetHandler():GetFlagEffect(c,13257217)==0 then
 		local att=e:GetHandler():GetAttack()
 		local ec=te:GetOwner()
 		return ec:GetAttack()<att

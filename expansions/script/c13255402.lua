@@ -29,22 +29,22 @@ function c13255402.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.MoveSequence(tc,0)
 	Duel.ConfirmDecktop(1-tp,1)
 	local rg=Group.CreateGroup()
-	if tc:IsLocation(LOCATION_DECK) then
-		local tpe=tc:GetType()
-		if bit.band(tpe,TYPE_TOKEN)==0 then
-			local g1=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_DECK+LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_DECK+LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE,nil,tc:GetCode())
-			rg:Merge(g1)
-		end
+	local tpe=tc:GetType()
+	if bit.band(tpe,TYPE_TOKEN)==0 then
+		local g1=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_DECK+LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_EXTRA,LOCATION_DECK+LOCATION_HAND+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_EXTRA,nil,tc:GetCode())
+		rg:Merge(g1)
 	end
 	if rg:GetCount()>0 then
 		Duel.BreakEffect()
 		if Duel.Remove(rg,POS_FACEDOWN,REASON_EFFECT)>0 then
+			local dp=0
 			if rg:FilterCount(Card.GetControler,nil,tp)==0 then
-				Duel.Draw(tp,1,REASON_EFFECT)
+				dp=dp+1
 			end
 			if rg:FilterCount(Card.GetControler,nil,1-tp)>=3 then
-				Duel.Draw(tp,1,REASON_EFFECT)
+				dp=dp+1
 			end
+			Duel.Draw(tp,dp,REASON_EFFECT)
 		end
 	end
 end

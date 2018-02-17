@@ -1,73 +1,64 @@
 --幻层驱动 膜层
 function c10130002.initial_effect(c)
-	--spsummon
+	--set1
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetDescription(aux.Stringid(10130002,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_FLIP+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,10130002)
-	e1:SetTarget(c10130002.sptg)
-	e1:SetOperation(c10130002.spop)
-	c:RegisterEffect(e1)  
-	--set
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(10130002,1))
-	e2:SetCategory(CATEGORY_POSITION)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetRange(LOCATION_HAND)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,0x1e0)
-	e2:SetCountLimit(1,10130102)
-	e2:SetCost(c10130002.poscost)
-	e2:SetTarget(c10130002.postg)
-	e2:SetOperation(c10130002.posop)
-	c:RegisterEffect(e2)	
+	e1:SetTarget(c10130002.settg)
+	e1:SetOperation(c10130002.setop)
+	c:RegisterEffect(e1)
+	--set2
+	local e2=e1:Clone()
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_TO_GRAVE)
+	e2:SetCost(c10130002.setcon)
+	c:RegisterEffect(e2)
+	c10130002.flip_effect=e1
 end
-function c10130002.poscost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return not c:IsPublic() end
-	Duel.ConfirmCards(1-tp,c)
+function c10130002.setcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) and e:GetHandler():IsPreviousPosition(POS_FACEDOWN)
 end
-function c10130002.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c10130002.posfilter(chkc) end
-	if chk==0 then return Duel.IsExistingMatchingCard(c10130002.posfilter,tp,LOCATION_MZONE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,c10130002.posfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,g:GetCount(),tp,0)
+function c10130002.settg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local p=tp
+	if e:GetCode()==EVENT_TO_GRAVE then p=1-tp end
+	if chk==0 then return Duel.GetFieldGroupCount(p,LOCATION_DECK,0)>2 end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_DECK)
 end
-function c10130002.posop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-		if tc and tc:IsRelateToEffect(e) and Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)~=0 then
-		 local sg=Duel.GetMatchingGroup(Card.IsFacedown,tp,LOCATION_MZONE,0,nil)
-			  if sg:GetCount()>0 then
-				 Duel.BreakEffect()
-				 Duel.ShuffleSetCard(sg)
-			  end
+function c10130002.setfilter(c,e,tp)
+	return ((c:IsType(TYPE_MONSTER) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))) or (c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable())
+end
+function c10130002.setop(e,tp,eg,ep,ev,re,r,rp)
+	local p=tp
+	if e:GetCode()==EVENT_TO_GRAVE then p=1-tp end
+	Duel.ConfirmDecktop(p,3)
+	local g=Duel.GetDecktopGroup(p,3)
+	if g:GetCount()>0 then
+		if g:IsExists(c10130002.setfilter,1,nil,e,tp) and Duel.SelectYesNo(tp,aux.Stringid(10130002,2)) then
+		   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
+		   local tc=g:FilterSelect(tp,c10130002.setfilter,1,1,nil,e,tp):GetFirst()
+		   local ct=0
+		   if tc:IsType(TYPE_SPELL+TYPE_TRAP) then
+			  ct=Duel.SSet(tp,Group.FromCards(tc))
+		   else
+			  ct=Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
+		   end
+		   g:RemoveCard(tc)
+		   local sg=Duel.GetMatchingGroup(c10130002.ssfilter,tp,LOCATION_MZONE,0,nil)
+		   Duel.ConfirmCards(1-tp,tc)
+		   if ct>0 and sg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(10130002,3)) then
+			  Duel.BreakEffect()
+			  Duel.ShuffleSetCard(sg)
+		   end
+		end
+		if e:GetValue()==1 then
+		   Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)
+		end
+		Duel.ShuffleDeck(tp)
 	end
 end
-function c10130002.posfilter(c)
-	return c:IsFaceup() and c:IsCanTurnSet() and c:IsSetCard(0xa336)
-end
-function c10130002.filter(c,e,tp)
-	return c:IsSetCard(0xa336) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
-end
-function c10130002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMZoneCount(tp)>0
-		and Duel.IsExistingMatchingCard(c10130002.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
-end
-function c10130002.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetMZoneCount(tp)<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c10130002.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
-	if g:GetCount()>0 and not g:GetFirst():IsHasEffect(EFFECT_NECRO_VALLEY) and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)~=0 then
-		Duel.ConfirmCards(1-tp,g)
-		local sg=Duel.GetMatchingGroup(Card.IsFacedown,tp,LOCATION_MZONE,0,nil)
-			  if sg:GetCount()>0 then
-				 Duel.BreakEffect()
-				 Duel.ShuffleSetCard(sg)
-			  end
-	end
+function c10130002.ssfilter(c)
+	return c:IsFacedown() and c:GetSequence()<5
 end

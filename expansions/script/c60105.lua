@@ -19,7 +19,7 @@ end
 c60105.DescSetName = 0x229
 function c60105.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainNegatable(ev) then return false end
-	return re:IsHasCategory(CATEGORY_DISABLE)
+	return re:IsHasCategory(CATEGORY_DISABLE) or re:IsHasCategory(CATEGORY_NEGATE) or re:IsHasCategory(CATEGORY_DISABLE_SUMMON)
 end
 function c60105.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
