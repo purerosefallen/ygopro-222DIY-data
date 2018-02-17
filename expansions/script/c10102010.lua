@@ -40,7 +40,7 @@ function c10102010.filter2(c,code,e,tp)
 	return c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c10102010.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetMZoneCount(tp)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if chk==0 then
 		if e:GetLabel()~=100 then return false end
 		e:SetLabel(0)
@@ -52,7 +52,7 @@ function c10102010.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c10102010.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetMZoneCount(tp)<=0 then return end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c10102010.filter2,tp,LOCATION_DECK,0,1,1,nil,e:GetLabel(),e,tp)
 	if g:GetCount()>0 then
@@ -68,7 +68,7 @@ function c10102010.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end
 	if chk==0 then return Duel.IsExistingTarget(c10102010.desfilter,tp,0,LOCATION_ONFIELD,1,nil,c) and Duel.IsExistingMatchingCard(c10102004.thfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,Card.IsType,tp,0,LOCATION_ONFIELD,1,1,nil,TYPE_SPELL+TYPE_TRAP)
+	local g=Duel.SelectTarget(tp,c10102010.desfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
@@ -80,7 +80,7 @@ function c10102010.thfilter(c)
 end
 function c10102010.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
+	if tc and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 	   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	   local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c10102010.thfilter),tp,LOCATION_GRAVE,0,1,1,e:GetHandler())
 	   if g:GetCount()>0 then
