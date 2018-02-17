@@ -102,7 +102,7 @@ function c13257319.pcop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eq:Filter(Card.IsAbleToDeck,nil)
 	local op=0
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and g:GetCount()>0 and (not Duel.IsExistingMatchingCard(c13257319.eqfilter,tp,LOCATION_EXTRA,0,1,nil,c) Duel.SelectYesNo(tp,aux.Stringid(13257319,3))) then op=1
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and g:GetCount()>0 and (not Duel.IsExistingMatchingCard(c13257319.eqfilter,tp,LOCATION_EXTRA,0,1,nil,c) or Duel.SelectYesNo(tp,aux.Stringid(13257319,3))) then op=1
 	elseif Duel.GetLocationCount(tp,LOCATION_SZONE)==0 and g:GetCount()>0 then op=1
 	end
 	if op==1 then
