@@ -95,7 +95,7 @@ function c14801029.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local g=Duel.GetMatchingGroup(c14801029.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
 		return not Duel.IsPlayerAffectedByEffect(tp,14801029)
-			and Duel.GetLocationCount(tp,LOCATION_MZONE)>2 and g:GetClassCount(Card.GetCode)>2
+			and Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and g:GetClassCount(Card.GetCode)>1
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,2,tp,LOCATION_GRAVE)
 end
@@ -103,7 +103,7 @@ function c14801029.spop(e,tp,eg,ep,ev,re,r,rp)
 if Duel.IsPlayerAffectedByEffect(tp,14801029) then return end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g=Duel.GetMatchingGroup(c14801029.spfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
-	if ft>2 and g:GetClassCount(Card.GetCode)>2 then
+	if ft>1 and g:GetClassCount(Card.GetCode)>1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g1=g:Select(tp,1,1,nil)
 		g:Remove(Card.IsCode,nil,g1:GetFirst():GetCode())
