@@ -2,9 +2,9 @@
 function c13257338.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(13257338,4))
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_EQUIP)
-	e1:SetType(EFFECT_TYPE_TRIGGER_O)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(c13257338.spcon)
@@ -35,8 +35,14 @@ end
 function c13257338.eqfilter(c,ec)
 	return c:IsSetCard(0x352) and c:IsType(TYPE_MONSTER) and c:CheckEquipTarget(ec)
 end
+function c13257338.spfilter(c)
+	return c:IsSetCard(0x351) and c:IsFaceup()
+end
+function c13257338.cfilter(c,tp)
+	return c:GetSummonPlayer()==tp
+end
 function c13257338.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return eg:IsExists(c13257338.cfilter,1,nil,1-tp) and Duel.IsExistingMatchingCard(c13257338.spfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c13257338.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
@@ -96,9 +102,9 @@ function c13257338.adtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local op=0
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(13257338,1))
 	if t1 then
-		op=Duel.SelectOption(tp,aux.Stringid(13257338,8),aux.Stringid(13257335,9))
+		op=Duel.SelectOption(tp,aux.Stringid(13257338,8),aux.Stringid(13257338,9))
 	else
-		op=Duel.SelectOption(tp,aux.Stringid(13257335,9))+1
+		op=Duel.SelectOption(tp,aux.Stringid(13257338,9))+1
 	end
 	e:SetLabel(op)
 	if op==0 then
@@ -134,12 +140,12 @@ function c13257338.adop(e,tp,eg,ep,ev,re,r,rp)
 			e8:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 			e8:SetRange(LOCATION_MZONE)
 			e8:SetReset(RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END)
-			e8:SetValue(c13257335.efilter)
+			e8:SetValue(c13257338.efilter)
 			c:RegisterEffect(e8)
 		end
 	end
 end
-function c13257335.efilter(e,te)
+function c13257338.efilter(e,te)
 	return te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 		and not te:IsHasProperty(EFFECT_FLAG_CARD_TARGET)
 end
