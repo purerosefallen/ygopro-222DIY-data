@@ -2,9 +2,9 @@
 function c13257338.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(13257338,4))
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_EQUIP)
-	e1:SetType(EFFECT_TYPE_TRIGGER_O)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(c13257338.spcon)
@@ -35,8 +35,14 @@ end
 function c13257338.eqfilter(c,ec)
 	return c:IsSetCard(0x352) and c:IsType(TYPE_MONSTER) and c:CheckEquipTarget(ec)
 end
+function c13257338.spfilter(c)
+	return c:IsSetCard(0x351) and c:IsFaceup()
+end
+function c13257338.cfilter(c,tp)
+	return c:GetSummonPlayer()==tp
+end
 function c13257338.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return eg:IsExists(c13257338.cfilter,1,nil,1-tp) and Duel.IsExistingMatchingCard(c13257338.spfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c13257338.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
