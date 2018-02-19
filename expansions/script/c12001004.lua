@@ -21,7 +21,6 @@ function c12001004.initial_effect(c)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetCountLimit(1,12001104)
 	e3:SetCondition(c12001004.dscon)
-	e3:SetTarget(c12001004.dstg)
 	e3:SetOperation(c12001004.dsop)
 	c:RegisterEffect(e3)
 end
@@ -50,15 +49,13 @@ function c12001004.dscon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_DECK) and c:IsReason(REASON_REVEAL)
 end
-function c12001004.dstg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c12001004.dsop(e,tp,eg,ep,ev,re,r,rp)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(1-tp) end
 	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DESTROY)
+	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(1-tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
-end
-function c12001004.dsop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
+	local tc=g:GetFirst()
 	if tc:IsRelateToEffect(e) then
 		Duel.Remove(tc,POS_FACEUP,REASON_RULE)
 	end

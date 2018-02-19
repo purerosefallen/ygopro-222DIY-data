@@ -24,7 +24,6 @@ function c12001018.initial_effect(c)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetCountLimit(1,12001104)
 	e2:SetCondition(c12001018.con2)
-	e2:SetTarget(c12001018.tg2)
 	e2:SetOperation(c12001018.op2)
 	c:RegisterEffect(e2)
 --
@@ -138,18 +137,14 @@ end
 function c12001018.tfilter2(c)
 	return c:IsAbleToRemove()
 end
-function c12001018.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(1-tp) end
-	if chk==0 then return Duel.IsExistingTarget(c12001018.tfilter2,1-tp,LOCATION_ONFIELD,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(1-tp,c12001018.tfilter2,1-tp,LOCATION_ONFIELD,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,LOCATION_ONFIELD)
-end
---
 function c12001018.op2(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
+	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(1-tp) end
+	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_REMOVE)
+	local g=Duel.SelectTarget(1-tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
+	local tc=g:GetFirst()
 	if tc:IsRelateToEffect(e) then
-		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
+		Duel.Remove(tc,POS_FACEUP,REASON_RULE)
 	end
 end
---
