@@ -1,3 +1,4 @@
+
 --里超时空战斗机-Arwing
 function c13257338.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
