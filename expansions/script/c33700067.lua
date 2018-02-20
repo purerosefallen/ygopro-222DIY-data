@@ -37,7 +37,7 @@ function c33700067.initial_effect(c)
 end
 function c33700067.condition(e,tp,eg,ep,ev,re,r,rp)
 	local rc=e:GetHandler():GetReasonCard()
-	return e:GetHandler():IsReason(REASON_EFFECT) and e:GetHandler():IsPreviousLocation(LOCATION_DECK) and e:GetHandler():GetPreviousControler()==tp and rc and rc:IsSetCard(0x442) and Duel.GetMZoneCount(tp)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return e:GetHandler():IsReason(REASON_EFFECT) and e:GetHandler():IsPreviousLocation(LOCATION_DECK) and e:GetHandler():GetPreviousControler()==tp and rc and rc:IsSetCard(0x442) and rc~=e:GetHandler() and Duel.GetMZoneCount(tp)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c33700067.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetMZoneCount(tp)>0
