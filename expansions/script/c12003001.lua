@@ -25,7 +25,7 @@ function c12003001.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_SEASERPENT) and not c:IsCode(12003001) and Duel.GetMZoneCount(tp,c,tp)>0
 end
 function c12003001.spfilter(c,e,tp)
-	return c:IsRace(RACE_SEASERPENT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xfb8) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c12003001.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c12003001.filter(chkc,tp) end
