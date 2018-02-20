@@ -1,4 +1,3 @@
-
 --里超时空战斗机-Arwing
 function c13257338.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
@@ -26,6 +25,7 @@ function c13257338.initial_effect(c)
 	e3:SetDescription(aux.Stringid(13257338,5))
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetRange(LOCATION_MZONE)
+	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetCountLimit(1)
 	e3:SetTarget(c13257338.adtg)
 	e3:SetOperation(c13257338.adop)
@@ -40,10 +40,10 @@ function c13257338.spfilter(c)
 	return c:IsSetCard(0x351) and c:IsFaceup()
 end
 function c13257338.cfilter(c,tp)
-	return c:GetSummonPlayer()==tp
+	return c:GetSummonPlayer()~=tp
 end
 function c13257338.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c13257338.cfilter,1,nil,1-tp) and Duel.IsExistingMatchingCard(c13257338.spfilter,tp,LOCATION_MZONE,0,1,nil)
+	return eg:IsExists(c13257338.cfilter,1,nil,tp) and Duel.IsExistingMatchingCard(c13257338.spfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c13257338.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
@@ -64,11 +64,11 @@ function c13257338.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c13257338.cfilter(c,tp)
+function c13257338.cfilter1(c,tp)
 	return c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)
 end
 function c13257338.pccon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c13257338.cfilter,1,nil,1-tp)
+	return eg:IsExists(c13257338.cfilter1,1,nil,1-tp)
 end
 function c13257338.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetEquipCount()>0 or  Duel.IsExistingMatchingCard(c13257338.eqfilter,tp,LOCATION_EXTRA,0,1,nil,e:GetHandler()) end

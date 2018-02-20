@@ -2,20 +2,13 @@
 function c10162005.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
+	aux.AddFusionProcFunRep(c,c10162005.ffilter,2,true)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
 	c:RegisterEffect(e1)
-	--fusion material
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_FUSION_MATERIAL)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e2:SetCondition(c10162005.fscon)
-	e2:SetOperation(c10162005.fsop)
-	c:RegisterEffect(e2)
 	--special summon rule
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
@@ -51,86 +44,56 @@ function c10162005.initial_effect(c)
 	e6:SetTarget(c10162005.antarget)
 	c:RegisterEffect(e6) 
 end
-
+function c10162005.ffilter(c,fc,sub,mg,sg)
+	return c:IsFusionSetCard(0x9333) and (not sg or not sg:IsExists(Card.IsFusionAttribute,1,c,c:GetFusionAttribute()))
+end
 function c10162005.antarget(e,c)
 	return c~=e:GetHandler()
 end
-
 function c10162005.imcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
 end
-
 function c10162005.imop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetRange(LOCATION_MZONE)
-		e1:SetCode(EFFECT_IMMUNE_EFFECT)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,2)
-		e1:SetValue(c10162005.efilter)
-		c:RegisterEffect(e1)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCode(EFFECT_IMMUNE_EFFECT)
+	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,2)
+	e1:SetValue(c10162005.efilter)
+	c:RegisterEffect(e1)
 end
-
 function c10162005.efilter(e,re)
 	return e:GetOwnerPlayer()~=re:GetOwnerPlayer()
 end
-
-function c10162005.spfilter1(c,tp)
-	return c:IsSetCard(0x9333) and c:IsAbleToGraveAsCost() and c:IsCanBeFusionMaterial()
-		and Duel.IsExistingMatchingCard(c10162005.spfilter2,tp,LOCATION_MZONE,0,1,c,c:GetAttribute())
+function c10162005.matfilter(c,fc)
+	return c:IsFusionSetCard(0x9333)
+		and c:IsAbleToGraveAsCost() and c:IsCanBeFusionMaterial(fc) and not c:IsHasEffect(6205579)
 end
-function c10162005.spfilter2(c,att)
-	return c:IsSetCard(0x9333) and c:IsAbleToGraveAsCost() and c:IsCanBeFusionMaterial() and c:GetAttribute()~=att 
+function c10162005.spfilter1(c,tp,g)
+	return g:IsExists(c10162005.spfilter2,1,c,tp,c)
+end
+function c10162005.spfilter2(c,tp,mc)
+	return c:GetRace()~=mc:GetRace()
+		and Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(c,mc))>0
 end
 function c10162005.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetMZoneCount(tp)>-2
-		and Duel.IsExistingMatchingCard(c10162005.spfilter1,tp,LOCATION_MZONE,0,1,nil,tp)
+	local g=Duel.GetMatchingGroup(c10162005.matfilter,tp,LOCATION_MZONE,0,nil,c)
+	return g:IsExists(c10162005.spfilter1,1,nil,tp,g)
 end
 function c10162005.sprop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g1=Duel.SelectMatchingCard(tp,c10162005.spfilter1,tp,LOCATION_MZONE,0,1,1,nil,tp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g2=Duel.SelectMatchingCard(tp,c10162005.spfilter2,tp,LOCATION_MZONE,0,1,1,g1:GetFirst(),g1:GetFirst():GetAttribute())
+	local g=Duel.GetMatchingGroup(c10162005.matfilter,tp,LOCATION_MZONE,0,nil,c)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g1=g:FilterSelect(tp,c10162005.spfilter1,1,1,nil,tp,g)
+	local mc=g1:GetFirst()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g2=g:FilterSelect(tp,c10162005.spfilter2,1,1,mc,tp,mc)
 	g1:Merge(g2)
 	c:SetMaterial(g1)
-	Duel.SendtoGrave(g1,2,REASON_COST)
-end
-
-function c10162005.fscon(e,g,gc,chkf)
-	if g==nil then return true end
-	if gc then
-		local mg=g:Filter(Card.IsSetCard,nil,0x9333)
-		mg:AddCard(gc)
-		return gc:IsSetCard(0x9333) and mg:GetClassCount(Card.GetAttribute)>=3
-	end
-	local fs=false
-	local mg=g:Filter(Card.IsSetCard,nil,0x9333)
-	if mg:IsExists(aux.FConditionCheckF,1,nil,chkf) then fs=true end
-	return mg:GetClassCount(Card.GetAttribute)>=2 and (fs or chkf==PLAYER_NONE)
-end
-
-function c10162005.fsop(e,tp,eg,ep,ev,re,r,rp,gc,chkf)
-	if gc then
-		local sg=eg:Filter(Card.IsSetCard,gc,0x9333)
-		sg:Remove(Card.IsAttribute,nil,gc:GetAttribute())
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-		local g1=sg:Select(tp,1,1,nil)
-		Duel.SetFusionMaterial(g1)
-		return
-	end
-	local sg=eg:Filter(Card.IsSetCard,nil,0x9333)
-	local g1=nil
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-	if chkf~=PLAYER_NONE then g1=sg:FilterSelect(tp,aux.FConditionCheckF,1,1,nil,chkf)
-	else g1=sg:Select(tp,1,1,nil) end
-	sg:Remove(Card.IsAttribute,nil,g1:GetFirst():GetAttribute())
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
-	local g2=sg:Select(tp,1,1,nil)
-	g1:Merge(g2)
-	Duel.SetFusionMaterial(g1)
+	Duel.SendtoGrave(g1,REASON_COST)
 end
