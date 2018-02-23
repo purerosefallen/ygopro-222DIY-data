@@ -113,16 +113,17 @@ function c1160001.tfilter2_1(c)
 	return c:IsFaceup() and c:GetAttack()>0 and c:IsType(TYPE_MONSTER)
 end
 function c1160001.tg2_1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingMatchingCard(c1160001.tfilter2_1,tp,0,LOCATION_MZONE,1,nil) end
-	Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(1160001,1)) 
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) end
+	if chk==0 then return Duel.IsExistingTarget(c1160001.tfilter2_1,tp,0,LOCATION_MZONE,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)
+	local g=Duel.SelectTarget(tp,c1160001.tfilter2_1,tp,0,LOCATION_MZONE,1,1,nil)	
+	Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(1160001,1))
 	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,nil,1,0,LOCATION_MZONE)
 end
 function c1160001.op2_1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_OPPO)
-	local g=Duel.SelectMatchingCard(tp,c1160001.tfilter2_1,tp,0,LOCATION_MZONE,1,1,nil)
-	if g:GetCount()>0 then
-		local tc=g:GetFirst()
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) then
 		local e2_1_1=Effect.CreateEffect(c)
 		e2_1_1:SetType(EFFECT_TYPE_SINGLE)
 		e2_1_1:SetCode(EFFECT_CANNOT_TRIGGER)
