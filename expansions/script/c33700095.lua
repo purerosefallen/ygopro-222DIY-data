@@ -26,10 +26,11 @@ function c33700095.initial_effect(c)
 	 --atk down
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetRange(LOCATION_PZONE)
+	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetTargetRange(0,LOCATION_MZONE)
 	e3:SetValue(-700)
+	e3:SetLabel(3)
 	effect_list[3]=e3
 	e3:SetCondition(c33700095.atkcon)
 	c:RegisterEffect(e3)
@@ -90,7 +91,7 @@ function c33700095.jfilter(c)
 end
 function c33700095.atkcon(e)
 	local g=Duel.GetMatchingGroup(c33700095.confilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)
-	return g:GetClassCount(Card.GetCode)>=3 or e:GetLabel()==33700090
+	return g:GetClassCount(Card.GetCode)>=e:GetLabel() or e:GetLabel()==33700090
 end
 function c33700095.effcon(e)
 	local g=Duel.GetMatchingGroup(c33700095.confilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)
