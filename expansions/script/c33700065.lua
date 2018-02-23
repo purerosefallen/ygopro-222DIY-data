@@ -70,19 +70,22 @@ end
 function c33700065.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x3442)
 end
+function c33700065.cfilter1(c)
+	return c:IsFaceup() and c:IsSetCard(0x442)
+end
 function c33700065.con(e)
 	 local g=Duel.GetMatchingGroup(c33700065.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil)
 	return g:GetClassCount(Card.GetCode)>=3
 end
 function c33700065.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local ct=Duel.GetMatchingGroupCount(c33700065.cfilter,tp,LOCATION_MZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(c33700065.cfilter1,tp,LOCATION_MZONE,0,nil)
 	Duel.SetTargetPlayer(tp)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,ct*800)
 end
 function c33700065.op(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	local ct=Duel.GetMatchingGroupCount(c33700065.cfilter,p,LOCATION_MZONE,0,nil)
+	local ct=Duel.GetMatchingGroupCount(c33700065.cfilter1,p,LOCATION_MZONE,0,nil)
 	if ct>0 then
 		Duel.Recover(p,ct*800,REASON_EFFECT)
 	end
