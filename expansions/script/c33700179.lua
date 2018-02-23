@@ -24,7 +24,7 @@ function cm.initial_effect(c)
 	e2:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
 		return rp~=tp
 	end)
-	e2:SetTarget(cm.sptg)
+	e2:SetTarget(cm.sptg) 
 	e2:SetOperation(cm.spop)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
@@ -123,13 +123,14 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.pencon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:IsFaceup()
 end
 function cm.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1) end
+	Duel.SetTargetCard(Group.FromCards(e:GetHandler()))
 end
 function cm.penop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return end
+	if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return false end
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
