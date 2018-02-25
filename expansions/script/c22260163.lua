@@ -125,17 +125,14 @@ function c22260163.spfilter(c,e,tp)
 	return c22260163.IsKuMaKawa(c) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(22260163)
 end
 function c22260163.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1 and Duel.IsExistingMatchingCard(c22260163.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetMZoneCount(tp)>0 and Duel.IsExistingMatchingCard(c22260163.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,0,0)
 end
 function c22260163.spop2(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local ct=Duel.GetMZoneCount(tp) 
 	if ct<1 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct=1 end
 	local g=Duel.SelectMatchingCard(tp,c22260163.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-	if ct>1 then 
-		local sg=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_GRAVE,0,nil,g:GetFirst():GetCode()):RandomSelect(tp,ct-1)
-		g:Merge(sg)
-	end
-	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+	local sg=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_GRAVE,0,nil,g:GetFirst():GetCode()):RandomSelect(tp,ct)
+	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 end
