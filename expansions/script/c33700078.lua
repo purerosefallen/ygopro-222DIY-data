@@ -129,7 +129,7 @@ function c33700078.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c33700078.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then 
-	 Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP_DEFENSE) 
+	 Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function c33700078.effcon2(e)
