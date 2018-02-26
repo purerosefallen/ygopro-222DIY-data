@@ -4,7 +4,7 @@ local cm=_G["c"..m]
 function cm.initial_effect(c)
     aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsSetCard,0x237),1)
     c:EnableReviveLimit()
-    aux.EnablePendulumAttribute(c)
+    aux.EnablePendulumAttribute(c,false)
     local e2=Effect.CreateEffect(c)
     e2:SetType(EFFECT_TYPE_FIELD)
     e2:SetCode(EFFECT_ACTIVATE_COST)
