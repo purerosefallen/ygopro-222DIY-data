@@ -95,7 +95,7 @@ function c13257217.bgmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(11,0,aux.Stringid(13257217,4))
 end
 function c13257217.efilter(e,te)
-	if te:IsActiveType(TYPE_MONSTER) and e:GetHandler():GetFlagEffect(c,13257217)==0 then
+	if te:IsActiveType(TYPE_MONSTER) and e:GetHandler():GetFlagEffect(13257217)==0 then
 		local att=e:GetHandler():GetAttack()
 		local ec=te:GetOwner()
 		return ec:GetAttack()<att
