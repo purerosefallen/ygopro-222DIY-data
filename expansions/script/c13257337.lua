@@ -33,7 +33,7 @@ function c13257337.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_EQUIP)
 	e4:SetCode(EFFECT_IMMUNE_EFFECT)
-	e4:SetValue(c13257337.efilter1)
+	e4:SetValue(c13257337.efilter)
 	c:RegisterEffect(e4)
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
@@ -50,11 +50,8 @@ end
 function c13257337.econ(e)
 	return e:GetHandler():GetEquipTarget()
 end
-function c13257337.efilter(e,re)
-	return e:GetHandlerPlayer()~=re:GetOwnerPlayer()
-end
-function c13257337.efilter1(e,te)
-	return te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+function c13257337.efilter(e,te)
+	return e:GetHandlerPlayer()~=te:GetOwnerPlayer()
 end
 function c13257337.sdcon(e)
 	return e:GetHandler():GetEquipTarget() and Duel.GetCurrentPhase()==PHASE_END 
