@@ -5,6 +5,7 @@ function c33700067.initial_effect(c)
 	e0:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e0:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e0:SetCode(EVENT_TO_HAND)
+	e0:SetProperty(EFFECT_FLAG_DELAY)
 	e0:SetCondition(c33700067.condition)
 	e0:SetOperation(c33700067.operation)
 	c:RegisterEffect(e0)
@@ -38,7 +39,7 @@ end
 function c33700067.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re and re:GetHandler()
-	return c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_RULE) and c:IsPreviousLocation(LOCATION_DECK) and c:GetPreviousControler()==tp and rc and rc:IsSetCard(0x442) and Duel.GetMZoneCount(tp)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_RULE) and c:IsPreviousLocation(LOCATION_DECK) and c:GetPreviousControler()==tp and rc and rc:IsSetCard(0x442) and Duel.GetMZoneCount(tp)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetTurnCount()>0
 end
 function c33700067.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetMZoneCount(tp)>0
