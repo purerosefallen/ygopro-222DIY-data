@@ -73,7 +73,7 @@ end
 function c33700066.spfilter(c,e,tp)
 	return c:IsSetCard(0x442) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c33700066.condition(e,tp,eg,ep,ev,re,r,rp)
+function c33700066.condition1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function c33700066.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
