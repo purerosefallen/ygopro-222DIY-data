@@ -78,7 +78,8 @@ end
 function c13257336.drop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	if Duel.SendtoDeck(c,nil,2,REASON_EFFECT)~=0 then
+	if Duel.SendtoDeck(c,nil,0,REASON_EFFECT)~=0 then
+		Duel.ShuffleDeck(tp)
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
