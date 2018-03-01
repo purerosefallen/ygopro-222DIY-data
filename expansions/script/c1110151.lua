@@ -135,7 +135,7 @@ function c1110151.con8(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1110151.filter8(c)
-	return c1110151.IsLd(c) and not c:IsStatus(STATUS_BATTLE_DESTROYED)
+	return c1110151.IsLd(c) and c:IsType(TYPE_MONSTER) and not c:IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function c1110151.cost8(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c1110151.filter8,tp,LOCATION_ONFIELD,0,1,nil) end

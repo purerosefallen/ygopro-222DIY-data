@@ -55,7 +55,7 @@ function c13257338.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsRelateToEffect(e) then
 		if Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
-			Duel.Hint(11,0,aux.Stringid(13257305,7))
+			Duel.Hint(11,0,aux.Stringid(13257338,7))
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 			local g=Duel.SelectMatchingCard(tp,c13257338.eqfilter,tp,LOCATION_EXTRA,0,1,1,nil,c)
 			local tc=g:GetFirst()

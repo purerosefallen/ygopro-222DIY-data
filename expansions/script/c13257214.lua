@@ -88,11 +88,10 @@ function c13257214.splimit(e,c)
 	return not c:IsSetCard(0x353)
 end
 function c13257214.condition(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler():IsSetCard(0x353) and e:GetHandler():GetFlagEffect(13257214)==0
+	return re:GetHandler():IsSetCard(0x353)
 end
 function c13257214.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	c:RegisterFlagEffect(13257214,RESET_EVENT+0x1fe0000,0,1)
 	if c:GetOwner()~=c:GetControler() then
 		Duel.GetControl(c,c:GetControler())
 	end
