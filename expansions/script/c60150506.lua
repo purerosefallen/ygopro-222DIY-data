@@ -1,14 +1,20 @@
 --幻想曲 曾经的梦境
 function c60150506.initial_effect(c)
+	--special summon
+	local e11=Effect.CreateEffect(c)
+	e11:SetType(EFFECT_TYPE_FIELD)
+	e11:SetCode(EFFECT_SPSUMMON_PROC)
+	e11:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e11:SetRange(LOCATION_HAND)
+	e11:SetCondition(c60150506.scon)
+	c:RegisterEffect(e11)
 	--spsummon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(13647631,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCountLimit(1,6010506)
 	e1:SetCondition(c60150506.spcon)
 	e1:SetTarget(c60150506.sptg)
 	e1:SetOperation(c60150506.spop)
@@ -30,6 +36,14 @@ function c60150506.initial_effect(c)
 	e12:SetOperation(c60150506.activate)
 	c:RegisterEffect(e12)
 end
+function c60150506.filter(c)
+    return c:IsFaceup() and c:IsSetCard(0xab20) and c:GetCode()~=60150506
+end
+function c60150506.scon(e,c)
+    if c==nil then return true end
+    return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
+        Duel.IsExistingMatchingCard(c60150506.filter,c:GetControler(),LOCATION_MZONE,0,1,nil)
+end
 function c60150506.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<0 then return end
 	local tc=Duel.GetFirstTarget()
@@ -46,10 +60,10 @@ function c60150506.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 		sc:CompleteProcedure()
 		local e1=Effect.CreateEffect(e:GetHandler())
-        e1:SetType(EFFECT_TYPE_SINGLE)
-        e1:SetCode(EFFECT_CANNOT_ATTACK)
-        e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-        sc:RegisterEffect(e1)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_CANNOT_ATTACK)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		sc:RegisterEffect(e1)
 	end
 end
 function c60150506.condition(e,tp,eg,ep,ev,re,r,rp)

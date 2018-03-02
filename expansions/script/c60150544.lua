@@ -5,7 +5,6 @@ function c60150544.initial_effect(c)
     c:EnableReviveLimit()
 	--summon
     local e21=Effect.CreateEffect(c)
-    e21:SetDescription(aux.Stringid(60150544,0))
     e21:SetCategory(CATEGORY_SPECIAL_SUMMON)
     e21:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
     e21:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -29,10 +28,11 @@ function c60150544.initial_effect(c)
     c:RegisterEffect(e2)
 	--destroy
     local e3=Effect.CreateEffect(c)
-    e3:SetDescription(aux.Stringid(60150544,1))
     e3:SetCategory(CATEGORY_DESTROY)
-    e3:SetType(EFFECT_TYPE_IGNITION)
+    e3:SetType(EFFECT_TYPE_QUICK_O)
     e3:SetRange(LOCATION_MZONE)
+    e3:SetCode(EVENT_FREE_CHAIN)
+    e3:SetHintTiming(0,0x1e0)
     e3:SetCountLimit(1,60150544)
     e3:SetTarget(c60150544.destg2)
     e3:SetOperation(c60150544.desop2)
@@ -80,7 +80,9 @@ function c60150544.destg2(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return g2:FilterCount(c60150544.dfilter,e:GetHandler())>0 end
     local g3=g2:Filter(c60150544.dfilter,e:GetHandler())
     Duel.SetOperationInfo(0,CATEGORY_DESTROY,g3,g3:GetCount(),0,0)
-    Duel.SetChainLimit(c60150544.chlimit)
+	if Duel.GetTurnPlayer()==tp then
+		Duel.SetChainLimit(c60150544.chlimit)
+    end
 end
 function c60150544.chlimit(e,ep,tp)
     return tp==ep
@@ -91,20 +93,44 @@ function c60150544.desop2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g2=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
 	Group.Sub(g2,g)
     local g3=g2:Filter(c60150544.dfilter,e:GetHandler())
-    local ct=Duel.Destroy(g3,REASON_EFFECT)
-    if ct>0 and c:IsRelateToEffect(e) then
-        local e1=Effect.CreateEffect(c)
-        e1:SetType(EFFECT_TYPE_SINGLE)
-        e1:SetCode(EFFECT_EXTRA_ATTACK)
-        e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-        e1:SetValue(ct)
-        e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-        c:RegisterEffect(e1)
-		local e2=Effect.CreateEffect(c)
-        e2:SetType(EFFECT_TYPE_SINGLE)
-        e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-        e2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-        e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-        c:RegisterEffect(e2)
-    end
+	if Duel.GetTurnPlayer()==tp then
+		local ct=Duel.Destroy(g3,REASON_EFFECT)
+		if ct>0 and c:IsRelateToEffect(e) then
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_EXTRA_ATTACK)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e1:SetValue(ct)
+			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+			c:RegisterEffect(e1)
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			e2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
+			e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+			c:RegisterEffect(e2)
+		end
+	else
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+		local sg=g3:Select(tp,1,1,nil)
+		if sg:GetCount()>0 then
+			Duel.HintSelection(sg)
+			Duel.Destroy(sg,REASON_EFFECT)
+			local tc=sg:GetFirst()
+			if tc:IsLocation(LOCATION_HAND) then
+				local e1=Effect.CreateEffect(c)
+				e1:SetType(EFFECT_TYPE_FIELD)
+				e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+				e1:SetCode(EFFECT_CANNOT_ACTIVATE)
+				e1:SetTargetRange(0,1)
+				e1:SetValue(c60150544.aclimit)
+				e1:SetLabel(tc:GetCode())
+				e1:SetReset(RESET_PHASE+PHASE_END)
+				Duel.RegisterEffect(e1,tp)
+			end
+		end
+	end
+end
+function c60150544.aclimit(e,re,tp)
+    return re:GetHandler():IsCode(e:GetLabel())
 end

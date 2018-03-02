@@ -4,11 +4,12 @@ function c60150615.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcFun2(c,c60150615.ffilter,aux.FilterBoolFunction(c60150615.ffilter2),false)
-	--spsummon condition
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetCode(EFFECT_SPSUMMON_CONDITION)
+    --splimit
+    local e2=Effect.CreateEffect(c)
+    e2:SetType(EFFECT_TYPE_SINGLE)
+    e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+    e2:SetCode(EFFECT_SPSUMMON_CONDITION)
+    e2:SetRange(LOCATION_EXTRA)
 	e2:SetValue(c60150615.splimit)
 	c:RegisterEffect(e2)
 	--special summon rule
@@ -91,10 +92,10 @@ function c60150615.sprcon(e,c)
 	local tp=c:GetControler()
 	local g=Duel.GetMatchingGroup(c60150615.filter,tp,LOCATION_ONFIELD,0,nil)
 	if g:GetCount()>0 then
-		return Duel.GetMZoneCount(tp)>-1
+		return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
 			and Duel.IsExistingMatchingCard(c60150615.spfilter1,tp,LOCATION_ONFIELD,0,1,nil,tp,c)
 	else
-		return Duel.GetMZoneCount(tp)>-2
+		return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
 			and Duel.IsExistingMatchingCard(c60150615.spfilter1,tp,LOCATION_ONFIELD,0,1,nil,tp,c)
 	end
 end

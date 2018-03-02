@@ -30,13 +30,6 @@ function c60150601.initial_effect(c)
 	e2:SetTarget(c60150601.destg)
 	e2:SetOperation(c60150601.desop)
 	c:RegisterEffect(e2)
-	--xyz limit
-	local e13=Effect.CreateEffect(c)
-	e13:SetType(EFFECT_TYPE_SINGLE)
-	e13:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-	e13:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
-	e13:SetValue(c60150601.xyzlimit)
-	c:RegisterEffect(e13)
 end
 function c60150601.xyzlimit(e,c)
 	if not c then return false end

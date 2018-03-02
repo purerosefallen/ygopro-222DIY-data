@@ -43,19 +43,19 @@ end
 function c60150504.spop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		--xyz limit
-            local e4=Effect.CreateEffect(e:GetHandler())
-            e4:SetType(EFFECT_TYPE_SINGLE)
-            e4:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-            e4:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
-            e4:SetValue(c60150504.xyzlimit)
-            e4:SetReset(RESET_EVENT+0xfe0000)
-            tc:RegisterEffect(e4)
-            Duel.SpecialSummonComplete()
+			local e4=Effect.CreateEffect(e:GetHandler())
+			e4:SetType(EFFECT_TYPE_SINGLE)
+			e4:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+			e4:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
+			e4:SetValue(c60150504.xyzlimit)
+			e4:SetReset(RESET_EVENT+0xfe0000)
+			tc:RegisterEffect(e4)
+			Duel.SpecialSummonComplete()
 	end
 end
 function c60150504.xyzlimit(e,c)
-    if not c then return false end
-    return not (c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_FIEND))
+	if not c then return false end
+	return not (c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsRace(RACE_FIEND))
 end

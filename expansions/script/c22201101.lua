@@ -2,7 +2,7 @@
 function c22201101.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOHAND)
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -54,8 +54,7 @@ function c22201101.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	--if tc:IsLocation(LOCATION_HAND) then
 		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetCategory(CATEGORY_DRAW)
-		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2:SetCode(EVENT_SUMMON_SUCCESS)
 		e2:SetLabelObject(tc)
 		e2:SetCountLimit(1)
@@ -79,6 +78,7 @@ function c22201101.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c22201101.drop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,0,22201101)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Draw(p,d,REASON_EFFECT)
+	if Duel.Draw(p,d,REASON_EFFECT)~=0 then e:Reset() end
 end

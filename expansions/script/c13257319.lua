@@ -5,7 +5,7 @@ function c13257319.initial_effect(c)
 	local e11=Effect.CreateEffect(c)
 	e11:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e11:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e11:SetCode(EVENT_DESTROYED)
+	e11:SetCode(EVENT_LEAVE_FIELD)
 	e11:SetRange(LOCATION_HAND)
 	e11:SetOperation(c13257319.regop)
 	c:RegisterEffect(e11)
@@ -51,11 +51,11 @@ function c13257319.initial_effect(c)
 	
 end
 function c13257319.cfilter(c,tp)
-	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp and (c:IsSetCard(0x351) or c:IsSetCard(0x353))
+	return c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp and (c:IsSetCard(0x351) or c:IsSetCard(0x353)) and c:IsPreviousPosition(POS_FACEUP) and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp
 end
 function c13257319.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if eg:IsExists(c13257319.cfilter,1,nil,tp) and rp~=tp and bit.band(r,REASON_EFFECT)~=0  then
+	if eg:IsExists(c13257319.cfilter,1,nil,tp) then
 		--spsummon
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(13257319,4))

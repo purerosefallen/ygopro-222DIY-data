@@ -48,7 +48,7 @@ function c13257216.initial_effect(c)
 end
 function c13257216.cfilter(c,tp)
 	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:GetReasonPlayer()~=tp and c:IsReason(REASON_EFFECT)
+		and ((c:GetReasonPlayer()~=tp and c:IsReason(REASON_EFFECT)) or c:IsReason(REASON_BATTLE))
 end
 function c13257216.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c13257216.cfilter,1,nil,tp)
@@ -102,5 +102,5 @@ function c13257216.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257216.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257216,4))
+	Duel.Hint(11,0,aux.Stringid(13257216,4))
 end

@@ -19,7 +19,7 @@ function c60150621.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(2)
-	e3:SetCondition(c60150621.seqcon)
+    e3:SetTarget(c60150621.mvtg)
 	e3:SetOperation(c60150621.seqop)
 	c:RegisterEffect(e3)
 	--Activate
@@ -43,37 +43,25 @@ end
 function c60150621.splimit(e,se,sp,st)
 	return bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
-function c60150621.seqcon(e,tp,eg,ep,ev,re,r,rp)
-	local seq=e:GetHandler():GetSequence()
-	return (seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1))
-		or (seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1))
+function c60150621.mvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+    if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) end
+    if chk==0 then return Duel.IsExistingTarget(nil,tp,LOCATION_MZONE,0,1,nil)
+        and Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL)>0 end
 end
 function c60150621.seqop(e,tp,eg,ep,ev,re,r,rp)
-	local seq=e:GetHandler():GetSequence()
-	if (seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1))
-		or (seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1)) then
-		local flag=0
-		if seq>0 and Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then flag=bit.bor(flag,bit.lshift(0x1,seq-1)) end
-		if seq<4 and Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then flag=bit.bor(flag,bit.lshift(0x1,seq+1)) end
-		flag=bit.bxor(flag,0xff)
-		local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,flag)
-		local nseq=0
-		if s==1 then nseq=0
-		elseif s==2 then nseq=1
-		elseif s==4 then nseq=2
-		elseif s==8 then nseq=3
-		else nseq=4 end
-		if Duel.MoveSequence(e:GetHandler(),nseq)~=0 then
-			local c=e:GetHandler()
-			local e5=Effect.CreateEffect(c)
-			e5:SetType(EFFECT_TYPE_SINGLE)
-			e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-			e5:SetRange(LOCATION_MZONE)
-			e5:SetCode(EFFECT_IMMUNE_EFFECT)
-			e5:SetValue(1)
-			e5:SetReset(RESET_PHASE+RESET_CHAIN)
-			c:RegisterEffect(e5)
-		end
+    if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
+    local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0)
+    local nseq=math.log(s,2)
+    if Duel.MoveSequence(e:GetHandler(),nseq)~=0 then
+		local e5=Effect.CreateEffect(e:GetHandler())
+		e5:SetType(EFFECT_TYPE_SINGLE)
+		e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e5:SetRange(LOCATION_MZONE)
+		e5:SetCode(EFFECT_IMMUNE_EFFECT)
+		e5:SetValue(1)
+		e5:SetReset(RESET_PHASE+RESET_CHAIN)
+		e:GetHandler():RegisterEffect(e5)
 	end
 end
 function c60150621.condition(e,tp,eg,ep,ev,re,r,rp)

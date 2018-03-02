@@ -17,16 +17,12 @@ function c22222101.initial_effect(c)
 	e3:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	e3:SetTarget(c22222101.target2)
 	c:RegisterEffect(e3)
-	--to hand
+	--to grave
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(22222101,1))
-	e4:SetCategory(CATEGORY_TOHAND)
-	e4:SetType(EFFECT_TYPE_QUICK_O)
-	e4:SetCode(EVENT_FREE_CHAIN)
-	e4:SetRange(LOCATION_GRAVE)
-	e4:SetCost(aux.bfgcost)
-	e4:SetTarget(c22222101.thtg)
-	e4:SetOperation(c22222101.thop)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e4:SetCode(EVENT_TO_GRAVE)
+	e4:SetOperation(c22222101.regop)
 	c:RegisterEffect(e4)
 end
 function c22222101.filter(c,tp)
@@ -84,20 +80,33 @@ end
 function c22222101.setfilter(c)
 	return c:IsSetCard(0x50f) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
 end
-function c22222101.thfilter(c)
+function c22222101.regop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(22222101,1))
+	e1:SetCategory(CATEGORY_TOHAND)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetRange(LOCATION_GRAVE)
+	e1:SetCountLimit(1)
+	e1:SetCost(aux.bfgcost)
+	e1:SetTarget(c22222101.rthtg)
+	e1:SetOperation(c22222101.rthop)
+	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+	c:RegisterEffect(e1)
+end
+function c22222101.rthfilter(c)
 	return c:IsSetCard(0x50f) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
-function c22222101.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c22222101.thfilter),tp,LOCATION_GRAVE,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,0,1,tp,LOCATION_GRAVE)
+function c22222101.rthtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chkc==0 then return c22222101.rthfilter(chkc) and chkc:IsControler(tp) end
+	if chk==0 then return Duel.IsExistingTarget(c22222101.rthfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	local g=Duel.SelectTarget(tp,c22222101.rthfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,g:GetCount(),tp,LOCATION_GRAVE)
 end
-function c22222101.thop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if not Duel.IsExistingMatchingCard(aux.NecroValleyFilter(c22222101.thfilter),tp,LOCATION_GRAVE,0,1,nil) then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c22222101.thfilter),tp,LOCATION_GRAVE,0,1,1,nil):GetFirst()
-	if tc then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tc)
-	end
+function c22222101.rthop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	if not tc:IsRelateToEffect(e) then return end
+	Duel.SendtoHand(tc,nil,REASON_EFFECT)
 end

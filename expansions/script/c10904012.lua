@@ -4,7 +4,7 @@ local cm=_G["c"..m]
 function cm.initial_effect(c)
     aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsSetCard,0x237),1)
     c:EnableReviveLimit()
-    aux.EnablePendulumAttribute(c)
+    aux.EnablePendulumAttribute(c,false)
     local e1=Effect.CreateEffect(c)
     e1:SetDescription(aux.Stringid(84013237,0))
     e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DAMAGE)
@@ -44,11 +44,11 @@ end
 function cm.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return true end
     Duel.SetTargetPlayer(1-tp)
-    Duel.SetTargetParam(700)
-    Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,700)
+    Duel.SetTargetParam(500)
+    Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,500)
 end
 function cm.damop(e,tp,eg,ep,ev,re,r,rp)
-    Duel.Damage(1-tp,700,REASON_EFFECT)
+    Duel.Damage(1-tp,500,REASON_EFFECT)
     local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
     local tc=g:GetFirst()
     while tc do
@@ -56,7 +56,7 @@ function cm.damop(e,tp,eg,ep,ev,re,r,rp)
         e1:SetType(EFFECT_TYPE_SINGLE)
         e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
         e1:SetCode(EFFECT_UPDATE_ATTACK)
-        e1:SetValue(700)
+        e1:SetValue(500)
         e1:SetReset(RESET_EVENT+0x1fe0000)
         tc:RegisterEffect(e1)
         tc=g:GetNext()
@@ -70,15 +70,15 @@ function cm.excon(e,tp,eg,ep,ev,re,r,rp)
     return tc1:GetLeftScale()==tc2:GetRightScale() and e:GetHandler():GetLeftScale()>tc1:GetLeftScale()
 end
 function cm.spfilter(c,e,tp)
-    return c:IsSetCard(0x237) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+    return c:IsSetCard(0x237) and c:IsFaceup() and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(m)
 end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+    if chk==0 then return Duel.GetLocationCountFromEx(tp)>0
         and Duel.IsExistingMatchingCard(cm.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp)
-    if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+    if Duel.GetLocationCountFromEx(tp)<=0 then return end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
     local g=Duel.SelectMatchingCard(tp,cm.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
     if g:GetCount()>0 then

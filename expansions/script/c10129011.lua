@@ -51,7 +51,7 @@ function c10129011.initial_effect(c)
 end
 c10129011.outhell_fusion=true
 function c10129011.atkval(e,c)
-	return Duel.GetMatchingGroupCount(c10129011.atkfilter,c:GetControler(),LOCATION_MZONE,0,nil)*1000
+	return Duel.GetMatchingGroupCount(c10129011.atkfilter,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil)*1000
 end
 function c10129011.atkfilter(c)
 	return c:IsRace(RACE_ZOMBIE) and c:IsFaceup()

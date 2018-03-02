@@ -36,6 +36,7 @@ function c60150618.tgfilter(c)
 end
 function c60150618.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c60150618.tgfilter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function c60150618.gfilter(c)
 	return c:IsType(TYPE_PENDULUM)

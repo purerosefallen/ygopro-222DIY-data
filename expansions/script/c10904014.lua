@@ -59,21 +59,14 @@ function cm.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-        and Duel.IsPlayerCanSpecialSummonMonster(tp,m,0,0x11+TYPE_TUNER,0,0,4,RACE_SPELLCASTER,ATTRIBUTE_DARK) end
+        and Duel.IsPlayerCanSpecialSummonMonster(tp,m,0,0x11,0,0,6,RACE_SPELLCASTER,ATTRIBUTE_DARK) end
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp)
     if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
     local c=e:GetHandler()
-    if c:IsRelateToEffect(e) and Duel.IsPlayerCanSpecialSummonMonster(tp,m,0,0x11+TYPE_TUNER,0,0,4,RACE_SPELLCASTER,ATTRIBUTE_DARK) then
+    if c:IsRelateToEffect(e) and Duel.IsPlayerCanSpecialSummonMonster(tp,m,0,0x11,0,0,6,RACE_SPELLCASTER,ATTRIBUTE_DARK) then
         c:AddMonsterAttribute(TYPE_NORMAL)
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_ADD_TYPE)
-		e1:SetReset(RESET_EVENT+0x1fc0000)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetValue(TYPE_TUNER)
-		c:RegisterEffect(e1)
         Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
         c:AddMonsterAttributeComplete()
         Duel.SpecialSummonComplete()

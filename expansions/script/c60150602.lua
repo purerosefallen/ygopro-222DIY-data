@@ -15,13 +15,6 @@ function c60150602.initial_effect(c)
 	e3:SetTarget(c60150602.target2)
 	e3:SetOperation(c60150602.activate2)
 	c:RegisterEffect(e3)
-	--xyz limit
-	local e13=Effect.CreateEffect(c)
-	e13:SetType(EFFECT_TYPE_SINGLE)
-	e13:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-	e13:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
-	e13:SetValue(c60150602.xyzlimit)
-	c:RegisterEffect(e13)
 	--tohand
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
@@ -58,7 +51,7 @@ function c60150602.descon(e,tp,eg,ep,ev,re,r,rp)
 		and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD+LOCATION_GRAVE)
 end
 function c60150602.filter3(c)
-	return c:IsSetCard(0x3b21) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSetCard(0x3b21) and c:IsType(TYPE_SPELL+TYPE_SPELL) and c:IsAbleToHand()
 end
 function c60150602.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c60150602.filter3,tp,LOCATION_DECK,0,1,nil) end
@@ -101,7 +94,7 @@ function c60150602.filter2(c,e,tp,m,f,chkf)
 end
 function c60150602.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local chkf=tp
+		local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
 		local mg1=Duel.GetFusionMaterial(tp):Filter(c60150602.filter1,nil,e,tp)
 		local res=Duel.IsExistingMatchingCard(c60150602.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)
 		if not res then
@@ -121,7 +114,7 @@ function c60150602.gfilter(c)
 	return c:IsType(TYPE_PENDULUM) and not c:IsLocation(LOCATION_EXTRA)
 end
 function c60150602.activate2(e,tp,eg,ep,ev,re,r,rp)
-	local chkf=tp
+	local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
 	local mg1=Duel.GetFusionMaterial(tp):Filter(c60150602.filter1,nil,e,tp,true)
 	local sg1=Duel.GetMatchingGroup(c60150602.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
 	local mg2=nil

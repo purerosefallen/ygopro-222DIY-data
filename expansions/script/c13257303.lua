@@ -10,7 +10,7 @@ function c13257303.initial_effect(c)
 	e1:SetOperation(c13257303.eqop)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
-	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
 	c:RegisterEffect(e2)
 	--Power Capsule
 	local e3=Effect.CreateEffect(c)

@@ -5,26 +5,33 @@ function c22202101.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
-	e1:SetCountLimit(1,22202101+EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(c22202101.con)
+	e1:SetCost(c22202101.cost)
 	e1:SetOperation(c22202101.op)
 	c:RegisterEffect(e1)
-	--search
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e3:SetProperty(EFFECT_FLAG_DELAY)
-	e3:SetCode(EVENT_TO_HAND)
-	e3:SetOperation(c22202101.handop)
-	c:RegisterEffect(e3)
 	--act in hand
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
-	e2:SetCondition(c22202101.handcon)
 	c:RegisterEffect(e2)
 end
 function c22202101.con(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsHasCategory(CATEGORY_NEGATE) or re:IsHasCategory(CATEGORY_DISABLE) or re:IsHasCategory(CATEGORY_DISABLE_SUMMON)
+end
+function c23002292.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return 
+		if c:IsLocation(LOCATION_HAND) then
+			return Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,c)
+		else
+			return true
+		end
+	end
+	if e:GetHandler():IsStatus(STATUS_ACT_FROM_HAND) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_DECK,0,1,1,c)
+		Duel.Remove(g,POS_FACEUP,REASON_COST)
+	end
 end
 function c22202101.filter(c,rtype)
 	return c:IsType(rtype) and c:IsAbleToGrave()
@@ -36,6 +43,7 @@ function c22202101.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeChainOperation(ev,c22202101.repop)
 	if Duel.IsExistingMatchingCard(c22202101.filter,tp,LOCATION_DECK,0,1,nil,rtype) and Duel.SelectYesNo(tp,aux.Stringid(22202101,0)) then
 		Duel.BreakEffect()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local sg=Duel.SelectMatchingCard(tp,c22202101.filter,tp,LOCATION_DECK,0,1,1,nil,rtype)
 		if sg:GetCount()>0 then Duel.SendtoGrave(sg,REASON_EFFECT) end
 	end
@@ -46,11 +54,4 @@ function c22202101.repop(e,tp,eg,ep,ev,re,r,rp)
 		c:CancelToGrave(false)
 	end
 	Duel.SendtoGrave(c,REASON_EFFECT)
-end
-function c22202101.handop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	c:RegisterFlagEffect(22202101,RESET_PHASE+PHASE_END,0,1)
-end
-function c22202101.handcon(e)
-	return e:GetHandler():GetFlagEffect(22202101)>0
 end

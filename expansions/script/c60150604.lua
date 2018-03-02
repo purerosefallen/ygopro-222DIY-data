@@ -12,20 +12,12 @@ function c60150604.initial_effect(c)
 	e1:SetTarget(c60150604.target)
 	e1:SetOperation(c60150604.activate)
 	c:RegisterEffect(e1)
-	--xyz limit
-	local e13=Effect.CreateEffect(c)
-	e13:SetType(EFFECT_TYPE_SINGLE)
-	e13:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-	e13:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
-	e13:SetValue(c60150604.xyzlimit)
-	c:RegisterEffect(e13)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCountLimit(1,60150604)
 	e1:SetCondition(c60150604.spcon)
 	c:RegisterEffect(e1)
 	--
@@ -33,7 +25,7 @@ function c60150604.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e4:SetCode(EVENT_TO_DECK)
-	e4:SetCountLimit(1,6010604)
+	e4:SetCountLimit(1,60150604)
 	e4:SetCondition(c60150604.descon)
 	e4:SetTarget(c60150604.destg)
 	e4:SetOperation(c60150604.desop)
@@ -81,7 +73,7 @@ function c60150604.filter(c)
 end
 function c60150604.spcon(e,c)
 	if c==nil then return true end
-	return Duel.GetMZoneCount(c:GetControler())>0 and
+	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
 		Duel.IsExistingMatchingCard(c60150604.filter,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function c60150604.descon(e,tp,eg,ep,ev,re,r,rp)

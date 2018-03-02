@@ -11,7 +11,6 @@ function c60150623.initial_effect(c)
 	e2:SetCode(EFFECT_SPSUMMON_CONDITION)
 	e2:SetValue(c60150623.splimit)
 	c:RegisterEffect(e2)
-	
 	--battle target
 	local e6=Effect.CreateEffect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE)
@@ -29,14 +28,15 @@ function c60150623.initial_effect(c)
 	e7:SetValue(c60150623.tgvalue)
 	e7:SetCondition(c60150623.immcon)
 	c:RegisterEffect(e7)
-	--battle indestructable
-	local e8=Effect.CreateEffect(c)
-	e8:SetType(EFFECT_TYPE_SINGLE)
-	e8:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e8:SetRange(LOCATION_MZONE)
-	e8:SetValue(c60150623.indval)
-	e8:SetCondition(c60150623.immcon)
-	c:RegisterEffect(e8)
+    --immune
+    local e5=Effect.CreateEffect(c)
+    e5:SetType(EFFECT_TYPE_SINGLE)
+    e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+    e5:SetRange(LOCATION_MZONE)
+    e5:SetCode(EFFECT_IMMUNE_EFFECT)
+    e5:SetCondition(c60150623.immcon)
+    e5:SetValue(c60150623.efilter)
+    c:RegisterEffect(e5)
 	--direct atk
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -65,11 +65,12 @@ end
 function c60150623.tgvalue(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
 end
-function c60150623.indval(e,re,tp)
-	return tp~=e:GetHandlerPlayer() or tp==e:GetHandlerPlayer()
+function c60150623.efilter(e,te)
+    if te:IsActiveType(TYPE_SPELL+TYPE_TRAP) and te:IsHasType(EFFECT_TYPE_ACTIVATE) then return true end
+    if te:IsActiveType(TYPE_MONSTER) and te:IsActivated() then return true end
 end
 function c60150623.immcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()<2 and e:GetHandler():IsFaceup()
+	return Duel.GetCurrentChain()<=2 and e:GetHandler():IsFaceup()
 end
 function c60150623.aclimit(e,re,tp)
 	return not re:GetHandler():IsImmuneToEffect(e)

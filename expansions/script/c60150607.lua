@@ -47,7 +47,7 @@ function c60150607.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsRelateToEffect(e) then
 		if Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)>0 then
-			if Duel.GetMZoneCount(tp)<=0 then return end
+			if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 			local g=Duel.GetMatchingGroup(c60150607.spfilter,tp,LOCATION_DECK,0,nil,e,tp)
 			if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(60150607,2)) then
 				Duel.BreakEffect()
@@ -72,7 +72,7 @@ function c60150607.filter2(c,e,tp,m,f,chkf)
 end
 function c60150607.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local chkf=tp
+		local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
 		local mg1=Duel.GetFusionMaterial(tp):Filter(c60150602.filter1,nil,e,tp)
 		local ct1=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD+LOCATION_HAND,0)
 		local ct2=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD+LOCATION_HAND)
@@ -102,7 +102,7 @@ function c60150607.gfilter2(c)
 	return c:IsLocation(LOCATION_EXTRA)
 end
 function c60150607.activate2(e,tp,eg,ep,ev,re,r,rp)
-	local chkf=tp
+	local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
 	local mg1=Duel.GetFusionMaterial(tp):Filter(c60150602.filter1,nil,e,tp,true)
 	local ct1=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD+LOCATION_HAND,0)
 	local ct2=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD+LOCATION_HAND)

@@ -40,7 +40,7 @@ function c60150698.filter2(c,e,tp,m,f,chkf)
 end
 function c60150698.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local chkf=tp
+		local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
 		local mg1=Duel.GetFusionMaterial(tp):Filter(c60150698.filterf,nil,e)
 		local mgg=Duel.GetMatchingGroup(c60150698.filter1,tp,LOCATION_GRAVE,0,nil,e,tp)
 		mg1:Merge(mgg)
@@ -71,7 +71,7 @@ function c60150698.gfilter2(c)
 	return c:IsLocation(LOCATION_EXTRA)
 end
 function c60150698.activate2(e,tp,eg,ep,ev,re,r,rp)
-	local chkf=tp
+	local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
 	local mg1=Duel.GetFusionMaterial(tp):Filter(c60150698.filterf,nil,e,true)
 	local mgg=Duel.GetMatchingGroup(c60150698.filter1,tp,LOCATION_GRAVE,0,nil,e,tp,true)
 	mg1:Merge(mgg)

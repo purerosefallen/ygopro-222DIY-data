@@ -61,7 +61,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function cm.spfilter(c)
-	return c.Senya_desc_with_nanahira and c:IsType(TYPE_TRAP) and c:IsAbleToGraveAsCost()
+	return c.Senya_desc_with_nanahira and c:IsType(TYPE_TRAP) and c:IsRelesable()
 end
 function cm.spcon(e,c)
 	if c==nil then return true end
@@ -71,9 +71,9 @@ function cm.spcon(e,c)
 end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.GetMatchingGroup(cm.spfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,nil)
-	local g=Senya.SelectGroup(tp,HINTMSG_TOGRAVE,g,Senya.CheckFieldFilter,nil,3,3,tp,c)
+	local g=Senya.SelectGroup(tp,HINTMSG_RELEASE,g,Senya.CheckFieldFilter,nil,3,3,tp,c)
 	c:SetMaterial(g)
-	Duel.SendtoGrave(g,REASON_COST)
+	Duel.Release(g,REASON_COST)
 end
 function cm.desccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
