@@ -23,7 +23,7 @@ function c33700175.initial_effect(c)
 	e3:SetCategory(CATEGORY_DRAW)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_FZONE)
-	e3:SetCountLimit(1) 
+	e3:SetCountLimit(1,33700175) 
 	e3:SetCondition(c33700175.thcon)
 	e3:SetTarget(c33700175.thtg)
 	e3:SetOperation(c33700175.thop)
@@ -49,7 +49,8 @@ function c33700175.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c33700175.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0
+	local g=Duel.GetFieldGroup(tp,LOCATION_GRAVE,0)
+	return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0 and g:GetClassCount(Card.GetCode)==g:GetCount()
 end
 function c33700175.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=Duel.GetMatchingGroupCount(nil,tp,0,LOCATION_HAND,nil)
@@ -62,12 +63,13 @@ function c33700175.thop(e,tp,eg,ep,ev,re,r,rp)
 	local ct1=Duel.GetFieldGroupCount(p,0,LOCATION_HAND)
 	local ct2=ct1-Duel.GetFieldGroupCount(p,LOCATION_HAND,0)
 	if ct2>0 then
-		Duel.Draw(tp,ct2,REASON_EFFECT)
+		Duel.Draw(p,ct2,REASON_EFFECT)
 	end
-	local sg=Duel.GetOperatedGroup()
-	Duel.ConfirmCards(1-p,sg)
+	local sg=Duel.MatchingGroup(function(c) return c:IsFaceup() or not c:IsOnField() end,p,LOCATION_GRAVE+LOCATION_HAND+LOCATION_ONFIELD,0,nil)
+	local hg=Duel.GetFieldGroup(p,LOCATION_HAND,0)
+	Duel.ConfirmCards(1-p,hg)
 	if sg:GetClassCount(Card.GetCode)==sg:GetCount() then
-		local gt=sg:FilterSelect(p,Card.IsDiscardable,1,sg:GetCount(),nil)
+		local gt=hg:FilterSelect(p,Card.IsDiscardable,0,hg:GetCount(),nil)
 		Duel.SendtoGrave(gt,REASON_EFFECT+REASON_DISCARD)
 		local ct3=gt:GetCount()
 		local tg=Duel.GetMatchingGroup(Card.IsAbleToHand,p,LOCATION_GRAVE,0,nil)
@@ -78,8 +80,9 @@ function c33700175.thop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoHand(sel,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-p,sel)
 		end
+		Duel.ShuffleHand(p)
 	else
-		Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+		Duel.SendtoDeck(hg,nil,2,REASON_EFFECT)
 		Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 	end
 end
