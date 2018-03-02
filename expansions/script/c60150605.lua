@@ -65,7 +65,7 @@ end
 function c60150605.filter(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(0x3b21) and not c:IsCode(60150605) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 		and ((c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp)>0) 
-		or (c:IsLocation(LOCATION_GRAVE) and Duel.GetMZoneCount(tp)>0)
+		or (c:IsLocation(LOCATION_GRAVE) and Duel.GetMZoneCount(tp)>0))
 end
 function c60150605.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c60150605.filter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,nil,e,tp) end
