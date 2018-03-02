@@ -56,7 +56,7 @@ function c10102013.spfilter(c,e,tp)
 end
 function c10102013.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc,ec)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c10102013.spfilter(chkc,e,tp) and chkc~=ec end
-	if chk==0 then return Duel.IsExistingTarget(c10102013.spfilter,tp,LOCATION_REMOVED,0,2,ec,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>=1 and e:GetHandler():GetFlagEffect(10102013)==0 end
+	if chk==0 then return Duel.IsExistingTarget(c10102013.spfilter,tp,LOCATION_REMOVED,0,2,ec,e,tp) and Duel.GetMZoneCount(tp)>=1 and e:GetHandler():GetFlagEffect(10102013)==0 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c10102013.spfilter,tp,LOCATION_REMOVED,0,2,2,ec,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,g:GetCount(),tp,LOCATION_REMOVED)   
@@ -67,31 +67,28 @@ function c10102013.spop2(e,tp,eg,ep,ev,re,r,rp)
 	   Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function c10102013.matfilter(c,fc)
-	return c:IsSetCard(0x9330)
-		and c:IsAbleToRemoveAsCost() and c:IsCanBeSynchroMaterial(fc)
+function c10102013.sprfilter(c,e,tp,ft)
+	return c:IsSetCard(0x9330) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and c:IsFaceup() and Duel.IsExistingMatchingCard(c10102013.sprfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil,c:GetCode())
 end
-function c10102013.spfilter1(c,tp,g)
-	return g:IsExists(c10102013.spfilter2,1,c,tp,c)
-end
-function c10102013.spfilter2(c,tp,mc)
-	return c:GetCode()~=mc:GetCode()
-		and Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(c,mc))>0
+function c10102013.sprfilter2(c,code)
+	return c:IsSetCard(0x9330) and c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsAbleToRemoveAsCost() and not c:IsCode(code)
 end
 function c10102013.spcon(e,c)
 	if c==nil then return true end
-	local tp=c:GetControler()
-	local g=Duel.GetMatchingGroup(c10102013.matfilter,tp,LOCATION_MZONE,0,nil,c)
-	return g:IsExists(c10102013.spfilter1,1,nil,tp,g)
+	local tp,ft=c:GetControler(),Duel.GetMZoneCount(tp)
+	local loc=LOCATION_GRAVE+LOCATION_MZONE 
+	if ft<=0 and c:IsLocation(LOCATION_GRAVE) then loc=LOCATION_MZONE end
+	return Duel.IsExistingMatchingCard(c10102013.sprfilter,tp,loc,0,1,nil,e,tp,ft)
 end
 function c10102013.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local g=Duel.GetMatchingGroup(c10102013.matfilter,tp,LOCATION_MZONE,0,nil,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g1=g:FilterSelect(tp,c10102013.spfilter1,1,1,nil,tp,g)
-	local mc=g1:GetFirst()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g2=g:FilterSelect(tp,c10102013.spfilter2,1,1,mc,tp,mc)
+	local ft=Duel.GetMZoneCount(tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local loc=LOCATION_MZONE+LOCATION_GRAVE 
+	if ft<=0 and c:IsLocation(LOCATION_GRAVE) then loc=LOCATION_MZONE end   
+	local g1=Duel.SelectMatchingCard(tp,c10102013.sprfilter,tp,loc,0,1,1,nil,e,tp,ft)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g2=Duel.SelectMatchingCard(tp,c10102013.sprfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil,g1:GetFirst():GetCode())
 	g1:Merge(g2)
-	c:SetMaterial(g1)
 	Duel.Remove(g1,POS_FACEUP,REASON_COST)
+	c:RegisterFlagEffect(10102013,RESET_EVENT+0xfe0000+RESET_PHASE+PHASE_END,0,1)
 end

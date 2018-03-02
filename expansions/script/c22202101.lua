@@ -18,9 +18,9 @@ end
 function c22202101.con(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsHasCategory(CATEGORY_NEGATE) or re:IsHasCategory(CATEGORY_DISABLE) or re:IsHasCategory(CATEGORY_DISABLE_SUMMON)
 end
-function c23002292.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c22202101.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return 
+	if chk==0 then
 		if c:IsLocation(LOCATION_HAND) then
 			return Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,c)
 		else
@@ -29,7 +29,7 @@ function c23002292.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 	if e:GetHandler():IsStatus(STATUS_ACT_FROM_HAND) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_DECK,0,1,1,c)
+		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,1,c)
 		Duel.Remove(g,POS_FACEUP,REASON_COST)
 	end
 end
