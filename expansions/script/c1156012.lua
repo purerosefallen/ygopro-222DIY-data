@@ -57,7 +57,7 @@ function c1156012.op1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1156012.con2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetSequence()>=5 and c:IsFaceup()
+	return e:GetHandler():GetSequence()>=5 and e:GetHandler():IsFaceup()
 end
 --
 function c1156012.limit2(e,re,tp)
