@@ -13,8 +13,8 @@ deck/3.3new_card5.ydk	9611d651c54aec34a7280d96144d9a8b
 deck/3.3new_card6.ydk	3b1fbff4e2acbcaee5073cb2aa07e9ed
 deck/3.3new_card7.ydk	e4d79f2d1cd35100b12f595c9d125b33
 deck/3.3new_card8.ydk	fcd39af5539415ab1f13843c0e6408f5
-expansions/222DIY.cdb	84f1ccb9fb9f04731364f4f28083437b
-expansions/lflist.conf	9adf3c0fb46e48e722100ceb62a4fded
+expansions/222DIY.cdb	ddc0e2d36acb9dad17cba274f1459c46
+expansions/lflist.conf	7d7e9ad8cd05e701049b3d53d9e4169e
 expansions/strings.conf	c93993aa417dbcac238add62a1ecc84d
 expansions/pics/08209710.jpg	ed0e60085631bfa641ffeebd6abbd910
 expansions/pics/1000400.jpg	6d8015d2ce5bc95f2165c68fc22440c1
@@ -5210,12 +5210,14 @@ sound/specialsummon.wav	218bf4e790ec49ef00905da9640610dc
 sound/summon.wav	b9292ee2280bf3938a0b0eb9615240e7
 sound/target.wav	da816f758fe0209ffffacdaa53fbb174
 sound/token.wav	5cc11cfc680533c041537309ca90d061
-sound/BGM/忍 - まつろわぬ少女.mp3	c63bff472614417e5a025e292e41a93c
 sound/BGM/advantage/1.00adv.mp3	99c7a36c726926e19f76f4113e042f96
 sound/BGM/advantage/1.962adv.mp3	6cff2bf4929eaae90785bfbd7f97b6fc
-sound/BGM/advantage/1.984adv.mp3	2528ca6cb2a7d7dfe428bfe662c1a70e
+sound/BGM/advantage/1.984adv.mp3	9ed4d6d58799917eaad1fc987637740c
 sound/BGM/advantage/1.986adv.mp3	b918e66d696f2f2dd82df5f8e01e6d7e
 sound/BGM/advantage/1.986advp.mp3	a0670d7e68207f092d5ca3e27668da7a
+sound/BGM/advantage/1.989adv.mp3	6175d86c51c882636f0808a60aefad29
+sound/BGM/advantage/1.989advpp.mp3	9373855d1a1c37e902af198a4ebc7f08
+sound/BGM/advantage/1.990adv.mp3	fcf2d337bc80b0e04576455c81997c78
 sound/BGM/advantage/monosu.mp3	5e991304c845aeaac09c77fb1c073a01
 sound/BGM/advantage/Monosugoikuruttoru Furantyanga Monosugoi Uta.mp3	6b69e22257e027b8d3e1c0b17ec36786
 sound/BGM/custom/(Maru)Air Battle.mp3	87dd4376dd7619dd25ba792d192f8b5b
@@ -5288,6 +5290,7 @@ sound/BGM/custom/sakura_engashi.mp3	2f9f65054d73b2d4aac81f3f89205db7
 sound/BGM/custom/Sekka.mp3	475898d82216e4a19a3fa08761e45124
 sound/BGM/custom/soku.mp3	5742bbdac0dcba58ea744faddfd7a18a
 sound/BGM/custom/SSpeed.mp3	63849f7661f39a9d114842cc5ee6aebc
+sound/BGM/custom/stary.mp3	c63bff472614417e5a025e292e41a93c
 sound/BGM/custom/Sweet Little Sister.mp3	6b9b9de77e58331af1bf257161df5029
 sound/BGM/custom/Sweets Time.mp3	d77d6fda103ead3f194a5a29c65ba745
 sound/BGM/custom/TETO RAN.mp3	dddf49dbda7646b40f6b8ddae23b595a
@@ -5309,6 +5312,10 @@ sound/BGM/deck/1.986deckpp.mp3	2435644246df6a6dad917ec80f3a4e24
 sound/BGM/deck/1.986deckppp.mp3	b05fe00ccddfde0baa6166998d736b6e
 sound/BGM/deck/1.986deckpppp.mp3	c8fdf6f0a512b33866a046a65630e5d0
 sound/BGM/deck/1.986deckppppp.mp3	317045e51f47db9b9937589e9b68efc1
+sound/BGM/deck/1.989deckp.mp3	01330c3c14f4b87b3e071a4cffd3893b
+sound/BGM/deck/1.989deckpp.mp3	1e0515ef8ce3d45d4b447d64b3656d07
+sound/BGM/deck/1.990deck.mp3	1fc749daa2791caaf910d8430b2cd251
+sound/BGM/deck/1.990deckp.mp3	35490de49c23503dd82081eec726ab2f
 sound/BGM/deck/saisou.mp3	f39aa99ddd830d2e86a515ad23b156d3
 sound/BGM/disadvantage/1.902disad.mp3	483d834d001772ebf631ae46dcd09521
 sound/BGM/disadvantage/1.92disad.mp3	f578c222515a578c971b5b94905883d8
@@ -5318,6 +5325,8 @@ sound/BGM/disadvantage/1.984disad.mp3	833660be6c0e623615a67dea389726d6
 sound/BGM/disadvantage/1.986disad.mp3	bd05da160ca9aad93ef1c496341ec0e5
 sound/BGM/disadvantage/1.986disadp.mp3	488b61361a042b0e156bf14b14e6d919
 sound/BGM/disadvantage/1.986disadpp.mp3	8e39c55be0fba33e799557c73a04ea94
+sound/BGM/disadvantage/1.989disad.mp3	39f9193dd2d84770f9f6a1c408fa1b43
+sound/BGM/disadvantage/1.990disad.mp3	9e909cf3425b851592bbfa1889daad27
 sound/BGM/disadvantage/shijyo.mp3	1afa8a4694572e0a99f5b7665223292b
 sound/BGM/duel/1.87duel.mp3	309d7c975f03b3ca7c3771224b305395
 sound/BGM/duel/1.87duelp.mp3	3c33d80c504c3d39373e02c9a7467971
@@ -5330,6 +5339,13 @@ sound/BGM/duel/1.986duelp.mp3	d52d70a97ab9cd320c03d400b7729ef9
 sound/BGM/duel/1.986duelpp.mp3	b3052bfe141b7f3a889f67dcbf2e3039
 sound/BGM/duel/1.986duelppp.mp3	597a63432dd382cab9053db93dfc5ff7
 sound/BGM/duel/1.986duelpppp.mp3	92f970edaa8a94d3a0e40a760cba8b46
+sound/BGM/duel/1.989duel.mp3	67b3b7a95f1805e54f0b351b129b939d
+sound/BGM/duel/1.989duelp.mp3	3e11702a0630f8e519812a6a6fb71898
+sound/BGM/duel/1.989duelpp.mp3	2bb0da50a5933ac66e60a2154fa0784a
+sound/BGM/duel/1.990duel.mp3	3882d43fc89aa118a5c6a8b3c697151a
+sound/BGM/duel/1.990duelp.mp3	fc037a1e58a1c28f7d64ffb94689b729
+sound/BGM/duel/1.990duelpp.mp3	e0a036091d1bc7a348b9ce18a3c40135
+sound/BGM/duel/1.990duelppp.mp3	29e32e11209a9f6dc39626770d9446cf
 sound/BGM/duel/ayakashi.mp3	0b5e4950ea8b307f92b982b725f71f73
 sound/BGM/duel/bijyutsu.mp3	7bcc47523f60d1cbe1779b01da7ca127
 sound/BGM/duel/melody.mp3	7d29238410a9dd3fc14ae7631698ea0a
@@ -5347,6 +5363,12 @@ sound/BGM/menu/1.986menu.mp3	d509dd5b36eafa6e308de0b87d3f0207
 sound/BGM/menu/1.986menup.mp3	e936be7fc672d11e256fbeb08841ab83
 sound/BGM/menu/1.986menupp.mp3	9628e8681603122c768892c2b41803cf
 sound/BGM/menu/1.986menuppp.mp3	d45ded28cf6ba6094739d92147f7134a
+sound/BGM/menu/1.989menup.mp3	bed87328ca347a6199d97095aa7be308
+sound/BGM/menu/1.989menupp.mp3	8d543be9cedea5fe00835379bd4c8317
+sound/BGM/menu/1.989menuppp.mp3	b569fc1ad4ab207b24dce80ff4ae8934
+sound/BGM/menu/1.990menu.mp3	e4faeec777febb52699d97a6d3426b58
+sound/BGM/menu/1.990menup.mp3	80b459d38a47d990bfca2c68153168b6
+sound/BGM/menu/1.990menupp.mp3	8b0cc15d681fe3e1b3dc92d4c3ca6c61
 sound/BGM/menu/hirahirahirara.mp3	99e19303e23d54fe16a4c2cf380b784f
 sound/BGM/win/LiveActors.mp3	370e49c36f979a4e6a8e94e3e3fb58f1
 sound/BGM/win/Stage Clear.mp3	dbb29cd8a039888cc6308a0c76e4c068
@@ -5409,8 +5431,8 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	4dc2f107ab080cdf5427ba7fd40b94ce
+update/filelist.txt	8c3947fc27e61aed0a63774985e0cc28
 update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
 update/update-push.bat	49e0e022872a85c5350b8ee445ecd4d8
 update/update-without-sound.bat	22d7b973d79ef9311213aeff61d93d7c
-update/version.txt	1501d5dfb6fe280276d64835d1521ec2
+update/version.txt	cf332b45aa0369e2df0ac0a18b9f1847
