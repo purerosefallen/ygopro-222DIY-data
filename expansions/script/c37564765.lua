@@ -1610,11 +1610,8 @@ function cm.CheckFusionMaterialExact(c,g,chkf)
 end
 function cm.HoldGroup(mg)
 	return function(tp,g,fc)
-		return not (g:IsExists(cm.HoldGroupFilter,1,nil,mg) or mg:IsExists(cm.HoldGroupFilter,1,nil,g))
+		return mg:Equal(g)
 	end
-end
-function cm.HoldGroupFilter(c,mg)
-	return not mg:IsContains(c)
 end
 --3L fusion monster, c=card, m=code
 --exf=extra function
