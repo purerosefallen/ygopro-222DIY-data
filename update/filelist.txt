@@ -13,7 +13,7 @@ deck/3.3new_card5.ydk	9611d651c54aec34a7280d96144d9a8b
 deck/3.3new_card6.ydk	3b1fbff4e2acbcaee5073cb2aa07e9ed
 deck/3.3new_card7.ydk	e4d79f2d1cd35100b12f595c9d125b33
 deck/3.3new_card8.ydk	fcd39af5539415ab1f13843c0e6408f5
-expansions/222DIY.cdb	ec6bada27ef2038206e73f08aec95cc8
+expansions/222DIY.cdb	cecc1101ecd50e58254226198c7b1a17
 expansions/lflist.conf	7d7e9ad8cd05e701049b3d53d9e4169e
 expansions/strings.conf	c93993aa417dbcac238add62a1ecc84d
 expansions/pics/08209710.jpg	ed0e60085631bfa641ffeebd6abbd910
@@ -3085,8 +3085,8 @@ expansions/script/c10904018.lua	347d96b14245cd8d4cd246815443423d
 expansions/script/c10904019.lua	49b61632edd4d000b8c02ae13e99cec6
 expansions/script/c10904020.lua	ed88c3fd0c44f81201533e2da9013316
 expansions/script/c10904021.lua	26c007b16dc0dbbd01e92fba94b35a13
-expansions/script/c10905000.lua	dbef9e95505da316ac701b59713744d5
-expansions/script/c10905001.lua	dfaba46ed198d28dfd5809cddab7c4f9
+expansions/script/c10905000.lua	3a32aaf7521c71a93aff2d62771fbb5e
+expansions/script/c10905001.lua	ee18444c1c8823bd5e31e58728312169
 expansions/script/c10905002.lua	0d2e59171d819ea72cb16ebbb4c3c82b
 expansions/script/c10905003.lua	0854dadc86fe2b469cc3f79de28aa544
 expansions/script/c10905004.lua	634c916b79cc416b9a037b591065c026
@@ -3094,7 +3094,7 @@ expansions/script/c10905005.lua	2f759835d7c79363f627517df78f89f2
 expansions/script/c10905006.lua	b97b918cbb396792419c2dcc495da625
 expansions/script/c10905007.lua	8f0b67e9bc4c5bee3044b53a797a9fba
 expansions/script/c10905008.lua	60827ec68c270b67c095e759d3564482
-expansions/script/c10905009.lua	59a29933334a87ea03b7dfb81e0b8586
+expansions/script/c10905009.lua	9ac6f8953f224867a3d6a02d4c1e2f05
 expansions/script/c10905010.lua	7c955d6652c3faace9d7cd13934fa3fc
 expansions/script/c10919000.lua	87a8ce0fe4af8eb5d010db1562df750c
 expansions/script/c10969999.lua	fa7de22f089beb1c03f7afc2580f7949
@@ -5223,6 +5223,7 @@ sound/BGM/advantage/Monosugoikuruttoru Furantyanga Monosugoi Uta.mp3	6b69e22257e
 sound/BGM/custom/(Maru)Air Battle.mp3	87dd4376dd7619dd25ba792d192f8b5b
 sound/BGM/custom/(Maru)Beginning Of The History.mp3	85b9b3de5673ee7222a4fba41a4f0313
 sound/BGM/custom/(Maru)BLACK HOLE.mp3	794ff08d14adc316c546758ce9e92419
+sound/BGM/custom/(Maru)Capriccio.mp3	42496e3532591003c81d88d160f31e4c
 sound/BGM/custom/(Maru)Challenger 1985.mp3	5f2cf00a758daf588959c53b2caf5370
 sound/BGM/custom/(Maru)Corneria.mp3	ea2849ddf8e9040491deb20045b1739a
 sound/BGM/custom/(Maru)CRYSTAL.mp3	a1af417c35c8677058e0f8c16619e84b
@@ -5237,7 +5238,6 @@ sound/BGM/custom/(Maru)TEARS BEGAN GUSHING.mp3	f2ac4aed55be16095b21211eff98987f
 sound/BGM/custom/(Maru)Tragedy flame.mp3	9bd9f5f672e3f7e4021844ab5f260468
 sound/BGM/custom/(Maru)TWINBEE'S HOME TOWN SONG.mp3	a5aeb68bf50f30d418e456b83c838c9b
 sound/BGM/custom/(Maru)unkai.mp3	5ec2a4f52b321bca8ec6501b701e9951
-sound/BGM/custom/(Maru)少女绮想曲 ~ Capriccio.mp3	42496e3532591003c81d88d160f31e4c
 sound/BGM/custom/A FIGHTER.mp3	75910f3a6a1605ae448f9ca3e76ca870
 sound/BGM/custom/Aircraft Carrier.mp3	7c48ef5836619684982ec8fd4c0a503d
 sound/BGM/custom/AlbumArtSmall.jpg	3df845b2ee9d1b96e405c917dc830813
@@ -5432,8 +5432,8 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	7219c2b65bab001499d6d00bbb7cc540
+update/filelist.txt	d6fba29ef51d1b4808a77be8ef5a86bc
 update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
 update/update-push.bat	49e0e022872a85c5350b8ee445ecd4d8
 update/update-without-sound.bat	22d7b973d79ef9311213aeff61d93d7c
-update/version.txt	e628b9e4ea26eb4551010436f99e8d60
+update/version.txt	6e52517ebe0f884de683e6c5bbeeaf7b

@@ -25,7 +25,7 @@ end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_DECK,0,1,nil) end
     Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-    if not Duel.IsExistingMatchingCard(nil,tp,LOCATION_GRAVE,0,1,nil) then e:GetHandler():SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE) end
+    if not Duel.IsExistingMatchingCard(nil,tp,LOCATION_GRAVE,0,1,nil) then e::SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE) end
 end
 function cm.activate(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
