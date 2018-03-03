@@ -51,7 +51,7 @@ function c60150602.descon(e,tp,eg,ep,ev,re,r,rp)
 		and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD+LOCATION_GRAVE)
 end
 function c60150602.filter3(c)
-	return c:IsSetCard(0x3b21) and c:IsType(TYPE_SPELL+TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSetCard(0x3b21) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c60150602.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c60150602.filter3,tp,LOCATION_DECK,0,1,nil) end
