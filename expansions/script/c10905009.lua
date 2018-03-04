@@ -46,7 +46,6 @@ function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function cm.operation(e,tp,eg,ep,ev,re,r,rp)
     local tc=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-    if tc:IsFaceup() then
         local e1=Effect.CreateEffect(e:GetHandler())
         e1:SetType(EFFECT_TYPE_SINGLE)
         e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
@@ -55,7 +54,6 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
         e1:SetValue(cm.valcon)
         e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
         tc:RegisterEffect(e1)
-    end
 end
 function cm.valcon(e,re,r,rp)
     return bit.band(r,REASON_BATTLE+REASON_EFFECT)~=0

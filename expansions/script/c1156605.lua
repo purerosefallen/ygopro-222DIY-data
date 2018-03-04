@@ -131,8 +131,13 @@ function c1156605.lkop(e,tp,eg,ep,ev,re,r,rp,c)
 		if g:GetCount()==0 then break end
 		sg:Merge(g)
 	end
+	local gn=Group.CreateGroup()
+	gn:Merge(sg)
+	local checknum=0
 	ct=sg:GetCount()
+--
 	if (c1156605.lcheck2(tp,sg,c,minc,ct) or mg:IsExists(c1156605.lkchenk2,1,nil,tp,sg,mg,c,ct,minc,maxc)) and Duel.SelectYesNo(tp,aux.Stringid(1156605,0)) then
+		checknum=1
 		for i=ct,maxc-1 do
 			local cg=mg:Filter(c1156605.lkchenk2,sg,tp,sg,mg,c,i,minc,maxc)
 			if cg:GetCount()==0 then break end
@@ -146,7 +151,6 @@ function c1156605.lkop(e,tp,eg,ep,ev,re,r,rp,c)
 			if g:GetCount()==0 then break end
 			sg:Merge(g)
 		end
---
 		c:RegisterFlagEffect(1156605,RESET_EVENT+0xfe0000,EFFECT_FLAG_CLIENT_HINT,0,0,aux.Stringid(1156605,1))
 		local e1_1=Effect.CreateEffect(c)
 		e1_1:SetType(EFFECT_TYPE_SINGLE)
@@ -164,21 +168,33 @@ function c1156605.lkop(e,tp,eg,ep,ev,re,r,rp,c)
 		e1_3:SetOperation(c1156605.op1_3)
 		e1_3:SetReset(RESET_EVENT+0xfe0000)
 		c:RegisterEffect(e1_3,true)
---
 	end
 --
-	local num=sg:GetCount()
-	local e1_2=Effect.CreateEffect(c)
-	e1_2:SetType(EFFECT_TYPE_SINGLE)
-	e1_2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1_2:SetRange(LOCATION_MZONE)
-	e1_2:SetCode(EFFECT_SET_BASE_ATTACK)
-	e1_2:SetValue(num*900)
-	e1_2:SetReset(RESET_EVENT+0xff0000)
-	c:RegisterEffect(e1_2,true)
---
-	c:SetMaterial(sg)
-	Duel.SendtoGrave(sg,REASON_MATERIAL+REASON_LINK)
+	if checknum==0 then
+		local num=gn:GetCount()
+		local e1_2=Effect.CreateEffect(c)
+		e1_2:SetType(EFFECT_TYPE_SINGLE)
+		e1_2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e1_2:SetRange(LOCATION_MZONE)
+		e1_2:SetCode(EFFECT_SET_BASE_ATTACK)
+		e1_2:SetValue(num*900)
+		e1_2:SetReset(RESET_EVENT+0xff0000)
+		c:RegisterEffect(e1_2,true)
+		c:SetMaterial(gn)
+		Duel.SendtoGrave(gn,REASON_MATERIAL+REASON_LINK)
+	else
+		local num=sg:GetCount()
+		local e1_2=Effect.CreateEffect(c)
+		e1_2:SetType(EFFECT_TYPE_SINGLE)
+		e1_2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e1_2:SetRange(LOCATION_MZONE)
+		e1_2:SetCode(EFFECT_SET_BASE_ATTACK)
+		e1_2:SetValue(num*900)
+		e1_2:SetReset(RESET_EVENT+0xff0000)
+		c:RegisterEffect(e1_2,true)
+		c:SetMaterial(sg)
+		Duel.SendtoGrave(sg,REASON_MATERIAL+REASON_LINK)
+	end
 end
 --
 function c1156605.val1_1(e,re)
@@ -210,7 +226,7 @@ function c1156605.op1_3(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SkipPhase(turnp,PHASE_STANDBY,RESET_PHASE+PHASE_END,1) 
 		Duel.SkipPhase(turnp,PHASE_MAIN1,RESET_PHASE+PHASE_END,1) 
 		Duel.SkipPhase(turnp,PHASE_BATTLE,RESET_PHASE+PHASE_END,1,1)
-		Duel.SkipPhase(turnp,PHASE_MAIN2,RESET_PHASE+PHASE_END,1)	 
+		Duel.SkipPhase(turnp,PHASE_MAIN2,RESET_PHASE+PHASE_END,1)   
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetType(EFFECT_TYPE_FIELD)
@@ -222,7 +238,7 @@ function c1156605.op1_3(e,tp,eg,ep,ev,re,r,rp)
 	if tph==PHASE_MAIN1 then 
 		Duel.SkipPhase(turnp,PHASE_MAIN1,RESET_PHASE+PHASE_END,1) 
 		Duel.SkipPhase(turnp,PHASE_BATTLE,RESET_PHASE+PHASE_END,1,1)
-		Duel.SkipPhase(turnp,PHASE_MAIN2,RESET_PHASE+PHASE_END,1)	 
+		Duel.SkipPhase(turnp,PHASE_MAIN2,RESET_PHASE+PHASE_END,1)   
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetType(EFFECT_TYPE_FIELD)
