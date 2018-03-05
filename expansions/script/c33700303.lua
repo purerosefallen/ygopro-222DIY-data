@@ -10,7 +10,6 @@ function cm.initial_effect(c)
 	e1:SetCondition(cm.actcon)
 	e1:SetRange(LOCATION_ONFIELD)
 	e1:SetTargetRange(0,1)
-	e1:SetCondition(cm.con)
 	e1:SetValue(cm.aclimit)
 	c:RegisterEffect(e1)
 	--Destroy
@@ -36,7 +35,7 @@ function cm.con(e)
 end
 function cm.actcon(e)
 	local ph=Duel.GetCurrentPhase()
-	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE and Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_MZONE,0,1,nil)
+	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE and Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_MZONE,0,1,nil) and cm.con(e)
 end
 function cm.cfilter(c)
 	return c:IsFaceup() and (c:IsSetCard(0x1449) or c:IsSetCard(0x3449))

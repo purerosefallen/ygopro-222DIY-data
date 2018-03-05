@@ -81,7 +81,7 @@ function c60152016.filter2(c)
 	return c:IsSetCard(0x6b25) and c:IsType(TYPE_MONSTER) and c:IsReleasable()
 end
 function c60152016.target2(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroup(c60152001.filter2,tp,LOCATION_ONFIELD,0,e:GetHandler())
+	local g=Duel.GetMatchingGroup(c60152016.filter2,tp,LOCATION_ONFIELD,0,e:GetHandler())
 	if chk==0 then return Duel.IsExistingMatchingCard(c60152016.filter2,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,e:GetHandler()) 
 		and Duel.GetMZoneCount(tp,g,tp)>0
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,60152097,0,0x4011,0,0,10,RACE_PYRO,ATTRIBUTE_FIRE) end
