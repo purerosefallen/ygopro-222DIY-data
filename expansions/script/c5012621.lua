@@ -106,5 +106,5 @@ function c5012621.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c5012621.operation(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-    local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_DECK,0,1,1,nil)
+    local g=Duel.SelectMatchingCard(tp,c5012621.defilter,tp,LOCATION_DECK,0,1,1,nil)
 end

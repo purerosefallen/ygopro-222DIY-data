@@ -26,7 +26,7 @@ function c13257326.filter(c)
 	if not c:IsSetCard(0x351) or c:IsFacedown() then return false end
 	local mt=getmetatable(c)
 	local PCe=mt[c]
-	return PCe:IsActivatable(PCe:GetOwnerPlayer())
+	return PCe -- and PCe:IsActivatable(PCe:GetOwnerPlayer())
 end
 function c13257326.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and c13257326.filter(chkc) end
@@ -40,7 +40,7 @@ function c13257326.activate(e,tp,eg,ep,ev,re,r,rp)
 		local tep=tc:GetControler()
 		local mt=getmetatable(tc)
 		local PCe=mt[tc]
-		if PCe and PCe:IsActivatable(PCe:GetOwnerPlayer()) then
+		if PCe  then
 			local cost=PCe:GetCost()
 			local target=PCe:GetTarget()
 			local operation=PCe:GetOperation()

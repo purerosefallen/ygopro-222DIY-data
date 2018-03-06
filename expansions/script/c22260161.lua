@@ -113,6 +113,7 @@ function c22260161.spop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		if Duel.SendtoHand(g,nil,REASON_EFFECT)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) then
 			Duel.ConfirmCards(1-tp,g)
+			if not e:GetHandler():IsRelateToEffect(e) then return end
 			Duel.BreakEffect()
 			Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
 			local e1=Effect.CreateEffect(c)

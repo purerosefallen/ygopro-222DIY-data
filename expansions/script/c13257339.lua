@@ -50,20 +50,27 @@ function c13257339.addc(e,tp,eg,ep,ev,re,r,rp)
 		e:GetHandler():AddCounter(0x351,1)
 	end
 end
+function c13257339.eqfilter(c,ec)
+	return c:IsSetCard(0x352) and c:IsType(TYPE_MONSTER) and c:CheckEquipTarget(ec)
+end
 function c13257339.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	local t1=e:GetHandler():IsCanAddCounter(0x351,1)
-	if chk==0 then return true end
+	local t1=Duel.IsExistingMatchingCard(c13257339.eqfilter,tp,LOCATION_EXTRA,0,1,nil,c) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	local t2=e:GetHandler():IsCanAddCounter(0x351,1)
+	if chk==0 then return t1 or t2 end
 	local op=0
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(13257339,1))
-	if t1 then
+	if t1 and t2 then
 		op=Duel.SelectOption(tp,aux.Stringid(13257339,2),aux.Stringid(13257339,3))
-	else
+	elseif t1 then
 		op=Duel.SelectOption(tp,aux.Stringid(13257339,2))
+	elseif t2 then
+		op=Duel.SelectOption(tp,aux.Stringid(13257339,3))+1
 	end
 	e:SetLabel(op)
 	if op==0 then
-		e:SetCategory(CATEGORY_ATKCHANGE)
+		e:SetCategory(CATEGORY_EQUIP)
+		Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_EXTRA)
 	elseif op==1 then
 		e:SetCategory(CATEGORY_COUNTER)
 		Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x351)
@@ -72,13 +79,12 @@ end
 function c13257339.pcop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if e:GetLabel()==0 then
-		if c:IsRelateToEffect(e) and c:IsFaceup() then
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(700)
-			e1:SetReset(RESET_EVENT+0x1ff0000)
-			c:RegisterEffect(e1)
+		if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or c:IsFacedown() or not c:IsRelateToEffect(e) then return end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+		local g=Duel.SelectMatchingCard(tp,c13257339.eqfilter,tp,LOCATION_EXTRA,0,1,1,nil,c)
+		local tc=g:GetFirst()
+		if tc then
+			Duel.Equip(tp,tc,c)
 		end
 	elseif e:GetLabel()==1 then
 		if c:IsRelateToEffect(e) then
@@ -94,7 +100,7 @@ function c13257339.rfilter(c)
 	return ((c:IsFaceup() and c:IsLocation(LOCATION_EXTRA)) or c:IsLocation(LOCATION_GRAVE)) and c:IsAbleToRemove()
 end
 function c13257339.bombtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c13257339.rfilter,tp,0,LOCATION_GRAVE+LOCATION_EXTRA,4,nil) end
+	if chk==0 then return true end
 	local e4=Effect.CreateEffect(e:GetHandler())
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -111,6 +117,7 @@ function c13257339.bombop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c13257339.rfilter,tp,0,LOCATION_GRAVE+LOCATION_EXTRA,nil)
 	local c=e:GetHandler()
 	local d=math.floor(g:GetCount()/4)
+	if g:GetCount()<8 then d=2 end
 		local e5=Effect.CreateEffect(e:GetHandler())
 		e5:SetType(EFFECT_TYPE_SINGLE)
 		e5:SetCode(EFFECT_UPDATE_ATTACK)
@@ -118,7 +125,7 @@ function c13257339.bombop(e,tp,eg,ep,ev,re,r,rp)
 		e5:SetValue(700)
 		c:RegisterEffect(e5)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local rg=g:FilterSelect(tp,c13257339.rfilter,1,d,nil)
+		local rg=g:FilterSelect(tp,c13257339.rfilter,d,d,nil)
 		if rg:GetCount()>0 then
 			Duel.HintSelection(rg)
 			Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
