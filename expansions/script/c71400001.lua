@@ -53,7 +53,7 @@ function c71400001.activate1(e,tp,eg,ep,ev,re,r,rp)
 		local tep=tc:GetControler()
 		local cost=te:GetCost()
 		if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
-		Duel.RaiseEvent(tc,71400001,te,0,tp,tp,Duel.GetCurrentChain())
+		Duel.RaiseEvent(tc,4179255,te,0,tp,tp,Duel.GetCurrentChain())
 	end
 end
 function c71400001.activate2(e,tp,eg,ep,ev,re,r,rp)
@@ -239,6 +239,6 @@ function yume.FieldActivationOp(e,tp,eg,ep,ev,re,r,rp)
 		local tep=tc:GetControler()
 		local cost=te:GetCost()
 		if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
-		Duel.RaiseEvent(tc,num,te,0,tp,tp,Duel.GetCurrentChain())
+		Duel.RaiseEvent(tc,4179255,te,0,tp,tp,Duel.GetCurrentChain())
 	end
 end
