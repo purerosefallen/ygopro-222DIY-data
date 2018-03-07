@@ -50,7 +50,7 @@ function c71400023.op1(e,tp,eg,ep,ev,re,r,rp)
 		local tep=tc:GetControler()
 		local cost=te:GetCost()
 		if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
-		Duel.RaiseEvent(tc,71400023,te,0,tp,tp,Duel.GetCurrentChain())
+		Duel.RaiseEvent(tc,4179255,te,0,tp,tp,Duel.GetCurrentChain())
 		if flag then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_FIELD)
