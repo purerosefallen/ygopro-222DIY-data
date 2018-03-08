@@ -1,8 +1,5 @@
 Senya=Senya or {}
 local cm=Senya
-os=require('os')
-table=require('table')
-io=require('io')
 --7CG universal scripts
 --test parts
 aux.BeginPuzzle=aux.TRUE
@@ -1766,15 +1763,6 @@ function cm.enable_kaguya_check_3L()
 			for code,v in pairs(t) do
 				cm.GainEffect_3L(tc,code)
 			end
-			if not tc:IsType(TYPE_EFFECT) then
-				local e2=Effect.CreateEffect(tc)
-				e2:SetType(EFFECT_TYPE_SINGLE)
-				e2:SetCode(EFFECT_ADD_TYPE)
-				e2:SetValue(TYPE_EFFECT)
-				e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-				e2:SetReset(RESET_EVENT+0x1fe0000)
-				tc:RegisterEffect(e2,true)
-			end
 		end
 	end)
 	Duel.RegisterEffect(ge1,0)
@@ -1823,6 +1811,19 @@ function cm.GainEffect_3L(c,tc,pres,pctlm)
 	if not mt or c:GetFlagEffect(cd-4000)>0 or not mt.effect_operation_3L then return end
 	local ctlm=pctlm or cm.CheckKoishiCount(c)
 	local efft={mt.effect_operation_3L(c,ctlm)}
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_ADD_TYPE)
+	e2:SetValue(TYPE_EFFECT)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e2:SetReset(RESET_EVENT+0x1fe0000)
+	c:RegisterEffect(e2,true)
+	table.insert(efft,e2)
+	local e3=e2:Clone()
+	e3:SetCode(EFFECT_REMOVE_TYPE)
+	e3:SetValue(EFFECT_NORMAL)
+	c:RegisterEffect(e3,true)
+	table.insert(efft,e3)	
 	c:RegisterFlagEffect(cd-4000,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,cm.order_table_new(efft),cd*16+1)
 	if pres then
 		local info_list={
