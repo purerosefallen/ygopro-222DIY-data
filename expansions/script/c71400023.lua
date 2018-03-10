@@ -5,7 +5,7 @@ function c71400023.initial_effect(c)
 	e1:SetDescription(aux.Stringid(71400023,1))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,71400023+EFFECT_COUNT_CODE_OATH)
+	e1:SetCountLimit(1,71400023+EFFECT_COUNT_CODE_DUEL)
 	e1:SetHintTiming(0,0x1f0)
 	e1:SetTarget(c71400023.tg1)
 	e1:SetOperation(c71400023.op1)
@@ -20,7 +20,7 @@ function c71400023.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(71400023,2))
 	e2:SetCategory(CATEGORY_BANISH)
-	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCondition(aux.exccon)
@@ -78,13 +78,13 @@ function c71400023.sumlimit(e,c,sump,sumtype,sumpos,targetp)
 	return bit.band(sumpos,POS_FACEDOWN)>0
 end
 function c71400023.tg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return false end
+	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsAbleToRemove() end
 	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,0,1,nil)
-		and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
+		and Duel.IsExistingTarget(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_BANISH)
-	local g1=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,0,1,1,nil)
+	local g1=Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,LOCATION_ONFIELD,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_BANISH)
-	local g2=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
+	local g2=Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,1,nil)
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_BANISH,g1,2,0,0)
 end
