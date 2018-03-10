@@ -56,9 +56,7 @@ function c60150817.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c60150817.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-		local dg=Duel.GetFieldGroup(tp,LOCATION_DECK,0)
-		if #dg==0 then return end
-		local tc=dg:GetMinGroup(Card.GetSequence):GetFirst()
+		local tc=Duel.GetFieldCard(tp,LOCATION_DECK,0)
 		if tc:IsAbleToRemove() and Duel.SelectYesNo(tp,aux.Stringid(60150817,0)) then
 			Duel.BreakEffect()
 			Duel.DisableShuffleCheck()

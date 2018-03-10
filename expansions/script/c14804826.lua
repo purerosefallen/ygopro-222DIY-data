@@ -44,8 +44,8 @@ function c14804826.initial_effect(c)
 	e6:SetCode(EVENT_SUMMON_SUCCESS)
 	e6:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e6:SetCountLimit(1,148048261)
-	e6:SetTarget(c14804826.sptg)
-	e6:SetOperation(c14804826.spop)
+	e6:SetTarget(c14804826.sptg2)
+	e6:SetOperation(c14804826.spop2)
 	c:RegisterEffect(e6)
 	local e7=e6:Clone()
 	e7:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -105,19 +105,19 @@ function c14804826.spop1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(tp,1,REASON_EFFECT)
 end 
 
-function c14804826.filter(c,e,tp)
+function c14804826.filter2(c,e,tp)
 	return c:IsSetCard(0x4848) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c14804826.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c14804826.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c14804826.filter,tp,LOCATION_HAND,0,1,nil,e,tp) end
+		and Duel.IsExistingMatchingCard(c14804826.filter2,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,1-tp,400)
 end
-function c14804826.spop(e,tp,eg,ep,ev,re,r,rp)
+function c14804826.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c14804826.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,c14804826.filter2,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		Duel.BreakEffect()

@@ -28,9 +28,7 @@ function c60150810.activate(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
-		local dg=Duel.GetFieldGroup(tp,LOCATION_DECK,0)
-		if #dg==0 then return end
-		local tc=dg:GetMinGroup(Card.GetSequence):GetFirst()
+		local tc=Duel.GetFieldCard(tp,LOCATION_DECK,0)
 		if tc:IsAbleToRemove() and Duel.SelectYesNo(tp,aux.Stringid(60150810,0)) then
 			Duel.BreakEffect()
 			Duel.DisableShuffleCheck()

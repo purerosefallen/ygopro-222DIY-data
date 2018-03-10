@@ -2,7 +2,7 @@
 function c14804854.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,14804854+EFFECT_COUNT_CODE_OATH)
@@ -32,7 +32,7 @@ function c14804854.condition(e,tp,eg,ep,ev,re,r,rp)
 	return  Duel.IsExistingMatchingCard(c14804854.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c14804854.thfilter(c,e,tp)
-	return c:IsSetCard(0x4848) and c:IsAbleToHand()
+	return c:IsSetCard(0x4848)  and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function c14804854.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c14804854.thfilter,tp,LOCATION_DECK,0,1,nil) end

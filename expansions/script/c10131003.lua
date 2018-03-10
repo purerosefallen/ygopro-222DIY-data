@@ -29,7 +29,7 @@ function c10131003.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetCard(eg)
 end
 function c10131003.pcfilter(c,e,tp)
-	return c:IsSetCard(0x5338) and c:IsType(TYPE_PENDULUM) and c:GetPreviousControler()==tp and ((c:IsCanBeSpecialSummoned(e,0,sp,false,false) and ((c:IsLocation(LOCATION_EXTRA) and GetLocationCountFromEx(tp)>0) or ( not c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0))) or (not c:IsForbidden() and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))))
+	return c:IsSetCard(0x5338) and c:IsType(TYPE_PENDULUM) and c:GetPreviousControler()==tp and ((c:IsCanBeSpecialSummoned(e,0,tp,false,false) and ((c:IsLocation(LOCATION_EXTRA) and GetLocationCountFromEx(tp)>0) or (not c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0))) or (not c:IsForbidden() and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))))
 end
 function c10131003.pcfilter2(c,e,tp)
 	return c10131003.pcfilter(c,e,tp) and c:IsRelateToEffect(e)
