@@ -5366,7 +5366,6 @@ expansions/script/c99600099.lua	76d64a71c75135d1bd92dfb056ad6f79
 expansions/script/c9990300.lua	3f5bee23ee070d717240da44528f7252
 expansions/script/c99998931.lua	97935b2773f0992c94ca924d5a5b82e1
 expansions/script/Millux.lua	936de77c94c7fec9193dd3e7312fedb7
-expansions/script/爱莎lua修复17.1.16.zip	31c36800a0992e400ad86d30c0f5b9a2
 sound/activate.wav	ddb25ba52e523b0ebc94d538a43d9bf9
 sound/addcounter.wav	6f9e1ad242ec8694a5c0c014dd4be00a
 sound/attack.wav	40e3a24a95429503df06352fb0dd1b92
@@ -5622,8 +5621,8 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	4745a1d94c275a5c05a61e10793ac500
+update/filelist.txt	33b7b26e9fafbc4d003ce53e89d317da
 update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
 update/update-push.bat	49e0e022872a85c5350b8ee445ecd4d8
 update/update-without-sound.bat	22d7b973d79ef9311213aeff61d93d7c
-update/version.txt	438b3643ef0dba5f8a191e026a6cc952
+update/version.txt	12308da3b4cf245b4cef8918d48144dc
