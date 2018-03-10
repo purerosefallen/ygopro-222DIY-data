@@ -49,7 +49,7 @@ function c60150813.atkval(e,c)
 	return e:GetHandler():GetCounter(0x1b)*50
 end
 function c60150813.cfilter(c)
-	return ((c:IsFaceup() and c:IsType(TYPE_MONSTER)) or c:IsFacedown()) and (c:IsAbleToDeckAsCost() or c:IsAbleToExtraAsCost())
+	return c:IsAbleToDeckAsCost() or c:IsAbleToExtraAsCost()
 end
 function c60150813.cost3(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x1b,3,REASON_COST)

@@ -15,17 +15,10 @@ function c60150802.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_REMOVE)
 	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-	e3:SetCountLimit(1,60150802)
 	e3:SetCondition(c60150802.thcon)
 	e3:SetTarget(c60150802.thtg2)
 	e3:SetOperation(c60150802.thop)
 	c:RegisterEffect(e3)
-	--xyz limit
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
-	e4:SetValue(c60150802.xyzlimit)
-	c:RegisterEffect(e4)
 end
 function c60150802.spfilter(c)
 	return c:IsType(TYPE_MONSTER)
@@ -33,12 +26,12 @@ end
 function c60150802.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetMZoneCount(tp)>0
-		and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_REMOVED,1,nil)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil)
 end
 function c60150802.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(60150802,0))
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,0,LOCATION_REMOVED,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST+REASON_RETURN)
 end
 function c60150802.thcon(e,tp,eg,ep,ev,re,r,rp)
@@ -70,8 +63,12 @@ function c60150802.thop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		end
 	end
-end
-function c60150802.xyzlimit(e,c)
-	if not c then return false end
-	return not (c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_SPELLCASTER))
+	if re:GetHandler():IsSetCard(0x3b23) and re:GetHandler():IsType(TYPE_MONSTER) then
+		local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
+		if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(60150802,3)) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+			local sg=g:Select(tp,1,1,nil)
+			Duel.SendtoGrave(g,REASON_EFFECT)
+		end
+	end
 end

@@ -45,17 +45,18 @@ function c10131001.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c10131001.ahfilter(c)
-	return c:IsSetCard(0x5338) and c:IsAbleToHand() and not c:IsCode(10131001)
+	return c:IsSetCard(0x5338) and c:IsAbleToHand() and not c:IsCode(10131001) and c:IsType(TYPE_MONSTER)
 end
 function c10131001.ahop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.IsExistingMatchingCard(c10131001.ahfilter,tp,LOCATION_DECK,0,1,nil) and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(10131001,0)) then
-	   if Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_EFFECT+REASON_DISCARD)==0 then return end
+	if Duel.IsExistingMatchingCard(c10131001.ahfilter,tp,LOCATION_DECK,0,1,nil) and Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(10131001,0)) then
 	   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	   local g=Duel.SelectMatchingCard(tp,c10131001.ahfilter,tp,LOCATION_DECK,0,1,1,nil)
-	   if g:GetCount()>0 then
-		   Duel.SendtoHand(g,nil,REASON_EFFECT)
-		   Duel.ConfirmCards(1-tp,g)
+	   if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
+		  Duel.ConfirmCards(1-tp,g)
+		  Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+		  local dg=Duel.SelectMatchingCard(tp,aux.TRUE,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,g:GetFirst())
+		  Duel.Destroy(dg,REASON_EFFECT)
 	   end
 	end
 end

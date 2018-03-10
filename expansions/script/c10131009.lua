@@ -2,7 +2,8 @@
 function c10131009.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c,true) 
-	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_WARRIOR),aux.NonTuner(Card.IsRace,RACE_WARRIOR),1)
+	--xyz summon
+	aux.AddXyzProcedure(c,c10131009.xyzfilter,4,2)
 	c:EnableReviveLimit()
 	--banish
 	local e1=Effect.CreateEffect(c)
@@ -11,7 +12,7 @@ function c10131009.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetRange(LOCATION_PZONE)
-	e1:SetCountLimit(1,10131009)
+	e1:SetCountLimit(1)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,0x1e0)
 	e1:SetTarget(c10131009.rmtg)
@@ -28,6 +29,22 @@ function c10131009.initial_effect(c)
 	e2:SetTarget(c10131009.atktg)
 	e2:SetOperation(c10131009.atkop)
 	c:RegisterEffect(e2)
+	--atk
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCode(EFFECT_UPDATE_ATTACK)
+	e3:SetCondition(c10131009.atkcon)
+	e3:SetValue(500)
+	c:RegisterEffect(e3)
+end
+c10131009.pendulum_level=4
+function c10131009.atkcon(e)
+	return e:GetHandler():GetOverlayCount()>0
+end
+function c10131009.xyzfilter(c)
+	return c:IsRace(RACE_WARRIOR) or c:IsHasEffect(10131016)
 end
 function c10131009.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and chkc~=e:GetHandler() end
@@ -43,7 +60,7 @@ function c10131009.atkop(e,tp,eg,ep,ev,re,r,rp)
 	   local e1=Effect.CreateEffect(c)
 	   e1:SetType(EFFECT_TYPE_SINGLE)
 	   e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-	   e1:SetValue(c:GetBaseAttack()*2)
+	   e1:SetValue(c:GetAttack()*2)
 	   e1:SetReset(RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_STANDBY,2)
 	   c:RegisterEffect(e1)
 	   if tc:IsRelateToEffect(e) then 

@@ -43,16 +43,15 @@ end
 function c10131002.desfilter(c)
 	return c:IsSetCard(0x5338) and c:IsFaceup()
 end
-function c10131002.spfilter(c,e,tp,seq)
-	return Card.IsSetCard(0x5338) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetSequence()==seq
+function c10131002.spfilter(c,e,tp)
+	return c:IsSetCard(0x5338) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c10131002.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local seq=e:GetHandler():GetSequence()
-	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,13-seq)
-	if chk==0 then return tc and tc:IsSetCard(0x5338) and tc:IsCanBeEffectTarget(e) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return Duel.IsExistingTarget(c10131002.spfilter,tp,LOCATION_PZONE,0,1,e:GetHandler(),e,tp) end
+	local tc=Duel.GetFirstMatchingCard(c10131002.spfilter,tp,LOCATION_PZONE,0,e:GetHandler(),e,tp)
 	Duel.SetTargetCard(tc)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,tc,1,0,0)
 end
 function c10131002.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

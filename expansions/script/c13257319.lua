@@ -34,8 +34,11 @@ function c13257319.initial_effect(c)
 	--Power Capsule
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(13257319,0))
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e4:SetCode(EVENT_BATTLED)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e4:SetCode(EVENT_DESTROYED)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e4:SetCondition(c13257319.pccon)
 	e4:SetTarget(c13257319.pctg)
 	e4:SetOperation(c13257319.pcop)
 	c:RegisterEffect(e4)
@@ -87,6 +90,12 @@ function c13257319.desrepop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13257319.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x1f,3)
+end
+function c13257319.pcfilter(c)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
+end
+function c13257319.pccon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c13257319.pcfilter,1,nil)
 end
 function c13257319.eqfilter(c,ec)
 	return c:IsSetCard(0x3352) and c:IsType(TYPE_MONSTER) and c:CheckEquipTarget(ec)

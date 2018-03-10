@@ -14,18 +14,14 @@ function c13257332.initial_effect(c)
 	--Power Capsule
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(13257332,0))
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_BATTLED)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_DESTROYED)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e2:SetCondition(c13257332.pccon)
 	e2:SetTarget(c13257332.pctg)
 	e2:SetOperation(c13257332.pcop)
 	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_DESTROYED)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetProperty(EFFECT_FLAG_DELAY)
-	e3:SetCondition(c13257332.pccon)
-	c:RegisterEffect(e3)
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(13257301,5))
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -108,27 +104,82 @@ function c13257332.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.EquipComplete()
 end
-function c13257332.cfilter(c,tp)
-	return c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)
+function c13257332.pcfilter(c)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c13257332.pccon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c13257332.cfilter,1,nil,1-tp) and re:GetHandler()==e:GetHandler()
+	return eg:IsExists(c13257332.pcfilter,1,nil)
 end
 function c13257332.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local t1=Duel.IsExistingMatchingCard(c13257332.eqfilter1,tp,LOCATION_EXTRA,0,1,nil,c) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-	if chk==0 then return t1 end
-	e:SetCategory(CATEGORY_EQUIP)
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_EXTRA)
+	local t2=Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil)
+	if chk==0 then return t1 or t2 end
+	local op=0
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(13257332,1))
+	if t1 and t2 then
+		op=Duel.SelectOption(tp,aux.Stringid(13257332,2),aux.Stringid(13257332,3))
+	elseif t1 then
+		op=Duel.SelectOption(tp,aux.Stringid(13257332,2))
+	elseif t2 then
+		op=Duel.SelectOption(tp,aux.Stringid(13257332,3))+1
+	end
+	e:SetLabel(op)
+	if op==0 then
+		e:SetCategory(CATEGORY_EQUIP)
+		Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_EXTRA)
+	elseif op==1 then
+		local e4=Effect.CreateEffect(e:GetHandler())
+		e4:SetType(EFFECT_TYPE_SINGLE)
+		e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e4:SetRange(LOCATION_MZONE)
+		e4:SetCode(EFFECT_IMMUNE_EFFECT)
+		e4:SetValue(c13257332.efilter)
+		e4:SetReset(RESET_EVENT+0x1fe0000+RESET_CHAIN)
+		e:GetHandler():RegisterEffect(e4)
+	end
+end
+function c13257332.efilter(e,te)
+	return te:GetOwner()~=e:GetOwner()
+end
+function c13257332.acfilter(c)
+	return c:IsFaceup() and (c:GetAttack()>0 or c:GetDefense()>0)
+end
+function c13257332.desfilter(c)
+	return c:IsFaceup() and (c:GetAttack()==0 or (c:GetDefense()==0 and not c:IsType(TYPE_LINK)))
 end
 function c13257332.pcop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or c:IsFacedown() or not c:IsRelateToEffect(e) then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectMatchingCard(tp,c13257332.eqfilter1,tp,LOCATION_EXTRA,0,1,1,nil,c)
-	local tc=g:GetFirst()
-	if tc then
-		Duel.Equip(tp,tc,c)
+	if e:GetLabel()==0 then
+		if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or c:IsFacedown() or not c:IsRelateToEffect(e) then return end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+		local g=Duel.SelectMatchingCard(tp,c13257332.eqfilter1,tp,LOCATION_EXTRA,0,1,1,nil,c)
+		local tc=g:GetFirst()
+		if tc then
+			Duel.Equip(tp,tc,c)
+		end
+	elseif e:GetLabel()==1 then
+		local g=Duel.GetMatchingGroup(c13257332.acfilter,tp,0,LOCATION_MZONE,nil)
+		if g:GetCount()>0 then
+			local sc=g:GetFirst()
+			while sc do
+				local e1=Effect.CreateEffect(c)
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_UPDATE_ATTACK)
+				e1:SetReset(RESET_EVENT+0x1fe0000)
+				e1:SetValue(-1000)
+				sc:RegisterEffect(e1)
+				local e2=e1:Clone()
+				e2:SetCode(EFFECT_UPDATE_DEFENSE)
+				sc:RegisterEffect(e2)
+				sc=g:GetNext()
+			end
+			g=Duel.GetMatchingGroup(c13257332.desfilter,tp,0,LOCATION_MZONE,nil)
+			if g:GetCount()>0 then
+				Duel.BreakEffect()
+				Duel.Destroy(g,REASON_EFFECT)
+			end
+		end
 	end
 end
 function c13257332.spcon(e,tp,eg,ep,ev,re,r,rp)

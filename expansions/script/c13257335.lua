@@ -16,13 +16,16 @@ function c13257335.initial_effect(c)
 	--Power Capsule
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(13257335,0))
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_BATTLED)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetCode(EVENT_DESTROYED)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e3:SetCondition(c13257335.pccon)
 	e3:SetTarget(c13257335.pctg)
 	e3:SetOperation(c13257335.pcop)
 	c:RegisterEffect(e3)
-	local e4=Effect.CreateEffect(c)
 	--Option Control
+	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(13257335,6))
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetRange(LOCATION_MZONE)
@@ -117,6 +120,12 @@ function c13257335.tokendes(e)
 end
 function c13257335.eqfilter(c,ec)
 	return c:IsSetCard(0x3352) and c:IsType(TYPE_MONSTER) and c:CheckEquipTarget(ec)
+end
+function c13257335.pcfilter(c)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
+end
+function c13257335.pccon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c13257335.pcfilter,1,nil)
 end
 function c13257335.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -1,75 +1,66 @@
 --神匠神 破刃
 function c10126008.initial_effect(c)
-	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsRace,RACE_WARRIOR),2,true)
-	--spsummon condition
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x1335),1)
+	--atk
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	c:RegisterEffect(e1)   
-	--special summon rule
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetValue(c10126008.atkval)
+	c:RegisterEffect(e1)
+	--extra summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_SPSUMMON_PROC)
-	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e2:SetRange(LOCATION_EXTRA)
-	e2:SetCondition(c10126008.sprcon)
-	e2:SetOperation(c10126008.sprop)
-	c:RegisterEffect(e2)   
-	--battle indestructable
+	e2:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x1335))
+	c:RegisterEffect(e2)
+	--equip
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-	e3:SetValue(1)
-	e3:SetCondition(c10126008.con1)
-	c:RegisterEffect(e3) 
-	--extra attack
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_EXTRA_ATTACK)
-	e4:SetValue(1)
-	e4:SetCondition(c10126008.con2)
-	c:RegisterEffect(e4)
-	--immune
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE)
-	e5:SetCode(EFFECT_IMMUNE_EFFECT)
-	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetValue(c10126008.efilter)
-	e5:SetCondition(c10126008.con3)
-	c:RegisterEffect(e5)
+	e3:SetDescription(aux.Stringid(10126008,0))
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetCategory(CATEGORY_EQUIP)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCountLimit(1,10126008)
+	e3:SetTarget(c10126008.eqtg)
+	e3:SetOperation(c10126008.eqop)
+	c:RegisterEffect(e3)
 end
-function c10126008.efilter(e,te)
-	return te:GetOwnerPlayer()~=e:GetOwnerPlayer()
+function c10126008.eqfilter(c)
+	return c:IsType(TYPE_MONSTER) and not c:IsForbidden() and c:GetPreviousEquipTarget() and Duel.GetLocationCount(c:GetOwner(),LOCATION_SZONE)>0
 end
-function c10126008.con3(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroupCount(c10126004.confilter,tp,LOCATION_SZONE,LOCATION_SZONE,nil,tp)>=4
+function c10126008.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c10126008.eqfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,PLAYER_ALL,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,PLAYER_ALL,LOCATION_GRAVE)
 end
-function c10126008.con2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroupCount(c10126004.confilter,tp,LOCATION_SZONE,LOCATION_SZONE,nil,tp)>=3
+function c10126008.eqop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c10126008.eqfilter),tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil):GetFirst()
+	if tc then
+		if not Duel.Equip(tc:GetOwner(),tc,c,true) then return end
+		local e1=Effect.CreateEffect(c)
+		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_OWNER_RELATE)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_EQUIP_LIMIT)
+		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetValue(c10126008.eqlimit)
+		tc:RegisterEffect(e1)
+	end
 end
-function c10126008.con1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroupCount(c10126004.confilter,tp,LOCATION_SZONE,LOCATION_SZONE,nil,tp)>=2
+function c10126008.eqlimit(e,c)
+	return e:GetOwner()==c
 end
-function c10126004.confilter(c,tp)
-	local ec=c:GetEquipTarget()
-	return ec and ec:IsControler(tp) 
+function c10126008.atkval(e,c)
+	local g=c:GetEquipGroup():Filter(c10126008.atkfilter,nil)
+	local atk=g:GetSum(Card.GetTextAttack)
+	return atk/2
 end
-function c10126008.spfilter1(c)
-	return c:IsRace(RACE_WARRIOR) and c:IsAbleToGraveAsCost() and c:IsCanBeFusionMaterial()
-end
-function c10126008.sprcon(e,c)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	return Duel.GetMZoneCount(tp)>-2
-		and Duel.IsExistingMatchingCard(c10126008.spfilter1,tp,LOCATION_MZONE,0,2,nil)
-end
-function c10126008.sprop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c10126008.spfilter1,tp,LOCATION_MZONE,0,2,2,nil)
-	c:SetMaterial(g)
-	Duel.SendtoGrave(g,REASON_COST)
+function c10126008.atkfilter(c)
+	return c:IsFaceup() and bit.band(c:GetOriginalType(),TYPE_MONSTER)==TYPE_MONSTER and c:GetTextAttack()>0
 end

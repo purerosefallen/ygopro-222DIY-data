@@ -2,7 +2,7 @@
 local m=10904016
 local cm=_G["c"..m]
 function cm.initial_effect(c)
-    aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsXyzType,TYPE_PENDULUM),4,2,cm.ovfilter,aux.Stringid(m,0),2,cm.xyzop)
+    aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_SPELLCASTER),4,2,cm.ovfilter,aux.Stringid(m,0),2,cm.xyzop)
     c:EnableReviveLimit()
     aux.EnablePendulumAttribute(c,false) 
     local e0=Effect.CreateEffect(c)
@@ -37,14 +37,15 @@ function cm.initial_effect(c)
     e4:SetOperation(cm.lpop)
     c:RegisterEffect(e4)
 end
+function cm.cfilter(c)
+    return c:IsSetCard(0x237) and c:IsAbleToGraveAsCost()
+end
 function cm.ovfilter(c)
-    return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and not c:IsType(TYPE_XYZ)
+    return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsRace(RACE_SPELLCASTER)
 end
 function cm.xyzop(e,tp,chk)
-    local tp=e:GetHandler():GetControler()
-    local tc1=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
-    local tc2=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
-    if chk==0 then return tc1:GetLeftScale()==tc2:GetRightScale() end
+    if chk==0 then return Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_HAND,0,1,nil) end
+    Duel.DiscardHand(tp,cm.cfilter,1,1,REASON_COST,nil)
 end
 function cm.upcon(e,tp,eg,ep,ev,re,r,rp)
     local tc1=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
@@ -87,8 +88,8 @@ function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
     e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function cm.lpcon(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.GetLP(tp)~=8000
+    return Duel.GetLP(tp)~=4000
 end
 function cm.lpop(e,tp,eg,ep,ev,re,r,rp)
-    Duel.SetLP(tp,8000)
+    Duel.SetLP(tp,4000)
 end

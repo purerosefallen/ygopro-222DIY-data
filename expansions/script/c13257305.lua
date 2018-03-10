@@ -16,8 +16,11 @@ function c13257305.initial_effect(c)
 	--Power Capsule
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(13257305,0))
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_BATTLED)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_DESTROYED)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e2:SetCondition(c13257305.pccon)
 	e2:SetTarget(c13257305.pctg)
 	e2:SetOperation(c13257305.pcop)
 	c:RegisterEffect(e2)
@@ -75,6 +78,12 @@ function c13257305.neop(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	end
+end
+function c13257305.pcfilter(c)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
+end
+function c13257305.pccon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c13257305.pcfilter,1,nil)
 end
 function c13257305.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

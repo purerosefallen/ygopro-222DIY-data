@@ -1,16 +1,9 @@
 --千夜 女王
 function c60150617.initial_effect(c)
 	c:SetUniqueOnField(1,0,60150617)
-	--fusion material
+	--link summon
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x3b21),2)
 	c:EnableReviveLimit()
-	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsSetCard,0x3b21),3,true)
-	--spsummon condition
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e2:SetValue(c60150617.splimit)
-	c:RegisterEffect(e2)
 	--cannot be target/battle indestructable
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
@@ -25,18 +18,15 @@ function c60150617.initial_effect(c)
 	c:RegisterEffect(e6)
 	--to hand
 	local e7=Effect.CreateEffect(c)
-	e7:SetDescription(aux.Stringid(38495396,0))
-	e7:SetCategory(CATEGORY_TOHAND)
+	e7:SetCategory(CATEGORY_TOHAND+CATEGORY_DRAW)
 	e7:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e7:SetType(EFFECT_TYPE_IGNITION)
-	e7:SetRange(LOCATION_MZONE)
+    e7:SetType(EFFECT_TYPE_QUICK_O)
+    e7:SetCode(EVENT_FREE_CHAIN)
+    e7:SetRange(LOCATION_MZONE)
 	e7:SetCountLimit(1)
 	e7:SetTarget(c60150617.thtg)
 	e7:SetOperation(c60150617.thop)
 	c:RegisterEffect(e7)
-end
-function c60150617.splimit(e,se,sp,st)
-	return bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
 function c60150617.tgvalue(e,re,rp)
 	return rp~=e:GetHandlerPlayer()
@@ -50,7 +40,7 @@ function c60150617.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		and Duel.IsPlayerCanDraw(tp,1) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,c60150617.thfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,1,nil)
-    Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c60150617.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

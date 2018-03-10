@@ -2,8 +2,8 @@
 function c10131007.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c,true)
-	--xyz
-	aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_WARRIOR),4,2)
+	--xyz summon
+	aux.AddXyzProcedure(c,c10131007.xyzfilter,4,2)
 	c:EnableReviveLimit()
 	--negate
 	local e1=Effect.CreateEffect(c)
@@ -31,6 +31,9 @@ function c10131007.initial_effect(c)
 	c:RegisterEffect(e2)  
 end
 c10131007.pendulum_level=4
+function c10131007.xyzfilter(c)
+	return c:IsRace(RACE_WARRIOR) or c:IsHasEffect(10131016)
+end
 function c10131007.tdfilter(c)
 	return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x5338) and c:IsAbleToExtra()
 end

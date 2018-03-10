@@ -33,6 +33,7 @@ function c11200006.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e3:SetCountLimit(1,11200013)
 	e3:SetCost(c11200006.cost)
 	e3:SetTarget(c11200006.tg)
 	e3:SetOperation(c11200006.op)
@@ -144,7 +145,7 @@ end
 	Duel.SetFusionMaterial(g)
 end
 function c11200006.splimit(e,se,sp,st)
-	return bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
+	return bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION or e:GetHandler():GetLocation()~=LOCATION_EXTRA
 end
 function c11200006.rfilter(c,fc)
 	return (c:IsFusionSetCard(0x134) or c:IsRace(RACE_SPELLCASTER)) and c:IsCanBeFusionMaterial(fc) 
@@ -181,12 +182,12 @@ function c11200006.tgfilter(c)
 	return c:IsSetCard(0x134) and c:IsAbleToGrave()
 end
 function c11200006.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c11200006.tgfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+	if chk==0 then return Duel.IsExistingMatchingCard(c11200006.tgfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK+LOCATION_EXTRA)
 end
 function c11200006.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c11200006.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c11200006.tgfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil)
 	if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)>0 then
 	Duel.BreakEffect()
 	Duel.SetLP(tp,Duel.GetLP(tp)-2000)
@@ -197,14 +198,15 @@ function c11200006.refilter(c)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsReleasable()
 end
 function c11200006.refilter2(c)
-	return c:IsSetCard(0x134) and c:IsType(TYPE_MONSTER) and c:IsReleasable()
+	return c:IsSetCard(0x134) and c:IsReleasable()
 end
 function c11200006.recon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local g=Duel.GetMatchingGroup(c11200006.refilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
-	return Duel.GetMZoneCount(tp)>-2
+	local g=Duel.GetMatchingGroup(c11200006.filter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
 		and g:GetCount()>1 and g:IsExists(c11200006.refilter2,1,nil)
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c11200006.reop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

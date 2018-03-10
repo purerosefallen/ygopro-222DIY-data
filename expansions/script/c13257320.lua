@@ -13,8 +13,11 @@ function c13257320.initial_effect(c)
 	--Power Capsule
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(13257320,0))
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_BATTLED)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_DESTROYED)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e2:SetCondition(c13257320.pccon)
 	e2:SetTarget(c13257320.pctg)
 	e2:SetOperation(c13257320.pcop)
 	c:RegisterEffect(e2)
@@ -46,7 +49,7 @@ function c13257320.spfilter(c,e,tp)
 end
 function c13257320.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c13257320.spfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetMZoneCount(tp)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingTarget(c13257320.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c13257320.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
@@ -58,13 +61,19 @@ function c13257320.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
+function c13257320.pcfilter(c)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
+end
+function c13257320.pccon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c13257320.pcfilter,1,nil)
+end
 function c13257320.eqfilter(c,ec)
 	return c:IsSetCard(0x352) and c:IsType(TYPE_MONSTER) and c:CheckEquipTarget(ec)
 end
 function c13257320.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local t1=Duel.IsExistingMatchingCard(c13257320.eqfilter,tp,LOCATION_EXTRA,0,1,nil,c) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-	local t2=Duel.GetMZoneCount(tp)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,93130022,0,0x4011,c:GetAttack(),c:GetDefense(),c:GetLevel(),c:GetRace(),c:GetAttribute())
+	local t2=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,93130022,0,0x4011,c:GetAttack(),c:GetDefense(),c:GetLevel(),c:GetRace(),c:GetAttribute())
 	if chk==0 then return t1 or t2 end
 	local op=0
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(13257320,1))
@@ -101,7 +110,7 @@ function c13257320.pcop(e,tp,eg,ep,ev,re,r,rp)
 		local lv=c:GetLevel()
 		local race=c:GetRace()
 		local att=c:GetAttribute()
-		if Duel.GetMZoneCount(tp)<=0 or not c:IsRelateToEffect(e) or c:IsFacedown()
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not c:IsRelateToEffect(e) or c:IsFacedown()
 			or not Duel.IsPlayerCanSpecialSummonMonster(tp,93130022,0,0x4011,atk,def,lv,race,att) then return end
 		local token=Duel.CreateToken(tp,93130022)
 		c:CreateRelation(token,RESET_EVENT+0x1fe0000)
@@ -143,6 +152,7 @@ function c13257320.pcop(e,tp,eg,ep,ev,re,r,rp)
 		e6:SetReset(RESET_EVENT+0xfe0000)
 		token:RegisterEffect(e6,true)
 		Duel.SpecialSummonComplete()
+		c:SetCardTarget(token)
 	end
 end
 function c13257320.tokenatk(e,c)
@@ -187,5 +197,5 @@ function c13257320.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257320.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257320,7))
+	Duel.Hint(11,0,aux.Stringid(13257320,7))
 end

@@ -16,12 +16,6 @@ function c60150804.initial_effect(c)
 	e3:SetCondition(c60150804.efcon)
 	e3:SetOperation(c60150804.efop)
 	c:RegisterEffect(e3)
-	--xyz limit
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
-	e4:SetValue(c60150804.xyzlimit)
-	c:RegisterEffect(e4)
 end
 function c60150804.spfilter(c)
 	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsSetCard(0x3b23) and c:IsAbleToRemoveAsCost()
@@ -29,7 +23,7 @@ end
 function c60150804.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.GetMZoneCount(tp)>0
+	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c60150804.spfilter,tp,LOCATION_GRAVE,0,1,nil)
 end
 function c60150804.spop(e,tp,eg,ep,ev,re,r,rp,c)
@@ -44,11 +38,10 @@ function c60150804.efop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
 	local e1=Effect.CreateEffect(rc)
-	e1:SetDescription(aux.Stringid(60150804,1))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCategory(CATEGORY_REMOVE)
+	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_TOGRAVE+CATEGORY_DRAW)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCondition(c60150804.atkcon)
 	e1:SetTarget(c60150804.target)
 	e1:SetOperation(c60150804.atkop)
@@ -65,61 +58,44 @@ function c60150804.efop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c60150804.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsSetCard(0x3b23) and e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsSetCard(0x3b23) and e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ
+end
+function c60150804.filter(c)
+	return c:IsAbleToRemove() or c:IsAbleToGrave()
 end
 function c60150804.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0xff,0xff,1,e:GetHandler()) end
-	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
+	if chk==0 then return Duel.IsExistingMatchingCard(c60150804.filter,tp,0,LOCATION_ONFIELD,1,nil) end
+	local g=Duel.GetMatchingGroup(c60150804.filter,tp,0,LOCATION_ONFIELD,nil)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE+CATEGORY_TOGRAVE,g,1,0,0)
 end
 function c60150804.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local dc=Duel.TossDice(tp,1)
-	if dc==1 then
-		local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
-		if g:GetCount()==0 then return end
-		local sg=g:RandomSelect(tp,1)
-		Duel.Remove(sg,POS_FACEDOWN,REASON_EFFECT)
-	end
-	if dc==2 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,1,nil)
-		if g:GetCount()>0 then
-			Duel.HintSelection(g)
-			Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)
-		end
-	end
-	if dc==3 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,1,nil)
-		if g:GetCount()>0 then
-			Duel.HintSelection(g)
-			Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)
-		end
-	end
-	if dc==4 then
-		local g1=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
-		if g1:GetCount()>0 then
-			Duel.ConfirmCards(tp,g1)
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-			local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_EXTRA,1,1,nil)
-			if g:GetCount()>0 then
-				Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)
+    Duel.Hint(HINT_CARD,0,60150804)
+	local c=e:GetHandler()
+	local g=Duel.GetMatchingGroup(c60150804.filter,tp,0,LOCATION_ONFIELD,nil)
+	if g:GetCount()>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(60150804,0))
+		local sg=g:Select(tp,1,1,nil)
+		local tc=sg:GetFirst()
+		if tc:IsAbleToRemove() and tc:IsAbleToGrave() then
+			if Duel.SelectYesNo(tp,aux.Stringid(60150804,1)) then
+				Duel.Remove(tc,POS_FACEDOWN,REASON_EFFECT)
+			else
+				Duel.SendtoGrave(tc,REASON_EFFECT)
+				local g2=Duel.GetOperatedGroup()
+				local ct=g2:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
+				if ct==1 then
+					Duel.Draw(tp,1,REASON_EFFECT)
+				end
 			end
+		elseif not tc:IsAbleToRemove() and tc:IsAbleToGrave() then
+			Duel.SendtoGrave(tc,REASON_EFFECT)
+			local g2=Duel.GetOperatedGroup()
+			local ct=g2:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
+			if ct==1 then
+				Duel.Draw(tp,1,REASON_EFFECT)
+			end
+		elseif tc:IsAbleToRemove() and not tc:IsAbleToGrave() then
+			Duel.Remove(tc,POS_FACEDOWN,REASON_EFFECT)
 		end
 	end
-	if dc==5 then
-		local g=Duel.GetFieldCard(1-tp,LOCATION_DECK,0)
-		Duel.DisableShuffleCheck()
-		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
-	end
-	if dc==6 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,1,nil)
-		if g:GetCount()>0 then
-			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
-		end
-	end
-end
-function c60150804.xyzlimit(e,c)
-	if not c then return false end
-	return not (c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_SPELLCASTER))
 end

@@ -1,72 +1,105 @@
---神匠阵法 匠魂阵
+--神匠的试炼
 function c10126014.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetDescription(aux.Stringid(10126014,0))
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,0x1c0)
 	e1:SetCountLimit(1,10126014)
 	e1:SetTarget(c10126014.target)
-	e1:SetOperation(c10126014.activate)
-	c:RegisterEffect(e1)	  
-	--reequip
+	e1:SetOperation(c10126014.operation)
+	c:RegisterEffect(e1)
+	--tribute
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(10126014,0))
-	e2:SetCategory(CATEGORY_EQUIP)
-	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetDescription(aux.Stringid(10126014,1))
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_GRAVE)
+	e2:SetHintTiming(0,0x1c0)
 	e2:SetCountLimit(1,10126014)
-	e2:SetTarget(c10126014.eqtg)
-	e2:SetOperation(c10126014.eqop)
-	c:RegisterEffect(e2) 
+	e2:SetCost(c10126014.tcost)
+	e2:SetOperation(c10126014.top)
+	c:RegisterEffect(e2)
 end
-function c10126014.eqfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_WARRIOR) and c:IsAttribute(ATTRIBUTE_EARTH)
+function c10126014.tcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
-function c10126014.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(c10126014.eqfilter,tp,LOCATION_MZONE,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,0,0)
+function c10126014.top(e,tp,eg,ep,ev,re,r,rp)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e1:SetCode(EFFECT_RELEASE_REPLACE)
+	e1:SetTarget(c10126014.reptg)
+	e1:SetValue(c10126014.repval)
+	e1:SetOperation(c10126014.repop)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
 end
-function c10126014.eqop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	   local tc=Duel.SelectMatchingCard(tp,c10126014.eqfilter,tp,LOCATION_MZONE,0,1,1,nil):GetFirst()
-	   if tc and Duel.Equip(tp,c,tc)~=0 then
-		   local e1=Effect.CreateEffect(c)
-		   e1:SetType(EFFECT_TYPE_SINGLE)
-		   e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		   e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		   e1:SetReset(RESET_EVENT+0x47e0000)
-		   e1:SetValue(LOCATION_DECKBOT)
-		   c:RegisterEffect(e1,true)
-		   local e2=Effect.CreateEffect(c)
-		   e2:SetType(EFFECT_TYPE_SINGLE)
-		   e2:SetCode(EFFECT_EQUIP_LIMIT)
-		   e2:SetReset(RESET_EVENT+0x1fe0000)
-		   e2:SetValue(c10126011.eqlimit)
-		   e2:SetLabelObject(tc)
-		   c:RegisterEffect(e2)
-	   end
+function c10126014.repfilter(c,tp)
+	local rc,re=c:GetReasonCard(),c:GetReasonEffect()
+	return c:IsLocation(LOCATION_HAND+LOCATION_ONFIELD) and ((c:IsReason(REASON_COST) and re and re:IsHasType(0x7e0) and re:GetHandler():IsSetCard(0x1335) and re:GetHandler():IsControler(tp)) or (c:IsReason(REASON_SUMMON+REASON_SPSUMMON) and rc and rc:IsSetCard(0x1335) and rc:IsControler(tp))) and c:GetFlagEffect(10126014)==0
 end
-function c10126014.eqlimit(e,c)
-	return c==e:GetLabelObject()
-end
-function c10126014.filter(c)
-	return c:IsSetCard(0x335) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
-end
-
-function c10126014.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c10126014.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
-end
-function c10126014.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c10126014.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
-	if g:GetCount()>0 and not g:GetFirst():IsHasEffect(EFFECT_NECRO_VALLEY) then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
+function c10126014.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then
+		local count=eg:FilterCount(c10126014.repfilter,nil,tp)
+		return Duel.IsExistingMatchingCard(Card.IsReleasable,tp,LOCATION_EXTRA+LOCATION_DECK,0,count,nil) and Duel.GetFlagEffect(tp,10126014)==0
+	end
+	if Duel.SelectYesNo(tp,aux.Stringid(10126014,3)) then
+	   Duel.RegisterFlagEffect(tp,10126014,RESET_PHASE+PHASE_END,0,1)
+	   local g=eg:Filter(c10126014.repfilter,nil,tp)
+	   g:KeepAlive()
+	   e:SetLabelObject(g)
+	return true
+	else return false
 	end
 end
-
+function c10126014.sfilter(c)
+	return c:IsLocation(LOCATION_HAND) and not c:IsPublic()
+end
+function c10126014.repop(e,tp,eg,ep,ev,re,r,rp)
+	local g=e:GetLabelObject()
+	local hg=g:Filter(c10126014.sfilter,nil)
+	if hg:GetCount()>0 then
+	   Duel.ConfirmCards(1-tp,hg)
+	   Duel.ShuffleHand(tp)
+	end
+	local count=g:GetCount()
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(10126014,4))
+	local rg=Duel.SelectMatchingCard(tp,Card.IsReleasable,tp,LOCATION_EXTRA+LOCATION_DECK,0,count,count,nil)
+	for tc in aux.Next(rg) do
+		tc:RegisterFlagEffect(10126014,RESET_EVENT+0x1fc0000+RESET_CHAIN,0,1)
+	end
+	--Duel.Release(rg,REASON_EFFECT)
+	Duel.SendtoGrave(rg,REASON_EFFECT+REASON_RELEASE)
+	e:Reset()
+end
+function c10126014.repval(e,c)
+	return c10126014.repfilter(c,e:GetHandlerPlayer())
+end
+function c10126014.filter(c,e,tp)
+	return c:IsSetCard(0x1335) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
+function c10126014.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c10126014.filter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_HAND)
+end
+function c10126014.operation(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c10126014.filter),tp,LOCATION_GRAVE+LOCATION_HAND,0,1,1,nil,e,tp):GetFirst()
+	if tc and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 and c:IsRelateToEffect(e) and Duel.SelectYesNo(tp,aux.Stringid(10126014,2)) then 
+		Duel.Equip(tp,c,tc)
+		c:CancelToGrave()
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_EQUIP_LIMIT)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetValue(1)
+		e1:SetReset(RESET_EVENT+0x1fe0000)
+		c:RegisterEffect(e1)
+	end
+end

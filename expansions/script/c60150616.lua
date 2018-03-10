@@ -1,16 +1,9 @@
 --千夜 黑白
 function c60150616.initial_effect(c)
 	c:SetUniqueOnField(1,0,60150616)
-	--fusion material
+	--link summon
 	c:EnableReviveLimit()
-	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsSetCard,0x3b21),2,true)
-	--spsummon condition
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e2:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e2:SetValue(c60150616.splimit)
-	c:RegisterEffect(e2)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x3b21),2,2)
 	--tograve
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(60150616,0))
@@ -46,9 +39,6 @@ function c60150616.initial_effect(c)
 	local e9=e7:Clone()
 	e9:SetCode(EVENT_TO_DECK)
 	c:RegisterEffect(e9)
-end
-function c60150616.splimit(e,se,sp,st)
-	return bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
 function c60150616.spfilter2(c)
 	return c:IsSetCard(0x3b21) and c:IsCanBeFusionMaterial() and c:IsAbleToDeckOrExtraAsCost()

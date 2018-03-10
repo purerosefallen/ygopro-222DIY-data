@@ -53,15 +53,15 @@ function c60150608.condition1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentChain()==0
 end
 function c60150608.target1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,eg:GetCount()) end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE_SUMMON,eg,eg:GetCount(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,eg,eg:GetCount(),0,0)
-    Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,eg:GetCount())
 end
 function c60150608.activate1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateSummon(eg)
 	if Duel.SendtoDeck(eg,nil,2,REASON_EFFECT)~=0 then
-        Duel.BreakEffect()
-		Duel.Draw(tp,1,REASON_EFFECT)
+		Duel.BreakEffect()
+		Duel.Draw(tp,eg:GetCount(),REASON_EFFECT)
 	end
 end

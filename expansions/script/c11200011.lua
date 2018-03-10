@@ -4,6 +4,7 @@ function c11200011.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(11200011,0))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetTarget(c11200011.mertg)
@@ -27,48 +28,29 @@ function c11200011.merfilter(c)
 end
 function c11200011.mertg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c11200011.merfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c11200011.merfilter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c11200011.merfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsPlayerCanDraw(tp,1) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	Duel.SelectTarget(tp,c11200011.merfilter,tp,LOCATION_MZONE,0,1,1,nil)
-end
-function c11200011.filter(c)
-	return c:IsSetCard(11200007) and c:IsFaceup() 
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c11200011.merop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsType(TYPE_MONSTER)  then
-		local e1=Effect.CreateEffect(e:GetHandler())
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e1:SetRange(LOCATION_MZONE)
+		e1:SetCode(EFFECT_IMMUNE_EFFECT)
 		e1:SetValue(c11200011.efilter)
 		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		if Duel.IsExistingMatchingCard(c11200011.filter,tp,LOCATION_MZONE,0,1,nil) then
-		local e2=Effect.CreateEffect(e:GetHandler())
-		e2:SetType(EFFECT_TYPE_FIELD)
-		e2:SetCode(EFFECT_CANNOT_TO_DECK)
-		e3:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE)
-		e2:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
-		e2:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e2,tp)
-		local e3=e2:Clone()
-		e3:SetCode(EFFECT_CANNOT_TO_HAND)
-		Duel.RegisterEffect(e2,tp)
-		local e4=Effect.CreateEffect(e:GetHandler())
-		e4:SetType(EFFECT_TYPE_FIELD)
-		e4:SetCode(EFFECT_CANNOT_REMOVE)
-		e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e4:SetTargetRange(0,1)
-		e4:SetValue(1)
-		e4:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e4,tp)
-	end
+		Duel.BreakEffect()
+		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end
 function c11200011.efilter(e,te)
-	return te:IsActiveType(TYPE_SPELL+TYPE_TRAP) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	return te:GetOwnerPlayer()~=e:GetOwnerPlayer()
 end
 function c11200011.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_HAND) or aux.exccon(e)
@@ -86,7 +68,7 @@ function c11200011.filter2(c,e,tp,m,f,chkf)
 end
 function c11200011.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local chkf=Duel.GetMZoneCount(tp)>0 and PLAYER_NONE or tp
+		local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
 		local mg=Duel.GetMatchingGroup(c11200011.filter1,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,e)
 		local res=Duel.IsExistingMatchingCard(c11200011.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg,nil,chkf)
 		if not res then

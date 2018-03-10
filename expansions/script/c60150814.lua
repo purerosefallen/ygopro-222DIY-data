@@ -56,39 +56,54 @@ end
 function c60150814.splimit(e,se,sp,st)
 	return bit.band(st,SUMMON_TYPE_XYZ)==SUMMON_TYPE_XYZ
 end
-function c60150814.cfilter2(c)
+function c60150814.cfilter(c)
 	return c:IsFaceup() and (c:IsAbleToDeckAsCost() or c:IsAbleToExtraAsCost())
 end
 function c60150814.tdcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) 
-	and Duel.IsExistingMatchingCard(c60150814.cfilter2,tp,0,LOCATION_REMOVED,1,nil) end
+	and Duel.IsExistingMatchingCard(c60150814.cfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,c60150814.cfilter2,tp,0,LOCATION_REMOVED,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c60150814.cfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,1,nil)
 	Duel.SendtoDeck(g,nil,2,REASON_COST)
 end
+function c60150814.tfilter(c)
+	return c:IsAbleToRemove() or c:IsAbleToGrave()
+end
 function c60150814.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chkc then return chkc:IsOnField() and chkc:IsAbleToRemove() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) end
-	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,nil)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
+	if chkc then return chkc:IsOnField() and (chkc:IsAbleToRemove() or chkc:IsAbleToGrave()) end
+	if chk==0 then return Duel.IsExistingTarget(c60150814.tfilter,tp,0,LOCATION_ONFIELD,1,nil) end
+	local g=Duel.GetMatchingGroup(c60150814.tfilter,tp,0,LOCATION_ONFIELD,nil)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE+CATEGORY_TOGRAVE,g,1,0,0)
 end
 function c60150814.tgop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,1,nil)
+	local c=e:GetHandler()
+	local g=Duel.GetMatchingGroup(c60150814.tfilter,tp,0,LOCATION_ONFIELD,nil)
 	if g:GetCount()>0 then
-		Duel.HintSelection(g)
-		Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)
+		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(60150814,1))
+		local sg=g:Select(tp,1,1,nil)
+		local tc=sg:GetFirst()
+		if tc:IsAbleToRemove() and tc:IsAbleToGrave() then
+			if Duel.SelectYesNo(tp,aux.Stringid(60150814,2)) then
+				Duel.Remove(tc,POS_FACEDOWN,REASON_EFFECT)
+			else
+				Duel.SendtoGrave(tc,REASON_EFFECT)
+			end
+		elseif not tc:IsAbleToRemove() and tc:IsAbleToGrave() then
+			Duel.SendtoGrave(tc,REASON_EFFECT)
+		elseif tc:IsAbleToRemove() and not tc:IsAbleToGrave() then
+			Duel.Remove(tc,POS_FACEDOWN,REASON_EFFECT)
+		end
 	end
 end
-function c60150814.cfilter(c)
+function c60150814.filter(c)
 	return c:IsFaceup() or c:IsFacedown()
 end
 function c60150814.chainlm(e,rp,tp)
 	return tp==rp
 end
 function c60150814.hspcon(c,e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c60150814.cfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,5,nil)
+	return Duel.IsExistingMatchingCard(c60150814.filter,tp,LOCATION_REMOVED,LOCATION_REMOVED,5,nil)
 end 
 function c60150814.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():GetSummonType()~=SUMMON_TYPE_XYZ then return end
@@ -99,14 +114,15 @@ function c60150814.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c60150814.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ 
+		and Duel.GetFieldGroupCount(tp,LOCATION_REMOVED,LOCATION_REMOVED)>=5
 end
-function c60150814.filter(c)
+function c60150814.filter2(c)
 	return c:IsFaceup() and (c:IsLocation(LOCATION_SZONE) or c:IsType(TYPE_EFFECT)) and not c:IsDisabled()
 end
 function c60150814.negop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g=Duel.GetMatchingGroup(c60150814.filter,tp,0,LOCATION_ONFIELD,c)
+	local g=Duel.GetMatchingGroup(c60150814.filter2,tp,0,LOCATION_ONFIELD,c)
 	local tc=g:GetFirst()
 	while tc do
 		local e1=Effect.CreateEffect(c)

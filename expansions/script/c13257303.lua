@@ -15,8 +15,11 @@ function c13257303.initial_effect(c)
 	--Power Capsule
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(13257303,0))
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_BATTLED)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e3:SetCode(EVENT_DESTROYED)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e3:SetCondition(c13257303.pccon)
 	e3:SetTarget(c13257303.pctg)
 	e3:SetOperation(c13257303.pcop)
 	c:RegisterEffect(e3)
@@ -51,6 +54,12 @@ function c13257303.eqop(e,tp,eg,ep,ev,re,r,rp)
 	if tc then
 		Duel.Equip(tp,tc,c)
 	end
+end
+function c13257303.pcfilter(c)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
+end
+function c13257303.pccon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c13257303.pcfilter,1,nil)
 end
 function c13257303.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

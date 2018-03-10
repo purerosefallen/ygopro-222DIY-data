@@ -29,11 +29,11 @@ function c11200003.tgfilter(c)
 	return c:IsSetCard(0x134) and c:IsAbleToGrave()
 end
 function c11200003.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c11200003.tgfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+	if chk==0 then return Duel.IsExistingMatchingCard(c11200003.tgfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK+LOCATION_EXTRA)
 end
 function c11200003.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c11200003.tgfilter,tp,LOCATION_DECK,0,nil)
+	local g=Duel.GetMatchingGroup(c11200003.tgfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,nil)
 	if g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local sg=g:Select(tp,1,1,nil)

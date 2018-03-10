@@ -19,7 +19,6 @@ function c60150808.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1)
 	e1:SetCondition(c60150808.condition)
 	e1:SetCost(c60150808.tdcost2)
 	e1:SetTarget(c60150808.target)
@@ -45,10 +44,10 @@ function c60150808.cfilter(c)
 end
 function c60150808.tdcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) 
-	and Duel.IsExistingMatchingCard(c60150808.cfilter,tp,0,LOCATION_REMOVED,1,nil) end
+	and Duel.IsExistingMatchingCard(c60150808.cfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,c60150808.cfilter,tp,0,LOCATION_REMOVED,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c60150808.cfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,1,nil)
 	Duel.SendtoDeck(g,nil,2,REASON_COST)
 end
 function c60150808.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -61,7 +60,7 @@ end
 function c60150808.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateActivation(ev)
 	if re:GetHandler():IsRelateToEffect(re) then
-		Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)
+		Duel.Remove(eg,POS_FACEDOWN,REASON_EFFECT)
 	end
 end
 function c60150808.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)

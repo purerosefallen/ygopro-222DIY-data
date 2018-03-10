@@ -9,7 +9,7 @@ function cm.initial_effect(c)
     e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
     e1:SetType(EFFECT_TYPE_QUICK_O)
     e1:SetRange(LOCATION_MZONE)
-    e1:SetCountLimit(1)
+    e1:SetCountLimit(2)
     e1:SetCode(EVENT_FREE_CHAIN)
     e1:SetTarget(cm.target)
     e1:SetOperation(cm.operation)
@@ -40,12 +40,13 @@ function cm.filter(c)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chkc then return chkc:IsControler(tp) and chkc:IsOnField() and cm.filter(chkc) end
-    if chk==0 then return Duel.IsExistingTarget(cm.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,e:GetHandler()) end
+    if chk==0 then return Duel.IsExistingTarget(cm.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-    Duel.SelectTarget(tp,cm.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,2,e:GetHandler())
+    Duel.SelectTarget(tp,cm.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,e:GetHandler())
 end
 function cm.operation(e,tp,eg,ep,ev,re,r,rp)
-    local tc=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+    local tc=Duel.GetFirstTarget()
+    if tc:IsRelateToEffect(e) and tc:IsFaceup() then
         local e1=Effect.CreateEffect(e:GetHandler())
         e1:SetType(EFFECT_TYPE_SINGLE)
         e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
@@ -54,6 +55,7 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
         e1:SetValue(cm.valcon)
         e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
         tc:RegisterEffect(e1)
+    end
 end
 function cm.valcon(e,re,r,rp)
     return bit.band(r,REASON_BATTLE+REASON_EFFECT)~=0

@@ -30,43 +30,36 @@ function c60150805.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RegisterFlagEffect(60150805,RESET_CHAIN,0,1)
 end
 function c60150805.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMZoneCount(tp)>0 and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_DECK,LOCATION_DECK,1,nil)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_COIN,nil,0,tp,1)
+	local g=Duel.GetMatchingGroup(c60150805.filter,tp,0,LOCATION_ONFIELD,nil)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE+CATEGORY_TOGRAVE,g,1,0,0)
 end
 function c60150805.spop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
-		if Duel.SpecialSummon(e:GetHandler(),1,tp,tp,false,false,POS_FACEUP) then Duel.BreakEffect()
-			--xyz limit
-			local e4=Effect.CreateEffect(e:GetHandler())
-			e4:SetType(EFFECT_TYPE_SINGLE)
-			e4:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-			e4:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
-			e4:SetReset(RESET_EVENT+0xfe0000)
-			e4:SetValue(c60150805.xyzlimit)
-			e:GetHandler():RegisterEffect(e4)
-			Duel.SpecialSummonComplete()
+		if Duel.SpecialSummon(e:GetHandler(),1,tp,tp,false,false,POS_FACEUP) then
+			Duel.BreakEffect()
 			local c=e:GetHandler()
-			local res=0
-			res=Duel.TossCoin(tp,1)
-			if res==0 then
-				local g=Duel.GetFieldCard(tp,LOCATION_DECK,0)
-				Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+			local g=Duel.GetMatchingGroup(c60150805.filter,tp,0,LOCATION_ONFIELD,nil)
+			if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(60150805,3)) then
+				Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(60150805,0))
+				local sg=g:Select(tp,1,1,nil)
+				local tc=sg:GetFirst()
+				if tc:IsAbleToRemove() and tc:IsAbleToGrave() then
+					if Duel.SelectYesNo(tp,aux.Stringid(60150805,1)) then
+						Duel.Remove(tc,POS_FACEDOWN,REASON_EFFECT)
+					else
+						Duel.SendtoGrave(tc,REASON_EFFECT)
+					end
+				elseif not tc:IsAbleToRemove() and tc:IsAbleToGrave() then
+					Duel.SendtoGrave(tc,REASON_EFFECT)
+				elseif tc:IsAbleToRemove() and not tc:IsAbleToGrave() then
+					Duel.Remove(tc,POS_FACEDOWN,REASON_EFFECT)
+				end
 			end
-			if res==1 then
-				local g=Duel.GetFieldCard(1-tp,LOCATION_DECK,0)
-				Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
-			end 
 		end
 	end
-end
-function c60150805.xyzlimit(e,c)
-	if not c then return false end
-	return not (c:IsAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_SPELLCASTER))
-end
-function c60150805.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return not (c:IsSetCard(0x3b23) and c:IsAttribute(ATTRIBUTE_DARK))
 end
 function c60150805.efcon(e,tp,eg,ep,ev,re,r,rp)
 	return r==REASON_XYZ
@@ -75,7 +68,7 @@ function c60150805.efop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
 	local e1=Effect.CreateEffect(rc)
-	e1:SetDescription(aux.Stringid(60150502,0))
+	e1:SetDescription(aux.Stringid(60150805,2))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)

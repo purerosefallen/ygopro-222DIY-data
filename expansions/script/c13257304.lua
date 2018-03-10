@@ -14,8 +14,11 @@ function c13257304.initial_effect(c)
 	--Power Capsule
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(13257304,0))
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_BATTLED)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_DESTROYED)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e2:SetCondition(c13257304.pccon)
 	e2:SetTarget(c13257304.pctg)
 	e2:SetOperation(c13257304.pcop)
 	c:RegisterEffect(e2)
@@ -61,6 +64,12 @@ function c13257304.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.CalculateDamage(a,c)
 		end
 	end
+end
+function c13257304.pcfilter(c)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
+end
+function c13257304.pccon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c13257304.pcfilter,1,nil)
 end
 function c13257304.eqfilter(c,ec)
 	return c:IsSetCard(0x352) and c:IsType(TYPE_MONSTER) and c:CheckEquipTarget(ec)

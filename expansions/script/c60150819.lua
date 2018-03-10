@@ -38,30 +38,12 @@ function c60150819.activate(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
-		Duel.BreakEffect()
-		local c=e:GetHandler()
-		local res=0
-		res=Duel.TossCoin(tp,1)
-		if res==0 then
-			local g=Duel.GetFieldCard(tp,LOCATION_DECK,0)
+		local g2=Duel.GetFieldCard(tp,LOCATION_DECK,0)
+		local tc=g2:GetFirst()
+		if tc:IsAbleToRemove() and Duel.SelectYesNo(tp,aux.Stringid(60150810,0)) then
+			Duel.BreakEffect()
 			Duel.DisableShuffleCheck()
-			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+			Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 		end
-		if res==1 then
-			local g=Duel.GetFieldCard(1-tp,LOCATION_DECK,0)
-			Duel.DisableShuffleCheck()
-			Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
-		end 
 	end
-	local e2=Effect.CreateEffect(e:GetHandler())
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetTargetRange(1,0)
-	e2:SetTarget(c60150819.splimit)
-	e2:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e2,tp)
-end
-function c60150819.splimit(e,c)
-	return not c:IsAttribute(ATTRIBUTE_DARK)
 end

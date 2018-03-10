@@ -16,19 +16,13 @@ function c60150815.initial_effect(c)
 	e3:SetCondition(c60150815.efcon)
 	e3:SetOperation(c60150815.efop)
 	c:RegisterEffect(e3)
-	--xyz limit
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE)
-	e4:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
-	e4:SetValue(c60150815.xyzlimit)
-	c:RegisterEffect(e4)
 end
 function c60150815.spfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_TRAP+TYPE_SPELL) and c:IsAbleToGraveAsCost()
 end
 function c60150815.spcon(e,c)
 	if c==nil then return true end
-	return Duel.GetMZoneCount(c:GetControler())>0
+	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c60150815.spfilter,c:GetControler(),LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
 end
 function c60150815.spop(e,tp,eg,ep,ev,re,r,rp,c)
@@ -63,11 +57,11 @@ function c60150815.efop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c60150815.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsSetCard(0x3b23) and e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsSetCard(0x3b23) and e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ
 end
 function c60150815.filter2(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP) 
-		and not (c:GetSequence()==6 or c:GetSequence()==7) and c:IsCanTurnSet()
+		and not c:IsType(TYPE_PENDULUM) and c:IsCanTurnSet()
 end
 function c60150815.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c60150815.filter2,tp,0,LOCATION_ONFIELD,1,nil) end

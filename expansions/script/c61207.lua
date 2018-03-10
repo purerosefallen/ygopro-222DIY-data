@@ -38,8 +38,8 @@ function c61207.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function c61207.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable()
-		and Duel.IsExistingMatchingCard(c61207.umbfilter,tp,LOCATION_HAND,0,2,e:GetHandler()) end
-	local g=Duel.SelectMatchingCard(tp,c61207.umbfilter,tp,LOCATION_HAND,0,2,2,e:GetHandler())
+		and Duel.IsExistingMatchingCard(c61207.umbfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+	local g=Duel.SelectMatchingCard(tp,c61207.umbfilter,tp,LOCATION_HAND,0,1,1,e:GetHandler())
 	g:AddCard(e:GetHandler())
 	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
 end

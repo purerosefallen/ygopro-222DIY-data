@@ -31,7 +31,7 @@ function c11200012.filter2(c)
 	return c:IsSetCard(0x134) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end
 function c11200012.filter3(c)
-	return  c:IsCode(11200007) and c:IsFaceup()
+	return  c:IsSetCard(0x134) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
 end
 function c11200012.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.GetMatchingGroup(c11200012.filter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,e:GetHandler())

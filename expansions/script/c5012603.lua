@@ -28,6 +28,7 @@ function c5012603.initial_effect(c)
     e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
     e6:SetCode(EVENT_REMOVE)
     e6:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+    e6:SetCountLimit(1,5012603)
     e6:SetTarget(c5012603.tg)
     e6:SetOperation(c5012603.op)
     c:RegisterEffect(e6)  
@@ -68,18 +69,24 @@ function c5012603.desop(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 function c5012603.spfilter(c,e,tp)
-    return (c:IsSetCard(0x250) or c:IsSetCard(0x23c)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
+    return (c:IsSetCard(0x250) or c:IsSetCard(0x23c)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLevelAbove(2)
 end
 function c5012603.tg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
-        and Duel.IsExistingMatchingCard(c5012603.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
-    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+        and Duel.IsExistingMatchingCard(c5012603.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil,e,tp) end
+    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
 end
 function c5012603.op(e,tp,eg,ep,ev,re,r,rp)
     if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-    local g=Duel.SelectMatchingCard(tp,c5012603.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-    if g:GetCount()>0 then
-        Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+    local g=Duel.SelectMatchingCard(tp,c5012603.spfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,1,nil,e,tp)
+    local tc=g:GetFirst()
+    if tc and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP) then
+        local e1=Effect.CreateEffect(e:GetHandler())
+        e1:SetType(EFFECT_TYPE_SINGLE)
+        e1:SetCode(EFFECT_CANNOT_TRIGGER)
+        e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+        tc:RegisterEffect(e1)
     end
+    Duel.SpecialSummonComplete()
 end

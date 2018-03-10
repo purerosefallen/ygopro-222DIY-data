@@ -15,8 +15,11 @@ function c13257314.initial_effect(c)
 	--Power Capsule
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(13257314,0))
-	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e3:SetCode(EVENT_BATTLED)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_DESTROYED)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e2:SetCondition(c13257314.pccon)
 	e3:SetTarget(c13257314.pctg)
 	e3:SetOperation(c13257314.pcop)
 	c:RegisterEffect(e3)
@@ -79,6 +82,12 @@ function c13257314.desop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTargetRange(1,0)
 	Duel.RegisterEffect(e1,tp)
 end
+function c13257314.pcfilter(c)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
+end
+function c13257314.pccon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c13257314.pcfilter,1,nil)
+end
 function c13257314.eqfilter(c,ec)
 	return c:IsSetCard(0x352) and c:IsType(TYPE_MONSTER) and c:CheckEquipTarget(ec)
 end
@@ -99,5 +108,5 @@ function c13257314.pcop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257314.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257314,7))
+	Duel.Hint(11,0,aux.Stringid(13257314,7))
 end
