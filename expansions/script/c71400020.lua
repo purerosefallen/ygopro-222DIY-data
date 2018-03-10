@@ -8,7 +8,7 @@ function c71400020.initial_effect(c)
 	e1:SetCondition(c71400020.condition)
 	e1:SetTarget(c71400020.target)
 	e1:SetOperation(c71400020.operation)
-	e1:SetCountLimit(1,71400020+EFFECT_COUNT_CODE_DUEL)
+	e1:SetCountLimit(1,71400020+EFFECT_COUNT_CODE_DUEL+EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e1)
 end
 function c71400020.filter1(c)
