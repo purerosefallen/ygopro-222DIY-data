@@ -92,7 +92,7 @@ function c12010021.poscost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function c12010021.thfilter(c,tp)
-	return c:IsCode(1200025) and c:IsAbleToHand()
+	return c:IsCode(12010025) and c:IsAbleToHand()
 end
 function c12010021.postg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetAttackTarget()
