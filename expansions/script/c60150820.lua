@@ -46,6 +46,7 @@ function c60150820.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c60150820.condition(e,tp,eg,ep,ev,re,r,rp)
+	local ph=Duel.GetCurrentPhase()
     return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
 end
 function c60150820.filter(c)
