@@ -38,7 +38,7 @@ function c12010011.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c12010011.thfilter(c)
-	return c:IsCode(1200035) and c:IsAbleToHand()
+	return c:IsCode(12010035) and c:IsAbleToHand()
 end
 function c12010011.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c12010011.thfilter,tp,LOCATION_DECK,0,1,nil) end
