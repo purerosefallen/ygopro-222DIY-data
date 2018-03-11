@@ -57,7 +57,7 @@ function c22202001.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c22202001.aclimit(e,re,tp)
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsCode(e:GetLabel())
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsCode(e:GetLabel()) and not re:GetHandler():IsImmuneToEffect(e)
 end
 function c22202001.handcon(e)
 	local tp=e:GetHandlerPlayer()
