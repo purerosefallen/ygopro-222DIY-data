@@ -58,7 +58,7 @@ function c10126003.eqop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_OWNER_RELATE)
 	e1:SetCode(EFFECT_EQUIP_LIMIT)
 	e1:SetReset(RESET_EVENT+0x1fe0000)
-	e1:SetValue(c10126004.eqlimit)
+	e1:SetValue(c10126003.eqlimit)
 	tc:RegisterEffect(e1)
 end
 function c10126003.otfilter(c,tp)

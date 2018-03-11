@@ -13,9 +13,14 @@ function cm.initial_effect(c)
     e1:SetHintTiming(0,TIMING_DRAW_PHASE)
     e1:SetRange(LOCATION_MZONE)
     e1:SetCountLimit(1)
+    e1:SetCost(cm.cost)
     e1:SetCondition(cm.tgcon)
     e1:SetOperation(cm.operation)
     c:RegisterEffect(e1)     
+end
+function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+    if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
+    e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function cm.tgcon(e,tp,eg,ep,ev,re,r,rp)
     local tp=e:GetHandler():GetControler()

@@ -3,7 +3,7 @@ function c10131009.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c,true) 
 	--xyz summon
-	aux.AddXyzProcedure(c,c10131009.xyzfilter,4,2)
+	aux.AddXyzProcedureLevelFree(c,c10131009.xyzfilter,aux.TRUE,2,2)
 	c:EnableReviveLimit()
 	--banish
 	local e1=Effect.CreateEffect(c)
@@ -43,8 +43,8 @@ c10131009.pendulum_level=4
 function c10131009.atkcon(e)
 	return e:GetHandler():GetOverlayCount()>0
 end
-function c10131009.xyzfilter(c)
-	return c:IsRace(RACE_WARRIOR) or c:IsHasEffect(10131016)
+function c10131009.xyzfilter(c,xyzc)
+	return (c:IsRace(RACE_WARRIOR) and c:IsXyzLevel(xyzc,4)) or c:IsHasEffect(10131016)
 end
 function c10131009.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and chkc~=e:GetHandler() end

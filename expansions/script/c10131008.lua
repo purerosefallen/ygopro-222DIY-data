@@ -3,7 +3,7 @@ function c10131008.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c,true)
 	--xyz summon
-	aux.AddXyzProcedure(c,c10131008.xyzfilter,4,2)
+	aux.AddXyzProcedureLevelFree(c,c10131008.xyzfilter,aux.TRUE,2,2)
 	c:EnableReviveLimit()
 	--negate
 	local e1=Effect.CreateEffect(c)
@@ -42,8 +42,8 @@ function c10131008.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:GetOverlayCount()>0 and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE) end
 	return Duel.SelectYesNo(tp,aux.Stringid(10131008,2))
 end
-function c10131008.xyzfilter(c)
-	return c:IsRace(RACE_WARRIOR) or c:IsHasEffect(10131016)
+function c10131008.xyzfilter(c,xyzc)
+	return (c:IsRace(RACE_WARRIOR) and c:IsXyzLevel(xyzc,4)) or c:IsHasEffect(10131016)
 end
 function c10131008.pcfilter(c)
 	return c:IsType(TYPE_PENDULUM) and not c:IsForbidden() and (c:IsFaceup() or not c:IsLocation(LOCATION_EXTRA)) and c:IsSetCard(0x5338)
