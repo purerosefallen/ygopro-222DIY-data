@@ -148,7 +148,7 @@ function c12010012.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c12010012.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c12010012.tgfilter,tp,LLOCATION_REMOVED+LOCATION_GRAVE,0,1,2,nil)
+	local g=Duel.SelectMatchingCard(tp,c12010012.tgfilter,tp,LOCATION_REMOVED+LOCATION_GRAVE,0,1,2,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)

@@ -24,16 +24,14 @@ function c60150820.initial_effect(c)
     c:RegisterEffect(e1)
 end
 function c60150820.disop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
 	if ep==tp then return end
 	local rc=re:GetHandler()
 	if rc:GetFlagEffect(60150820)~=0 then return end
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	if (loc==LOCATION_MZONE or loc==LOCATION_SZONE) then 
+	if Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_ONFIELD then 
 		Duel.Hint(HINT_CARD,0,60150820)
-		if rc:IsRelateToEffect(re) and not rc:IsImmuneToEffect(e) 
-			and Duel.SelectYesNo(tp,aux.Stringid(60150820,1)) then
-			local e1=Effect.CreateEffect(c)
+		if not rc:IsImmuneToEffect(e) and Duel.SelectYesNo(tp,aux.Stringid(60150820,1)) then
+			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetDescription(aux.Stringid(60150820,0))
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
@@ -46,7 +44,6 @@ function c60150820.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c60150820.condition(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
     return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
 end
 function c60150820.filter(c)

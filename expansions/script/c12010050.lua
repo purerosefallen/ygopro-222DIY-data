@@ -3,7 +3,7 @@ function c12010050.initial_effect(c)
 	c:SetUniqueOnField(1,0,12010050)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFunFun(c,aux.FilterBoolFunction(Card.IsFusionCode,1200043),c12010050.ffilter,2,true)
+	aux.AddFusionProcFunFun(c,aux.FilterBoolFunction(Card.IsFusionCode,12010043),c12010050.ffilter,2,true)
 	--special summon rule
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -18,8 +18,9 @@ function c12010050.initial_effect(c)
 	e1:SetDescription(aux.Stringid(12010050,0))
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCountLimit(1)
-	e1:SetCondition(c12010050.con)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e1:SetCountLimit(1,12011250)
+	--e1:SetCondition(c12010050.con)
 	e1:SetTarget(c12010050.tg)
 	e1:SetOperation(c12010050.op)
 	c:RegisterEffect(e1)
@@ -53,7 +54,7 @@ function c12010050.spfilter1(c,tp,ft)
 	else return false end
 end
 function c12010050.spfilter2(c,tp,rc)
-	return cc:IsSetCard(0x2fba) and c:IsReleasable() and c:IsCanBeFusionMaterial() and (c:IsControler(tp) or c:IsFaceup()) and c~=rc
+	return c:IsSetCard(0x2fba) and c:IsReleasable() and c:IsCanBeFusionMaterial() and (c:IsControler(tp) or c:IsFaceup()) and c~=rc
 end
 function c12010050.spfilter3(c,tp,rc)
 	return cc:IsSetCard(0x2fba) and c:IsReleasable() and c:IsCanBeFusionMaterial() and (c:IsControler(tp) or c:IsFaceup()) and Duel.IsExistingMatchingCard(c12010050.spfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,2,c,tp,rc)
@@ -84,27 +85,27 @@ function c12010050.con(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_FUSION 
 end
 function c12010050.spfilter4(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2fba) and c:IsCanBeSpecialSummoned(e, 0, tp, false, false)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2fba) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c12010050.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp, LOCATION_MZONE) > 0
-		and Duel.IsExistingMatchingCard(c12010050.spfilter4, tp, LOCATION_GRAVE, 0, 1, nil, e, tp) end
-	Duel.SetOperationInfo(0, CATEGORY_SPECIAL_SUMMON, nil, 1, 0, 0)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c12010050.spfilter4,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c12010050.op(e,tp,eg,ep,ev,re,r,rp)
-	local ft = Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if ft < 1 then return end
-	local g = Duel.GetMatchingGroup(c12010050.spfilter4, tp, LOCATION_GRAVE, 0, nil, e, tp)
-	local count = g:GetCount()
-	if count < 1 then return end
-	local min = math.min(count, ft)
-	local sg = Duel.SelectMatchingCard(tp, c12010050.spfilter4, tp, LOCATION_GRAVE, 0, min, ft, nil, e, tp)
-	Duel.SpecialSummon(sg, 0, tp, tp, false, false, POS_FACEUP)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if ft<1 then return end
+	local g=Duel.GetMatchingGroup(c12010050.spfilter4,tp,LOCATION_GRAVE,0,nil,e,tp)
+	local count=g:GetCount()
+	if count<1 then return end
+	local min=math.min(count,ft)
+	local sg=Duel.SelectMatchingCard(tp,c12010050.spfilter4,tp,LOCATION_GRAVE,0,min,ft,nil,e,tp)
+	Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CHANGE_DAMAGE)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetTargetRange(0, 1)
+	e1:SetTargetRange(0,1)
 	e1:SetValue(0)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)

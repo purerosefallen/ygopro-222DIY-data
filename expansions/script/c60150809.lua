@@ -91,7 +91,6 @@ function c60150809.sfilter(c,sp)
 end
 function c60150809.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_HAND)
-	and e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,60150807)
 end
 function c60150809.drop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c60150809.sfilter,1,nil,1-tp) then
@@ -102,7 +101,6 @@ function c60150809.drop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c60150809.drcon2(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_GRAVE)
-	and e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,60150807)
 end
 function c60150809.drop2(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c60150809.sfilter,1,nil,1-tp) then
@@ -113,7 +111,6 @@ function c60150809.drop2(e,tp,eg,ep,ev,re,r,rp)
 end
 function c60150809.drcon3(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_DECK)
-	and e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,60150807)
 end
 function c60150809.drop3(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c60150809.sfilter,1,nil,1-tp) then
@@ -124,7 +121,6 @@ function c60150809.drop3(e,tp,eg,ep,ev,re,r,rp)
 end
 function c60150809.drcon4(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_EXTRA)
-	and e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,60150807)
 end
 function c60150809.drop4(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c60150809.sfilter,1,nil,1-tp) then
@@ -132,16 +128,6 @@ function c60150809.drop4(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND):RandomSelect(tp,1)
 		Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)
 	end
-end
-function c60150809.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,60150808)
-end
-function c60150809.tgvalue(e,re,rp)
-	return rp~=e:GetHandlerPlayer()
-end
-function c60150809.condition2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetOverlayCount()<3
-	and e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,60150807)
 end
 function c60150809.filter(c)
 	return (c:IsFaceup() or c:IsFacedown()) and c:IsAbleToChangeControler()

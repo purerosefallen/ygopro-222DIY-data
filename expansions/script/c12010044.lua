@@ -16,13 +16,17 @@ function c12010044.initial_effect(c)
 	e1:SetOperation(c12010044.negop)
 	c:RegisterEffect(e1)
 	-- atk up
-	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCode(EVENT_CHAIN_SOLVING)
-	e4:SetCondition(c12010044.tgcon)
-	e4:SetOperation(c12010044.disop)
-	c:RegisterEffect(e4)
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(12010044,2))
+	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
+	e1:SetCode(EVENT_CHAINING)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1)
+	e1:SetCondition(c12010044.discon)
+	e1:SetTarget(c12010044.distg)
+	e1:SetOperation(c12010044.disop)
+	c:RegisterEffect(e1)
 	--cannot direct attack
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
@@ -37,16 +41,6 @@ function c12010044.initial_effect(c)
 	e3:SetTarget(c12010044.tg)
 	e3:SetOperation(c12010044.op)
 	c:RegisterEffect(e3)
-end
-function c12010044.tgcon(e)
-	return Duel.GetCurrentPhase()>PHASE_MAIN1 and Duel.GetCurrentPhase()<PHASE_MAIN2
-end
-function c12010044.disop(e,tp,eg,ep,ev,re,r,rp)
-	if ep==tp then return end
-	local rc=re:GetHandler()
-	if Duel.NegateEffect(ev) and rc:IsRelateToEffect(re) then
-		Duel.Destroy(rc,REASON_EFFECT)
-	end
 end
 function c12010044.ovfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xfba) and c:IsType(TYPE_XYZ) and c:GetOverlayCount()>0 and not c:IsCode(12010044)
@@ -88,7 +82,11 @@ function c12010044.disop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) then
 		Duel.Destroy(eg,REASON_EFFECT)
 		Duel.BreakEffect()
-		Duel.ChainAttack()
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetCode(EFFECT_EXTRA_ATTACK)
+		e3:SetValue(1)
+		c:RegisterEffect(e3)
 	end
 end
 function c12010044.cd(e,tp,eg,ep,ev,re,r,rp)

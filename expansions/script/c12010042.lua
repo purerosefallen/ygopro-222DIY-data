@@ -21,6 +21,7 @@ function c12010042.initial_effect(c)
 	e2:SetCategory(CATEGORY_SEARCH+CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_BATTLED)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(c12010042.condition2)
 	e2:SetTarget(c12010042.target2)
@@ -31,12 +32,16 @@ function c12010042.ffilter(c)
 	return c:IsFusionSetCard(0xfba)
 end
 function c12010042.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsRelateToBattle() and e:GetHandler():GetAttack()<3000
+	return e:GetHandler():IsRelateToBattle() and e:GetHandler():GetAttack()<4000
 end
 function c12010042.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		Duel.ChainAttack()
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetCode(EFFECT_EXTRA_ATTACK)
+		e3:SetValue(1)
+		c:RegisterEffect(e3)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)

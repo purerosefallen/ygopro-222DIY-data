@@ -68,7 +68,7 @@ function c60150802.thop(e,tp,eg,ep,ev,re,r,rp)
 		if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(60150802,3)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 			local sg=g:Select(tp,1,1,nil)
-			Duel.SendtoGrave(g,REASON_EFFECT)
+			Duel.SendtoGrave(sg,REASON_EFFECT)
 		end
 	end
 end
