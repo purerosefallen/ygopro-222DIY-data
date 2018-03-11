@@ -44,7 +44,7 @@ function c12010036.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c12010036.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_END and Duel.GetLP(tp)>Duel.GetLP(1-tp)
+	return Duel.GetCurrentPhase()==PHASE_END and Duel.GetLP(tp)>=Duel.GetLP(1-tp)
 end
 function c12010036.thfilter(c,lp)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfba) and c:IsAbleToHand()
