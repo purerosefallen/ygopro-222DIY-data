@@ -52,7 +52,6 @@ function c12010024.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1)
-	e2:SetCost(c12010024.cost)
 	e2:SetTarget(c12010024.target)
 	e2:SetOperation(c12010024.activate)
 	c:RegisterEffect(e2)
@@ -173,6 +172,6 @@ function c12010024.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c12010024.tdfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,5,e:GetHandler())
 	if Duel.SendtoDeck(g,nil,2,REASON_EFFECT)>0 then
 		Duel.ShuffleDeck(tp)
-		Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_PZONE,POS_FACEUP,true)
+		Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	end
 end
