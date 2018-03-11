@@ -37,7 +37,7 @@ end
 function c12010002.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if chk==0 then return ft>0 and Duel.IsExistingMatchingCard(c12010002.cfilter1,tp,LOCATION_ONFIELD,0,1,nil) end
-	local sg=Duel.SelectReleaseGroup(tp,c12010002.cfilter1,1,1,nil,ft,tp)
+	local sg=Duel.SelectMatchingCard(tp,c12010002.cfilter1,tp,LOCATION_ONFIELD,0,1,1,nil)
 	Duel.SendtoGrave(sg,REASON_COST)
 end
 function c12010002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
