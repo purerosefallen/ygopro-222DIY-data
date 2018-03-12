@@ -17,7 +17,7 @@ function c10126006.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCountLimit(1,10126106)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,0x1028)
+	e2:SetHintTiming(0,0x1e0)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCost(c10126006.incost)
 	e2:SetCondition(c10126006.incon)
@@ -75,8 +75,10 @@ function c10126006.incon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetEquipTarget()
 end
 function c10126006.incost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToHandAsCost() end
-	Duel.SendtoHand(e:GetHandler(),nil,REASON_COST)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToHandAsCost() end
+	Duel.SetTargetCard(c:GetEquipTarget())
+	Duel.SendtoHand(c,nil,REASON_COST)
 end
 function c10126006.inop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
