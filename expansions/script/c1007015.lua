@@ -61,18 +61,16 @@ function c1007015.initial_effect(c)
 	c:RegisterEffect(e7)
 end
 function c1007015.sccon(e)
-	local seq=e:GetHandler():GetSequence()
-	local tc=Duel.GetFieldCard(e:GetHandlerPlayer(),LOCATION_SZONE,13-seq)
-	return not tc or not tc:IsSetCard(0x20f)
+	return not Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,1,e:GetHandler(),0x20f)
 end
 function c1007015.spfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x20f) and (c:GetSequence()==6 or c:GetSequence()==7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(1007015)
+	return c:IsSetCard(0x20f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(1007015)
 end
 function c1007015.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_SZONE) and c1007015.spfilter(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(c1007015.spfilter,tp,LOCATION_SZONE,0,1,nil,e,tp) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_PZONE) and c1007015.spfilter(chkc,e,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c1007015.spfilter,tp,LOCATION_PZONE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,c1007015.spfilter,tp,LOCATION_SZONE,0,1,1,nil,e,tp)
+	local g=Duel.SelectTarget(tp,c1007015.spfilter,tp,LOCATION_PZONE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function c1007015.spop(e,tp,eg,ep,ev,re,r,rp)
