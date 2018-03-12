@@ -14,7 +14,7 @@ function c12006002.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e3:SetTargetRange(LOCATION_MZONE,0)
 	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xfbd))
 	e3:SetValue(c12006002.atkval)
 	c:RegisterEffect(e3)
@@ -45,7 +45,7 @@ end
 function c12006002.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and
-		Duel.IsExistingMatchingCard(c12006002.filter,c:GetControler(),LOCATION_MZONE,0,1,nil)
+		Duel.IsExistingMatchingCard(c12006002.filter,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function c12006002.atkfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xfbd)
