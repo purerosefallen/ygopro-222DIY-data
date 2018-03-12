@@ -56,7 +56,7 @@ function c12006022.thop1(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 				e1:SetValue(3000)
 				e1:SetReset(RESET_EVENT+0x1ff0000)
-				c:RegisterEffect(e1)
+				tc:RegisterEffect(e1)
 		end
 end
 end
