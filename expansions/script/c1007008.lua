@@ -58,9 +58,7 @@ function c1007008.initial_effect(c)
 end
 c1007008.pendulum_level=10
 function c1007008.sccon(e)
-	local seq=e:GetHandler():GetSequence()
-	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,13-seq)
-	return tc and not tc:IsSetCard(0x20f)
+	return not Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,1,e:GetHandler(),0x20f)
 end
 function c1007008.splimit(e,c)
 	return not c:IsSetCard(0x20f)
