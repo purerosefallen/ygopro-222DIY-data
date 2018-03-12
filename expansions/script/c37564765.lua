@@ -1,4 +1,4 @@
---test webhook
+--test webhook1
 Senya=Senya or {}
 local cm=Senya
 --7CG universal scripts
