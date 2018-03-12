@@ -67,10 +67,8 @@ function c1007013.initial_effect(c)
 	e9:SetOperation(c1007013.sumop)
 	c:RegisterEffect(e9)
 end
-function c1007013.sccon(e)
-	local seq=e:GetHandler():GetSequence()
-	local tc=Duel.GetFieldCard(e:GetHandlerPlayer(),LOCATION_SZONE,13-seq)
-	return not tc or not tc:IsSetCard(0x20f)
+function c1007013.sccon(e,tp,eg,ep,ev,re,r,rp)
+	return not Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,1,e:GetHandler(),0x20f)
 end
 function c1007013.splimit(e,c)
 	return not c:IsSetCard(0x20f)
@@ -88,10 +86,11 @@ function c1007013.scop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_CHANGE_RSCALE)
 	c:RegisterEffect(e2)
 end
+function c1007013.defilter(c)
+	return c:IsSetCard(0x20f) and not c:IsCode(1007013)
+end
 function c1007013.decon(e,tp,eg,ep,ev,re,r,rp)
-	local seq=e:GetHandler():GetSequence()
-	local sc=Duel.GetFieldCard(tp,LOCATION_SZONE,13-seq)
-	return sc and sc:IsSetCard(0x20f) and not sc:IsCode(1007013)
+	return Duel.IsExistingMatchingCard(c1007013.defilter,tp,LOCATION_PZONE,0,1,e:GetHandler())
 end
 function c1007013.val(e,re,dam,r,rp,rc)
 	if c1007013[e:GetOwnerPlayer()]==1 or bit.band(r,REASON_BATTLE+REASON_EFFECT)~=0 then
