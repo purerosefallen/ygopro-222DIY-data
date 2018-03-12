@@ -30,6 +30,7 @@ function c1007016.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e3:SetRange(LOCATION_PZONE)
+	e3:SetCondition(c1007016.spccon)
 	e3:SetTarget(c1007016.sptg)
 	e3:SetOperation(c1007016.spop)
 	c:RegisterEffect(e3)
@@ -56,12 +57,16 @@ function c1007016.initial_effect(c)
 end
 c1007016.pendulum_level=3
 function c1007016.sccon(e)
-	local seq=e:GetHandler():GetSequence()
-	local tc=Duel.GetFieldCard(e:GetHandlerPlayer(),LOCATION_SZONE,13-seq)
-	return not tc or not tc:IsSetCard(0x20f)
+	return not Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_PZONE,0,1,e:GetHandler(),0x20f)
 end
 function c1007016.splimit(e,c)
 	return not c:IsSetCard(0x20f)
+end
+function c1007016.ppxfilter(c)
+	return c:IsSetCard(0x20f)
+end
+function c1007016.spccon(e)
+	return Duel.IsExistingMatchingCard(c1007016.ppxfilter,tp,LOCATION_PZONE,0,1,e:GetHandler())
 end
 function c1007016.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
