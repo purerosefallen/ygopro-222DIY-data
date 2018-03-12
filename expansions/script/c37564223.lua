@@ -44,7 +44,7 @@ function cm.initial_effect(c)
 	e8:SetType(EFFECT_TYPE_IGNITION)
 	e8:SetRange(LOCATION_MZONE)
 	e8:SetCountLimit(1)
-	e8:SetCost(cm.cost)
+	e8:SetCost(Senya.ReleaseCost(LOCATION_ONFIELD,LOCATION_ONFIELD))
 	e8:SetTarget(cm.tgtg)
 	e8:SetOperation(cm.tgop)
 	c:RegisterEffect(e8)
@@ -76,11 +76,6 @@ function cm.ttop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function cm.efilter(e,te)
 	return te:GetHandler():GetSummonLocation()==LOCATION_EXTRA and te:GetOwner()~=e:GetOwner() and te:IsActiveType(TYPE_MONSTER)
-end
-function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsReleasable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
-	local g=Duel.SelectMatchingCard(tp,Card.IsReleasable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
-	Duel.Release(g,REASON_COST)
 end
 function cm.tgfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave() and Senya.check_set_sawawa(c)

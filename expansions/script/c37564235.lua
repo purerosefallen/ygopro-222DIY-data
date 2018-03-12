@@ -4,20 +4,16 @@ local cm=_G["c"..m]
 xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 function cm.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_DISABLE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCountLimit(1,m+EFFECT_COUNT_CODE_OATH)
-	e1:SetCost(cm.cost)
+	e1:SetCost(Senya.ReleaseCost(LOCATION_HAND+LOCATION_MZONE,0,cm.filter))
 	e1:SetOperation(cm.operation)
 	c:RegisterEffect(e1)
 end
 function cm.filter(c)
 	return Senya.check_set_sawawa(c) and c:IsType(TYPE_MONSTER) and c:IsReleasable()
-end
-function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,nil) end
-	local g=Duel.SelectMatchingCard(tp,cm.filter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,nil)
-	Duel.Release(g,REASON_COST)
 end
 function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	--

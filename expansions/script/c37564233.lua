@@ -31,16 +31,12 @@ function cm.dfilter(c,e)
 	return c:IsAbleToChangeControler() and not c:IsImmuneToEffect(e)
 end
 function cm.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local b1=0
-	if Duel.CheckLocation(tp,LOCATION_PZONE,0) then b1=b1+1 end
-	if Duel.CheckLocation(tp,LOCATION_PZONE,1) then b1=b1+1 end
+	local b1=Duel.GetLocationCount(tp,LOCATION_PZONE)
 	local g=Duel.GetMatchingGroup(cm.dfilter,tp,0,LOCATION_SZONE,nil,e)
 	if chk==0 then return b1>0 and #g>0 end
 end
 function cm.desop(e,tp,eg,ep,ev,re,r,rp)
-	local b1=0
-	if Duel.CheckLocation(tp,LOCATION_PZONE,0) then b1=b1+1 end
-	if Duel.CheckLocation(tp,LOCATION_PZONE,1) then b1=b1+1 end
+	local b1=Duel.GetLocationCount(tp,LOCATION_PZONE)
 	local g=Duel.GetMatchingGroup(cm.dfilter,tp,0,LOCATION_PZONE,nil,e)
 	if not (b1>0 and #g>0) then return end
 	if b1>=#g then

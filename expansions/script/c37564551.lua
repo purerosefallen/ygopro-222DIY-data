@@ -63,8 +63,9 @@ function cm.initial_effect(c)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e2:SetCost(function(e,tp,eg,ep,ev,re,r,rp,chk)
-		if chk==0 then return Duel.CheckReleaseGroup(tp,aux.FilterEqualFunction(Card.GetOriginalCode,37564765),1,nil) end
-		local g=Duel.SelectReleaseGroup(tp,aux.FilterEqualFunction(Card.GetOriginalCode,37564765),1,1,nil)
+		local f=function(c) return Duel.GetMZoneCount(tp,c,tp)>0 and c:GetOriginalCode()==37564765 end
+		if chk==0 then return Duel.CheckReleaseGroup(tp,f,1,nil) end
+		local g=Duel.SelectReleaseGroup(tp,f,1,1,nil)
 		Duel.Release(g,REASON_COST)
 	end)
 	e2:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
@@ -224,8 +225,7 @@ function cm.CopySpellChainingFilter(c,e,tp,eg,ep,ev,re,r,rp)
 	return true
 end
 function cm.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMZoneCount(tp)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,m,0,0x21,7,2850,2100,RACE_FAIRY,ATTRIBUTE_LIGHT) end
+	if chk==0 then return Duel.IsPlayerCanSpecialSummonMonster(tp,m,0,0x21,7,2850,2100,RACE_FAIRY,ATTRIBUTE_LIGHT) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function cm.thop(e,tp,eg,ep,ev,re,r,rp)

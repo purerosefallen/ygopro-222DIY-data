@@ -2200,6 +2200,41 @@ function cm.GetFusionMaterial(tp,loc,oloc,f,gc,e,...)
 	if e then g1=g1:Filter(cm.NonImmuneFilter,nil,e) end
 	return g1
 end
+function cm.GetReleaseGroup(tp,loc,oloc,f,gc,...)
+	local g1=Duel.GetReleaseGroup(tp)
+	if loc then
+		local floc=(loc & LOCATION_MZONE)
+		if floc~=0 then
+			g1=g1:Filter(Card.IsLocation,nil,floc)
+		else
+			g1:Clear()
+		end
+		local eloc=loc-floc
+		if eloc~=0 then
+			local g2=Duel.GetMatchingGroup(Card.IsReleasable,tp,eloc,0,nil)
+			g1:Merge(g2)
+		end
+	end
+	if oloc and oloc~=0 then
+		local g3=Duel.GetMatchingGroup(Card.IsReleasable,tp,0,oloc,nil)
+		g1:Merge(g3)
+	end
+	if f then g1=g1:Filter(f,nil,...) end
+	if gc then g1:RemoveCard(gc) end
+	return g1
+end
+function cm.ReleaseCost(loc,oloc,f,self,...)
+	local ext_params={...}
+	return  function(e,tp,eg,ep,ev,re,r,rp,chk)
+					local ec=self and e:GetHandler()
+					local mg=cm.GetReleaseGroup(tp,loc,oloc,f,ec,table.unpack(ext_params))
+					if chk==0 then return #mg>0 and (not ec or ec:IsReleasable()) end
+					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+					local g=mg:Select(tp,1,1,nil)
+					if ec then g:AddCard(ec) end
+					Duel.Release(g,REASON_COST)
+				end
+end
 function cm.ChainLimitCost(original_cost)
 	return  function(e,tp,eg,ep,ev,re,r,rp,chk)
 					local effect_code=e:GetHandler():GetFlagEffectLabel(37564766)
