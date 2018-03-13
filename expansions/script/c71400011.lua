@@ -77,7 +77,7 @@ end
 function c71400011.condition2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	return rc:IsCode(71400026) and c:GetFlagEffect(1)>0
+	return rc:IsCode(71400026) and c:GetFlagEffect(1)>0 and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function c71400011.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
