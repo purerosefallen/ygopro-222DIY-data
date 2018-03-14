@@ -52,7 +52,7 @@ function cm.initial_effect(c)
 		e:SetLabel(0)
 	end)
 	e3:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
-		if not Duel.GetLocationCount(tp,LOCATION_PZONE)<2 then return end
+		if Duel.GetLocationCount(tp,LOCATION_PZONE)<2 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local g=Duel.SelectMatchingCard(tp,cm.pcfilter,tp,LOCATION_DECK,0,2,2,nil)
 		local pc=g:GetFirst()
