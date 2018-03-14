@@ -50,11 +50,11 @@ function cm.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local mg=Duel.GetFusionMaterial(tp):Filter(cm.mfilter,nil)
-	return c:CheckFusionMaterial(mg,nil,PLAYER_NONE)
+	return c:CheckFusionMaterial(mg,nil,tp)
 end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local mg=Duel.GetFusionMaterial(tp):Filter(cm.mfilter,nil)
-	local g1=Duel.SelectFusionMaterial(tp,c,mg,nil,PLAYER_NONE)
+	local g1=Duel.SelectFusionMaterial(tp,c,mg,nil,tp)
 	c:SetMaterial(g1)
 	Duel.Release(g1,REASON_COST+REASON_FUSION+REASON_MATERIAL)
 end
