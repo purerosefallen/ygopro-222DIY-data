@@ -1,4 +1,4 @@
-﻿ygopro_222.exe	16f1e14b6fb969d6a5e84584af1d268f
+﻿ygopro_222.exe	31cf24f4ba99c887fb3de12cc49e8445
 deck/2.10new_card1.ydk	d452e18743e45e89cd1f015ba12270ed
 deck/2.10new_card2.ydk	c25f8ad5aaa2b7fe135883c043a6c442
 deck/2.10new_card3.ydk	83d8980143c2c7391511b0db310091f2
@@ -19,7 +19,7 @@ deck/3.3new_card6.ydk	456c33f90ea4c36fa640a763e72ffdeb
 deck/3.3new_card7.ydk	18ca8df8d010a261367e67d324c0802e
 deck/3.3new_card8.ydk	2ffbcf9194c461da33d1dd2c602e9d7f
 expansions/222DIY.cdb	1507dd11622e5ee8b7717b042b5a6db3
-expansions/lflist.conf	c748dbcbb7b5c8f256acea73df10d45c
+expansions/lflist.conf	fbc14c4bfa901db30d4b3da913e4fa34
 expansions/strings.conf	a763600b8d39504f6e49843d9c021e74
 expansions/pics/08209710.jpg	ed0e60085631bfa641ffeebd6abbd910
 expansions/pics/1000400.jpg	6d8015d2ce5bc95f2165c68fc22440c1
@@ -5251,7 +5251,7 @@ expansions/script/c71400018.lua	77529f8e4c9123c7161484c0a8fb3f2e
 expansions/script/c71400019.lua	6e6a21b3798c3035e4bd5d46398cfbe9
 expansions/script/c71400020.lua	04b88c3faa8fe1c2233f8d0de409cf9f
 expansions/script/c71400021.lua	56531466590ee2f0dc78b090df4037f6
-expansions/script/c71400022.lua	c91bd06a1338cee6d87d252cc0c478f0
+expansions/script/c71400022.lua	85bb759057b2afde400313bb84a04754
 expansions/script/c71400023.lua	bae39956795cf45ac4abff2476d0f090
 expansions/script/c71400024.lua	256590577819140e7e40d809db44876b
 expansions/script/c71400025.lua	9e544ad26f56eaab4999ffbdff00cebe
@@ -5626,8 +5626,8 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	f763e11d40a123906abe1888606b0d2a
+update/filelist.txt	d99963c3017bea0c5f5bfd04a525881e
 update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
 update/update-push.bat	49e0e022872a85c5350b8ee445ecd4d8
 update/update-without-sound.bat	22d7b973d79ef9311213aeff61d93d7c
-update/version.txt	69c5926e6d4372408ce574c118d30e3b
+update/version.txt	572b6ddf520cd6b3bbda2c276624ea1b
