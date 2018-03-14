@@ -62,10 +62,10 @@ function c13257320.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257320.pcfilter(c)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
 end
 function c13257320.pccon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c13257320.pcfilter,1,nil)
+	return eg:IsExists(c13257320.pcfilter,1,nil,1-tp)
 end
 function c13257320.eqfilter(c,ec)
 	return c:IsSetCard(0x352) and c:IsType(TYPE_MONSTER) and c:CheckEquipTarget(ec)

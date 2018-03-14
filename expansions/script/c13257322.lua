@@ -12,10 +12,9 @@ function c13257322.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_DRAW)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e2:SetCode(EVENT_BATTLE_DESTROYED)
+	e2:SetCode(EVENT_DESTROYED)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
-	e2:SetCost(aux.bfgcost)
 	e2:SetCondition(c13257322.drcon)
 	e2:SetTarget(c13257322.drtg)
 	e2:SetOperation(c13257322.drop)
@@ -47,7 +46,7 @@ function c13257322.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c13257322.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c13257322.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=Duel.GetMZoneCount(1-tp)
+	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
 	if chk==0 then return ft>0 and not (ft>1 and Duel.IsPlayerAffectedByEffect(tp,59822133))
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,13257323,0,0x4011,400,400,1,RACE_MACHINE,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE,1-tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,ft,0,0)
@@ -55,7 +54,7 @@ function c13257322.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c13257322.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ft=Duel.GetMZoneCount(1-tp)
+	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
 	if ft>0 and not (ft>1 and Duel.IsPlayerAffectedByEffect(tp,59822133))
 		and Duel.IsPlayerCanSpecialSummonMonster(tp,13257323,0,0x4011,400,400,1,RACE_MACHINE,ATTRIBUTE_DARK,POS_FACEUP_DEFENSE,1-tp) then
 		local g=Group.CreateGroup()
@@ -67,7 +66,7 @@ function c13257322.spop(e,tp,eg,ep,ev,re,r,rp)
 			g:AddCard(token)
 		end
 		Duel.SpecialSummonComplete()
-		Duel.Hint(HINT_MUSIC,0,aux.Stringid(13257322,0))
+		Duel.Hint(11,0,aux.Stringid(13257322,0))
 		g:KeepAlive()
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -100,16 +99,16 @@ function c13257322.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(tg,REASON_EFFECT)
 end
 function c13257322.cfilter(c,tp)
-	return c:IsCode(13257323) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()~=tp
+	return c:IsCode(13257323) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()~=tp and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and not c:GetReasonCard():IsCode(13257322)))
 end
 function c13257322.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c13257322.cfilter,1,nil,tp)
+	return eg:IsExists(c13257322.cfilter,1,nil,tp) and Duel.GetMatchingGroupCount(Card.IsCode,tp,0,LOCATION_MZONE,nil,13257323)==0
 end
 function c13257322.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
 	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(1)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	Duel.SetTargetParam(2)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 end
 function c13257322.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)

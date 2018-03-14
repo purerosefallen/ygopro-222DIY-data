@@ -14,7 +14,6 @@ function c13257313.initial_effect(c)
 	e12:SetCode(EFFECT_IMMUNE_EFFECT)
 	e12:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e12:SetRange(LOCATION_SZONE)
-	e12:SetCondition(c13257313.econ)
 	e12:SetValue(c13257313.efilter)
 	c:RegisterEffect(e12)
 	--def up
@@ -41,11 +40,8 @@ end
 function c13257313.eqlimit(e,c)
 	return not c:GetEquipGroup():IsExists(Card.IsSetCard,1,e:GetHandler(),0x5352)
 end
-function c13257313.econ(e)
-	return e:GetHandler():GetEquipTarget()
-end
 function c13257313.efilter(e,re)
-	return e:GetHandlerPlayer()~=re:GetOwnerPlayer()
+	return e:GetHandler():GetEquipTarget()~=nil and e:GetHandlerPlayer()~=re:GetOwnerPlayer()
 end
 function c13257313.efilter1(e,te)
 	return te:GetOwnerPlayer()~=e:GetHandlerPlayer()

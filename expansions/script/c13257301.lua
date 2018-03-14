@@ -55,10 +55,10 @@ function c13257301.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257301.pcfilter(c)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
 end
 function c13257301.pccon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c13257301.pcfilter,1,nil)
+	return eg:IsExists(c13257301.pcfilter,1,nil,1-tp)
 end
 function c13257301.thfilter(c)
 	return c:IsSetCard(0x351) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

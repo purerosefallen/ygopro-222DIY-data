@@ -105,10 +105,10 @@ function c13257332.eqop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.EquipComplete()
 end
 function c13257332.pcfilter(c)
-	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
 end
 function c13257332.pccon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c13257332.pcfilter,1,nil)
+	return eg:IsExists(c13257332.pcfilter,1,nil,1-tp)
 end
 function c13257332.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
