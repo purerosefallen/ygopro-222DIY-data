@@ -54,7 +54,7 @@ function cm.spcon(e,c)
 end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local mg=Duel.GetFusionMaterial(tp):Filter(cm.mfilter,nil)
-	local g1=Duel.SelectFusionMaterial(tp,f,mg,nil,PLAYER_NONE)
+	local g1=Duel.SelectFusionMaterial(tp,c,mg,nil,PLAYER_NONE)
 	c:SetMaterial(g1)
 	Duel.Release(g1,REASON_COST+REASON_FUSION+REASON_MATERIAL)
 end
