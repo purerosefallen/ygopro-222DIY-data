@@ -22,6 +22,7 @@ function c71400023.initial_effect(c)
 	e2:SetCategory(CATEGORY_BANISH)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetCondition(aux.exccon)
 	e2:SetCost(aux.bfgcost)
@@ -92,6 +93,6 @@ function c71400023.op2(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	if sg:GetCount()==2 then
-		Duel.Remove(sg,REASON_EFFECT)
+		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 	end
 end
