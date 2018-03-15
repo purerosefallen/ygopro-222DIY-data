@@ -64,7 +64,7 @@ function c71400017.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c71400017.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	c=e:GetHandler()
-	local g=GetMatchingGroup(c71400017.filter2c,tp,LOCATION_GRAVE,0,nil)
+	local g=Duel.GetMatchingGroup(c71400017.filter2c,tp,LOCATION_GRAVE,0,nil)
 	if chk==0 then return c:IsAbleToRemoveAsCost() and g:GetClassCount(Card.GetCode)>4 end
 	local rg=Group.CreateGroup()
 	for i=1,5 do
