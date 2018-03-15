@@ -65,7 +65,7 @@ function c13257304.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c13257304.pcfilter(c)
+function c13257304.pcfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
 end
 function c13257304.pccon(e,tp,eg,ep,ev,re,r,rp)

@@ -27,12 +27,13 @@ function c60150813.initial_effect(c)
 	c:RegisterEffect(e4)
 	--special summon
 	local e5=Effect.CreateEffect(c)
-	e5:SetCategory(CATEGORY_TOHAND)
+	e5:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e5:SetDescription(aux.Stringid(60150813,1))
 	e5:SetType(EFFECT_TYPE_IGNITION)
 	e5:SetRange(LOCATION_SZONE)
 	e5:SetCountLimit(1,60150813)
 	e5:SetCost(c60150813.cost3)
+    e5:SetTarget(c60150813.target)
 	e5:SetOperation(c60150813.op3)
 	c:RegisterEffect(e5)
 end
@@ -53,8 +54,7 @@ function c60150813.cfilter(c)
 end
 function c60150813.cost3(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x1b,3,REASON_COST)
-		and Duel.IsExistingMatchingCard(c60150813.cfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,3,nil) 
-		and Duel.IsExistingMatchingCard(c60150813.filter2,tp,LOCATION_DECK,0,1,nil) end
+		and Duel.IsExistingMatchingCard(c60150813.cfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,3,nil) end
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	e:GetHandler():RemoveCounter(tp,0x1b,3,REASON_COST)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
@@ -63,6 +63,10 @@ function c60150813.cost3(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c60150813.filter2(c)
 	return c:IsSetCard(0x3b23) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsAbleToHand()
+end
+function c60150813.target(e,tp,eg,ep,ev,re,r,rp,chk)
+    if chk==0 then return Duel.IsExistingMatchingCard(c60150813.filter2,tp,LOCATION_DECK,0,1,nil) end
+    Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c60150813.op3(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

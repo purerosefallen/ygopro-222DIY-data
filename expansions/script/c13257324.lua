@@ -54,7 +54,7 @@ function c13257324.acfilter(c)
 	return c:IsFaceup() and (c:GetAttack()>0 or c:GetDefense()>0)
 end
 function c13257324.actg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c13257324.acfilter,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 end
 function c13257324.desfilter(c)
 	return c:IsFaceup() and (c:GetAttack()==0 or (c:GetDefense()==0 and not c:IsType(TYPE_LINK)))

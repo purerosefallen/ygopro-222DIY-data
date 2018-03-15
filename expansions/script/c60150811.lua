@@ -84,6 +84,6 @@ function c60150811.activate2(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
     local g=Duel.SelectMatchingCard(tp,c60150811.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
     if g:GetCount()>0 then
-        Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
+        Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
     end
 end

@@ -61,7 +61,7 @@ function c13257320.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function c13257320.pcfilter(c)
+function c13257320.pcfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
 end
 function c13257320.pccon(e,tp,eg,ep,ev,re,r,rp)

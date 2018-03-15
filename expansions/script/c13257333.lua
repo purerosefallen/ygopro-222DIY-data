@@ -52,7 +52,7 @@ end
 function c13257333.eqfilter(c,ec)
 	return c:IsSetCard(0x352) and c:IsType(TYPE_MONSTER) and c:CheckEquipTarget(ec)
 end
-function c13257333.pcfilter(c)
+function c13257333.pcfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
 end
 function c13257333.pccon(e,tp,eg,ep,ev,re,r,rp)

@@ -48,7 +48,7 @@ function c60150801.rmop2(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 		--xyz limit
 		local e4=Effect.CreateEffect(c)
-		e4:SetDescription(aux.Stringid(60150822,0))
+		e4:SetDescription(aux.Stringid(60150801,0))
 		e4:SetType(EFFECT_TYPE_SINGLE)
 		e4:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CLIENT_HINT)
 		e4:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)

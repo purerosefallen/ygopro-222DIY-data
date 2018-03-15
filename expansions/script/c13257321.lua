@@ -59,7 +59,7 @@ function c13257321.eqop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Equip(tp,tc,c)
 	end
 end
-function c13257321.pcfilter(c)
+function c13257321.pcfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
 end
 function c13257321.pccon(e,tp,eg,ep,ev,re,r,rp)
