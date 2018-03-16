@@ -93,7 +93,7 @@ end
 function c1160004.op4(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,1160004)
 	Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(1160004,1))  
-	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 	end

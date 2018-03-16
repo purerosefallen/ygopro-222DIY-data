@@ -88,6 +88,7 @@ end
 --
 function c1161007.val1_1(e,re)
 	local code=e:GetLabel()
+	local rc=re:GetHandler()
 	return re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsLocation(LOCATION_MZONE) and re:GetHandler():IsCode(code) and not rc:IsImmuneToEffect(e)
 end
 --
