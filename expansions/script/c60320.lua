@@ -1,4 +1,5 @@
 --落樱的和伞-春分
+xpcall(function() require("expansions/script/nef") end,function() require("script/nef") end)
 function c60320.initial_effect(c)
 	--link summon
 	Nef.AddLinkProcedureWithDesc(c,c60320.matfilter,1,1,nil,aux.Stringid(60320,0))
