@@ -1,10 +1,18 @@
 --落樱的和伞-春分
-xpcall(function() require("expansions/script/nef") end,function() require("script/nef") end)
 function c60320.initial_effect(c)
-	--link summon
-	Nef.AddLinkProcedureWithDesc(c,c60320.matfilter,1,1,nil,aux.Stringid(60320,0))
 	c:EnableReviveLimit()
 	--link summon
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_SPSUMMON_PROC)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
+	e1:SetRange(LOCATION_EXTRA)
+	e1:SetDescription(aux.Stringid(60320,0))
+	local f=c60320.matfilter
+	e1:SetCondition(Auxiliary.LinkCondition(f,1,1))
+	e1:SetOperation(Auxiliary.LinkOperation(f,1,1))
+	e1:SetValue(SUMMON_TYPE_LINK)
+	c:RegisterEffect(e1)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetDescription(aux.Stringid(60320,1))

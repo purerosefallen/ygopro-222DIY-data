@@ -5191,7 +5191,7 @@ expansions/script/c60159924.lua	6619985a0a107a146f9c2b8e67a29fc6
 expansions/script/c60159925.lua	c910fdf2a464862b5757f138b01d8719
 expansions/script/c60203.lua	53241188756e752fd3a9286d4ca6c771
 expansions/script/c60218.lua	6a668a978db7302065e40b514ebb0ef6
-expansions/script/c60320.lua	d6f675c173c0a3b2aa96d253044c7ff9
+expansions/script/c60320.lua	0be6639d449f25b18eab991da72e8dd2
 expansions/script/c60404.lua	7f60ee8a633966c2ca08f5b6c109acd3
 expansions/script/c60505.lua	158e1756565a99fd93788c1c6d4442dc
 expansions/script/c60605.lua	e541b8e6ca66e0bcf46913cb439f090d
@@ -5436,7 +5436,6 @@ expansions/script/c99600099.lua	76d64a71c75135d1bd92dfb056ad6f79
 expansions/script/c9990300.lua	3f5bee23ee070d717240da44528f7252
 expansions/script/c99998931.lua	97935b2773f0992c94ca924d5a5b82e1
 expansions/script/Millux.lua	936de77c94c7fec9193dd3e7312fedb7
-expansions/script/nef.lua	08aa31a3215cb95f665a711f0ee5d200
 sound/activate.wav	ddb25ba52e523b0ebc94d538a43d9bf9
 sound/addcounter.wav	6f9e1ad242ec8694a5c0c014dd4be00a
 sound/attack.wav	40e3a24a95429503df06352fb0dd1b92
@@ -5693,8 +5692,8 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	d880af6e2da66348bfb3b3322c79fba7
+update/filelist.txt	3702f71882462e29c97765773476bfa3
 update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
 update/update-push.bat	49e0e022872a85c5350b8ee445ecd4d8
 update/update-without-sound.bat	22d7b973d79ef9311213aeff61d93d7c
-update/version.txt	29e60eb0d536b644e6be37e4f8ef78be
+update/version.txt	e16f4a89c9ccd136943db53e54286b3d
