@@ -24,8 +24,8 @@ function c60151013.initial_effect(c)
 	e3:SetCountLimit(1)
 	e3:SetCode(EVENT_TO_HAND)
 	e3:SetCondition(c60151013.condition)
-	e3:SetTarget(c60151013.target)
-	e3:SetOperation(c60151013.operation)
+	e3:SetTarget(c60151013.target2)
+	e3:SetOperation(c60151013.operation2)
 	c:RegisterEffect(e3)
 end
 function c60151013.filter(c,e,tp)
@@ -71,16 +71,13 @@ end
 function c60151013.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c60151013.cfilter,1,nil,tp)
 end
-function c60151013.filter(c)
-	return c:IsAbleToHand()
-end
-function c60151013.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function c60151013.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
         and Duel.IsPlayerCanSpecialSummonMonster(tp,60151014,0,0x4011,2000,2000,6,RACE_FIEND,ATTRIBUTE_DARK) end
     Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
-function c60151013.operation(e,tp,eg,ep,ev,re,r,rp)
+function c60151013.operation2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
         or not Duel.IsPlayerCanSpecialSummonMonster(tp,60151014,0,0x4011,2000,2000,6,RACE_FIEND,ATTRIBUTE_DARK) then return end
     local token=Duel.CreateToken(tp,60151014)
