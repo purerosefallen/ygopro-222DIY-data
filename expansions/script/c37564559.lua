@@ -16,12 +16,8 @@ end
 function cm.filter(c,e)
 	return c:IsCode(37564765) and c:IsFaceup() and c:IsCanBeEffectTarget(e) and c:IsAbleToGrave()
 end
-function cm.gcheck(g,ft)
-	if ft<=0 and not g:IsExists(cm.mzfilter,-ft+1,nil) then return false end
-	return not g:IsExists(cm.filter1,1,nil,g)
-end
-function cm.mzfilter(c)
-	return c:GetSequence()<5
+function cm.gcheck(g,tp)
+	return Duel.GetMZoneCount(tp,g,tp)>0 not g:IsExists(cm.filter1,1,nil,g)
 end
 function cm.filter1(c,g)
 	return g:IsExists(cm.filter2,1,c,c:GetOriginalCode())
@@ -34,10 +30,9 @@ function cm.sfilter(c,e,tp)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
-	local ft=Duel.GetMZoneCount(tp)
 	local g=Duel.GetMatchingGroup(cm.filter,tp,LOCATION_MZONE,0,nil,e)
-	if chk==0 then return Duel.IsExistingMatchingCard(cm.sfilter,tp,LOCATION_DECK,0,1,nil,e,tp) and Senya.CheckGroup(g,cm.gcheck,nil,3,3,ft) end
-	local tg=Senya.SelectGroup(tp,HINTMSG_TOGRAVE,g,cm.gcheck,nil,3,3,ft)
+	if chk==0 then return Duel.IsExistingMatchingCard(cm.sfilter,tp,LOCATION_DECK,0,1,nil,e,tp) and Senya.CheckGroup(g,cm.gcheck,nil,3,3,tp) end
+	local tg=Senya.SelectGroup(tp,HINTMSG_TOGRAVE,g,cm.gcheck,nil,3,3,tp)
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
@@ -57,7 +52,6 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.SelectMatchingCard(tp,cm.sfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=sg:GetFirst()
 	if tc then
-		Duel.BreakEffect()
 		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
