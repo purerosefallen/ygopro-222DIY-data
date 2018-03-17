@@ -75,10 +75,13 @@ function Nef.AddXyzProcedureWithDesc(c,f,lv,ct,desc,maxct,alterf,op)
 	return e1
 end
 
+--no overwriting aux in 222
+--[[
 function Auxiliary.EnablePendulumAttribute(c,reg)
 	local argTable = {1}
 	return Nef.EnablePendulumAttributeSP(c,99,Auxiliary.TRUE,argTable,reg,nil)
 end
+]]
 
 function Nef.GetExtraPendulumEffect(c, code, count)
 	local e1=Effect.CreateEffect(c)
