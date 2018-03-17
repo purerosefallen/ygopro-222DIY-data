@@ -1,7 +1,7 @@
 --梅露可 纵牵的耀丝
 local m=50008110
 local cm=_G["c"..m]
-local mil=require("expansions/script/Millux")
+local mil=require("expansions/script/nef/Millux")
 cm.is_series_with_mlk=true
 function cm.initial_effect(c)
 	--link summon
@@ -86,7 +86,7 @@ function cm.regop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.disable(e,c)
-	return  c:GetAttack()<=2000 and (c:IsType(TYPE_EFFECT) or bit.band(c:GetOriginalType(),TYPE_EFFECT)==TYPE_EFFECT)
+	return  c:GetAttack()<2000 and (c:IsType(TYPE_EFFECT) or bit.band(c:GetOriginalType(),TYPE_EFFECT)==TYPE_EFFECT)
 end
 function cm.efilter(e,te)
 	return te:IsActiveType(TYPE_MONSTER) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
