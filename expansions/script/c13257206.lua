@@ -63,7 +63,7 @@ function c13257206.initial_effect(c)
 	e8:SetDescription(aux.Stringid(13257206,0))
 	e8:SetType(EFFECT_TYPE_IGNITION)
 	e8:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e8:SetRange(LOCATION_MZONE)
+	e8:SetRange(LOCATION_SZONE)
 	e8:SetCountLimit(1)
 	e8:SetCondition(c13257206.econ)
 	e8:SetTarget(c13257206.destg)
@@ -90,9 +90,13 @@ function c13257206.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetEquipTarget() and ep~=tp and c:GetFlagEffect(13257206)~=0
 end
 function c13257206.damop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():GetEquipTarget() then
-		Duel.Hint(HINT_CARD,0,13257206)
-		Duel.Damage(1-tp,e:GetHandler():GetFlagEffectLabel(13257200)*100,REASON_EFFECT)
+	local ec=e:GetHandler():GetEquipTarget()
+	if ec then
+		local ct=ec:GetFlagEffectLabel(13257200)*100
+		if ct>0 then
+			Duel.Hint(HINT_CARD,0,13257206)
+			Duel.Damage(1-tp,ct,REASON_EFFECT)
+		end
 	end
 end
 function c13257206.cfilter(c,tp)

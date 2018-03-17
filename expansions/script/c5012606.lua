@@ -22,17 +22,20 @@ function c5012606.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c5012606.filter(c,e,tp)
-	return c:IsSetCard(0x350) and c:IsAbleToRemoveAsCost() and Duel.GetLocationCountFromEx(tp,tp,c)>0 and Duel.IsExistingMatchingCard(c5012606.filter2,tp,LOCATION_GRAVE+LOCATION_MZONE,LOCATION_GRAVE+LOCATION_MZONE,5,c)
+	return c:IsSetCard(0x350) and c:IsAbleToRemoveAsCost() and Duel.GetLocationCountFromEx(tp,tp,c)>0 and Duel.IsExistingMatchingCard(c5012606.filter2,tp,LOCATION_GRAVE+LOCATION_ONFIELD,LOCATION_GRAVE+LOCATION_ONFIELD,5,c) and c:IsFaceup()
 end
 function c5012606.filter2(c)
-	return c:IsSetCard(0x350) and c:IsAbleToRemoveAsCost() and c:IsFaceup()
+	return c:IsSetCard(0x350) and c:IsAbleToRemoveAsCost() and c:IsFaceup() and c:IsFaceup()
 end
 function c5012606.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c5012606.filter,tp,LOCATION_GRAVE+LOCATION_MZONE,LOCATION_GRAVE+LOCATION_MZONE,1,nil,e,tp) end
+	local c=e:GetHandler()
+	if chk==0 then return Duel.IsExistingMatchingCard(c5012606.filter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,LOCATION_GRAVE+LOCATION_ONFIELD,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g1=Duel.SelectMatchingCard(tp,c5012606.filter,tp,LOCATION_GRAVE+LOCATION_MZONE,LOCATION_GRAVE+LOCATION_MZONE,1,1,nil,e,tp)
+	local g1=Duel.SelectMatchingCard(tp,c5012606.filter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,LOCATION_GRAVE+LOCATION_ONFIELD,1,1,c,e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g2=Duel.SelectMatchingCard(tp,c5012606.filter2,tp,LOCATION_GRAVE+LOCATION_MZONE,LOCATION_GRAVE+LOCATION_MZONE,5,5,g1:GetFirst(),e,tp)
+	local sg=g1:Clone()
+	sg:AddCard(c)
+	local g2=Duel.SelectMatchingCard(tp,c5012606.filter2,tp,LOCATION_GRAVE+LOCATION_ONFIELD,LOCATION_GRAVE+LOCATION_ONFIELD,5,5,sg,e,tp)
 	g1:Merge(g2)
 	Duel.Remove(g1,POS_FACEUP,REASON_COST)
 end
