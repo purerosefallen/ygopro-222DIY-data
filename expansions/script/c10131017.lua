@@ -27,7 +27,7 @@ function c10131017.linkfilter(c)
 	return c:IsType(TYPE_PENDULUM) and c:IsRace(RACE_WARRIOR)
 end
 function c10131017.repfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x5338)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsOnField() and c:IsSetCard(0x5338)
 		and (c:IsReason(REASON_BATTLE) or c:IsReason(REASON_EFFECT)) and not c:IsReason(REASON_REPLACE)
 end
 function c10131017.desfilter(c,e,tp)
@@ -56,7 +56,7 @@ function c10131017.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(tc,REASON_EFFECT+REASON_REPLACE)
 end
 function c10131017.filter(c,e,tp,zone)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and (c:IsAbleToHand() or (zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)))
+	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and (c:IsAbleToHand() or (zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone))) and c:IsSetCard(0x5338)
 end
 function c10131017.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c10131017.filter,tp,LOCATION_GRAVE+LOCATION_EXTRA,0,1,nil,e,tp,e:GetHandler():GetLinkedZone()) end

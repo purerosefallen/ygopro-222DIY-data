@@ -37,7 +37,7 @@ function c60150506.initial_effect(c)
 	c:RegisterEffect(e12)
 end
 function c60150506.filter(c)
-    return c:IsFaceup() and c:IsSetCard(0xab20) and c:GetCode()~=60150506
+    return c:IsFaceup() and c:IsRace(RACE_FIEND) and c:IsAttribute(ATTRIBUTE_LIGHT)
 end
 function c60150506.scon(e,c)
     if c==nil then return true end
@@ -59,11 +59,14 @@ function c60150506.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Overlay(sc,Group.FromCards(tc))
 		Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
 		sc:CompleteProcedure()
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-		sc:RegisterEffect(e1)
+		local ph=Duel.GetCurrentPhase()
+		if (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) then
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_CANNOT_ATTACK)
+			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+			sc:RegisterEffect(e1)
+		end
 	end
 end
 function c60150506.condition(e,tp,eg,ep,ev,re,r,rp)

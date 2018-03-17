@@ -21,12 +21,13 @@ function c33700042.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c33700042.splimit(e,c,sump,sumtype,sumpos,targetp)
-	if c:IsLevelAbove(4) then return false end
-	return bit.band(sumtype,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
+	if not bit.band(sumtype,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM then return end
+	return c:GetLevel()>=4
 end
 function c33700042.filter(c)
 	return not (c:IsFaceup() and c:IsLevelBelow(2))
 end
-function c33700042.con(e,tp,eg,ep,ev,re,r,rp,c)
+function c33700042.con(e)
+	local tp=e:GetHandlerPlayer()
 	return not Duel.IsExistingMatchingCard(c33700042.filter,tp,LOCATION_MZONE,0,1,nil)
 end

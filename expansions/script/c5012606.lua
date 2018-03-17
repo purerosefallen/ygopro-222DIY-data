@@ -21,21 +21,26 @@ function c5012606.initial_effect(c)
 	e2:SetOperation(c5012606.op)
 	c:RegisterEffect(e2)
 end
-function c5012606.filter(c)
-	return c:IsSetCard(0x250) and c:IsAbleToRemoveAsCost()
+function c5012606.filter(c,e,tp)
+	return c:IsSetCard(0x350) and c:IsAbleToRemoveAsCost() and Duel.GetLocationCountFromEx(tp,tp,c)>0 and Duel.IsExistingMatchingCard(c5012606.filter2,tp,LOCATION_GRAVE+LOCATION_MZONE,LOCATION_GRAVE+LOCATION_MZONE,5,c)
+end
+function c5012606.filter2(c)
+	return c:IsSetCard(0x350) and c:IsAbleToRemoveAsCost() and c:IsFaceup()
 end
 function c5012606.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c5012606.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,6,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c5012606.filter,tp,LOCATION_GRAVE+LOCATION_MZONE,LOCATION_GRAVE+LOCATION_MZONE,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c5012606.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,6,6,nil)
-	Duel.Remove(g,POS_FACEUP,REASON_COST)
+	local g1=Duel.SelectMatchingCard(tp,c5012606.filter,tp,LOCATION_GRAVE+LOCATION_MZONE,LOCATION_GRAVE+LOCATION_MZONE,1,1,nil,e,tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g2=Duel.SelectMatchingCard(tp,c5012606.filter2,tp,LOCATION_GRAVE+LOCATION_MZONE,LOCATION_GRAVE+LOCATION_MZONE,5,5,g1:GetFirst(),e,tp)
+	g1:Merge(g2)
+	Duel.Remove(g1,POS_FACEUP,REASON_COST)
 end
 function c5012606.spfilter(c,e,tp)
-	return c:IsSetCard(0x250) and c:IsCanBeSpecialSummoned(e,0,tp,true,true) and c:IsFacedown()
+	return c:IsSetCard(0x350) and c:IsCanBeSpecialSummoned(e,0,tp,true,true) and c:IsFacedown()
 end
 function c5012606.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0 and
-	Duel.IsExistingMatchingCard(c5012606.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c5012606.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c5012606.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -44,10 +49,13 @@ function c5012606.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sp=Duel.GetMatchingGroup(c5012606.spfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
 	local g=sp:RandomSelect(tp,1)
 	local tc=g:GetFirst()
-	if tc and Duel.SpecialSummon(tc,0,tp,tp,true,true,POS_FACEUP)~=0 and tc:IsType(TYPE_XYZ) and Duel.IsExistingMatchingCard(nil,tp,LOCATION_DECK,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(5012606,0)) then
-	   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	   local tg=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_DECK,0,1,2,nil)
-	   Duel.Overlay(tc,tg)
+	if tc and Duel.SpecialSummon(tc,0,tp,tp,true,true,POS_FACEUP)~=0 then
+	   tc:CompleteProcedure()
+	   if tc:IsType(TYPE_XYZ) and Duel.IsExistingMatchingCard(nil,tp,LOCATION_DECK,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(5012606,0)) then
+		  Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
+		  local tg=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_DECK,0,1,2,nil)
+		  Duel.Overlay(tc,tg)
+	   end
 	end
 end
 function c5012606.recost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -55,14 +63,14 @@ function c5012606.recost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c5012606.defilter(c)
-	return c:IsAbleToDeck() and c:IsSetCard(0x250) and c:IsFaceup()
+	return c:IsAbleToDeck() and c:IsSetCard(0x350) and c:IsFaceup()
 end
 function c5012606.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c5012606.defilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,0,0)
 end
 function c5012606.thfilter(c)
-	return c:IsAbleToHand() and c:IsSetCard(0x250) and c:IsFaceup() and c:IsType(TYPE_MONSTER)
+	return c:IsAbleToHand() and c:IsSetCard(0x350) and c:IsFaceup() and c:IsType(TYPE_MONSTER)
 end
 function c5012606.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)

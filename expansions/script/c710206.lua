@@ -5,16 +5,18 @@ function c710206.initial_effect(c)
 	c:EnableReviveLimit()
 	--to deck  
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(710206,5))
 	e1:SetCategory(CATEGORY_TODECK)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
-	e1:SetCondition(c710206.condition)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1,711206)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetTarget(c710206.target)
 	e1:SetOperation(c710206.operation)
 	c:RegisterEffect(e1)
 	--announce
 	local e2=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(710206,6))
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
@@ -30,9 +32,6 @@ function c710206.IsWindWheel(c)
 	return m and m.is_named_with_WindWheel
 end
 
-function c710206.condition(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
-end
 function c710206.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end
 	if chk==0 then return true end

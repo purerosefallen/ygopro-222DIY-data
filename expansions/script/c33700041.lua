@@ -22,22 +22,25 @@ function c33700041.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c33700041.cfilter(c,e,tp)
-	return  c:GetSummonPlayer()==tp and c:IsSummonType(SUMMON_TYPE_PENDULUM)
+	return  c:GetSummonPlayer()==tp and c:GetSummonType()==SUMMON_TYPE_PENDULUM
 		and (not e or c:IsRelateToEffect(e))
 end
 function c33700041.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c3700041.cfilter,1,nil,nil,tp)
+	local other=Duel.GetFieldCard(tp,LOCATION_SZONE,4-e:GetHandler():GetSequence())
+	if other==nil then return end
+	if other:GetSequence()==0 then scale=other:GetLeftScale() elseif other:GetSequence()==4 then scale=other:GetRightScale() end
+	return eg:IsExists(c33700041.cfilter,1,nil,nil,tp) and scale<2
 end
 function c33700041.spfilter(c,e,tp)
 	return c:GetLevel()==1 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c33700041.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetMZoneCount(tp)>0
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c33700041.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c33700041.spop(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetMZoneCount(tp)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 then return end
 	local g=Duel.GetMatchingGroup(c33700041.spfilter,tp,LOCATION_HAND,0,nil,e,tp)
   if g:GetCount()>0 then

@@ -1,9 +1,18 @@
 --千夜 女王
 function c60150617.initial_effect(c)
-	c:SetUniqueOnField(1,0,60150617)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x3b21),2)
 	c:EnableReviveLimit()
+	--tograve
+	local e4=Effect.CreateEffect(c)
+	e4:SetCategory(CATEGORY_TOGRAVE)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e4:SetProperty(EFFECT_FLAG_DELAY)
+    e3:SetCondition(c60150617.tgcon)
+	e4:SetTarget(c60150617.tgtg)
+	e4:SetOperation(c60150617.tgop)
+	c:RegisterEffect(e4)
 	--cannot be target/battle indestructable
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
@@ -27,6 +36,26 @@ function c60150617.initial_effect(c)
 	e7:SetTarget(c60150617.thtg)
 	e7:SetOperation(c60150617.thop)
 	c:RegisterEffect(e7)
+end
+function c60150617.tgcon(e,tp,eg,ep,ev,re,r,rp)
+    local c=e:GetHandler()
+    return c:IsSummonType(SUMMON_TYPE_LINK)
+end
+function c60150617.tgfilter(c)
+	return c:IsSetCard(0x3b21) and c:IsType(TYPE_MONSTER) 
+		and ((c:IsLocation(LOCATION_EXTRA) and c:IsFaceup()) or c:IsLocation(LOCATION_DECK)) and c:IsAbleToGrave()
+end
+function c60150617.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c60150617.tgfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil) end
+    Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK+LOCATION_EXTRA)
+end
+function c60150617.tgop(e,tp,eg,ep,ev,re,r,rp)
+	local sc=e:GetHandler():GetMaterialCount()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+    local g=Duel.SelectMatchingCard(tp,c60150617.tgfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,sc,nil)
+    if g:GetCount()>0 then
+        Duel.SendtoGrave(g,REASON_EFFECT)
+    end
 end
 function c60150617.tgvalue(e,re,rp)
 	return rp~=e:GetHandlerPlayer()

@@ -3,6 +3,13 @@ function c60150818.initial_effect(c)
     --link summon
     aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x3b23),3)
     c:EnableReviveLimit()
+	--spsummon condition
+    local e1=Effect.CreateEffect(c)
+    e1:SetType(EFFECT_TYPE_SINGLE)
+    e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+    e1:SetCode(EFFECT_SPSUMMON_CONDITION)
+    e1:SetValue(c60150818.linklimit)
+    c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -42,6 +49,9 @@ function c60150818.initial_effect(c)
     e5:SetRange(LOCATION_MZONE)
     e5:SetValue(c60150818.efilter)
     c:RegisterEffect(e5)
+end
+function c60150818.linklimit(e,se,sp,st)
+	return bit.band(st,SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
 end
 function c60150818.cfilter(c,tp)
 	return c:GetSummonPlayer()==tp
@@ -92,7 +102,7 @@ function c60150818.filter(c)
 	return c:IsFaceup() and c:GetBaseAttack()>0 and c:IsSetCard(0x3b23)
 end
 function c60150818.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp 
+	return Duel.GetTurnPlayer()==tp and g:FilterCount(c60150818.ccfilter,nil)>0
 end
 function c60150818.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -82,9 +82,15 @@ function c61221.drop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c61221.tgcon(e)
 	local eo=e:GetHandler():GetOverlayGroup()
-	local p1=eo:IsExists(Card.IsCode,1,nil,60105) or (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
-	return eo:FilterCount(Card.IsAttribute,nil,ATTRIBUTE_WATER)>=3
-		and p1 and Duel.GetTurnPlayer()==e:GetHandlerPlayer()
+	-- local p1=eo:IsExists(Card.IsCode,1,nil,60105) or (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
+	-- local p2=eo:IsExists(Card.IsCode,1,nil,60707) or Duel.GetTurnPlayer()==e:GetHandlerPlayer()
+	-- return eo:FilterCount(Card.IsAttribute,nil,ATTRIBUTE_WATER)>=3 and p1 and p2
+	local turn=Duel.GetTurnPlayer()==e:GetHandlerPlayer()
+	local mph=Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
+	local ct=eo:FilterCount(Card.IsAttribute,nil,ATTRIBUTE_WATER)>=3
+	local p1=(eo:IsExists(Card.IsCode,1,nil,60105) or mph) and turn
+	local p2=(eo:IsExists(Card.IsCode,1,nil,60707) or turn) and mph
+	return (ct and p1) or (ct and p2)
 end
 function c61221.disop(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp then return end

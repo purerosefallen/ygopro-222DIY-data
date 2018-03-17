@@ -1,6 +1,5 @@
 --千夜 黑白
 function c60150616.initial_effect(c)
-	c:SetUniqueOnField(1,0,60150616)
 	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x3b21),2,2)
@@ -63,6 +62,7 @@ function c60150616.tgfilter(c)
 end
 function c60150616.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c60150616.tgfilter,tp,LOCATION_DECK,0,1,nil) end
+    Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function c60150616.gfilter(c)
 	return c:IsType(TYPE_PENDULUM)
