@@ -2,6 +2,7 @@
 function c13257210.initial_effect(c)
 	--search
 	local e1=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(13257210,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
@@ -10,7 +11,7 @@ function c13257210.initial_effect(c)
 	e1:SetOperation(c13257210.operation)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(13257210,0))
+	e2:SetDescription(aux.Stringid(13257210,2))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_HAND)
@@ -95,6 +96,9 @@ function c13257210.spop(e,tp,eg,ep,ev,re,r,rp)
 	local e5=e3:Clone()
 	e5:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	Duel.RegisterEffect(e5,tp)
+end
+function c13257210.splimit(e,c)
+	return not c:IsSetCard(0x353)
 end
 function c13257210.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsAbleToDeck() end

@@ -30,11 +30,14 @@ function c12005010.thop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_INDESTRUCTABLE)
-	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,nil))
+	e1:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
+	e1:SetTarget(c12005010.etarget)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	e1:SetValue(1)
 	Duel.RegisterEffect(e1,tp)
+end
+function c12005010.etarget(e,c)
+	return c:IsRace(RACE_ALL)
 end
 function c12005010.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToExtraAsCost() end

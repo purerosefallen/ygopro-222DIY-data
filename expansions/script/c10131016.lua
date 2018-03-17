@@ -1,11 +1,18 @@
 --自由斗士-狂兽金雷虎
 function c10131016.initial_effect(c)
-	--Syn Xyz
+	--Xyz
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(10131016)
 	e1:SetRange(LOCATION_MZONE)
 	c:RegisterEffect(e1)
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetCode(EFFECT_XYZ_LEVEL)
+	e0:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e0:SetRange(LOCATION_MZONE)
+	e0:SetValue(c10131016.xyzlv)
+	c:RegisterEffect(e0)  
 	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(10131016,0))
@@ -32,6 +39,12 @@ function c10131016.initial_effect(c)
 	e3:SetTarget(c10131016.thtg)
 	e3:SetOperation(c10131016.thop)
 	c:RegisterEffect(e3)
+end
+function c10131016.xyzlv(e,c,rc)
+	local lv=e:GetHandler():GetLevel()
+	if c:IsSetCard(0x5338) then
+		return 4*65536+lv
+	else return lv end
 end
 function c10131016.cfilter(c,tp)
 	return c:IsSetCard(0x5338) and c:IsFaceup() and c:IsControler(tp)

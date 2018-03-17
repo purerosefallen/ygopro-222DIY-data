@@ -3,7 +3,7 @@ function c10131010.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c,true) 
 	--xyz summon
-	aux.AddXyzProcedureLevelFree(c,c10131010.xyzfilter,aux.TRUE,2,2)
+	aux.AddXyzProcedure(c,c10131010.xyzfilter,4,2)
 	c:EnableReviveLimit()
 	--tribute
 	local e1=Effect.CreateEffect(c)
@@ -41,8 +41,8 @@ c10131010.pendulum_level=4
 function c10131010.dacon(e)
 	return e:GetHandler():GetOverlayCount()>0
 end
-function c10131010.xyzfilter(c,xyzc)
-	return (c:IsRace(RACE_WARRIOR) and c:IsXyzLevel(xyzc,4)) or c:IsHasEffect(10131016)
+function c10131010.xyzfilter(c)
+	return c:IsRace(RACE_WARRIOR) or c:IsHasEffect(10131016)
 end
 function c10131010.descon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()

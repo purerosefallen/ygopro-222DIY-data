@@ -25,8 +25,7 @@ function c10173055.initial_effect(c)
 	e4:SetCategory(CATEGORY_TODECK)
 	e4:SetDescription(aux.Stringid(10173055,1))
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e4:SetTarget(c10173055.tdtg)
 	e4:SetOperation(c10173055.tdop)
@@ -57,7 +56,7 @@ end
 function c10173055.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local g,re=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS,CHAININFO_TRIGGERING_EFFECT)
-	if chk==0 then return c:IsFaceup() and c:GetReasonPlayer()~=tp and (not re or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) or not g:IsContains(c))  end
+	if chk==0 then return c:IsFaceup() and c:GetReasonPlayer()~=tp and (not re or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) or not g:IsContains(c)) end
 	return true
 end
 function c10173055.repop(e,tp,eg,ep,ev,re,r,rp)
@@ -68,8 +67,26 @@ function c10173055.tfcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c10173055.tfop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
+	local fid=c:GetFieldID()
+	if Duel.GetCurrentChain()==0 then
+	   Duel.Hint(HINT_CARD,0,10173055)
+	   if Duel.ReturnToField(c,POS_FACEUP_DEFENSE) then
+		  Duel.RaiseSingleEvent(c,EVENT_CUSTOM+10173055,e,0,tp,0,0)
+	   end
+	else
+	   local e1=Effect.CreateEffect(c)
+	   e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	   e1:SetCode(EVENT_CHAIN_SOLVED)
+	   e1:SetOperation(c10173055.op)
+	   e1:SetReset(RESET_PHASE+PHASE_END)
+	   Duel.RegisterEffect(e1,tp)
+	end
+end
+function c10173055.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,10173055)
+	local c=e:GetHandler()
 	if Duel.ReturnToField(c,POS_FACEUP_DEFENSE) then
 	   Duel.RaiseSingleEvent(c,EVENT_CUSTOM+10173055,e,0,tp,0,0)
 	end
+	e:Reset()
 end
