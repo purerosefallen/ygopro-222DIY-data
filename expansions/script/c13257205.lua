@@ -72,7 +72,7 @@ function c13257205.caop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ec=c:GetEquipTarget()
 	if not ec:IsRelateToBattle() or not c:IsRelateToEffect(e) then return end
-	Duel.ChainAttack()
+	ec:ChainAttack()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)

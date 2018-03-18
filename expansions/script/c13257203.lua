@@ -83,7 +83,7 @@ end
 function c13257203.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return c:GetAttackAnnouncedCount()==0 end
-	local e1=Effect.CreateEffect(e:GetHandler())
+	local e13=Effect.CreateEffect(e:GetHandler())
 	e13:SetType(EFFECT_TYPE_SINGLE)
 	e13:SetProperty(EFFECT_FLAG_OATH)
 	e13:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)

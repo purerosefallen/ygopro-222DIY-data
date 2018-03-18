@@ -39,7 +39,7 @@ function c13257207.cttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ec=eg:FilterCount(c13257207.ctfilter,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,ec,0,0x353)
 	--immune effect
-	local e4=Effect.CreateEffect(c)
+	local e4=Effect.CreateEffect(e:GetHandler())
 	e4:SetType(EFFECT_TYPE_FIELD)
 	e4:SetCode(EFFECT_IMMUNE_EFFECT)
 	e4:SetTargetRange(LOCATION_MZONE,0)
@@ -61,7 +61,7 @@ function c13257207.ctop(e,tp,eg,ep,ev,re,r,rp)
 	while tc do
 		tc:AddCounter(0x353,2)
 		--Destroy replace
-		local e1=Effect.CreateEffect(c)
+		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DESTROY_REPLACE)
 		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)

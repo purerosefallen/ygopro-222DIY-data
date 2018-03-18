@@ -42,8 +42,8 @@ function c10131016.initial_effect(c)
 end
 function c10131016.xyzlv(e,c,rc)
 	local lv=e:GetHandler():GetLevel()
-	if c:IsSetCard(0x5338) then
-		return 4*65536+lv
+	if rc:IsSetCard(0x5338) then
+		return 0x40000+lv
 	else return lv end
 end
 function c10131016.cfilter(c,tp)
