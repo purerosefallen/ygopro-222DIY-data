@@ -67,7 +67,6 @@ function c13257204.desop(e,tp,eg,ep,ev,re,r,rp)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
 		tc:RegisterEffect(e2)
-		Duel.Destroy(tc,REASON_EFFECT)
 		if tc:IsFaceup() and (tc:GetAttack()==0 or (tc:GetDefense()==0 and not tc:IsType(TYPE_LINK))) then
 			if Duel.Destroy(tc,REASON_EFFECT)~=0 then
 				Duel.Damage(1-tp,1000,REASON_EFFECT)

@@ -44,7 +44,7 @@ function c13257212.ctop(e,tp,eg,ep,ev,re,r,rp)
 		c:SetFlagEffectLabel(13257212,label+ev)
 	end
 	if c:GetFlagEffectLabel(13257212)>=2000 and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD+LOCATION_HAND,1,nil) then
-		local sg=Duel.SelectMatchingCard(1-tp,Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD+LOCATION_HAND,nil)
+		local sg=Duel.SelectMatchingCard(1-tp,Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD+LOCATION_HAND,1,1,nil)
 		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 		c:SetFlagEffectLabel(13257212,0)
 	end

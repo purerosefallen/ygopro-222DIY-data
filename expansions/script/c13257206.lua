@@ -181,6 +181,7 @@ function c13257206.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:GetControler()~=tp then
 		local g=Group.CreateGroup()
+		g:AddCard(tc)
 		local seq=tc:GetSequence()
 		if seq>0 then
 			local tc1=nil

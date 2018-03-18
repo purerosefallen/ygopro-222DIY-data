@@ -20,10 +20,12 @@ function c13257203.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(13257203,2))
 	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetRange(LOCATION_SZONE)
+	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetCost(c13257203.cost)
+	e3:SetTarget(c13257203.target)
 	e3:SetOperation(c13257203.operation)
 	c:RegisterEffect(e3)
 	local e4=Effect.CreateEffect(c)
@@ -64,7 +66,7 @@ function c13257203.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	local mg1=Duel.GetMatchingGroup(c13257203.otfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local sg=Group.CreateGroup()
 	if c:GetLevel()>6 then
-		if mg:GetCount()>0 and mg1:GetCount()==0 or (mg:GetCount()>0 and mg1:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(13257203,2))) then
+		if mg:GetCount()>0 and mg1:GetCount()==0 or (mg:GetCount()>0 and mg1:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(13257203,0))) then
 			sg=mg:Select(tp,1,1,nil)
 		else
 			sg=Duel.SelectTribute(tp,c,1,1,mg1)
