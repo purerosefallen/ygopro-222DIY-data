@@ -38,7 +38,7 @@ function c10131017.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(c10131017.repfilter,1,nil,tp)
 		and Duel.IsExistingMatchingCard(c10131017.desfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA,0,1,nil,e,tp) 
 	end
-	if Duel.SelectYesNo(tp,aux.Stringid(10131017,2)) then
+	if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
 		local g=Duel.SelectMatchingCard(tp,c10131017.desfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil,e,tp)
 		e:SetLabelObject(g:GetFirst())
@@ -51,6 +51,7 @@ function c10131017.repval(e,c)
 	return c10131017.repfilter(c,e:GetHandlerPlayer())
 end
 function c10131017.repop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,0,10131017)
 	local tc=e:GetLabelObject()
 	tc:SetStatus(STATUS_DESTROY_CONFIRMED,false)
 	Duel.Destroy(tc,REASON_EFFECT+REASON_REPLACE)
@@ -66,7 +67,7 @@ end
 function c10131017.operation(e,tp,eg,ep,ev,re,r,rp)
 	local zone=e:GetHandler():GetLinkedZone()
 	if zone<=0 then return end
-	Duel.Hint(HINT_MESSAGE,tp,HINTMSG_SELF)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
 	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c10131017.filter),tp,LOCATION_GRAVE+LOCATION_EXTRA,0,1,1,nil,e,tp,zone):GetFirst()
 	if not tc then return end
 	if tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone) and (not tc:IsAbleToHand() or Duel.SelectYesNo(tp,aux.Stringid(10131017,1))) then

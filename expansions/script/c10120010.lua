@@ -65,8 +65,7 @@ function cm.netg2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function cm.neop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) then
-	   local ct=eg:FilterCount(Card.IsAbleToHand,nil)
-	   if eg:GetCount()==ct and Duel.SelectYesNo(tp,aux.Stringid(m,2)) then
+	   if re:GetHandler():IsRelateToEffect(re) and re:GetHandler():IsAbleToHand() and Duel.SelectYesNo(tp,aux.Stringid(m,2)) then
 		  Duel.BreakEffect()
 		  Duel.SendtoHand(eg,nil,REASON_EFFECT)
 	   end

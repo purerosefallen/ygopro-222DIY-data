@@ -84,14 +84,14 @@ function c13257201.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257201.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetHandler():GetCounter(0x353)==0
+	return e:GetHandler():GetCounter(0x353)==0
 end
 function c13257201.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function c13257201.spfilter(c,e,tp)
-	return c:IsSetCard(0x353) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x353) and not c:IsCode(13257201) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c13257201.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1

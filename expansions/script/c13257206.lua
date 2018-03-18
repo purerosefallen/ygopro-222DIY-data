@@ -72,7 +72,11 @@ function c13257206.initial_effect(c)
 	
 end
 function c13257206.eqlimit(e,c)
-	return not (c:GetEquipGroup():FilterCount(Card.IsSetCard,nil,0x3354)>c:GetFlagEffectLabel(13257200)) and not (c:GetEquipGroup():GetSum(Card.GetLevel)>c:GetLevel())
+	local eg=c:GetEquipGroup()
+	if not eg:IsContains(e:GetHandler()) then
+		eg:AddCard(e:GetHandler())
+	end
+	return not (eg:FilterCount(Card.IsSetCard,nil,0x3354)>c:GetFlagEffectLabel(13257200)) and not (eg:GetSum(Card.GetLevel)>c:GetLevel())
 end
 function c13257206.econ(e)
 	return e:GetHandler():GetEquipTarget()

@@ -59,6 +59,7 @@ function c13257207.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(c13257207.ctfilter,nil,tp)
 	local tc=g:GetFirst()
 	while tc do
+		tc:EnableCounterPermit(0x353)
 		tc:AddCounter(0x353,2)
 		--Destroy replace
 		local e1=Effect.CreateEffect(e:GetHandler())

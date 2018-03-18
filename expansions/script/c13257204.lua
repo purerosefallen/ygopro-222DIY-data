@@ -38,7 +38,11 @@ function c13257204.initial_effect(c)
 	
 end
 function c13257204.eqlimit(e,c)
-	return (c:GetOriginalLevel()>=7) and not (c:GetEquipGroup():GetSum(Card.GetLevel)>c:GetLevel())
+	local eg=c:GetEquipGroup()
+	if not eg:IsContains(e:GetHandler()) then
+		eg:AddCard(e:GetHandler())
+	end
+	return (c:GetOriginalLevel()>=7) and not (eg:GetSum(Card.GetLevel)>c:GetLevel())
 end
 function c13257204.econ(e)
 	return e:GetHandler():GetEquipTarget()
