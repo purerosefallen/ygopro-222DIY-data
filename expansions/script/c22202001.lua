@@ -31,6 +31,7 @@ end
 function c22202001.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g1=Duel.GetMatchingGroup(Card.IsFacedown,tp,0,LOCATION_SZONE,nil)
+	if g1:GetCount()<1 then return end
 	Duel.ConfirmCards(tp,g1)
 	local g=g1:Filter(Card.IsType,nil,TYPE_TRAP)
 	if g:GetCount()>0 then
@@ -49,6 +50,7 @@ function c22202001.activate(e,tp,eg,ep,ev,re,r,rp)
 			tc=g:GetNext()
 		end
 		if Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(22202001,0)) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 			local dg=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 			Duel.Destroy(dg,REASON_EFFECT)
 		end
