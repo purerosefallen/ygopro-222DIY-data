@@ -33,7 +33,7 @@ function c12008007.thop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
 	   Duel.ConfirmCards(1-tp,g)
 	   if Duel.GetFlagEffect(tp,12008006)<=0 then return end
-	   local tg=Duel.GetMatchingGroup(c12008007.thfilter2,tp,LOCATION_DECK,0,nil)
+	   local tg=Duel.GetMatchingGroup(c12008007.thfilter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,nil)
 	   if tg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(12008007,0)) then
 		  Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		  local tg2=tg:Select(tp,1,1,nil)

@@ -49,16 +49,15 @@ end
 function c12006022.thop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
+	local e1=Effect.CreateEffect(tc)
+		  e1:SetType(EFFECT_TYPE_SINGLE)
+		  e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		  e1:SetValue(3000)
+		  e1:SetReset(RESET_EVENT+0x1ff0000)
+		  tc:RegisterEffect(e1)
 	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
-		 if Duel.SpecialSummon(c,0,tp,1-tp,false,false,POS_FACEUP_ATTACK)~=0 then
-				local e1=Effect.CreateEffect(tc)
-				e1:SetType(EFFECT_TYPE_SINGLE)
-				e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-				e1:SetValue(3000)
-				e1:SetReset(RESET_EVENT+0x1ff0000)
-				tc:RegisterEffect(e1)
-		end
-end
+		Duel.SpecialSummon(c,0,tp,1-tp,false,false,POS_FACEUP_ATTACK) 
+	end
 end
 function c12006022.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

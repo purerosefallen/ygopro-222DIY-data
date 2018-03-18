@@ -195,9 +195,9 @@ function c11200006.op(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetReset(RESET_PHASE+PHASE_END)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_SPELLCASTER))
 	e1:SetValue(900)
+	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 	--Def
 	local e2=e1:Clone()
@@ -207,18 +207,18 @@ function c11200006.op(e,tp,eg,ep,ev,re,r,rp)
 end
 end
 function c11200006.refilter(c)
-	return c:IsRace(RACE_SPELLCASTER) and c:IsReleasable()
+	return  c:IsReleasable()
 end
 function c11200006.refilter2(c)
-	return c:IsSetCard(0x134) and c:IsReleasable()
+	return c:IsRace(RACE_SPELLCASTER) and c:IsReleasable()
 end
 function c11200006.recon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local g=Duel.GetMatchingGroup(c11200006.refilter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(c11200006.filter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
 		and g:GetCount()>1 and g:IsExists(c11200006.refilter2,1,nil)
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,true)
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c11200006.reop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
@@ -226,5 +226,4 @@ function c11200006.reop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g2=Duel.SelectMatchingCard(tp,c11200006.refilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,g1:GetFirst())
 	g1:Merge(g2)
 	Duel.SendtoGrave(g1,REASON_COST)
-	e:GetHandler():CompleteProcedure()
 end

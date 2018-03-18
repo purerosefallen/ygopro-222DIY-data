@@ -27,6 +27,7 @@ function c12010045.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCost(c12010045.cost)
 	e1:SetTarget(c12010045.tg)
 	e1:SetOperation(c12010045.op)
 	c:RegisterEffect(e1)
@@ -36,7 +37,6 @@ function c12010045.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetCost(c12010045.spcost)
 	e2:SetTarget(c12010045.sptg)
@@ -48,10 +48,15 @@ function c12010045.val(c)
 	local n=Duel.GetLP(1-Duel.GetTurnPlayer())
 	return math.abs(m-n)
 end
+function c12010045.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:GetFlagEffect(12010045)==0 end
+	c:RegisterFlagEffect(12010045,RESET_CHAIN,0,1)
+end
 function c12010045.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c12010045.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c12010045.filter,tp,0,LOCATION_MZONE,1,nil) end
-	local g=Duel.SelectTarget(tp,c12010045.filter,tp,0,LOCATION_MZONE,1,1,nil)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c12010045.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c12010045.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
+	local g=Duel.SelectTarget(tp,c12010045.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler())
 end
 function c12010045.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
