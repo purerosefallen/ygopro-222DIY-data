@@ -5,3 +5,5 @@
 *.7z
 *.rar
 *.zip
+
+/expansions/pre-*.cdb
