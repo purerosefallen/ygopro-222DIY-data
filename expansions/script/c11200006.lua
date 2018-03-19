@@ -218,7 +218,7 @@ function c11200006.recon(e,c)
 	local g=Duel.GetMatchingGroup(c11200006.filter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
 		and g:GetCount()>1 and g:IsExists(c11200006.refilter2,1,nil)
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,true)
 end
 function c11200006.reop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

@@ -58,7 +58,7 @@ function c13257208.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Release(sg, REASON_SUMMON+REASON_MATERIAL)
 end
 function c13257208.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and bit.band(r,REASON_EFFECT)~=0
+	return ep~=tp -- and bit.band(r,REASON_EFFECT)~=0
 end
 function c13257208.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

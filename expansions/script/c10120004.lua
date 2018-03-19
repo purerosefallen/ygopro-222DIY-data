@@ -9,8 +9,9 @@ function cm.initial_effect(c)
 end
 function cm.ntg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetTargetPlayer(tp)
+	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(1000)
+	Duel.SetTargetCard(e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,0,0,tp,1000)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,0,0,e:GetHandler():GetLocation())
 end

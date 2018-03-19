@@ -9,7 +9,7 @@ function c60150617.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e4:SetProperty(EFFECT_FLAG_DELAY)
-    e3:SetCondition(c60150617.tgcon)
+	e4:SetCondition(c60150617.tgcon)
 	e4:SetTarget(c60150617.tgtg)
 	e4:SetOperation(c60150617.tgop)
 	c:RegisterEffect(e4)
@@ -29,17 +29,17 @@ function c60150617.initial_effect(c)
 	local e7=Effect.CreateEffect(c)
 	e7:SetCategory(CATEGORY_TOHAND+CATEGORY_DRAW)
 	e7:SetProperty(EFFECT_FLAG_CARD_TARGET)
-    e7:SetType(EFFECT_TYPE_QUICK_O)
-    e7:SetCode(EVENT_FREE_CHAIN)
-    e7:SetRange(LOCATION_MZONE)
+	e7:SetType(EFFECT_TYPE_QUICK_O)
+	e7:SetCode(EVENT_FREE_CHAIN)
+	e7:SetRange(LOCATION_MZONE)
 	e7:SetCountLimit(1)
 	e7:SetTarget(c60150617.thtg)
 	e7:SetOperation(c60150617.thop)
 	c:RegisterEffect(e7)
 end
 function c60150617.tgcon(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
-    return c:IsSummonType(SUMMON_TYPE_LINK)
+	local c=e:GetHandler()
+	return c:IsSummonType(SUMMON_TYPE_LINK)
 end
 function c60150617.tgfilter(c)
 	return c:IsSetCard(0x3b21) and c:IsType(TYPE_MONSTER) 
@@ -47,15 +47,15 @@ function c60150617.tgfilter(c)
 end
 function c60150617.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c60150617.tgfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil) end
-    Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK+LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK+LOCATION_EXTRA)
 end
 function c60150617.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local sc=e:GetHandler():GetMaterialCount()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-    local g=Duel.SelectMatchingCard(tp,c60150617.tgfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,sc,nil)
-    if g:GetCount()>0 then
-        Duel.SendtoGrave(g,REASON_EFFECT)
-    end
+	local g=Duel.SelectMatchingCard(tp,c60150617.tgfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,sc,nil)
+	if g:GetCount()>0 then
+		Duel.SendtoGrave(g,REASON_EFFECT)
+	end
 end
 function c60150617.tgvalue(e,re,rp)
 	return rp~=e:GetHandlerPlayer()

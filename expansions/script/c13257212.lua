@@ -33,7 +33,7 @@ function c13257212.initial_effect(c)
 	
 end
 function c13257212.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and bit.band(r,REASON_EFFECT)~=0
+	return ep~=tp
 end
 function c13257212.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

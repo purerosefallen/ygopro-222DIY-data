@@ -133,7 +133,7 @@ function c11200005.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c11200005.desfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x134) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0x134) and c:IsLocation(LOCATION_MZONE)
 end
 function c11200005.flcon(e,tp,eg,ep,ev,re,r,rp)
    if  not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end

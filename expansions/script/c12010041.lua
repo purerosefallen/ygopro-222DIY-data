@@ -7,7 +7,7 @@ function c12010041.initial_effect(c)
 	--fusion success
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(12010041,0))
-	e3:SetCategory(CATEGORY_TOHAND)
+	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetCountLimit(1,12010041)

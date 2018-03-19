@@ -13,7 +13,6 @@ function c12010031.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,12010031)
-	e2:SetCondition(c12010031.sccon)
 	e2:SetTarget(c12010031.sctg)
 	e2:SetOperation(c12010031.scop)
 	c:RegisterEffect(e2)
@@ -25,13 +24,9 @@ function c12010031.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_SZONE)
 	e3:SetCountLimit(1,12010031)
-	e3:SetCondition(c12010031.spcon)
 	e3:SetTarget(c12010031.sptg)
 	e3:SetOperation(c12010031.spop)
 	c:RegisterEffect(e3)
-end
-function c12010031.sccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function c12010031.scfilter(c)
 	return c:IsSetCard(0xfba) and c:IsType(TYPE_MONSTER) and c:IsReleasable()
@@ -59,9 +54,6 @@ function c12010031.scop(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 			end
 		end
 	end
-end
-function c12010031.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function c12010031.spcfilter(c)
 	return c:IsSetCard(0xfba) and c:IsType(TYPE_MONSTER) and c:IsReleasable()
