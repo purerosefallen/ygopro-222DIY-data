@@ -17,7 +17,7 @@ function c60150817.initial_effect(c)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCountLimit(1,60150817)
-    e1:SetCondition(c60150817.rmcon)
+	e1:SetCondition(c60150817.rmcon)
 	e1:SetTarget(c60150817.sptg2)
 	e1:SetOperation(c60150817.spop2)
 	c:RegisterEffect(e1)
@@ -38,7 +38,7 @@ function c60150817.filter(c,e,tp)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c60150817.rmcon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():IsPreviousLocation(LOCATION_GRAVE+LOCATION_REMOVED)
+	return e:GetHandler():IsPreviousLocation(LOCATION_GRAVE+LOCATION_REMOVED)
 end
 function c60150817.afilter(c)
 	return c:IsAbleToRemove()
@@ -57,7 +57,7 @@ function c60150817.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		local tc=Duel.GetFieldCard(tp,LOCATION_DECK,0)
-		if tc:IsAbleToRemove() and Duel.SelectYesNo(tp,aux.Stringid(60150817,0)) then
+		if tc:IsAbleToRemove() and Duel.SelectYesNo(tp,aux.Stringid(60150810,0)) then
 			Duel.BreakEffect()
 			Duel.DisableShuffleCheck()
 			Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
