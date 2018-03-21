@@ -89,19 +89,19 @@ function c1160023.op2(e,tp,eg,ep,ev,re,r,rp)
 					flag=bit.replace(flag,0x1,seq-2)
 					if not Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then flag=bit.replace(flag,0x1,seq-1) end
 					if not Duel.CheckLocation(tp,LOCATION_MZONE,seq+1) then flag=bit.replace(flag,0x1,seq+1) end
-				end	 
+				end  
 				if seq==4 then
 					flag=bit.replace(flag,0x1,seq-4)
 					flag=bit.replace(flag,0x1,seq-3)
 					flag=bit.replace(flag,0x1,seq-2)
 					if not Duel.CheckLocation(tp,LOCATION_MZONE,seq-1) then flag=bit.replace(flag,0x1,seq-1) end
-				end	 
+				end  
 				flag=bit.bxor(flag,0xff)
 				Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,flag)
 			end
 		end
 	end
-	local gn=g:Filter(c1160023.ofilter2_2,nil)	  
+	local gn=g:Filter(c1160023.ofilter2_2,nil)  
 	if gn:GetCount()>0 then
 		Duel.SendtoGrave(gn,REASON_EFFECT)
 		Duel.Recover(tp,gn:GetCount()*500,REASON_EFFECT)
@@ -126,13 +126,12 @@ function c1160023.op3(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e3_1)
 --
 		local fid=c:GetFieldID()
-		c:RegisterFlagEffect(tp,1160023,RESET_PHASE+PHASE_END,0,1,fid)
+		c:RegisterFlagEffect(1160023,RESET_PHASE+PHASE_END,0,1,fid)
 --
-		local e3_2=Effect.CreateEffect(e:GetHandler())
+		local e3_2=Effect.CreateEffect(c)
 		e3_2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e3_2:SetCode(EVENT_CHAINING)
 		e3_2:SetLabel(fid)
-		e3_2:SetLabelObject(c)
 		e3_2:SetCondition(c1160023.con3_2)
 		e3_2:SetOperation(c1160023.op3_2)
 		e3_2:SetReset(RESET_PHASE+PHASE_END,2)
@@ -142,9 +141,9 @@ function c1160023.op3(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1160023.con3_2(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local fid=e:GetLabel()
-	local c=e:GetLabelObject()
-	return re:GetHandler():GetControler()~=tp and not c:GetFlagEffectLabel(1160023)==fid
+	return re:GetHandler():GetControler()~=tp and c:GetFlagEffectLabel(1160023)~=fid
 end
 function c1160023.op3_2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(tp,200,REASON_EFFECT)

@@ -1,15 +1,15 @@
 --死神·死亡本能
 function c60150818.initial_effect(c)
-    --link summon
-    aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x3b23),3)
-    c:EnableReviveLimit()
+	--link summon
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x3b23),3)
+	c:EnableReviveLimit()
 	--spsummon condition
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_SINGLE)
-    e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-    e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-    e1:SetValue(c60150818.linklimit)
-    c:RegisterEffect(e1)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e1:SetValue(c60150818.linklimit)
+	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -33,7 +33,7 @@ function c60150818.initial_effect(c)
 	--die
 	local e8=Effect.CreateEffect(c)
 	e8:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-    e8:SetCode(EVENT_PHASE+PHASE_STANDBY)
+	e8:SetCode(EVENT_PHASE+PHASE_STANDBY)
 	e8:SetRange(LOCATION_MZONE)
 	e8:SetCountLimit(1)
 	e8:SetCondition(c60150818.descon)
@@ -42,13 +42,13 @@ function c60150818.initial_effect(c)
 	e8:SetOperation(c60150818.desop)
 	c:RegisterEffect(e8)
 	--immune
-    local e5=Effect.CreateEffect(c)
-    e5:SetType(EFFECT_TYPE_SINGLE)
-    e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-    e5:SetCode(EFFECT_IMMUNE_EFFECT)
-    e5:SetRange(LOCATION_MZONE)
-    e5:SetValue(c60150818.efilter)
-    c:RegisterEffect(e5)
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e5:SetCode(EFFECT_IMMUNE_EFFECT)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetValue(c60150818.efilter)
+	c:RegisterEffect(e5)
 end
 function c60150818.linklimit(e,se,sp,st)
 	return bit.band(st,SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
@@ -60,7 +60,7 @@ function c60150818.ccfilter(c)
 	return c:IsType(TYPE_XYZ)
 end
 function c60150818.condition(e,tp,eg,ep,ev,re,r,rp)
-    local g=e:GetHandler():GetMaterial()
+	local g=e:GetHandler():GetMaterial()
 	return eg:IsExists(c60150818.cfilter,1,nil,1-tp) and g:FilterCount(c60150818.ccfilter,nil)>0
 end
 function c60150818.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -80,7 +80,7 @@ function c60150818.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c60150818.damcon(e,tp,eg,ep,ev,re,r,rp)
-    local g=e:GetHandler():GetMaterial()
+	local g=e:GetHandler():GetMaterial()
 	return ep~=tp and re:IsActiveType(TYPE_MONSTER) and g:FilterCount(c60150818.ccfilter,nil)>0
 end
 function c60150818.damop(e,tp,eg,ep,ev,re,r,rp)
@@ -102,6 +102,7 @@ function c60150818.filter(c)
 	return c:IsFaceup() and c:GetBaseAttack()>0 and c:IsSetCard(0x3b23)
 end
 function c60150818.descon(e,tp,eg,ep,ev,re,r,rp)
+	local g=e:GetHandler():GetMaterial()
 	return Duel.GetTurnPlayer()==tp and g:FilterCount(c60150818.ccfilter,nil)>0
 end
 function c60150818.descost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -114,7 +115,7 @@ function c60150818.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c60150818.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c60150818.filter,tp,LOCATION_MZONE,0,nil)
-    local atk=g:GetSum(Card.GetBaseAttack)
+	local atk=g:GetSum(Card.GetBaseAttack)
 	local lp=Duel.GetLP(1-tp)
 	if lp>atk then
 		Duel.SetLP(1-tp,lp-atk)
@@ -128,5 +129,5 @@ function c60150818.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c60150818.efilter(e,te)
-    return te:IsActiveType(TYPE_SPELL+TYPE_TRAP)
+	return te:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end

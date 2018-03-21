@@ -115,9 +115,8 @@ function c60150544.desop2(e,tp,eg,ep,ev,re,r,rp,chk)
 		local sg=g3:Select(tp,1,1,nil)
 		if sg:GetCount()>0 then
 			Duel.HintSelection(sg)
-			Duel.Destroy(sg,REASON_EFFECT)
-			local tc=sg:GetFirst()
-			if tc:IsLocation(LOCATION_HAND) then
+			if Duel.Destroy(sg,REASON_EFFECT)~=0 then
+				local tc=sg:GetFirst()
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_FIELD)
 				e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)

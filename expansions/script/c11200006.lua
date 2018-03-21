@@ -41,12 +41,11 @@ function c11200006.initial_effect(c)
 	c:RegisterEffect(e3)
 	--sp
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetCode(EFFECT_SPSUMMON_PROC)
-	e4:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_GRAVE)
 	e4:SetCountLimit(1,11200006)
-	e4:SetCondition(c11200006.recon)
+	e4:SetTarget(c11200006.retg)
 	e4:SetOperation(c11200006.reop)
 	c:RegisterEffect(e4)
 end
@@ -212,18 +211,21 @@ end
 function c11200006.refilter2(c)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsReleasable()
 end
-function c11200006.recon(e,c)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local g=Duel.GetMatchingGroup(c11200006.filter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
-		and g:GetCount()>1 and g:IsExists(c11200006.refilter2,1,nil)
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,true)
+function c11200006.retg(e,tp,eg,ep,ev,re,r,rp,chk)
+	 local g=Duel.GetMatchingGroup(c11200006.filter,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)	
+	 if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
+	 and g:GetCount()>1 and g:IsExists(c11200006.refilter2,1,nil)
+	 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,true)
+end
+  Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,tp,LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_RELEASE,nil,2,tp,LOCATION_HAND+LOCATION_MZONE)
 end
 function c11200006.reop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 	local g1=Duel.SelectMatchingCard(tp,c11200006.refilter2,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
 	local g2=Duel.SelectMatchingCard(tp,c11200006.refilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,g1:GetFirst())
-	g1:Merge(g2)
-	Duel.SendtoGrave(g1,REASON_COST)
+	g2:Merge(g1)
+   if g2:GetCount()==2 and Duel.Release(g2,REASON_EFFECT) and  e:GetHandler():IsRelateToEffect(e) and Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,true,POS_FACEUP) then
+	e:GetHandler():CompleteProcedure()
+end
 end
