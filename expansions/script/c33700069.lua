@@ -59,7 +59,7 @@ function c33700069.aclimit(e,re,tp)
 end
 function c33700069.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>4
-		and Duel.GetDrawCount(tp)>0 and Duel.GetTurnCount()>1
+		and Duel.GetDrawCount(tp)>0 and Duel.GetTurnCount()>1 and e:GetHandler():IsLocation(LOCATION_HAND)
 end
 function c33700069.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then 
