@@ -21,6 +21,7 @@ function c13254115.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(13254115,1))
+	e3:SetCategory(CATEGORY_REMOVE)
 	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_REMOVE)
@@ -61,7 +62,7 @@ function c13254115.refilter(c)
 	return c:IsAbleToRemove()
 end
 function c13254115.retg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and c13254115.refilter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c13254115.refilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c13254115.refilter,tp,0,LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectTarget(tp,c13254115.refilter,tp,0,LOCATION_GRAVE,1,1,nil)

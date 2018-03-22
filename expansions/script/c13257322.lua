@@ -27,14 +27,14 @@ function c13257322.counterfilter(c)
 end
 function c13257322.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(13257322,tp,ACTIVITY_SPSUMMON)==0 end
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
-	e1:SetTargetRange(1,0)
-	e1:SetTarget(c13257322.splimit)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)
+	local e3=Effect.CreateEffect(e:GetHandler())
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
+	e3:SetTargetRange(1,0)
+	e3:SetTarget(c13257322.splimit)
+	e3:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e3,tp)
 end
 function c13257322.splimit(e,c,sump,sumtype,sumpos,targetp)
 	return c:IsLocation(LOCATION_EXTRA)
@@ -98,11 +98,11 @@ function c13257322.desop(e,tp,eg,ep,ev,re,r,rp)
 	g:DeleteGroup()
 	Duel.Destroy(tg,REASON_EFFECT)
 end
-function c13257322.cfilter(c,tp)
-	return c:IsCode(13257323) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()~=tp and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and not c:GetReasonCard():IsCode(13257322)))
+function c13257322.cfilter1(c,tp,re)
+	return c:IsCode(13257323) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()~=tp and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and not re:GetHandler():IsCode(13257322)))
 end
 function c13257322.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c13257322.cfilter,1,nil,tp) and Duel.GetMatchingGroupCount(Card.IsCode,tp,0,LOCATION_MZONE,nil,13257323)==0
+	return eg:IsExists(c13257322.cfilter1,1,nil,tp,re) and Duel.GetMatchingGroupCount(Card.IsCode,tp,0,LOCATION_MZONE,nil,13257323)==0
 end
 function c13257322.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end

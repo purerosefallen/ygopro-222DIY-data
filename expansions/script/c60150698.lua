@@ -49,18 +49,30 @@ function c60150698.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 		if ct1<ct2 then
 			local sg=Duel.GetMatchingGroup(c60150698.filter0,tp,LOCATION_EXTRA,0,nil,e)
 			mg1:Merge(sg)
-		end
-		local res=Duel.IsExistingMatchingCard(c60150698.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)
-		if not res then
-			local ce=Duel.GetChainMaterial(tp)
-			if ce~=nil then
-				local fgroup=ce:GetTarget()
-				local mg2=fgroup(ce,e,tp)
-				local mf=ce:GetValue()
-				res=Duel.IsExistingMatchingCard(c60150698.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg2,mf,chkf)
+			local res=Duel.IsExistingMatchingCard(c60150698.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)
+			if not res then
+				local ce=Duel.GetChainMaterial(tp)
+				if ce~=nil then
+					local fgroup=ce:GetTarget()
+					local mg2=fgroup(ce,e,tp)
+					local mf=ce:GetValue()
+					res=Duel.IsExistingMatchingCard(c60150698.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg2,mf,chkf)
+				end
 			end
+			return res
+		else
+			local res=Duel.IsExistingMatchingCard(c60150698.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)
+			if not res then
+				local ce=Duel.GetChainMaterial(tp)
+				if ce~=nil then
+					local fgroup=ce:GetTarget()
+					local mg2=fgroup(ce,e,tp)
+					local mf=ce:GetValue()
+					res=Duel.IsExistingMatchingCard(c60150698.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg2,mf,chkf)
+				end
+			end
+			return res
 		end
-		return res
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
@@ -77,63 +89,118 @@ function c60150698.activate2(e,tp,eg,ep,ev,re,r,rp)
 	mg1:Merge(mgg)
 	local ct1=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD+LOCATION_HAND,0)
 	local ct2=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD+LOCATION_HAND)
-		if ct1<ct2 then
+	if ct1<ct2 then
 		local sg=Duel.GetMatchingGroup(c60150698.filter0,tp,LOCATION_EXTRA,0,nil,e,true)
 		mg1:Merge(sg)
-	end
-	local sg1=Duel.GetMatchingGroup(c60150698.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
-	local mg2=nil
-	local sg2=nil
-	local ce=Duel.GetChainMaterial(tp)
-	if ce~=nil then
-		local fgroup=ce:GetTarget()
-		mg2=fgroup(ce,e,tp)
-		local mf=ce:GetValue()
-		sg2=Duel.GetMatchingGroup(c60150698.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg2,mf,chkf)
-	end
-	if sg1:GetCount()>0 or (sg2~=nil and sg2:GetCount()>0) then
-		local sg=sg1:Clone()
-		if sg2 then sg:Merge(sg2) end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local tg=sg:Select(tp,1,1,nil)
-		local tc=tg:GetFirst()
-		if sg1:IsContains(tc) and (sg2==nil or not sg2:IsContains(tc) or not Duel.SelectYesNo(tp,ce:GetDescription())) then
-			local mg1=Duel.SelectFusionMaterial(tp,tc,mg1,nil,chkf)
-			tc:SetMaterial(mg1)
-			local mtc=mg1:GetFirst()
-			while mtc do
-					if not mtc:IsFaceup() or mtc:IsLocation(LOCATION_EXTRA) then Duel.ConfirmCards(1-tp,mtc) end
-					mtc=mg1:GetNext()
-				end
-			local g=mg1:Filter(c60150698.gfilter,nil)
-			if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(60150602,0)) then
-				Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(60150602,1))
-				local sg=g:Select(tp,1,g:GetCount(),nil)
-				local gtc=sg:GetFirst()
-				while gtc do
-					mg1:RemoveCard(gtc)
-					gtc=sg:GetNext()
-				end
-				Duel.SendtoExtraP(sg,nil,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
-			end
-			local g2=mg1:Filter(c60150698.gfilter2,nil)
-			if g2:GetCount()>0 then
-				local gtc2=g2:GetFirst()
-				while gtc2 do
-					mg1:RemoveCard(gtc2)
-					gtc2=g2:GetNext()
-				end
-				Duel.SendtoGrave(g2,nil,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
-			end
-			Duel.SendtoDeck(mg1,nil,2,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
-			Duel.BreakEffect()
-			Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
-		else
-			local mat2=Duel.SelectFusionMaterial(tp,tc,mg2,nil,chkf)
-			local fop=ce:GetOperation()
-			fop(ce,e,tp,tc,mat2)
+		local sg1=Duel.GetMatchingGroup(c60150698.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
+		local mg2=nil
+		local sg2=nil
+		local ce=Duel.GetChainMaterial(tp)
+		if ce~=nil then
+			local fgroup=ce:GetTarget()
+			mg2=fgroup(ce,e,tp)
+			local mf=ce:GetValue()
+			sg2=Duel.GetMatchingGroup(c60150698.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg2,mf,chkf)
 		end
-		tc:CompleteProcedure()
+		if sg1:GetCount()>0 or (sg2~=nil and sg2:GetCount()>0) then
+			local sg=sg1:Clone()
+			if sg2 then sg:Merge(sg2) end
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local tg=sg:Select(tp,1,1,nil)
+			local tc=tg:GetFirst()
+			if sg1:IsContains(tc) and (sg2==nil or not sg2:IsContains(tc) or not Duel.SelectYesNo(tp,ce:GetDescription())) then
+				local mg1=Duel.SelectFusionMaterial(tp,tc,mg1,nil,chkf)
+				tc:SetMaterial(mg1)
+				local mtc=mg1:GetFirst()
+				while mtc do
+						if not mtc:IsFaceup() or mtc:IsLocation(LOCATION_EXTRA) then Duel.ConfirmCards(1-tp,mtc) end
+						mtc=mg1:GetNext()
+					end
+				local g=mg1:Filter(c60150698.gfilter,nil)
+				if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(60150602,0)) then
+					Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(60150602,1))
+					local sg=g:Select(tp,1,g:GetCount(),nil)
+					local gtc=sg:GetFirst()
+					while gtc do
+						mg1:RemoveCard(gtc)
+						gtc=sg:GetNext()
+					end
+					Duel.SendtoExtraP(sg,nil,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+				end
+				local g2=mg1:Filter(c60150698.gfilter2,nil)
+				if g2:GetCount()>0 then
+					local gtc2=g2:GetFirst()
+					while gtc2 do
+						mg1:RemoveCard(gtc2)
+						gtc2=g2:GetNext()
+					end
+					Duel.SendtoGrave(g2,nil,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+				end
+				Duel.SendtoDeck(mg1,nil,2,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+				Duel.BreakEffect()
+				Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
+			else
+				local mat2=Duel.SelectFusionMaterial(tp,tc,mg2,nil,chkf)
+				local fop=ce:GetOperation()
+				fop(ce,e,tp,tc,mat2)
+			end
+			tc:CompleteProcedure()
+		end
+	else
+		local sg1=Duel.GetMatchingGroup(c60150698.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
+		local mg2=nil
+		local sg2=nil
+		local ce=Duel.GetChainMaterial(tp)
+		if ce~=nil then
+			local fgroup=ce:GetTarget()
+			mg2=fgroup(ce,e,tp)
+			local mf=ce:GetValue()
+			sg2=Duel.GetMatchingGroup(c60150698.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg2,mf,chkf)
+		end
+		if sg1:GetCount()>0 or (sg2~=nil and sg2:GetCount()>0) then
+			local sg=sg1:Clone()
+			if sg2 then sg:Merge(sg2) end
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local tg=sg:Select(tp,1,1,nil)
+			local tc=tg:GetFirst()
+			if sg1:IsContains(tc) and (sg2==nil or not sg2:IsContains(tc) or not Duel.SelectYesNo(tp,ce:GetDescription())) then
+				local mg1=Duel.SelectFusionMaterial(tp,tc,mg1,nil,chkf)
+				tc:SetMaterial(mg1)
+				local mtc=mg1:GetFirst()
+				while mtc do
+						if not mtc:IsFaceup() or mtc:IsLocation(LOCATION_EXTRA) then Duel.ConfirmCards(1-tp,mtc) end
+						mtc=mg1:GetNext()
+					end
+				local g=mg1:Filter(c60150698.gfilter,nil)
+				if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(60150602,0)) then
+					Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(60150602,1))
+					local sg=g:Select(tp,1,g:GetCount(),nil)
+					local gtc=sg:GetFirst()
+					while gtc do
+						mg1:RemoveCard(gtc)
+						gtc=sg:GetNext()
+					end
+					Duel.SendtoExtraP(sg,nil,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+				end
+				local g2=mg1:Filter(c60150698.gfilter2,nil)
+				if g2:GetCount()>0 then
+					local gtc2=g2:GetFirst()
+					while gtc2 do
+						mg1:RemoveCard(gtc2)
+						gtc2=g2:GetNext()
+					end
+					Duel.SendtoGrave(g2,nil,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+				end
+				Duel.SendtoDeck(mg1,nil,2,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+				Duel.BreakEffect()
+				Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
+			else
+				local mat2=Duel.SelectFusionMaterial(tp,tc,mg2,nil,chkf)
+				local fop=ce:GetOperation()
+				fop(ce,e,tp,tc,mat2)
+			end
+			tc:CompleteProcedure()
+		end
 	end
 end
 function c60150698.negcon(e,tp,eg,ep,ev,re,r,rp)

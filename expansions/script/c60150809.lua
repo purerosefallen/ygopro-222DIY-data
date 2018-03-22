@@ -1,8 +1,8 @@
 --真正的虚无-爱莎
 function c60150809.initial_effect(c)
 	--link summon
-    aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x3b23),2)
-    c:EnableReviveLimit()
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x3b23),2)
+	c:EnableReviveLimit()
 	--除外1
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -40,16 +40,16 @@ function c60150809.initial_effect(c)
 	e4:SetOperation(c60150809.drop4)
 	c:RegisterEffect(e4)
 	--indes
-    local e5=Effect.CreateEffect(c)
-    e5:SetType(EFFECT_TYPE_SINGLE)
-    e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-    e5:SetRange(LOCATION_MZONE)
-    e5:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-    e5:SetValue(1)
-    c:RegisterEffect(e5)
-    local e6=e5:Clone()
-    e6:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-    c:RegisterEffect(e6)
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e5:SetValue(1)
+	c:RegisterEffect(e5)
+	local e6=e5:Clone()
+	e6:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	c:RegisterEffect(e6)
 end
 function c60150809.efilter(e,te)
 	return te:IsActiveType(TYPE_TRAP)
@@ -93,37 +93,43 @@ function c60150809.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_HAND)
 end
 function c60150809.drop(e,tp,eg,ep,ev,re,r,rp)
-	if eg:IsExists(c60150809.sfilter,1,nil,1-tp) then
+	if eg:IsExists(c60150809.sfilter,1,nil,1-tp) and Duel.GetFieldGroupCount(tp,0,LOCATION_GRAVE)>0 then
 		Duel.Hint(HINT_CARD,0,60150809)
-		local g=Duel.GetFieldCard(1-tp,LOCATION_GRAVE,Duel.GetFieldGroupCount(1-tp,LOCATION_GRAVE,0)-1)
-		Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)
+		local tc=Duel.GetFieldCard(1-tp,LOCATION_GRAVE,Duel.GetFieldGroupCount(1-tp,LOCATION_GRAVE,0)-1)
+		if tc then
+			Duel.Remove(tc,POS_FACEDOWN,REASON_EFFECT)
+		end
 	end
 end
 function c60150809.drcon2(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_GRAVE)
 end
 function c60150809.drop2(e,tp,eg,ep,ev,re,r,rp)
-	if eg:IsExists(c60150809.sfilter,1,nil,1-tp) then
+	if eg:IsExists(c60150809.sfilter,1,nil,1-tp) and Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0 then
 		Duel.Hint(HINT_CARD,0,60150809)
-		local g=Duel.GetFieldCard(1-tp,LOCATION_DECK,Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0)-1)
-		Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)
+		local tc=Duel.GetFieldCard(1-tp,LOCATION_DECK,Duel.GetFieldGroupCount(1-tp,LOCATION_DECK,0)-1)
+		if tc then
+			Duel.Remove(tc,POS_FACEDOWN,REASON_EFFECT)
+		end
 	end
 end
 function c60150809.drcon3(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_DECK)
 end
 function c60150809.drop3(e,tp,eg,ep,ev,re,r,rp)
-	if eg:IsExists(c60150809.sfilter,1,nil,1-tp) then
+	if eg:IsExists(c60150809.sfilter,1,nil,1-tp) and Duel.GetFieldGroupCount(tp,0,LOCATION_EXTRA)>0 then
 		Duel.Hint(HINT_CARD,0,60150809)
-		local g=Duel.GetFieldCard(1-tp,LOCATION_EXTRA,Duel.GetFieldGroupCount(1-tp,LOCATION_EXTRA,0)-1)
-		Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)
+		local tc=Duel.GetFieldCard(1-tp,LOCATION_EXTRA,Duel.GetFieldGroupCount(1-tp,LOCATION_EXTRA,0)-1)
+		if tc then
+			Duel.Remove(tc,POS_FACEDOWN,REASON_EFFECT)
+		end
 	end
 end
 function c60150809.drcon4(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_EXTRA)
 end
 function c60150809.drop4(e,tp,eg,ep,ev,re,r,rp)
-	if eg:IsExists(c60150809.sfilter,1,nil,1-tp) then
+	if eg:IsExists(c60150809.sfilter,1,nil,1-tp) and Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 then
 		Duel.Hint(HINT_CARD,0,60150809)
 		local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND):RandomSelect(tp,1)
 		Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)

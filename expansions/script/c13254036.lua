@@ -59,7 +59,7 @@ function c13254036.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(0)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e1)
-		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,0,0)
+		Duel.ChangePosition(tc,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE,POS_FACEUP_DEFENSE,POS_FACEDOWN_DEFENSE)
 		tc=g:GetNext()
 	end
 end
