@@ -103,7 +103,7 @@ function c1156009.cfilter3(c)
 	return c:IsType(TYPE_MONSTER)
 end
 function c1156009.con3(e)
-	return e:GetHandler():GetLinkedGroup():FilterCount(c1156009.cfilter3,nil)==0
+	return e:GetHandler():GetLinkedGroup():FilterCount(c1156009.cfilter3,nil)<1
 end
 --
 function c1156009.sumlimit6(e,c,sump,sumtype,sumpos,targetp)
@@ -111,7 +111,7 @@ function c1156009.sumlimit6(e,c,sump,sumtype,sumpos,targetp)
 end
 --
 function c1156009.con7(e)
-	return Duel.GetTurnPlayer()==e:GetHandler():GetControler()
+	return Duel.GetTurnPlayer()==e:GetHandler():GetControler() and e:GetHandler():GetLinkedGroup():FilterCount(c1156009.cfilter3,nil)<1
 end
 --
 function c1156009.tg7(e,c)
