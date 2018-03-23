@@ -23,7 +23,7 @@ function c12005008.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
 	end
 end
-function c12005008.filter(c)
+function c12005008.filter1(c)
 	return c:IsSetCard(0xfbb)
 end
 function c12005008.sfilter(c,e,tp)
