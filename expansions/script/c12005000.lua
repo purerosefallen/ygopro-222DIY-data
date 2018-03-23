@@ -60,7 +60,7 @@ function c12005000.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoHand(c,nil,REASON_COST)
 end
 function c12005000.thfilter(c)
-	return c:IsSetCard(0xfb0) and c:IsAbleToHand()
+	return c:IsSetCard(0xfb0) and c:IsAbleToHand() and c:IsType(TYPE_TRAP)
 end
 function c12005000.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c12005000.thfilter,tp,LOCATION_DECK,0,1,nil) end
