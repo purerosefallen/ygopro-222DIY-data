@@ -15,7 +15,7 @@ function c71400020.filter1(c)
 	return c:IsSetCard(0x714)
 end
 function c71400020.filter2(c,tp)
-	return c:IsType(TYPE_FIELD) and c:GetActivateEffect():IsActivatable(tp)
+	return c:IsType(TYPE_FIELD) and c:GetActivateEffect():IsActivatable(tp,true)
 end
 function c71400020.filter3(c,e,tp)
 	return c:IsSetCard(0x714) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

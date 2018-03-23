@@ -31,7 +31,7 @@ function c71400023.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c71400023.filter1(c,tp)
-	return c:IsType(TYPE_FIELD) and c:GetActivateEffect():IsActivatable(tp) and c:IsSetCard(0x3714)
+	return c:IsType(TYPE_FIELD) and c:GetActivateEffect():IsActivatable(tp,true) and c:IsSetCard(0x3714)
 end
 function c71400023.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c71400023.filter1,tp,LOCATION_DECK,0,1,nil,tp) end

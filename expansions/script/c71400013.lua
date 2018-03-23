@@ -38,7 +38,7 @@ function c71400013.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return tc and tc:IsFaceup() and tc:IsSetCard(0x3714)
 end
 function c71400013.filter1(c,tp)
-	return c:IsType(TYPE_FIELD) and c:GetActivateEffect():IsActivatable(tp) and c:IsSetCard(0xb714)
+	return c:IsType(TYPE_FIELD) and c:GetActivateEffect():IsActivatable(tp,true) and c:IsSetCard(0xb714)
 end
 function c71400013.filter1a(c)
 	return c:IsFaceup() and c:IsAbleToGrave()

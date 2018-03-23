@@ -57,7 +57,7 @@ function c71400001.activate2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c71400001.filter1(c,tp)
-	return c:IsType(TYPE_FIELD) and c:GetActivateEffect():IsActivatable(tp) and c:IsSetCard(0xb714)
+	return c:IsType(TYPE_FIELD) and c:GetActivateEffect():IsActivatable(tp,true) and c:IsSetCard(0xb714)
 end
 function c71400001.filter2(c,tp)
 	return c:IsSetCard(0x714) and c:IsAbleToHand() and not c:IsCode(71400001)
@@ -205,7 +205,7 @@ function yume.YumeFieldActivationLimit(e,re,tp)
 end
 --Field Activation
 function yume.FieldActivationFilter(c,tp,num,ft)
-	local flag=c:IsType(TYPE_FIELD) and c:GetActivateEffect():IsActivatable(tp) and not c:IsCode(num)
+	local flag=c:IsType(TYPE_FIELD) and c:GetActivateEffect():IsActivatable(tp,true) and not c:IsCode(num)
 	if ft==0 then return flag and c:IsSetCard(0xb714)
 	elseif ft==1 then return flag and c:IsSetCard(0x7714)
 	end

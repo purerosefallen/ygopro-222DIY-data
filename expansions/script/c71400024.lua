@@ -2,7 +2,7 @@
 xpcall(function() require("expansions/script/c71400001") end,function() require("script/c71400001") end)
 function c71400024.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedureLevelFree(c,c71400024.mfilter,yume.YumeCheck(c),2,2)
+	aux.AddXyzProcedureLevelFree(c,c71400024.mfilter,c71400024.xyzcheck,2,2)
 	c:EnableReviveLimit()
 	--summon limit
 	yume.AddYumeSummonLimit(c,1)
@@ -22,9 +22,22 @@ function c71400024.initial_effect(c)
 	e2:SetCost(c71400024.cost)
 	e2:SetOperation(c71400024.op)
 	c:RegisterEffect(e2)
+	--spsummon cost
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_SPSUMMON_COST)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e3:SetCost(c71400024.spcost)
+	c:RegisterEffect(e3)
+end
+function c71400024.spcost(e,c,tp)
+	return yume.YumeCheck(c)
 end
 function c71400024.mfilter(c,xyzc)
 	return c:IsXyzType(TYPE_XYZ) and c:GetRank()==4
+end
+function c71400024.xyzcheck(g)
+	return g:GetClassCount(Card.GetRank)==1 and g:GetFirst():GetRank()==4
 end
 function c71400024.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x3715)
@@ -32,7 +45,7 @@ end
 function c71400024.con1(e)
 	return Duel.IsExistingMatchingCard(c71400024.filter,0,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
-function c71400024.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c71400024.cost(e,c,tp)
 	return Duel.CheckRemoveOverlayCard(tp,1,0,1,REASON_COST)
 end
 function c71400024.op(e,tp,eg,ep,ev,re,r,rp)
