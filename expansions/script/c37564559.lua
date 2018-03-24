@@ -17,7 +17,7 @@ function cm.filter(c,e)
 	return c:IsCode(37564765) and c:IsFaceup() and c:IsCanBeEffectTarget(e) and c:IsAbleToGrave()
 end
 function cm.gcheck(g,tp)
-	return Duel.GetMZoneCount(tp,g,tp)>0 not g:IsExists(cm.filter1,1,nil,g)
+	return Duel.GetMZoneCount(tp,g,tp)>0 and not g:IsExists(cm.filter1,1,nil,g)
 end
 function cm.filter1(c,g)
 	return g:IsExists(cm.filter2,1,c,c:GetOriginalCode())
