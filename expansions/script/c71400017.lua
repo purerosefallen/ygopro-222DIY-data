@@ -19,7 +19,7 @@ function c71400017.initial_effect(c)
 	c:RegisterEffect(e1)
 	--banish
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(71400017,4))
+	e2:SetDescription(aux.Stringid(71400017,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
@@ -28,7 +28,7 @@ function c71400017.initial_effect(c)
 	e2:SetOperation(c71400017.op2)
 	c:RegisterEffect(e2)
 	--self limitation & field activation
-	yume.AddYumeFieldGlobal(c,71400017,1,2,3)
+	yume.AddYumeFieldGlobal(c,71400017,1)
 end
 function c71400017.filter1(c)
 	return c:IsSetCard(0xa714) and c:IsType(TYPE_FIELD) and not c:IsCode(71400017) and c:IsAbleToHand()

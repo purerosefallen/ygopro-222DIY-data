@@ -32,7 +32,7 @@ function c71400014.initial_effect(c)
 	e3:SetOperation(c71400014.operation3)
 	c:RegisterEffect(e3)
 	--self limitation & field activation
-	yume.AddYumeFieldGlobal(c,71400014,2,4,5)
+	yume.AddYumeFieldGlobal(c,71400014,1)
 end
 function c71400014.operation2(e,tp,eg,ep,ev,re,r,rp)
 	local cnt=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -44,7 +44,7 @@ function c71400014.operation2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	local mg=Duel.GetMatchingGroup(c71400014.xyzfilter,tp,LOCATION_MZONE,0,nil)
 	local xyzg=Duel.GetMatchingGroup(c71400014.xyz2filter,tp,LOCATION_EXTRA,0,nil,mg)
-	if mg:GetCount()>0 and xyzg:GetCount()>0 and Duel.GetLocationCountFromEx(tp)>0 and Duel.SelectYesNo(tp,aux.Stringid(71400014,3)) then
+	if mg:GetCount()>0 and xyzg:GetCount()>0 and Duel.GetLocationCountFromEx(tp)>0 and Duel.SelectYesNo(tp,aux.Stringid(71400014,2)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()

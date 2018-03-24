@@ -51,28 +51,14 @@ function c71400013.filter2a(c)
 end
 function c71400013.operation1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(71400013,0))
-	local tc=Duel.SelectMatchingCard(tp,c71400013.filter1,tp,LOCATION_DECK,0,1,1,nil,tp):GetFirst()
-	if tc then
-		local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-		if fc then
-			Duel.SendtoGrave(fc,REASON_RULE)
-			Duel.BreakEffect()
-		end
-		local flag=Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-		local te=tc:GetActivateEffect()
-		local tep=tc:GetControler()
-		local cost=te:GetCost()
-		if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
-		Duel.RaiseEvent(tc,4179255,te,0,tp,tp,Duel.GetCurrentChain())
-		local dg=Duel.GetMatchingGroup(c71400013.filter1a,tp,0,LOCATION_ONFIELD,nil)
-		if dg:GetCount()>0 and flag and Duel.SelectYesNo(tp,aux.Stringid(71400013,3)) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-			local des=dg:Select(tp,1,1,nil)
-			Duel.HintSelection(des)
-			Duel.BreakEffect()
-			Duel.SendtoGrave(des,REASON_EFFECT)
-		end
+	local tc=yume.FieldActivation(tp,nil,1)
+	local dg=Duel.GetMatchingGroup(c71400013.filter1a,tp,0,LOCATION_ONFIELD,nil)
+	if tc and dg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(71400013,3)) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+		local des=dg:Select(tp,1,1,nil)
+		Duel.HintSelection(des)
+		Duel.BreakEffect()
+		Duel.SendtoGrave(des,REASON_EFFECT)
 	end
 	local el1=Effect.CreateEffect(c)
 	el1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -144,7 +130,7 @@ function c71400013.sumlimit(e,c)
 	return not c:IsSetCard(0x714)
 end
 function c71400013.target1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c71400013.filter1,tp,LOCATION_DECK,0,1,nil,tp) end
+	if chk==0 then return yume.YumeFieldCheck(tp,0,1) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,0,1-tp,LOCATION_ONFIELD)
 end
 function c71400013.target2(e,tp,eg,ep,ev,re,r,rp,chk)

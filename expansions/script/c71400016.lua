@@ -19,7 +19,7 @@ function c71400016.initial_effect(c)
 	e1:SetOperation(c71400016.operation)
 	c:RegisterEffect(e1)
 	--self limitation & field activation
-	yume.AddYumeFieldGlobal(c,71400016,1,2,3)
+	yume.AddYumeFieldGlobal(c,71400016,1)
 end
 function c71400016.filter(c)
 	return c:IsSetCard(0x714) and c:IsAbleToHand()

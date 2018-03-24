@@ -30,7 +30,7 @@ function c71400015.initial_effect(c)
 	e2:SetOperation(c71400015.operation2)
 	c:RegisterEffect(e2)
 	--self limitation & field activation
-	yume.AddYumeFieldGlobal(c,71400015,2,3,4)
+	yume.AddYumeFieldGlobal(c,71400015,1)
 end
 function c71400015.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
