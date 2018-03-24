@@ -42,6 +42,11 @@ function c12008006.op(e,tp,eg,ep,ev,re,r,rp)
 	   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	   local tg=sg:Select(tp,1,1,nil)
 	   Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)
+		local e1=Effect.CreateEffect(e:GetHandler())
+                      e1:SetType(EFFECT_TYPE_SINGLE)
+                      e1:SetCode(EFFECT_CANNOT_TRIGGER)
+                      e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+                      tg:RegisterEffect(e1)
 	end
 	local dg=Duel.GetMatchingGroup(c12008006.thfilter2,tp,LOCATION_DECK,0,nil)
 	if ct>=4 and dg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(12008006,2)) then
