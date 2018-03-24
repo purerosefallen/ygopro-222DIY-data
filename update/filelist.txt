@@ -995,6 +995,7 @@ expansions/pics/13254123.jpg	64dbfaca43f2306d61fc783474eec0b5
 expansions/pics/13254124.jpg	5ee05f5e8d533b498899f18f02807a66
 expansions/pics/13254125.jpg	4bbd4f2668d305e8ab7eca34a54e2293
 expansions/pics/13254126.jpg	20b438a96a21c42233f224c467210ce1
+expansions/pics/13254127.jpg	b1afa16d76c2b29ba046e0f1867a6ddd
 expansions/pics/13255200.jpg	12e0965e7c399e716c7959c78ff97ce3
 expansions/pics/13255201.jpg	6f8e8981b15afb545da2a29eeef5a388
 expansions/pics/13255202.jpg	fc5d2fc2237f0490733d05adfbcfd10e
@@ -5842,8 +5843,8 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	f973a897a36c7d2e32a06aa4d71e0b32
+update/filelist.txt	7d36e5717990e834f2447819326396df
 update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
 update/update-push.bat	49e0e022872a85c5350b8ee445ecd4d8
 update/update-without-sound.bat	22d7b973d79ef9311213aeff61d93d7c
-update/version.txt	8f9145be8f82a36ee885b2a4dad1355b
+update/version.txt	24de3c8726fb8dd978ce66542dd70851
