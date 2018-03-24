@@ -42,7 +42,7 @@ function c13257339.initial_effect(c)
 	
 end
 function c13257339.addc(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsRelateToEffect(e) and e:GetHandler():IsCanAddCounter(0x351,1) then
+	if e:GetHandler():IsCanAddCounter(0x351,1) then
 		e:GetHandler():AddCounter(0x351,1)
 	end
 end
