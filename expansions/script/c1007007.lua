@@ -71,17 +71,22 @@ function c1007007.thfilter(c)
 	return c:IsSetCard(0xa20f) and not c:IsCode(1007007) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 end
 function c1007007.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local sc=Duel.GetFirstMatchingCard(nil,tp,LOCATION_PZONE,0,e:GetHandler())
 	if chk==0 then return Duel.IsExistingMatchingCard(c1007007.thfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
+	Duel.SetTargetCard(sc)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sc,1,0,0)
 end
 function c1007007.thop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.Destroy(e:GetHandler(),REASON_EFFECT)~=0 then
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(1007007,2))
 		local g=Duel.SelectMatchingCard(tp,c1007007.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+		if g:GetCount()>0 then
 		local tc=g:GetFirst()
 		if tc then
 			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+		end
 		end
 	end
 end
