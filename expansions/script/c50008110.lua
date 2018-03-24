@@ -1,7 +1,7 @@
 --梅露可 纵牵的耀丝
 local m=50008110
 local cm=_G["c"..m]
-local mil=require("expansions/script/nef/Millux")
+local mil=require("expansions/script/Millux")
 cm.is_series_with_mlk=true
 function cm.initial_effect(c)
 	--link summon
