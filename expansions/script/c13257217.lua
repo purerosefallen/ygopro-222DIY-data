@@ -61,7 +61,7 @@ function c13257217.rdop(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 	else
-		while sg:GetCount()>0 then
+		while sg:GetCount()>0 do
 			local dg=sg:Select(tp,1,1,nil)
 			Duel.HintSelection(dg)
 			sg:Sub(dg)

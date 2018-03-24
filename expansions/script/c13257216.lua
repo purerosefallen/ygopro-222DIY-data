@@ -74,7 +74,7 @@ function c13257216.desop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(-ct)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e1)
-		if tc:IsFaceup() and tc:GetLevel()==0 then
+		if tc:IsFaceup() and tc:GetLevel()==1 then
 			Duel.Destroy(tc,REASON_EFFECT)
 		end
 	end
