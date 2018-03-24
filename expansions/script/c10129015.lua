@@ -44,7 +44,7 @@ function c10129015.spop(e,tp,eg,ep,ev,re,r,rp)
 	   local e2=e1:Clone()
 	   e2:SetCode(EFFECT_DISABLE_EFFECT)
 	   tc:RegisterEffect(e2)
-	   local g=Duel.GetMatchingGroup(c10129015.thfilter,tp,LOCATION_DECK,0,nil,tc:GetCode())
+	   local g=Duel.GetMatchingGroup(c10129015.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,tc:GetCode())
 	   if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(10129015,1)) then
 		  Duel.BreakEffect()
 		  Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND) 

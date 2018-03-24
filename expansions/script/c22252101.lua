@@ -5,7 +5,6 @@ function c22252101.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e1:SetCountLimit(1,22252101+EFFECT_COUNT_CODE_OATH)
 	e1:SetCondition(c22252101.condition)
 	e1:SetOperation(c22252101.activate)
 	c:RegisterEffect(e1)
@@ -36,9 +35,11 @@ function c22252101.filter2(c,e,tp,m,f,chkf)
 end
 function c22252101.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ac=Duel.GetAttacker()
-	if Duel.NegateAttack() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=5 then
+	if Duel.NegateAttack() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=5 and not Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_FMATERIAL) then
 		Duel.ConfirmDecktop(tp,5)
 		local g=Duel.GetDecktopGroup(tp,5)
+		local hg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
+		g:Merge(hg)
 		local chkf=tp
 		local mg1=g:Filter(Card.IsCanBeFusionMaterial,nil)
 		local res=Duel.IsExistingMatchingCard(c22252101.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)

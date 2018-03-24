@@ -62,10 +62,10 @@ function c13255205.initial_effect(c)
 	
 end
 function c13255205.eqlimit(e,c)
-	return c:IsRace(RACE_BEASTWARRIOR)
+	return c:GetOriginalLevel()==1
 end
 function c13255205.filter(c)
-	return c:IsFaceup() and c:IsRace(RACE_BEASTWARRIOR)
+	return c:IsFaceup() and c:IsLevelBelow(1)
 end
 function c13255205.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() and c13255205.filter(chkc) end

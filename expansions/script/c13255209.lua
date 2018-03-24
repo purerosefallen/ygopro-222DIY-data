@@ -46,13 +46,16 @@ function c13255209.initial_effect(c)
 	
 end
 function c13255209.eqlimit(e,c)
-	return c:IsRace(RACE_BEASTWARRIOR)
+	return c:GetOriginalLevel()==1
+end
+function c13255209.filter(c)
+	return c:IsFaceup() and c:IsRace(RACE_BEASTWARRIOR)
 end
 function c13255209.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c13255209.filter(ckhc) end
+	if chk==0 then return Duel.IsExistingTarget(c13255209.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	Duel.SelectTarget(tp,c13255209.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 	Duel.SetChainLimit(aux.FALSE)
 end

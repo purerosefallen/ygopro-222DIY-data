@@ -1,6 +1,12 @@
 --异界恶魔蝠 阿比
 function c13255224.initial_effect(c)
-	c:EnableReviveLimit()
+	--spsummon condition
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(c13255224.splimit)
+	c:RegisterEffect(e0)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -46,6 +52,9 @@ function c13255224.initial_effect(c)
 	c:RegisterEffect(e5)
 	
 end
+function c13255224.splimit(e,se,sp,st)
+	return not se:GetHandler()~=e:GetHandler()
+end
 function c13255224.spfilter(c)
 	return c:IsCode(13255222) and c:IsAbleToDeckAsCost()
 end
@@ -63,9 +72,9 @@ end
 function c13255224.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local ct=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD+LOCATION_HAND,0)
-	local d=math.floor(7-ct/2)
-	if chk==0 then return c:GetFlagEffect(13254085)<d end
-	c:RegisterFlagEffect(13254085,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+	local d=math.floor(13-ct/4)
+	if chk==0 then return c:GetFlagEffect(13255224)<d end
+	c:RegisterFlagEffect(13255224,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 end
 function c13255224.descon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()

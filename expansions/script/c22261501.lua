@@ -18,8 +18,12 @@ function c22261501.initial_effect(c)
 	e1:SetOperation(c22261501.op)
 	c:RegisterEffect(e1)
 end
+function c22261501.IsNajiMi(c)
+	local m=_G["c"..c:GetCode()]
+	return m and m.named_with_NajiMi
+end
 function c22261501.filter(c)
-	return c:IsCode(22260005) and c:IsAbleToHand()
+	return c22261501.IsNajiMi(c) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c22261501.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c22261501.filter,tp,LOCATION_DECK,0,1,nil) end

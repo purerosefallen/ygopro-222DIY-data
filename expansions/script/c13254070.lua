@@ -19,7 +19,7 @@ function c13254070.initial_effect(c)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EFFECT_DESTROY_REPLACE)
-	e3:SetRange(LOCATION_GRAVE)
+	e3:SetRange(LOCATION_HAND+LOCATION_GRAVE)
 	e3:SetTarget(c13254070.reptg)
 	e3:SetValue(c13254070.repval)
 	e3:SetOperation(c13254070.repop)
@@ -78,12 +78,14 @@ function c13254070.repfilter(c,tp)
 		and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
 end
 function c13254070.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemove() and eg:IsExists(c13254070.repfilter,1,nil,tp) end
-	return Duel.SelectYesNo(tp,aux.Stringid(13254070,1))
+	if chk==0 then return ((c:IsLocation(LOCATION_GRAVE) and c:IsAbleToRemove()) or (c:IsLocation(LOCATION_HAND) and c:IsDiscardable())) and eg:IsExists(c13254070.repfilter,1,nil,tp) end
+	return (c:IsLocation(LOCATION_HAND) and Duel.SelectYesNo(tp,aux.Stringid(13254113,1))) or (c:IsLocation(LOCATION_GRAVE) and Duel.SelectYesNo(tp,aux.Stringid(13254113,2)))
 end
 function c13254070.repval(e,c)
 	return c13254070.repfilter(c,e:GetHandlerPlayer())
 end
 function c13254070.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
+	local c=e:GetHandler()
+	if c:IsLocation(LOCATION_GRAVE) then Duel.Remove(c,POS_FACEUP,REASON_EFFECT)
+	elseif c:IsLocation(LOCATION_HAND) then Duel.SendtoGrave(c,REASON_EFFECT+REASON_DISCARD) end
 end

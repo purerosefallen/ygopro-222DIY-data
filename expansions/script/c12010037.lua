@@ -29,7 +29,7 @@ function c12010037.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c12010037.thfilter(c)
-	return and c:IsSetCard(0xfbb) and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfbb) and c:IsAbleToHand()
 end
 function c12010037.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

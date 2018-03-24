@@ -1,12 +1,10 @@
 --对碑文的解读
 function c22252201.initial_effect(c)
-	c:SetUniqueOnField(1,0,22252201)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetOperation(c22252201.activate)
 	c:RegisterEffect(e1)
 	--ANNOUNCE_CARD
 	local e2=Effect.CreateEffect(c)
@@ -62,7 +60,6 @@ function c22252201.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetRange(LOCATION_SZONE)
-	e1:SetCountLimit(1)
 	e1:SetCondition(c22252201.spcon)
 	e1:SetTarget(c22252201.sptg)
 	e1:SetOperation(c22252201.spop)

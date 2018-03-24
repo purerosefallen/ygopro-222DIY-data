@@ -54,7 +54,7 @@ function c22260005.initial_effect(c)
 	--todeck
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(22260005,2))
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetCategory(CATEGORY_TODECK)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_EXTRA)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -63,12 +63,17 @@ function c22260005.initial_effect(c)
 	e3:SetOperation(c22260005.tdop)
 	c:RegisterEffect(e3)
 end
+c22260005.named_with_NajiMi=1
 function c22260005.IsKuMaKawa(c)
 	local m=_G["c"..c:GetCode()]
 	return m and m.named_with_KuMaKawa
 end
+function c22260005.IsNajiMi(c)
+	local m=_G["c"..c:GetCode()]
+	return m and m.named_with_NajiMi
+end
 function c22260005.splimit(e,c,tp,sumtp,sumpos)
-	return not c:GetBaseAttack()==0
+	return c:GetBaseAttack()~=0
 end
 function c22260005.drfilter(c,tp)
 	return c22260005.IsKuMaKawa(c) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
@@ -169,7 +174,6 @@ function c22260005.rstop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.HintSelection(Group.FromCards(c))
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
-
 function c22260005.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsFaceup()
 end
@@ -186,6 +190,8 @@ function c22260005.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c22260005.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
+	local c=e:GetHandler()
+	if not tc:IsRelateToEffect(e) or not c:IsLocation(LOCATION_EXTRA) then return end
 	Duel.SendtoDeck(Group.FromCards(e:GetHandler(),tc),nil,0,REASON_EFFECT)
 	Duel.ShuffleDeck(tp)	
 end

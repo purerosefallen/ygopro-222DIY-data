@@ -2,12 +2,9 @@
 function c13257339.initial_effect(c)
 	c:EnableCounterPermit(0x351)
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(13257339,3))
 	e1:SetCategory(CATEGORY_COUNTER)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e1:SetTarget(c13257339.addct)
 	e1:SetOperation(c13257339.addc)
 	c:RegisterEffect(e1)
 	local e2=e1:Clone()
@@ -44,12 +41,8 @@ function c13257339.initial_effect(c)
 	c13257339[c]=e3
 	
 end
-function c13257339.addct(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanAddCounter(0x351,1) end
-	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,1,0,0x351)
-end
 function c13257339.addc(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsRelateToEffect(e) then
+	if e:GetHandler():IsRelateToEffect(e) and e:GetHandler():IsCanAddCounter(0x351,1) then
 		e:GetHandler():AddCounter(0x351,1)
 	end
 end

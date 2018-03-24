@@ -62,10 +62,18 @@ function c71400010.operation1(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(0x714)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e1)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+		e2:SetOperation(c71400010.rdop)
+		c:RegisterEffect(e2)
 		tc=og:GetNext()
 	end
 	Duel.BreakEffect()
 	Duel.Damage(tp,atk/2,REASON_EFFECT)
+end
+function c71400010.rdop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.ChangeBattleDamage(ep,ev/2)
 end
 function c71400010.condition2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

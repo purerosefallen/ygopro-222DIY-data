@@ -62,7 +62,7 @@ function c13255202.initial_effect(c)
 	
 end
 function c13255202.eqlimit(e,c)
-	return c:IsRace(RACE_BEASTWARRIOR)
+	return c:GetOriginalLevel()==1
 end
 function c13255202.filter(c)
 	return c:IsFaceup() and c:IsRace(RACE_BEASTWARRIOR)

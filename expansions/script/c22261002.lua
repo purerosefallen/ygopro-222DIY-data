@@ -27,6 +27,10 @@ function c22261002.IsKuMaKawa(c)
 	local m=_G["c"..c:GetCode()]
 	return m and m.named_with_KuMaKawa
 end
+function c22261002.IsNajiMi(c)
+	local m=_G["c"..c:GetCode()]
+	return m and m.named_with_NajiMi
+end
 function c22261002.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
@@ -35,7 +39,7 @@ function c22261002.thfilter1(c)
 	return c22261002.IsKuMaKawa(c) and c:IsAbleToHand()
 end
 function c22261002.thfilter2(c)
-	return c:IsCode(22260005) and c:IsAbleToHand()
+	return c22261002.IsNajiMi(c) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c22261002.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c22261002.thfilter1,tp,LOCATION_DECK,0,1,nil) and Duel.IsExistingMatchingCard(c22261002.thfilter2,tp,LOCATION_DECK,0,1,nil) end
@@ -54,7 +58,7 @@ function c22261002.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c22261002.spcfilter(c,tp)
-	return c:IsCode(22260005) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
+	return c22261002.IsNajiMi(c) and c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function c22261002.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c22261002.spcfilter,1,nil,tp)
