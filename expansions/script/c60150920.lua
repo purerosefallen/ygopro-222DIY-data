@@ -110,8 +110,8 @@ function c60150920.drop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c60150920.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-    return c:IsPreviousPosition(POS_FACEUP) and c:GetLocation()~=LOCATION_DECK
-        and c:GetReasonPlayer()==1-tp
+	return c:IsPreviousPosition(POS_FACEUP) and c:GetLocation()~=LOCATION_DECK
+		and c:GetReasonPlayer()==1-tp
 end
 function c60150920.spfilter(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x6b23) and c:IsFaceup()
@@ -131,7 +131,7 @@ function c60150920.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmDecktop(1-tp,1)
 		if Duel.IsPlayerCanDraw(1-tp,1) and Duel.SelectYesNo(tp,aux.Stringid(60150920,3)) then
 			Duel.BreakEffect()
-			Duel.Draw(tp,1,REASON_EFFECT)
+			Duel.Draw(1-tp,1,REASON_EFFECT)
 		end
 	end
 end
