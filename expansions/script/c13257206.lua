@@ -76,7 +76,11 @@ function c13257206.eqlimit(e,c)
 	if not eg:IsContains(e:GetHandler()) then
 		eg:AddCard(e:GetHandler())
 	end
-	return not (eg:FilterCount(Card.IsSetCard,nil,0x3354)>c:GetFlagEffectLabel(13257200)) and not (eg:GetSum(Card.GetLevel)>c:GetLevel())
+	local cl=c:GetFlagEffectLabel(13257200)
+	if cl==nil then
+		cl=0
+	end
+	return not (eg:FilterCount(Card.IsSetCard,nil,0x3354)>cl) and not (eg:GetSum(Card.GetLevel)>c:GetLevel())
 end
 function c13257206.econ(e)
 	return e:GetHandler():GetEquipTarget()
@@ -198,13 +202,12 @@ function c13257206.desop(e,tp,eg,ep,ev,re,r,rp)
 					ex=1
 				end
 				area=1
-			end
-			if tc:IsLocation(LOCATION_SZONE) then
+			elseif tc:IsLocation(LOCATION_SZONE) then
 				if seq==6 then seq=0
 				elseif seq==7 then seq=4
 				end
 			end
-			local lseq=seq-1--get seq at left
+			local lseq=seq-1 --get seq at left
 			if ex==1 and area==1 then
 				tc1=Duel.GetFieldCard(1-tp,LOCATION_MZONE,lseq)
 				if tc1 then g:AddCard(tc1)
@@ -216,8 +219,9 @@ function c13257206.desop(e,tp,eg,ep,ev,re,r,rp)
 				end
 			end
 		end
+		seq=tc:GetSequence()
 		if seq<4 or seq>4 then
-			local tc1=nil
+			local tc2=nil
 			local ex=0--if location EXZONE
 			local area=0--if location MZONE
 			if tc:IsLocation(LOCATION_MZONE) then
@@ -227,21 +231,20 @@ function c13257206.desop(e,tp,eg,ep,ev,re,r,rp)
 					ex=1
 				end
 				area=1
-			end
-			if tc:IsLocation(LOCATION_SZONE) then
+			elseif tc:IsLocation(LOCATION_SZONE) then
 				if seq==6 then seq=0
 				elseif seq==7 then seq=4
 				end
 			end
-			local rseq=seq+1--get seq at right
+			local rseq=seq+1 --get seq at right
 			if ex==1 and area==1 then
-				tc1=Duel.GetFieldCard(1-tp,LOCATION_MZONE,rseq)
-				if tc1 then g:AddCard(tc1)
+				tc2=Duel.GetFieldCard(1-tp,LOCATION_MZONE,rseq)
+				if tc2 then g:AddCard(tc2)
 				end
 			end
 			if area==1 then
-				tc1=Duel.GetFieldCard(1-tp,LOCATION_SZONE,rseq)
-				if tc1 then g:AddCard(tc1)
+				tc2=Duel.GetFieldCard(1-tp,LOCATION_SZONE,rseq)
+				if tc2 then g:AddCard(tc2)
 				end
 			end
 		end

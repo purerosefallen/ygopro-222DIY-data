@@ -40,7 +40,11 @@ function c13257202.eqlimit(e,c)
 	if not eg:IsContains(e:GetHandler()) then
 		eg:AddCard(e:GetHandler())
 	end
-	return not (eg:FilterCount(Card.IsSetCard,nil,0x3354)>c:GetFlagEffectLabel(13257200)) and not (eg:GetSum(Card.GetLevel)>c:GetLevel())
+	local cl=c:GetFlagEffectLabel(13257200)
+	if cl==nil then
+		cl=0
+	end
+	return not (eg:FilterCount(Card.IsSetCard,nil,0x3354)>cl) and not (eg:GetSum(Card.GetLevel)>c:GetLevel())
 end
 function c13257202.econ(e)
 	return e:GetHandler():GetEquipTarget()

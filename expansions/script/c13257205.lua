@@ -55,7 +55,11 @@ function c13257205.eqlimit(e,c)
 	if not eg:IsContains(e:GetHandler()) then
 		eg:AddCard(e:GetHandler())
 	end
-	return not (eg:FilterCount(Card.IsSetCard,nil,0x3354)>c:GetFlagEffectLabel(13257200)) and not (eg:GetSum(Card.GetLevel)>c:GetLevel())
+	local cl=c:GetFlagEffectLabel(13257200)
+	if cl==nil then
+		cl=0
+	end
+	return not (eg:FilterCount(Card.IsSetCard,nil,0x3354)>cl) and not (eg:GetSum(Card.GetLevel)>c:GetLevel())
 end
 function c13257205.econ(e)
 	return e:GetHandler():GetEquipTarget()
@@ -76,7 +80,7 @@ function c13257205.caop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ec=c:GetEquipTarget()
 	if not ec:IsRelateToBattle() or not c:IsRelateToEffect(e) then return end
-	ec:ChainAttack()
+	Duel.ChainAttack(ec)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)

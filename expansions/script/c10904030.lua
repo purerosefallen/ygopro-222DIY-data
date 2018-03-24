@@ -26,7 +26,7 @@ function cm.initial_effect(c)
     e2:SetOperation(cm.spop)
     c:RegisterEffect(e2)   
 end
-function cm.condition(e,tp,eg,ep,ev,re,r,rp)
+function cm.atkcon(e,tp,eg,ep,ev,re,r,rp)
     return Duel.GetFieldGroupCount(tp,LOCATION_REMOVED,0)>=5
 end
 function cm.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -44,7 +44,7 @@ function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
     e1:SetType(EFFECT_TYPE_FIELD)
     e1:SetCode(EFFECT_UPDATE_ATTACK)
     e1:SetTargetRange(LOCATION_MZONE,0)
-    e1:SetTarget(cm.atktg)
+    e1:SetTarget(cm.atkup)
     e1:SetValue(200)
     Duel.RegisterEffect(e1,tp)
     local e2=e1:Clone()
@@ -52,7 +52,7 @@ function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
     Duel.RegisterEffect(e2,tp)
     end
 end
-function cm.atktg(e,c)
+function cm.atkup(e,c)
     return c:IsSetCard(0x237)
 end
 function cm.rmfilter(c)
