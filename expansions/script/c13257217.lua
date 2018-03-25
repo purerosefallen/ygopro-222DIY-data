@@ -59,6 +59,7 @@ function c13257217.rdop(e,tp,eg,ep,ev,re,r,rp)
 			if d1<=2 then
 				g:AddCard(tc)
 			end
+			tc=sg:GetNext()
 		end
 	else
 		while sg:GetCount()>0 do
