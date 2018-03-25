@@ -206,7 +206,7 @@ function c11200006.op(e,tp,eg,ep,ev,re,r,rp)
 end
 end
 function c11200006.refilter(c)
-	return  c:IsReleasable()
+	return  c:IsReleasable() and  c:IsType(TYPE_MONSTER)
 end
 function c11200006.refilter2(c)
 	return c:IsRace(RACE_SPELLCASTER) and c:IsReleasable()
@@ -225,7 +225,7 @@ function c11200006.reop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g1=Duel.SelectMatchingCard(tp,c11200006.refilter2,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil)
 	local g2=Duel.SelectMatchingCard(tp,c11200006.refilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,g1:GetFirst())
 	g2:Merge(g1)
-   if g2:GetCount()==2 and Duel.Release(g2,REASON_EFFECT) and  e:GetHandler():IsRelateToEffect(e) and Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,true,POS_FACEUP) then
+   if g2:GetCount()==2 and Duel.Release(g2,REASON_EFFECT)==2 and  e:GetHandler():IsRelateToEffect(e) and Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,true,POS_FACEUP) then
 	e:GetHandler():CompleteProcedure()
 end
 end

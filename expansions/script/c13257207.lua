@@ -59,7 +59,9 @@ function c13257207.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(c13257207.ctfilter,nil,tp)
 	local tc=g:GetFirst()
 	while tc do
-		tc:EnableCounterPermit(0x353)
+		if not tc:IsCanAddCounter(0x353,1) then
+			tc:EnableCounterPermit(0x353)
+		end
 		tc:AddCounter(0x353,2)
 		--Destroy replace
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -83,12 +85,6 @@ function c13257207.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveCounter(ep,0x353,1,REASON_EFFECT)
 end
 function c13257207.ctop1(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(COUNTER_NEED_ENABLE+0x100e,1)
-end
-function c13257207.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
-end
-function c13257207.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SelectYesNo(tp,aux.Stringid(13257207,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,e:GetHandler())

@@ -184,7 +184,7 @@ function c11200004.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=tg:Filter(Card.IsRelateToEffect,nil,e)
 	if sg:GetCount()==tg:GetCount() and  e:GetHandler():IsRelateToEffect(e) then
-		Duel.SendtoDeck(sg,REASON_EFFECT+REASON_RETURN)
+		Duel.SendtoDeck(sg,nil,2,REASON_EFFECT+REASON_RETURN)
 	end
 end
 function c11200004.retg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

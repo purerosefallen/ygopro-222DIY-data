@@ -47,9 +47,6 @@ function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
     e1:SetTarget(cm.atkup)
     e1:SetValue(200)
     Duel.RegisterEffect(e1,tp)
-    local e2=e1:Clone()
-    e2:SetCode(EFFECT_UPDATE_DEFENSE)
-    Duel.RegisterEffect(e2,tp)
     end
 end
 function cm.atkup(e,c)
