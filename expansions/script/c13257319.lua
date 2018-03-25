@@ -1,6 +1,5 @@
 --超时空战斗机-Big Core Custom
 function c13257319.initial_effect(c)
-	c:EnableCounterPermit(0x1f)
 	--special summon
 	local e11=Effect.CreateEffect(c)
 	e11:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -9,27 +8,13 @@ function c13257319.initial_effect(c)
 	e11:SetRange(LOCATION_HAND)
 	e11:SetOperation(c13257319.regop)
 	c:RegisterEffect(e11)
-	local e12=e11:Clone()
-	e12:SetCode(EVENT_REMOVE)
-	c:RegisterEffect(e12)
-	--Destroy replace
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_DESTROY_REPLACE)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetTarget(c13257319.desreptg)
-	e1:SetOperation(c13257319.desrepop)
-	c:RegisterEffect(e1)
-	--counter
-	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_COUNTER)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetOperation(c13257319.ctop)
-	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(13257319,5))
+	e3:SetCategory(CATEGORY_EQUIP)
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetTarget(c13257319.eqtg)
+	e3:SetOperation(c13257319.eqop)
 	c:RegisterEffect(e3)
 	--Power Capsule
 	local e4=Effect.CreateEffect(c)
@@ -51,6 +36,7 @@ function c13257319.initial_effect(c)
 	e14:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e14)
 	c13257319[c]=e4
+	c:RegisterFlagEffect(13257200,0,0,0,1)
 	
 end
 function c13257319.cfilter(c,tp)
@@ -80,16 +66,23 @@ end
 function c13257319.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(11,0,aux.Stringid(13257319,7))
 end
-function c13257319.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReason(REASON_EFFECT+REASON_BATTLE)
-		and e:GetHandler():GetCounter(0x1f)>0 end
-	return true
+function c13257319.eqfilter1(c,ec)
+	return c:IsSetCard(0x354) and c:IsType(TYPE_MONSTER) and c:CheckEquipTarget(ec)
 end
-function c13257319.desrepop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RemoveCounter(ep,0x1f,1,REASON_EFFECT)
+function c13257319.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingMatchingCard(c13257319.eqfilter1,tp,LOCATION_EXTRA,0,1,nil,e:GetHandler()) end
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_EXTRA)
 end
-function c13257319.ctop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x1f,3)
+function c13257319.eqop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or c:IsFacedown() or not c:IsRelateToEffect(e) then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+	local g=Duel.SelectMatchingCard(tp,c13257319.eqfilter1,tp,LOCATION_EXTRA,0,1,1,nil,c)
+	local tc=g:GetFirst()
+	if tc then
+		Duel.Equip(tp,tc,c)
+	end
 end
 function c13257319.pcfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp

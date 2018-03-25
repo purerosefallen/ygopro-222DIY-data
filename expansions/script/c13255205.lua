@@ -114,7 +114,7 @@ function c13255205.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13255205.filter1(c)
-	return c:IsFaceup() and c:IsRace(RACE_BEASTWARRIOR) and c:IsLevelBelow(1)
+	return c:IsFaceup() and c:IsLevelBelow(1)
 end
 function c13255205.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c13255205.filter1(chkc) and chkc:IsControler(tp) end

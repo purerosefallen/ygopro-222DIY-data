@@ -15,6 +15,7 @@ function c13257210.initial_effect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_HAND)
+	e2:SetCondition(c13257210.spcon)
 	e2:SetTarget(c13257210.sptg)
 	e2:SetOperation(c13257210.spop)
 	c:RegisterEffect(e2)
@@ -70,6 +71,9 @@ function c13257210.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c13257210.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsSetCard(0x353)
+end
+function c13257210.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
 end
 function c13257210.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
