@@ -37,8 +37,8 @@ function c12010016.spfilter(c,e,tp,rec,att)
 end
 function c12010016.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not Duel.IsExistingMatchingCard(c12010016.filter,tp,LOCATION_HAND,0,1,nil) then return false end
-	local g=Duel.SelectMatchingCard(tp,c12010016.filter,tp,LOCATION_HAND,0,1,1,nil)
+	if not Duel.IsExistingMatchingCard(c12010016.tgfilter,tp,LOCATION_HAND,0,1,nil) then return false end
+	local g=Duel.SelectMatchingCard(tp,c12010016.tgfilter,tp,LOCATION_HAND,0,1,1,nil)
 	if g then 
 		local tc=g:GetFirst()
 		if Duel.Release(tc,REASON_EFFECT) then
