@@ -18,7 +18,6 @@ function c1007007.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_PZONE)
 	e2:SetCountLimit(1)
-	e2:SetCondition(c1007007.thcon)
 	e2:SetTarget(c1007007.thtg)
 	e2:SetOperation(c1007007.thop)
 	c:RegisterEffect(e2)
@@ -60,12 +59,6 @@ function c1007007.sccon(e)
 end
 function c1007007.splimit(e,c)
 	return not c:IsSetCard(0x20f)
-end
-function c1007007.pxfilter(c)
-	return c:IsSetCard(0x20f) and not c:IsCode(1007007)
-end
-function c1007007.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c1007007.pxfilter,tp,LOCATION_PZONE,0,1,e:GetHandler())
 end
 function c1007007.thfilter(c)
 	return c:IsSetCard(0xa20f) and not c:IsCode(1007007) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
