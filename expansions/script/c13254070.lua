@@ -78,6 +78,7 @@ function c13254070.repfilter(c,tp)
 		and c:IsControler(tp) and c:IsReason(REASON_EFFECT+REASON_BATTLE)
 end
 function c13254070.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return ((c:IsLocation(LOCATION_GRAVE) and c:IsAbleToRemove()) or (c:IsLocation(LOCATION_HAND) and c:IsDiscardable())) and eg:IsExists(c13254070.repfilter,1,nil,tp) end
 	return (c:IsLocation(LOCATION_HAND) and Duel.SelectYesNo(tp,aux.Stringid(13254113,1))) or (c:IsLocation(LOCATION_GRAVE) and Duel.SelectYesNo(tp,aux.Stringid(13254113,2)))
 end

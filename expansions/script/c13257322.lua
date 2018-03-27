@@ -15,6 +15,7 @@ function c13257322.initial_effect(c)
 	e2:SetCode(EVENT_DESTROYED)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCost(c13257322.drcost)
 	e2:SetCondition(c13257322.drcon)
 	e2:SetTarget(c13257322.drtg)
 	e2:SetOperation(c13257322.drop)
@@ -100,6 +101,10 @@ function c13257322.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13257322.cfilter1(c,tp,re)
 	return c:IsCode(13257323) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()~=tp and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and not re:GetHandler():IsCode(13257322)))
+end
+function c13257322.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c13257322.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c13257322.cfilter1,1,nil,tp,re) and Duel.GetMatchingGroupCount(Card.IsCode,tp,0,LOCATION_MZONE,nil,13257323)==0

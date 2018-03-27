@@ -52,6 +52,8 @@ function c13257205.initial_effect(c)
 end
 function c13257205.eqlimit(e,c)
 	local eg=c:GetEquipGroup()
+	local lv=c:GetOriginalLevel()
+	if lv==nil then lv=0 end
 	if not eg:IsContains(e:GetHandler()) then
 		eg:AddCard(e:GetHandler())
 	end
@@ -59,7 +61,7 @@ function c13257205.eqlimit(e,c)
 	if cl==nil then
 		cl=0
 	end
-	return not (eg:FilterCount(Card.IsSetCard,nil,0x3354)>cl) and not (eg:GetSum(Card.GetLevel)>c:GetLevel())
+	return not (eg:FilterCount(Card.IsSetCard,nil,0x3354)>cl) and not (eg:Filter(Card.IsSetCard,nil,0x354):GetSum(Card.GetLevel)>lv)
 end
 function c13257205.econ(e)
 	return e:GetHandler():GetEquipTarget()
@@ -81,12 +83,6 @@ function c13257205.caop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=c:GetEquipTarget()
 	if not ec:IsRelateToBattle() or not c:IsRelateToEffect(e) then return end
 	Duel.ChainAttack(ec)
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_BATTLE+PHASE_DAMAGE_CAL)
-	ec:RegisterEffect(e1)
 end
 function c13257205.descon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and eg:GetFirst()==e:GetHandler():GetEquipTarget()

@@ -44,10 +44,12 @@ function c13257216.initial_effect(c)
 end
 function c13257216.eqlimit(e,c)
 	local eg=c:GetEquipGroup()
+	local lv=c:GetOriginalLevel()
+	if lv==nil then lv=0 end
 	if not eg:IsContains(e:GetHandler()) then
 		eg:AddCard(e:GetHandler())
 	end
-	return not c:GetEquipGroup():IsExists(Card.IsCode,1,c,c:GetCode()) and not (eg:GetSum(Card.GetLevel)>c:GetLevel())
+	return not c:GetEquipGroup():IsExists(Card.IsCode,1,c,c:GetCode()) and not (eg:Filter(Card.IsSetCard,nil,0x354):GetSum(Card.GetLevel)>lv)
 end
 function c13257216.econ(e)
 	return e:GetHandler():GetEquipTarget()

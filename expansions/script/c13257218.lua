@@ -34,6 +34,7 @@ function c13257218.initial_effect(c)
 	e4:SetTarget(c13257218.eqtg)
 	e4:SetOperation(c13257218.eqop)
 	c:RegisterEffect(e4)
+	c:RegisterFlagEffect(13257200,0,0,0,1)
 	
 end
 function c13257218.spcon(e,c)

@@ -1,6 +1,5 @@
 --异界恶魔蝠 阿比
 function c13255224.initial_effect(c)
-	c:EnableReviveLimit()
 	--spsummon condition
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
@@ -54,7 +53,7 @@ function c13255224.initial_effect(c)
 	
 end
 function c13255224.splimit(e,se,sp,st)
-	return not se:GetHandler()~=e:GetHandler()
+	return se:GetHandler()==e:GetHandler()
 end
 function c13255224.spfilter(c)
 	return c:IsCode(13255222) and c:IsAbleToDeckAsCost()

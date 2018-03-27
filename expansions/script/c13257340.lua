@@ -66,7 +66,7 @@ function c13257340.initial_effect(c)
 	c:RegisterEffect(e4)
 	local e11=Effect.CreateEffect(c)
 	e11:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e11:SetCode(EVENT_SUMMON_SUCCESS)
+	e11:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e11:SetOperation(c13257340.bgmop)
 	c:RegisterEffect(e11)
 	c13257340[c]=e3
