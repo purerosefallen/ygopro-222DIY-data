@@ -61,7 +61,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function cm.spfilter(c)
-	return c.Senya_desc_with_nanahira and c:IsType(TYPE_TRAP) and c:IsRelesable()
+	return c.Senya_desc_with_nanahira and c:IsType(TYPE_TRAP) and c:IsReleasable()
 end
 function cm.spcon(e,c)
 	if c==nil then return true end
