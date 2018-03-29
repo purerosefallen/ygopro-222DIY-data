@@ -21,7 +21,7 @@ function c13257206.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetValue(300)
+	e1:SetValue(700)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
@@ -69,9 +69,10 @@ function c13257206.initial_effect(c)
 	e8:SetTarget(c13257206.destg)
 	e8:SetOperation(c13257206.desop)
 	c:RegisterEffect(e8)
+	c:RegisterFlagEffect(13257201,0,0,0,3)
 	
 end
-function c13257206.eqlimit(e,c)
+function c13257202.eqlimit(e,c)
 	local eg=c:GetEquipGroup()
 	local lv=c:GetOriginalLevel()
 	if lv==nil then lv=0 end
@@ -82,7 +83,11 @@ function c13257206.eqlimit(e,c)
 	if cl==nil then
 		cl=0
 	end
-	return not (eg:FilterCount(Card.IsSetCard,nil,0x3354)>cl) and not (eg:Filter(Card.IsSetCard,nil,0x354):GetSum(Card.GetLevel)>lv)
+	local er=e:GetHandler():GetFlagEffectLabel(13257201)
+	if er==nil then
+		er=0
+	end
+	return not (er>cl) and not (eg:Filter(Card.IsSetCard,nil,0x354):GetSum(Card.GetLevel)>lv) and not c:GetEquipGroup():IsExists(Card.IsCode,1,e:GetHandler(),e:GetHandler():GetCode())
 end
 function c13257206.econ(e)
 	return e:GetHandler():GetEquipTarget()
@@ -104,7 +109,7 @@ function c13257206.damop(e,tp,eg,ep,ev,re,r,rp)
 	if ec then
 		local ct=ec:GetFlagEffectLabel(13257200)*100
 		if ct>0 then
-			Duel.Hint(HINT_CARD,0,13257206)
+			Duel.Hint(HINT_CARD,1,13257206)
 			Duel.Damage(1-tp,ct,REASON_EFFECT)
 		end
 	end
@@ -184,7 +189,7 @@ function c13257206.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 				end
 			end
 		end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
 function c13257206.desop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

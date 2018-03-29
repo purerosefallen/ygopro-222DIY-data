@@ -63,7 +63,7 @@ end
 function c13257208.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:GetFlagEffect(13257208)==0 then 
-		c:RegisterFlagEffect(13257208,RESET_EVENT+0x1ff0000,0,1,ev)
+		c:RegisterFlagEffect(13257208,RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END,0,1,ev)
 	else
 		local label=c:GetFlagEffectLabel(13257208)
 		c:SetFlagEffectLabel(13257208,label+ev)
