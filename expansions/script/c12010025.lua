@@ -79,7 +79,7 @@ function c12010025.spop(e,tp,eg,ep,ev,re,r,rp)
 			e4:SetValue(9)
 			c:RegisterEffect(e4)
 			Duel.BreakEffect()
-			local g=Duel.GetMatchingGroup(Card.IsCanTurnSet,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
+			local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 		end
 	end
