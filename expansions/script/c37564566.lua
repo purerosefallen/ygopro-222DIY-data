@@ -87,7 +87,7 @@ function cm.operation1(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		local eset=cm[tc]
 		if eset then
-			for _,te in ipairs(tc) do
+			for _,te in ipairs(eset) do
 				te:Reset()
 			end
 			cm[tc]=nil
