@@ -112,7 +112,7 @@ function c1152212.op2(e,tp,eg,ep,ev,re,r,rp)
 		e:GetHandler():RegisterEffect(e2_1,true)
 		local e2_2=Effect.CreateEffect(e:GetHandler())
 		e2_2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-		e2_2:SetType(EFFECT_TYPE_QUICK_O)
+		e2_2:SetType(EFFECT_TYPE_QUICK_F)
 		e2_2:SetCode(EVENT_CHAINING)
 		e2_2:SetRange(LOCATION_SZONE)
 		e2_2:SetReset(RESET_EVENT+0x1fe0000)
@@ -120,6 +120,8 @@ function c1152212.op2(e,tp,eg,ep,ev,re,r,rp)
 		e2_2:SetTarget(c1152212.tg2_2)
 		e2_2:SetOperation(c1152212.op2_2)
 		e:GetHandler():RegisterEffect(e2_2,true)
+	else
+		e:GetHandler():CancelToGrave(true)
 	end
 end
 function c1152212.con2_2(e,tp,eg,ep,ev,re,r,rp)
