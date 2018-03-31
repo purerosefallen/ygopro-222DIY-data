@@ -15,7 +15,6 @@ deck/03.24new_card8.ydk	be11316add9046aefcc55a212950a9de
 deck/03.24new_card9.ydk	e9eddfa590fdc6e148104e6baf03a6c3
 expansions/222DIY.cdb	175f53060ee66eb5d7e77641c08abc35
 expansions/lflist.conf	ea8035785c1698e45788613747d3dc4e
-expansions/pics.zip	d16a76e652806f435207867b33c1278c
 expansions/strings.conf	778453aec27a7045468e6f55dd04e431
 expansions/pics/08209710.jpg	ed0e60085631bfa641ffeebd6abbd910
 expansions/pics/1000400.jpg	6d8015d2ce5bc95f2165c68fc22440c1
@@ -5833,8 +5832,8 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	43b8fe61448ca4c33732f9b41fe3ad65
+update/filelist.txt	b768b4e3e14191a5594d216bf634d8bb
 update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
 update/update-push.bat	49e0e022872a85c5350b8ee445ecd4d8
 update/update-without-sound.bat	22d7b973d79ef9311213aeff61d93d7c
-update/version.txt	0e16120918fbc60043baa3187b6756a1
+update/version.txt	fa7813e205617e554f441fd72bef9900
