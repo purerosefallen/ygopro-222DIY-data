@@ -2680,3 +2680,10 @@ function cm.LinkOperation(f,min,max,gf)
 				g:DeleteGroup()
 			end
 end
+function cm.GetPZoneCount(tp,g)
+	local res=0
+	for i=0,1 do
+		if Duel.CheckLocation(tp,LOCATION_PZONE,i) or (g and g:IsExists(function(c) return c==Duel.GetFieldCard(tp,LOCATION_PZONE,i) or (c:IsLocation(LOCATION_SZONE) and c:GetSequence()==i*4) end,1,nil)) then res=res+1 end
+	end
+	return res
+end

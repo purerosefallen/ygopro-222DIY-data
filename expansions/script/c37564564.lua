@@ -6,7 +6,7 @@ cm.Senya_desc_with_nanahira=true
 function cm.initial_effect(c)
 	Senya.Nanahira(c)
 	c:EnableReviveLimit()
-	cm.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkCode,37564765),3,3)
+	Senya.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkCode,37564765),3,3)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)

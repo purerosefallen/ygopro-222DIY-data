@@ -7,7 +7,7 @@ function cm.initial_effect(c)
 	Senya.Nanahira(c)
 	Senya.AddSummonMusic(c,m*16+1,SUMMON_TYPE_LINK)
 	--link summon
-	cm.AddLinkProcedure(c,function(c) return c:GetOriginalCode()==37564765 end,1,1)
+	Senya.AddLinkProcedure(c,function(c) return c:GetOriginalCode()==37564765 end,1,1)
 	c:EnableReviveLimit()
 	--special summon
 	local e3=Effect.CreateEffect(c)

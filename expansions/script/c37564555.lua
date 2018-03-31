@@ -32,9 +32,9 @@ function cm.initial_effect(c)
 	e3:SetRange(LOCATION_PZONE)
 	e3:SetCountLimit(1,m)
 	e3:SetCost(function(e,tp,eg,ep,ev,re,r,rp,chk)
-		local pend=Duel.GetLocationCount(tp,LOCATION_PZONE)>0
+		local pend=Senya.GetPZoneCount(tp)>0
 		local c=e:GetHandler()
-		local g=Senya.GetReleaseGroup(tp,LOCATION_ONFIELD,0,cm.f,c,pend)
+		local g=Senya.GetReleaseGroup(tp,LOCATION_ONFIELD,0,cm.f,c,tp,c)
 		e:SetLabel(1)
 		if chk==0 then return #g>0 and c:IsReleasable() end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
@@ -46,13 +46,13 @@ function cm.initial_effect(c)
 		if chk==0 then
 			local l=e:GetLabel()
 			e:SetLabel(0)
-			if l~=1 and Duel.GetLocationCount(tp,LOCATION_PZONE)<2 then return false end
+			if l~=1 and Senya.GetPZoneCount(tp)<2 then return false end
 			return Duel.IsExistingMatchingCard(cm.pcfilter,tp,LOCATION_DECK,0,2,nil)
 		end
 		e:SetLabel(0)
 	end)
 	e3:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
-		if Duel.GetLocationCount(tp,LOCATION_PZONE)<2 then return end
+		if Senya.GetPZoneCount(tp)<2 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 		local g=Duel.SelectMatchingCard(tp,cm.pcfilter,tp,LOCATION_DECK,0,2,2,nil)
 		local pc=g:GetFirst()
@@ -84,9 +84,8 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 cm.pendulum_level=7
-function cm.f(c,pend)
-	if not pend and not c:IsLocation(LOCATION_PZONE) and c:GetSequence()>0 and c:GetSequence()<4 then return false end
-	return c:IsCode(37564765) and c:IsReleasable()
+function cm.f(c,tp,ec)
+	return c:IsCode(37564765) and c:IsReleasable() and Senya.GetPZoneCount(tp,Group.FromCards(c,ec))>1
 end
 function cm.pcfilter(c)
 	return c:IsType(TYPE_PENDULUM) and c.Senya_desc_with_nanahira and not c:IsForbidden()
