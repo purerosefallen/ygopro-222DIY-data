@@ -73,14 +73,14 @@ function c1156009.ofilter1(c)
 	return c:IsAbleToHand()
 end
 function c1156009.op1(e,tp,eg,ep,ev,re,r,rp)
+	if not Duel.IsExistingMatchingCard(c1156009.ofilter1,tp,0,LOCATION_ONFIELD,nil) then return end
 	if Duel.SelectYesNo(tp,aux.Stringid(1156009,0)) then
 		Duel.Hint(HINT_CARD,0,1156009)
-		local g=Duel.GetMatchingGroupCount(c1156009.ofilter1,tp,0,LOCATION_ONFIELD,nil) 
-		if g>0 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-			local sg=Duel.SelectMatchingCard(tp,c1156009.ofilter1,tp,0,LOCATION_ONFIELD,1,1,nil)
-			Duel.SendtoHand(sg,nil,REASON_EFFECT)
-		end
+		local g=Duel.GetMatchingGroup(c1156009.ofilter1,tp,0,LOCATION_ONFIELD,nil) 
+		if g:GetCount()<1 then return end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+		local sg=Duel.SelectMatchingCard(tp,c1156009.ofilter1,tp,0,LOCATION_ONFIELD,1,1,nil)
+		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 	end
 end
 --

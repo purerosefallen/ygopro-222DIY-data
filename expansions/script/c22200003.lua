@@ -37,10 +37,10 @@ function c22200003.mfilterf(c,tp,mg,rc)
 	else return false end
 end
 function c22200003.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then
 		local mg=Duel.GetRitualMaterial(tp):Filter(Card.IsCanBeRitualMaterial,c,c)
 		local ft=Duel.GetMZoneCount(tp)
-		local c=e:GetHandler()
 		if not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 		if ft>0 then
 			return mg:CheckWithSumEqual(Card.GetRitualLevel,c:GetLevel(),1,99,c)
