@@ -6,6 +6,7 @@ cm.Senya_desc_with_nanahira=true
 function cm.initial_effect(c)
 	Senya.Nanahira(c)
 	c:EnableReviveLimit()
+	Senya.AddSummonMusic(c,m*16+2,SUMMON_TYPE_RITUAL)
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetDescription(aux.Stringid(37564765,0))
