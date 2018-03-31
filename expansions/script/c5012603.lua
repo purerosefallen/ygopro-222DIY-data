@@ -69,7 +69,7 @@ function c5012603.desop(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 function c5012603.spfilter(c,e,tp)
-    return (c:IsSetCard(0x250) or c:IsSetCard(0x23c)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLevelAbove(2)
+    return (c:IsSetCard(0x250) or c:IsSetCard(0x23c)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetLevel()==2
 end
 function c5012603.tg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1

@@ -11,7 +11,7 @@ function c13254127.initial_effect(c)
 	c:RegisterEffect(e1)
 	
 end
-function c13254127.filter(c,t,tp,maru)
+function c13254127.filter(c,tp,maru)
 	return ((c:IsSetCard(0x356) and maru==1) or (not c:IsSetCard(0x356) and maru==2)) and c:IsFaceup() and Duel.IsExistingMatchingCard(c13254127.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,2-maru)
 end
 function c13254127.spfilter(c,e,tp,maru)
@@ -20,7 +20,7 @@ end
 function c13254127.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local t1=Duel.IsExistingTarget(c13254127.filter,tp,LOCATION_MZONE,0,1,nil,1)
 	local t2=Duel.IsExistingTarget(c13254127.filter,tp,LOCATION_MZONE,0,1,nil,2)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and (c13254127.filter(chkc,1) or c13254127.filter(chkc,2)) end
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and (c13254127.filter(chkc,tp,1) or c13254127.filter(chkc,tp,2)) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and (t1 or t2) end
 	local op=0
