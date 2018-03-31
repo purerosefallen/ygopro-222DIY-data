@@ -73,7 +73,7 @@ function c1156009.ofilter1(c)
 	return c:IsAbleToHand()
 end
 function c1156009.op1(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(c1156009.ofilter1,tp,0,LOCATION_ONFIELD,nil) then return end
+	if not Duel.IsExistingMatchingCard(c1156009.ofilter1,tp,0,LOCATION_ONFIELD,1,nil) then return end
 	if Duel.SelectYesNo(tp,aux.Stringid(1156009,0)) then
 		Duel.Hint(HINT_CARD,0,1156009)
 		local g=Duel.GetMatchingGroup(c1156009.ofilter1,tp,0,LOCATION_ONFIELD,nil) 
