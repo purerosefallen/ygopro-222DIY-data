@@ -38,8 +38,7 @@ function c11200007.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	 Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
 end
 function c11200007.lovefilter(c)
-	if not  (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup()) then return false end
-	return c:IsCode(11200011) and  c:IsSSetable() 
+  return c:IsCode(11200011) and c:IsSSetable() and ((c:IsLocation(LOCATION_DECK)) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup()))
 end
 function c11200007.betrayfilter(c)
 	return c:IsCode(11200012) and ((c:IsLocation(LOCATION_DECK) and c:IsAbleToGrave()) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup()))

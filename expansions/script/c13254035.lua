@@ -143,3 +143,6 @@ function c13254035.aclimit3(e,re,tp)
 	local loc=re:GetHandler():GetLocation()
 	return (loc==LOCATION_GRAVE or loc==LOCATION_HAND) and not re:GetHandler():IsImmuneToEffect(e)
 end
+function c13254035.splimit(e,c)
+	return not c:IsSetCard(0x356)
+end

@@ -81,7 +81,7 @@ end
 function c13257205.caop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ec=c:GetEquipTarget()
-	if not ec:IsRelateToBattle() or not c:IsRelateToEffect(e) then return end
+	if not c:IsRelateToEffect(e) then return end
 	Duel.ChainAttack(ec)
 end
 function c13257205.descon(e,tp,eg,ep,ev,re,r,rp)

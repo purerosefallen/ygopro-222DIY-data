@@ -135,7 +135,7 @@ function c71404864.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	c71404864.YumeCost=c71404864.YumeCost+lpcost
 end
 function c71404864.filter2(c,e,sp)
-	return c:IsSetCard(0x714) and not c:IsCode(71404864) and c:IsCanBeSpecialSummoned(e,0,sp,true,false)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x714) and not c:IsCode(71404864) and c:IsCanBeSpecialSummoned(e,0,sp,true,false)
 end
 function c71404864.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

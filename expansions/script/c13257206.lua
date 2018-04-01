@@ -21,7 +21,7 @@ function c13257206.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetValue(700)
+	e1:SetValue(300)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
@@ -69,10 +69,9 @@ function c13257206.initial_effect(c)
 	e8:SetTarget(c13257206.destg)
 	e8:SetOperation(c13257206.desop)
 	c:RegisterEffect(e8)
-	c:RegisterFlagEffect(13257201,0,0,0,3)
 	
 end
-function c13257202.eqlimit(e,c)
+function c13257206.eqlimit(e,c)
 	local eg=c:GetEquipGroup()
 	local lv=c:GetOriginalLevel()
 	if lv==nil then lv=0 end
@@ -83,11 +82,7 @@ function c13257202.eqlimit(e,c)
 	if cl==nil then
 		cl=0
 	end
-	local er=e:GetHandler():GetFlagEffectLabel(13257201)
-	if er==nil then
-		er=0
-	end
-	return not (er>cl) and not (eg:Filter(Card.IsSetCard,nil,0x354):GetSum(Card.GetLevel)>lv) and not c:GetEquipGroup():IsExists(Card.IsCode,1,e:GetHandler(),e:GetHandler():GetCode())
+	return not (eg:FilterCount(Card.IsSetCard,nil,0x3354)>cl) and not (eg:Filter(Card.IsSetCard,nil,0x354):GetSum(Card.GetLevel)>lv)
 end
 function c13257206.econ(e)
 	return e:GetHandler():GetEquipTarget()

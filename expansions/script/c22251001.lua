@@ -27,7 +27,7 @@ function c22251001.initial_effect(c)
 	--negate
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(22251001,1))
-	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
+	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE+CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e2:SetCode(EVENT_CHAINING)
@@ -44,8 +44,7 @@ function c22251001.IsRiviera(c)
 	return m and m.named_with_Riviera
 end
 function c22251001.checkop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
-	c22251001[tc:GetControler()]=c22251001[tc:GetControler()]+1
+	c22251001[rp]=c22251001[rp]+1
 end
 function c22251001.clear(e,tp,eg,ep,ev,re,r,rp)
 	c22251001[0]=0
@@ -154,6 +153,9 @@ end
 function c22251001.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 end
+function c22251001.desfilter(c)
+	return (c:GetAttack()==0 or (c:GetDefense()==0 and not c:IsType(TYPE_LINK))) and c:IsFaceup() and c:IsLocation(LOCATION_MZONE)
+end
 function c22251001.op(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
@@ -171,9 +173,10 @@ function c22251001.op(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetValue(-400*e:GetLabel())
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e1)
-		if (tc:IsType(TYPE_LINK) and tc:GetAttack()==0) or (tc:GetAttack()*tc:GetDefense()==0 and not tc:IsType(TYPE_LINK))then
-			Duel.Destroy(tc,REASON_EFFECT)
-		end
 		tc=g:GetNext()
+	end
+	local dg=g:Filter(c22251001.desfilter,nil)
+	if dg:GetCount()>0 then
+		Duel.Destroy(dg,REASON_EFFECT)
 	end
 end
