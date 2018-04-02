@@ -153,14 +153,17 @@ end
 function c22251001.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 end
-function c22251001.desfilter(c)
-	return (c:GetAttack()==0 or (c:GetDefense()==0 and not c:IsType(TYPE_LINK))) and c:IsFaceup() and c:IsLocation(LOCATION_MZONE)
+function c22251001.desfilter(c,patk,pdef)
+	return (c:IsType(TYPE_LINK) and c:GetAttack()==0 and patk~=0) or (((c:GetAttack()==0 and patk~=0) or (c:GetDefense()==0 and pdef~=0)) and not c:IsType(TYPE_LINK)) and c:IsFaceup() and c:IsLocation(LOCATION_MZONE)
 end
 function c22251001.op(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	local tc=g:GetFirst()
+	local dg=Group.CreateGroup()
 	while tc and tc:IsFaceup() do
+		local patk=tc:GetAttack()
+		local pdef=tc:GetDefense()
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
@@ -173,9 +176,11 @@ function c22251001.op(e,tp,eg,ep,ev,re,r,rp,chk)
 		e1:SetValue(-400*e:GetLabel())
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e1)
+		if ((tc:IsType(TYPE_LINK) and tc:GetAttack()==0 and patk~=0) or (((tc:GetAttack()==0 and patk~=0) or (tc:GetDefense()==0 and pdef~=0)) and not tc:IsType(TYPE_LINK))) and tc:IsFaceup() and tc:IsLocation(LOCATION_MZONE) then
+			dg:AddCard(tc)
+		end
 		tc=g:GetNext()
 	end
-	local dg=g:Filter(c22251001.desfilter,nil)
 	if dg:GetCount()>0 then
 		Duel.Destroy(dg,REASON_EFFECT)
 	end
