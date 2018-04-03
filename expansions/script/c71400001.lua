@@ -115,6 +115,13 @@ function yume.AddYumeFieldGlobal(c,id,ft)
 	yume.temp_card_field[c]=yume.temp_card_field[c] or {}
 	yume.temp_card_field[c].id=id
 	yume.temp_card_field[c].ft=ft
+	--Activate
+	local eac=Effect.CreateEffect(c)
+	eac:SetType(EFFECT_TYPE_ACTIVATE)
+	eac:SetCode(EVENT_FREE_CHAIN)
+	eac:SetCountLimit(1,id+EFFECT_COUNT_CODE_OATH)
+	eac:SetCost(yume.FieldActCostForNow)
+	c:RegisterEffect(eac)
 	--self limitation
 	local esl=Effect.CreateEffect(c)
 	esl:SetDescription(aux.Stringid(71400001,1))
@@ -135,6 +142,11 @@ function yume.AddYumeFieldGlobal(c,id,ft)
 	efa:SetCondition(yume.FieldActivationCon)
 	efa:SetOperation(yume.FieldActivationOp)
 	c:RegisterEffect(efa)
+end
+function yume.FieldActCostForNow(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	local num=yume.temp_card_field[c].id
+	if chk==0 then return Duel.GetFlagEffect(tp,num)==0 end
 end
 --Against Yume
 function yume.YumeFieldLimitCon(e,tp,eg,ep,ev,re,r,rp)
@@ -210,6 +222,8 @@ function yume.FieldActivation(tp,num,ft,loc)
 		local tep=tc:GetControler()
 		local cost=te:GetCost()
 		if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
+		local id=yume.temp_card_field[tc].id or 0
+		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 		Duel.RaiseEvent(tc,4179255,te,0,tp,tp,Duel.GetCurrentChain())
 		return tc
 	end

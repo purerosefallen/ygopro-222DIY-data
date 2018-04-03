@@ -93,7 +93,7 @@ end
 function c22250102.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and c22250102.filter(chkc,e,tp) end
-	if chk==0 then return Duel.IsExistingTarget(c22250102.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp) and (c:GetSequence()<5 or Duel.GetLocationCount(tp,LOCATION_MZONE)>1) end
+	if chk==0 then return c:IsAbleToRemove() and Duel.IsExistingTarget(c22250102.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp) and (c:GetSequence()<5 or Duel.GetLocationCount(tp,LOCATION_MZONE)>1) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectTarget(tp,c22250102.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,LOCATION_GRAVE+LOCATION_REMOVED)

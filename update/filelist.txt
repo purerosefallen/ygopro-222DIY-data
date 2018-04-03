@@ -1,4 +1,4 @@
-﻿ygopro_222.exe	830498fe13384ae7d24d3cc7333cd045
+﻿ygopro_222.exe	e50b024edff2252685a0984dcc9898e8
 deck/03.24new_card1.ydk	04acbad475814852e8c6c9b062a48e22
 deck/03.24new_card10.ydk	938d0e24faf11e38f813ee312dcc87c9
 deck/03.24new_card11.ydk	fb62e020dd98e7e5728dbf6ab87f087d
@@ -3792,7 +3792,7 @@ expansions/script/c13254123.lua	ee656f42c24940a458bf89d56809ca86
 expansions/script/c13254124.lua	0cbaeea7c1d48acb3e54fdbda0af3086
 expansions/script/c13254125.lua	3e3cfb6d8cd6c6b0a8429585ce750dec
 expansions/script/c13254126.lua	270cb15e6ac84dcb3f8a459bf61e8f9e
-expansions/script/c13254127.lua	c194dc5a59e8a771790807dc9d41c8b6
+expansions/script/c13254127.lua	9893e0a41db77aad6a36df092cfa82c1
 expansions/script/c13255200.lua	b13fed1999163eecf600221ef1268948
 expansions/script/c13255201.lua	1d778da80549065dd8094afc88eff2d3
 expansions/script/c13255202.lua	3cfe101f3ccbe334b6c2dc3cfb4c33ce
@@ -3875,7 +3875,7 @@ expansions/script/c13257334.lua	c85480ab520655411743921d2131dc8a
 expansions/script/c13257335.lua	925b6a0da52014e582730ada3c5ae3e1
 expansions/script/c13257336.lua	5f92d09c0fdbdeb3eb8104c4359e26ce
 expansions/script/c13257337.lua	247956a8c448e1c24ddf0d36ed1e244c
-expansions/script/c13257338.lua	bfbec49effbe6886fd96702178389399
+expansions/script/c13257338.lua	b1a8365b027a7c2484a17f09cb31f1d1
 expansions/script/c13257339.lua	d99f95f20753436744b3b4efd0a8413c
 expansions/script/c13257340.lua	d3587764eea942ff924fbe8e6295b67b
 expansions/script/c14000001.lua	c452dc4ca34717a81b0816d1f2068756
@@ -4227,8 +4227,8 @@ expansions/script/c22250003.lua	4897fe2eb7e690287f55ae41ff83a4eb
 expansions/script/c22250004.lua	ee1c18d16f1156a711e22c8868646f32
 expansions/script/c22250005.lua	9363b23fab665dc747e5d60f914e1940
 expansions/script/c22250006.lua	b266246effdc97d4070c254f4b926854
-expansions/script/c22250101.lua	3eebff836e0cbad02c6f6f043fb55a87
-expansions/script/c22250102.lua	12978f0e617fdcb3fa44c8922382314a
+expansions/script/c22250101.lua	e4ca0a9ff6e48c090de803c9c3a4783c
+expansions/script/c22250102.lua	944e5323e534662d0d951b0415b64dd7
 expansions/script/c22250161.lua	5c5b1123a660898e7aebb28399c3cee7
 expansions/script/c22251001.lua	f90e32545436408f999761d398c81071
 expansions/script/c22251002.lua	0418bfc83ddeafcf14f80f86dbae7b13
@@ -5420,7 +5420,7 @@ expansions/script/c710250.lua	d00660a7189a586ee2d9dfaaee026e72
 expansions/script/c710251.lua	24471867ac97b8f9e20acb87858295e8
 expansions/script/c710252.lua	a1580dc285bb83de8ce6aa94cd2fd9e1
 expansions/script/c710253.lua	a66c02bc4e29b265130a9da2b085a3a9
-expansions/script/c71400001.lua	17ab276ff7325c09f5c733c5ef7f8993
+expansions/script/c71400001.lua	b9b9786c9d2bb0e0982864c107e1b874
 expansions/script/c71400002.lua	4461423480efe0ca3faa9bc7a82b7962
 expansions/script/c71400003.lua	8c81aa8b9a5a99b40d0b00c4111c390f
 expansions/script/c71400004.lua	15c9bd151ca944324d9f52d191df55b2
@@ -5433,10 +5433,10 @@ expansions/script/c71400010.lua	d8a16e8e5935ddc920f76ec39a0b3893
 expansions/script/c71400011.lua	a643fc9dcabcd7e6389417d47d109aab
 expansions/script/c71400012.lua	52a745013ef18b3bc137d7547bcaa3c9
 expansions/script/c71400013.lua	b401bfb747aa2bd5f25906a85b1d40af
-expansions/script/c71400014.lua	1d48e505fc990ebad7382084a01b1268
-expansions/script/c71400015.lua	02c8f4a10d3705f2fc9761c88b57e82f
-expansions/script/c71400016.lua	7a0c90297b112939b387ae6dfd7833c6
-expansions/script/c71400017.lua	2d9ca6211d1d1665a94501a06414cd24
+expansions/script/c71400014.lua	a473d8b5cb4b5bf3ecfc78be147dcfd1
+expansions/script/c71400015.lua	c1b01c026ded7f383333c05f44297cc9
+expansions/script/c71400016.lua	3d32d52cd965a21221a4a04eb11c0c0f
+expansions/script/c71400017.lua	73ebfc251daf9c3d8fa093c93502bc75
 expansions/script/c71400018.lua	77529f8e4c9123c7161484c0a8fb3f2e
 expansions/script/c71400019.lua	6e6a21b3798c3035e4bd5d46398cfbe9
 expansions/script/c71400020.lua	4f6e6e081561a343959741cf8e473d48
@@ -5830,8 +5830,8 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	292f07c509006d08d8b855bd9c8d43c9
+update/filelist.txt	b4d31c55923b1dc8572e1c3b8d9adaae
 update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
 update/update-push.bat	49e0e022872a85c5350b8ee445ecd4d8
 update/update-without-sound.bat	22d7b973d79ef9311213aeff61d93d7c
-update/version.txt	40af8ffe74c65091d147fb7c3cbe7bcd
+update/version.txt	af38780742042f894863c1af136980c1

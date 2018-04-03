@@ -67,7 +67,7 @@ function c13257338.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257338.cfilter1(c,tp)
-	return c:GetPreviousControler()==tp and c:IsReason(REASON_EFFECT)
+	return c:GetPreviousControler()==tp and c:IsReason(REASON_BATTLE+REASON_EFFECT)
 end
 function c13257338.pccon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c13257338.cfilter1,1,nil,1-tp)

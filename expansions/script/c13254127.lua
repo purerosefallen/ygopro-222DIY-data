@@ -44,6 +44,7 @@ function c13254127.spop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Group.CreateGroup()
 	if tc:IsRelateToEffect(e) then
 		sg:AddCard(tc)
+	else return end
 	end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
