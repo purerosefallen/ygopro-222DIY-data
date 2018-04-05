@@ -34,7 +34,8 @@ function c22261003.filter2(c,e,tp)
 	return c22261003.IsNanayaShiki(c) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c22261003.filter3(c,tp)
-	return c22261003.IsNanayaShiki(c) and c:IsFaceup() and Duel.IsExistingMatchingCard(c22261003.filter4,tp,LOCATION_DECK,0,1,nil)
+	local g=c:GetColumnGroup():Filter(Card.IsType,nil,TYPE_MONSTER):Filter(Card.IsControler,nil,1-tp)
+	return c22261003.IsNanayaShiki(c) and c:IsFaceup() and Duel.IsExistingMatchingCard(c22261003.filter4,tp,LOCATION_DECK,0,1,nil) and g:GetCount()>0
 end
 function c22261003.filter4(c)
 	return c:IsCode(22260007) and c:IsAbleToHand()
@@ -63,7 +64,7 @@ function c22261003.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 		local g=Duel.SelectTarget(tp,c22261003.filter1,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
-		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)	   
+		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)	  
 	elseif sel==2 then
 		e:SetCategory(CATEGORY_DESTROY+CATEGORY_SEARCH+CATEGORY_TOHAND)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)

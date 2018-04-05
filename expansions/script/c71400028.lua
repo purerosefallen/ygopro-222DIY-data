@@ -39,7 +39,7 @@ function c71400028.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c71400028.filter1(c,e,tp,zone)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,zone)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function c71400028.tg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local zone=e:GetHandler():GetLinkedZone(tp)
