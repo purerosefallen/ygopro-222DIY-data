@@ -40,7 +40,7 @@ function c13257221.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_LEAVE_FIELD)
 	e4:SetRange(LOCATION_SZONE)
-	e4:SetCondition(c13257221.damcon1)
+	e4:SetCondition(c13257221.damcon)
 	e4:SetOperation(c13257221.damop1)
 	c:RegisterEffect(e4)
 	--Mk-4 Laser

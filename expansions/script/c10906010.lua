@@ -32,7 +32,7 @@ function cm.initial_effect(c)
     e3:SetType(EFFECT_TYPE_FIELD)
     e3:SetRange(LOCATION_MZONE)
     e3:SetTargetRange(0,LOCATION_SZONE)
-    e3:SetCondition(cm.randcon2)
+    e3:SetCondition(cm.randcon)
     e3:SetCode(EFFECT_DISABLE)
     c:RegisterEffect(e3)
     local e4=Effect.CreateEffect(c)
@@ -60,7 +60,7 @@ function cm.randcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.randcon2(e,tp,eg,ep,ev,re,r,rp)
     local ct=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)
-    return ct%2==0
+    return ct%2==0 and ct>1
 end
 function cm.cfilter(c)
     return c:IsSetCard(0x239) and c:IsFaceup() and c:IsAbleToGraveAsCost()
