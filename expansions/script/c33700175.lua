@@ -65,7 +65,7 @@ function c33700175.thop(e,tp,eg,ep,ev,re,r,rp)
 	if ct2>0 then
 		Duel.Draw(p,ct2,REASON_EFFECT)
 	end
-	local sg=Duel.MatchingGroup(function(c) return c:IsFaceup() or not c:IsOnField() end,p,LOCATION_GRAVE+LOCATION_HAND+LOCATION_ONFIELD,0,nil)
+	local sg=Duel.GetMatchingGroup(function(c) return c:IsFaceup() or not c:IsOnField() end,p,LOCATION_GRAVE+LOCATION_HAND+LOCATION_ONFIELD,0,nil)
 	local hg=Duel.GetFieldGroup(p,LOCATION_HAND,0)
 	Duel.ConfirmCards(1-p,hg)
 	if sg:GetClassCount(Card.GetCode)==sg:GetCount() then
