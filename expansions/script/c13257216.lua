@@ -21,12 +21,12 @@ function c13257216.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetValue(300)
+	e1:SetValue(500)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_EQUIP)
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
-	e2:SetValue(100)
+	e2:SetValue(200)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(13257216,0))
@@ -40,6 +40,7 @@ function c13257216.initial_effect(c)
 	e3:SetTarget(c13257216.destg)
 	e3:SetOperation(c13257216.desop)
 	c:RegisterEffect(e3)
+	c:RegisterFlagEffect(13257201,0,0,0,2)
 	
 end
 function c13257216.eqlimit(e,c)
@@ -49,7 +50,15 @@ function c13257216.eqlimit(e,c)
 	if not eg:IsContains(e:GetHandler()) then
 		eg:AddCard(e:GetHandler())
 	end
-	return not c:GetEquipGroup():IsExists(Card.IsCode,1,c,c:GetCode()) and not (eg:Filter(Card.IsSetCard,nil,0x354):GetSum(Card.GetLevel)>lv)
+	local cl=c:GetFlagEffectLabel(13257200)
+	if cl==nil then
+		cl=0
+	end
+	local er=e:GetHandler():GetFlagEffectLabel(13257201)
+	if er==nil then
+		er=0
+	end
+	return not (er>cl) and not (eg:Filter(Card.IsSetCard,nil,0x354):GetSum(Card.GetLevel)>lv) and not c:GetEquipGroup():IsExists(Card.IsCode,1,e:GetHandler(),e:GetHandler():GetCode())
 end
 function c13257216.econ(e)
 	return e:GetHandler():GetEquipTarget()

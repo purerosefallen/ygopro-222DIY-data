@@ -37,6 +37,7 @@ end
 function c13257326.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
+		Duel.Hint(12,0,aux.Stringid(13257326,7))
 		local tep=tc:GetControler()
 		local mt=getmetatable(tc)
 		local PCe=mt[tc]

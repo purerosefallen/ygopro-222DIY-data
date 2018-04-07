@@ -56,7 +56,7 @@ function c13257217.rdop(e,tp,eg,ep,ev,re,r,rp)
 			dg:AddCard(tc)
 			Duel.HintSelection(dg)
 			local d1=Duel.TossDice(tp,1)
-			if d1<=2 then
+			if d1<=3 then
 				g:AddCard(tc)
 			end
 			tc=sg:GetNext()
@@ -67,7 +67,7 @@ function c13257217.rdop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.HintSelection(dg)
 			sg:Sub(dg)
 			local d1=Duel.TossDice(tp,1)
-			if d1<=2 then
+			if d1<=3 then
 				g:Merge(dg)
 			end
 		end

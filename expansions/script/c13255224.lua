@@ -46,6 +46,7 @@ function c13255224.initial_effect(c)
 	e5:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
 	e5:SetCode(EVENT_REMOVE)
 	e5:SetCountLimit(1,13255224)
+	e5:SetCost(c13255224.thcost)
 	e5:SetCondition(c13255224.thcon)
 	e5:SetTarget(c13255224.thtg)
 	e5:SetOperation(c13255224.thop)
@@ -143,6 +144,10 @@ function c13255224.repop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Destroy(dg,REASON_EFFECT)
 		end
 	end
+end
+function c13255224.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function c13255224.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_DECK)

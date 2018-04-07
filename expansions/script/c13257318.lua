@@ -38,6 +38,7 @@ function c13257318.initial_effect(c)
 	e4:SetCountLimit(1)
 	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetHintTiming(0,0x1e0)
+	e4:SetCost(c13257318.pccost)
 	e4:SetTarget(c13257318.pctg)
 	e4:SetOperation(c13257318.pcop)
 	c:RegisterEffect(e4)
@@ -114,6 +115,16 @@ end
 function c13257318.eqfilter(c,ec)
 	return c:IsSetCard(0x3352) and c:IsType(TYPE_MONSTER) and c:CheckEquipTarget(ec)
 end
+function c13257318.tdfilter(c)
+	return c:IsAbleToDeckAsCost()
+end
+function c13257318.pccost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local eq=e:GetHandler():GetEquipGroup()
+	if chk==0 then return eg:IsExists(c13257318.tdfilter,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g=eq:FilterSelect(tp,c13257318.tdfilter,1,1,nil)
+	Duel.SendtoDeck(g,nil,2,REASON_COST)
+end
 function c13257318.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local t1=c:GetEquipCount()>0 or Duel.IsExistingMatchingCard(c13257318.eqfilter,tp,LOCATION_EXTRA,0,1,nil,c)
@@ -125,10 +136,7 @@ function c13257318.pcop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local t1=c:GetEquipCount()>0 or Duel.IsExistingMatchingCard(c13257318.eqfilter,tp,LOCATION_EXTRA,0,1,nil,c) and c:IsRelateToEffect(e) and c:IsFaceup()
 	local t2=Duel.IsPlayerCanDraw(tp,1)
-	if not (t1 or t2) or c:GetEquipCount()==0 then return end
-	local tg=c:GetEquipGroup():Select(tp,1,1,nil)
-	if Duel.SendtoDeck(tg,nil,2,REASON_EFFECT)==0 then return end
-	Duel.BreakEffect()
+	if not (t1 or t2) then return end
 	local op=0
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(13257318,1))
 	if t1 and t2 then

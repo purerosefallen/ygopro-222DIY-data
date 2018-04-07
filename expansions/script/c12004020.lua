@@ -31,7 +31,8 @@ function c12004020.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c12004020.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler():IsOnField()
+	local ph=Duel.GetCurrentPhase()
+	return (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) and re:GetHandler():IsOnField()
 end
 function c12004020.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

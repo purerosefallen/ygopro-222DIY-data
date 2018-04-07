@@ -41,33 +41,23 @@ function c13254067.initial_effect(c)
 	c:RegisterEffect(e4)
 	--Handes
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(13254067,2))
-	e5:SetCategory(CATEGORY_HANDES+CATEGORY_TODECK)
+	e5:SetDescription(aux.Stringid(13254067,3))
+	e5:SetCategory(CATEGORY_TODECK)
 	e5:SetType(EFFECT_TYPE_IGNITION)
 	e5:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e5:SetRange(LOCATION_MZONE)
-	e5:SetCountLimit(1,13254067)
-	e5:SetTarget(c13254067.target2)
-	e5:SetOperation(c13254067.operation2)
+	e5:SetTarget(c13254067.pentg)
+	e5:SetOperation(c13254067.penop)
 	c:RegisterEffect(e5)
-	--pendulum
-	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(13254067,3))
-	e6:SetType(EFFECT_TYPE_IGNITION)
-	e6:SetRange(LOCATION_MZONE)
-	e6:SetCountLimit(1,23254067)
-	e6:SetTarget(c13254067.pentg)
-	e6:SetOperation(c13254067.penop)
-	c:RegisterEffect(e6)
 	--to grave
-	local e7=Effect.CreateEffect(c)
-	e7:SetCategory(CATEGORY_TOGRAVE)
-	e7:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e7:SetProperty(EFFECT_FLAG_DELAY)
-	e7:SetCode(EVENT_RELEASE)
-	e7:SetCountLimit(1,33254067)
-	e7:SetOperation(c13254067.operation3)
-	c:RegisterEffect(e7)
+	local e6=Effect.CreateEffect(c)
+	e6:SetCategory(CATEGORY_TOGRAVE)
+	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e6:SetProperty(EFFECT_FLAG_DELAY)
+	e6:SetCode(EVENT_RELEASE)
+	e6:SetCountLimit(1,13254067)
+	e6:SetOperation(c13254067.operation3)
+	c:RegisterEffect(e6)
 	local e10=Effect.CreateEffect(c)
 	e10:SetType(EFFECT_TYPE_SINGLE)
 	e10:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -142,7 +132,7 @@ function c13254067.operation(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetValue(300)
+		e1:SetValue(200)
 		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
 		tc=g:GetNext()
@@ -151,49 +141,31 @@ end
 function c13254067.filter1(c)
 	return (c:IsCode(13254032) or c:IsCode(13254062)) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
-function c13254067.target2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c13254067.pentg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c13254067.filter1(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c13254067.filter1,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c13254067.filter1,tp,LOCATION_GRAVE,0,1,nil) and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g1=Duel.SelectTarget(tp,c13254067.filter1,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g1,1,0,0)
 end
-function c13254067.operation2(e,tp,eg,ep,ev,re,r,rp)
+function c13254067.penop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	if Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)~=1 then return end
 	Duel.BreakEffect()
+	if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return false end
+	local c=e:GetHandler()
+	Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+end
+function c13254067.operation3(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetLP(1-tp)>6000 then
+		Duel.SetLP(1-tp,6000)
+	end
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
 	if ct>=5 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 		local g1=Duel.SelectMatchingCard(1-tp,nil,1-tp,LOCATION_HAND,0,ct-4,ct-4,nil)
 		Duel.SendtoGrave(g1,REASON_DISCARD)
 	end
-end
-function c13254067.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1) end
-end
-function c13254067.penop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return false end
-	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-	end
-end
-function c13254067.operation3(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLP(1-tp)==6000 then return end
-	Duel.SetLP(1-tp,6000)
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetCode(EFFECT_CHANGE_DAMAGE)
-		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e1:SetTargetRange(0,1)
-		e1:SetValue(0)
-		e1:SetReset(RESET_PHASE+PHASE_END,2)
-		Duel.RegisterEffect(e1,tp)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_NO_EFFECT_DAMAGE)
-		e2:SetReset(RESET_PHASE+PHASE_END,2)
-		Duel.RegisterEffect(e2,tp)
 end
 

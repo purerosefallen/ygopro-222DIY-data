@@ -21,9 +21,11 @@ function c13257203.initial_effect(c)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(13257203,2))
-	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
+	e3:SetCondition(c13257203.condition)
 	e3:SetCost(c13257203.cost)
 	e3:SetTarget(c13257203.target)
 	e3:SetOperation(c13257203.operation)
@@ -79,6 +81,9 @@ function c13257203.otop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function c13257203.dircon(e)
 	return e:GetHandler():GetEquipCount()>1
+end
+function c13257203.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==tp
 end
 function c13257203.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

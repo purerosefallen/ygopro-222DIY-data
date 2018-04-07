@@ -21,7 +21,7 @@ function c13257202.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_EQUIP)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
-	e1:SetValue(1200)
+	e1:SetValue(c13257202.value)
 	c:RegisterEffect(e1)
 	--actlimit
 	local e3=Effect.CreateEffect(c)
@@ -33,6 +33,7 @@ function c13257202.initial_effect(c)
 	e3:SetValue(c13257202.aclimit)
 	e3:SetCondition(c13257202.actcon)
 	c:RegisterEffect(e3)
+	c:RegisterFlagEffect(13257201,0,0,0,1)
 	
 end
 function c13257202.eqlimit(e,c)
@@ -46,13 +47,20 @@ function c13257202.eqlimit(e,c)
 	if cl==nil then
 		cl=0
 	end
-	return not (eg:FilterCount(Card.IsSetCard,nil,0x3354)>cl) and not (eg:Filter(Card.IsSetCard,nil,0x354):GetSum(Card.GetLevel)>lv)
+	local er=e:GetHandler():GetFlagEffectLabel(13257201)
+	if er==nil then
+		er=0
+	end
+	return not (er>cl) and not (eg:Filter(Card.IsSetCard,nil,0x354):GetSum(Card.GetLevel)>lv) and not c:GetEquipGroup():IsExists(Card.IsCode,1,e:GetHandler(),e:GetHandler():GetCode())
 end
 function c13257202.econ(e)
 	return e:GetHandler():GetEquipTarget()
 end
 function c13257202.efilter(e,re)
 	return e:GetHandlerPlayer()~=re:GetOwnerPlayer()
+end
+function c13257202.value(e,c)
+	return c:GetLevel()*200
 end
 function c13257202.aclimit(e,re,tp)
 	return not re:GetHandler():IsImmuneToEffect(e)

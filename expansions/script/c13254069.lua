@@ -35,39 +35,28 @@ function c13254069.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e4:SetCode(EVENT_PHASE+PHASE_END)
 	e4:SetRange(LOCATION_PZONE)
-	e4:SetCountLimit(1,43254069)
-	e4:SetCondition(c13254069.edcon)
+	e4:SetCountLimit(1,13254069)
 	e4:SetTarget(c13254069.edtg)
 	e4:SetOperation(c13254069.edop)
 	c:RegisterEffect(e4)
+	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(13254069,3))
+	e5:SetCategory(CATEGORY_TODECK)
+	e5:SetType(EFFECT_TYPE_IGNITION)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e5:SetTarget(c13254069.pentg)
+	e5:SetOperation(c13254069.penop)
+	c:RegisterEffect(e5)
 	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(13254069,2))
-	e6:SetCategory(CATEGORY_TOHAND+CATEGORY_TODECK)
-	e6:SetType(EFFECT_TYPE_IGNITION)
-	e6:SetRange(LOCATION_MZONE)
-	e6:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e6:SetCountLimit(1,13254069)
-	e6:SetTarget(c13254069.thtg)
-	e6:SetOperation(c13254069.thop)
+	e6:SetCategory(CATEGORY_TOGRAVE)
+	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e6:SetProperty(EFFECT_FLAG_DELAY)
+	e6:SetCode(EVENT_RELEASE)
+	e6:SetCountLimit(1,23254069)
+	e6:SetTarget(c13254069.tgtg)
+	e6:SetOperation(c13254069.tgop)
 	c:RegisterEffect(e6)
-	--pendulum
-	local e7=Effect.CreateEffect(c)
-	e7:SetDescription(aux.Stringid(13254069,3))
-	e7:SetType(EFFECT_TYPE_IGNITION)
-	e7:SetRange(LOCATION_MZONE)
-	e7:SetCountLimit(1,23254069)
-	e7:SetTarget(c13254069.pentg)
-	e7:SetOperation(c13254069.penop)
-	c:RegisterEffect(e7)
-	local e8=Effect.CreateEffect(c)
-	e8:SetCategory(CATEGORY_TOGRAVE)
-	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e8:SetProperty(EFFECT_FLAG_DELAY)
-	e8:SetCode(EVENT_RELEASE)
-	e8:SetCountLimit(1,33254069)
-	e8:SetTarget(c13254069.tgtg)
-	e8:SetOperation(c13254069.tgop)
-	c:RegisterEffect(e8)
 	local e10=Effect.CreateEffect(c)
 	e10:SetType(EFFECT_TYPE_SINGLE)
 	e10:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -129,9 +118,6 @@ function c13254069.psplimit(e,c,sump,sumtype,sumpos,targetp)
 	if c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER) then return false end
 	return bit.band(sumtype,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
-function c13254069.edcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
-end
 function c13254069.edtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_EXTRA,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_EXTRA)
@@ -147,40 +133,39 @@ end
 function c13254069.filter1(c)
 	return (c:IsCode(13254031) or c:IsCode(13254062)) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
-function c13254069.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c13254069.pentg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c13254069.filter1(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c13254069.filter1,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c13254069.filter1,tp,LOCATION_GRAVE,0,1,nil) and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g1=Duel.SelectTarget(tp,c13254069.filter1,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g1,1,0,0)
 end
-function c13254069.thop(e,tp,eg,ep,ev,re,r,rp)
+function c13254069.penop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	if Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)~=1 then return end
 	Duel.BreakEffect()
-	local g=Duel.GetMatchingGroup(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,nil)
-	Duel.SendtoHand(g,nil,REASON_EFFECT)
-end
-function c13254069.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1) end
-end
-function c13254069.penop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return false end
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-	end
+	Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 end
 function c13254069.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,0,LOCATION_EXTRA,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,0,LOCATION_EXTRA)
 end
+function c13254069.tgfilter(c)
+	return c:IsFacedown() and c:IsAbleToGrave()
+end
+function c13254069.tgfilter1(c)
+	return c:IsFaceup() and c:IsAbleToGrave()
+end
 function c13254069.tgop(e,tp,eg,ep,ev,re,r,rp)
-	local g1=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,0,LOCATION_EXTRA,nil)
-	if g1:GetCount()>0 then
+	local g1=Duel.GetMatchingGroup(c13254069.tgfilter,tp,0,LOCATION_EXTRA,nil)
+	local g2=Duel.GetMatchingGroup(c13254069.tgfilter1,tp,0,LOCATION_EXTRA,nil)
+	if g1:GetCount()>0 or g2:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local sg=g1:RandomSelect(1-tp,3)
+		sg:Merge(g2)
 		Duel.SendtoGrave(sg,REASON_EFFECT)
 	end
 end

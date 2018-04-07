@@ -1,0 +1,57 @@
+--乱数机关 要塞
+local m=10906008
+local cm=_G["c"..m]
+function cm.initial_effect(c)
+    c:EnableReviveLimit()
+    aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0x239),2,2)
+    local e1=Effect.CreateEffect(c)
+    e1:SetType(EFFECT_TYPE_FIELD)
+    e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+    e1:SetRange(LOCATION_MZONE)
+    e1:SetTargetRange(LOCATION_MZONE,0)
+    e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x239))
+    e1:SetCondition(cm.randcon)
+    e1:SetValue(1)
+    c:RegisterEffect(e1)   
+    local e2=Effect.CreateEffect(c)
+    e2:SetType(EFFECT_TYPE_FIELD)
+    e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+    e2:SetRange(LOCATION_MZONE)
+    e2:SetTargetRange(LOCATION_MZONE,0)
+    e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x239))
+    e2:SetCondition(cm.randcon2)
+    e2:SetValue(1)
+    c:RegisterEffect(e2)  
+    local e3=Effect.CreateEffect(c)
+    e3:SetType(EFFECT_TYPE_FIELD)
+    e3:SetCode(EFFECT_IMMUNE_EFFECT)
+    e3:SetRange(LOCATION_MZONE)
+    e3:SetTargetRange(LOCATION_MZONE,0)
+    e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x239))
+    e3:SetCondition(cm.randcon)
+    e3:SetValue(cm.efilter)
+    c:RegisterEffect(e3)
+    local e4=Effect.CreateEffect(c)
+    e4:SetType(EFFECT_TYPE_FIELD)
+    e4:SetCode(EFFECT_IMMUNE_EFFECT)
+    e4:SetRange(LOCATION_MZONE)
+    e4:SetTargetRange(LOCATION_MZONE,0)
+    e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x239))
+    e4:SetCondition(cm.randcon2)
+    e4:SetValue(cm.vfilter2)
+    c:RegisterEffect(e4)
+end
+function cm.randcon(e,tp,eg,ep,ev,re,r,rp)
+    local ct=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)
+    return ct%2~=0
+end
+function cm.randcon2(e,tp,eg,ep,ev,re,r,rp)
+    local ct=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)
+    return ct%2==0
+end
+function cm.efilter(e,te)
+    return te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:IsActiveType(TYPE_MONSTER)
+end
+function cm.vfilter2(e,te)
+    return te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:IsActiveType(TYPE_SPELL)
+end

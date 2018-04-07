@@ -1,5 +1,12 @@
 --零之力 泽洛斯
 function c13257211.initial_effect(c)
+	--summon with no tribute
+	local e11=Effect.CreateEffect(c)
+	e11:SetDescription(aux.Stringid(13257211,3))
+	e11:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e11:SetType(EFFECT_TYPE_SINGLE)
+	e11:SetCode(EFFECT_SUMMON_PROC)
+	c:RegisterEffect(e11)
 	--tohand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(13257211,0))
@@ -7,17 +14,17 @@ function c13257211.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
+	e1:SetCondition(c13257211.thcon)
 	e1:SetCost(c13257211.thcost)
 	e1:SetTarget(c13257211.thtg)
 	e1:SetOperation(c13257211.thop)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(13257209,1))
+	e2:SetDescription(aux.Stringid(13257211,1))
 	e2:SetCategory(CATEGORY_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCondition(c13257211.condition)
 	e2:SetTarget(c13257211.target)
 	e2:SetOperation(c13257211.activate)
 	c:RegisterEffect(e2)
@@ -37,6 +44,9 @@ function c13257211.initial_effect(c)
 	e12:SetOperation(c13257211.bgmop)
 	c:RegisterEffect(e12)
 	
+end
+function c13257211.thcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE)
 end
 function c13257211.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToGraveAsCost() 
@@ -68,9 +78,6 @@ end
 function c13257211.filter(c)
 	return c:IsSetCard(0x353) and c:IsSummonable(true,nil,1)
 end
-function c13257211.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetActivityCount(tp,ACTIVITY_NORMALSUMMON)==0
-end
 function c13257211.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c13257211.filter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
@@ -85,7 +92,7 @@ function c13257211.activate(e,tp,eg,ep,ev,re,r,rp)
 		if s1 then
 			Duel.Summon(tp,tc,true,nil,1)
 			local label=tc:GetFlagEffectLabel(13257200)
-			tc:RegisterFlagEffect(13257200,RESET_EVENT+0x1fe0000,0,1,label+1)
+			tc:RegisterFlagEffect(13257200,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,label+1,aux.Stringid(13257211,5))
 		end
 	end
 end

@@ -35,6 +35,7 @@ function c13257204.initial_effect(c)
 	e3:SetTarget(c13257204.destg)
 	e3:SetOperation(c13257204.desop)
 	c:RegisterEffect(e3)
+	c:RegisterFlagEffect(13257201,0,0,0,1)
 	
 end
 function c13257204.eqlimit(e,c)
@@ -44,7 +45,15 @@ function c13257204.eqlimit(e,c)
 	if not eg:IsContains(e:GetHandler()) then
 		eg:AddCard(e:GetHandler())
 	end
-	return (c:GetOriginalLevel()>=7) and not (eg:Filter(Card.IsSetCard,nil,0x354):GetSum(Card.GetLevel)>lv)
+	local cl=c:GetFlagEffectLabel(13257200)
+	if cl==nil then
+		cl=0
+	end
+	local er=e:GetHandler():GetFlagEffectLabel(13257201)
+	if er==nil then
+		er=0
+	end
+	return not (er>cl) and not (c:GetOriginalLevel()>=7) and not (eg:Filter(Card.IsSetCard,nil,0x354):GetSum(Card.GetLevel)>lv)
 end
 function c13257204.econ(e)
 	return e:GetHandler():GetEquipTarget()
@@ -67,7 +76,7 @@ function c13257204.desop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(-1000)
+		e1:SetValue(-500)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e1)
 		local e2=e1:Clone()

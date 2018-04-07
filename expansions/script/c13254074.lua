@@ -37,7 +37,6 @@ function c13254074.initial_effect(c)
 	e4:SetCode(EVENT_PHASE+PHASE_END)
 	e4:SetRange(LOCATION_PZONE)
 	e4:SetCountLimit(1,13254074)
-	e4:SetCondition(c13254074.drcon)
 	e4:SetTarget(c13254074.drtg)
 	e4:SetOperation(c13254074.drop)
 	c:RegisterEffect(e4)
@@ -130,9 +129,6 @@ function c13254074.psplimit(e,c,sump,sumtype,sumpos,targetp)
 	if c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER) then return false end
 	return bit.band(sumtype,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
-function c13254074.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
-end
 function c13254074.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
 	Duel.SetTargetPlayer(tp)
@@ -149,7 +145,7 @@ function c13254074.filter1(c)
 end
 function c13254074.drtg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c13254074.filter1(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c13254074.filter1,tp,LOCATION_GRAVE,0,2,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c13254074.filter1,tp,LOCATION_GRAVE,0,2,nil) and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g1=Duel.SelectTarget(tp,c13254074.filter1,tp,LOCATION_GRAVE,0,2,2,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g1,2,0,0)
@@ -158,9 +154,10 @@ function c13254074.drop1(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	if Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)~=2 then return end
-	Duel.ShuffleDeck(tp)
 	Duel.BreakEffect()
-	Duel.Draw(tp,1,REASON_EFFECT)
+	if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return false end
+	local c=e:GetHandler()
+	Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 end
 function c13254074.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1) end
@@ -173,10 +170,10 @@ function c13254074.penop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13254074.drtg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
 	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(1)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	Duel.SetTargetParam(2)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 end
 function c13254074.drop2(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

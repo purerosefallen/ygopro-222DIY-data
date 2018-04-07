@@ -56,7 +56,7 @@ function c75646402.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 	if e:GetLabel()==1
 		and Duel.IsExistingMatchingCard(c75646402.filter,tp,LOCATION_DECK,0,1,nil) then
-		e:SetCategory(CATEGORY_TOGRAVE+CATEGORY_TOHAND)
+		e:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	end
 end

@@ -43,6 +43,7 @@ function c13257336.chlimit(e,ep,tp)
 	return e:IsActiveType(TYPE_MONSTER)
 end
 function c13257336.desop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(12,0,aux.Stringid(13257336,7))
 	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
 	Duel.Destroy(sg,REASON_EFFECT)
 end
@@ -59,6 +60,7 @@ end
 function c13257336.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsCanAddCounter(0x351,1) then
+		Duel.Hint(12,0,aux.Stringid(13257326,7))
 		tc:AddCounter(0x351,1)
 	end
 end

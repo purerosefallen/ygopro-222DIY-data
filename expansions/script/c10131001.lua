@@ -13,35 +13,38 @@ function c10131001.initial_effect(c)
 	--Destroy
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(10131001,1))
-	e2:SetCategory(CATEGORY_DESTROY)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetCode(EVENT_CHAINING)
+	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_SEARCH+CATEGORY_TOHAND)
+	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCountLimit(1)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(c10131001.descon)
 	e2:SetTarget(c10131001.destg)
 	e2:SetOperation(c10131001.desop)
 	c:RegisterEffect(e2) 
 end
-function c10131001.cfilter(c,tp)
-	return c:IsOnField() and c:IsControler(tp) and c:IsFaceup() and c:IsSetCard(0x5338)
+function c10131001.desfilter(c,tp)
+	return c:IsSetCard(0x5338) and c:IsFaceup() and Duel.IsExistingMatchingCard(c10131001.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c:GetCode())
 end
-function c10131001.descon(e,tp,eg,ep,ev,re,r,rp)
-	local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
-	return ex and tg~=nil and tc+tg:FilterCount(c10131001.cfilter,nil,tp)-tg:GetCount()>0
+function c10131001.thfilter(c,code)
+	return c:IsCode(code) and c:IsAbleToHand()
 end
 function c10131001.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() end
-	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
+	if chkc then return chkc:IsOnField() and chkc:IsFaceup() and chkc:IsControler(tp) and chkc:IsCode(e:GetLabel()) end
+	if chk==0 then return Duel.IsExistingTarget(c10131001.desfilter,tp,LOCATION_ONFIELD,0,1,nil,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	local g=Duel.SelectTarget(tp,c10131001.tgfilter1,tp,LOCATION_ONFIELD,0,1,1,nil,tp)
+	e:SetLabel(g:GetFirst():GetCode())
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,tp,LOCATION_ONFIELD)
 end
 function c10131001.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and e:GetHandler():IsRelateToEffect(e) then
-		Duel.Destroy(tc,REASON_EFFECT)
+	if tc:IsRelateToEffect(e) then
+	   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	   local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c10131001.thfilter),tp,LOCATION_DECK,0,1,1,nil,tc:GetCode())
+	   if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
+		  Duel.Destroy(tc,REASON_EFFECT)
+	   end
 	end
 end
 function c10131001.ahfilter(c)

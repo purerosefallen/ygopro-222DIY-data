@@ -22,13 +22,15 @@ function c13257304.initial_effect(c)
 	e2:SetTarget(c13257304.pctg)
 	e2:SetOperation(c13257304.pcop)
 	c:RegisterEffect(e2)
-	--cannot select battle target
+	--special summon
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_FIELD)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetTargetRange(0,LOCATION_MZONE)
-	e3:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
-	e3:SetValue(c13257304.atlimit)
+	e3:SetDescription(aux.Stringid(13257304,5))
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetCode(EVENT_BECOME_TARGET)
+	e3:SetRange(LOCATION_HAND)
+	e3:SetCondition(c13257304.tgcon)
+	e3:SetTarget(c13257304.tgtg)
+	e3:SetOperation(c13257304.tgop)
 	c:RegisterEffect(e3)
 	local e11=Effect.CreateEffect(c)
 	e11:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -44,25 +46,53 @@ function c13257304.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13257304.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingMatchingCard(c13257304.eqfilter,tp,LOCATION_EXTRA,0,1,nil,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
 function c13257304.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 then
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
 		Duel.Hint(11,0,aux.Stringid(13257304,7))
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+		local g=Duel.SelectMatchingCard(tp,c13257304.eqfilter,tp,LOCATION_EXTRA,0,1,1,nil,c)
+		local tc=g:GetFirst()
+		if tc then
+			Duel.Equip(tp,tc,c)
+		end
 		local a=Duel.GetAttacker()
 		if a:IsAttackable() and not a:IsImmuneToEffect(e) then
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetValue(1)
-			e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
-			c:RegisterEffect(e1)
 			Duel.CalculateDamage(a,c)
 		end
+	end
+end
+function c13257304.tgfilter(c,tp)
+	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp) and c:IsSetCard(0x351)
+end
+function c13257304.tgcon(e,tp,eg,ep,ev,re,r,rp)
+	local tf=re:GetTarget()
+	local res,ceg,cep,cev,cre,cr,crp=Duel.CheckEvent(re:GetCode(),true)
+	return eg:IsExists(c13257304.tgfilter,1,nil,tp) and tf(re,rp,ceg,cep,cev,cre,cr,crp,0,c)
+end
+function c13257304.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingMatchingCard(c13257304.eqfilter,tp,LOCATION_EXTRA,0,1,nil,e:GetHandler()) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
+end
+function c13257304.tgop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 then
+		Duel.Hint(11,0,aux.Stringid(13257304,7))
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+		local g=Duel.SelectMatchingCard(tp,c13257304.eqfilter,tp,LOCATION_EXTRA,0,1,1,nil,c)
+		local tc=g:GetFirst()
+		if tc then
+			Duel.Equip(tp,tc,c)
+		end
+		local g=Group.CreateGroup()
+		g:AddCard(c)
+		Duel.ChangeTargetCard(ev,g)
 	end
 end
 function c13257304.pcfilter(c,tp)
@@ -176,9 +206,6 @@ function c13257304.tokenatt(e,c)
 end
 function c13257304.tokendes(e)
 	return not e:GetOwner():IsRelateToCard(e:GetHandler())
-end
-function c13257304.atlimit(e,c)
-	return c:GetCode()~=e:GetHandler():GetCode() and c:IsFaceup() and c:IsSetCard(0x351)
 end
 function c13257304.bgmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(11,0,aux.Stringid(13257304,7))

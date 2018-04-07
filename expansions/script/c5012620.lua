@@ -1,6 +1,5 @@
 --木原唯一
 function c5012620.initial_effect(c)
-    c:SetUniqueOnField(1,1,5012620)
      --synchro summon
     aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsSetCard,0x250),1)
     c:EnableReviveLimit()
@@ -48,9 +47,9 @@ function c5012620.filter(c)
     return c:IsType(TYPE_EFFECT) and c:IsAbleToRemove()
 end
 function c5012620.cost(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    if chk==0 then return Duel.IsExistingMatchingCard(c5012620.filter,tp,0,LOCATION_GRAVE,1,nil) end
+    if chk==0 then return Duel.IsExistingMatchingCard(c5012620.filter,tp,0,LOCATION_GRAVE,LOCATION_GRAVE,nil) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-    local g=Duel.SelectMatchingCard(tp,c5012620.filter,tp,0,LOCATION_GRAVE,1,1,nil)
+    local g=Duel.SelectMatchingCard(tp,c5012620.filter,tp,0,LOCATION_GRAVE,LOCATION_GRAVE,1,nil)
     Duel.Remove(g,POS_FACEUP,REASON_COST)
     e:SetLabel(g:GetFirst():GetOriginalCode())
 end
@@ -90,7 +89,7 @@ function c5012620.desop(e,tp,eg,ep,ev,re,r,rp)
         Duel.Destroy(g,REASON_EFFECT)
 end
 function c5012620.repfilter(c)
-    return c:IsSetCard(0x250) and c:IsAbleToRemoveAsCost()
+    return  c:IsAbleToRemoveAsCost()
 end
 function c5012620.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
     local c=e:GetHandler()

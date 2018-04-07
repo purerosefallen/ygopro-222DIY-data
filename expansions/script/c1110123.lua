@@ -2,7 +2,6 @@
 local m=1110123
 local cm=_G["c"..m]
 xpcall(function() require("expansions/script/c1110198") end,function() require("script/c1110198") end)
-cm.named_with_Soul=true
 --
 function c1110123.initial_effect(c)
 --

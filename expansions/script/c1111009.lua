@@ -1,54 +1,52 @@
---于拂晓徘徊之风
+--秘谈·彷徨的旅程
+local m=1111009
+local cm=_G["c"..m]
+xpcall(function() require("expansions/script/c1110198") end,function() require("script/c1110198") end)
+cm.named_with_Legend=true
+--
 function c1111009.initial_effect(c)
 --
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TODECK)
+	e1:SetCategory(CATEGORY_TODECK+CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(2,1111009+EFFECT_COUNT_CODE_OATH)
-	e1:SetCost(c1111009.cost1)
+	e1:SetCondition(c1111009.con1)
 	e1:SetTarget(c1111009.tg1)
 	e1:SetOperation(c1111009.op1)
 	c:RegisterEffect(e1)
---  
+--
 end
 --
-function c1111009.IsLd(c)
-	local m=_G["c"..c:GetCode()]
-	return m and m.named_with_Ld
+function c1111009.cfilter1(c)
+	return muxu.check_set_Urban(c) and c:IsFaceup()
+end
+function c1111009.con1(e,tp,eg,ep,ev,re,r,rp)
+	local b1=Duel.IsExistingMatchingCard(c1111009.cfilter1,tp,LOCATION_FZONE,LOCATION_FZONE,1,nil)
+	local b2=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD+LOCATION_HAND,0)-Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)
+	return b1 or b2<1
 end
 --
-function c1111009.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroupCount(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
-	local g2=Duel.GetMatchingGroupCount(aux.TRUE,tp,LOCATION_ONFIELD,0,nil)
-	if chk==0 then return g2<=g and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 end
-	Duel.Draw(tp,1,REASON_COST)
-	local tc=Duel.GetOperatedGroup():GetFirst()
-	e:SetLabelObject(tc)
+function c1111009.tfilter1(c)
+	return c:IsType(TYPE_SPELL) and c:IsAbleToHand()
 end
---
 function c1111009.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	local c=e:GetHandler()
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,1,nil) and Duel.GetFieldGroup(tp,LOCATION_DECK,0)>1 end
+	c:CancelToGrave()
+	Duel.SendtoDeck(c,nil,2,REASON_RULE)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,0,LOCATION_ONFIELD)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 --
 function c1111009.op1(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsAbleToDeck() then
-		e:GetHandler():CancelToGrave()
-		Duel.SendtoDeck(e:GetHandler(),nil,2,REASON_EFFECT)
-	end
-	local tc=e:GetLabelObject()
-	if tc and tc~=nil and (c1111009.IsLd(tc)) then
-		Duel.ConfirmCards(1-tp,tc)
-		if Duel.GetMatchingGroupCount(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)>0 and Duel.SelectYesNo(tp,aux.Stringid(1111009,0)) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-			local dg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,1,1,nil)
-			Duel.SendtoDeck(dg,nil,2,REASON_EFFECT)
-		end
-	else
-		Duel.ConfirmCards(1-tp,tc)
-		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
-	end
-	Duel.ShuffleHand(tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local sg=Duel.SelectMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,1,nil)
+	if sg:GetCount()<1 then return end
+	if Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)<1 then return end
+	local tg=Duel.GetDecktopGroup(tp,2):Filter(c1111009.tfilter1,nil)
+	if tg:GetCount()<1 then return end
+	local gn=tg:Select(tp,1,1,nil)
+	Duel.SendtoHand(gn,nil,REASON_EFFECT)
+	Duel.ConfirmCards(1-tp,gn)
 end
-
-
+--

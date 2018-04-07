@@ -47,7 +47,6 @@ function c13254065.initial_effect(c)
 	e5:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e5:SetType(EFFECT_TYPE_IGNITION)
 	e5:SetRange(LOCATION_MZONE)
-	e5:SetCountLimit(1,23254065)
 	e5:SetTarget(c13254065.pentg)
 	e5:SetOperation(c13254065.penop)
 	c:RegisterEffect(e5)
@@ -57,7 +56,7 @@ function c13254065.initial_effect(c)
 	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e6:SetProperty(EFFECT_FLAG_DELAY)
 	e6:SetCode(EVENT_RELEASE)
-	e6:SetCountLimit(1,33254065)
+	e6:SetCountLimit(1,23254065)
 	e6:SetTarget(c13254065.sgtg)
 	e6:SetOperation(c13254065.sgop)
 	c:RegisterEffect(e6)
@@ -123,15 +122,17 @@ function c13254065.psplimit(e,c,sump,sumtype,sumpos,targetp)
 	return bit.band(sumtype,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function c13254065.hdtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_HAND,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_HAND,1,nil) and Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_HAND,3,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_HAND)
 end
 function c13254065.hdop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
+	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
+	local d=math.floor(ct/3)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_HAND,nil)
-	if g:GetCount()>0 then
-		local sg=g:RandomSelect(tp,1)
-		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
+	if g:GetCount()>0 and d>0 then
+		local sg=g:RandomSelect(tp,d)
+		Duel.Remove(sg,POS_FACEDOWN,REASON_EFFECT)
 	end
 end
 function c13254065.filter1(c)

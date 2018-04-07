@@ -114,6 +114,7 @@ function c13257308.desop(e,tp,eg,ep,ev,re,r,rp)
 			tc=g:GetNext()
 		end
 		Duel.Destroy(g,REASON_EFFECT)
+	end
 		Duel.BreakEffect()
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
 			local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0)
@@ -126,7 +127,6 @@ function c13257308.desop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.MoveSequence(ec,nseq)
 		end
 		Duel.ChangePosition(ec,POS_FACEUP_DEFENSE)
-	end
 end
 function c13257308.aclimit(e,re,tp)
 	return not re:GetHandler():IsImmuneToEffect(e)

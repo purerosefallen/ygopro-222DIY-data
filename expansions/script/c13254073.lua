@@ -30,45 +30,34 @@ function c13254073.initial_effect(c)
 	e3:SetTargetRange(1,0)
 	e3:SetTarget(c13254073.psplimit)
 	c:RegisterEffect(e3)
-	--atkdown
+	--special summon
 	local e4=Effect.CreateEffect(c)
-	e4:SetCategory(CATEGORY_TODECK)
+	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_IGNITION)
-	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetRange(LOCATION_PZONE)
 	e4:SetCountLimit(1)
-	e4:SetTarget(c13254073.tdtg)
-	e4:SetOperation(c13254073.tdop)
+	e4:SetTarget(c13254073.sptg)
+	e4:SetOperation(c13254073.spop)
 	c:RegisterEffect(e4)
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(13254073,2))
-	e5:SetCategory(CATEGORY_TOHAND+CATEGORY_TODECK)
+	e5:SetDescription(aux.Stringid(13254073,3))
+	e5:SetCategory(CATEGORY_TODECK)
 	e5:SetType(EFFECT_TYPE_IGNITION)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e5:SetCountLimit(1,13254073)
-	e5:SetTarget(c13254073.target)
-	e5:SetOperation(c13254073.operation)
+	e5:SetTarget(c13254073.pentg)
+	e5:SetOperation(c13254073.penop)
 	c:RegisterEffect(e5)
-	--pendulum
 	local e6=Effect.CreateEffect(c)
-	e6:SetDescription(aux.Stringid(13254073,3))
-	e6:SetType(EFFECT_TYPE_IGNITION)
-	e6:SetRange(LOCATION_MZONE)
+	e6:SetCategory(CATEGORY_HANDES)
+	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e6:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_PLAYER_TARGET)
+	e6:SetCode(EVENT_RELEASE)
 	e6:SetCountLimit(1,23254073)
-	e6:SetTarget(c13254073.pentg)
-	e6:SetOperation(c13254073.penop)
+	e6:SetCondition(c13254073.hdcon)
+	e6:SetTarget(c13254073.hdtg)
+	e6:SetOperation(c13254073.hdop)
 	c:RegisterEffect(e6)
-	local e7=Effect.CreateEffect(c)
-	e7:SetCategory(CATEGORY_HANDES)
-	e7:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e7:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_PLAYER_TARGET)
-	e7:SetCode(EVENT_RELEASE)
-	e7:SetCountLimit(1,33254073)
-	e7:SetCondition(c13254073.hdcon)
-	e7:SetTarget(c13254073.hdtg)
-	e7:SetOperation(c13254073.hdop)
-	c:RegisterEffect(e7)
 	local e10=Effect.CreateEffect(c)
 	e10:SetType(EFFECT_TYPE_SINGLE)
 	e10:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -130,51 +119,41 @@ function c13254073.psplimit(e,c,sump,sumtype,sumpos,targetp)
 	if c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER) then return false end
 	return bit.band(sumtype,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
-function c13254073.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_REMOVED) end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToDeck,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
+function c13254073.spfilter(c,e,tp)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c13254073.tdop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local sg=tg:Filter(Card.IsRelateToEffect,nil,e)
-	if sg:GetCount()>0 then
-		Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+function c13254073.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c13254073.spfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_REMOVED,LOCATION_GRAVE+LOCATION_REMOVED,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_REMOVED)
+end
+function c13254073.spop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 or not e:GetHandler():IsRelateToEffect(e) then return end
+	local g=Duel.GetMatchingGroup(aux.NecroValleyFilter(c13254073.spfilter),tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_REMOVED,LOCATION_GRAVE+LOCATION_REMOVED,nil,e,tp)
+	if g:GetCount()>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local sg=g:Select(tp,1,1,nil)
+		Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 function c13254073.filter1(c)
 	return (c:IsCode(13254036) or c:IsCode(13254062)) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
-function c13254073.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c13254073.pentg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c13254073.filter1(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c13254073.filter1,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c13254073.filter1,tp,LOCATION_GRAVE,0,1,nil) and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g1=Duel.SelectTarget(tp,c13254073.filter1,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g1,1,0,0)
 end
-function c13254073.operation(e,tp,eg,ep,ev,re,r,rp)
+function c13254073.penop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	if Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)~=1 then return end
 	Duel.BreakEffect()
-	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD+LOCATION_HAND)
-	if g:GetCount()==0 then return end
-	Duel.ConfirmCards(tp,g)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local dg=g:Select(tp,0,1,nil)
-	Duel.HintSelection(dg)
-	local ct=Duel.Destroy(dg,REASON_EFFECT)
-	g=Duel.GetMatchingGroup(aux.TRUE,1-tp,LOCATION_DECK,0,nil)
-	Duel.ShuffleHand(1-tp)
-	if ct>0 and dg:GetCount()>0 and Duel.SelectYesNo(1-tp,aux.Stringid(13254073,8)) then
-		Duel.BreakEffect()
-		Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DESTROY)
-		local dg=g:Select(1-tp,1,2,nil)
-		Duel.Destroy(dg,REASON_EFFECT)
-	end
+	if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return false end
+	local c=e:GetHandler()
+	Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	--Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(13254073,4))
 	--local sel=Duel.SelectOption(tp,70,71,72)
 	--if sel==0 then
@@ -213,27 +192,20 @@ function c13254073.operation(e,tp,eg,ep,ev,re,r,rp)
 	--  end
 	--end
 end
-function c13254073.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1) end
-end
-function c13254073.penop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return false end
-	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-	end
-end
 function c13254073.hdcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)
 end
 function c13254073.hdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(1-tp,LOCATION_HAND,0)~=0 end
-	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,1,1-tp,LOCATION_HAND)
 end
 function c13254073.hdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(1-tp,LOCATION_HAND,0)
-	if g:GetCount()==0 then return end
-	local sg=g:RandomSelect(1-tp,1)
-	Duel.SendtoGrave(sg,REASON_DISCARD)
+	if g:GetCount()>0 then
+		Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(13254073,9))
+		Duel.ConfirmCards(tp,g)
+		local sg=hg:Select(tp,1,1,nil)
+		Duel.SendtoHand(sg,tp,REASON_EFFECT)
+		Duel.ShuffleHand(1-tp)
+	end
 end
 
