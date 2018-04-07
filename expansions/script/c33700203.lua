@@ -20,7 +20,9 @@ function c33700203.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
 	e2:SetTargetRange(1,0)
-	e2:SetTarget(c33700203.splimit)
+	e2:SetTarget(function(e,c,sump,sumtype,sumpos,targetp)
+		return bit.band(sumtype,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
+	end)
 	c:RegisterEffect(e2)
 	--P: Once per turn, you can send 1 face-up "Heavenly Maid" monster you control to your GY, and if you do, gain 1000 LP.
 	local e1=Effect.CreateEffect(c)
