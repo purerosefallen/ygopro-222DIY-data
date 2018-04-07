@@ -4,7 +4,7 @@ local cm=_G["c"..m]
 xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 cm.Senya_name_with_prism=true
 function cm.initial_effect(c)
-	Senya.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_SEASERPENT),2,3)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_SEASERPENT),2,3)
 	c:EnableReviveLimit()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

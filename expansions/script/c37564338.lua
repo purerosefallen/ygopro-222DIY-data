@@ -4,7 +4,7 @@ local cm=_G["c"..m]
 xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 function cm.initial_effect(c)
 	--link summon
-	Senya.AddLinkProcedure(c,aux.TRUE,4)
+	aux.AddLinkProcedure(c,aux.TRUE,4)
 	c:EnableReviveLimit()
 	Senya.AddSummonMusic(c,m*16+1,SUMMON_TYPE_LINK)
 	--atk

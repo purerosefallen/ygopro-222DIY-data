@@ -6,7 +6,7 @@ cm.Senya_desc_with_nanahira=true
 function cm.initial_effect(c)
 	Senya.Nanahira(c)
 	c:EnableReviveLimit()
-	Senya.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkCode,37564765),2,4)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkCode,37564765),2,4)
 	Senya.AddSummonMusic(c,m*16,SUMMON_TYPE_LINK)
 	local ex=Effect.CreateEffect(c)
 	ex:SetType(EFFECT_TYPE_SINGLE)
