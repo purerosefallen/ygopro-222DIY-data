@@ -54,7 +54,7 @@ function c33700196.initial_effect(c)
 	local ec=eb:Clone()
 	ec:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	ec:SetValue(function(e,c) return c~=e:GetHandler() end)
-	c:RegisterEffect(e)
+	c:RegisterEffect(ec)
 	--On your 2nd Standby Phase after this card is Normal or Special Summoned, Destroy this card.
 	local ed=Effect.CreateEffect(c)
 	ed:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)

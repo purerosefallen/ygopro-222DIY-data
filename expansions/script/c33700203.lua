@@ -88,7 +88,7 @@ function c33700203.afilter(c)
 end
 function c33700203.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local g1=Duel.GetMatchingGroup(c33700203.disfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c))
+	local g1=Duel.GetMatchingGroup(c33700203.disfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,c)
 	local g2=Duel.GetMatchingGroup(c33700203.afilter,tp,LOCATION_MZONE,0,nil)
 	local opt=0
 	if g1:GetCount()>0 and g2:GetCount()>0 then
