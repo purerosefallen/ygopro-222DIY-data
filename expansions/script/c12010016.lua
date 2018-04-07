@@ -30,7 +30,7 @@ function c12010016.tgfilter(c)
 end
 function c12010016.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c12010016.filter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function c12010016.spfilter(c,e,tp,rec,att)
 	return  (c:IsSetCard(0xfba) or c:IsSetCard(0x1fb3))  and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(12010016) and c:IsType(TYPE_MONSTER) and (c:IsRace(rec) or c:IsAttribute(att))
