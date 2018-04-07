@@ -77,7 +77,7 @@ function c1110141.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 --
 function c1110141.ofilter2(c)
-	return c:IsType(TYPE_RITUAL) and c:IsAbleToRemove()
+	return c:IsType(TYPE_RITUAL) and c:IsAbleToRemove() and c:IsType(TYPE_MONSTER)
 end
 function c1110141.op2(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)

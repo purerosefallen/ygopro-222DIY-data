@@ -136,7 +136,7 @@ function c1111402.op4(e,tp,eg,ep,ev,re,r,rp)
 		e4_3:SetRange(LOCATION_SZONE)
 		e4_3:SetCountLimit(1)
 		e4_3:SetCondition(c1111402.con4_1)
-		e4_3:SetOperation(c1111403.op4_3)
+		e4_3:SetOperation(c1111402.op4_3)
 		c:RegisterEffect(e4_3)
 	end
 end
@@ -286,6 +286,7 @@ function c1111402.op4_2(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1111402.op4_3(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetTurnPlayer()~=tp then return end
 	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 end
 --

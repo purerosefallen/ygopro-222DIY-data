@@ -48,6 +48,7 @@ function c22260166.splimit(e,c)
 end
 function c22260166.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local zone=e:GetHandler():GetLinkedZone(tp)
+	local g=e:GetHandler():GetLinkedGroup()
 	local ft=Duel.GetMZoneCount(tp,g,tp,LOCATION_REASON_TOFIELD,zone)
 	if chk==0 then return ft>0 and Duel.IsPlayerCanSpecialSummonMonster(tp,22269998,nil,0x4011,0,0,11,RACE_FAIRY,ATTRIBUTE_DARK,zone)end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
@@ -55,6 +56,7 @@ function c22260166.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end 
 function c22260166.spop(e,tp,eg,ep,ev,re,r,rp)
 	local zone=e:GetHandler():GetLinkedZone(tp)
+	local g=e:GetHandler():GetLinkedGroup()
 	local ft=Duel.GetMZoneCount(tp,g,tp,LOCATION_REASON_TOFIELD,zone)
 	if ft<1 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end

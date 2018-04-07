@@ -91,7 +91,7 @@ function cm.spfilter2(c,e,tp)
 end
 function cm.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return true end
-    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function cm.spop2(e,tp,eg,ep,ev,re,r,rp)
     if Duel.GetLocationCountFromEx(tp)<=0 then return end

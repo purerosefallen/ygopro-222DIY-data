@@ -31,7 +31,7 @@ function c1111009.tfilter1(c)
 end
 function c1111009.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,1,nil) and Duel.GetFieldGroup(tp,LOCATION_DECK,0)>1 end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,1,nil) and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>1 end
 	c:CancelToGrave()
 	Duel.SendtoDeck(c,nil,2,REASON_RULE)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,0,LOCATION_ONFIELD)
