@@ -2,7 +2,7 @@
 function c14804814.initial_effect(c)
 	--link summon
 	c:SetUniqueOnField(1,1,aux.FilterBoolFunction(Card.IsCode,14804814),LOCATION_MZONE)
-	aux.AddLinkProcedure(c,c14804816.matfilter,2)
+	aux.AddLinkProcedure(c,c14804814.matfilter,2)
 	c:EnableReviveLimit()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -45,7 +45,7 @@ function c14804814.initial_effect(c)
 	e5:SetValue(c14804814.limval)
 	c:RegisterEffect(e5)
 end
-function c14804816.matfilter(c)
+function c14804814.matfilter(c)
 	return c:IsSetCard(0x4848) and c:IsLinkType(TYPE_LINK)
 end
 function c14804814.atktg(e,c)
