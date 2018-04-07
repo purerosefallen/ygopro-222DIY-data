@@ -10,7 +10,7 @@ function c1111223.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EFFECT_DESTROY_REPLACE)
 	e1:SetRange(LOCATION_SZONE)
-	e1:SetTarget(c1111402.tg1)
+	e1:SetTarget(c1111223.tg1)
 	c:RegisterEffect(e1)
 --
 	local e2=Effect.CreateEffect(c)
