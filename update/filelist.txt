@@ -7,7 +7,7 @@ deck/04.07new_card5.ydk	05921b299851ecba9ac2d47cd66a16dd
 deck/04.07new_card6.ydk	a6610daa0934ba5a58d8f154b8a4ee42
 deck/04.07new_card7.ydk	87c11406a46bc070268f4053308d1529
 deck/04.07new_card8.ydk	6af58c996e8eb4a5f6fb399876e68f90
-expansions/222DIY.cdb	b5a5e1018ed537421c725f68d51fe1cc
+expansions/222DIY.cdb	436bfe60e20f67f178e6cd12dcf90ccb
 expansions/lflist.conf	60541939d6e36167c103dfd7a8148bed
 expansions/strings.conf	9b6efc12a369475d7768532987572986
 expansions/pics/08209710.jpg	ed0e60085631bfa641ffeebd6abbd910
@@ -1342,11 +1342,6 @@ expansions/pics/197520737.jpg	7349fac73a55d3d89be9719a24813bb5
 expansions/pics/197520738.jpg	0ba5c70f297c020e8a198d728526a66e
 expansions/pics/197520742.jpg	a8ff844651ec8410954be4ea2196c92a
 expansions/pics/197520743.jpg	3e1dccebf4bfa26aa5b752e9ca7fc7ce
-expansions/pics/20180401.jpg	2523cdf9c0e85e0855ad6e661602e410
-expansions/pics/20180402.jpg	9da716cfe39e075dafc5b85d76f2696c
-expansions/pics/20180403.jpg	5b04d13a7425a3e95c9e8f854394d13d
-expansions/pics/20180404.jpg	9a02a90048aef42b47d28ab3a65808bc
-expansions/pics/20180405.jpg	6868d18fda4aceac593a9e0937544e1d
 expansions/pics/2100001.jpg	a952f09759dfd54efceff789b9e2f5cf
 expansions/pics/2100002.jpg	a2fbe74aadf2073bf7c0d2dbda0663f0
 expansions/pics/2100003.jpg	150f386b57c09b4a3612f2c3208aa7d2
@@ -4254,11 +4249,6 @@ expansions/script/c17091001.lua	13cfd404053b7a4be319ef1d8f23e0ee
 expansions/script/c17091002.lua	271bc6a8edbce807cd930a42b925d56e
 expansions/script/c17091003.lua	23f8be60a76323ed402d1b6c1d840baf
 expansions/script/c17111010.lua	b1cebff889e04e55bc9308c2fc034ce1
-expansions/script/c20180401.lua	a1782cd193e888a74f23e4ea7c0e144f
-expansions/script/c20180402.lua	ff48da2376bb5a347e8d9ce6bfa22724
-expansions/script/c20180403.lua	4003490248dceace9e85807e16620435
-expansions/script/c20180404.lua	ecab5392c62f7970b87f0e3c6ffecf12
-expansions/script/c20180405.lua	cbe1da8bf7cc7ceb84405166fdbb9c20
 expansions/script/c2100001.lua	502495feba7fc1f45c729fc5e39f3ff8
 expansions/script/c2100002.lua	620ffedb121edf0b614b61e1b40e8630
 expansions/script/c2100003.lua	2fe50fb6f05ba5994a5f94081d2ffc5d
@@ -4663,7 +4653,7 @@ expansions/script/c33700207.lua	5a0189241fba0ea6803a80add6bdb7ba
 expansions/script/c33700208.lua	862ba4ef776e726fae26b4071c20c2ae
 expansions/script/c33700209.lua	858369d5fc1b2268a8ab4734c27f1fab
 expansions/script/c33700210.lua	f37cef61be869e0bb790f5aaedd7358d
-expansions/script/c33700211.lua	56c02a4ebb274e4ccd1be14b1eb012d7
+expansions/script/c33700211.lua	6043f7f6370589a0afa29ff42514e1c9
 expansions/script/c33700300.lua	5d0b0578589915337f1c46b407ed0cdf
 expansions/script/c33700301.lua	0db2b0ef6bc3f369a353c24c86b17f73
 expansions/script/c33700302.lua	9997af7942b7ed172221e7bc7421c91c
@@ -6051,8 +6041,8 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	0524122cd49054fa367efab0d2e828ba
+update/filelist.txt	e1de9d0bf6dcd206d764a9458e68e8e9
 update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
 update/update-push.bat	49e0e022872a85c5350b8ee445ecd4d8
 update/update-without-sound.bat	22d7b973d79ef9311213aeff61d93d7c
-update/version.txt	fc1646427b47b1a1404fac90d7e85d62
+update/version.txt	c98a4ffd90dfc5d3a09cc637ad372977
