@@ -66,8 +66,8 @@ function c1111003.op1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local sel=e:GetLabel()
 	if sel==1 then
-		Duel.RegisterFlagEffect(tp,1111003,0,0,0)
 		if Duel.GetFlagEffect(tp,1111003)>0 then return end
+		Duel.RegisterFlagEffect(tp,1111003,0,0,0)
 		local e1_1=Effect.CreateEffect(c)
 		e1_1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1_1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)

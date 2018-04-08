@@ -53,7 +53,7 @@ function c1111005.op1(e,tp,eg,ep,ev,re,r,rp)
 		end
 		if b2 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-			local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil)
+			local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,3,nil)
 			if g:GetCount()>0 then
 				Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 			end

@@ -44,7 +44,6 @@ function c1111007.op1(e,tp,eg,ep,ev,re,r,rp)
 	local b1=(tc:IsFaceup() and not tc:IsDisabled())
 	local b2=Duel.IsExistingMatchingCard(c1111007.ofilter1,p,LOCATION_MZONE,LOCATION_MZONE,1,tc,tc)
 	local b3=true
-	if not Duel.SelectYesNo(tp,aux.Stringid(1111007,0)) then return end
 	local off=1
 	local ops={}
 	local opval={}

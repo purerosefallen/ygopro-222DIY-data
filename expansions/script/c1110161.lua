@@ -13,8 +13,9 @@ function c1110161.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetRange(LOCATION_EXTRA)
-	e1:SetCondition(aux.LinkCondition(c1110161.filter1,2,2))
-	e1:SetOperation(aux.LinkOperation(c1110161.filter1,2,2))
+	e1:SetCondition(aux.LinkCondition(aux.FilterBoolFunction(Card.IsLevel,3),2,2))
+	e1:SetTarget(aux.LinkTarget(aux.FilterBoolFunction(Card.IsLevel,3),2,2))
+	e1:SetOperation(aux.LinkOperation(aux.FilterBoolFunction(Card.IsLevel,3),2,2))
 	e1:SetValue(SUMMON_TYPE_LINK)
 	c:RegisterEffect(e1)
 --
@@ -25,6 +26,7 @@ function c1110161.initial_effect(c)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
 	e2:SetRange(LOCATION_EXTRA)
 	e2:SetCondition(c1110161.LinkCondition(c1110161.filter2,1,1))
+	e2:SetTarget(c1110161.LinkTarget(c1110161.filter2,1,1))
 	e2:SetOperation(c1110161.LinkOperation(c1110161.filter2,1,1))
 	e2:SetValue(SUMMON_TYPE_LINK)
 	c:RegisterEffect(e2)
@@ -39,20 +41,13 @@ function c1110161.initial_effect(c)
 --
 end
 --
-function c1110161.filter1(c)
-	return c:GetLevel()==3
-end
---
 function c1110161.filter2(c)
-	return c:IsType(TYPE_TOKEN) and c:GetLevel()==3
+	return c:IsLinkType(TYPE_TOKEN) and aux.FilterBoolFunction(Card.IsLevel,3)
 end
 --
-function c1110161.GetLinkCount(c)
-	if c:IsType(TYPE_LINK) and c:GetLink()>1 then
-		return 1+0x10000*c:GetLink()
-	else return 1 end
+function c1110161.LCheckGoal(tp,sg,lc,minc,ct,gf)
+	return ct>=minc and sg:CheckWithSumEqual(aux.GetLinkCount,1,ct,ct) and Duel.GetLocationCountFromEx(tp,tp,sg,lc)>0 and (not gf or gf(sg))
 end
---
 function c1110161.LCheckRecursive(c,tp,sg,mg,lc,ct,minc,maxc,gf)
 	sg:AddCard(c)
 	ct=ct+1
@@ -61,9 +56,6 @@ function c1110161.LCheckRecursive(c,tp,sg,mg,lc,ct,minc,maxc,gf)
 	sg:RemoveCard(c)
 	ct=ct-1
 	return res
-end
-function c1110161.LCheckGoal(tp,sg,lc,minc,ct,gf)
-	return ct>=minc and sg:CheckWithSumEqual(c1110161.GetLinkCount,1,ct,ct) and Duel.GetLocationCountFromEx(tp,tp,sg,lc)>0 and (not gf or gf(sg))
 end
 --
 function c1110161.LinkCondition(f,minc,maxc,gf)
@@ -85,32 +77,53 @@ function c1110161.LinkCondition(f,minc,maxc,gf)
 	end
 end
 --
-function c1110161.LinkOperation(f,minc,maxc,gf)
+function c1110161.LinkTarget(f,minc,maxc,gf)
 	return  
-	function(e,tp,eg,ep,ev,re,r,rp,c)
+	function(e,tp,eg,ep,ev,re,r,rp,chk,c)
 		local mg=Duel.GetMatchingGroup(aux.LConditionFilter,tp,LOCATION_MZONE,0,nil,f,c)
-		local sg=Group.CreateGroup()
+		local bg=Group.CreateGroup()
 		for i,pe in ipairs({Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_LMATERIAL)}) do
-			sg:AddCard(pe:GetHandler())
+			bg:AddCard(pe:GetHandler())
 		end
-		local ct=sg:GetCount()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LMATERIAL)
-		sg:Select(tp,ct,ct,nil)
-		for i=ct,maxc-1 do
-			local cg=mg:Filter(c1110161.LCheckRecursive,sg,tp,sg,mg,c,i,minc,maxc,gf)
-			if cg:GetCount()==0 then break end
-			local minct=1
-			if c1110161.LCheckGoal(tp,sg,c,minc,i,gf) then
-				if not Duel.SelectYesNo(tp,210) then break end
-				minct=0
-			end
+		if bg:GetCount()>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LMATERIAL)
-			local g=cg:Select(tp,minct,1,nil)
-			if g:GetCount()==0 then break end
-			sg:Merge(g)
+			bg:Select(tp,bg:GetCount(),bg:GetCount(),nil)
 		end
-		c:SetMaterial(sg)
-		Duel.SendtoGrave(sg,REASON_MATERIAL+REASON_LINK)
+		local sg=Group.CreateGroup()
+		sg:Merge(bg)
+		while sg:GetCount()<maxc do
+			local cg=mg:Filter(c1110161.LCheckRecursive,sg,tp,sg,mg,c,sg:GetCount(),minc,maxc,gf)
+			if cg:GetCount()==0 then break end
+			local finish=c1110161.LCheckGoal(tp,sg,c,minc,sg:GetCount(),gf)
+			local cancel=(sg:GetCount()==0 or finish)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LMATERIAL)
+			local tc=cg:SelectUnselect(sg,tp,finish,cancel,minc,maxc)
+			if not tc then break end
+			if not bg:IsContains(tc) then
+				if not sg:IsContains(tc) then
+					sg:AddCard(tc)
+				else
+					sg:RemoveCard(tc)
+				end
+			elseif bg:GetCount()>0 and sg:GetCount()<=bg:GetCount() then
+				return false 
+			end
+		end
+		if sg:GetCount()>0 then
+			sg:KeepAlive()
+			e:SetLabelObject(sg)
+			return true
+		else return false end
+	end
+end
+--
+function c1110161.LinkOperation(f,min,max,gf)
+	return  
+	function(e,tp,eg,ep,ev,re,r,rp,c,smat,mg)
+		local g=e:GetLabelObject()
+		c:SetMaterial(g)
+		Duel.SendtoGrave(g,REASON_MATERIAL+REASON_LINK)
+		g:DeleteGroup()
 		local e2_1=Effect.CreateEffect(c)
 		e2_1:SetType(EFFECT_TYPE_SINGLE)
 		e2_1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)

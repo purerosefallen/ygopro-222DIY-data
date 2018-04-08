@@ -72,6 +72,7 @@ function c1111223.op1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1111223.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	local num=Duel.GetMatchingGroupCount(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	if chk==0 then return num>0 and c:IsCanAddCounter(0x1111,num) end
 	c:AddCounter(0x1111,num)

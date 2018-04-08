@@ -74,6 +74,7 @@ function c1110151.tg3(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 --
 function c1110151.op3(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	Duel.SetLP(tp,c1110151.lplist[tp])
 	local sg=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_MZONE,LOCATION_MZONE,c)
 	if sg:GetCount()<1 then return end

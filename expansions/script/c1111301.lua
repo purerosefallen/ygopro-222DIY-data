@@ -47,6 +47,7 @@ function c1111301.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 --
 function c1111301.op1(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local mg=Duel.GetMatchingGroup(c1111301.matfilter,tp,LOCATION_GRAVE,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

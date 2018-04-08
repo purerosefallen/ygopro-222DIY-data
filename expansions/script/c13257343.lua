@@ -67,7 +67,7 @@ function c13257343.filter1(c)
 	return (c:IsCode(13257341) or c:IsCode(13257342)) and c:IsAbleToHand()
 end
 function c13257343.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return c13257336.check(Duel.GetAttacker(),tp) or c13257343.check(Duel.GetAttackTarget(),tp) and Duel.IsExistingMatchingCard(c13257343.filter1,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return c13257343.check(Duel.GetAttacker(),tp) or c13257343.check(Duel.GetAttackTarget(),tp) and Duel.IsExistingMatchingCard(c13257343.filter1,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
 end
 function c13257343.thop(e,tp,eg,ep,ev,re,r,rp)

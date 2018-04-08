@@ -13,7 +13,7 @@ function c1111010.initial_effect(c)
 	e1:SetTarget(c1111010.tg1)
 	e1:SetOperation(c1111010.op1)
 	c:RegisterEffect(e1)
---	
+--  
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_REMAIN_FIELD)
@@ -129,11 +129,16 @@ function c1111010.val3(e,ct)
 	local p=e:GetHandlerPlayer()
 	local te=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT)
 	local tc=te:GetHandler()
-	return p==tp and tc:IsType(TYPE_SPIRIT) and c:IsRace(RACE_PSYCHO)
+	return p==tp and tc:IsType(TYPE_SPIRIT) and tc:IsRace(RACE_PSYCHO)
 end
 --
 function c1111010.tg5(e,c)
 	return c:IsType(TYPE_SPIRIT) and c:IsRace(RACE_PSYCHO)
 end
 --
+
+
+
+
+
 

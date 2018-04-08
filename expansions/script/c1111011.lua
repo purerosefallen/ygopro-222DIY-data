@@ -16,12 +16,12 @@ function c1111011.initial_effect(c)
 end
 --
 function c1111011.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_ONFIELD,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFacedown,tp,0,LOCATION_ONFIELD,1,nil) end
 end
 --
 function c1111011.op1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local sg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_ONFIELD,nil)
+	local sg=Duel.GetMatchingGroup(Card.IsFacedown,tp,0,LOCATION_ONFIELD,nil)
 	if sg:GetCount()<1 then return end
 	Duel.ConfirmCards(tp,sg)
 	local e1_1=Effect.CreateEffect(c)

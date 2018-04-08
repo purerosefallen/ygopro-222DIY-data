@@ -43,7 +43,7 @@ function c1111203.tfilter2_4(c)
 end
 function c1111203.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.GetFlagEffect(tp,1111215)<1
-	local b2=Duel.IsExistingMatchingCard(c1111203.tfilter2_2,tp,0,LOCATION_ONFIELD,1,nil) and Duel.GetFlagEffect(tp,1111216)<1
+	local b2=Duel.IsExistingMatchingCard(c1111203.tfilter2_2,tp,LOCATION_ONFIELD,0,1,nil) and Duel.GetFlagEffect(tp,1111216)<1
 	local num=Duel.GetMatchingGroupCount(c1111203.tfilter2_3,tp,0,LOCATION_MZONE,1,nil)
 	local b3=Duel.IsExistingMatchingCard(c1111203.tfilter2_4,tp,LOCATION_SZONE,0,1,nil) and Duel.IsExistingMatchingCard(c1111203.tfilter2_3,tp,0,LOCATION_MZONE,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>=num and Duel.GetFlagEffect(tp,1111217)<1
 	if chk==0 then return b1 or b2 or b3 end
@@ -91,12 +91,12 @@ function c1111203.op2(e,tp,eg,ep,ev,re,r,rp,chk)
 			e2_1:SetType(EFFECT_TYPE_SINGLE)
 			e2_1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
 			e2_1:SetReset(RESET_EVENT+0x1fe0000)
-			c:RegisterEffect(e2_1)
+			sc:RegisterEffect(e2_1)
 			sc=sg:GetNext()
 		end
 	elseif sel==2 then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(1111203,3))
-		local sg=Duel.IsExistingMatchingCard(c1111203.tfilter2_2,tp,0,LOCATION_ONFIELD,1,nil)
+		local sg=Duel.SelectMatchingCard(tp,c1111203.tfilter2_2,tp,LOCATION_ONFIELD,0,1,1,nil)
 		if sg:GetCount()<1 then return end
 		local sc=sg:GetFirst()
 		sc:AddCounter(0x1111,1)

@@ -89,14 +89,14 @@ function c1111402.tg3(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.SelectEffectYesNo(tp,c,96) then
 		local g=Duel.SelectMatchingCard(tp,c1111402.tfilter3,p,LOCATION_ONFIELD,0,1,1,nil,e)
 		local tc=g:GetFirst()
-		e:SetLabel(tc)
+		e:SetLabelObject(tc)
 		tc:SetStatus(STATUS_DESTROY_CONFIRMED,true)
 		return true
 	else return false end
 end
 --
 function c1111402.op3(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabel()
+	local tc=e:GetLabelObject()
 	tc:SetStatus(STATUS_DESTROY_CONFIRMED,false)
 	Duel.Destroy(tc,REASON_EFFECT+REASON_REPLACE)
 end
@@ -135,6 +135,7 @@ function c1111402.op4(e,tp,eg,ep,ev,re,r,rp)
 		e4_3:SetCode(EVENT_PHASE+PHASE_END)
 		e4_3:SetRange(LOCATION_SZONE)
 		e4_3:SetCountLimit(1)
+		e4_3:SetLabelObject(tc)
 		e4_3:SetCondition(c1111402.con4_1)
 		e4_3:SetOperation(c1111402.op4_3)
 		c:RegisterEffect(e4_3)
@@ -286,8 +287,10 @@ function c1111402.op4_2(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1111402.op4_3(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp then return end
-	Duel.Destroy(e:GetHandler(),REASON_EFFECT)
+	local c=e:GetHandler()
+	if Duel.GetTurnPlayer()~=c:GetControler() then
+		Duel.Destroy(c,REASON_EFFECT)
+	end
 end
 --
 function c1111402.op5(e,tp,eg,ep,ev,re,r,rp)
