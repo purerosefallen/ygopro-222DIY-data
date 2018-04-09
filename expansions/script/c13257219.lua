@@ -36,7 +36,7 @@ function c13257219.eqlimit(e,c)
 	if er==nil then
 		er=0
 	end
-	return not (er>cl) and (c:GetOriginalLevel()>=e:GetHandler():GetRank()) and not c:GetEquipGroup():IsExists(Card.IsSetCard,1,e:GetHandler(),0x9354)
+	return not (er>cl) and not (c:GetOriginalLevel()>=e:GetHandler():GetRank()) and not c:GetEquipGroup():IsExists(Card.IsSetCard,1,e:GetHandler(),0x9354)
 end
 function c13257219.econ(e)
 	return e:GetHandler():GetEquipTarget()

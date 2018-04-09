@@ -77,7 +77,7 @@ function c1111001.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c1111001.cfilter2,tp,LOCATION_HAND,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
-	Duel.SendtoDeck(c,nil,2,REASON_COST)
+	Duel.SendtoDeck(c,REASON_COST)
 	Duel.Hint(HINT_OPSELECTED,1-tp,aux.Stringid(1111001,0))
 end
 --

@@ -145,9 +145,6 @@ function c13257211.spop(e,tp,eg,ep,ev,re,r,rp)
 	e8:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	Duel.RegisterEffect(e8,tp)
 end
-function c13257211.splimit(e,c)
-	return not c:IsSetCard(0x353)
-end
 function c13257211.bgmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(11,0,aux.Stringid(13257211,4))
 end

@@ -90,7 +90,7 @@ function c1111201.op2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local sel=e:GetLabel()
 	if sel==1 then
-		local sg=eg:Filter(c1111201.ofilter2_1,nil,e,tp)
+		local sg=eg:IsExists(c1111201.ofilter2_1,1,nil,e,tp)
 		if sg:GetCount()<1 then return end
 		Duel.SendtoGrave(sg,REASON_EFFECT)
 	elseif sel==2 then

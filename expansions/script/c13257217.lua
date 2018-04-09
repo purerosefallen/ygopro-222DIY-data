@@ -96,6 +96,6 @@ function c13257217.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c13257217.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		Duel.Hint(11,0,aux.Stringid(13257201,4))
+		Duel.Hint(11,0,aux.Stringid(13257217,4))
 	end
 end
