@@ -155,7 +155,7 @@ function cm.CheckGroup(g,f,cg,min,max,...)
 	if #sg>=min and #sg<=max and f(sg,...) then return true end
 	return g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params)
 end
-function cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
+function cm.SelectGroupNew(tp,desc,cancelable,g,f,cg,min,max,...)
 	local min=min or 1
 	local max=max or #g
 	local ext_params={...}
@@ -164,38 +164,17 @@ function cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
 	sg:Merge(cg)
 	local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
 	while #sg<max and #ag>0 do
+		local seg=sg:Clone()
+		seg:Sub(cg)
 		local finish=(#sg>=min and #sg<=max and f(sg,...))
-		local seg=sg-cg
-		local dmin=#seg
-		local dmax=math.min(max-#cg,#g)
-		Duel.Hint(HINT_SELECTMSG,tp,desc)
-		local tc=ag:SelectUnselect(seg,tp,finish,finish,dmin,dmax)
-		if not tc then break end
-		if sg:IsContains(tc) then
-			sg:RemoveCard(tc)
-		else
-			sg:AddCard(tc)
-		end
-		ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)
-	end
-	return sg
-end
-function cm.SelectGroupWithCancel(tp,desc,g,f,cg,min,max,...)
-	local min=min or 1
-	local max=max or #g
-	local ext_params={...}
-	local sg=Group.CreateGroup()
-	local cg=cg or Group.CreateGroup()
-	sg:Merge(cg)
-	local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
-	while #sg<max and #ag>0 do
-		local finish=(#sg>=min and #sg<=max and f(sg,...))
-		local cancel=finish or #sg==0
-		local seg=sg-cg
-		local dmin=#seg
-		local dmax=math.min(max-#cg,#g)
-		Duel.Hint(HINT_SELECTMSG,tp,desc)
-		local tc=ag:SelectUnselect(seg,tp,finish,cancel,dmin,dmax)
+		local cancel=finish or (cancelable and #seg==0)
+		local dmin=#sg
+		local dmax=math.min(max,#g)
+		local tc=nil
+		repeat
+			Duel.Hint(HINT_SELECTMSG,tp,desc)
+			tc=ag:SelectUnselect(sg,tp,finish,cancel,dmin,dmax)
+		until not tc or ag:IsContains(tc) or seg:IsContains(tc)
 		if not tc then
 			if not finish then return end
 			break
@@ -208,6 +187,12 @@ function cm.SelectGroupWithCancel(tp,desc,g,f,cg,min,max,...)
 		ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)
 	end
 	return sg
+end
+function cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
+	return cm.SelectGroupNew(tp,desc,false,g,f,cg,min,max,...)
+end
+function cm.SelectGroupWithCancel(tp,desc,g,f,cg,min,max,...)
+	return cm.SelectGroupNew(tp,desc,true,g,f,cg,min,max,...)
 end
 
 --updated overlay
@@ -257,15 +242,7 @@ function cm.CheckFieldFilter(g,tp,c,f,...)
 	end
 end
 function cm.MustMaterialCheck(v,tp,code)
-	if not v then return not Duel.IsPlayerAffectedByEffect(tp,code) end
-	local t=cm.GetValueType(v)
-	if t~="Card" and t~="Group" then error("Parameter 1 must be \"Card\" or \"Group\".",2) end
-	local ce={Duel.IsPlayerAffectedByEffect(tp,code)}
-	for _,te in ipairs(ce) do
-		if (t=="Card" and v~=te:GetHandler())
-			or (t=="Group" and not v:IsExists(te:GetHandler())) then return false end
-	end
-	return true
+	return aux.MustMaterialCheck(v,tp,code)
 end
 --xyz summon of prim
 function cm.AddXyzProcedureRank(c,rk,f,minct,maxct,xm,exop,...)
