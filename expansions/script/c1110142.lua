@@ -81,7 +81,7 @@ function c1110142.op2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(p,d,REASON_EFFECT)<1 then return end
 	if Duel.IsExistingMatchingCard(Card.IsAbleToDeck,p,LOCATION_REMOVED,0,1,nil) and Duel.SelectYesNo(p,aux.Stringid(1110142,2)) then
 		Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
-		local sg=Duel.SelectMatchingCard(p,Card.IsAbleToDeck,p,LOCATION_REMOVED,0,1,1,nil)
+		local sg=Duel.SelectMatchingCard(p,Card.IsAbleToDeck,p,LOCATION_REMOVED,0,1,3,nil)
 		if sg:GetCount()<1 then return end
 		Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
 	end

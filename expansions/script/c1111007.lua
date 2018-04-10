@@ -108,6 +108,6 @@ end
 function c1111007.val1_4(e,re)
 	local tc=e:GetLabelObject()
 	local p=tc:GetControler()
-	return re:GetOwnerPlayer()==p and te:GetOwner()~=e:GetOwner()
+	return re:GetOwnerPlayer()==p and re:GetOwner()~=e:GetOwner()
 end
 --

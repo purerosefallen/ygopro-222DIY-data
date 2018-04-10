@@ -18,6 +18,7 @@ function c13257214.initial_effect(c)
 	e2:SetCondition(c13257214.tgcon)
 	e2:SetValue(aux.imval1)
 	c:RegisterEffect(e2)
+	--deck equip
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(13257214,2))
 	e3:SetCategory(CATEGORY_EQUIP)
@@ -32,6 +33,7 @@ function c13257214.initial_effect(c)
 	e12:SetOperation(c13257214.bgmop)
 	c:RegisterEffect(e12)
 	c:RegisterFlagEffect(13257200,0,0,0,1)
+	c13257214[c]=e3
 	
 end
 function c13257214.thfilter(c)

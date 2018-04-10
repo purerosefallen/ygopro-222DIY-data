@@ -25,6 +25,7 @@ end
 function c13257326.filter(c)
 	if not c:IsSetCard(0x351) or c:IsFacedown() then return false end
 	local mt=getmetatable(c)
+	if not mt then return false end
 	local PCe=mt[c]
 	return PCe -- and PCe:IsActivatable(PCe:GetOwnerPlayer())
 end
@@ -40,18 +41,20 @@ function c13257326.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(12,0,aux.Stringid(13257326,7))
 		local tep=tc:GetControler()
 		local mt=getmetatable(tc)
-		local PCe=mt[tc]
-		if PCe  then
-			local cost=PCe:GetCost()
-			local target=PCe:GetTarget()
-			local operation=PCe:GetOperation()
-			Duel.ClearTargetCard()
-			e:SetProperty(PCe:GetProperty())
-			tc:CreateEffectRelation(PCe)
-			if cost then cost(PCe,tep,eg,ep,ev,re,r,rp,1) end
-			if target then target(PCe,tep,eg,ep,ev,re,r,rp,1) end
-			if operation then operation(PCe,tep,eg,ep,ev,re,r,rp) end
-			tc:ReleaseEffectRelation(PCe)
+		if mt then
+			local PCe=mt[tc]
+			if PCe  then
+				local cost=PCe:GetCost()
+				local target=PCe:GetTarget()
+				local operation=PCe:GetOperation()
+				Duel.ClearTargetCard()
+				e:SetProperty(PCe:GetProperty())
+				tc:CreateEffectRelation(PCe)
+				if cost then cost(PCe,tep,eg,ep,ev,re,r,rp,1) end
+				if target then target(PCe,tep,eg,ep,ev,re,r,rp,1) end
+				if operation then operation(PCe,tep,eg,ep,ev,re,r,rp) end
+				tc:ReleaseEffectRelation(PCe)
+			end
 		end
 	end
 end

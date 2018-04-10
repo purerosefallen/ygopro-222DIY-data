@@ -58,7 +58,7 @@ function c1110005.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local sel=opval[op]
 	e:SetLabel(sel)
 	if sel==1 then
-		e:SetCategory(CATEGORY_TOHAND)
+		e:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	else
 	end
@@ -88,7 +88,7 @@ end
 function c1110005.tfilter2_1(c,e,tp,tc)
 	local lv=c:GetLevel()
 	local lv2=tc:GetLevel()
-	return lv>0 and c:IsAbleToRemove() and Duel.IsExistingMatchingCard(c1110005.tfilter2_2,tp,LOCATION_EXTRA,0,1,nil,e,tp,lv+lv2)
+	return lv>0 and c:IsAbleToDeck() and Duel.IsExistingMatchingCard(c1110005.tfilter2_2,tp,LOCATION_EXTRA,0,1,nil,e,tp,lv+lv2)
 end
 function c1110005.tfilter2_2(c,e,tp,lv)
 	return muxu.check_set_Urban(c) and c:GetLevel()==lv and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,false)
@@ -96,7 +96,7 @@ end
 function c1110005.tg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	if chkc then return false end
-	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0 and Duel.IsExistingTarget(c1110005.tfilter2_1,tp,LOCATION_GRAVE,0,1,c,e,tp,c) and c:IsAbleToRemove() end
+	if chk==0 then return Duel.GetLocationCountFromEx(tp)>0 and Duel.IsExistingTarget(c1110005.tfilter2_1,tp,LOCATION_GRAVE,0,1,c,e,tp,c) and c:IsAbleToDeck() end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectTarget(tp,c1110005.tfilter2_1,tp,LOCATION_GRAVE,0,1,1,c,e,tp,c)
 	g:AddCard(c)

@@ -68,7 +68,7 @@ function c1111502.op1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=Duel.SelectMatchingCard(tp,c1111502.tfilter1,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if sg:GetCount()<1 then return end
-	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingMatchingCard(c1111502.ofilter1,tp,LOCATION_DECK,0,nil) and Duel.SelectYesNo(tp,aux.Stringid(1111502,1)) then
+	if Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.IsExistingMatchingCard(c1111502.ofilter1,tp,LOCATION_DECK,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(1111502,1)) then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(1111502,2))
 		local tg=Duel.SelectMatchingCard(tp,c1111502.ofilter1,tp,LOCATION_DECK,0,1,1,nil)
 		if tg:GetCount()<1 then return end

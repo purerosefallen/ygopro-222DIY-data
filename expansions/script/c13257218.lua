@@ -26,6 +26,7 @@ function c13257218.initial_effect(c)
 	e3:SetTarget(c13257218.thtg)
 	e3:SetOperation(c13257218.thop)
 	c:RegisterEffect(e3)
+	--deck equip
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(13257218,1))
 	e4:SetCategory(CATEGORY_EQUIP)
@@ -35,6 +36,7 @@ function c13257218.initial_effect(c)
 	e4:SetOperation(c13257218.eqop)
 	c:RegisterEffect(e4)
 	c:RegisterFlagEffect(13257200,0,0,0,1)
+	c13257218[c]=e4
 	
 end
 function c13257218.spcon(e,c)

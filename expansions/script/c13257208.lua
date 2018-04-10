@@ -26,6 +26,7 @@ function c13257208.initial_effect(c)
 	e2:SetTarget(c13257208.rmlimit)
 	e2:SetTargetRange(1,1)
 	c:RegisterEffect(e2)
+	--deck equip
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(13257208,1))
 	e4:SetCategory(CATEGORY_EQUIP)
@@ -40,6 +41,7 @@ function c13257208.initial_effect(c)
 	e12:SetOperation(c13257208.bgmop)
 	c:RegisterEffect(e12)
 	c:RegisterFlagEffect(13257200,0,0,0,3)
+	c13257208[c]=e4
 	
 end
 function c13257208.otfilter(c)

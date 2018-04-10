@@ -92,6 +92,7 @@ function c1110151.tg4(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 --
 function c1110151.op4(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	if not re:GetHandler():IsRelateToEffect(re) then return end
 	if Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)<1 then return end
 	if re:IsActiveType(TYPE_MONSTER) then

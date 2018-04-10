@@ -27,6 +27,7 @@ function c13257201.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
+	--deck equip
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(13257201,1))
 	e4:SetCategory(CATEGORY_EQUIP)
@@ -53,6 +54,7 @@ function c13257201.initial_effect(c)
 	e12:SetOperation(c13257201.bgmop)
 	c:RegisterEffect(e12)
 	c:RegisterFlagEffect(13257200,0,0,0,1)
+	c13257201[c]=e4
 end
 function c13257201.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReason(REASON_EFFECT+REASON_BATTLE)
@@ -60,7 +62,9 @@ function c13257201.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	return true
 end
 function c13257201.desrepop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RemoveCounter(ep,0x353,1,REASON_EFFECT)
+	local c=e:GetHandler()
+	c:RemoveCounter(ep,0x353,1,REASON_EFFECT)
+	Duel.RaiseEvent(c,EVENT_REMOVE_COUNTER+0x353,e,REASON_EFFECT+REASON_REPLACE,tp,tp,1)
 end
 function c13257201.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x353,2)

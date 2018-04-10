@@ -49,31 +49,31 @@ function c1111501.op1(e,tp,eg,ep,ev,re,r,rp)
 		e1_1:SetCode(EVENT_BE_MATERIAL)
 		e1_1:SetCondition(c1111501.con1_1)
 		e1_1:SetOperation(c1111501.op1_1)
+		e1_1:SetReset(RESET_EVENT+0x1fe0000)
 		token:RegisterEffect(e1_1)
 	end
 end
 --
 function c1111501.con1_1(e,tp,eg,ep,ev,re,r,rp)
-	return r==REASON_LINK 
+	return bit.band(r,REASON_LINK)~=0 
 end
-function c1111501.op1_1_1(e,tp,eg,ep,ev,re,r,rp)
+function c1111501.op1_1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=c:GetReasonCard()
+--	rc:RegisterFlagEffect(1111501,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(1111501,1))
 	local e1_1_1=Effect.CreateEffect(c)
-	e1_1_1:SetDescription(aux.Stringid(1111501,1))
 	e1_1_1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
 	e1_1_1:SetType(EFFECT_TYPE_FIELD)
 	e1_1_1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1_1_1:SetRange(LOCATION_MZONE)
 	e1_1_1:SetTargetRange(1,1)
+	e1_1_1:SetLabelObject(rc)
 	e1_1_1:SetTarget(c1111501.tg1_1_1)
-	e1_1_1:SetReset(RESET_EVENT+0x1fe0000)
-	rc:RegisterEffect(e1_1_1)
+	Duel.RegisterEffect(e1_1_1,tp)
 end
 --
 function c1111501.tg1_1_1(e,c)
-	local rc=e:GetHandler()
-	return c:IsControler(rc:GetSummonPlayer()) and c:IsType(TYPE_LINK)
+	local rc=e:GetLabelObject()
+	return c:IsControler(rc:GetSummonPlayer()) and c:IsType(TYPE_LINK) --and rc:GetFlagEffect(1111501)>0
 end
 --
 function c1111501.cost2(e,tp,eg,ep,ev,re,r,rp,chk)

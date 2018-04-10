@@ -45,6 +45,7 @@ function c1111403.op1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not c:IsRelateToEffect(e) then return end
 	if not (tc:IsRelateToEffect(e) and tc:IsFaceup()) then return end
+	c:CancelToGrave()
 	local e1_1=Effect.CreateEffect(c)
 	e1_1:SetType(EFFECT_TYPE_SINGLE)
 	e1_1:SetCode(EFFECT_CHANGE_TYPE)
@@ -80,8 +81,6 @@ function c1111403.op3(e,tp,eg,ep,ev,re,r,rp)
 	local tc=c:GetEquipTarget()
 	if tc then
 		local e3_1=Effect.CreateEffect(c)
-		e3_1:SetDescription(aux.Stringid(1111403,0))
-		e3_1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e3_1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e3_1:SetCode(EVENT_CHAINING)
 		e3_1:SetRange(LOCATION_MZONE)

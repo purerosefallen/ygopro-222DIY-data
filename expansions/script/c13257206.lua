@@ -72,7 +72,7 @@ function c13257206.initial_effect(c)
 	c:RegisterFlagEffect(13257201,0,0,0,3)
 	
 end
-function c13257202.eqlimit(e,c)
+function c13257206.eqlimit(e,c)
 	local eg=c:GetEquipGroup()
 	local lv=c:GetOriginalLevel()
 	if lv==nil then lv=0 end

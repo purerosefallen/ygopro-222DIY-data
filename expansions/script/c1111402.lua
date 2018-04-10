@@ -167,7 +167,7 @@ function c1111402.limit4_1(e,c,sump,sumtype,sumpos,targetp)
 	for k,v in ipairs(muxu11402_GetLevel) do
 		if v==c:GetLevel() then checknum=1 end
 	end
-	return checknum==1 and not c:IsLocation(LOCATION_HAND)
+	return checknum==1 and c:GetLevel()>0 and not c:IsLocation(LOCATION_HAND)
 end
 --
 function c1111402.ofilter4_2_1(c)

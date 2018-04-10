@@ -79,6 +79,7 @@ function c1111223.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 --
 function c1111223.op2(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local b1=true
 	local b2=true
 	local off=1

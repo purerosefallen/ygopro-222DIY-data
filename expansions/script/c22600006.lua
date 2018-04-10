@@ -44,7 +44,7 @@ function c22600006.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tp=c:GetControler()
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_REMOVED)
 	if chk==0 then
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and g:GetCount()>0 and not g:IsExists(c4112225.spfilter,1,nil) 
+		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and g:GetCount()>0 and not g:IsExists(c22600006.spfilter,1,nil) 
 	end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,tp,1)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)

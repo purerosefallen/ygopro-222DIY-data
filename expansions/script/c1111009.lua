@@ -41,7 +41,7 @@ end
 function c1111009.op1(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():CancelToGrave()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local sg=Duel.SelectMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,1,1,nil)
+	local sg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,1,1,nil)
 	if sg:GetCount()<1 then return end
 	if Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)<1 then return end
 	local tg=Duel.GetDecktopGroup(tp,2):Filter(c1111009.tfilter1,nil)

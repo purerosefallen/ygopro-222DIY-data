@@ -64,7 +64,7 @@ function c1110121.op1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if not tc:IsRelateToEffect(e) then return end
 	local code=tc:GetCode()
-	local sg=Duel.GetMatchingGroup(c1110121.ofilter1,tp,LOCATION_HAND+LOCATION_EXTRA,0,nil,code)
+	local sg=Duel.GetMatchingGroup(c1110121.ofilter1,tp,0,LOCATION_HAND+LOCATION_EXTRA,nil,code)
 	sg:AddCard(tc)
 	if sg:GetCount()<1 then return end
 	Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
@@ -93,7 +93,7 @@ function c1110121.cfilter2_1(c)
 end
 --
 --function c1110121.con2_1(e,tp,eg,ep,ev,re,r,rp)
---	return Duel.IsExistingMatchingCard(c1110121.cfilter2_1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil)
+--  return Duel.IsExistingMatchingCard(c1110121.cfilter2_1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil)
 --end
 --
 function c1110121.op2_1(e,tp,eg,ep,ev,re,r,rp)
