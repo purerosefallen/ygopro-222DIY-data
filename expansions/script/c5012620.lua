@@ -1,7 +1,8 @@
 --木原唯一
 function c5012620.initial_effect(c)
+    c:SetUniqueOnField(1,1,5012620)
      --synchro summon
-    aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsSetCard,0x250),1)
+    aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsSetCard,0x350),1)
     c:EnableReviveLimit()
     --
     aux.EnablePendulumAttribute(c,false)
@@ -27,13 +28,6 @@ function c5012620.initial_effect(c)
     e2:SetTarget(c5012620.destg)
     e2:SetOperation(c5012620.desop)
     c:RegisterEffect(e2)
---
-    local e3=Effect.CreateEffect(c)
-    e3:SetType(EFFECT_TYPE_SINGLE)
-    e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-    e3:SetCode(EFFECT_ADD_SETCODE)
-    e3:SetValue(0x250)
-    c:RegisterEffect(e3)
     --
     local e4=Effect.CreateEffect(c)
     e4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
@@ -47,9 +41,9 @@ function c5012620.filter(c)
     return c:IsType(TYPE_EFFECT) and c:IsAbleToRemove()
 end
 function c5012620.cost(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    if chk==0 then return Duel.IsExistingMatchingCard(c5012620.filter,tp,0,LOCATION_GRAVE,LOCATION_GRAVE,nil) end
+    if chk==0 then return Duel.IsExistingMatchingCard(c5012620.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-    local g=Duel.SelectMatchingCard(tp,c5012620.filter,tp,0,LOCATION_GRAVE,LOCATION_GRAVE,1,nil)
+    local g=Duel.SelectMatchingCard(tp,c5012620.filter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil)
     Duel.Remove(g,POS_FACEUP,REASON_COST)
     e:SetLabel(g:GetFirst():GetOriginalCode())
 end
@@ -89,7 +83,7 @@ function c5012620.desop(e,tp,eg,ep,ev,re,r,rp)
         Duel.Destroy(g,REASON_EFFECT)
 end
 function c5012620.repfilter(c)
-    return  c:IsAbleToRemoveAsCost()
+    return c:IsSetCard(0x350) and c:IsAbleToRemoveAsCost()
 end
 function c5012620.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
     local c=e:GetHandler()

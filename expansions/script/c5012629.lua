@@ -1,7 +1,8 @@
 --五和
 function c5012629.initial_effect(c)
+    c:SetUniqueOnField(1,1,5012629)
      --synchro summon
-    aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x350),aux.NonTuner(nil),1)   
+    aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x250),aux.NonTuner(nil),1)   
     c:EnableReviveLimit()
     --
     aux.EnablePendulumAttribute(c,false)
