@@ -45,7 +45,8 @@ function c13257344.initial_effect(c)
 	e3:SetTarget(c13257344.pctg)
 	e3:SetOperation(c13257344.pcop)
 	c:RegisterEffect(e3)
-	c13257344[c]=e3
+	eflist={"power_capsule",e3}
+	c13257344[c]=eflist
 	
 end
 function c13257344.spfilter(c,ft,tp)

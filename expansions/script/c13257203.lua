@@ -45,7 +45,8 @@ function c13257203.initial_effect(c)
 	e12:SetOperation(c13257203.bgmop)
 	c:RegisterEffect(e12)
 	c:RegisterFlagEffect(13257200,0,0,0,2)
-	c13257203[c]=e4
+	eflist={"deck_equip",e4}
+	c13257203[c]=eflist
 	
 end
 function c13257203.otfilter(c)

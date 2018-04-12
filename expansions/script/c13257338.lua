@@ -32,7 +32,8 @@ function c13257338.initial_effect(c)
 	e3:SetTarget(c13257338.adtg)
 	e3:SetOperation(c13257338.adop)
 	c:RegisterEffect(e3)
-	c13257338[c]=e2
+	eflist={"power_capsule",e2}
+	c13257338[c]=eflist
 	
 end
 function c13257338.eqfilter(c,ec)

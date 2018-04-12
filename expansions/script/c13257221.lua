@@ -40,7 +40,7 @@ function c13257221.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_LEAVE_FIELD)
 	e4:SetRange(LOCATION_SZONE)
-	e4:SetCondition(c13257221.damcon)
+	e4:SetCondition(c13257221.damcon1)
 	e4:SetOperation(c13257221.damop1)
 	c:RegisterEffect(e4)
 	--Mk-4 Laser
@@ -87,6 +87,24 @@ end
 function c13257221.damop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
 	local ct=eg:FilterCount(Card.IsControler,nil,1-tp)
+	if ec then
+		local ct1=ec:GetFlagEffectLabel(13257200)*100
+		if ct>0 and ct1>0 then
+			Duel.Hint(HINT_CARD,1,13257221)
+			Duel.Damage(1-tp,ct*ct1,REASON_EFFECT)
+		end
+	end
+end
+function c13257221.damfilter(c,tp)
+	return c:GetPreviousControler()==tp
+end
+function c13257221.damcon1(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:GetEquipTarget() and eg:IsExists(c13257221.damfilter,1,nil,1-tp)
+end
+function c13257221.damop1(e,tp,eg,ep,ev,re,r,rp)
+	local ec=e:GetHandler():GetEquipTarget()
+	local ct=eg:FilterCount(c13257221.damfilter,nil,1-tp)
 	if ec then
 		local ct1=ec:GetFlagEffectLabel(13257200)*100
 		if ct>0 and ct1>0 then

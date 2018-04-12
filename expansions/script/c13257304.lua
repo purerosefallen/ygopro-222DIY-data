@@ -37,7 +37,8 @@ function c13257304.initial_effect(c)
 	e11:SetCode(EVENT_SUMMON_SUCCESS)
 	e11:SetOperation(c13257304.bgmop)
 	c:RegisterEffect(e11)
-	c13257304[c]=e2
+	eflist={"power_capsule",e2}
+	c13257304[c]=eflist
 	
 end
 function c13257304.spcon(e,tp,eg,ep,ev,re,r,rp)

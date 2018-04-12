@@ -33,7 +33,8 @@ function c13257214.initial_effect(c)
 	e12:SetOperation(c13257214.bgmop)
 	c:RegisterEffect(e12)
 	c:RegisterFlagEffect(13257200,0,0,0,1)
-	c13257214[c]=e3
+	eflist={"deck_equip",e3}
+	c13257214[c]=eflist
 	
 end
 function c13257214.thfilter(c)

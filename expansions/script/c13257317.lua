@@ -37,7 +37,8 @@ function c13257317.initial_effect(c)
 	e11:SetCode(EVENT_SUMMON_SUCCESS)
 	e11:SetOperation(c13257317.bgmop)
 	c:RegisterEffect(e11)
-	c13257317[c]=e2
+	eflist={"power_capsule",e2}
+	c13257317[c]=eflist
 	
 end
 function c13257317.spcon(e,c)
@@ -51,7 +52,7 @@ end
 function c13257317.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(11,0,aux.Stringid(13257317,7))
 end
-function c13257317.pcfilter(c)
+function c13257317.pcfilter(c,tp)
 	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
 end
 function c13257317.pccon(e,tp,eg,ep,ev,re,r,rp)

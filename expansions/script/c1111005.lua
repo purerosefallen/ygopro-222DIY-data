@@ -18,7 +18,7 @@ function c1111005.initial_effect(c)
 end
 --
 function c1111005.tfilter1(c)
-	return muxu.check_set_Urban(c) and c:IsAbleToRemove() and c:IsPreviousLocation(LOCATION_ONFIELD)
+	return muxu.check_set_Urban(c) and c:IsAbleToRemove() and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsType(TYPE_MONSTER)
 end
 function c1111005.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c1111005.tfilter1,tp,LOCATION_GRAVE,0,1,nil) end

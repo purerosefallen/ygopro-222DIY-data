@@ -31,7 +31,8 @@ function c13257212.initial_effect(c)
 	e12:SetOperation(c13257212.bgmop)
 	c:RegisterEffect(e12)
 	c:RegisterFlagEffect(13257200,0,0,0,4)
-	c13257212[c]=e4
+	eflist={"deck_equip",e4}
+	c13257212[c]=eflist
 	
 end
 function c13257212.ctcon(e,tp,eg,ep,ev,re,r,rp)

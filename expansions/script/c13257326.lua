@@ -26,7 +26,13 @@ function c13257326.filter(c)
 	if not c:IsSetCard(0x351) or c:IsFacedown() then return false end
 	local mt=getmetatable(c)
 	if not mt then return false end
-	local PCe=mt[c]
+	local eflist=mt[c]
+	local i=1
+	while eflist[i] do
+		if eflist[i]=="deck_equip" then i=i+1 break end
+		i=i+1
+	end
+	local PCe=eflist[i]
 	return PCe -- and PCe:IsActivatable(PCe:GetOwnerPlayer())
 end
 function c13257326.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -42,8 +48,13 @@ function c13257326.activate(e,tp,eg,ep,ev,re,r,rp)
 		local tep=tc:GetControler()
 		local mt=getmetatable(tc)
 		if mt then
-			local PCe=mt[tc]
-			if PCe  then
+			local eflist=mt[tc]
+			local i=1
+			while eflist[i] do
+				if eflist[i]=="power_capsule" then i=i+1 break end
+				i=i+1
+			end
+			if eflist[i] then
 				local cost=PCe:GetCost()
 				local target=PCe:GetTarget()
 				local operation=PCe:GetOperation()

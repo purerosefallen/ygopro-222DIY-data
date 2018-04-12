@@ -34,7 +34,8 @@ function c13257303.initial_effect(c)
 	e11:SetCode(EVENT_SUMMON_SUCCESS)
 	e11:SetOperation(c13257303.bgmop)
 	c:RegisterEffect(e11)
-	c13257303[c]=e3
+	eflist={"power_capsule",e3}
+	c13257303[c]=eflist
 	
 end
 function c13257303.eqfilter(c,ec)

@@ -35,7 +35,8 @@ function c13257319.initial_effect(c)
 	local e14=e13:Clone()
 	e14:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e14)
-	c13257319[c]=e4
+	eflist={"power_capsule",e4,"deck_equip",e3}
+	c13257319[c]=eflist
 	c:RegisterFlagEffect(13257200,0,0,0,1)
 	
 end
@@ -47,7 +48,7 @@ function c13257319.regop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c13257319.cfilter,1,nil,tp) then
 		--spsummon
 		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.Stringid(13257319,4))
+		e1:SetDescription(aux.Stringid(13257319,6))
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_SPSUMMON_PROC)
 		e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)

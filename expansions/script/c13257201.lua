@@ -54,7 +54,8 @@ function c13257201.initial_effect(c)
 	e12:SetOperation(c13257201.bgmop)
 	c:RegisterEffect(e12)
 	c:RegisterFlagEffect(13257200,0,0,0,1)
-	c13257201[c]=e4
+	eflist={"deck_equip",e4}
+	c13257201[c]=eflist
 end
 function c13257201.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReason(REASON_EFFECT+REASON_BATTLE)

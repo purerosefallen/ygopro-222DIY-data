@@ -69,7 +69,8 @@ function c13257340.initial_effect(c)
 	e11:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e11:SetOperation(c13257340.bgmop)
 	c:RegisterEffect(e11)
-	c13257340[c]=e3
+	eflist={"power_capsule",e3}
+	c13257340[c]=eflist
 	
 end
 function c13257340.spfilter(c,ft,tp)

@@ -36,7 +36,8 @@ function c13257218.initial_effect(c)
 	e4:SetOperation(c13257218.eqop)
 	c:RegisterEffect(e4)
 	c:RegisterFlagEffect(13257200,0,0,0,1)
-	c13257218[c]=e4
+	eflist={"deck_equip",e4}
+	c13257218[c]=eflist
 	
 end
 function c13257218.spcon(e,c)

@@ -92,7 +92,31 @@ function c13257213.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c13257213.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-		Duel.Hint(11,0,aux.Stringid(g:GetFirst():GetCode(),4))
+		local sc=g:GetFirst()
+		Duel.Hint(11,0,aux.Stringid(sc:GetCode(),4))
+		local tep=sc:GetControler()
+		local mt=getmetatable(sc)
+		if mt then
+			local eflist=mt[sc]
+			local i=1
+			while eflist[i] do
+				if eflist[i]=="deck_equip" then i=i+1 break end
+				i=i+1
+			end
+			if eflist[i] then
+				local PCe=eflist[i]
+				local cost=PCe:GetCost()
+				local target=PCe:GetTarget()
+				local operation=PCe:GetOperation()
+				Duel.ClearTargetCard()
+				e:SetProperty(PCe:GetProperty())
+				sc:CreateEffectRelation(PCe)
+				if cost then cost(PCe,tep,eg,ep,ev,re,r,rp,1) end
+				if target then target(PCe,tep,eg,ep,ev,re,r,rp,1) end
+				if operation then operation(PCe,tep,eg,ep,ev,re,r,rp) end
+				sc:ReleaseEffectRelation(PCe)
+			end
+		end
 	end
 end
 function c13257213.destg(e,tp,eg,ep,ev,re,r,rp,chk)

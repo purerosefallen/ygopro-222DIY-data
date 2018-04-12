@@ -92,7 +92,9 @@ function c13257211.activate(e,tp,eg,ep,ev,re,r,rp)
 		if s1 then
 			Duel.Summon(tp,tc,true,nil,1)
 			local label=tc:GetFlagEffectLabel(13257200)
+			tc:ResetFlagEffect(13257200)
 			tc:RegisterFlagEffect(13257200,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,label+1,aux.Stringid(13257211,5))
+			tc:RegisterFlagEffect(13257200,0,0,0,label)
 		end
 	end
 end
