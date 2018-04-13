@@ -51,7 +51,7 @@ function c2170711.initial_effect(c)
 
 end
 function c2170711.efilter1(e,te)
-	return te:IsCode(2170704)
+	return te:IsCode(2170703)
 end
 function c2170711.efilter2(e,te)
 	return te:IsCode(2170705)
@@ -61,7 +61,7 @@ function c2170711.checkop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsCode(2170705) and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		c2170711[tc:GetControler()]=c2170711[tc:GetControler()]+1
 	end
-	if tc:IsCode(2170704) and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if tc:IsCode(2170703) and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		c2170711[tc:GetControler()]=c2170711[tc:GetControler()]+1
 	end
 end

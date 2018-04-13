@@ -53,7 +53,7 @@ function c2170713.initial_effect(c)
 end
 function c2170713.checkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	if tc:IsCode(2170703) and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
+	if tc:IsCode(2170704) and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		c2170713[tc:GetControler()]=c2170713[tc:GetControler()]+1
 	end
 	if tc:IsCode(2170707) and re:IsHasType(EFFECT_TYPE_ACTIVATE) then
