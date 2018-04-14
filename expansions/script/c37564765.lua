@@ -257,19 +257,8 @@ end
 function cm.XyzProcedureRankCheck(g,xyzc)
 	return g:GetClassCount(Card.GetRank)==1
 end
-function cm.XyzProcedureCustomTuneMagicianFilter(c,te)
-	local f=te:GetValue()
-	return f(te,c)
-end
-function cm.XyzProcedureCustomTuneMagicianCheck(c,g)
-	local eset={c:IsHasEffect(EFFECT_TUNE_MAGICIAN_X)}
-	for _,te in ipairs(eset) do
-		if g:IsExists(cm.XyzProcedureCustomTuneMagicianFilter,1,c,te) then return true end
-	end
-	return false
-end
 function cm.XyzProcedureCustomCheck(g,xyzc,tp,gf)
-	if g:IsExists(cm.XyzProcedureCustomTuneMagicianCheck,1,nil,g) then return false end
+	if g:IsExists(aux.TuneMagicianCheckX,nil,g,EFFECT_TUNE_MAGICIAN_X) then return false end
 	return not gf or gf(g,xyzc,tp)
 end
 function cm.AddXyzProcedureCustom(c,func,gf,minc,maxc,xm,exop,...)
@@ -1609,7 +1598,7 @@ function cm.FusionFilter_3L(c,fc,mf,sub)
 end
 function cm.FusionCheck_3L(g,min,tp,fc,f,chkf,sub)
 		--check sayuri_3L
-	if g:IsExists(aux.FCheckTuneMagicianX,1,nil,g) then return false end
+	if g:IsExists(aux.TuneMagicianCheckX,nil,g,EFFECT_TUNE_MAGICIAN_F) then return false end
 	if chkf~=PLAYER_NONE and Duel.GetLocationCountFromEx(chkf,tp,g,fc)<=0 then return false end
 	if aux.FCheckAdditional and not aux.FCheckAdditional(tp,g,fc) then return false end
 	if #g==1 and fc:GetLevel()==7 and g:GetFirst():IsHasEffect(37564914) then return true end
@@ -2333,31 +2322,13 @@ function cm.CheckSummonLocation(c,tp,g)
 	return Duel.GetMZoneCount(tp,g,tp)>0
 end
 function cm.AND(...)
-	local t={...}
-	return function(...)
-		local res=false
-		for i,f in pairs(t) do
-			res=f(...)
-			if not res then return res end
-		end
-		return res
-	end
+	return aux.AND(...)
 end
 function cm.OR(...)
-	local t={...}
-	return function(...)
-		local res=false
-		for i,f in pairs(t) do
-			res=f(...)
-			if res then return res end
-		end
-		return res
-	end
+	return aux.OR(...)
 end
 function cm.NOT(f)
-	return function(...)
-		return not f(...)
-	end
+	return aux.NOT(f)
 end
 function cm.DirectReturn(...)
 	local t={...}
