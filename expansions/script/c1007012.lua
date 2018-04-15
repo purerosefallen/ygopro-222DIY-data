@@ -52,7 +52,7 @@ function c1007012.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,c1007012.filter,tp,0,LOCATION_MZONE,1,1,nil,lv)
 	if g:GetCount()>0 then
-		Duel.Destroy(g,REASON_EFFECT)
+		Duel.SendtoGrave(g,REASON_EFFECT)
 	end
 end
 function c1007012.filter2(c)
