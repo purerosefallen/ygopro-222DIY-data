@@ -8,7 +8,7 @@ function c1007012.initial_effect(c)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e0:SetValue()
+	e0:SetValue(aux.synlimit)
 	c:RegisterEffect(e0)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
