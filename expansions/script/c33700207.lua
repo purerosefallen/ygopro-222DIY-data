@@ -98,7 +98,7 @@ function c33700207.drcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c33700207.cfilter,1,nil,tp) 
 		and (not re:IsHasType(EFFECT_TYPE_ACTIONS) or re:IsHasType(EFFECT_TYPE_CONTINUOUS))
 end
-function c33700206.hfilter(c)
+function c33700207.hfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x444) and c:IsAbleToGraveAsCost()
 end
 function c33700207.drop1(e,tp,eg,ep,ev,re,r,rp)

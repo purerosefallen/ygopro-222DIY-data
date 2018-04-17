@@ -29,7 +29,7 @@ function c13257326.filter(c)
 	local eflist=mt[c]
 	local i=1
 	while eflist[i] do
-		if eflist[i]=="deck_equip" then i=i+1 break end
+		if eflist[i]=="power_capsule" then i=i+1 break end
 		i=i+1
 	end
 	local PCe=eflist[i]

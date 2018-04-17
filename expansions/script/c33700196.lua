@@ -54,7 +54,7 @@ function c33700196.initial_effect(c)
 	local ec=eb:Clone()
 	ec:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	ec:SetValue(function(e,c) return c~=e:GetHandler() end)
-	c:RegisterEffect(ec)
+	c:RegisterEffect(e)
 	--On your 2nd Standby Phase after this card is Normal or Special Summoned, Destroy this card.
 	local ed=Effect.CreateEffect(c)
 	ed:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -66,15 +66,14 @@ function c33700196.initial_effect(c)
 	ee:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(ee)
 	--If this card leaves the field: If it left the field by its own effect, Draw 2 Cards. Otherwise, you can look at 3 cards from the top of your Deck, then place them on the top of the Deck in any order.
-	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DRAW)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e1:SetCode(EVENT_LEAVE_FIELD)
-	e1:SetCondition(c33700196.drcon)
-	e1:SetTarget(c33700196.drtg)
-	e1:SetOperation(c33700196.drop)
-	c:RegisterEffect(e1)
+	local ef=Effect.CreateEffect(c)
+	ef:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	ef:SetCode(EVENT_LEAVE_FIELD)
+	ef:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	ef:SetCategory(CATEGORY_DRAW)
+	ef:SetTarget(c33700196.drtg)
+	ef:SetOperation(c33700196.drop)
+	c:RegisterEffect(ef)
 end
 function c33700196.desreg(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -118,9 +117,6 @@ function c33700196.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 	--end
 end
-function c33700196.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return true
-end
 function c33700196.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(tp)
@@ -139,7 +135,7 @@ function c33700196.drop(e,tp,eg,ep,ev,re,r,rp,chk)
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 		Duel.Draw(p,d,REASON_EFFECT)
 	else
-		if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<3 or not Duel.SelectEffectYesNo(tp,aux.Stringid(122518919,7)) then return end
+		if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)<3 or not Duel.SelectYesNo(tp,aux.Stringid(33700196,7)) then return end
 		Duel.SortDecktop(tp,tp,3)
 	end
 end

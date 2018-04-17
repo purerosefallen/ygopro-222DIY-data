@@ -13,7 +13,7 @@ end
 function c33700208.filter(c)
 	return c:IsSetCard(0x444) and c:IsAbleToDeck()
 end
-function c33700208.tg(e,tp,eg,ep,ev,re,r,rp)
+function c33700208.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c33700208.filter,tp,LOCATION_GRAVE,0,3,nil)
 		and Duel.IsPlayerCanDraw(tp,1) end
 	local g=Duel.GetMatchingGroup(c33700208.filter,tp,LOCATION_GRAVE,0,nil)
@@ -37,7 +37,7 @@ function c33700208.op(e,tp,eg,ep,ev,re,r,rp)
 		local dg=Duel.GetOperatedGroup():Filter(Card.IsLocation,tp,LOCATION_HAND)
 		--And if it's a "Heavenly Maid" monster, you can Special Summon it.
 		local sg=dg:Filter(c33700208.spfilter,nil,e,tp)
-		if sg:GetCount()>0 then
+		if sg:GetCount()>0 and Duel.SelectYesNo(tp,2) then
 			if sg:GetCount()>1 then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 				sg=sg:Select(tp,1,1,nil)

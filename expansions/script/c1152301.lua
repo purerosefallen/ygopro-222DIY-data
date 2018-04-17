@@ -147,7 +147,7 @@ function c1152301.op2(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2_1)
 	end
 end
-function c1152301.con2(e)
+function c1152301.con2_1(e)
 	return Duel.GetTurnPlayer()~=tc:GetControler() and Duel.GetTurnCount()~=e:GetLabel() and Duel.GetCurrentPhase()==PHASE_END 
 end
 --

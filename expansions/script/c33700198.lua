@@ -53,7 +53,7 @@ function c33700198.initial_effect(c)
 	local ec=eb:Clone()
 	ec:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
 	ec:SetValue(function(e,c) return c~=e:GetHandler() end)
-	c:RegisterEffect(ec)
+	c:RegisterEffect(e)
 	--On your 2nd Standby Phase after this card is Normal or Special Summoned, Destroy this card.
 	local ed=Effect.CreateEffect(c)
 	ed:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -123,10 +123,10 @@ end
 function c33700198.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD)
 	local ct=g:GetCount()
-	local rg=Duel.GetDecktopGroup(tp,ct)
-	if Duel.IsChainDisablable(0) and rg:FilterCount(Card.IsAbleToRemoveAsCost,nil)==ct
-		and Duel.SelectYesNo(1-tp,aux.Stringid(80764541,1)) then
-		Duel.DisableShuffleCheck()
+	local rg=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
+	if Duel.IsChainDisablable(0) and rg:FilterCount(Card.IsAbleToRemoveAsCost,nil)>=ct
+		and Duel.SelectYesNo(1-tp,aux.Stringid(33700198,1)) then
+		rg=rg:Select(1-tp,ct,ct,nil)
 		Duel.Remove(rg,POS_FACEDOWN,REASON_COST)
 		Duel.NegateEffect(0)
 		return
