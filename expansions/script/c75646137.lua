@@ -43,10 +43,10 @@ function c75646137.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2,tp)
 end
 function c75646137.sumlimit(e,c,sump,sumtype,sumpos,targetp)
-	return (c:GetBaseAttack()==0 or c:GetBaseDefense()==0)
+	return (c:IsAttackBelow(0) or c:IsDefenseBelow(0))
 end
 function c75646137.discon(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and (re:GetHandler():GetAttack()==0 or re:GetHandler():GetDefense()==0)
+	return re:IsActiveType(TYPE_MONSTER) and (re:GetHandler():IsAttackBelow(0) or re:GetHandler():IsDefenseBelow(0))
 end
 function c75646137.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
