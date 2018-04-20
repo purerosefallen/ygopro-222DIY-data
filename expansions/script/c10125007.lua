@@ -40,7 +40,7 @@ function cm.initial_effect(c)
 	e5:SetCode(EVENT_TO_GRAVE)
 	e5:SetProperty(EFFECT_FLAG_DELAY)
 	e5:SetRange(LOCATION_FZONE)
-	e5:SetCountLimit(1)
+	e5:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
 	e5:SetTarget(cm.thtg)
 	e5:SetOperation(cm.thop)
 	c:RegisterEffect(e5)
@@ -68,7 +68,7 @@ end
 function cm.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if g:GetCount()>0 and Duel.SendtoHand(g,tp,REASON_EFFECT)~=0 then
-	   local tg=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_GRAVE)
+	   local tg=Duel.GetOperatedGroup():Filter(Card.IsLocation,nil,LOCATION_HAND)
 	   if tg:GetCount()>0 then
 		  Duel.BreakEffect()
 		  local e1=Effect.CreateEffect(e:GetHandler())
