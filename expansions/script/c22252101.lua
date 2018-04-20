@@ -2,10 +2,11 @@
 function c22252101.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e1:SetCondition(c22252101.condition)
+	e1:SetTarget(c22252101.target)
 	e1:SetOperation(c22252101.activate)
 	c:RegisterEffect(e1)
 	--SpecialSummon
@@ -26,6 +27,9 @@ function c22252101.IsRiviera(c)
 end
 function c22252101.condition(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=Duel.GetTurnPlayer()
+end
+function c22252101.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=5 end
 end
 function c22252101.filter1(c,e)
 	return not c:IsImmuneToEffect(e)
