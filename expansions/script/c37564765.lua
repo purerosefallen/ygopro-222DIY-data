@@ -167,7 +167,7 @@ function cm.SelectGroupNew(tp,desc,cancelable,g,f,cg,min,max,...)
 		local seg=sg:Clone()
 		seg:Sub(cg)
 		local finish=(#sg>=min and #sg<=max and f(sg,...))
-		local cancel=finish or (cancelable and #seg==0)
+		local cancel=cancelable and not finish
 		local dmin=#sg
 		local dmax=math.min(max,#g)
 		local tc=nil
