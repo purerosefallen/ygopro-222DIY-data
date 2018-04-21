@@ -28,7 +28,7 @@ function c12008000.initial_effect(c)
 	c:RegisterEffect(e3)  
 end
 function c12008000.thfilter(c)
-	return c:IsSetCard(0x1fb3) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x1fb3) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and not c:IsRace(RACE_SEASERPENT)
 end
 function c12008000.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c12008000.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -64,7 +64,7 @@ function c12008000.spop(e,tp,eg,ep,ev,re,r,rp)
 	local maxct=math.max(ct1,ct2,ct3)
 	if (opt==0 and maxct==ct1) or (opt==1 and maxct==ct2) or (opt==2 and maxct==ct3) then
 	   if not c:IsRelateToEffect(e) or Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)<=0 then return end
-	   local rg=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	   local rg=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,c)
 	   if rg:GetCount()<=0 then return end
 	   Duel.BreakEffect()
 	   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)

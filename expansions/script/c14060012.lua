@@ -72,7 +72,7 @@ function cm.atkfilter(c,e,tp)
 	return c:IsSetCard(0x1406) and c:IsFaceup()
 end
 function cm.atkval(e,c)
-	return Duel.GetMatchingGroupCount(cm.atkfilter,c:GetControler(),LOCATION_DECK+LOCATION_EXTRA,0,nil)*800
+	return Duel.GetMatchingGroupCount(cm.atkfilter,c:GetControler(),LOCATION_EXTRA,0,nil)*300
 end
 function cm.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

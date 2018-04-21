@@ -33,7 +33,7 @@ end
 function c22200003.mfilterf(c,tp,mg,rc)
 	if c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 then
 		Duel.SetSelectedCard(c)
-		return mg:CheckWithSumEqual(Card.GetRitualLevel,rc:GetLevel(),0,99,rc)
+		return mg:CheckWithSumGreater(Card.GetRitualLevel,rc:GetLevel(),rc)
 	else return false end
 end
 function c22200003.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -43,7 +43,7 @@ function c22200003.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		local ft=Duel.GetMZoneCount(tp)
 		if not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 		if ft>0 then
-			return mg:CheckWithSumEqual(Card.GetRitualLevel,c:GetLevel(),1,99,c)
+			return mg:CheckWithSumGreater(Card.GetRitualLevel,c:GetLevel(),c)
 		else
 			return mg:IsExists(c22200003.mfilterf,1,nil,tp,mg,c)
 		end
@@ -59,13 +59,13 @@ function c22200003.operation(e,tp,eg,ep,ev,re,r,rp)
 		local mat=nil
 		if ft>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-			mat=mg:SelectWithSumEqual(tp,Card.GetRitualLevel,tc:GetLevel(),1,99,tc)
+			mat=mg:SelectWithSumGreater(tp,Card.GetRitualLevel,tc:GetLevel(),tc)
 		else
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 			mat=mg:FilterSelect(tp,c22200003.mfilterf,1,1,nil,tp,mg,tc)
 			Duel.SetSelectedCard(mat)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-			local mat2=mg:SelectWithSumEqual(tp,Card.GetRitualLevel,tc:GetLevel(),0,99,tc)
+			local mat2=mg:SelectWithSumGreater(tp,Card.GetRitualLevel,tc:GetLevel(),tc)
 			mat:Merge(mat2)
 		end
 		tc:SetMaterial(mat)
@@ -88,11 +88,12 @@ function c22200003.thfilter(c)
 end
 function c22200003.desop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local cg=eg:Filter(Card.IsControler,nil,1-tp):Filter(Card.IsFacedown,nil)
+	if not (c:IsRelateToEffect(e) and Duel.Destroy(c,REASON_EFFECT)>0) then return end
+	local cg=eg:Filter(Card.IsControler,nil,1-tp):Filter(Card.IsFacedown,nil):Filter(Card.IsLocation,nil,LOCATION_SZONE)
 	if cg:GetCount()<1 then return end
 	Duel.ConfirmCards(tp,cg)
-	if cg:FilterCount(Card.IsType,nil,TYPE_TRAP)>0 and c:IsRelateToEffect(e) then
-		if Duel.Destroy(c,REASON_EFFECT)~=0 and Duel.IsExistingMatchingCard(c22200003.thfilter,tp,LOCATION_DECK,0,1,nil) then
+	if cg:FilterCount(Card.IsType,nil,TYPE_TRAP)>0 then
+		if Duel.IsExistingMatchingCard(c22200003.thfilter,tp,LOCATION_DECK,0,1,nil) then
 			local tc=Duel.GetMatchingGroup(c22200003.thfilter,tp,LOCATION_DECK,0,nil):Select(tp,1,1,nil):GetFirst()
 			if tc then 
 				Duel.SendtoHand(tc,nil,REASON_EFFECT)

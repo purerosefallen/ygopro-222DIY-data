@@ -4,7 +4,7 @@ local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcCodeFun(c,cm.fusfilter,cm.fusfilter,1,true,true)
+	aux.AddFusionProcCodeFun(c,cm.fusfilter1,cm.fusfilter,1,true,true)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c,false)
 	--base attack
@@ -66,6 +66,9 @@ end
 function cm.fusfilter(c,e,tp)
 	return (c:IsFacedown() or (c:IsRace(RACE_ZOMBIE) and c:IsAttribute(ATTRIBUTE_DARK))) and c:IsType(TYPE_MONSTER)
 end
+function cm.fusfilter1(c,e,tp)
+	return c:IsSetCard(0x1406) and c:IsType(TYPE_MONSTER)
+end
 function cm.splimit(e,se,sp,st)
 	return e:GetHandler():GetLocation()~=LOCATION_EXTRA
 end
@@ -116,7 +119,7 @@ function cm.atkfilter(c,e,tp)
 	return c:IsSetCard(0x1406) and c:IsFaceup()
 end
 function cm.atkval(e,c)
-	return Duel.GetMatchingGroupCount(cm.atkfilter,c:GetControler(),LOCATION_DECK+LOCATION_EXTRA,0,nil)*600
+	return Duel.GetMatchingGroupCount(cm.atkfilter,c:GetControler(),LOCATION_EXTRA,0,nil)*400
 end
 function cm.rettg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -15,7 +15,7 @@ function c22201102.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttackTarget()~=nil
 end
 function c22201102.costfilter(c,bc)
-	return c:IsAbleToRemoveAsCost() and bit.band(c:GetAttribute(),bc:GetAttribute())~=0 and bit.band(c:GetRace(),bc:GetRace())~=0
+	return c:IsAbleToRemoveAsCost() and (bit.band(c:GetAttribute(),bc:GetAttribute())~=0 or bit.band(c:GetRace(),bc:GetRace())~=0)
 end
 function c22201102.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ac=Duel.GetAttacker()

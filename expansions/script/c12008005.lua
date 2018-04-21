@@ -7,6 +7,7 @@ function c12008005.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
+	e1:SetCountLimit(1,12008105)
 	e1:SetTarget(c12008005.thtg)
 	e1:SetOperation(c12008005.thop)
 	c:RegisterEffect(e1)
@@ -26,7 +27,7 @@ function c12008005.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c12008005.thfilter(c)
-	return c:IsCode(12008006) and c:IsAbleToHand()
+	return c:IsSetCard(0x2fb3) and c:IsAbleToHand()
 end
 function c12008005.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c12008005.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end

@@ -28,7 +28,7 @@ function c12008014.initial_effect(c)
 	c:RegisterEffect(e5)	
 end
 function c12008014.spfilter(c,e,tp)
-	return c:IsFaceup() and c:IsReason(REASON_EFFECT) and c:GetReasonEffect():GetHandler():IsSetCard(0x1fb3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsReason(REASON_EFFECT) and c:GetReasonEffect():GetHandler():IsSetCard(0x1fb3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(12008014)
 end
 function c12008014.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c12008014.spfilter,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil,e,tp) end

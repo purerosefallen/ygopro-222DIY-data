@@ -73,21 +73,9 @@ function c22202002.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c22202002.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local a=e:IsHasType(EFFECT_TYPE_ACTIVATE)
 	local te=e:GetLabelObject()
 	if not te then return end
 	e:SetLabelObject(te:GetLabelObject())
 	local op=te:GetOperation()
 	if op then op(e,tp,eg,ep,ev,re,r,rp) end
-	if not a then return end
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
-	e1:SetTargetRange(1,0)
-	e1:SetValue(c22202002.actlimit)
-	Duel.RegisterEffect(e1,tp)
-end
-function c22202002.actlimit(e,re,tp)
-	return re:IsActiveType(TYPE_TRAP) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and not re:GetHandler():IsImmuneToEffect(e)
 end
