@@ -25,7 +25,7 @@ function cm.initial_effect(c)
     e2:SetOperation(cm.spop)
     c:RegisterEffect(e2)   
 end
-function cm.actcon(e,tp,eg,ep,ev,re,r,rp)
+function cm.actcon(e)
     local ct=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)
     return ct%2==0 and ct>1
 end

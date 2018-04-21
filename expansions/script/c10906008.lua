@@ -41,11 +41,11 @@ function cm.initial_effect(c)
     e4:SetValue(cm.vfilter2)
     c:RegisterEffect(e4)
 end
-function cm.randcon(e,tp,eg,ep,ev,re,r,rp)
+function cm.randcon(e)
     local ct=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)
     return ct%2~=0
 end
-function cm.randcon2(e,tp,eg,ep,ev,re,r,rp)
+function cm.randcon2(e)
     local ct=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)
     return ct%2==0
 end
