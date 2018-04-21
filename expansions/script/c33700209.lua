@@ -39,12 +39,12 @@ end
 function c33700209.filter(c,e,tp)
 	return c:IsSetCard(0x444) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c33700209.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c33700209.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c33700209.filter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_HAND)
 end
-function c33700209.spop(e,tp,eg,ep,ev,re,r,rp)
+function c33700209.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c33700209.filter),tp,LOCATION_GRAVE+LOCATION_HAND,0,1,1,nil,e,tp)
