@@ -7,7 +7,7 @@ function cm.initial_effect(c)
 	Senya.AddSummonMusic(c,aux.Stringid(m,2),SUMMON_TYPE_LINK)
 	--link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLevel,3),2,2)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLevel,4),2,2)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(m,1))
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
