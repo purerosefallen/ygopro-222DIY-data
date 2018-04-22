@@ -32,7 +32,7 @@ function c4210009.initial_effect(c)
 	c4210009.tgcard = nil
 end
 function c4210009.cfilter(c,ft)
-	return c:IsFaceup() and c:IsReleasable() and (ft>0 or c:GetSequence()<5)
+	return c:IsFaceup() and c:IsSetCard(0x2af) and c:IsReleasable() and (ft>0 or c:GetSequence()<5)
 end
 function c4210009.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -55,6 +55,8 @@ function c4210009.spop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
 			c4210009.tgcard = nil
+			c:RegisterFlagEffect(0,RESET_EVENT+0xcff0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(4210010,1))
+			c:RegisterFlagEffect(4210010,RESET_EVENT+0xcff0000,0,0)
 		end
 		Duel.SpecialSummonComplete()
 	end

@@ -36,51 +36,54 @@ end
 function c13254114.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2 
 end
+--get green maru
 function c13254114.cfilter1(c,e,tp)
 	return c:IsSetCard(0x356) and not c:IsPublic() and c:IsAttribute(ATTRIBUTE_WIND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
+--get all maru
 function c13254114.cfilter2(c,e,tp)
 	return c:IsSetCard(0x356) and not c:IsPublic() and c:IsType(TYPE_MONSTER)
 end
-function c13254114.cfilter3(c,e,tp,ft)
-	return c:IsSetCard(0x356) and not c:IsPublic() and c:IsType(TYPE_MONSTER) and ((c:IsAttribute(ATTRIBUTE_WIND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0) or not c:IsAttribute(ATTRIBUTE_WIND))
+function c13254114.cfilter3(c,e,tp,ft,sg)
+	return c:IsSetCard(0x356) and not c:IsPublic() and c:IsType(TYPE_MONSTER) and ((c:IsAttribute(ATTRIBUTE_WIND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and ft>0) or not c:IsAttribute(ATTRIBUTE_WIND)) and not sg:IsContains(c)
 end
 function c13254114.thfilter(c)
 	return c:IsFaceup() and c:IsAbleToHand()
 end
 function c13254114.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	local cc1=Duel.GetMatchingGroupCount(c13254114.cfilter1,tp,LOCATION_HAND,0,c,e,tp)
-	local cg2=Duel.GetMatchingGroup(c13254114.cfilter2,tp,LOCATION_HAND,0,c,e,tp)
+	local cc1=Duel.GetMatchingGroupCount(c13254114.cfilter1,tp,LOCATION_HAND,0,c,e,tp)--green maru count
+	local cg2=Duel.GetMatchingGroup(c13254114.cfilter2,tp,LOCATION_HAND,0,c,e,tp)--maru no public
 	local cc2=cg2:GetCount()
-	ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
+	if ft>0 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end--limit spsummon count
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c13254114.thfilter(chkc) end
-	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingTarget(c13254114.thfilter,tp,0,LOCATION_ONFIELD,1,nil) and cc2>=2 and cc2-cc1>=1+2-ft end
+	if chk==0 then return ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingTarget(c13254114.thfilter,tp,0,LOCATION_ONFIELD,1,nil) and cc2>=2 and cc2-cc1>=1+2-ft end--non green maru count>=3-limit
 	local cg=Group.CreateGroup()
 	local sg=Group.CreateGroup()
+	local tc=c
 	local i=0
-	while i<2 do
+	repeat
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-		sg=cg2:FilterSelect(tp,c13254114.cfilter3,1,1,nil,e,tp,ft)
-		if sg:GetFirst():IsAttribute(ATTRIBUTE_WIND) then ft=ft-1 end
-		cg:Merge(sg)
-		cg2:Sub(sg)
-		i=i+1
-	end
+		sg=cg2:FilterSelect(tp,c13254114.cfilter3,1,1,nil,e,tp,ft-1,sg)--select maru to confirm
+		if i==0 then
+			tc=sg:GetFirst()
+			i=1
+		end
+		if tc:IsAttribute(ATTRIBUTE_WIND) then ft=ft-1 end
+		tc=sg:GetNext()
+	until tc
+	local cg=sg:Clone()--selected maru
 	Duel.ConfirmCards(1-tp,cg)
 	Duel.ShuffleHand(tp)
 	cg:KeepAlive()
 	e:SetLabelObject(cg)
 	local sc=cg:GetFirst()
-	i=0
-	while i<2 do
+	while sc do
 		sc:RegisterFlagEffect(13254114,RESET_EVENT+0x1fe0000+RESET_CHAIN,0,1)
 		sc=cg:GetNext()
-		i=i+1
 	end
-	sg=cg:Filter(Card.IsAttribute,nil,ATTRIBUTE_WIND)
+	sg=sg:Filter(Card.IsAttribute,nil,ATTRIBUTE_WIND)--operationInfo sp
 	sg:AddCard(c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local g=Duel.SelectTarget(tp,c13254114.thfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
@@ -97,15 +100,17 @@ function c13254114.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if tc and tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)~=0 then
 		local sc=cg:GetFirst()
-		local i=0
-		while i<cc do
-			if sc:GetFlagEffect(13254114)==0 then cg:RemoveCard(sc) end
-			i=i+1
-		end
-		local sg=cg:Filter(c13254114.spfilter,nil,e,tp)
+		local g=Group.CreateGroup()
+		repeat
+			if sc:GetFlagEffect(13254114)==0 then g:AddCard(sc) else sc=cg:GetNext() end
+		until sc
+		cg:Sub(g)--remove non relatetoeffect card
+		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		if ft>0 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end--limit spsummon count
+		local sg=cg:Filter(c13254114.spfilter,nil,e,tp)--get maru which can spsummon
 		if c:IsRelateToEffect(e) then cg:AddCard(c) end
 		if c:IsCanBeSpecialSummoned(e,0,tp,false,false) then sg:AddCard(c) end
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)>=sg:GetCount() then
+		if ft>=sg:GetCount() then
 			Duel.BreakEffect()
 			cg:Sub(sg)
 			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)

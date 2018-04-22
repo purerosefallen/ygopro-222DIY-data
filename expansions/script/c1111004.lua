@@ -40,13 +40,13 @@ function c1111004.tfilter1(c)
 end
 function c1111004.tg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return false end
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) end
 	if chk==0 then return Duel.IsExistingMatchingCard(c1111004.tfilter1,tp,LOCATION_GRAVE,0,1,nil) end
 	local num=Duel.GetMatchingGroupCount(c1111004.tfilter1,tp,LOCATION_GRAVE,0,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local sg=Duel.SelectMatchingCard(tp,c1111004.tfilter1,tp,LOCATION_GRAVE,0,1,num,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,sg,sg:GetCount(),0,0)
+	local sg=Duel.SelectTarget(tp,c1111004.tfilter1,tp,LOCATION_GRAVE,0,1,num,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_MZONE)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,sg,sg:GetCount(),0,0)
 end
 --
 function c1111004.ofilter1(c,atk)
@@ -54,8 +54,7 @@ function c1111004.ofilter1(c,atk)
 end
 function c1111004.op1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local sg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local gn=sg:Filter(Card.IsRelateToEffect,nil,e)
+	local gn=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
 	if gn:GetCount()<1 then return end
 	local num=Duel.SendtoDeck(gn,nil,2,REASON_EFFECT)
 	if num<1 then return end

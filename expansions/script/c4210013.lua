@@ -94,7 +94,7 @@ function c4210013.splimit(e,se,sp,st)
 	return se:GetHandler():IsSetCard(0x2af)
 end
 function c4210013.spfilter(c,tp)
-	return c:IsFaceup() and c:GetFlagEffect(4210010)~=0 and c:IsControler(tp) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:GetFlagEffect(4210010)~=0 and c:IsControler(tp) and c:IsReleasable()
 end
 function c4210013.mzfilter(c,tp)
 	return c:IsControler(tp) and c:GetSequence()<5

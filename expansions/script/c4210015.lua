@@ -87,7 +87,7 @@ function c4210015.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c4210015.spfilter(c,tp)
-	return c:IsFaceup() and c:GetFlagEffect(4210010)~=0 and c:IsControler(tp) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:GetFlagEffect(4210010)~=0 and c:IsControler(tp) and c:IsReleasable()
 end
 function c4210015.mzfilter(c,tp)
 	return c:IsControler(tp) and c:GetSequence()<5

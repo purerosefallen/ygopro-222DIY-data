@@ -55,6 +55,7 @@ function c13257326.activate(e,tp,eg,ep,ev,re,r,rp)
 				i=i+1
 			end
 			if eflist[i] then
+				local PCe=eflist[i]
 				local cost=PCe:GetCost()
 				local target=PCe:GetTarget()
 				local operation=PCe:GetOperation()

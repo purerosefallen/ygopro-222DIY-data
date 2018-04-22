@@ -36,7 +36,7 @@ function c4210030.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c4210030.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c4210030.filter,tp,LOCATION_HAND,0,1,nil)
-		and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
+		and Duel.IsExistingMatchingCard(function(c) return c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end,tp,LOCATION_HAND,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 	if c4210030.tg == 1 then
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_REMOVED)
