@@ -3,7 +3,7 @@ function c12008013.initial_effect(c)
 	--atk
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(12008013,0))
-	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_ATKCHANGE)
+	e1:SetCategory(CATEGORY_TODECK+CATEGORY_ATKCHANGE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetRange(LOCATION_HAND)
@@ -61,13 +61,13 @@ function c12008013.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingTarget(c12008013.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.IsExistingMatchingCard(c12008013.tgfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,c12008013.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_DECK)
 end
 function c12008013.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tgc=Duel.SelectMatchingCard(tp,c12008013.tgfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
-	if tgc and Duel.SendtoGrave(tgc,REASON_EFFECT)~=0 and tc:IsRelateToEffect(e) and tc:IsFaceup() and tgc:GetAttack()>0 then
+	if tgc and Duel.SendtoDeck(tgc,nil,0,REASON_EFFECT)~=0 and tc:IsRelateToEffect(e) and tc:IsFaceup() and tgc:GetAttack()>0 then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
