@@ -64,7 +64,7 @@ function c22261003.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 		local g=Duel.SelectTarget(tp,c22261003.filter1,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
-		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)	  
+		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)	 
 	elseif sel==2 then
 		e:SetCategory(CATEGORY_DESTROY+CATEGORY_SEARCH+CATEGORY_TOHAND)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
@@ -120,5 +120,5 @@ function c22261003.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c22261003.efilter(e,re)
-	return e:GetOwnerPlayer()~=re:GetOwnerPlayer() and re:IsActivated()
+	return e:GetOwnerPlayer()~=re:GetOwnerPlayer()
 end

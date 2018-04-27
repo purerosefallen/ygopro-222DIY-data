@@ -53,7 +53,7 @@ function c13257204.eqlimit(e,c)
 	if er==nil then
 		er=0
 	end
-	return not (er>cl) and not (c:GetOriginalLevel()>=7) and not (eg:Filter(Card.IsSetCard,nil,0x354):GetSum(Card.GetLevel)>lv)
+	return not (er>cl) and c:GetOriginalLevel()>=7 and not (eg:Filter(Card.IsSetCard,nil,0x354):GetSum(Card.GetLevel)>lv)
 end
 function c13257204.econ(e)
 	return e:GetHandler():GetEquipTarget()

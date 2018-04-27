@@ -34,7 +34,7 @@ function c22260141.initial_effect(c)
 	e4:SetDescription(aux.Stringid(22260141,2))
 	e4:SetCategory(CATEGORY_DISABLE)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
-	e4:SetCode(EVENT_CHAINING)
+	e4:SetCode(EVENT_BECOME_TARGET)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCondition(c22260141.cecon)
 	e4:SetCost(c22260141.ccost)
@@ -75,9 +75,7 @@ function c22260141.cbop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateAttack()
 end
 function c22260141.cecon(e,tp,eg,ep,ev,re,r,rp)
-	if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
-	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-	return g:IsContains(e:GetHandler()) and Duel.IsChainDisablable(ev)
+	return eg:IsContains(e:GetHandler()) and Duel.IsChainDisablable(ev)
 end
 function c22260141.cetg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

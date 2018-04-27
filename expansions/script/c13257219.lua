@@ -46,7 +46,7 @@ function c13257219.efilter(e,re)
 end
 function c13257219.ctcon1(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
-	return ec and ec==eg and ep==tp and bit.band(r,REASON_REPLACE)==1 
+	return ec and ec==eg and ep==tp and bit.band(r,REASON_REPLACE)==REASON_REPLACE 
 end
 function c13257219.ctop1(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SelectYesNo(tp,aux.Stringid(13257219,0)) then
