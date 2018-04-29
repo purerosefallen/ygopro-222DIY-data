@@ -47,9 +47,13 @@ function cm.CheckFieldFilter(g,tp,c,f,...)
 		return Duel.GetMZoneCount(tp,g,tp)>0 and (not f or f(g,...))
 	end
 end
-function cm.AddXyzProcedureRank(c,rk,f,minct,maxct,xm,...)
+function cm.MustMaterialCheck(v,tp,code)
+	return aux.MustMaterialCheck(v,tp,code)
+end
+--xyz summon of prim
+function cm.AddXyzProcedureRank(c,rk,f,minct,maxct,xm,exop,...)
 	local ext_params={...}
-	return cm.AddXyzProcedureCustom(c,cm.XyzProcedureRankFilter(rk,f,ext_params),cm.XyzProcedureRankCheck,minct,maxct,xm)
+	return cm.AddXyzProcedureCustom(c,cm.XyzProcedureRankFilter(rk,f,ext_params),cm.XyzProcedureRankCheck,minct,maxct,xm,exop)
 end
 function cm.XyzProcedureRankFilter(rk,f,ext_params)
 return function(c,xyzc)
@@ -59,25 +63,11 @@ end
 function cm.XyzProcedureRankCheck(g,xyzc)
 	return g:GetClassCount(Card.GetRank)==1
 end
-function cm.rxyz2(c,rk,f,ct,xm,...)
-	return cm.AddXyzProcedureRank(c,rk,f,ct,ct,xm,...)
-end
-function cm.XyzProcedureCustomTuneMagicianFilter(c,te)
-	local f=te:GetValue()
-	return f(te,c)
-end
-function cm.XyzProcedureCustomTuneMagicianCheck(c,g)
-	local eset={c:IsHasEffect(EFFECT_TUNE_MAGICIAN_X)}
-	for _,te in ipairs(eset) do
-		if g:IsExists(cm.XyzProcedureCustomTuneMagicianFilter,1,c,te) then return true end
-	end
-	return false
-end
 function cm.XyzProcedureCustomCheck(g,xyzc,tp,gf)
-	if g:IsExists(cm.XyzProcedureCustomTuneMagicianCheck,1,nil,g) then return false end
+	if g:IsExists(aux.TuneMagicianCheckX,nil,g,EFFECT_TUNE_MAGICIAN_X) then return false end
 	return not gf or gf(g,xyzc,tp)
 end
-function cm.AddXyzProcedureCustom(c,func,gf,minc,maxc,xm,...)
+function cm.AddXyzProcedureCustom(c,func,gf,minc,maxc,xm,exop,...)
 	local ext_params={...}
 	c:EnableReviveLimit()
 	local maxc=maxc or minc
@@ -88,7 +78,7 @@ function cm.AddXyzProcedureCustom(c,func,gf,minc,maxc,xm,...)
 	e1:SetRange(LOCATION_EXTRA)
 	e1:SetCondition(cm.XyzProcedureCustomCondition(func,gf,minc,maxc,ext_params))
 	e1:SetTarget(cm.XyzProcedureCustomTarget(func,gf,minc,maxc,ext_params))
-	e1:SetOperation(cm.XyzProcedureCustomOperation(xm))
+	e1:SetOperation(cm.XyzProcedureCustomOperation(xm,exop))
 	e1:SetValue(SUMMON_TYPE_XYZ)
 	c:RegisterEffect(e1)
 	return e1
@@ -142,6 +132,7 @@ function cm.XyzProcedureCustomTarget(func,gf,minct,maxct,ext_params)
 				minc=math.max(minc,min)
 				maxc=math.min(maxc,max)
 			end
+			local sg=Group.CreateGroup()
 			local ce={Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_XMATERIAL)}
 			for _,te in ipairs(ce) do
 				local tc=te:GetHandler()
@@ -156,9 +147,10 @@ function cm.XyzProcedureCustomTarget(func,gf,minct,maxct,ext_params)
 		else return false end
 	end
 end
-function cm.XyzProcedureCustomOperation(xm)
+function cm.XyzProcedureCustomOperation(xm,exop)
 	return function(e,tp,eg,ep,ev,re,r,rp,c,og,min,max)
 		local g=e:GetLabelObject()
+		if exop then exop(e,tp,g,c) end
 		c:SetMaterial(g)
 		cm.OverlayGroup(c,g,xm,true)
 		g:DeleteGroup()
@@ -205,7 +197,7 @@ function cm.CheckGroup(g,f,cg,min,max,...)
 	if #sg>=min and #sg<=max and f(sg,...) then return true end
 	return g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params)
 end
-function cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
+function cm.SelectGroupNew(tp,desc,cancelable,g,f,cg,min,max,...)
 	local min=min or 1
 	local max=max or #g
 	local ext_params={...}
@@ -214,38 +206,17 @@ function cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
 	sg:Merge(cg)
 	local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
 	while #sg<max and #ag>0 do
+		local seg=sg:Clone()
+		seg:Sub(cg)
 		local finish=(#sg>=min and #sg<=max and f(sg,...))
-		local seg=sg-cg
-		local dmin=#seg
-		local dmax=math.min(max-#cg,#g)
-		Duel.Hint(HINT_SELECTMSG,tp,desc)
-		local tc=ag:SelectUnselect(seg,tp,finish,finish,dmin,dmax)
-		if not tc then break end
-		if sg:IsContains(tc) then
-			sg:RemoveCard(tc)
-		else
-			sg:AddCard(tc)
-		end
-		ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)
-	end
-	return sg
-end
-function cm.SelectGroupWithCancel(tp,desc,g,f,cg,min,max,...)
-	local min=min or 1
-	local max=max or #g
-	local ext_params={...}
-	local sg=Group.CreateGroup()
-	local cg=cg or Group.CreateGroup()
-	sg:Merge(cg)
-	local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
-	while #sg<max and #ag>0 do
-		local finish=(#sg>=min and #sg<=max and f(sg,...))
-		local cancel=finish or #sg==0
-		local seg=sg-cg
-		local dmin=#seg
-		local dmax=math.min(max-#cg,#g)
-		Duel.Hint(HINT_SELECTMSG,tp,desc)
-		local tc=ag:SelectUnselect(seg,tp,finish,cancel,dmin,dmax)
+		local cancel=cancelable and not finish
+		local dmin=#sg
+		local dmax=math.min(max,#g)
+		local tc=nil
+		repeat
+			Duel.Hint(HINT_SELECTMSG,tp,desc)
+			tc=ag:SelectUnselect(sg,tp,finish,cancel,dmin,dmax)
+		until not tc or ag:IsContains(tc) or seg:IsContains(tc)
 		if not tc then
 			if not finish then return end
 			break
@@ -259,6 +230,12 @@ function cm.SelectGroupWithCancel(tp,desc,g,f,cg,min,max,...)
 	end
 	return sg
 end
+function cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
+	return cm.SelectGroupNew(tp,desc,false,g,f,cg,min,max,...)
+end
+function cm.SelectGroupWithCancel(tp,desc,g,f,cg,min,max,...)
+	return cm.SelectGroupNew(tp,desc,true,g,f,cg,min,max,...)
+end
 function cm.exgoal(g,tp,fc)
 	return Duel.GetLocationCountFromEx(tp,tp,g,fc)>0
 end
@@ -267,31 +244,13 @@ function cm.CheckSummonLocation(c,tp)
 	return Duel.GetMZoneCount(tp)>0
 end
 function cm.AND(...)
-	local t={...}
-	return function(...)
-		local res=false
-		for i,f in pairs(t) do
-			res=f(...)
-			if not res then return res end
-		end
-		return res
-	end
+	return aux.AND(...)
 end
 function cm.OR(...)
-	local t={...}
-	return function(...)
-		local res=false
-		for i,f in pairs(t) do
-			res=f(...)
-			if res then return res end
-		end
-		return res
-	end
+	return aux.OR(...)
 end
 function cm.NOT(f)
-	return function(...)
-		return not f(...)
-	end
+	return aux.NOT(f)
 end
 function cm.serlcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end
