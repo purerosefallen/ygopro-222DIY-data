@@ -1349,6 +1349,16 @@ function cm.CopySpellModule(c,loc1,loc2,f,con,cost,ctlm,ctlmid,eloc,x)
 	c:RegisterEffect(e3)
 	return e2,e3
 end
+function cm.ProtectedRun(f,...)
+	if not f then return true end
+	local params={...}
+	local ret={}
+	local res_test=pcall(function()
+		ret={f(table.unpack(params))}
+	end)
+	if not res_test then return false end
+	return table.unpack(ret)
+end
 function cm.ForbiddenCost(costf)
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
 		e:SetLabel(1)
@@ -1366,7 +1376,7 @@ return function(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
 		local te=e:GetLabelObject()
 		local tg=te:GetTarget()
-		return te:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and (not tg or tg(e,tp,eg,ep,ev,re,r,rp,0,chkc))
+		return te:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and cm.ProtectedRun(tg,e,tp,eg,ep,ev,re,r,rp,0,chkc)
 	end
 	local og=Duel.GetFieldGroup(tp,loc1,loc2)
 	if x then og:Merge(e:GetHandler():GetOverlayGroup()) end
@@ -1405,7 +1415,7 @@ function cm.CopyOperation(e,tp,eg,ep,ev,re,r,rp)
 	if te:IsHasType(EFFECT_TYPE_ACTIVATE) then
 		e:GetHandler():ReleaseEffectRelation(e)
 	end
-	if op then op(e,tp,eg,ep,ev,re,r,rp) end
+	cm.ProtectedRun(op,e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.CopySpellChainingFilter(c,e,tp,eg,ep,ev,re,r,rp,f)
 	if (c:GetType()==TYPE_SPELL or c:GetType()==TYPE_SPELL+TYPE_QUICKPLAY
@@ -1414,7 +1424,7 @@ function cm.CopySpellChainingFilter(c,e,tp,eg,ep,ev,re,r,rp,f)
 		local te=c:GetActivateEffect()
 		if te:GetCode()~=EVENT_CHAINING then return false end
 		local tg=te:GetTarget()
-		if tg and not tg(e,tp,eg,ep,ev,re,r,rp,0) then return false end
+		if not cm.ProtectedRun(tg,e,tp,eg,ep,ev,re,r,rp,0) then return false end
 		return true
 	else return false end
 end
@@ -1449,9 +1459,9 @@ return function(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tg=te:GetTarget()
 	if tg then
 		if fchain then
-			tg(e,tp,ceg,cep,cev,cre,cr,crp,1)
+			cm.ProtectedRun(tg,e,tp,ceg,cep,cev,cre,cr,crp,1)
 		else
-			tg(e,tp,eg,ep,ev,re,r,rp,1)
+			cm.ProtectedRun(tg,e,tp,eg,ep,ev,re,r,rp,1)
 		end
 	end
 	te:SetLabelObject(e:GetLabelObject())
@@ -1492,7 +1502,7 @@ function cm.InstantCopyTarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then
 		local te=e:GetLabelObject()
 		local tg=te:GetTarget()
-		return te:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and (not tg or tg(e,tp,eg,ep,ev,re,r,rp,0,chkc))
+		return te:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and cm.ProtectedRun(tg,e,tp,eg,ep,ev,re,r,rp,0,chkc)
 	end
 	local te=re:Clone()
 	local tg=te:GetTarget()
@@ -1506,20 +1516,17 @@ function cm.InstantCopyTarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		e:SetLabel(0)
 		local res=false
 		if not tg then return true end
-		if not pcall(function()
-			if tres then res=tg(e,tp,teg,tep,tev,tre,tr,trp,0)
-			else res=tg(e,tp,eg,ep,ev,re,r,rp,0) end
-		end) then return false end
-		return res
+		if tres then return cm.ProtectedRun(tg,e,tp,teg,tep,tev,tre,tr,trp,0)
+		else return cm.ProtectedRun(tg,e,tp,eg,ep,ev,re,r,rp,0) end
 	end
 	e:SetLabel(te:GetLabel())
 	e:SetCategory(te:GetCategory())
 	e:SetProperty(te:GetProperty())
 	if tg then
 		if tres then
-			tg(e,tp,teg,tep,tev,tre,tr,trp,1)
+			cm.ProtectedRun(tg,e,tp,teg,tep,tev,tre,tr,trp,1)
 		else
-			tg(e,tp,eg,ep,ev,re,r,rp,1)
+			cm.ProtectedRun(tg,e,tp,eg,ep,ev,re,r,rp,1)
 		end
 	end
 	te:SetLabelObject(e:GetLabelObject())
