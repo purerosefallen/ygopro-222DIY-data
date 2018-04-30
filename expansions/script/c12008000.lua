@@ -31,7 +31,7 @@ function c12008000.thfilter(c)
 	return c:IsSetCard(0x1fb3) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and not c:IsRace(RACE_SEASERPENT)
 end
 function c12008000.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c12008000.thfilter,tp,LOCATION_DECK,0,1,nil) and Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,1，e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c12008000.thfilter,tp,LOCATION_DECK,0,1,nil)  end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c12008000.thop(e,tp,eg,ep,ev,re,r,rp)
@@ -45,7 +45,7 @@ end
 function c12008000.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0
 		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CARDTYPE)
 	e:SetLabel(Duel.AnnounceType(tp))
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
