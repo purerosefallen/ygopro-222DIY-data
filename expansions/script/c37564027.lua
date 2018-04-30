@@ -31,11 +31,12 @@ function cm.initial_effect(c)
 --xm
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(m,1))
-	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_OVERLAY_REMOVE_REPLACE)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_OVERLAY_REMOVE_COST_CHANGE_KOISHI)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(cm.rcon)
-	e2:SetOperation(aux.TRUE)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetTargetRange(1,0)
+	e2:SetValue(cm.rval)
 	c:RegisterEffect(e2)
 end
 function cm.immfilter(e,te)
@@ -77,9 +78,8 @@ end
 function cm.xmfilter(c)
 	return Senya.check_set_elem(c) and c:IsType(TYPE_XYZ) and c:GetRank()==4
 end
-function cm.rcon(e,tp,eg,ep,ev,re,r,rp)
-	return (r & REASON_COST)~=0 and re:IsHasType(0x7e0) and re:IsActiveType(TYPE_XYZ) and Senya.check_set_elem(re:GetHandler()) and e:GetHandler():GetOverlayGroup():IsExists(cm.xmfilter,1,nil)
-and re:GetHandler()~=e:GetHandler()
+function cm.rval(e,re,tp,ct,r,c)
+	if r&REASON_COST~=0 and re:IsHasType(0x7e0) and re:IsActiveType(TYPE_XYZ) and Senya.check_set_elem(re:GetHandler()) and e:GetHandler():GetOverlayGroup():IsExists(cm.xmfilter,1,nil) and re:GetHandler()~=e:GetHandler() then return 0 else return ct end
 end
 
 
