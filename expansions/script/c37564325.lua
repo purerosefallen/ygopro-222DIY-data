@@ -51,7 +51,7 @@ function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) or c:IsFacedown() then return end
 	local g=Duel.GetMatchingGroup(cm.rmfilter,tp,0,LOCATION_GRAVE,nil)
-	local ct=math.min(Duel.GetLocationCount(tp,LOCATION_SZONE),#g)
+	local ct=math.min((Duel.GetLocationCount(tp,LOCATION_SZONE)),#g)
 	if ct==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local fg=Group.CreateGroup()

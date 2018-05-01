@@ -55,7 +55,7 @@ function cm.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local rct=Duel.SendtoHand(g1,nil,REASON_EFFECT)
 	local tsg=Duel.GetMatchingGroup(cm.sfilter,tp,LOCATION_HAND,0,nil,e,tp)
 	local minct=math.min(#tsg,rct)
-	minct=math.min(minct,Duel.GetMZoneCount(tp,nil,tp,LOCATION_REASON_TOFIELD,z))
+	minct=math.min(minct,(Duel.GetMZoneCount(tp,nil,tp,LOCATION_REASON_TOFIELD,z)))
 	if minct<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g2=tsg:Select(tp,1,minct,nil)

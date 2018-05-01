@@ -33,7 +33,7 @@ function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,3,tp,LOCATION_HAND)
 end
 function cm.activate(e,tp,eg,ep,ev,re,r,rp)
-	local ft=math.min(Duel.GetMZoneCount(tp),3)
+	local ft=math.min((Duel.GetMZoneCount(tp)),3)
 	if ft<=0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	local tg=Duel.GetMatchingGroup(cm.filter,tp,LOCATION_HAND,0,nil,e,tp)
