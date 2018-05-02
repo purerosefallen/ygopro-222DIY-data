@@ -95,7 +95,7 @@ function c4210028.thcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c4210028.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
-		and Duel.IsExistingMatchingCard(c4210028.cfilter,tp,LOCATION_ONFIELD,0,1,nil) end
+		and Duel.IsExistingMatchingCard(c4210028.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,c4210028.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	g:AddCard(e:GetHandler())

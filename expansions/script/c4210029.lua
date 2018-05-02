@@ -40,9 +40,12 @@ function c4210029.activate(e,tp,eg,ep,ev,re,r,rp)
 		local gc=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_HAND,0,1,1,nil)		
 		if Duel.SendtoGrave(gc,REASON_EFFECT)~=0 and gc:FilterCount(function(c)return c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) end,nil,tp) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-			local rel = Duel.SelectMatchingCard(tp,Card.IsReleasable,tp,LOCATION_MZONE,0,1,1,nil)
-			if Duel.Release(rel,REASON_EFFECT)~=0 then
-				Duel.Draw(tp,1,REASON_EFFECT)
+			if Duel.SelectEffectYesNo(tp,e:GetHandler(),500) 
+				and Duel.IsExistingMatchingCard(Card.IsReleasable,tp,LOCATION_MZONE,0,1,nil) then
+				local rel = Duel.SelectMatchingCard(tp,Card.IsReleasable,tp,LOCATION_MZONE,0,1,1,nil)
+				if Duel.Release(rel,REASON_EFFECT)~=0 then
+					Duel.Draw(tp,1,REASON_EFFECT)
+				end
 			end
 		end
 	end

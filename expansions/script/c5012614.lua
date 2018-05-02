@@ -79,11 +79,11 @@ function c5012614.cfilter(c)
 		and c:IsAbleToRemoveAsCost() and c:IsCanBeFusionMaterial()
 end
 function c5012614.fselect(c,tp)
-	return c:IsFusionCode(5012604) and c:IsAbleToRemoveAsCost() and c:IsCanBeFusionMaterial() and Duel.IsExistingMatchingCard(c5012614.fselect2,tp,LOCATION_MZONE,0,2,c,tp,c)
+	return c:IsFusionCode(5012604) and c:IsAbleToRemoveAsCost() and c:IsCanBeFusionMaterial() and Duel.IsExistingMatchingCard(c5012614.fselect2,tp,LOCATION_MZONE,0,1,c,tp,c)
 end
 function c5012614.fselect2(c,tp,rc)
 	local g=Group.FromCards(c,rc)
-	return c:IsFusionSetCard(0x250) and c:IsAbleToRemoveAsCost() and c:IsCanBeFusionMaterial() and Duel.IsExistingMatchingCard(c5012614.fselect3,tp,LOCATION_MZONE,0,2,g,g)
+	return c:IsFusionSetCard(0x250) and c:IsAbleToRemoveAsCost() and c:IsCanBeFusionMaterial() and Duel.IsExistingMatchingCard(c5012614.fselect3,tp,LOCATION_MZONE,0,1,g,g)
 end
 function c5012614.fselect3(c,g)
 	local mg=g:Clone()

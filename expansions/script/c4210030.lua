@@ -51,11 +51,15 @@ function c4210030.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			g:GetFirst():RegisterFlagEffect(0,RESET_EVENT+0xcff0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(4210010,1))
 			g:GetFirst():RegisterFlagEffect(4210010,RESET_EVENT+0xcff0000,0,0)
-			local gc=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,LOCATION_REMOVED,0,1,1,nil)
-			if gc:GetCount()>0 then
-				Duel.SendtoHand(gc,nil,REASON_EFFECT)
-				Duel.ConfirmCards(1-tp,gc)
-				c4210030.tg = 0
+			if Duel.SelectEffectYesNo(tp,e:GetHandler(),aux.Stringid(4210030,0)) 
+				and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_REMOVED,0,1,nil) then
+				local gc=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,LOCATION_REMOVED,0,1,1,nil)
+				if gc:GetCount()>0 then
+					Duel.SendtoHand(gc,nil,REASON_EFFECT)
+					Duel.ConfirmCards(1-tp,gc)
+					c4210030.tg = 0
+				end
+				else c4210030.tg = 0
 			end
 		end
 	end
