@@ -6,5 +6,6 @@
 *.rar
 *.zip
 *.swp
+/ygopro
 
 /expansions/pre-*.cdb
