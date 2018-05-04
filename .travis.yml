@@ -44,6 +44,7 @@ script:
 - cd ..
 - mv -f ./bin/release/ygopro .
 - strip ygopro
+- mkdir replay
 
 - ./ygopro 7911 -1 2 0 F T T 8000 5 1 180 0 >> ./../redtext.txt &
 
