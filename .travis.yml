@@ -57,3 +57,7 @@ script:
 - git add ./redtext.txt
 - git commit -m "test redtext of $TRAVIS_COMMIT"
 - git push -f https://$NANAHIRA@github.com/purerosefallen/ygopro-222DIY HEAD:redtext
+
+branches:
+  only:
+  - master
