@@ -11,6 +11,8 @@ addons:
     - libsqlite3-dev
     - sqlite3
     - mono-complete
+env:
+- YGOPRO_TEST_REDTEXT=1
 
 script:
 
