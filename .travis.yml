@@ -13,6 +13,12 @@ addons:
     - sqlite3
 
 script:
+- echo "Redtext check with commit $TRAVIS_COMMIT on $(date +%m.%d)." > ./../redtext.txt
+- echo $TRAVIS_COMMIT_MESSAGE > ./../redtext.txt
+
+- git config --global user.name purerosefallen
+- git config --global user.email 78877@qq.com
+
 - git clone --depth=1 --branch=server --recursive https://github.com/purerosefallen/ygopro
 - cd ygopro
 
@@ -25,26 +31,23 @@ script:
 - cd build
 - make config=release
 
+- cd ..
 - mv -f ./bin/release/ygopro .
 - strip ygopro
 
-- echo "Redtext check with commit $TRAVIS_COMMIT on $(date +%m.%d)." > ./../redtext.txt
-- echo $TRAVIS_COMMIT_MESSAGE > ./../redtext.txt
-
 - bash -c "./ygopro 7911 999 2 0 F T T 8000 5 1 0 0 >>& ./../redtext.txt ; exit 0" &
 
-- git clone --depth=1 https://github.com/purerosefallen/windbot
+- wget --no-check-certificate https://github.com/purerosefallen/windbot/releases/download/latest/WindBot.7z
+- 7z x -y WindBot.7z
 
-- cp -rf ./cards.cdb ./windbot/
-- bash -c "sqlite3 ./expansions/222DIY.cdb .dump | sqlite3 ./windbot/cards.cdb ; exit 0"
+- cp -rf ./cards.cdb ./WindBot/
+- bash -c "sqlite3 ./expansions/222DIY.cdb .dump | sqlite3 ./WindBot/cards.cdb ; exit 0"
 
-- echo "# deck used for test" > ./windbot/Decks/AI_Test.ydk
-- echo "select id from datas;" | sqlite3 ./expansions/222DIY.cdb >> ./windbot/Decks/AI_Test.ydk
-- echo "!side" > ./windbot/Decks/AI_Test.ydk
+- echo "# deck used for test" > ./WindBot/Decks/AI_Test.ydk
+- echo "select id from datas;" | sqlite3 ./expansions/222DIY.cdb >> ./WindBot/Decks/AI_Test.ydk
+- echo "!side" > ./WindBot/Decks/AI_Test.ydk
 
-- cd windbot
-- xbuild /property:Configuration=Release
-- mv -f ./bin/Release/WindBot.exe .
+- cd WindBot
 
 - mono ./WindBot.exe Name=Nanahira Deck=Test Dialog=default Host=127.0.0.1 Port=7911 &
 - mono ./WindBot.exe Name=Nanahira Deck=Test Dialog=default Host=127.0.0.1 Port=7911
