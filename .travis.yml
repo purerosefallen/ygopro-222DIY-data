@@ -55,8 +55,8 @@ before_install:
 - cd ../..
 
 script:
+- cd ygopro
 - ls list | xargs -I {} bash -c "./ygopro 7911 -1 2 0 F T T 8000 5 1 180 0 >> ./../redtext.txt & ; echo "# deck used for test" > ./WindBot/Decks/AI_Test.ydk ; cat list/{} >> ./WindBot/Decks/AI_Test.ydk ; echo "!side" >> ./WindBot/Decks/AI_Test.ydk ; cd ./WindBot/ ; mono ./WindBot.exe Name=Nanahira Deck=Test Dialog=default Host=127.0.0.1 Port=7911 & ; mono ./WindBot.exe Name=Miyuki Deck=Test Dialog=default Host=127.0.0.1 Port=7911 ; exit 0"
-
 - cd ..
 
 - git add ./redtext.txt
