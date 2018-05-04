@@ -14,7 +14,7 @@ addons:
 env:
 - YGOPRO_TEST_REDTEXT=1
 
-script:
+before_install:
 - echo "Redtext check with commit $TRAVIS_COMMIT \"$TRAVIS_COMMIT_MESSAGE\" on $(date +%m.%d)." > ./redtext.txt
 
 - git config --global user.name purerosefallen
@@ -37,24 +37,29 @@ script:
 - strip ygopro
 - mkdir replay
 
-- ./ygopro 7911 -1 2 0 F T T 8000 5 1 180 0 >> ./../redtext.txt &
+- 
 
 - git clone --depth=1 https://github.com/purerosefallen/windbot WindBot
 
 - cp -rf ./cards.cdb ./WindBot/
 - bash -c "sqlite3 ./expansions/222DIY.cdb .dump | sqlite3 ./WindBot/cards.cdb ; exit 0"
 
-- echo "# deck used for test" > ./WindBot/Decks/AI_Test.ydk
-- echo "select id from datas;" | sqlite3 ./expansions/222DIY.cdb >> ./WindBot/Decks/AI_Test.ydk
-- echo "!side" >> ./WindBot/Decks/AI_Test.ydk
+- mkdir list
+- echo "select id from datas;" | sqlite3 ./expansions/222DIY.cdb >> ./list/codelist.txt
+- cd list
+- split -l 100 ./codelist.txt
+- rm -rf ./codelist.txt
+- cd ..
 
-- cd WindBot
+- cd ./WindBot
 - xbuild /property:Configuration=Release
 - mv -f bin/Release/WindBot.exe .
-- mono ./WindBot.exe Name=Nanahira Deck=Test Dialog=default Host=127.0.0.1 Port=7911 &
-- mono ./WindBot.exe Name=Miyuki Deck=Test Dialog=default Host=127.0.0.1 Port=7911
-
 - cd ../..
+
+script:
+- ls list | xargs -I {} bash -c "./ygopro 7911 -1 2 0 F T T 8000 5 1 180 0 >> ./../redtext.txt & ; echo "# deck used for test" > ./WindBot/Decks/AI_Test.ydk ; cat list/{} >> ./WindBot/Decks/AI_Test.ydk ; echo "!side" >> ./WindBot/Decks/AI_Test.ydk ; cd ./WindBot/ ; mono ./WindBot.exe Name=Nanahira Deck=Test Dialog=default Host=127.0.0.1 Port=7911 & ; mono ./WindBot.exe Name=Miyuki Deck=Test Dialog=default Host=127.0.0.1 Port=7911 ; exit 0"
+
+- cd ..
 
 - git add ./redtext.txt
 - git commit -m "test redtext of $TRAVIS_COMMIT"
