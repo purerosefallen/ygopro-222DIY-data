@@ -7,7 +7,6 @@ addons:
   - github.com
   apt:
     packages:
-    - libevent-dev
     - libsqlite3-dev
     - sqlite3
     - p7zip-full
@@ -15,8 +14,7 @@ addons:
     - mono-complete
 
 script:
-- echo "Redtext check with commit $TRAVIS_COMMIT on $(date +%m.%d)." > ./redtext.txt
-- echo $TRAVIS_COMMIT_MESSAGE > ./redtext.txt
+- echo "Redtext check with commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MESSAGE on $(date +%m.%d)." > ./redtext.txt
 
 - git config --global user.name purerosefallen
 - git config --global user.email 78877@qq.com
@@ -29,6 +27,16 @@ script:
 
 - wget -O - https://github.com/premake/premake-core/releases/download/v5.0.0-alpha12/premake-5.0.0-alpha12-linux.tar.gz | tar zfx -
 - wget -O - https://www.lua.org/ftp/lua-5.3.4.tar.gz | tar zfx -; cd lua-5.3.4; sudo make linux install; cd ..
+
+- wget 'https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz' -O libevent-2.0.22-stable.tar.gz --no-check-certificate
+- tar xf libevent-2.0.22-stable.tar.gz
+- cd libevent-2.0.22-stable/
+- ./configure
+- make
+- sudo -E make install
+- sudo -E bash -c "ln -s /usr/local/lib/libevent-2.0.so.5 /usr/lib/libevent-2.0.so.5 ; ln -s /usr/local/lib/libevent-2.0.so.5 /usr/lib64/libevent-2.0.so.5 ; ln -s /usr/local/lib/libevent_pthreads-2.0.so.5 /usr/lib/libevent_pthreads-2.0.so.5 ; ln -s /usr/local/lib/libevent_pthreads-2.0.so.5 /usr/lib64/libevent_pthreads-2.0.so.5 ; exit 0"
+- cd ..
+
 - ./premake5 gmake
 - cd build
 - make config=release
