@@ -15,8 +15,8 @@ addons:
     - mono-complete
 
 script:
-- echo "Redtext check with commit $TRAVIS_COMMIT on $(date +%m.%d)." > ./../redtext.txt
-- echo $TRAVIS_COMMIT_MESSAGE > ./../redtext.txt
+- echo "Redtext check with commit $TRAVIS_COMMIT on $(date +%m.%d)." > ./redtext.txt
+- echo $TRAVIS_COMMIT_MESSAGE > ./redtext.txt
 
 - git config --global user.name purerosefallen
 - git config --global user.email 78877@qq.com
