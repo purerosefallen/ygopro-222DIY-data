@@ -25,14 +25,7 @@ script:
 - git submodule foreach git checkout master
 - ln -s ./../expansions .
 
-- wget 'http://downloads.sourceforge.net/project/premake/Premake/4.4/premake-4.4-beta5-src.zip?r=&ts=1457170593&use_mirror=nchc' -O premake-4.4-beta5-src.zip --no-check-certificate
-- 7z x -y premake-4.4-beta5-src.zip
-- cd premake-4.4-beta5/build/gmake.unix/
-- make
-- cd ../../bin/release/
-- sudo -E cp premake4 /usr/bin/
-- cd ../../../
-
+- wget -O - https://github.com/premake/premake-core/releases/download/v5.0.0-alpha12/premake-5.0.0-alpha12-linux.tar.gz | tar zfx -
 - wget -O - https://www.lua.org/ftp/lua-5.3.4.tar.gz | tar zfx -; cd lua-5.3.4; sudo make linux install; cd ..
 
 - wget 'https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz' -O libevent-2.0.22-stable.tar.gz --no-check-certificate
@@ -44,7 +37,7 @@ script:
 - sudo -E bash -c "ln -s /usr/local/lib/libevent-2.0.so.5 /usr/lib/libevent-2.0.so.5 ; ln -s /usr/local/lib/libevent-2.0.so.5 /usr/lib64/libevent-2.0.so.5 ; ln -s /usr/local/lib/libevent_pthreads-2.0.so.5 /usr/lib/libevent_pthreads-2.0.so.5 ; ln -s /usr/local/lib/libevent_pthreads-2.0.so.5 /usr/lib64/libevent_pthreads-2.0.so.5 ; exit 0"
 - cd ..
 
-- premake4 gmake
+- ./premake5 gmake
 - cd build
 - make config=release
 
