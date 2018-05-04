@@ -24,7 +24,8 @@ function cm.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function cm.filter(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_PENDULUM,tp,false,false)
+	local bool=aux.PendulumSummonableBool(c)
+	return c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_PENDULUM,tp,bool,bool)
 		and (c:IsLocation(LOCATION_HAND) or c:IsFaceup())
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)

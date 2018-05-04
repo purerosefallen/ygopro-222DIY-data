@@ -1023,7 +1023,8 @@ function cm.PConditionFilterNanahira(c,e,tp,lscale,rscale,f,tc)
 	else
 		lv=c:GetLevel()
 	end
-	return lv>lscale and lv<rscale and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_PENDULUM,tp,false,false)
+	local bool=aux.PendulumSummonableBool(c)
+	return lv>lscale and lv<rscale and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_PENDULUM,tp,bool,bool)
 		and not c:IsForbidden() and (not f or f(c,tc))
 end
 function cm.PendConditionNanahira()
