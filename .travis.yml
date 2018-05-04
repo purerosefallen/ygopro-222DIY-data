@@ -11,7 +11,6 @@ addons:
     - libsqlite3-dev
     - sqlite3
     - p7zip-full
-    - screen
     - mono-complete
 
 script:
@@ -35,7 +34,7 @@ script:
 - mv -f ./bin/release/ygopro .
 - strip ygopro
 
-- screen -dmS bash -c "./ygopro 7911 999 2 0 F T T 8000 5 1 0 0 >& ./../redtext.txt ; exit 0"
+- ./ygopro 7911 999 2 0 F T T 8000 5 1 0 0 >& ./../redtext.txt &
 
 - git clone --depth=1 https://github.com/purerosefallen/windbot WindBot
 
@@ -49,7 +48,7 @@ script:
 - cd WindBot
 - xbuild /property:Configuration=Release
 - mv -f bin/Release/WindBot.exe .
-- screen -dmS mono ./WindBot.exe Name=Nanahira Deck=Test Dialog=default Host=127.0.0.1 Port=7911
+- mono ./WindBot.exe Name=Nanahira Deck=Test Dialog=default Host=127.0.0.1 Port=7911 &
 - mono ./WindBot.exe Name=Miyuki Deck=Test Dialog=default Host=127.0.0.1 Port=7911
 
 - cd ../..
