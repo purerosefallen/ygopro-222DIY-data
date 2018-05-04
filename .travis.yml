@@ -39,8 +39,7 @@ script:
 
 - screen -dmS bash -c "./ygopro 7911 999 2 0 F T T 8000 5 1 0 0 >>& ./../redtext.txt ; exit 0"
 
-- wget --no-check-certificate https://github.com/purerosefallen/windbot/releases/download/latest/WindBot.7z
-- 7z x -y WindBot.7z
+- git clone --depth=1 https://github.com/purerosefallen/windbot WindBot
 
 - cp -rf ./cards.cdb ./WindBot/
 - bash -c "sqlite3 ./expansions/222DIY.cdb .dump | sqlite3 ./WindBot/cards.cdb ; exit 0"
@@ -50,7 +49,8 @@ script:
 - echo "!side" > ./WindBot/Decks/AI_Test.ydk
 
 - cd WindBot
-
+- xbuild /property:Configuration=Release
+- mv -f bin/Release/WindBot.exe .
 - screen -dmS mono ./WindBot.exe Name=Nanahira Deck=Test Dialog=default Host=127.0.0.1 Port=7911
 - mono ./WindBot.exe Name=Miyuki Deck=Test Dialog=default Host=127.0.0.1 Port=7911
 
