@@ -10,7 +10,6 @@ addons:
     - libevent-dev
     - libsqlite3-dev
     - sqlite3
-    - p7zip-full
     - mono-complete
 
 script:
