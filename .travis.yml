@@ -15,8 +15,6 @@ addons:
     - mono-complete
 
 script:
-- echo "Redtext check with commit $TRAVIS_COMMIT on $(date +%m.%d)." > ./redtext.txt
-- echo $TRAVIS_COMMIT_MESSAGE > ./redtext.txt
 
 - git config --global user.name purerosefallen
 - git config --global user.email 78877@qq.com
@@ -37,7 +35,7 @@ script:
 - mv -f ./bin/release/ygopro .
 - strip ygopro
 
-- screen -dmS bash -c "./ygopro 7911 999 2 0 F T T 8000 5 1 0 0 >>& ./../redtext.txt ; exit 0"
+- screen -dmS bash -c "./ygopro 7911 999 2 0 F T T 8000 5 1 0 0 >& ./../redtext.txt ; exit 0"
 
 - git clone --depth=1 https://github.com/purerosefallen/windbot WindBot
 
@@ -56,6 +54,7 @@ script:
 
 - cd ../..
 
+- echo "Redtext check with commit $TRAVIS_COMMIT \"$TRAVIS_COMMIT_MESSAGE\" on $(date +%m.%d)." >> ./redtext.txt
 - git add ./redtext.txt
 - git commit -m "test redtext of $TRAVIS_COMMIT"
 - git push -f https://$NANAHIRA@github.com/purerosefallen/ygopro-222DIY-data HEAD:redtext
