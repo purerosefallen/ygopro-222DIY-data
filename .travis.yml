@@ -43,7 +43,7 @@ script:
 
 - echo "# deck used for test" > ./WindBot/Decks/AI_Test.ydk
 - echo "select id from datas;" | sqlite3 ./expansions/222DIY.cdb >> ./WindBot/Decks/AI_Test.ydk
-- echo "!side" > ./WindBot/Decks/AI_Test.ydk
+- echo "!side" >> ./WindBot/Decks/AI_Test.ydk
 
 - cd WindBot
 - xbuild /property:Configuration=Release
