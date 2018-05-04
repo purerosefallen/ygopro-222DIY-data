@@ -7,7 +7,7 @@ addons:
   - github.com
   apt:
     packages:
-    - p7zip-full
+    - libsqlite3-dev
     - sqlite3
     - mono-complete
 env:
