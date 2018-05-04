@@ -1,0 +1,59 @@
+language: cpp
+dist: trusty
+mono: latest
+git:
+  submodules: false
+addons:
+  ssh_known_hosts:
+  - github.com
+  apt:
+    packages:
+    - libevent-dev
+    - libsqlite3-dev
+    - sqlite3
+
+script:
+- git clone --depth=1 --branch=server --recursive https://github.com/purerosefallen/ygopro
+- cd ygopro
+
+- git submodule foreach git checkout master
+- ln -s ./../expansions .
+
+- wget -O - https://github.com/premake/premake-core/releases/download/v5.0.0-alpha12/premake-5.0.0-alpha12-linux.tar.gz | tar zfx -
+- wget -O - https://www.lua.org/ftp/lua-5.3.4.tar.gz | tar zfx -; cd lua-5.3.4; sudo make linux install; cd ..
+- ./premake5 gmake
+- cd build
+- make config=release
+
+- mv -f ./bin/release/ygopro .
+- strip ygopro
+
+- echo "Redtext check with commit $TRAVIS_COMMIT on $(date +%m.%d)." > ./redtext.txt
+- echo $TRAVIS_COMMIT_MESSAGE > ./redtext.txt
+
+- bash -c "./ygopro 7911 999 2 0 F T T 8000 5 1 0 0 >>& ./redtext.txt ; exit 0" &
+
+- git clone --depth=1 https://github.com/purerosefallen/windbot
+
+- cp -rf ./cards.cdb ./windbot/
+- bash -c "sqlite3 ./expansions/222DIY.cdb .dump | sqlite3 ./windbot/cards.cdb ; exit 0"
+
+- echo "# deck used for test" > ./windbot/Decks/AI_Test.ydk
+- echo "select id from datas;" | sqlite3 ./expansions/222DIY.cdb >> ./windbot/Decks/AI_Test.ydk
+- echo "!side" > ./windbot/Decks/AI_Test.ydk
+
+- cd windbot
+- xbuild /property:Configuration=Release
+- mv -f ./bin/Release/WindBot.exe .
+
+- mono ./WindBot.exe Name=Nanahira Deck=Test Dialog=default Host=127.0.0.1 Port=7911 &
+- mono ./WindBot.exe Name=Nanahira Deck=Test Dialog=default Host=127.0.0.1 Port=7911
+
+- cd ..
+
+- git config --global user.name purerosefallen
+- git config --global user.email 78877@qq.com
+
+- git add ./redtext.txt
+- git commit -m "test redtext of $TRAVIS_COMMIT"
+- git push -f https://$NANAHIRA@github.com/purerosefallen/ygopro-222DIY HEAD:redtext
