@@ -45,7 +45,7 @@ script:
 - mv -f ./bin/release/ygopro .
 - strip ygopro
 
-- ./ygopro 7911 999 2 0 F T T 8000 5 1 0 0 >> ./../redtext.txt &
+- ./ygopro 7911 -1 2 0 F T T 8000 5 1 180 0 >> ./../redtext.txt &
 
 - git clone --depth=1 https://github.com/purerosefallen/windbot WindBot
 
