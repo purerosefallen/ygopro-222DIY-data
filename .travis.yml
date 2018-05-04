@@ -37,8 +37,6 @@ before_install:
 - strip ygopro
 - mkdir replay
 
-- 
-
 - git clone --depth=1 https://github.com/purerosefallen/windbot WindBot
 
 - cp -rf ./cards.cdb ./WindBot/
