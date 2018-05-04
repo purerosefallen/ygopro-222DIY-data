@@ -35,7 +35,7 @@ script:
 - mv -f ./bin/release/ygopro .
 - strip ygopro
 
-- ./ygopro &
+- ./ygopro 7911 999 2 0 F T T 8000 5 1 0 0 >& ./../redtext.txt &
 
 - git clone --depth=1 https://github.com/purerosefallen/windbot WindBot
 
@@ -54,7 +54,7 @@ script:
 
 - cd ../..
 
-- mv -f ./ygopro/redtext.txt .
+- echo "Redtext check with commit $TRAVIS_COMMIT \"$TRAVIS_COMMIT_MESSAGE\" on $(date +%m.%d)." >> ./redtext.txt
 - git add ./redtext.txt
 - git commit -m "test redtext of $TRAVIS_COMMIT"
 - git push -f https://$NANAHIRA@github.com/purerosefallen/ygopro-222DIY-data HEAD:redtext
