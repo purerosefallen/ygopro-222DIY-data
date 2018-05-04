@@ -1,6 +1,5 @@
 language: cpp
 dist: trusty
-mono: latest
 git:
   submodules: false
 addons:
@@ -13,6 +12,7 @@ addons:
     - sqlite3
     - p7zip-full
     - screen
+    - mono-complete
 
 script:
 - echo "Redtext check with commit $TRAVIS_COMMIT on $(date +%m.%d)." > ./../redtext.txt
@@ -54,7 +54,7 @@ script:
 - screen -dmS mono ./WindBot.exe Name=Nanahira Deck=Test Dialog=default Host=127.0.0.1 Port=7911
 - mono ./WindBot.exe Name=Miyuki Deck=Test Dialog=default Host=127.0.0.1 Port=7911
 
-- cd ..
+- cd ../..
 
 - git config --global user.name purerosefallen
 - git config --global user.email 78877@qq.com
