@@ -45,7 +45,7 @@ before_install:
 - mkdir list
 - echo "select id from datas;" | sqlite3 ./expansions/222DIY.cdb >> ./list/codelist.txt
 - cd list
-- split -l 100 ./codelist.txt
+- split -l 60 ./codelist.txt
 - rm -rf ./codelist.txt
 - cd ..
 
