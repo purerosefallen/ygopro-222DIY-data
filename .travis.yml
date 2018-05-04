@@ -28,10 +28,10 @@ script:
 - mv -f ./bin/release/ygopro .
 - strip ygopro
 
-- echo "Redtext check with commit $TRAVIS_COMMIT on $(date +%m.%d)." > ./redtext.txt
-- echo $TRAVIS_COMMIT_MESSAGE > ./redtext.txt
+- echo "Redtext check with commit $TRAVIS_COMMIT on $(date +%m.%d)." > ./../redtext.txt
+- echo $TRAVIS_COMMIT_MESSAGE > ./../redtext.txt
 
-- bash -c "./ygopro 7911 999 2 0 F T T 8000 5 1 0 0 >>& ./redtext.txt ; exit 0" &
+- bash -c "./ygopro 7911 999 2 0 F T T 8000 5 1 0 0 >>& ./../redtext.txt ; exit 0" &
 
 - git clone --depth=1 https://github.com/purerosefallen/windbot
 
