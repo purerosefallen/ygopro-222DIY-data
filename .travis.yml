@@ -14,6 +14,7 @@ env:
 - YGOPRO_TEST_REDTEXT=1
 
 script:
+- echo "Redtext check with commit $TRAVIS_COMMIT \"$TRAVIS_COMMIT_MESSAGE\" on $(date +%m.%d)." > ./redtext.txt
 
 - git config --global user.name purerosefallen
 - git config --global user.email 78877@qq.com
@@ -44,8 +45,7 @@ script:
 - mv -f ./bin/release/ygopro .
 - strip ygopro
 
-- echo "Redtext check with commit $TRAVIS_COMMIT \"$TRAVIS_COMMIT_MESSAGE\" on $(date +%m.%d)." > ./redtext.txt
-- ./ygopro 7911 999 2 0 F T T 8000 5 1 0 0 &
+- ./ygopro 7911 999 2 0 F T T 8000 5 1 0 0 >> ./../redtext.txt &
 
 - git clone --depth=1 https://github.com/purerosefallen/windbot WindBot
 
@@ -64,7 +64,6 @@ script:
 
 - cd ../..
 
-- mv -f ./ygopro/redtext.txt .
 - git add ./redtext.txt
 - git commit -m "test redtext of $TRAVIS_COMMIT"
 - git push -f https://$NANAHIRA@github.com/purerosefallen/ygopro-222DIY-data HEAD:redtext
