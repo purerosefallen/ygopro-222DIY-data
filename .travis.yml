@@ -56,7 +56,8 @@ before_install:
 
 script:
 - cd ./ygopro
-- travis_wait 60 ls list | xargs -I {} bash -c "echo {} ; bash -c \"./ygopro 7911 -1 2 0 F T T 100 20 10 180 0 | sed '/7911/d' >> ./../redtext.txt &\" ; echo '# deck used for test' > ./WindBot/Decks/AI_Test.ydk ; cat list/{} >> ./WindBot/Decks/AI_Test.ydk ; echo '!side' >> ./WindBot/Decks/AI_Test.ydk ; cd ./WindBot/ ; bash -c \"mono ./WindBot.exe Name=Nanahira Deck=Test Dialog=default Host=127.0.0.1 Port=7911 &\" ; mono ./WindBot.exe Name=Miyuki Deck=Test Dialog=default Host=127.0.0.1 Port=7911 ; exit 0"
+- export YGOPRO_PORT=7911
+- travis_wait 60 ls list | xargs -I {} bash -c "echo 'Running deck {} with port \$YGOPRO_PORT' ; bash -c \"./ygopro \$YGOPRO_PORT -1 2 0 F T T 100 20 10 180 0 | sed '/\$YGOPRO_PORT/d' >> ./../redtext.txt &\" ; echo '# deck used for test' > ./WindBot/Decks/AI_Test.ydk ; cat list/{} >> ./WindBot/Decks/AI_Test.ydk ; echo '!side' >> ./WindBot/Decks/AI_Test.ydk ; cd ./WindBot/ ; bash -c \"mono ./WindBot.exe Name=Nanahira Deck=Test Dialog=default Host=127.0.0.1 Port=\$YGOPRO_PORT &\" ; mono ./WindBot.exe Name=Miyuki Deck=Test Dialog=default Host=127.0.0.1 Port=\$YGOPRO_PORT ; export YGOPRO_PORT=\$[\$YGOPRO_PORT + 1] ; exit 0"
 - cd ..
 
 - git add ./redtext.txt
