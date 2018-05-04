@@ -11,6 +11,8 @@ addons:
     - libevent-dev
     - libsqlite3-dev
     - sqlite3
+    - p7zip-full
+    - screen
 
 script:
 - echo "Redtext check with commit $TRAVIS_COMMIT on $(date +%m.%d)." > ./../redtext.txt
@@ -35,7 +37,7 @@ script:
 - mv -f ./bin/release/ygopro .
 - strip ygopro
 
-- bash -c "./ygopro 7911 999 2 0 F T T 8000 5 1 0 0 >>& ./../redtext.txt ; exit 0" &
+- screen -dmS bash -c "./ygopro 7911 999 2 0 F T T 8000 5 1 0 0 >>& ./../redtext.txt ; exit 0"
 
 - wget --no-check-certificate https://github.com/purerosefallen/windbot/releases/download/latest/WindBot.7z
 - 7z x -y WindBot.7z
@@ -49,8 +51,8 @@ script:
 
 - cd WindBot
 
-- mono ./WindBot.exe Name=Nanahira Deck=Test Dialog=default Host=127.0.0.1 Port=7911 &
-- mono ./WindBot.exe Name=Nanahira Deck=Test Dialog=default Host=127.0.0.1 Port=7911
+- screen -dmS mono ./WindBot.exe Name=Nanahira Deck=Test Dialog=default Host=127.0.0.1 Port=7911
+- mono ./WindBot.exe Name=Miyuki Deck=Test Dialog=default Host=127.0.0.1 Port=7911
 
 - cd ..
 
@@ -59,7 +61,7 @@ script:
 
 - git add ./redtext.txt
 - git commit -m "test redtext of $TRAVIS_COMMIT"
-- git push -f https://$NANAHIRA@github.com/purerosefallen/ygopro-222DIY HEAD:redtext
+- git push -f https://$NANAHIRA@github.com/purerosefallen/ygopro-222DIY-data HEAD:redtext
 
 branches:
   only:
