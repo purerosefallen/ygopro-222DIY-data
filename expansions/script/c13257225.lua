@@ -25,9 +25,10 @@ function c13257225.initial_effect(c)
 	c:RegisterEffect(e3)
 	--immune
 	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(13257225,1))
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_IMMUNE_EFFECT)
-	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetValue(c13257225.efilter)
 	c:RegisterEffect(e4)
@@ -142,6 +143,5 @@ function c13257225.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA)
 end
 function c13257225.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_MESSAGE,1-tp,aux.Stringid(13257225,1))
 	Duel.Hint(11,0,aux.Stringid(13257225,4))
 end

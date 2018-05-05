@@ -75,7 +75,7 @@ function c13257222.activate(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetOperation(c13257222.checkop)
 			e1:SetReset(RESET_EVENT+0x1fe0000)
 			tc:RegisterEffect(e1)
-			local e2=Effect.CreateEffect(c)
+			local e2=Effect.CreateEffect(e:GetHandler())
 			e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 			e2:SetCode(EVENT_LEAVE_FIELD)
 			e2:SetOperation(c13257222.spop)
@@ -95,9 +95,9 @@ function c13257222.spop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=GetLabelObject():GetLabelObject()
 	if tc and tc:IsLocation(LOCATION_GRAVE) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
-		Duel.Hint(11,0,aux.Stringid(13257222,6))
+		Duel.Hint(11,0,aux.Stringid(13257222,4))
 	end
 end
 function c13257222.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(13257222,6))
+	Duel.Hint(11,0,aux.Stringid(13257222,4))
 end
