@@ -30,6 +30,7 @@ function c13257340.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e1:SetCode(EVENT_CHAIN_SOLVED)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1)
 	e1:SetCondition(c13257340.accon)
 	e1:SetOperation(c13257340.acop)
 	c:RegisterEffect(e1)
@@ -43,7 +44,7 @@ function c13257340.initial_effect(c)
 	--Power Capsule
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(13257340,0))
-	e3:SetCategory(CATEGORY_DEFCHANGE)
+	e3:SetCategory(CATEGORY_ATKCHANGE)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
@@ -94,17 +95,17 @@ function c13257340.efilter(e,te)
 	return ((c:IsAttribute(ATTRIBUTE_LIGHT) and te:IsActiveType(TYPE_MONSTER)) or (c:IsAttribute(ATTRIBUTE_DARK) and te:IsActiveType(TYPE_SPELL+TYPE_TRAP))) and e:GetHandlerPlayer()~=te:GetOwnerPlayer()
 end
 function c13257340.accon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetHandler():GetFlagEffect(1)>0
+	local c=e:GetHandler()
+	return ep~=tp and c:GetFlagEffect(1)>0 and ((c:IsAttribute(ATTRIBUTE_LIGHT) and re:IsActiveType(TYPE_MONSTER)) or (c:IsAttribute(ATTRIBUTE_DARK) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)))
 end
 function c13257340.acop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,13257340)
-	local c=e:GetHandler()
-	if ((c:IsAttribute(ATTRIBUTE_LIGHT) and re:IsActiveType(TYPE_MONSTER)) or (c:IsAttribute(ATTRIBUTE_DARK) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP))) and e:GetHandler():GetFlagEffect(1)>0 then
-		c:AddCounter(0x351,1)
+	if e:GetHandler():GetFlagEffect(1)>0 then
+		e:GetHandler():AddCounter(0x351,1)
 	end
 end
 function c13257340.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return Duel.GetTurnPlayer()==tp end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATTRIBUTE)
 	local att=Duel.AnnounceAttribute(tp,1,0x30)
 		local e5=Effect.CreateEffect(e:GetHandler())
@@ -121,7 +122,7 @@ function c13257340.pcop(e,tp,eg,ep,ev,re,r,rp)
 		local e6=Effect.CreateEffect(e:GetHandler())
 		e6:SetType(EFFECT_TYPE_SINGLE)
 		e6:SetCode(EFFECT_UPDATE_ATTACK)
-		e6:SetValue(-1500)
+		e6:SetValue(-300)
 		e6:SetReset(RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e6)
 		local e7=e6:Clone()

@@ -71,7 +71,7 @@ function c13257203.otop(e,tp,eg,ep,ev,re,r,rp,c)
 	local mg1=Duel.GetMatchingGroup(c13257203.otfilter1,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	local sg=Group.CreateGroup()
 	if c:GetLevel()>6 then
-		if mg:GetCount()>0 and mg1:GetCount()==0 or (mg:GetCount()>0 and mg1:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(13257203,0))) then
+		if mg:GetCount()>0 and mg1:GetCount()==0 or (mg:GetCount()>0 and mg1:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(13257203,3))) then
 			sg=mg:Select(tp,1,1,nil)
 		else
 			sg=Duel.SelectTribute(tp,c,1,1,mg1)
@@ -109,8 +109,9 @@ function c13257203.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and c:IsFaceup() then
 		local e14=Effect.CreateEffect(c)
+		e14:SetDescription(aux.Stringid(13257203,2))
 		e14:SetType(EFFECT_TYPE_SINGLE)
-		e14:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e14:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
 		e14:SetRange(LOCATION_MZONE)
 		e14:SetCode(EFFECT_IMMUNE_EFFECT)
 		e14:SetValue(c13257203.efilter1)

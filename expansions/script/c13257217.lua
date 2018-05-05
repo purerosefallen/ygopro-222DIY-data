@@ -43,10 +43,10 @@ function c13257217.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(11,0,aux.Stringid(13257217,4))
 end
 function c13257217.etarget(e,c)
-	return c:IsType(TYPE_SPELL) and c:IsFaceup()
+	return c:IsType(TYPE_SPELL) and c:IsType(TYPE_FIELD) and c:IsFaceup()
 end
 function c13257217.rdop(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetFieldGroup(tp,LOCATION_ONFIELD,LOCATION_ONFIELD)
+	local sg=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
 	if not e:GetHandler():IsRelateToEffect(e) or sg:GetCount()==0 then return end
 	local g=Group.CreateGroup()
 	if Duel.SelectYesNo(tp,aux.Stringid(13257217,2)) then

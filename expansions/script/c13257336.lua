@@ -2,9 +2,10 @@
 function c13257336.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(13257336,0))
-	e1:SetCategory(CATEGORY_DESTROY)
+	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_ATKCHANGE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_BATTLED)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetHintTiming(0,0x1e0)
 	e1:SetTarget(c13257336.destg)
 	e1:SetOperation(c13257336.desop)
 	c:RegisterEffect(e1)
@@ -30,22 +31,48 @@ function c13257336.initial_effect(c)
 	c:RegisterEffect(e4)
 	
 end
-function c13257336.check(c,tp)
-	return c and c:IsControler(tp) and c:IsSetCard(0x351)
+--function c13257336.check(c,tp)
+--  return c and c:IsControler(tp) and c:IsSetCard(0x351)
+--end
+function c13257336.pcfilter(c)
+	return c:IsSetCard(0x351) and c:IsFaceup()
 end
-function c13257336.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return c13257336.check(Duel.GetAttacker(),tp) or c13257336.check(Duel.GetAttackTarget(),tp) end
+function c13257336.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	--if chk==0 then return c13257336.check(Duel.GetAttacker(),tp) or c13257336.check(Duel.GetAttackTarget(),tp) end
+	if chkc==0 then return chkc:IsOnField and c13257336.pcfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c13257336.pcfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
 	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg,sg:GetCount(),0,0)
 	Duel.SetChainLimit(c13257336.chlimit)
 end
 function c13257336.chlimit(e,ep,tp)
 	return e:IsActiveType(TYPE_MONSTER)
 end
+function c13257336.desfilter(c)
+	return c:IsFaceup() and (c:GetAttack()==0 or (c:GetDefense()==0 and not c:IsType(TYPE_LINK)))
+end
 function c13257336.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(12,0,aux.Stringid(13257336,7))
-	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
-	Duel.Destroy(sg,REASON_EFFECT)
+	local g=Duel.GetMatchingGroup(c13257336.acfilter,tp,0,LOCATION_MZONE,nil)
+	if g:GetCount()>0 then
+		local sc=g:GetFirst()
+		while sc do
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetReset(RESET_EVENT+0x1fe0000)
+			e1:SetValue(-1000)
+			sc:RegisterEffect(e1)
+			local e2=e1:Clone()
+			e2:SetCode(EFFECT_UPDATE_DEFENSE)
+			sc:RegisterEffect(e2)
+			sc=g:GetNext()
+		end
+		g=Duel.GetMatchingGroup(c13257336.desfilter,tp,0,LOCATION_MZONE,nil)
+		if g:GetCount()>0 then
+			Duel.BreakEffect()
+			Duel.Destroy(g,REASON_EFFECT)
+		end
+	end
 end
 function c13257336.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x351) and c:IsCanAddCounter(0x351,1)

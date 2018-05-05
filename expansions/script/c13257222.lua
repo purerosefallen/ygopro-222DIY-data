@@ -1,5 +1,13 @@
 --宇宙军阀首领 邪神红水晶
 function c13257222.initial_effect(c)
+	--summon with s/t
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_ADD_EXTRA_TRIBUTE)
+	e0:SetTargetRange(LOCATION_HAND,0)
+	e0:SetValue(POS_FACEUP_ATTACK)
+	c:RegisterEffect(e0)
 	--double tribute
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

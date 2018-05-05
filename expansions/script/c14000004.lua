@@ -33,6 +33,7 @@ function cm.initial_effect(c)
 	e4:SetCode(EVENT_DAMAGE)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCondition(cm.atkcon)
+	e4:SetTarget(cm.atktg)
 	e4:SetOperation(cm.atkop)
 	c:RegisterEffect(e4)
 end
@@ -51,7 +52,21 @@ end
 function cm.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and bit.band(r,REASON_EFFECT)~=0 and re:GetHandler():IsSetCard(0x1404) and not re:GetHandler():IsCode(m)
 end
+function cm.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) end
+	if chk==0 then return Duel.IsExistingTarget(nil,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL)>0 end
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(m,1))
+	Duel.SelectTarget(tp,nil,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_ATKCHANGE,nil,1,tp,LOCATION_MZONE)
+end
 function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	if not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
+	local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0)
+	local nseq=math.log(s,2)
+	if Duel.MoveSequence(tc,nseq) then return true end
 	local c=e:GetHandler()
 	if c:IsFaceup() and c:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(c)

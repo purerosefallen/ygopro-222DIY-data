@@ -1,96 +1,93 @@
---五和
+--魔禁 五和
 function c5012629.initial_effect(c)
-    c:SetUniqueOnField(1,1,5012629)
-     --synchro summon
-    aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x250),aux.NonTuner(nil),1)   
-    c:EnableReviveLimit()
-    --
-    aux.EnablePendulumAttribute(c,false)
-    --
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-    e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-    e1:SetRange(LOCATION_MZONE)
-    e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
-    e1:SetCondition(c5012629.atkcon)
-    e1:SetOperation(c5012629.atkop)
-    c:RegisterEffect(e1)
-    --atk
-    local e3=Effect.CreateEffect(c)
-    e3:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DISABLE)
-    e3:SetType(EFFECT_TYPE_QUICK_O)
-    e3:SetCode(EVENT_FREE_CHAIN)
-    e3:SetRange(LOCATION_MZONE)
-    e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-    e3:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+0x1c0)
-    e3:SetCountLimit(1)
-    e3:SetCondition(c5012629.condition)
-    e3:SetTarget(c5012629.target)
-    e3:SetOperation(c5012629.operation)
-    c:RegisterEffect(e3)
-    --add code   
-    local e4=Effect.CreateEffect(c)
-    e4:SetType(EFFECT_TYPE_SINGLE)
-    e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-    e4:SetCode(EFFECT_ADD_SETCODE)
-    e4:SetValue(0x250)
-    c:RegisterEffect(e4)
+	--fusion material
+	c:EnableReviveLimit()
+	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsSetCard,0x250),2,false)
+	--negate
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(5012629,0))
+	e1:SetCategory(CATEGORY_DISABLE)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+0x1c0)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1)
+	e1:SetCondition(c5012629.negcon)
+	e1:SetTarget(c5012629.negtg)
+	e1:SetOperation(c5012629.negop)
+	c:RegisterEffect(e1)
+	--special summon rule
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_SPSUMMON_PROC)
+	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e2:SetRange(LOCATION_EXTRA)
+	e2:SetCondition(c5012629.sprcon)
+	e2:SetOperation(c5012629.sprop)
+	c:RegisterEffect(e2)	
 end
-function c5012629.atkcon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():GetBattleTarget() and e:GetHandler():GetFlagEffect(5012629)==0
-end
-function c5012629.atkop(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
-    c:RegisterFlagEffect(5012629,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_DAMAGE_CAL,0,1)
-    if  c:IsRelateToBattle() and c:IsFaceup() then
-        local e1=Effect.CreateEffect(c)
-        e1:SetType(EFFECT_TYPE_SINGLE)
-        e1:SetCode(EFFECT_UPDATE_ATTACK)
-        e1:SetValue(1000)
-        e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
-        c:RegisterEffect(e1)
-    end
-end
-function c5012629.condition(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
+function c5012629.negcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
 end
 function c5012629.filter(c)
-    return  not (c:GetAttack()==0 and c:IsDisabled())
+	return c:IsFaceup() and c:GetAttack()>0
 end
-function c5012629.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    if chkc then return chkc:IsLocation(LOCATION_MZONE) and c5012629.filter(chkc) end
-    if chk==0 then return Duel.IsExistingTarget(c5012629.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-    Duel.SelectTarget(tp,c5012629.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+function c5012629.negtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c5012629.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c5012629.filter,tp,0,LOCATION_MZONE,1,nil) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	local g=Duel.SelectTarget(tp,c5012629.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 end
-function c5012629.operation(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
-    local tc=Duel.GetFirstTarget()
-    if tc:IsFaceup() and tc:IsRelateToEffect(e) then
-        local e1=Effect.CreateEffect(c)
-        e1:SetType(EFFECT_TYPE_SINGLE)
-        e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-        e1:SetValue(0)
-        e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-        tc:RegisterEffect(e1)
-        Duel.NegateRelatedChain(tc,RESET_TURN_SET)
-        local e2=Effect.CreateEffect(c)
-        e2:SetType(EFFECT_TYPE_SINGLE)
-        e2:SetCode(EFFECT_DISABLE)
-        e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-        tc:RegisterEffect(e2)
-        local e3=Effect.CreateEffect(c)
-        e3:SetType(EFFECT_TYPE_SINGLE)
-        e3:SetCode(EFFECT_DISABLE_EFFECT)
-        e3:SetValue(RESET_TURN_SET)
-        e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-        tc:RegisterEffect(e3)
-        if tc:IsType(TYPE_TRAPMONSTER) then
-            local e4=Effect.CreateEffect(c)
-            e4:SetType(EFFECT_TYPE_SINGLE)
-            e4:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-            e4:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-            tc:RegisterEffect(e4)
-        end
-    end
+function c5012629.negop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tc=Duel.GetFirstTarget()
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:GetAttack()>0 then
+		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+		e1:SetValue(0)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e1)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_DISABLE)
+		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e2)
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetCode(EFFECT_DISABLE_EFFECT)
+		e3:SetValue(RESET_TURN_SET)
+		e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e3)
+	end
+end
+function c5012629.sprfilter(c,fc)
+	return c:IsSetCard(0x250) and c:IsCanBeFusionMaterial(fc) and not c:IsHasEffect(6205579)
+end
+function c5012629.sprfilter1(c,tp,g)
+	return g:IsExists(c5012629.sprfilter2,1,c,tp,c)
+end
+function c5012629.sprfilter2(c,tp,mc)
+	return Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(c,mc))>0
+end
+function c5012629.sprcon(e,c)
+	if c==nil then return true end
+	local tp=c:GetControler()
+	local g=Duel.GetReleaseGroup(tp):Filter(c5012629.sprfilter,nil,c)
+	return g:IsExists(c5012629.sprfilter1,1,nil,tp,g)
+end
+function c5012629.sprop(e,tp,eg,ep,ev,re,r,rp,c)
+	local rg=Duel.GetReleaseGroup(tp):Filter(c5012629.sprfilter,nil,c)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	local g1=rg:FilterSelect(tp,c5012629.sprfilter1,1,1,nil,tp,rg)
+	local mc=g1:GetFirst()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	local g2=rg:FilterSelect(tp,c5012629.sprfilter2,1,1,mc,tp,mc)
+	g1:Merge(g2)
+	c:SetMaterial(g1)
+	Duel.Release(g1,REASON_COST+REASON_FUSION+REASON_MATERIAL)
 end

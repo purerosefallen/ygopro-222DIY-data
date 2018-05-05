@@ -61,7 +61,7 @@ function c13257343.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257343.check(c,tp)
-	return c and c:IsControler(tp) and c:IsSetCard(0x351)
+	return c and c:IsControler(tp) and (c:IsSetCard(0x351) or c:IsCode(93130022))
 end
 function c13257343.filter1(c)
 	return (c:IsCode(13257341) or c:IsCode(13257342)) and c:IsAbleToHand()

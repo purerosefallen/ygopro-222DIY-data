@@ -5,6 +5,7 @@ function c13257342.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetHintTiming(0,0x1e0)
 	e1:SetTarget(c13257342.target)
 	e1:SetOperation(c13257342.activate)
 	c:RegisterEffect(e1)
@@ -36,11 +37,30 @@ function c13257342.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c13257342.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.RegisterFlagEffect(tp,c13257342,RESET_PHASE+PHASE_END,0,1)
+	Duel.RegisterFlagEffect(tp,13257342,RESET_PHASE+PHASE_END,0,1)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		Duel.Hint(12,0,aux.Stringid(13257342,7))
 		Duel.Draw(tp,1,REASON_EFFECT)
+		if Duel.GetFlagEffect(tp,13257342)>=1 then
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetValue(500)
+			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,2)
+			tc:RegisterEffect(e1)
+		end
+		if Duel.GetFlagEffect(tp,13257342)>=2 then
+			if tc:GetFlagEffect(13257342)==0 then
+				tc:RegisterFlagEffect(13257342,0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,nil,aux.Stringid(13257342,0))
+			end
+			local e2=Effect.CreateEffect(e:GetHandler())
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+			e2:SetValue(1)
+			e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,2)
+			tc:RegisterEffect(e2)
+		end
 		if Duel.GetFlagEffect(tp,13257342)>=3 then
 			local code=tc:GetCode()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
