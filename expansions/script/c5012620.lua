@@ -83,7 +83,7 @@ function c5012620.desop(e,tp,eg,ep,ev,re,r,rp)
         Duel.Destroy(g,REASON_EFFECT)
 end
 function c5012620.repfilter(c)
-    return c:IsSetCard(0x350) and c:IsAbleToRemoveAsCost()
+    return c:IsAbleToRemoveAsCost()
 end
 function c5012620.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
     local c=e:GetHandler()
