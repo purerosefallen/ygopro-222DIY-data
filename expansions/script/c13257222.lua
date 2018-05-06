@@ -65,7 +65,7 @@ function c13257222.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Summon(tp,tc,true,nil,1)
 			local label=tc:GetFlagEffectLabel(13257200)
 			tc:ResetFlagEffect(13257200)
-			tc:RegisterFlagEffect(13257200,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,label+1,aux.Stringid(13257222,5))
+			tc:RegisterFlagEffect(13257200,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,label+2,aux.Stringid(13257222,5))
 			tc:RegisterFlagEffect(13257200,0,0,0,label)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
@@ -81,7 +81,6 @@ function c13257222.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetOperation(c13257222.spop)
 			e2:SetLabelObject(e1)
 			tc:RegisterEffect(e2)
-			Duel.Hint(11,0,aux.Stringid(13257222,6))
 		end
 	end
 end
@@ -92,12 +91,12 @@ function c13257222.checkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13257222.spop(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetLabelObject():GetLabel()~=0 then return end
-	local tc=GetLabelObject():GetLabelObject()
+	local tc=e:GetLabelObject():GetLabelObject()
 	if tc and tc:IsLocation(LOCATION_GRAVE) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		Duel.Hint(11,0,aux.Stringid(13257222,4))
 	end
 end
 function c13257222.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(13257222,4))
+	Duel.Hint(11,0,aux.Stringid(13257222,6))
 end

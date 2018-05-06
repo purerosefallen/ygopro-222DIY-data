@@ -74,7 +74,7 @@ function c13257225.initial_effect(c)
 	e13:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e13)
 	eflist={"deck_equip",e8}
-	c13257201[c]=eflist
+	c13257225[c]=eflist
 	
 end
 function c13257225.spcon(e,c)

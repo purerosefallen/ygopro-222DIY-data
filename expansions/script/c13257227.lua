@@ -12,7 +12,7 @@ function c13257227.initial_effect(c)
 	c:RegisterEffect(e1)
 	--deck equip
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(c13257227,0))
+	e2:SetDescription(aux.Stringid(13257227,0))
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_FREE_CHAIN)
@@ -28,14 +28,14 @@ function c13257227.initial_effect(c)
 	e3:SetCountLimit(1)
 	e3:SetValue(c13257227.valcon)
 	c:RegisterEffect(e3)
-	c:RegisterFlagEffect(13257200,0,0,0,3)
 	local e12=Effect.CreateEffect(c)
 	e12:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e12:SetCode(EVENT_SUMMON_SUCCESS)
 	e12:SetOperation(c13257227.bgmop)
 	c:RegisterEffect(e12)
+	c:RegisterFlagEffect(13257200,0,0,0,3)
 	eflist={"deck_equip",e2}
-	c13257201[c]=eflist
+	c13257227[c]=eflist
 	
 end
 function c13257227.filter(c)
@@ -63,7 +63,7 @@ function c13257227.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eq:Filter(Card.IsAbleToDeck,nil)
 	local op=0
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and g:GetCount()>0 and (not Duel.IsExistingMatchingCard(c13257321.eqfilter,tp,LOCATION_EXTRA,0,1,nil,c) or Duel.SelectYesNo(tp,aux.Stringid(13257227,1))) then op=1
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and g:GetCount()>0 and (not Duel.IsExistingMatchingCard(c13257227.eqfilter,tp,LOCATION_EXTRA,0,1,nil,c) or Duel.SelectYesNo(tp,aux.Stringid(13257227,1))) then op=1
 	elseif Duel.GetLocationCount(tp,LOCATION_SZONE)==0 and g:GetCount()>0 then op=1
 	end
 	if op==1 then
@@ -73,7 +73,7 @@ function c13257227.eqop(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.BreakEffect()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	g=Duel.SelectMatchingCard(tp,c13257321.eqfilter,tp,LOCATION_EXTRA,0,1,1,nil,c)
+	g=Duel.SelectMatchingCard(tp,c13257227.eqfilter,tp,LOCATION_EXTRA,0,1,1,nil,c)
 	local tc=g:GetFirst()
 	if tc then
 		Duel.Equip(tp,tc,c)

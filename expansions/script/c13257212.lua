@@ -38,6 +38,9 @@ end
 function c13257212.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end
+function c13257212.rmfilter(c)
+	return c:IsAbleToRemove and c:IsStatus(STATUS_BATTLE_DESTROYED)
+end
 function c13257212.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:GetFlagEffect(13257212)==0 then 
@@ -46,10 +49,10 @@ function c13257212.ctop(e,tp,eg,ep,ev,re,r,rp)
 		local label=c:GetFlagEffectLabel(13257212)
 		c:SetFlagEffectLabel(13257212,label+ev)
 	end
-	if c:GetFlagEffectLabel(13257212)>=2000 and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD+LOCATION_HAND,1,nil) then
-		local sg=Duel.SelectMatchingCard(1-tp,Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD+LOCATION_HAND,1,1,nil)
-		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
+	if c:GetFlagEffectLabel(13257212)>=2000 and Duel.IsExistingMatchingCard(c13257212.rmfilter,tp,0,LOCATION_ONFIELD+LOCATION_HAND,1,nil) then
 		c:SetFlagEffectLabel(13257212,0)
+		local sg=Duel.SelectMatchingCard(1-tp,c13257212.rmfilter,tp,0,LOCATION_ONFIELD+LOCATION_HAND,1,1,nil)
+		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 	end
 end
 function c13257212.rmlimit(e,c,p)

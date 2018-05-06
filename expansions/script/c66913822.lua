@@ -23,12 +23,15 @@ function c66913822.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c66913822.scon(e,tp,eg,ep,ev,re,r,rp)
-	return  Duel.GetFieldGroupCount(tp,LOCATION_REMOVED,0)>=20
+	return  Duel.GetFieldGroupCount(tp,LOCATION_REMOVED,0)>=15
+end
+function c66913822.cfilter(c)
+	return  c:IsAbleToRemoveAsCost()
 end
 function c66913822.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c66913830.cfilter,tp,LOCATION_HAND,0,2,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c66913822.cfilter,tp,LOCATION_HAND,0,3,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c66913830.cfilter,tp,LOCATION_HAND,0,2,2,nil)
+	local g=Duel.SelectMatchingCard(tp,c66913822.cfilter,tp,LOCATION_HAND,0,3,3,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c66913822.target(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -48,7 +48,7 @@ function cm.filter(c)
 	return c:IsCode(14000006) and c:IsAbleToHand()
 end
 function cm.filter1(c)
-	return c:IsCode(14000006) and c:IsAbleToGraveAsCost()
+	return c:IsCode(14000006) and c:IsFaceup() and c:IsAbleToGraveAsCost()
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -83,9 +83,9 @@ function cm.profilter(c,e,tp)
 	return c:IsCode(14000007) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false)
 end
 function cm.lkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() and Duel.IsExistingMatchingCard(cm.filter1,tp,LOCATION_ONFIELD,0,1,nil)  end
+	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() and Duel.IsExistingMatchingCard(cm.filter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)  end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local mat=Duel.SelectMatchingCard(tp,cm.filter1,tp,LOCATION_ONFIELD,0,1,1,nil)
+	local mat=Duel.SelectMatchingCard(tp,cm.filter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 	Duel.SendtoGrave(mat,REASON_COST)
 end
