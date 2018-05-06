@@ -16,8 +16,8 @@ function c57300011.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c57300011.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
+	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
+	e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
 end
 function c57300011.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
