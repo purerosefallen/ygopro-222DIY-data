@@ -38,7 +38,7 @@ function c1003016.atkval(e,c)
 	return Duel.GetMatchingGroupCount(c1003016.vfilter,0,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)*-200
 end
 function c1003016.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xa200) and c:IsAbleToGraveAsCost()
+	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0xa200) and c:IsAbleToGraveAsCost()
 end
 function c1003016.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost()
