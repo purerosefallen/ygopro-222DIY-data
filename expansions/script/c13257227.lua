@@ -55,10 +55,12 @@ function c13257227.eqfilter(c,ec)
 	return c:IsSetCard(0x354) and c:IsType(TYPE_MONSTER) and c:CheckEquipTarget(ec)
 end
 function c13257227.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
 	if chk==0 then return c:GetEquipCount()>0 or Duel.IsExistingMatchingCard(c13257227.eqfilter,tp,LOCATION_EXTRA,0,1,nil,c) end
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_EXTRA)
 end
 function c13257227.eqop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local eq=c:GetEquipGroup()
 	local g=eq:Filter(Card.IsAbleToDeck,nil)
 	local op=0

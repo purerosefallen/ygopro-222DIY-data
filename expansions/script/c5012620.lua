@@ -2,7 +2,7 @@
 function c5012620.initial_effect(c)
     c:SetUniqueOnField(1,1,5012620)
      --synchro summon
-    aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsSetCard,0x350),1)
+    aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsSetCard,0x250),1)
     c:EnableReviveLimit()
     --
     aux.EnablePendulumAttribute(c,false)
@@ -83,7 +83,7 @@ function c5012620.desop(e,tp,eg,ep,ev,re,r,rp)
         Duel.Destroy(g,REASON_EFFECT)
 end
 function c5012620.repfilter(c)
-    return c:IsAbleToRemoveAsCost()
+    return c:IsSetCard(0x350) and c:IsAbleToRemoveAsCost()
 end
 function c5012620.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
     local c=e:GetHandler()
