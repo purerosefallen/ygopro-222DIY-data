@@ -34,7 +34,7 @@ before_install:
 - mkdir replay
 
 script:
-- echo \"select id from datas;\" | sqlite3 ./expansions/222DIY.cdb | xargs -I {} ./ygopro {} 2>&1 | tee ../redtext.txt
+- echo "select id from datas;" | sqlite3 ./expansions/222DIY.cdb | xargs -I {} ./ygopro {} 2>&1 | tee ../redtext.txt
 - cd ..
 
 - echo "Redtext check with commit $TRAVIS_COMMIT \"$TRAVIS_COMMIT_MESSAGE\" on $(date +%m.%d)." >> ./redtext.txt
