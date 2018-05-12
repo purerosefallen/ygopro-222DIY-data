@@ -9,10 +9,10 @@ addons:
     packages:
     - libevent-dev
     - libsqlite3-dev
-    - sqlite3
+env:
+- DATABASE_FILE=expansions/222DIY.cdb
 
 before_install:
-
 - git config --global user.name purerosefallen
 - git config --global user.email 78877@qq.com
 
@@ -34,8 +34,10 @@ before_install:
 - mkdir replay
 
 script:
-- echo "select id from datas;" | sqlite3 ./expansions/222DIY.cdb | xargs -I {} ./ygopro {} 2>&1 | tee ../redtext.txt
+- echo "select id from datas;" | sqlite3 $DATABASE_FILE | xargs -I {} ./ygopro {} 2>&1 | tee ../redtext.txt
 - cd ..
+
+- bash -c "exit $(cat ./redtext.txt | wc -l)"
 
 - git add ./redtext.txt
 - git commit -m "test redtext of $TRAVIS_COMMIT"
