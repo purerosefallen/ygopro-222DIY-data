@@ -37,7 +37,7 @@ before_install:
 - mkdir replay
 
 script:
-- echo "select id from datas;" | sqlite3 ./expansions/222DIY.cdb | xargs -I {} ./ygopro {} >> ../redtext.txt
+- bash -c "echo \"select id from datas;\" | sqlite3 ./expansions/222DIY.cdb | xargs -I {} ./ygopro {}" >> ../redtext.txt
 - cd ..
 
 - git add ./redtext.txt
