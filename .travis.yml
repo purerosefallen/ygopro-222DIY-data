@@ -10,8 +10,6 @@ addons:
     - libevent-dev
     - libsqlite3-dev
     - sqlite3
-env:
-- YGOPRO_TEST_REDTEXT=1
 
 before_install:
 - echo "Redtext check with commit $TRAVIS_COMMIT \"$TRAVIS_COMMIT_MESSAGE\" on $(date +%m.%d)." > ./redtext.txt
