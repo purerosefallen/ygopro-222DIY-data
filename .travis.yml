@@ -10,7 +10,6 @@ addons:
     - libevent-dev
     - libsqlite3-dev
     - sqlite3
-    - mono-complete
 env:
 - YGOPRO_TEST_REDTEXT=1
 
@@ -37,27 +36,9 @@ before_install:
 - strip ygopro
 - mkdir replay
 
-- git clone --depth=1 https://github.com/purerosefallen/windbot WindBot
-
-- cp -rf ./cards.cdb ./WindBot/
-- bash -c "sqlite3 ./expansions/222DIY.cdb .dump | sqlite3 ./WindBot/cards.cdb ; exit 0"
-
-- mkdir list
-- echo "select id from datas;" | sqlite3 ./expansions/222DIY.cdb >> ./list/codelist.txt
-- cd list
-- split -l 60 ./codelist.txt
-- rm -rf ./codelist.txt
-- cd ..
-
-- cd ./WindBot
-- xbuild /property:Configuration=Release
-- mv -f bin/Release/WindBot.exe .
-- cd ../..
-
 script:
 - cd ./ygopro
-- export YGOPRO_PORT=7911
-- ls list | xargs -I {} bash -c "echo 'Running deck {} with port \$YGOPRO_PORT' ; bash -c \"./ygopro \$YGOPRO_PORT -1 2 0 F T T 100 20 10 180 0 | sed '/\$YGOPRO_PORT/d' >> ./../redtext.txt &\" ; echo '# deck used for test' > ./WindBot/Decks/AI_Test.ydk ; cat list/{} >> ./WindBot/Decks/AI_Test.ydk ; echo '!side' >> ./WindBot/Decks/AI_Test.ydk ; cd ./WindBot/ ; bash -c \"mono ./WindBot.exe Name=Nanahira Deck=Test Dialog=default Host=127.0.0.1 Port=\$YGOPRO_PORT &\" ; mono ./WindBot.exe Name=Miyuki Deck=Test Dialog=default Host=127.0.0.1 Port=\$YGOPRO_PORT ; export YGOPRO_PORT=\$[\$YGOPRO_PORT + 1] ; exit 0"
+- echo "select id from datas;" | sqlite3 ./expansions/222DIY.cdb | xargs -I {} ./ygopro {} >> ../redtext.txt
 - cd ..
 
 - git add ./redtext.txt
