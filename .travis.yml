@@ -37,7 +37,6 @@ before_install:
 - mkdir replay
 
 script:
-- cd ./ygopro
 - echo "select id from datas;" | sqlite3 ./expansions/222DIY.cdb | xargs -I {} ./ygopro {} >> ../redtext.txt
 - cd ..
 
