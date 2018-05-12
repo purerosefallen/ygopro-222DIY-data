@@ -12,7 +12,6 @@ addons:
     - sqlite3
 
 before_install:
-- echo "Redtext check with commit $TRAVIS_COMMIT \"$TRAVIS_COMMIT_MESSAGE\" on $(date +%m.%d)." > ./redtext.txt
 
 - git config --global user.name purerosefallen
 - git config --global user.email 78877@qq.com
@@ -35,9 +34,10 @@ before_install:
 - mkdir replay
 
 script:
-- bash -c "echo \"select id from datas;\" | sqlite3 ./expansions/222DIY.cdb | xargs -I {} ./ygopro {}" >> ../redtext.txt
+- echo \"select id from datas;\" | sqlite3 ./expansions/222DIY.cdb | xargs -I {} ./ygopro {} 2>&1 | tee ../redtext.txt
 - cd ..
 
+- echo "Redtext check with commit $TRAVIS_COMMIT \"$TRAVIS_COMMIT_MESSAGE\" on $(date +%m.%d)." >> ./redtext.txt
 - git add ./redtext.txt
 - git commit -m "test redtext of $TRAVIS_COMMIT"
 - git push -f https://$NANAHIRA@github.com/purerosefallen/ygopro-222DIY-data HEAD:redtext
