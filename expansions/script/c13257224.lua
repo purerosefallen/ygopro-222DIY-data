@@ -1,6 +1,6 @@
 --宇宙战争兵器 量产炮 自瞄镭射
 function c13257224.initial_effect(c)
-	c:EnableCounterPermit(0x354)
+	c:EnableCounterPermit(0x354,LOCATION_SZONE)
 	c:SetCounterLimit(0x354,10)
 	c:EnableReviveLimit()
 	--equip limit
