@@ -62,7 +62,7 @@ function c60150616.tgfilter(c)
 end
 function c60150616.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c60150616.tgfilter,tp,LOCATION_DECK,0,1,nil) end
-    Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function c60150616.gfilter(c)
 	return c:IsType(TYPE_PENDULUM)
@@ -93,7 +93,7 @@ function c60150616.descon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousPosition(POS_FACEUP) and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c60150616.filter(c,e,tp)
-	return c:IsSetCard(0x3b21) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x3b21) and not c:IsCode(60150616) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c60150616.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
