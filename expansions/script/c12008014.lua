@@ -57,9 +57,9 @@ function c12008014.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.IsChainDisablable(0) then
 		local g=Duel.GetMatchingGroup(c12008014.cfilter,tp,0,LOCATION_EXTRA,nil,e:GetLabel())
-		if g:GetCount()>=2 and Duel.SelectYesNo(1-tp,aux.Stringid(12008014,1)) then
+		if g:GetCount()>=1 and Duel.SelectYesNo(1-tp,aux.Stringid(12008014,1)) then
 			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_REMOVE)
-			local sg=g:Select(1-tp,2,2,nil)
+			local sg=g:Select(1-tp,1,1,nil)
 			Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 			Duel.NegateEffect(0)
 			return
