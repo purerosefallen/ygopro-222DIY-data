@@ -72,7 +72,7 @@ function cm.RegisterBuff(c,ec)
 	c:RegisterEffect(e2,true)
 end
 function cm.rmop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(cm.rfilter,tp,LOCATION_MZONE,0,e:GetHandler(),e)
+	local g=Duel.GetMatchingGroup(cm.rfilter,tp,LOCATION_MZONE,0,aux.ExceptThisCard(e),e)
 	if #g==0 or not Duel.IsExistingMatchingCard(cm.sfilter,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,nil,e,tp,g) then return end
 	local ct=Duel.SendtoDeck(g,nil,0,REASON_EFFECT)
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
