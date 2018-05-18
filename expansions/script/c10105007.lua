@@ -60,11 +60,11 @@ function c10105007.rmop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
 end
-function c10105009.mafilter(c,tp)
+function c10105007.mafilter(c,tp)
 	return c:IsSetCard(0xc330) and c:IsPreviousLocation(LOCATION_MZONE+LOCATION_HAND) and c:GetPreviousControler()==tp and bit.band(c:GetReason(),0x40008)~=0x40008
 end
-function c10105009.sumfilter(c,tp)
-	return c:GetMaterialCount()>0 and c:GetMaterial():IsExists(c10105009.mafilter,1,nil,tp)
+function c10105007.sumfilter(c,tp)
+	return c:GetMaterialCount()>0 and c:GetMaterial():IsExists(c10105007.mafilter,1,nil,tp)
 end
 function c10105007.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c10105007.sumfilter,1,nil,tp)

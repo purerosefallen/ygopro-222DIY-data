@@ -29,10 +29,10 @@ end
 function c10113001.descon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
 	while ec do
-	 if ec:GetReasonPlayer()~=ec:GetPreviousControler() and ec:IsPreviousLocation(LOCATION_ONFIELD) then
-	 return true end
-	 end
-	ec=eg:GetNext()
+		if ec:GetReasonPlayer()~=ec:GetPreviousControler() and ec:IsPreviousLocation(LOCATION_ONFIELD) then
+			return true
+		end
+		ec=eg:GetNext()
 	end
 	return false
 end

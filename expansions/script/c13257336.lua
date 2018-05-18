@@ -39,7 +39,7 @@ function c13257336.pcfilter(c)
 end
 function c13257336.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	--if chk==0 then return c13257336.check(Duel.GetAttacker(),tp) or c13257336.check(Duel.GetAttackTarget(),tp) end
-	if chkc==0 then return chkc:IsOnField and c13257336.pcfilter(chkc) end
+	if chkc==0 then return chkc:IsOnField() and c13257336.pcfilter(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(c13257336.pcfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)
 	local sg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_MZONE,nil)
 	Duel.SetChainLimit(c13257336.chlimit)

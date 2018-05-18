@@ -32,7 +32,7 @@ function c10173019.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	sg1:Merge(sg2)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,sg1,sg1:GetCount(),0,0)
 end
-function c1005587.activate(e,tp,eg,ep,ev,re,r,rp)
+function c10173019.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	if sg:GetCount()<=0 then return end

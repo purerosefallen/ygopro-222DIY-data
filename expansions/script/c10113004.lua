@@ -15,7 +15,7 @@ function c10113004.initial_effect(c)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 		e1:SetCode(EVENT_ATTACK_ANNOUNCE)
-		e1:SetOperation(c10113005.addcount)
+		e1:SetOperation(c10113004.addcount)
 		Duel.RegisterEffect(e1,0)
 	end
 end

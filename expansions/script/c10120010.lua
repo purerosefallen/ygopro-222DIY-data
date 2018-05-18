@@ -1,6 +1,7 @@
 --神之国度 阿斯加德
 local m=10120010
 local cm=_G["c"..m]
+if not pcall(function() require("expansions/script/c10120001") end) then require("script/c10120001") end
 function cm.initial_effect(c)
 	dsrsv.DanceSpiritNegateEffect(c,m,CATEGORY_TOHAND,cm.ntg,cm.nop)
 	--Activate
