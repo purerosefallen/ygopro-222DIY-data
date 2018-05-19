@@ -30,7 +30,6 @@ function cm.initial_effect(c)
 	e2:SetCategory(CATEGORY_EQUIP)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCondition(cm.dacon)
 	e2:SetTarget(cm.eqtg)
 	e2:SetOperation(cm.eqop)
 	local e3=Effect.CreateEffect(c)
@@ -77,10 +76,6 @@ function cm.remop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.HintSelection(g)
 		Duel.SendtoDeck(g,nil,3,REASON_EFFECT)
 	end
-end
-function cm.dacon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return not c:IsCode(m)
 end
 function cm.eftg(e,c)
 	return c:IsType(TYPE_EFFECT) and c:IsSetCard(0xfb2)
