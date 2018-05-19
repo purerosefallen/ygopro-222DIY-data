@@ -1,4 +1,4 @@
-﻿ygopro.exe	e0817993e3a12852f7d5a9b263b9575a
+﻿ygopro.exe	51648afc6ae3d226d5b1a43b864df4c9
 deck/04.07new_card1.ydk	64e227517d6de4a9db3386d57587345c
 deck/04.07new_card2.ydk	45b5f2087125773abf1ba028fb117fb9
 deck/04.07new_card3.ydk	0db4a170800387b943b775b83d34d561
@@ -6373,8 +6373,8 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	cc89a305f10b9123e97e79f0cfe241e7
+update/filelist.txt	fb6785861c98c9e75c6536e0b56d4523
 update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
 update/update-push.bat	49e0e022872a85c5350b8ee445ecd4d8
 update/update-without-sound.bat	22d7b973d79ef9311213aeff61d93d7c
-update/version.txt	69d047f0b0c7e8a4e5f087ce765e88d9
+update/version.txt	12e0a17ca7f711d6779e3d14d0f075b8
