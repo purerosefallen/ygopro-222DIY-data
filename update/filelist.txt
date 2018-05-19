@@ -1,4 +1,4 @@
-﻿ygopro.exe	51648afc6ae3d226d5b1a43b864df4c9
+﻿ygopro.exe	42530bb3326b252aa93881d4db4edebb
 deck/04.07new_card1.ydk	64e227517d6de4a9db3386d57587345c
 deck/04.07new_card2.ydk	45b5f2087125773abf1ba028fb117fb9
 deck/04.07new_card3.ydk	0db4a170800387b943b775b83d34d561
@@ -15,7 +15,7 @@ deck/05.19new_card1.ydk	eccae0b93afa2d7941f1d22955f44d37
 deck/05.19new_card2.ydk	346e92f0fb25bc12d5f0b795535f8080
 deck/05.19new_card3.ydk	f8d757a2144abe2c116ba05b430d65dd
 deck/05.19new_card4.ydk	ff61d19eabcd01a6c1e960d21c84f34c
-expansions/222DIY.cdb	0705ef0194be5bbb33fe79133be73ae6
+expansions/222DIY.cdb	d9e9922b085f49bf2fdf5e7d591c3e31
 expansions/lflist.conf	62cd265078bd594b80bd4d5b6bc69971
 expansions/strings.conf	cbb1fc79f66ab353b523081e021edc39
 expansions/pics/08209710.jpg	ed0e60085631bfa641ffeebd6abbd910
@@ -6129,6 +6129,9 @@ sound/BGM/advantage/1.986advp.mp3	a0670d7e68207f092d5ca3e27668da7a
 sound/BGM/advantage/1.989adv.mp3	6175d86c51c882636f0808a60aefad29
 sound/BGM/advantage/1.989advpp.mp3	9373855d1a1c37e902af198a4ebc7f08
 sound/BGM/advantage/1.990adv.mp3	fcf2d337bc80b0e04576455c81997c78
+sound/BGM/advantage/1.992adv.mp3	00aeb08e6beac403f13317f7418008f7
+sound/BGM/advantage/1.992advp.mp3	fdbf32b21ac642ad7c022d6c1201a629
+sound/BGM/advantage/1.993adv.mp3	1125991d0d56e7166e9aaab7fe308205
 sound/BGM/advantage/Anti the HOLiC.mp3	e4c9793bbc34e964c7021419a0ee1780
 sound/BGM/advantage/monosu.mp3	5e991304c845aeaac09c77fb1c073a01
 sound/BGM/advantage/Monosugoikuruttoru Furantyanga Monosugoi Uta.mp3	6b69e22257e027b8d3e1c0b17ec36786
@@ -6248,6 +6251,9 @@ sound/BGM/deck/1.989deckp.mp3	01330c3c14f4b87b3e071a4cffd3893b
 sound/BGM/deck/1.989deckpp.mp3	1e0515ef8ce3d45d4b447d64b3656d07
 sound/BGM/deck/1.990deck.mp3	1fc749daa2791caaf910d8430b2cd251
 sound/BGM/deck/1.990deckp.mp3	35490de49c23503dd82081eec726ab2f
+sound/BGM/deck/1.992deck.mp3	ea8de0905f5d6d73b0a810e0bbbce221
+sound/BGM/deck/1.992deckp.mp3	3f6187bca30f6fdd46aa90e4775b752c
+sound/BGM/deck/1.993deck.mp3	aeca2e3ef8041e1aa947e1d6e20c5807
 sound/BGM/deck/Gateway Galaxy.mp3	45edb69478ae7357a6aed5521a185671
 sound/BGM/deck/saisou.mp3	f39aa99ddd830d2e86a515ad23b156d3
 sound/BGM/disadvantage/1.902disad.mp3	483d834d001772ebf631ae46dcd09521
@@ -6260,6 +6266,8 @@ sound/BGM/disadvantage/1.986disadp.mp3	488b61361a042b0e156bf14b14e6d919
 sound/BGM/disadvantage/1.986disadpp.mp3	8e39c55be0fba33e799557c73a04ea94
 sound/BGM/disadvantage/1.989disad.mp3	39f9193dd2d84770f9f6a1c408fa1b43
 sound/BGM/disadvantage/1.990disad.mp3	9e909cf3425b851592bbfa1889daad27
+sound/BGM/disadvantage/1.992disad.mp3	0c48d2708da5fc1b594d87ce81e142b3
+sound/BGM/disadvantage/1.992disadp.mp3	49829eb59eb554a61d5c82bd223eca90
 sound/BGM/disadvantage/shijyo.mp3	1afa8a4694572e0a99f5b7665223292b
 sound/BGM/disadvantage/Who Killed U.N.Owen.mp3	382f056359f1e4d87f7570b6b7587331
 sound/BGM/duel/1.87duel.mp3	309d7c975f03b3ca7c3771224b305395
@@ -6280,6 +6288,10 @@ sound/BGM/duel/1.990duel.mp3	3882d43fc89aa118a5c6a8b3c697151a
 sound/BGM/duel/1.990duelp.mp3	fc037a1e58a1c28f7d64ffb94689b729
 sound/BGM/duel/1.990duelpp.mp3	e0a036091d1bc7a348b9ce18a3c40135
 sound/BGM/duel/1.990duelppp.mp3	29e32e11209a9f6dc39626770d9446cf
+sound/BGM/duel/1.992duel.mp3	4bee6de58fa0f0d4a52c2b4aab922e9b
+sound/BGM/duel/1.992duelp.mp3	4843f37b52e8964739a459d87ba1277b
+sound/BGM/duel/1.992duelpp.mp3	83587781935dc0693175a1171d040109
+sound/BGM/duel/1.993duel.mp3	cd4b91b066a1958fb238120605e266f1
 sound/BGM/duel/ayakashi.mp3	0b5e4950ea8b307f92b982b725f71f73
 sound/BGM/duel/bijyutsu.mp3	7bcc47523f60d1cbe1779b01da7ca127
 sound/BGM/duel/melody.mp3	7d29238410a9dd3fc14ae7631698ea0a
@@ -6292,6 +6304,7 @@ sound/BGM/lose/thc_lose.mp3	4b097111ce6dc1ee2e7ca1bc0995a826
 sound/BGM/menu/1.902menu.mp3	2c271b2630dc060090a2b0f488efa0c7
 sound/BGM/menu/1.91menu.mp3	fd232323fb43055f32c6394b629d6a68
 sound/BGM/menu/1.963menu.mp3	dcbce0efe88fdf1112da8aa81eb87fc0
+sound/BGM/menu/1.972menu.mp3	2f5f2c1de452fbf1ceb618287a2c07c4
 sound/BGM/menu/1.982menu.mp3	7485677e44063a1f10d9e09f976621b9
 sound/BGM/menu/1.982menup.mp3	71333e5581c179b0ae30f1b347855363
 sound/BGM/menu/1.984menu.mp3	1201d5069937a30fda9668a9fdf55b7e
@@ -6305,6 +6318,9 @@ sound/BGM/menu/1.989menuppp.mp3	b569fc1ad4ab207b24dce80ff4ae8934
 sound/BGM/menu/1.990menu.mp3	e4faeec777febb52699d97a6d3426b58
 sound/BGM/menu/1.990menup.mp3	80b459d38a47d990bfca2c68153168b6
 sound/BGM/menu/1.990menupp.mp3	8b0cc15d681fe3e1b3dc92d4c3ca6c61
+sound/BGM/menu/1.992menu.mp3	ac3f6581335882d3aad8e44cee57cf32
+sound/BGM/menu/1.992menup.mp3	7f845157fb2a90f5bf389394249b71ef
+sound/BGM/menu/1.993menu.mp3	20176bb8ff754ae6a40efb45b1ba1e5f
 sound/BGM/menu/hirahirahirara.mp3	99e19303e23d54fe16a4c2cf380b784f
 sound/BGM/menu/Katone.mp3	4b8073cd165f3fb7f71ff34004a3d303
 sound/BGM/menu/Yumemi.mp3	2bc4baa0088326f428e471834d1d9ac5
@@ -6373,8 +6389,8 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	fb6785861c98c9e75c6536e0b56d4523
+update/filelist.txt	a9d61ef5f40380dd7a926ec47e372ebf
 update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
 update/update-push.bat	49e0e022872a85c5350b8ee445ecd4d8
 update/update-without-sound.bat	22d7b973d79ef9311213aeff61d93d7c
-update/version.txt	12e0a17ca7f711d6779e3d14d0f075b8
+update/version.txt	3ada675ca70f7edd44c0c740fe3f139e
