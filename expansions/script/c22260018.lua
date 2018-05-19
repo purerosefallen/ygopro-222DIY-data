@@ -59,8 +59,7 @@ function c22260018.sprcon(e,c)
     local tp=c:GetControler()
     local ft=Duel.GetMZoneCount(tp)
     local ct2=Duel.GetMatchingGroupCount(c22260018.sprfilter2,tp,LOCATION_MZONE,0,nil)
-    local ct3=Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)
-    return ft>0 and ((ct2==ct3 and ct3>0))
+    return ft>0 and ct2>0
 end
     
 function c22260018.cfilter(c,tp)
