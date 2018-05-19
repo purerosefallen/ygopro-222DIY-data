@@ -33,7 +33,7 @@ function c11200084.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c11200084.filter(c)
-	return c:IsSetCard(0x131) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
+	return c:IsSetCard(0x131) and c:IsAbleToRemove()
 end
 function c11200084.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)<Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)

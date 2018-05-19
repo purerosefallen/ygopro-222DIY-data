@@ -27,7 +27,7 @@ function c12003000.initial_effect(c)
 	c:RegisterEffect(e1)	
 end
 function c12003000.tgfilter(c)
-	return c:IsRace(RACE_SEASERPENT) and c:IsAbleToGrave()
+	return c:IsSetCard(0xfb8) and c:IsAbleToGrave()
 end
 function c12003000.thgt(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c12003000.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -38,18 +38,7 @@ function c12003000.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c12003000.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoGrave(g,REASON_EFFECT)
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
-		e1:SetCode(EFFECT_CANNOT_ACTIVATE)
-		e1:SetTargetRange(1,0)
-		e1:SetValue(c12003000.aclimit)
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e1,tp)
 	end
-end
-function c12003000.aclimit(e,re,tp)
-	return re:GetActivateLocation()==LOCATION_MZONE and not re:GetHandler():IsSetCard(0xfb8)
 end
 function c12003000.con2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)

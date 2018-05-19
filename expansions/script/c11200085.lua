@@ -49,14 +49,37 @@ function c11200085.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(g,nil,2,REASON_COST)
 end
 function c11200085.activate(e,tp,eg,ep,ev,re,r,rp)
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Damage(1-tp,550,REASON_EFFECT)
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_DAMAGE)
-	e1:SetCondition(c11200085.ctcon)
-	e1:SetOperation(c11200085.ctop)
-	Duel.RegisterEffect(e1,tp)
+	local g=Duel.GetMatchingGroup(c11200085.acfilter,tp,0,LOCATION_MZONE,nil)
+	local op=1
+	if g:GetCount()>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
+		op=Duel.SelectOption(tp,aux.Stringid(11200085,0),aux.Stringid(11200085,1))
+	end
+	if op==0 then
+		if g:GetCount()>0 then
+			local sc=g:GetFirst()
+			while sc do
+				local e1=Effect.CreateEffect(e:GetHandler())
+				e1:SetType(EFFECT_TYPE_SINGLE)
+				e1:SetCode(EFFECT_UPDATE_ATTACK)
+				e1:SetReset(RESET_EVENT+0x1fe0000)
+				e1:SetValue(-550)
+				sc:RegisterEffect(e1)
+				local e2=e1:Clone()
+				e2:SetCode(EFFECT_UPDATE_DEFENSE)
+				sc:RegisterEffect(e2)
+				sc=g:GetNext()
+			end
+		end
+	elseif op==1 then
+		Duel.Damage(1-tp,1100,REASON_EFFECT)
+	end
+	--local e1=Effect.CreateEffect(e:GetHandler())
+	--e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	--e1:SetCode(EVENT_DAMAGE)
+	--e1:SetCondition(c11200085.ctcon)
+	--e1:SetOperation(c11200085.ctop)
+	--Duel.RegisterEffect(e1,tp)
 end
 function c11200085.cfilter(c)
 	return c:IsSetCard(0x131) and c:IsType(TYPE_MONSTER) and c:IsOnField()

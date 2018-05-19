@@ -38,7 +38,7 @@ function c12003015.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c12003015.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_COST) and re:IsHasType(0x7e0) and re:IsActiveType(TYPE_MONSTER)
-	  and re:GetHandler():IsSetCard(0xfb8) and Duel.GetMZoneCount(tp)>0
+	  and re:GetHandler():IsAttribute(ATTRIBUTE_WATER) and Duel.GetMZoneCount(tp)>0
 end
 function c12003015.spcon(e,c)
 	if c==nil then return true end

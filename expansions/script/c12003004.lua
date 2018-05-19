@@ -32,7 +32,7 @@ function c12003004.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c12003004.filter(c)
-	return c:IsRace(RACE_SEASERPENT) and c:IsAbleToHand()
+	return c:IsSetCard(0xfb8) and c:IsAbleToHand()
 end
 function c12003004.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_DECK) and c12003004.filter(chkc) end
@@ -46,18 +46,7 @@ function c12003004.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
-		e1:SetCode(EFFECT_CANNOT_ACTIVATE)
-		e1:SetTargetRange(1,0)
-		e1:SetValue(c12003004.aclimit)
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		Duel.RegisterEffect(e1,tp)
 	end
-end
-function c12003004.aclimit(e,re,tp)
-	return re:GetActivateLocation()==LOCATION_MZONE and not re:GetHandler():IsSetCard(0xfb8)
 end
 function c12003004.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end

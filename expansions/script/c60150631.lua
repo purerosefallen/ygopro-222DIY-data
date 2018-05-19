@@ -28,7 +28,7 @@ function c60150631.initial_effect(c)
     e7:SetRange(LOCATION_MZONE)
     e7:SetTarget(c60150631.reptg)
     c:RegisterEffect(e7)
-	--atk
+    --atk
     local e2=Effect.CreateEffect(c)
     e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
     e2:SetCode(EVENT_BATTLE_START)
@@ -36,15 +36,11 @@ function c60150631.initial_effect(c)
     e2:SetOperation(c60150631.operation)
     c:RegisterEffect(e2)
 end
-function c60150631.cfilter(c)
-    return c:IsSetCard(0x3b21) and c:IsType(TYPE_SPELL) and c:IsDiscardable()
-end
 function c60150631.ovfilter(c)
     return c:IsFaceup() and c:IsSetCard(0x5b21)
 end
 function c60150631.xyzop(e,tp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(c60150631.cfilter,tp,LOCATION_HAND,0,1,nil) end
-    Duel.DiscardHand(tp,c60150631.cfilter,1,1,REASON_COST+REASON_DISCARD)
+    if chk==0 then return true end
 end
 function c60150631.pcfilter(c)
     return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
@@ -80,31 +76,32 @@ function c60150631.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
         return true
     else return false end
 end
-function c60150631.filter(c,tc)
-    if not c:IsFaceup() then return false end
-    return tc:GetBaseAttack()~=c:GetAttack() or tc:GetBaseAttack()~=c:GetDefence()
-end
 function c60150631.condition(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     local bc=c:GetBattleTarget()
-    return c:IsRelateToBattle() and bc and c60150631.filter(c,bc) and bc:IsFaceup() 
-		and bc:IsRelateToBattle() and e:GetHandler():GetOverlayCount()~=0
+    return c:IsRelateToBattle() and bc and bc:IsFaceup() 
+        and bc:IsRelateToBattle() and e:GetHandler():GetOverlayCount()~=0
 end
 function c60150631.operation(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     local bc=c:GetBattleTarget()
-	local atk=bc:GetAttack()
+    local atk=bc:GetAttack()
     local def=bc:GetDefence()
     if c:IsFaceup() and c:IsRelateToBattle() and bc:IsFaceup() and bc:IsRelateToBattle() then
-        local e1=Effect.CreateEffect(c)
-        e1:SetType(EFFECT_TYPE_SINGLE)
-        e1:SetCode(EFFECT_UPDATE_ATTACK)
-        if atk>=def then
-            e1:SetValue(atk/2)
-        else
-            e1:SetValue(def/2)
-        end
-        e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-        c:RegisterEffect(e1)
+        if atk>def then
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetValue(atk/2)
+			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+			c:RegisterEffect(e1)
+		else
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetValue(def/2)
+			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+			c:RegisterEffect(e1)
+		end
     end
 end

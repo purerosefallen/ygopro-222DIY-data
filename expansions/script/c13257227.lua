@@ -48,7 +48,7 @@ function c13257227.spcon(e,c)
 end
 function c13257227.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c13257227.filter,tp,LOCATION_HAND,0,2,2,nil)
+	local g=Duel.SelectMatchingCard(tp,c13257227.filter,tp,LOCATION_HAND,0,2,2,c)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c13257227.eqfilter(c,ec)

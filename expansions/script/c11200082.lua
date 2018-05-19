@@ -21,13 +21,6 @@ function c11200082.initial_effect(c)
 	e2:SetTarget(c11200082.sptg)
 	e2:SetOperation(c11200082.spop)
 	c:RegisterEffect(e2)
-	--cannot be fusion material
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e3:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
-	e3:SetValue(1)
-	c:RegisterEffect(e3)
 	
 end
 function c11200082.activate(e,tp,eg,ep,ev,re,r,rp)
@@ -39,10 +32,9 @@ function c11200082.rfilter(c)
 	return c:IsSetCard(0x131) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
 end
 function c11200082.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	 local g=Duel.GetMatchingGroup(c11200082.rfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,e:GetHandler())  
-	 if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
-	 and g:GetCount()>1
-	 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,true) end
+	local g=Duel.GetMatchingGroup(c11200082.rfilter,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE,0,e:GetHandler())
+	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_MZONE)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>ct-2 and g:GetCount()>1 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,true) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,tp,LOCATION_GRAVE)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,2,tp,LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE)
 end

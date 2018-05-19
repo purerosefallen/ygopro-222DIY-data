@@ -75,12 +75,15 @@ function c22202003.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 			g:AddCard(tc)
 			Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
 		elseif sel==2 then
-			Duel.SetChainLimit(aux.FALSE)
+			Duel.SetChainLimit(c22202003.chlimit)
 		elseif sel==3 then
 		end
 	else
 		Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
 	end
+end
+function c22202003.chlimit(e,ep,tp)
+	return tp==ep
 end
 function c22202003.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)

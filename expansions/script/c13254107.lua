@@ -16,6 +16,7 @@ function c13254107.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetCondition(c13254107.thcon)
 	e2:SetTarget(c13254107.thtg)
 	e2:SetOperation(c13254107.thop)
 	c:RegisterEffect(e2)
@@ -80,6 +81,9 @@ function c13254107.efilter(e,te)
 end
 function c13254107.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK 
+end
+function c13254107.thcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c13254107.thfilter(c)
 	return c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

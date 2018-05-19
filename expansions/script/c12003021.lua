@@ -33,7 +33,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e1)  
 end
 function cm.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xfb8) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsRace(RACE_SEASERPENT) and c:IsType(TYPE_MONSTER)
 end
 function cm.spcon(e,c)
 	if c==nil then return true end

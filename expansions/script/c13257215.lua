@@ -51,6 +51,9 @@ function c13257215.rdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetTargetPlayer(eg:GetFirst():GetSummonPlayer())
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,eg:GetFirst():GetSummonPlayer(),1)
 end
+function c13257215.desfilter(c)
+	return c:GetSequence()>5
+end
 function c13257215.rdop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
@@ -60,6 +63,9 @@ function c13257215.rdop(e,tp,eg,ep,ev,re,r,rp)
 		if tc then
 			Duel.Destroy(tc,REASON_EFFECT)
 		end
+	elseif d1==6 then
+		local tc=Duel.GetMatchingGroup(c13257215.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
 function c13257215.spfilter(c,e,tp)
