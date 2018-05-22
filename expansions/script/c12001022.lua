@@ -1,7 +1,7 @@
 --六曜的虹光丘儿
 function c12001022.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,c12001022.matfilter,2)
+	aux.AddLinkProcedure(c,nil,2,3,c12001022.lcheck)
 	c:EnableReviveLimit()
 	--to hand
 	local e1=Effect.CreateEffect(c)
@@ -58,8 +58,8 @@ function c12001022.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	tc:SetStatus(STATUS_DESTROY_CONFIRMED,false)
 	Duel.Destroy(tc,REASON_EFFECT+REASON_REPLACE)
 end
-function c12001022.matfilter(c)
-	return c:IsSetCard(0xfb0)
+function c12001022.lcheck(g,lc)
+    return g:IsExists(Card.IsType,1,nil,TYPE_PENDULUM)
 end
 function c12001022.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
