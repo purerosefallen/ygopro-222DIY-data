@@ -64,16 +64,20 @@ function c12008013.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_DECK)
 end
 function c12008013.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local tgc=Duel.SelectMatchingCard(tp,c12008013.tgfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
-	if tgc and Duel.SendtoDeck(tgc,nil,0,REASON_EFFECT)~=0 and tc:IsRelateToEffect(e) and tc:IsFaceup() and tgc:GetAttack()>0 then
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
-		e1:SetValue(-tgc:GetAttack())
-		tc:RegisterEffect(e1)
-	end
+    local tc=Duel.GetFirstTarget()
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+    local tgc=Duel.SelectMatchingCard(tp,c12008013.tgfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
+    Duel.ConfirmCards(1-tp,tgc)
+    mc=tgc:GetAttack()
+    if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+        local e1=Effect.CreateEffect(e:GetHandler())
+        e1:SetType(EFFECT_TYPE_SINGLE)
+        e1:SetCode(EFFECT_UPDATE_ATTACK)
+        e1:SetReset(RESET_EVENT+0x1fe0000)
+        e1:SetValue(-mc)
+        tc:RegisterEffect(e1)
+        Duel.SendtoDeck(tgc,nil,0,REASON_EFFECT)
+    end
 end
+
 
