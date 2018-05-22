@@ -44,7 +44,7 @@ function c12001007.filter(c)
 end
 function c12001007.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c12001007.filter,tp,LOCATION_MZONE,0,1,nil)
-		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+        and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
 end
 function c12001007.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
