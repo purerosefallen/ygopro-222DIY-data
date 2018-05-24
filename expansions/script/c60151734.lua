@@ -38,6 +38,20 @@ function c60151734.initial_effect(c)
     e3:SetOperation(c60151734.operation2)
     c:RegisterEffect(e3)
 end
+function c60151734.thtgfilter(c)
+    return c:IsSetCard(0x3b26) and c:IsAbleToGrave()
+end
+function c60151734.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+    if chk==0 then return Duel.IsExistingMatchingCard(c60151734.thtgfilter,tp,LOCATION_DECK,0,1,nil) end
+    Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+end
+function c60151734.thop(e,tp,eg,ep,ev,re,r,rp)
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+    local g=Duel.SelectMatchingCard(tp,c60151734.thtgfilter,tp,LOCATION_DECK,0,1,1,nil)
+    if g:GetCount()>0 then
+        Duel.SendtoGrave(g,REASON_EFFECT)
+    end
+end
 function c60151734.tdfilter(c)
     return c:IsSetCard(0x3b26) and c:IsAbleToDeck()
 end
@@ -66,20 +80,6 @@ function c60151734.tdop(e,tp,eg,ep,ev,re,r,rp)
                 Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
             end
         end
-    end
-end
-function c60151734.filter(c)
-    return c:IsSetCard(0x3b26) and c:IsAbleToGrave()
-end
-function c60151734.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(c60151734.filter,tp,LOCATION_DECK,0,1,nil) end
-    Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-end
-function c60151734.thop(e,tp,eg,ep,ev,re,r,rp)
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-    local g=Duel.SelectMatchingCard(tp,c60151734.filter,tp,LOCATION_DECK,0,1,1,nil)
-    if g:GetCount()>0 then
-        Duel.SendtoGrave(g,REASON_EFFECT)
     end
 end
 function c60151734.filter(c,e,tp)
