@@ -48,6 +48,7 @@ function c12001005.operation(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,c12001005.filter1,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 		  if g:GetCount()>0 then
 			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+			Duel.ShuffleDeck(tp)
 		  end
 	else
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
