@@ -30,7 +30,7 @@ function cm.con(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsReason(REASON_DRAW)
 end
 function cm.filter(c)
-	return c:IsSetCard(0xfb8) and c:IsCode(m) and c:IsAbleToHand()
+	return c:IsSetCard(0xfb8) and not c:IsCode(m) and c:IsAbleToHand()
 end
 function cm.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_DECK) and cm.filter(chkc) end
