@@ -24,7 +24,7 @@ function c710205.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function c710205.filter(c)
-	return c:Faceup() and c:IsAbleToDeck()
+	return c:IsFaceup() and c:IsAbleToDeck()
 end
 function c710205.thfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_WIND) and (c:IsAbleToHand()
