@@ -30,7 +30,7 @@ function c2161004.spcon(e,c)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c2161004.filter,tp,LOCATION_ONFIELD,0,1,nil) 
 end
 function c2161004.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return  Duel.GetTurnPlayer()~=tp
+	return  Duel.GetTurnPlayer()==1-tp
 end
 function c2161004.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	 if chkc then return false end

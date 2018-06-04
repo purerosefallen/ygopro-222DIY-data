@@ -112,7 +112,7 @@ function c22220003.eftg(e,c)
 	return e:GetHandler():GetEquipTarget()==c  
 end
 function c22220003.indcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function c22220003.indtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end

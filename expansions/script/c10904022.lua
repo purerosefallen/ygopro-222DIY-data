@@ -39,7 +39,7 @@ function cm.cfilter2(c)
     return c:IsFaceup() and c:IsCode(10904015)
 end
 function cm.condition(e,tp,eg,ep,ev,re,r,rp)
-    return ep~=tp and Duel.IsExistingMatchingCard(cm.cfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil)
+    return ep==1-tp and Duel.IsExistingMatchingCard(cm.cfilter2,tp,LOCATION_MZONE+LOCATION_GRAVE,0,1,nil)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_REMOVED,LOCATION_REMOVED,1,nil) end

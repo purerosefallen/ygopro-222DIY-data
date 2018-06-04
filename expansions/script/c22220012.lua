@@ -68,7 +68,7 @@ function c22220012.chop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function c22220012.discon(e,tp,eg,ep,ev,re,r,rp)
 	local tp=e:GetHandler():GetControler()
-	return re:IsActiveType(TYPE_MONSTER) and ep~=tp
+	return re:IsActiveType(TYPE_MONSTER) and ep==1-tp
 end
 function c22220012.disop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Group.CreateGroup()

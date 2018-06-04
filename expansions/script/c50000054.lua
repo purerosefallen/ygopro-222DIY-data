@@ -142,7 +142,7 @@ function cm.retfilter(c,fid)
 	return c:GetFlagEffectLabel(m)==fid
 end
 function cm.retcon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp then return false end
+	if Duel.GetTurnPlayer()==1-tp then return false end
 	local g=e:GetLabelObject()
 	if not g:IsExists(cm.retfilter,1,nil,e:GetLabel()) then
 		g:DeleteGroup()

@@ -19,7 +19,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function cm.discon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and ep~=tp
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and ep==1-tp
 end
 function cm.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

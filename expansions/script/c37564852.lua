@@ -39,7 +39,7 @@ function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function cm.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:GetControler()~=tp
+	return at:GetControler()==1-tp
 end
 function cm.MergeCard(g,p,loc,seq)
 	local tc=Duel.GetFieldCard(p,loc,seq)

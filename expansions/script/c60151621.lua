@@ -43,7 +43,7 @@ function c60151621.activate(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 function c60151621.rdcon(e,tp,eg,ep,ev,re,r,rp)
-    return ep~=tp
+    return ep==1-tp
 end
 function c60151621.rdop(e,tp,eg,ep,ev,re,r,rp)
     Duel.ChangeBattleDamage(ep,ev/2)

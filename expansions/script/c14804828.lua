@@ -60,7 +60,7 @@ function c14804828.imtg(e,c)
 end
 
 function c14804828.spcon(e,tp,eg,ep,ev,re,r,rp)
-   return ep~=tp 
+   return ep==1-tp 
 end
 function c14804828.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c14804826.penfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end

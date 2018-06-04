@@ -18,7 +18,7 @@ function c14140003.cfilter(c,rc)
 	return c:IsAbleToGraveAsCost()
 end
 function c14140003.discon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and Duel.IsChainDisablable(ev) and Duel.IsExistingMatchingCard(c14140003.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler())
+	return rp==1-tp and Duel.IsChainDisablable(ev) and Duel.IsExistingMatchingCard(c14140003.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler())
 end
 function c14140003.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.SelectYesNo(tp,14140003*16) then return end

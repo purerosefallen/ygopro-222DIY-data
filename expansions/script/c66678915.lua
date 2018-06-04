@@ -75,7 +75,7 @@ function c66678915.initial_effect(c)
 	e4:SetCode(EVENT_TO_GRAVE)
 	e4:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==tp
+	return rp==1-tp and c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==tp
 	end)
 	e4:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c66678915.tgfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end

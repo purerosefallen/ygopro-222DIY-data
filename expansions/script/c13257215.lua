@@ -72,7 +72,7 @@ function c13257215.spfilter(c,e,tp)
 	return c:IsCode(13257214) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c13257215.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 and Duel.GetTurnPlayer()~=tp
+	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 and Duel.GetTurnPlayer()==1-tp
 end
 function c13257215.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,13257215)==0 end

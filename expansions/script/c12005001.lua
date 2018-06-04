@@ -58,7 +58,7 @@ function c12005001.thfilter2(c)
 	return c:IsSetCard(0xfbb) and c:IsAbleToHand()
 end
 function c12005001.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function c12005001.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

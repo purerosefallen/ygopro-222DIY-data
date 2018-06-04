@@ -55,7 +55,7 @@ function cm.atkfilter(c)
 	return c:IsAttribute(ATTRIBUTE_WATER) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())
 end
 function cm.dcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and e:GetHandler():GetPreviousControler()==tp
+	return rp==1-tp and e:GetHandler():GetPreviousControler()==tp
 end
 function cm.dop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

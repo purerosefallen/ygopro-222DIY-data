@@ -91,7 +91,7 @@ function c11113165.mtop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c11113165.discon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
+	return rp==1-tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 function c11113165.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

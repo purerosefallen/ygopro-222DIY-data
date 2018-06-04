@@ -13,7 +13,7 @@ function c2100010.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c2100010.condition(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_MONSTER) and rp~=tp
+	return re:IsActiveType(TYPE_MONSTER) and rp==1-tp
 end
 function c2100010.cffilter(c)
 	return c:IsSetCard(0x3219) and not c:IsPublic()

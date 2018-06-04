@@ -50,7 +50,7 @@ function c33700058.con(e,tp,eg,ep,ev,re,r,rp)
 end
 function c33700058.spfilter(c,e,tp,tid)
 	return  c:IsSetCard(0x442) and c:IsType(TYPE_MONSTER) 
-  and c:GetTurnID()==tid and (c:IsReason(REASON_BATTLE) or bit.band(c:GetReason(),0x41)==0x41 and c:GetReasonPlayer()~=tp) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
+  and c:GetTurnID()==tid and (c:IsReason(REASON_BATTLE) or bit.band(c:GetReason(),0x41)==0x41 and c:GetReasonPlayer()==1-tp) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
 end
 function c33700058.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
    local tid=Duel.GetTurnCount()

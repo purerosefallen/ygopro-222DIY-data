@@ -72,7 +72,7 @@ function c37564102.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c37564102.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function c37564102.tfilter(c,e,tp)
 	return c:IsCode(37564103)

@@ -43,7 +43,7 @@ function c1000401.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c1000401.con(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:IsActiveType(TYPE_SPELL)
+	return ep==1-tp and re:IsActiveType(TYPE_SPELL)
 end
 function c1000401.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

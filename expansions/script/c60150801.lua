@@ -25,7 +25,7 @@ function c60150801.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c60150801.cfilter2(c,tp)
-	return c:IsControler(1-tp) and c:GetPreviousControler()~=tp
+	return c:IsControler(1-tp) and c:GetPreviousControler()==1-tp
 end
 function c60150801.rmcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c60150801.cfilter2,1,nil,tp)

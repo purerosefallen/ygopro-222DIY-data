@@ -102,7 +102,7 @@ function c710251.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c710251.eqcon1(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function c710251.eqcon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)
@@ -127,7 +127,7 @@ function c710251.eqop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c710251.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function c710251.tdfilter(c)
 	return c:IsType(TYPE_EQUIP) and c:IsAbleToDeck()

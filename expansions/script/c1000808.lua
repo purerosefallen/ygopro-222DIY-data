@@ -32,7 +32,7 @@ function c1000808.initial_effect(c)
 end
 function c1000808.rdcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return ep~=tp and tc:IsControler(tp) and tc:IsSetCard(0x3204)
+	return ep==1-tp and tc:IsControler(tp) and tc:IsSetCard(0x3204)
 end
 function c1000808.rdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(ep,ev*1.5)

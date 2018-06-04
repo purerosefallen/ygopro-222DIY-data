@@ -100,7 +100,7 @@ function c710238.efdes(e,re)
 end
 
 function c710238.eqcon1(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function c710238.eqcon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)

@@ -59,7 +59,7 @@ function c1156902.splimit(e,se,sp,st)
 end
 --
 function c1156902.con2(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp
+	return rp==1-tp
 end
 --
 function c1156902.tfilter2_1(c)

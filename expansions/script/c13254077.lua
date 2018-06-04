@@ -89,7 +89,7 @@ function c13254077.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function c13254077.dcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return ep~=tp and (c==Duel.GetAttacker() or c==Duel.GetAttackTarget())
+	return ep==1-tp and (c==Duel.GetAttacker() or c==Duel.GetAttackTarget())
 end
 function c13254077.dop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(ep,ev/2)

@@ -50,7 +50,7 @@ function cm.spcon(e,c)
 end
 function cm.rdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return ep~=tp and Duel.GetAttackTarget()==nil
+	return ep==1-tp and Duel.GetAttackTarget()==nil
 		and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and e:GetHandler():IsSummonType(0x534)
 end
 function cm.rdop(e,tp,eg,ep,ev,re,r,rp)

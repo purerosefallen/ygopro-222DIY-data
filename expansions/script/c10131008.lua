@@ -62,7 +62,7 @@ function c10131008.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c10131008.filter(c,tp,ep)
-	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and ep~=tp 
+	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and ep==1-tp 
 end
 function c10131008.descon(e,tp,eg,ep,ev,re,r,rp)
 	return tp~=ep and Duel.GetCurrentChain()==0

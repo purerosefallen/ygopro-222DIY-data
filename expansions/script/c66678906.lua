@@ -61,7 +61,7 @@ function c66678906.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e3:SetRange(LOCATION_HAND)
 	e3:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-		return ep~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+		return ep==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 	end)
 	e3:SetCost(function(e,tp,eg,ep,ev,re,r,rp,chk)
 		local fil1,fil2=

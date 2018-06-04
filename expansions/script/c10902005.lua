@@ -64,7 +64,7 @@ function cm.eqop(e,tp,eg,ep,ev,re,r,rp)
     if not c:IsRelateToEffect(e) then return end
     if c:IsLocation(LOCATION_MZONE) and c:IsFacedown() then return end
     local tc=Duel.GetFirstTarget()
-    if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or tc:GetControler()~=tp or tc:IsFacedown() or not tc:IsRelateToEffect(e) then
+    if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or tc:GetControler()==1-tp or tc:IsFacedown() or not tc:IsRelateToEffect(e) then
         Duel.SendtoGrave(c,REASON_EFFECT)
         return
     end
@@ -114,7 +114,7 @@ end
 function cm.discon(e,tp,eg,ep,ev,re,r,rp)
     local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
     local c=e:GetHandler()
-    return ep~=tp and c:GetSummonLocation()==LOCATION_SZONE and not (re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsType(TYPE_SPELL)) and loc==LOCATION_HAND 
+    return ep==1-tp and c:GetSummonLocation()==LOCATION_SZONE and not (re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsType(TYPE_SPELL)) and loc==LOCATION_HAND 
 end
 function cm.disop(e,tp,eg,ep,ev,re,r,rp)
     Duel.NegateEffect(ev)

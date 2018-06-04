@@ -97,7 +97,7 @@ function c1160201.op1(e,tp,eg,ep,ev,re,r,rp)
 			e1_1:SetType(EFFECT_TYPE_FIELD)
 			e1_1:SetCode(EFFECT_DISABLE_FIELD)
 			e1_1:SetOperation(function (e,tp) return seq2 end)
-			if Duel.GetTurnPlayer()~=tp then
+			if Duel.GetTurnPlayer()==1-tp then
 				e1_1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
 			else
 				e1_1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)

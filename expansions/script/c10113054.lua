@@ -47,7 +47,7 @@ function c10113054.pocost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c10113054.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ec=eg:GetFirst()
-	if chk==0 then return eg:GetCount()==1 and ec:GetSummonPlayer()~=tp and ec:IsFaceup() and ec:IsType(TYPE_TUNER) and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE,1-tp) end
+	if chk==0 then return eg:GetCount()==1 and ec:GetSummonPlayer()==1-tp and ec:IsFaceup() and ec:IsType(TYPE_TUNER) and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE,1-tp) end
 	Duel.SetTargetCard(ec)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,ec,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,tp,LOCATION_HAND)

@@ -70,7 +70,7 @@ function c13254042.neop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13254042.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and c:GetCounter(0x356)==0
+	return rp==1-tp and c:GetCounter(0x356)==0
 end
 function c13254042.filter(c)
 	return c:IsRace(RACE_FAIRY) and c:IsLevelBelow(1) and c:IsAbleToHand()

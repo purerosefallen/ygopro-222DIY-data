@@ -26,7 +26,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e2)	
 end
 function cm.condition2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentChain()==0 and rp~=tp
+	return Duel.GetCurrentChain()==0 and rp==1-tp
 end
 function cm.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -61,7 +61,7 @@ function cm.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return sg:IsExists(Card.IsCode,1,nil,c:GetCode())
 end
 function cm.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsChainNegatable(ev) and rp~=tp
+	return Duel.IsChainNegatable(ev) and rp==1-tp
 end
 function cm.costfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x9334) and c:IsDualState()

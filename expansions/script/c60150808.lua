@@ -36,7 +36,7 @@ function c60150808.spcon2(e,tp,eg,ep,ev,re,r,rp)
 end
 function c60150808.condition(e,tp,eg,ep,ev,re,r,rp)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return ep~=tp and (loc==LOCATION_HAND or loc==LOCATION_GRAVE)
+	return ep==1-tp and (loc==LOCATION_HAND or loc==LOCATION_GRAVE)
 	and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
 end
 function c60150808.cfilter(c)

@@ -204,7 +204,7 @@ function c1156024.lkop1(e,tp,eg,ep,ev,re,r,rp,c)
 	local cnum=0
 	local cc=sg:GetFirst()
 	while cc do
-		if cc:GetControler()~=tp then
+		if cc:GetControler()==1-tp then
 			cnum=cnum+1
 		end
 		cc=sg:GetNext()

@@ -25,7 +25,7 @@ function c14801055.initial_effect(c)
 end
 function c14801055.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetTurnPlayer()~=tp
+	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetTurnPlayer()==1-tp
 		and (ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2)
 end
 function c14801055.filter1(c,e)

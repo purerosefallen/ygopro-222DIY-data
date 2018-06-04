@@ -123,7 +123,7 @@ function c1156015.lkop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 --
 function c1156015.con2(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return ep==1-tp and re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 --
 function c1156015.tg2(e,tp,eg,ep,ev,re,r,rp,chk)

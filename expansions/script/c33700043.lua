@@ -55,7 +55,7 @@ end
 function c33700043.spcon(e,tp,eg,ep,ev,re,r,rp)
 	 local ct1=Duel.GetFieldGroup(tp,LOCATION_ONFIELD,0):FilterCount(Card.IsFacedown,nil)
 	local ct2=Duel.GetFieldGroup(tp,0,LOCATION_ONFIELD):FilterCount(Card.IsFacedown,nil)
-	return Duel.GetTurnPlayer()~=tp and rp~=tp and ct1<ct2
+	return Duel.GetTurnPlayer()==1-tp and rp==1-tp and ct1<ct2
 end
 function c33700043.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMZoneCount(tp)>0

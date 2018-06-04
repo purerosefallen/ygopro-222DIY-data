@@ -105,7 +105,7 @@ function c17060850.atkop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c17060850.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetHandler():GetLinkedGroup()~=nil
+	return ep==1-tp and e:GetHandler():GetLinkedGroup()~=nil
 end
 function c17060850.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(ep,ev*2)

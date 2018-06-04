@@ -93,7 +93,7 @@ function c60150502.efop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c60150502.condition(e,tp,eg,ep,ev,re,r,rp)
-    return ep~=tp
+    return ep==1-tp
 end
 function c60150502.target(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return true end

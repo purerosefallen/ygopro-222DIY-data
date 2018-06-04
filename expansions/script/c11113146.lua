@@ -70,7 +70,7 @@ function c11113146.spop(e,tp,eg,ep,ev,re,r,rp)
 end	
 function c11113146.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:GetControler()~=tp
+	return at:GetControler()==1-tp
 end
 function c11113146.atkfilter(c)
 	return c:IsSetCard(0x15d) and c:IsType(TYPE_LINK) and c:IsAbleToExtraAsCost()

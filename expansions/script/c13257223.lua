@@ -67,7 +67,7 @@ function c13257223.efilter(e,re)
 	return e:GetHandlerPlayer()~=re:GetOwnerPlayer()
 end
 function c13257223.codisable(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 		and not e:GetHandler():IsStatus(STATUS_CHAINING)
 end
 function c13257223.tgdisable(e,tp,eg,ep,ev,re,r,rp,chk)

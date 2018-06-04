@@ -36,7 +36,7 @@ function c33700343.desop(e,tp,eg,ep,ev,re,r,rp)
 	if bt:IsControler(tp) then at,bt=bt,at end
 	if not bt:IsRelateToBattle() then return end
 	Duel.Hint(HINT_CARD,0,33700343)
-	if Duel.Destroy(bt,REASON_EFFECT)~=0 and Duel.GetTurnPlayer()~=tp then
+	if Duel.Destroy(bt,REASON_EFFECT)~=0 and Duel.GetTurnPlayer()==1-tp then
 	   Duel.SendtoHand(at,nil,REASON_EFFECT)
 	end
 end

@@ -60,7 +60,7 @@ function c13257308.efilter(e,re)
 	return e:GetHandlerPlayer()~=re:GetOwnerPlayer()
 end
 function c13257308.descon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and eg:GetFirst()==e:GetHandler():GetEquipTarget()
+	return ep==1-tp and eg:GetFirst()==e:GetHandler():GetEquipTarget()
 end
 function c13257308.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end

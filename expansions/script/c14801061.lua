@@ -44,7 +44,7 @@ function c14801061.dimfilter(c)
 end
 function c14801061.dimcom(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:GetControler()~=tp and Duel.IsExistingMatchingCard(c14801061.dimfilter,tp,LOCATION_ONFIELD,0,1,nil)
+	return at:GetControler()==1-tp and Duel.IsExistingMatchingCard(c14801061.dimfilter,tp,LOCATION_ONFIELD,0,1,nil)
 end
 function c14801061.dimtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

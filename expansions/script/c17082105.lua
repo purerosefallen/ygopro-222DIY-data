@@ -130,7 +130,7 @@ function c17082105.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c17082105.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetHandler():GetBattleTarget()~=nil
+	return ep==1-tp and e:GetHandler():GetBattleTarget()~=nil
 end
 function c17082105.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(ep,0)

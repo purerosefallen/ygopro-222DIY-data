@@ -32,7 +32,7 @@ function c33700208.op(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.SendtoDeck(g,nil,2,REASON_EFFECT)<3 or g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)<3 then return end
 		--if you do, Draw 1 card. If this card is activated in your opponent's turn, you can draw 1 more card.
 		local d=1
-		if Duel.GetTurnPlayer()~=tp then d=d+1 end
+		if Duel.GetTurnPlayer()==1-tp then d=d+1 end
 		Duel.Draw(tp,d,REASON_EFFECT)
 		local dg=Duel.GetOperatedGroup():Filter(Card.IsLocation,tp,LOCATION_HAND)
 		--And if it's a "Heavenly Maid" monster, you can Special Summon it.

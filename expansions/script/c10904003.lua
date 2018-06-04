@@ -71,7 +71,7 @@ function cm.tdcon(e,tp,eg,ep,ev,re,r,rp)
     return tc1:GetLeftScale()==tc2:GetRightScale() and e:GetHandler():GetLeftScale()>tc1:GetLeftScale()
 end
 function cm.filter(c,tp)
-    return c:GetSummonPlayer()~=tp and bit.band(c:GetSummonLocation(),LOCATION_HAND+LOCATION_GRAVE)~=0
+    return c:GetSummonPlayer()==1-tp and bit.band(c:GetSummonLocation(),LOCATION_HAND+LOCATION_GRAVE)~=0
         and c:IsAbleToDeck() and c:IsLocation(LOCATION_MZONE)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -68,7 +68,7 @@ function c5012608.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function c5012608.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_DESTROY) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_SZONE) and c:GetSequence()<5 and c:GetPreviousControler()==tp and rp~=tp
+	return c:IsReason(REASON_DESTROY) and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_SZONE) and c:GetSequence()<5 and c:GetPreviousControler()==tp and rp==1-tp
 end
 function c5012608.tgfilter(c)
 	return c:IsAbleToDeck() and not c:IsCode(5012604) 

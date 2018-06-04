@@ -59,7 +59,7 @@ function c5012611.op(e,tp,eg,ep,ev,re,r,rp)
 end
 function c5012611.damcon(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    return ep~=tp and ev>=Duel.GetLP(1-tp) and Duel.GetAttacker()==c
+    return ep==1-tp and ev>=Duel.GetLP(1-tp) and Duel.GetAttacker()==c
 end
 function c5012611.damop(e,tp,eg,ep,ev,re,r,rp)
     Duel.ChangeBattleDamage(ep,0)

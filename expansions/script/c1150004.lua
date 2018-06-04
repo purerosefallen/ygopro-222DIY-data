@@ -69,7 +69,7 @@ function c1150004.val1_1(e,re,val,r,rp,rc)
 end
 --
 function c1150004.ofilter1_2(c,tp)
-	return c:GetControler()~=tp
+	return c:GetControler()==1-tp
 end
 function c1150004.op1_2(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(c1150004.ofilter1_2,nil,tp)

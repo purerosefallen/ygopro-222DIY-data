@@ -90,7 +90,7 @@ function c17060830.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c17060830.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetHandler():GetBattleTarget()~=nil
+	return ep==1-tp and e:GetHandler():GetBattleTarget()~=nil
 end
 function c17060830.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(ep,ev*2)

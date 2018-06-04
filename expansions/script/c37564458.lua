@@ -22,7 +22,7 @@ function cm.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_BATTLE_DAMAGE)
 	e2:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-		return ep~=tp
+		return ep==1-tp
 	end)
 	e2:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
 		if chk==0 then return true end

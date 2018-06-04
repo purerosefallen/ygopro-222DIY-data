@@ -58,7 +58,7 @@ function c14801039.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c14801039.discon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetTurnPlayer()~=tp
+	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetTurnPlayer()==1-tp
 		and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
 end
 function c14801039.disfilter(c)

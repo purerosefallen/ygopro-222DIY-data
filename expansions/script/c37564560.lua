@@ -49,7 +49,7 @@ function cm.lfilter(c,g)
 end
 function cm.location_check(p,tp,z)
 	local tz=0
-	if p~=tp then
+	if p==1-tp then
 		tz=((z & 0x1f0000) >> 16)
 	else
 		tz=(z & 0x1f)
@@ -63,7 +63,7 @@ function cm.location_check(p,tp,z)
 			res=(cz | res)
 		end
 	end
-	if p~=tp then res=(res << 16) end
+	if p==1-tp then res=(res << 16) end
 	return ct,res
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)

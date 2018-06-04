@@ -62,7 +62,7 @@ function c5013355.op2(e,tp,eg,ep,ev,re,r,rp)
 end
 function c5013355.con(e,tp,eg,ep,ev,re,r,rp)
     local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-    return bit.band(loc,LOCATION_ONFIELD)~=0 and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp~=tp and (Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,LOCATION_ONFIELD)>0 or Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_HAND,1,nil))
+    return bit.band(loc,LOCATION_ONFIELD)~=0 and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp==1-tp and (Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,LOCATION_ONFIELD)>0 or Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_HAND,1,nil))
 end
 function c5013355.cfilter(c)
     return c:IsOnField() or c:IsAbleToDeck()

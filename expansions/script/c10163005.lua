@@ -83,7 +83,7 @@ function c10163005.desfilter0(c)
 	return c:IsType(TYPE_MONSTER) and c:IsDestructable()
 end
 function c10163005.desfilter(c,tp)
-	return c10163005.desfilter0(c) and ((c:GetOwner()==tp and Duel.IsPlayerCanDraw(tp,1)) or (c:GetOwner()~=tp and Duel.IsPlayerCanDraw(1-tp,1)))
+	return c10163005.desfilter0(c) and ((c:GetOwner()==tp and Duel.IsPlayerCanDraw(tp,1)) or (c:GetOwner()==1-tp and Duel.IsPlayerCanDraw(1-tp,1)))
 end
 function c10163005.rfilter(c,tp,ct,ec)
 	return (c:IsLevelAbove(8) or c:IsAttribute(ATTRIBUTE_EARTH)) and ((ct==1 and Duel.CheckReleaseGroupEx(tp,c10163005.rfilter,1,c,tp,0)) or ct==0) and c~=ec

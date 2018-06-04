@@ -84,7 +84,7 @@ function c60150642.effcon(e)
 	return e:GetOwnerPlayer()==e:GetHandlerPlayer()
 end
 function c60150642.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetOwnerPlayer()==tp
+	return ep==1-tp and e:GetOwnerPlayer()==tp
 end
 function c60150642.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(ep,ev/2)

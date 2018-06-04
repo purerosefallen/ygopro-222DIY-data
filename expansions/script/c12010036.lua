@@ -100,7 +100,7 @@ function c12010036.reop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c12010036.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP) and not c:IsLocation(LOCATION_DECK) and c:GetPreviousControler()==tp
+	return rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP) and not c:IsLocation(LOCATION_DECK) and c:GetPreviousControler()==tp
 end
 function c12010036.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

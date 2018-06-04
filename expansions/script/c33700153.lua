@@ -14,7 +14,7 @@ function c33700153.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c33700153.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and r~=REASON_RULE
+	return ep==1-tp and r~=REASON_RULE
 end
 function c33700153.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsAbleToRemove() end

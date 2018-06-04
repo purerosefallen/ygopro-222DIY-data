@@ -163,7 +163,7 @@ function c1150045.checkop1_1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1150045.con1_1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function c1150045.eop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,1150045)

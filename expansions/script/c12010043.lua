@@ -50,7 +50,7 @@ function c12010043.actcon(e)
 end
 function c12010043.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return ep~=tp and tc:IsControler(tp) and tc:IsSetCard(0xfba)
+	return ep==1-tp and tc:IsControler(tp) and tc:IsSetCard(0xfba)
 end
 function c12010043.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() end

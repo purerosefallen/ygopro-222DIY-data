@@ -106,7 +106,7 @@ function c12010024.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c12010024.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:GetControler()~=tp and Duel.GetAttackTarget()==nil
+	return at:GetControler()==1-tp and Duel.GetAttackTarget()==nil
 end
 function c12010024.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

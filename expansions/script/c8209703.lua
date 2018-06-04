@@ -31,7 +31,7 @@ function c8209703.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c8209703.cbcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetAttackTarget()~=e:GetHandler()
+	return Duel.GetTurnPlayer()==1-tp and Duel.GetAttackTarget()~=e:GetHandler()
 end
 function c8209703.cbcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

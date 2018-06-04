@@ -42,7 +42,7 @@ function c13257306.initial_effect(c)
 end
 function c13257306.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:GetControler()~=tp and Duel.GetAttackTarget()==nil
+	return at:GetControler()==1-tp and Duel.GetAttackTarget()==nil
 end
 function c13257306.eqfilter(c,ec)
 	return c:IsSetCard(0x352) and c:IsType(TYPE_MONSTER) and c:CheckEquipTarget(ec)

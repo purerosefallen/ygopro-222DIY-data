@@ -103,7 +103,7 @@ function c60151614.tg(e,c)
 	return not c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_EFFECT)
 end
 function c60151614.disoperation(e,tp,eg,ep,ev,re,r,rp)
-	if ep~=tp and re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsAttribute(ATTRIBUTE_LIGHT) then
+	if ep==1-tp and re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsAttribute(ATTRIBUTE_LIGHT) then
 		Duel.NegateEffect(ev)
 	end
 end

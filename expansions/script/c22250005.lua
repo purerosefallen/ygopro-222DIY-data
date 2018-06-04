@@ -31,7 +31,7 @@ function c22250005.IsRiviera(c)
 end
 function c22250005.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return ep~=tp and tc:IsControler(tp) and c22250005.IsRiviera(tc) and tc:IsType(TYPE_MONSTER)
+	return ep==1-tp and tc:IsControler(tp) and c22250005.IsRiviera(tc) and tc:IsType(TYPE_MONSTER)
 end
 function c22250005.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end

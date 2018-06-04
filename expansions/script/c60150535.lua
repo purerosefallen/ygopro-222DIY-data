@@ -55,7 +55,7 @@ function c60150535.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c60150535.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and e:GetHandler():GetOverlayCount()~=0
+	return ep==1-tp and e:GetHandler():GetOverlayCount()~=0
 end
 function c60150535.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

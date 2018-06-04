@@ -180,7 +180,7 @@ function c60151503.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c60151503.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsContains(e:GetHandler()) and rp~=tp 
+	return eg:IsContains(e:GetHandler()) and rp==1-tp 
 end
 function c60151503.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsContains(e:GetHandler()) and Duel.GetAttacker():IsControler(1-tp)

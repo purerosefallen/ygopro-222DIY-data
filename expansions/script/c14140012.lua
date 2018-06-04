@@ -28,7 +28,7 @@ function cm.initial_effect(c)
 	e1:SetCode(EVENT_DRAW)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
-		if ep~=tp then
+		if ep==1-tp then
 			e:GetHandler():AddCounter(0x18,1)
 		end
 	end)

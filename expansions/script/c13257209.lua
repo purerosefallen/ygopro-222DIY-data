@@ -49,7 +49,7 @@ end
 function c13257209.condition(e,tp,eg,ep,ev,re,r,rp)
 	local tn=Duel.GetTurnPlayer()
 	local ph=Duel.GetCurrentPhase()
-	return tn~=tp and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE))
+	return tn==1-tp and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE))
 end
 function c13257209.filter(c)
 	return (c:IsRace(RACE_MACHINE) or c:IsRace(RACE_FIEND)) and c:IsSummonable(true,nil,1) or c:IsMSetable(true,nil,1)
@@ -74,7 +74,7 @@ function c13257209.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257209.cfilter(c,tp)
-	return c:GetPreviousControler()==tp and c:IsSetCard(0x353) and (c:GetReasonPlayer()~=tp and c:IsReason(REASON_EFFECT))
+	return c:GetPreviousControler()==tp and c:IsSetCard(0x353) and (c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT))
 		and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c13257209.drcon(e,tp,eg,ep,ev,re,r,rp)

@@ -23,7 +23,7 @@ function c22261106.IsNanayaShiki(c)
 end
 function c22261106.con1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return ep~=tp and tc:IsControler(tp) and c22261106.IsNanayaShiki(tc)
+	return ep==1-tp and tc:IsControler(tp) and c22261106.IsNanayaShiki(tc)
 end
 function c22261106.con2(e,tp,eg,ep,ev,re,r,rp)
 	local a=Duel.GetAttacker()

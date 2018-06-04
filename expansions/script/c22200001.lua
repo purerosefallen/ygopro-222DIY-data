@@ -18,7 +18,7 @@ function c22200001.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c22200001.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function c22200001.filter(c,ignore)
 	return c:IsType(TYPE_TRAP) and c:IsSSetable(ignore)

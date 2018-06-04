@@ -70,7 +70,7 @@ function c22230004.con2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
 	if not g or g:GetCount()~=1 then return false end
 	local tc=g:GetFirst()
-	return tc:IsFaceup() and c22230004.IsValhalla(tc) and tc:IsAbleToRemoveAsCost() and rp~=tp and tc:IsControler(tp) and tc:IsLocation(LOCATION_MZONE)
+	return tc:IsFaceup() and c22230004.IsValhalla(tc) and tc:IsAbleToRemoveAsCost() and rp==1-tp and tc:IsControler(tp) and tc:IsLocation(LOCATION_MZONE)
 end
 function c22230004.cost2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local tc=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS):GetFirst()

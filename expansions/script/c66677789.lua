@@ -81,7 +81,7 @@ end
 function cm.discon1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return Duel.IsChainNegatable(ev) and ep~=tp and re:IsActiveType(TYPE_MONSTER) and e:GetHandler():GetOverlayGroup():IsExists(Card.IsRace,1,nil,RACE_SEASERPENT)
+	return Duel.IsChainNegatable(ev) and ep==1-tp and re:IsActiveType(TYPE_MONSTER) and e:GetHandler():GetOverlayGroup():IsExists(Card.IsRace,1,nil,RACE_SEASERPENT)
 end
 function cm.distg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -105,7 +105,7 @@ end
 function cm.discon2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return Duel.IsChainNegatable(ev) and ep~=tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and e:GetHandler():GetOverlayGroup():IsExists(Card.IsRace,1,nil,RACE_FAIRY)
+	return Duel.IsChainNegatable(ev) and ep==1-tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and e:GetHandler():GetOverlayGroup():IsExists(Card.IsRace,1,nil,RACE_FAIRY)
 end
 function cm.distg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

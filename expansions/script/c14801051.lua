@@ -47,7 +47,7 @@ function c14801051.initial_effect(c)
 end
 function c14801051.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetTurnPlayer()~=tp
+	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetTurnPlayer()==1-tp
 		and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
 end
 function c14801051.costfilter(c)
@@ -74,7 +74,7 @@ function c14801051.damop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Damage(p,ct*400,REASON_EFFECT)
 end
 function c14801051.dambcon(e,tp,eg,ep,ev,re,r,rp)
-	return aux.exccon(e) and Duel.GetTurnPlayer()~=tp and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return aux.exccon(e) and Duel.GetTurnPlayer()==1-tp and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
 end
 function c14801051.dambtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,0xe,1,nil) end

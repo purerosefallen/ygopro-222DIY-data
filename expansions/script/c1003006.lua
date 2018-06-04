@@ -72,7 +72,7 @@ function c1003006.splimit(e,c)
 	return not c:IsSetCard(0xa200)
 end
 function c1003006.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function c1003006.spfilter(c,e,tp)
 	return  (c:IsRace(RACE_FAIRY) or c:IsSetCard(0xa200)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

@@ -33,7 +33,7 @@ function c12010033.cfilter(c)
 	return c:IsSetCard(0xfba) and c:IsReleasable()
 end
 function c12010033.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp 
+	return ep==1-tp 
 end
 function c12010033.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c12010033.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,nil) end

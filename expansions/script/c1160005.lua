@@ -113,7 +113,7 @@ function c1160005.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 --
 function c1160005.ofilter2(c,tp)
-	return c:IsFaceup() and c:GetControler()~=tp and not c:IsDisabled()
+	return c:IsFaceup() and c:GetControler()==1-tp and not c:IsDisabled()
 end
 function c1160005.op2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

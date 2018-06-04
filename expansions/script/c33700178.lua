@@ -54,7 +54,7 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:GetReasonPlayer()~=tp and c:IsReason(REASON_EFFECT)
+	return c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT)
 end
 function cm.filter1(c)
 	return c:IsSetCard(0x442) and c:IsAbleToHand()

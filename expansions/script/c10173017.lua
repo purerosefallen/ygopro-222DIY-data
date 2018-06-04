@@ -26,7 +26,7 @@ end
 function c10173017.discon(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ph=Duel.GetCurrentPhase()
 	return e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-		and ep~=tp and ph>=0x08 and ph<=0x20 and Duel.IsChainNegatable(ev)
+		and ep==1-tp and ph>=0x08 and ph<=0x20 and Duel.IsChainNegatable(ev)
 end
 function c10173017.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

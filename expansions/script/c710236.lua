@@ -97,7 +97,7 @@ function c710236.efilter(e,te)
 end
 
 function c710236.eqcon1(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function c710236.eqcon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)

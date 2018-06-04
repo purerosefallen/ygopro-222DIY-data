@@ -50,12 +50,12 @@ end
 function cm.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	return re:IsActiveType(TYPE_MONSTER) and rc~=c and not c:IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp
+	return re:IsActiveType(TYPE_MONSTER) and rc~=c and not c:IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp
 end
 function cm.condition1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc~=c and not c:IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and rc~=c and not c:IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp
 end 
 function cm.operation0(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

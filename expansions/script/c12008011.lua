@@ -52,7 +52,7 @@ function c12008011.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c12008011.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function c12008011.filter1(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingMatchingCard(c12008011.filter2,tp,LOCATION_DECK,0,1,c,e,tp,c) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0

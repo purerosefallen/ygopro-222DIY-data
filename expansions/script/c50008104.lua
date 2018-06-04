@@ -93,7 +93,7 @@ function cm.regop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function cm.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

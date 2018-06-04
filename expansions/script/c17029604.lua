@@ -138,7 +138,7 @@ function c17029604.valct(e,re,r,rp)
 	return bit.band(r,REASON_BATTLE)~=0
 end
 function c17029604.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp
+	return rp==1-tp
 end
 function c17029604.grfilter(c)
 	return c:IsFacedown() and c:IsAbleToGrave()

@@ -48,7 +48,7 @@ function c22260141.IsNanayaShiki(c)
 	return m and m.named_with_NanayaShiki
 end
 function c22260141.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function c22260141.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

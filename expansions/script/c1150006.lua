@@ -57,7 +57,7 @@ function c1150006.op1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1150006.ofilter1_1(c,tp)
-	return c:GetSummonPlayer()~=tp and c:IsPosition(POS_FACEUP_ATTACK)
+	return c:GetSummonPlayer()==1-tp and c:IsPosition(POS_FACEUP_ATTACK)
 end
 function c1150006.op1_1(e,tp,eg,ep,ev,re,r,rp)
 	local hurt=e:GetLabel()

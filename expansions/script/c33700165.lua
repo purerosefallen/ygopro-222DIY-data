@@ -76,7 +76,7 @@ function c33700165.sdcon(e)
 	return Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_HAND,0)==0
 end
 function c33700165.descon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsActiveType(TYPE_MONSTER) and  re:GetHandler():IsDestructable()  and Duel.GetTurnPlayer()==1-tp
+	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and  re:GetHandler():IsDestructable()  and Duel.GetTurnPlayer()==1-tp
 end
 function c33700165.desfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()
@@ -97,7 +97,7 @@ function c33700165.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c33700165.discon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp  and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainDisablable(ev) and Duel.GetTurnPlayer()==1-tp
+	return rp==1-tp  and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainDisablable(ev) and Duel.GetTurnPlayer()==1-tp
 end
 function c33700165.disfilter(c)
 	return c:IsType(TYPE_SPELL) and c:IsDiscardable()
@@ -118,7 +118,7 @@ function c33700165.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c33700165.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Duel.GetCurrentPhase()~=PHASE_DRAW  and Duel.GetTurnPlayer()==1-tp
+	return ep==1-tp and Duel.GetCurrentPhase()~=PHASE_DRAW  and Duel.GetTurnPlayer()==1-tp
 end
 function c33700165.drfilter(c)
 	return c:IsType(TYPE_TRAP) and c:IsDiscardable()

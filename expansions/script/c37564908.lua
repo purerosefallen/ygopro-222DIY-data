@@ -47,7 +47,7 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.descon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function cm.sfilter(c,e,tp)
 	return Senya.check_set_sayuri(c) and not c:IsCode(m) and c:IsCanBeSpecialSummoned(e,0,tp,true,true) and c:IsLevelBelow(8)

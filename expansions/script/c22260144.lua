@@ -35,7 +35,7 @@ function c22260144.initial_effect(c)
 	e3:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
 		local ph=Duel.GetCurrentPhase()
 		local l=e:GetLabel()
-		if l==2 then return ph>PHASE_MAIN1 and ph<PHASE_MAIN2 and Duel.GetTurnPlayer()~=tp end
+		if l==2 then return ph>PHASE_MAIN1 and ph<PHASE_MAIN2 and Duel.GetTurnPlayer()==1-tp end
 		return Duel.GetTurnPlayer()==tp
 	end)
 	e3:SetCost(c22260144.descost)

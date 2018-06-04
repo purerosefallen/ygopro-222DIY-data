@@ -37,7 +37,7 @@ function c10173029.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c10173029.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and bit.band(e:GetHandler():GetType(),0x20002)==0x20002
+	return Duel.GetTurnPlayer()==1-tp and bit.band(e:GetHandler():GetType(),0x20002)==0x20002
 end
 function c10173029.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMZoneCount(tp)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end

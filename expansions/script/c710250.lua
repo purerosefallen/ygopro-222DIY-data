@@ -116,7 +116,7 @@ function c710250.eqop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c710250.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function c710250.spfilter1(c,e,tp)
 	return c710250.IsTheLostSpirit(c) and not c:IsCode(710250) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

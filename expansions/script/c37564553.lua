@@ -53,7 +53,7 @@ function cm.cnegop(e,tp,eg,ep,ev,re,r,rp)
 	Senya.OverlayCard(e:GetHandler(),re:GetHandler())
 end
 function cm.sfilter(c,tp)
-	return c:GetSummonPlayer()~=tp
+	return c:GetSummonPlayer()==1-tp
 end
 function cm.ssfilter(c,e,tp)
 	return c:IsType(TYPE_TRAP) and c.Senya_desc_with_nanahira and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetOriginalCode(),0,0x21,7,2850,2100,RACE_FAIRY,ATTRIBUTE_LIGHT)

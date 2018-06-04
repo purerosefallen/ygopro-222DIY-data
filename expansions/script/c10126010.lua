@@ -125,7 +125,7 @@ function c10126010.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local ec=eg:GetFirst()
 	local bc=ec:GetBattleTarget()
 	return e:GetHandler():GetEquipTarget()==ec and ec:IsControler(tp)
-		and bc:IsReason(REASON_BATTLE) and bc:GetPreviousControler()~=tp
+		and bc:IsReason(REASON_BATTLE) and bc:GetPreviousControler()==1-tp
 end
 function c10126010.thfilter(c)
 	return c:IsSetCard(0x1335) and c:IsAbleToHand()

@@ -31,7 +31,7 @@ function c22600015.spcon(e,c)
 end
 
 function c22600015.dkcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 
 function c22600015.dktg(e,tp,eg,ep,ev,re,r,rp,chk)

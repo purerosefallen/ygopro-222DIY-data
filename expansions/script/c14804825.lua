@@ -91,7 +91,7 @@ function c14804825.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c14804825.spcon1(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function c14804825.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
    if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and  Duel.GetLocationCount(tp,LOCATION_MZONE)>0

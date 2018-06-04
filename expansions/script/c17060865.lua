@@ -108,7 +108,7 @@ function c17060865.chainlm(e,rp,tp)
 	return tp==rp
 end
 function c17060865.discon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
 end
 function c17060865.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

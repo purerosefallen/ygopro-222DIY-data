@@ -66,7 +66,7 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.descon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function cm.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) end
@@ -83,7 +83,7 @@ function cm.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.rdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return ep~=tp and Duel.GetAttackTarget()==nil
+	return ep==1-tp and Duel.GetAttackTarget()==nil
 		and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end
 function cm.rdop(e,tp,eg,ep,ev,re,r,rp)

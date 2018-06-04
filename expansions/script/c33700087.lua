@@ -54,7 +54,7 @@ function c33700087.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.PayLPCost(tp,1000)
 end
 function c33700087.dcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c33700087.tgfilter,1,nil,tp) and rp~=tp
+	return eg:IsExists(c33700087.tgfilter,1,nil,tp) and rp==1-tp
 end
 function c33700087.dtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -77,7 +77,7 @@ function c33700087.atop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c33700087.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:GetControler()~=tp and Duel.GetAttackTarget()==nil
+	return at:GetControler()==1-tp and Duel.GetAttackTarget()==nil
 end
 function c33700087.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c33700087.filter,tp,LOCATION_GRAVE,0,1,nil)  end

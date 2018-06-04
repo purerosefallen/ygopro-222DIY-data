@@ -96,7 +96,7 @@ function c13257340.efilter(e,te)
 end
 function c13257340.accon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return ep~=tp and c:GetFlagEffect(1)>0 and ((c:IsAttribute(ATTRIBUTE_LIGHT) and re:IsActiveType(TYPE_MONSTER)) or (c:IsAttribute(ATTRIBUTE_DARK) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)))
+	return ep==1-tp and c:GetFlagEffect(1)>0 and ((c:IsAttribute(ATTRIBUTE_LIGHT) and re:IsActiveType(TYPE_MONSTER)) or (c:IsAttribute(ATTRIBUTE_DARK) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)))
 end
 function c13257340.acop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,13257340)

@@ -69,7 +69,7 @@ function c1150042.op3(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e3_1,tp)
 end
 function c1150042.con3_1(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and bit.band(r,REASON_EFFECT)~=0
+	return ep==1-tp and bit.band(r,REASON_EFFECT)~=0
 end
 function c1150042.op3_1(e,tp,eg,ep,ev,re,r,rp)
 	local lp=Duel.GetLP(1-tp)

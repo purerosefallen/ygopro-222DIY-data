@@ -55,7 +55,7 @@ end
 --
 function c1110131.con4(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousPosition(POS_FACEUP) and not c:IsLocation(LOCATION_DECK) and c:GetPreviousControler()==tp and rp~=tp
+	return c:IsPreviousPosition(POS_FACEUP) and not c:IsLocation(LOCATION_DECK) and c:GetPreviousControler()==tp and rp==1-tp
 end
 --
 function c1110131.tfilter4_1(c)

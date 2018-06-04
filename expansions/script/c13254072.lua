@@ -59,7 +59,7 @@ function c13254072.cfilter(c)
 end
 function c13254072.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return Duel.GetMatchingGroup(c13254072.cfilter,tp,LOCATION_GRAVE,0,nil):GetClassCount(Card.GetCode)>=2 and at:GetControler()~=tp
+	return Duel.GetMatchingGroup(c13254072.cfilter,tp,LOCATION_GRAVE,0,nil):GetClassCount(Card.GetCode)>=2 and at:GetControler()==1-tp
 end
 function c13254072.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 end
@@ -70,7 +70,7 @@ function c13254072.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardHand(1-tp,aux.TRUE,1,1,REASON_DISCARD+REASON_EFFECT)
 end
 function c13254072.condition1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetMatchingGroup(c13254072.cfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil):GetClassCount(Card.GetCode)>=4 and ep~=tp and Duel.IsChainNegatable(ev)
+	return Duel.GetMatchingGroup(c13254072.cfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil):GetClassCount(Card.GetCode)>=4 and ep==1-tp and Duel.IsChainNegatable(ev)
 end
 function c13254072.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 end
@@ -88,7 +88,7 @@ function c13254072.condition2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetMatchingGroup(c13254072.cfilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil):GetClassCount(Card.GetCode)>=6
 end
 function c13254072.filter(c,tp)
-	return c:IsFaceup() and c:GetSummonPlayer()~=tp and c:IsCanTurnSet()
+	return c:IsFaceup() and c:GetSummonPlayer()==1-tp and c:IsCanTurnSet()
 end
 function c13254072.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(c13254072.filter,1,nil,tp) and Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 end

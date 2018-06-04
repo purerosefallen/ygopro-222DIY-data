@@ -50,7 +50,7 @@ function cm.actcon(e)
 	return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()
 end
 function cm.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and bit.band(r,REASON_EFFECT)~=0 and re:GetHandler():IsSetCard(0x1404) and not re:GetHandler():IsCode(m)
+	return ep==1-tp and bit.band(r,REASON_EFFECT)~=0 and re:GetHandler():IsSetCard(0x1404) and not re:GetHandler():IsCode(m)
 end
 function cm.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) end

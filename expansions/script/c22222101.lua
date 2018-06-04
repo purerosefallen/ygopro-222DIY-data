@@ -26,7 +26,7 @@ function c22222101.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c22222101.filter(c,tp)
-	return c:IsFaceup() and c:GetSummonPlayer()~=tp
+	return c:IsFaceup() and c:GetSummonPlayer()==1-tp
 end
 function c22222101.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(c22222101.filter,1,nil,tp) end

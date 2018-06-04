@@ -46,7 +46,7 @@ function c2120007.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
 function c2120007.discon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsChainNegatable(ev) and rp~=tp and aux.exccon(e)
+	return Duel.IsChainNegatable(ev) and rp==1-tp and aux.exccon(e)
 end
 function c2120007.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMZoneCount(tp)>0

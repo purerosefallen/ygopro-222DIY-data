@@ -93,7 +93,7 @@ end
 end
 end
 function c33700061.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp 
+	return ep==1-tp 
 end
 function c33700061.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(ep,ev*2)

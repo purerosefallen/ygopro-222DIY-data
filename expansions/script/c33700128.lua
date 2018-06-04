@@ -58,7 +58,7 @@ function c33700128.effop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c33700128.hdcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Duel.GetCurrentPhase()~=PHASE_DRAW
+	return ep==1-tp and Duel.GetCurrentPhase()~=PHASE_DRAW
 end
 function c33700128.hdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

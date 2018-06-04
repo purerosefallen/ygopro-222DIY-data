@@ -42,7 +42,7 @@ function c5200011.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local ct=c:GetOverlayCount()
 	e:SetLabel(ct)
-	return c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp
+	return c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp
 		and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp and ct>0
 end
 function c5200011.spfilter(c,e,tp)

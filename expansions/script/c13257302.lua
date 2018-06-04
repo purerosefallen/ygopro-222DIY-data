@@ -65,7 +65,7 @@ function c13257302.actcon(e)
 end
 function c13257302.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetEquipTarget()
-	return ep~=tp and tc==Duel.GetAttacker() and Duel.GetAttackTarget() and Duel.GetAttackTarget():IsDefensePos()
+	return ep==1-tp and tc==Duel.GetAttacker() and Duel.GetAttackTarget() and Duel.GetAttackTarget():IsDefensePos()
 end
 function c13257302.damop(e,tp,eg,ep,ev,re,r,rp)
 	local atk=e:GetHandler():GetEquipTarget():GetAttack()

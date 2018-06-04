@@ -23,7 +23,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function cm.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function cm.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>=4 end

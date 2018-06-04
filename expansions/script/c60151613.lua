@@ -110,7 +110,7 @@ function c60151613.adop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c60151613.disoperation(e,tp,eg,ep,ev,re,r,rp)
-	if ep~=tp and re:IsActiveType(TYPE_TRAP) then
+	if ep==1-tp and re:IsActiveType(TYPE_TRAP) then
 		Duel.NegateEffect(ev)
 	end
 end

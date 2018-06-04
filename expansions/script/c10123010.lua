@@ -14,7 +14,7 @@ function c10123010.initial_effect(c)
 	c:RegisterEffect(e1)	
 end
 function c10123010.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function c10123010.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c10123010.filter,tp,LOCATION_HAND,0,1,nil) end

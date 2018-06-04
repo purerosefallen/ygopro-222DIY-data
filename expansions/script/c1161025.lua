@@ -97,7 +97,7 @@ function c1161025.tg1_1_5(e,c)
 end
 --
 function c1161025.con2(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and ((bit.band(r,REASON_BATTLE)~=0 and Duel.GetTurnPlayer()~=tp) or (bit.band(r,REASON_EFFECT)~=0 and rp~=tp))
+	return ep==tp and ((bit.band(r,REASON_BATTLE)~=0 and Duel.GetTurnPlayer()==1-tp) or (bit.band(r,REASON_EFFECT)~=0 and rp==1-tp))
 end
 --
 function c1161025.op2(e,tp,eg,ep,ev,re,r,rp)
@@ -107,7 +107,7 @@ function c1161025.op2(e,tp,eg,ep,ev,re,r,rp)
 --
 		local lp=Duel.GetLP(tp)
 --
-		if Duel.GetTurnPlayer()~=tp then
+		if Duel.GetTurnPlayer()==1-tp then
 			local e2_1=Effect.CreateEffect(c)
 			e2_1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 			e2_1:SetCode(EVENT_PHASE+PHASE_END)
@@ -150,7 +150,7 @@ function c1161025.op2_1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1161025.con2_2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function c1161025.op2_2(e,tp,eg,ep,ev,re,r,rp)
 	local lp=e:GetLabel()

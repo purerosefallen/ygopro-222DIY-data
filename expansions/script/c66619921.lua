@@ -261,7 +261,7 @@ function c66619921.trtg(e,c)
 	return c:IsStatus(STATUS_SPSUMMON_TURN)
 end
 function c66619921.condition1(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:GetHandler():IsOnField() and ((re:IsActiveType(TYPE_MONSTER)
+	return rp==1-tp and re:GetHandler():IsOnField() and ((re:IsActiveType(TYPE_MONSTER)
 		or (re:IsActiveType(TYPE_SPELL+TYPE_TRAP)) and re:IsHasType(EFFECT_TYPE_ACTIVATE)))
 end
 function c66619921.activate(e,tp,eg,ep,ev,re,r,rp)

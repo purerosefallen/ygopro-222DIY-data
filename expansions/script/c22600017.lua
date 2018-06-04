@@ -79,7 +79,7 @@ end
 
 function c22600017.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return ep~=tp and c:GetFlagEffect(22600017)~=0 and re:IsActiveType(TYPE_MONSTER)
+	return ep==1-tp and c:GetFlagEffect(22600017)~=0 and re:IsActiveType(TYPE_MONSTER)
 end
 
 function c22600017.rmop3(e,tp,eg,ep,ev,re,r,rp)

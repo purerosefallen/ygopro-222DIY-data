@@ -43,7 +43,7 @@ function c1150020.op1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1150020.con1_1(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp 
+	return rp==1-tp 
 end
 --
 function c1150020.tg1_1(e,tp,eg,ep,ev,re,r,rp,chk)

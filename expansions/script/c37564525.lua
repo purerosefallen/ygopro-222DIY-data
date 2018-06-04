@@ -19,7 +19,7 @@ function cm.initial_effect(c)
 end
 function cm.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and re:IsActiveType(TYPE_MONSTER) and c:GetEquipGroup():IsExists(cm.cf,1,nil,re:GetHandler())
+	return rp==1-tp and re:IsActiveType(TYPE_MONSTER) and c:GetEquipGroup():IsExists(cm.cf,1,nil,re:GetHandler())
 end
 function cm.cf(c,rc)
 	if not c:IsAbleToGraveAsCost() then return false end

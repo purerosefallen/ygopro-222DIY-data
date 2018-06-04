@@ -19,7 +19,7 @@ function c33700156.dircon(e)
 end
 function c33700156.con(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return ep~=tp and Duel.GetAttackTarget()==nil and Duel.GetLP(e:GetHandlerPlayer())<Duel.GetLP(1-e:GetHandlerPlayer())
+	return ep==1-tp and Duel.GetAttackTarget()==nil and Duel.GetLP(e:GetHandlerPlayer())<Duel.GetLP(1-e:GetHandlerPlayer())
 end
 function c33700156.op(e,tp,eg,ep,ev,re,r,rp)
 	if ev>0 then

@@ -21,7 +21,7 @@ function c66678917.initial_effect(c)
 	e4:SetCode(EVENT_CHAINING)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-		return ep~=tp
+		return ep==1-tp
 	end)
 	e4:SetCost(function(e,tp,eg,ep,ev,re,r,rp,chk)
 		if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

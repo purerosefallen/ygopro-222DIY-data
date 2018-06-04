@@ -43,7 +43,7 @@ function c10113055.macost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c10113055.mtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ec=eg:GetFirst()
-	if chk==0 then return eg:GetCount()==1 and ec:IsFaceup() and ec:IsType(TYPE_XYZ) and ec:GetSummonPlayer()~=tp end
+	if chk==0 then return eg:GetCount()==1 and ec:IsFaceup() and ec:IsType(TYPE_XYZ) and ec:GetSummonPlayer()==1-tp end
 	Duel.SetTargetCard(ec)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,ec,1,0,0)
 end

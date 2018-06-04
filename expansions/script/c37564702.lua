@@ -10,7 +10,7 @@ function cm.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCountLimit(1,m)
 	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-		return ep~=tp
+		return ep==1-tp
 	end)
 	e1:SetTarget(cm.target)
 	e1:SetOperation(cm.operation)

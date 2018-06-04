@@ -101,7 +101,7 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 			if rc:IsStatus(STATUS_LEAVE_CONFIRMED) then
 				rc:CancelToGrave()
 			end
-			if rc:GetControler()~=tp then
+			if rc:GetControler()==1-tp then
 				--Senya.ExileCard(rc)
 				Duel.MoveToField(rc,tp,tp,LOCATION_SZONE,POS_FACEDOWN,true)
 			else

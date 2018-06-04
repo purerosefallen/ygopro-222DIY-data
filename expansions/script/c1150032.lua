@@ -146,7 +146,7 @@ function c1150032.op2(e,tp,eg,ep,ev,re,r,rp)
 	while tc do
 		local p=tc:GetPreviousControler()
 		if p==tp then check1=1 end
-		if p~=tp then check2=1 end
+		if p==1-tp then check2=1 end
 		tc=sg:GetNext()
 	end
 	if check1==1 then 

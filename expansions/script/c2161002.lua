@@ -67,7 +67,7 @@ function c2161002.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c2161002.descon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) 
+	return rp==1-tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) 
 end
 function c2161002.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) end

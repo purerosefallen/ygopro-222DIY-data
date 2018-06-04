@@ -64,7 +64,7 @@ function c14801053.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c14801053.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return aux.exccon(e) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp
+	return aux.exccon(e) and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp
 		and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function c14801053.negtg(e,tp,eg,ep,ev,re,r,rp,chk)

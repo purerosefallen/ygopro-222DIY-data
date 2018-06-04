@@ -94,7 +94,7 @@ function c14804830.cfilter(c,tp)
 end
 function c14804830.spcon2(e,tp,eg,ep,ev,re,r,rp)
 	local cet=e:GetHandler():GetEquipTarget()
-	return ep~=tp and ((eg and eg:GetFirst() == cet) or (re and re:GetHandler() == cet)) and eg:IsExists(c14804830.cfilter,1,nil,1-tp)
+	return ep==1-tp and ((eg and eg:GetFirst() == cet) or (re and re:GetHandler() == cet)) and eg:IsExists(c14804830.cfilter,1,nil,1-tp)
 end
 function c14804830.spfilter2(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,1-tp,false,false)

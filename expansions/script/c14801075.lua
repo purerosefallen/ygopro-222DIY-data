@@ -47,7 +47,7 @@ function c14801075.imtg(e,c)
 end
 function c14801075.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return aux.exccon(e) and not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetTurnPlayer()~=tp
+	return aux.exccon(e) and not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetTurnPlayer()==1-tp
 		and (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE)
 end
 function c14801075.spfilter(c,e,tp)

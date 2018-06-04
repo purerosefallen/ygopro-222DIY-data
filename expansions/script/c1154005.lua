@@ -94,7 +94,7 @@ end
 function c1154005.tg3(e,tp,eg,ep,ev,re,r,rp,chk)
 	local rc=re:GetHandler()
 	local np=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER)
-	if chk==0 then return np~=tp and re:IsActiveType(TYPE_MONSTER) end
+	if chk==0 then return np==1-tp and re:IsActiveType(TYPE_MONSTER) end
 end
 --
 function c1154005.op3(e,tp,eg,ep,ev,re,r,rp)
@@ -116,7 +116,7 @@ function c1154005.op3(e,tp,eg,ep,ev,re,r,rp)
 		e3_2:SetType(EFFECT_TYPE_SINGLE)
 		e3_2:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 		e3_2:SetValue(1)
-		if Duel.GetTurnPlayer()~=tp then
+		if Duel.GetTurnPlayer()==1-tp then
 			e3_2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,2)
 		else
 			e3_2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,1)

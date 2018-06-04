@@ -19,7 +19,7 @@ function cm.cfilter(c,tp)
 	return c:IsControler(tp) and c:IsReason(REASON_EFFECT)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(cm.cfilter,1,nil,1-tp) and rp~=tp end
+	if chk==0 then return eg:IsExists(cm.cfilter,1,nil,1-tp) and rp==1-tp end
 	Duel.SetTargetCard(eg)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,0,1-tp,1)
 end

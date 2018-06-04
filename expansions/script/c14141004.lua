@@ -38,7 +38,7 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.filter(c,tp)
-	return c:GetSummonPlayer()~=tp
+	return c:GetSummonPlayer()==1-tp
 end
 function cm.replace_register_effect(f)
 	return function(tc,e,forced)

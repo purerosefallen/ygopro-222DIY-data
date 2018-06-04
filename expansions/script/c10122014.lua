@@ -29,7 +29,7 @@ function c10122014.initial_effect(c)
 	c:RegisterEffect(e3)	 
 end
 function c10122014.tkcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+	return rp==1-tp and re:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function c10122014.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(c59255742.filter,nil,tp)

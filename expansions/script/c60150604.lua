@@ -32,7 +32,7 @@ function c60150604.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c60150604.tfilter(c,tp)
-	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:GetSummonPlayer()~=tp 
+	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:GetSummonPlayer()==1-tp 
 		and c:IsDestructable()
 end
 function c60150604.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -51,7 +51,7 @@ function c60150604.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c60150604.tfilter2(c,e,tp)
-	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:GetSummonPlayer()~=tp 
+	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:GetSummonPlayer()==1-tp 
 		and c:IsDestructable() and c:IsRelateToEffect(e) 
 end
 function c60150604.activate(e,tp,eg,ep,ev,re,r,rp)

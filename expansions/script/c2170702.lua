@@ -62,7 +62,7 @@ function c2170702.efilter(e,te)
 end
 function c2170702.condition2(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:GetControler()~=tp and Duel.GetAttackTarget()==nil
+	return at:GetControler()==1-tp and Duel.GetAttackTarget()==nil
 end
 function c2170702.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end

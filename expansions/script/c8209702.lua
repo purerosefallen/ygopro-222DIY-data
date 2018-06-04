@@ -88,7 +88,7 @@ function c8209702.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	c:RegisterFlagEffect(8209702,RESET_CHAIN,0,1)
 end
 function c8209702.condition2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,8209716) and Duel.GetTurnPlayer()~=tp and Duel.GetCurrentPhase()==PHASE_STANDBY
+	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,8209716) and Duel.GetTurnPlayer()==1-tp and Duel.GetCurrentPhase()==PHASE_STANDBY
 end
 function c8209702.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end

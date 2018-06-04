@@ -1496,7 +1496,7 @@ function cm.InstantCopyModule(c,lmct,lmcd,cost,excon,loc)
 end
 function cm.InstantCopyCondition(excon)
 return function(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and (not excon or excon(e,tp,eg,ep,ev,re,r,rp))
+	return rp==1-tp and (not excon or excon(e,tp,eg,ep,ev,re,r,rp))
 end
 end
 function cm.InstantCopyTarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

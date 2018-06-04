@@ -22,7 +22,7 @@ function c10113019.initial_effect(c)
 	c:RegisterEffect(e3)	
 end
 function c10113019.cfilter(c,tp)
-	return c:GetSummonPlayer()~=tp and c:IsPreviousLocation(LOCATION_EXTRA) and c:GetPreviousControler()~=tp
+	return c:GetSummonPlayer()==1-tp and c:IsPreviousLocation(LOCATION_EXTRA) and c:GetPreviousControler()==1-tp
 end
 function c10113019.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c10113019.cfilter,1,nil,tp)

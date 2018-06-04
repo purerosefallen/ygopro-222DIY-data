@@ -28,7 +28,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function cm.at(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetTurnPlayer()~=tp end
+	if chk==0 then return Duel.GetTurnPlayer()==1-tp end
 end
 function cm.ao(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttackTarget()

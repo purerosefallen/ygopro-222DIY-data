@@ -78,7 +78,7 @@ end
 function c13255232.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return Duel.IsChainNegatable(ev) and ep~=tp and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==1
+	return Duel.IsChainNegatable(ev) and ep==1-tp and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==1
 end
 function c13255232.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

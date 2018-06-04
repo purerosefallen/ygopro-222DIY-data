@@ -14,7 +14,7 @@ function c33700157.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c33700157.con(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function c33700157.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end

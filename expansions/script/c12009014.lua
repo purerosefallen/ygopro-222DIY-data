@@ -38,7 +38,7 @@ function c12009014.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end 
 end
 function c12009014.recon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and  re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL)
+	return ep==1-tp and  re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL)
 		and Duel.IsChainNegatable(ev)
 end
 function c12009014.reop(e,tp,eg,ep,ev,re,r,rp)

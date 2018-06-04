@@ -19,7 +19,7 @@ function cm.sdfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:GetRank()~=4
 end
 function cm.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():GetControler()~=tp
+	return Duel.GetAttacker():GetControler()==1-tp
 	and not Duel.IsExistingMatchingCard(cm.sdfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -67,7 +67,7 @@ function c14801047.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c14801047.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetTurnPlayer()~=tp
+	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetTurnPlayer()==1-tp
 		and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
 end
 function c14801047.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -89,7 +89,7 @@ function c14801047.spop1(e,tp,eg,ep,ev,re,r,rp)
 		end
 end
 function c14801047.condition(e,tp,eg,ep,ev,re,r,rp)
-	return aux.exccon(e) and Duel.GetTurnPlayer()~=tp and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+	return aux.exccon(e) and Duel.GetTurnPlayer()==1-tp and (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
 end
 function c14801047.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE,1)

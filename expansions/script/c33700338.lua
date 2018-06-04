@@ -43,7 +43,7 @@ function c33700338.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2) and Duel.GetTurnPlayer()==tp
 end
 function c33700338.reccon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and eg:GetFirst():IsControler(tp) and Duel.GetAttacker():IsSetCard(0x5449) and Duel.GetAttackTarget()==nil
+	return ep==1-tp and eg:GetFirst():IsControler(tp) and Duel.GetAttacker():IsSetCard(0x5449) and Duel.GetAttackTarget()==nil
 end
 function c33700338.recop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end

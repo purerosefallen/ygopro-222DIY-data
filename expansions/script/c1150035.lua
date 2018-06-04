@@ -109,7 +109,7 @@ end
 function c1150035.tg1_3(e,tp,eg,ep,ev,re,r,rp,chk)
 	local np=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_CONTROLER)
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	if chk==0 then return np~=tp and re:IsActiveType(TYPE_MONSTER) and loc==LOCATION_MZONE end
+	if chk==0 then return np==1-tp and re:IsActiveType(TYPE_MONSTER) and loc==LOCATION_MZONE end
 end
 --
 function c1150035.op1_3(e,tp,eg,ep,ev,re,r,rp)

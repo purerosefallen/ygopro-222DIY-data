@@ -120,7 +120,7 @@ function c13254036.filter(c)
 	return c:IsRace(RACE_FAIRY) and c:IsLevelBelow(1) and c:IsCanTurnSet() and c:IsFaceup()
 end
 function c13254036.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function c13254036.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end

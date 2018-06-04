@@ -18,7 +18,7 @@ function cm.initial_effect(c)
 end
 function cm.dogcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not (c:GetPreviousControler()==tp and rp~=tp) then return false end
+	if not (c:GetPreviousControler()==tp and rp==1-tp) then return false end
 	if c:IsReason(REASON_EFFECT) then return true end
 	local bc=Duel.GetAttacker()
 	return c:IsReason(REASON_BATTLE) and c==Duel.GetAttackTarget() and bc and bc:IsControler(1-tp)

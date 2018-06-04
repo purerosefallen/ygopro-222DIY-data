@@ -30,7 +30,7 @@ function c2161001.initial_effect(c)
 end
 function c2161001.descon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetTurnPlayer()~=tp
+	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetTurnPlayer()==1-tp
 		and (ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2)
 end
 function c2161001.desfilter(c)
@@ -49,7 +49,7 @@ function c2161001.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c2161001.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return  c:IsReason(REASON_DESTROY) and Duel.GetTurnPlayer()~=tp
+	return  c:IsReason(REASON_DESTROY) and Duel.GetTurnPlayer()==1-tp
 end
 function c2161001.thfilter(c)
 	return c:IsSetCard(0x21e)  and c:IsAbleToHand()

@@ -56,7 +56,7 @@ function c13255220.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.SendtoGrave(g,REASON_COST+REASON_DISCARD)
 end
 function c13255220.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp
 end
 function c13255220.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and chkc:IsAbleToRemove() end
@@ -92,7 +92,7 @@ function c13255220.eqcon(e)
 	return eg:GetCount()>0
 end
 function c13255220.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function c13255220.thfilter(c)
 	return c:IsType(TYPE_EQUIP) and c:IsAbleToHand()

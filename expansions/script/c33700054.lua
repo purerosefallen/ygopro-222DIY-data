@@ -91,7 +91,7 @@ function c33700054.jfilter(c)
 end
 function c33700054.drcon(e,tp,eg,ep,ev,re,r,rp)
 	 local g=Duel.GetMatchingGroup(c33700054.confiltert,tp,LOCATION_GRAVE,0,nil)
-	return (g:GetClassCount(Card.GetCode)>=e:GetLabel() or e:GetLabel()==33700090) and ep~=tp
+	return (g:GetClassCount(Card.GetCode)>=e:GetLabel() or e:GetLabel()==33700090) and ep==1-tp
 end
 function c33700054.confilter(c)
 	return c:IsSetCard(0x442) and c:IsFaceup() and c:IsType(TYPE_MONSTER)

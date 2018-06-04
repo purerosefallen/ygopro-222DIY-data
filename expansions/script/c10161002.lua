@@ -65,7 +65,7 @@ function c10161002.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c10161002.rfcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and aux.damcon1(e,tp,eg,ep,ev,re,r,rp)
+	return ep==1-tp and aux.damcon1(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c10161002.rfop(e,tp,eg,ep,ev,re,r,rp)

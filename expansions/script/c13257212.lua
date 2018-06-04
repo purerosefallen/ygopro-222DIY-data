@@ -36,7 +36,7 @@ function c13257212.initial_effect(c)
 	
 end
 function c13257212.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function c13257212.rmfilter(c)
 	return c:IsAbleToRemove() and c:IsStatus(STATUS_BATTLE_DESTROYED)

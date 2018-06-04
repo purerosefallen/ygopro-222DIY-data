@@ -27,7 +27,7 @@ function c66677706.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c66677706.discon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and ep~=tp
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and ep==1-tp
 end
 function c66677706.DiscardHandCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_HAND,0,1,nil) end
@@ -49,7 +49,7 @@ function c66677706.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c66677706.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and c:GetPreviousControler()==tp and (r & REASON_DESTROY)~=0
+	return rp==1-tp and c:GetPreviousControler()==tp and (r & REASON_DESTROY)~=0
 end
 function c66677706.filter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:IsSetCard(0x777) and c:IsFaceup()

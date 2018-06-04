@@ -143,7 +143,7 @@ end
 function c1160023.con3_2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local fid=e:GetLabel()
-	return re:GetHandler():GetControler()~=tp and c:GetFlagEffectLabel(1160023)~=fid
+	return re:GetHandler():GetControler()==1-tp and c:GetFlagEffectLabel(1160023)~=fid
 end
 function c1160023.op3_2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(tp,200,REASON_EFFECT)

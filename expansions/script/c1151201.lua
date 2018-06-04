@@ -79,7 +79,7 @@ function c1151201.op1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1151201.con2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsChainNegatable(ev) and rp~=tp
+	return Duel.IsChainNegatable(ev) and rp==1-tp
 end
 --
 function c1151201.tfilter2(c)

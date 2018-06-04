@@ -37,7 +37,7 @@ function c60151763.checkop(e,tp,eg,ep,ev,re,r,rp)
     local p1=false
     local p2=false
     while tc do
-        if tc:IsPreviousLocation(LOCATION_MZONE) and tc:IsSetCard(0x3b26) and tc:GetPreviousControler()==tp and (tc:IsReason(REASON_BATTLE) or rp~=tp) then
+        if tc:IsPreviousLocation(LOCATION_MZONE) and tc:IsSetCard(0x3b26) and tc:GetPreviousControler()==tp and (tc:IsReason(REASON_BATTLE) or rp==1-tp) then
             if tc:GetPreviousControler()==0 then p1=true else p2=true end
         end
         tc=eg:GetNext()

@@ -160,7 +160,7 @@ function c1161026.op3_1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1161026.con3_1_5(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and (bit.band(r,REASON_BATTLE)~=0 or bit.band(r,REASON_EFFECT)~=0)
+	return ep==1-tp and (bit.band(r,REASON_BATTLE)~=0 or bit.band(r,REASON_EFFECT)~=0)
 end
 --
 function c1161026.op3_1_5(e,tp,eg,ep,ev,re,r,rp)

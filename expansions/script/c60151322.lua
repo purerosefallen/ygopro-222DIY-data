@@ -163,7 +163,7 @@ function c60151322.thop(e,tp,eg,ep,ev,re,r,rp)
 			e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 			e4:SetCode(EFFECT_CANNOT_ACTIVATE)
 			e4:SetTargetRange(0,1)
-			if Duel.GetTurnPlayer()~=tp then
+			if Duel.GetTurnPlayer()==1-tp then
 				e4:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
 			else
 				e4:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)

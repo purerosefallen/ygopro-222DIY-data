@@ -12,7 +12,7 @@ function cm.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,m)
 	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-		return Senya.CheckNoExtra(e,tp) and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2) and Duel.GetTurnPlayer()~=tp
+		return Senya.CheckNoExtra(e,tp) and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2) and Duel.GetTurnPlayer()==1-tp
 	end)
 	e1:SetCost(Senya.SawawaRemoveCost(1))
 	e1:SetTarget(cm.tg)

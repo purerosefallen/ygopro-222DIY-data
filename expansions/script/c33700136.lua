@@ -11,7 +11,7 @@ function c33700136.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c33700136.con(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and r==REASON_RULE
+	return ep==1-tp and r==REASON_RULE
 end
 function c33700136.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMZoneCount(tp)>0

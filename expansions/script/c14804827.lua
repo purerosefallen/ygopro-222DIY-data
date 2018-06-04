@@ -58,7 +58,7 @@ function c14804827.rev(e,re,val,r,rp,rc)
 end
 
 function c14804827.spcon(e,tp,eg,ep,ev,re,r,rp)
-   return ep~=tp 
+   return ep==1-tp 
 end
 function c14804827.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c14804826.penfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end

@@ -23,7 +23,7 @@ function c14140002.cfilter(c,rc)
 	return c:IsAttribute(rc:GetAttribute()) and c:IsRace(rc:GetRace()) and c:IsAbleToGraveAsCost()
 end
 function c14140002.discon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and Duel.IsChainDisablable(ev) and re:IsActiveType(TYPE_MONSTER) and Duel.IsExistingMatchingCard(c14140002.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler(),re:GetHandler())
+	return rp==1-tp and Duel.IsChainDisablable(ev) and re:IsActiveType(TYPE_MONSTER) and Duel.IsExistingMatchingCard(c14140002.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler(),re:GetHandler())
 end
 function c14140002.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.SelectYesNo(tp,14140002*16) then return end

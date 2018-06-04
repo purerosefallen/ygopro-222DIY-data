@@ -49,7 +49,7 @@ function c11113123.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 	local rct=1
-	if Duel.GetTurnPlayer()~=tp then rct=2 end
+	if Duel.GetTurnPlayer()==1-tp then rct=2 end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)

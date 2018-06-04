@@ -41,7 +41,7 @@ function c5200003.initial_effect(c)
 end
 function c5200003.rdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return ep~=tp and c==Duel.GetAttacker() and Duel.GetAttackTarget()==nil
+	return ep==1-tp and c==Duel.GetAttacker() and Duel.GetAttackTarget()==nil
 		and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0
 end
 function c5200003.rdop(e,tp,eg,ep,ev,re,r,rp)

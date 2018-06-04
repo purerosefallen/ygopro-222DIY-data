@@ -60,7 +60,7 @@ function c33700122.cfilter(c)
 	return c:IsSetCard(0x443) 
 end
 function c33700122.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return g:IsExists(c33700122.cfilter,1,nil) and bit.band(r,REASON_EFFECT)~=0 and ep~=tp
+	return g:IsExists(c33700122.cfilter,1,nil) and bit.band(r,REASON_EFFECT)~=0 and ep==1-tp
 end
 function c33700122.ctop(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():AddCounter(0x5,1)

@@ -62,7 +62,7 @@ function c33700129.cfilter(c)
 	return c:IsSetCard(0x443) 
 end
 function c33700129.con(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c33700129.cfilter,1,nil) and bit.band(r,REASON_EFFECT)~=0 and ep~=tp
+	return eg:IsExists(c33700129.cfilter,1,nil) and bit.band(r,REASON_EFFECT)~=0 and ep==1-tp
 end
 function c33700129.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

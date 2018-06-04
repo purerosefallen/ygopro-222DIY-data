@@ -41,7 +41,7 @@ function c1111011.op1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1111011.con1_1(e,tp,eg,ep,ev,re,r,rp)
-	return bit.band(Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION),LOCATION_ONFIELD)==0 and rp~=tp and re:IsActiveType(TYPE_MONSTER)
+	return bit.band(Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION),LOCATION_ONFIELD)==0 and rp==1-tp and re:IsActiveType(TYPE_MONSTER)
 end
 --
 function c1111011.op1_1(e,tp,eg,ep,ev,re,r,rp)

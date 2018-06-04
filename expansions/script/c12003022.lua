@@ -55,7 +55,7 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
  end
 end
 function cm.damcon1(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and eg:GetFirst():IsRace(RACE_SEASERPENT) and eg:GetFirst():IsAttackBelow(1000)
+	return ep==1-tp and eg:GetFirst():IsRace(RACE_SEASERPENT) and eg:GetFirst():IsAttackBelow(1000)
 end
 function cm.thfilter1(c)
 	return c:IsRace(RACE_SEASERPENT) and c:IsAttackBelow(1000) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

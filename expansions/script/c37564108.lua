@@ -35,5 +35,5 @@ function c37564108.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c37564108.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end

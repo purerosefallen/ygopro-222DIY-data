@@ -42,7 +42,7 @@ function cm.mtop(e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp~=tp and c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT) and cm.xcon(e,tp,eg,ep,ev,re,r,rp)
+	return rp==1-tp and c:CheckRemoveOverlayCard(tp,1,REASON_EFFECT) and cm.xcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.DiscardHandCost(e,tp,eg,ep,ev,re,r,rp)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_EFFECT)

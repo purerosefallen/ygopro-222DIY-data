@@ -84,7 +84,7 @@ function c10113097.retfilter(c,fid)
 	return c:GetFlagEffectLabel(10113097)==fid
 end
 function c10113097.retcon(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp or Duel.GetTurnCount()==e:GetValue() then return false end
+	if Duel.GetTurnPlayer()==1-tp or Duel.GetTurnCount()==e:GetValue() then return false end
 	local g=e:GetLabelObject()
 	if not g:IsExists(c10113097.retfilter,1,e:GetHandler(),e:GetLabel()) then
 		g:DeleteGroup()

@@ -45,7 +45,7 @@ function c60150816.distg(e,c)
 end
 function c60150816.condition(e,tp,eg,ep,ev,re,r,rp)
     return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
-        and re:IsActiveType(TYPE_SPELL) and Duel.IsChainNegatable(ev) and ep~=tp
+        and re:IsActiveType(TYPE_SPELL) and Duel.IsChainNegatable(ev) and ep==1-tp
 end
 function c60150816.cfilter(c)
 	return (c:IsFaceup() or c:IsFacedown()) and (c:IsAbleToDeckAsCost() or c:IsAbleToExtraAsCost())

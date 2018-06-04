@@ -78,7 +78,7 @@ function c10122008.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c10122008.discon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and rp~=tp 
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and rp==1-tp 
 end
 
 function c10122008.discost(e,tp,eg,ep,ev,re,r,rp,chk)

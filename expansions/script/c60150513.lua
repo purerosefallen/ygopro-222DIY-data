@@ -37,7 +37,7 @@ function c60150513.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c60150513.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function c60150513.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanSpecialSummonMonster(tp,60150512,0,0x4011,-2,-2,10,RACE_FIEND,ATTRIBUTE_LIGHT) end

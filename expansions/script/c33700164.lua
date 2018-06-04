@@ -64,7 +64,7 @@ function c33700164.damop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e1:SetTargetRange(1,0)
 		e1:SetValue(c33700164.damval)
-		if Duel.GetTurnPlayer()~=tp then
+		if Duel.GetTurnPlayer()==1-tp then
 		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
 	else
 		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)

@@ -64,7 +64,7 @@ function c12001018.op1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c12001018.cfilter1_1(c,tp)
-	return c:GetSummonPlayer()~=tp
+	return c:GetSummonPlayer()==1-tp
 end
 function c12001018.con1_1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c12001018.cfilter1_1,1,nil,tp) 

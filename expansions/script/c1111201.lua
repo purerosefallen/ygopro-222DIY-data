@@ -106,7 +106,7 @@ function c1111201.op2(e,tp,eg,ep,ev,re,r,rp,chk)
 		e2_3:SetCode(EFFECT_CANNOT_ACTIVATE)
 		e2_3:SetTargetRange(1,1)
 		e2_3:SetValue(c1111201.val2_3)
-		if Duel.GetTurnPlayer()~=tp then
+		if Duel.GetTurnPlayer()==1-tp then
 			e2_3:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
 		else
 			e2_3:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)

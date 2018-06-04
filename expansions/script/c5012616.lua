@@ -150,7 +150,7 @@ function c5012616.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c5012616.damcon(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    return ep~=tp and c:GetFlagEffect(5012616)~=0
+    return ep==1-tp and c:GetFlagEffect(5012616)~=0
 end
 function c5012616.damop(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_CARD,0,5012616)

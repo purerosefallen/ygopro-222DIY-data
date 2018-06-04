@@ -48,7 +48,7 @@ function c22600001.synlimit(e,c)
 end
 
 function c22600001.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 
 function c22600001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -42,7 +42,7 @@ function cm.initial_effect(c)
 	e1:SetHintTiming(0,0x1c0)
 	e1:SetCountLimit(1)
 	e1:SetCondition(function(e,tp)
-		return Duel.GetTurnPlayer()~=tp
+		return Duel.GetTurnPlayer()==1-tp
 	end)
 	e1:SetTarget(cm.target1)
 	e1:SetOperation(cm.operation1)

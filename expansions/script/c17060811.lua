@@ -49,7 +49,7 @@ function c17060811.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c17060811.sccon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetTurnPlayer()~=tp
+	return not e:GetHandler():IsStatus(STATUS_CHAINING) and Duel.GetTurnPlayer()==1-tp
 		and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
 end
 function c17060811.sctarg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -58,7 +58,7 @@ function c17060811.sctarg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c17060811.scop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:GetControler()~=tp or not c:IsRelateToEffect(e) then return end
+	if c:GetControler()==1-tp or not c:IsRelateToEffect(e) then return end
 	local g=Duel.GetMatchingGroup(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,nil,c)
 	if g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

@@ -102,7 +102,7 @@ function c1156016.efilter1_3(e,te)
 end
 --
 function c1156016.con1_4(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffectLabel(1156016)==0 and rp~=tp and Duel.IsChainNegatable(ev) and bit.band(re:GetActivateLocation(),LOCATION_ONFIELD)==0
+	return e:GetHandler():GetFlagEffectLabel(1156016)==0 and rp==1-tp and Duel.IsChainNegatable(ev) and bit.band(re:GetActivateLocation(),LOCATION_ONFIELD)==0
 end
 function c1156016.tg1_4(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_EXTRA+LOCATION_DECK)>0 end

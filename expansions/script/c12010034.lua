@@ -58,7 +58,7 @@ function c12010034.activate(e,tp,eg,ep,ev,re,r,rp)
 end
 function c12010034.cfilter(c,tp)
 	return  c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==tp and c:IsPreviousPosition(POS_FACEUP)
-		and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp)) and (c:IsSetCard(0xfba) and c:IsType(TYPE_MONSTER))
+		and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp)) and (c:IsSetCard(0xfba) and c:IsType(TYPE_MONSTER))
 end
 function c12010034.con(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c12010034.cfilter,1,nil,tp)

@@ -37,7 +37,7 @@ function c17091001.atkval(e,c)
 	return c:GetLinkedGroupCount()*600
 end
 function c17091001.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function c17091001.negop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateAttack() then

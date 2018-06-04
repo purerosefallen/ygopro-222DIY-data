@@ -124,7 +124,7 @@ function c1150002.op1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1150002.con1_2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function c1150002.op1_2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT)

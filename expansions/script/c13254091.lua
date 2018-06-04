@@ -46,7 +46,7 @@ function c13254091.cfilter(c)
 	return c:IsSetCard(0x356) and c:IsDiscardable() and c:IsType(TYPE_MONSTER)
 end
 function c13254091.posfilter(c,tp)
-	return c:IsFaceup() and c:GetSummonPlayer()~=tp and c:IsAttackPos()
+	return c:IsFaceup() and c:GetSummonPlayer()==1-tp and c:IsAttackPos()
 end
 function c13254091.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

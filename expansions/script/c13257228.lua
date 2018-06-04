@@ -92,7 +92,7 @@ function c13257228.splimit(e,c)
 	return not c:IsSetCard(0x353)
 end
 function c13257228.descon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function c13257228.costfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()

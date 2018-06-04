@@ -78,7 +78,7 @@ function c22201102.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c22201102.rdcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function c22201102.rdfilter(c)
 	return c:IsAbleToHand() and c:IsType(TYPE_MONSTER) and c:IsFaceup()

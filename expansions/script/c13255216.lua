@@ -52,7 +52,7 @@ function c13255216.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13255216.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function c13255216.drop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SelectYesNo(tp,aux.Stringid(13255216,1)) then

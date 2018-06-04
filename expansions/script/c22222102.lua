@@ -65,7 +65,7 @@ function c22222102.retop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c22222102.con(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():GetControler()~=tp
+	return Duel.GetAttacker():GetControler()==1-tp
 end
 function c22222102.tgfilter(c,e,tp)
 	return c:IsSetCard(0x50f) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

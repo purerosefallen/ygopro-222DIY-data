@@ -87,7 +87,7 @@ function c1160004.op3(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1160004.tg4(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return rp~=tp and Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) end
+	if chk==0 then return rp==1-tp and Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_MZONE,1,nil) end
 end
 --
 function c1160004.op4(e,tp,eg,ep,ev,re,r,rp)

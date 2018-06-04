@@ -76,7 +76,7 @@ end
 --
 function c1160041.op2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetTurnPlayer()~=tp then
+	if Duel.GetTurnPlayer()==1-tp then
 		local e2_1=Effect.CreateEffect(c)
 		e2_1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e2_1:SetCode(EVENT_LEAVE_FIELD)
@@ -102,7 +102,7 @@ function c1160041.con2_1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1160041.ofilter2_1(c,tp)
-	return c:GetPreviousControler()~=tp and not (c:GetType()==TYPE_SPELL or c:IsType(TYPE_SPELL+TYPE_QUICKPLAY) or c:IsType(TYPE_SPELL+TYPE_RITUAL))
+	return c:GetPreviousControler()==1-tp and not (c:GetType()==TYPE_SPELL or c:IsType(TYPE_SPELL+TYPE_QUICKPLAY) or c:IsType(TYPE_SPELL+TYPE_RITUAL))
 end
 function c1160041.op2_1(e,tp,eg,ep,ev,re,r,rp)
 	local num=eg:FilterCount(c1160041.ofilter2_1,nil,tp)

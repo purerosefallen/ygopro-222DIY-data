@@ -28,7 +28,7 @@ function c5200018.indtg(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x360) 
 end
 function c5200018.indval(e,re,tp)
-	return e:GetHandler():GetControler()~=tp
+	return e:GetHandler():GetControler()==1-tp
 end
 function c5200018.counterfilter(c)
 	return c:IsSetCard(0x360) or c:GetSummonLocation()~=LOCATION_EXTRA

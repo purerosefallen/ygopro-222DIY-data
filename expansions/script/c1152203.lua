@@ -117,7 +117,7 @@ function c1152203.op1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1152203.con2(e,tp,eg,ep,ev,re,r,rp)
-	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and rp~=tp
+	return re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and rp==1-tp
 end
 --
 function c1152203.cfilter2(c)

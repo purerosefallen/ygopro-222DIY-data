@@ -58,7 +58,7 @@ function c5200001.initial_effect(c)
 end
 ----墓地回收--------------------------------------------------------------
 function c5200001.gthcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and bit.band(r,REASON_EFFECT)~=0 and e:GetHandler():GetPreviousControler()==tp
+	return rp==1-tp and bit.band(r,REASON_EFFECT)~=0 and e:GetHandler():GetPreviousControler()==tp
 		and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c5200001.gthfilter(c)

@@ -180,7 +180,7 @@ function c14804848.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c14804848.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return  Duel.GetTurnPlayer()~=tp
+	return  Duel.GetTurnPlayer()==1-tp
 end
 function c14804848.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
    if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x48f,9,REASON_COST) end

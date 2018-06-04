@@ -201,7 +201,7 @@ function c1160002.tg6_1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,0,0,LOCATION_ONFIELD)
 end
 function c1160002.ofilter6_1(c,tp)
-	return c:GetControler()~=tp and c:IsDestructable()
+	return c:GetControler()==1-tp and c:IsDestructable()
 end
 function c1160002.op6_1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler()

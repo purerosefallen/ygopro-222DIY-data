@@ -79,7 +79,7 @@ function cm.indval(e,c)
 end
 --
 function cm.aclimit1(e,tp,eg,ep,ev,re,r,rp)
-    if ep~=tp or not re:IsActiveType(TYPE_SPELL) or re:IsActiveType(TYPE_EQUIP) then return end
+    if ep==1-tp or not re:IsActiveType(TYPE_SPELL) or re:IsActiveType(TYPE_EQUIP) then return end
     e:GetHandler():RegisterFlagEffect(m,RESET_EVENT+0x3ff0000+RESET_PHASE+PHASE_END,0,1)
 end
 function cm.econ1(e)

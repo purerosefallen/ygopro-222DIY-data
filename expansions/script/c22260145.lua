@@ -76,7 +76,7 @@ function c22260145.efilter(e,te)
 	return te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
 function c22260145.tkcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp
+	return rp==1-tp
 end
 function c22260145.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanSpecialSummonMonster(tp,22269998,nil,0x4011,0,0,11,RACE_FAIRY,ATTRIBUTE_DARK) and Duel.GetMZoneCount(tp)>0 end

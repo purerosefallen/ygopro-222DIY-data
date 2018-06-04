@@ -128,7 +128,7 @@ function c12001023.synop(e,tp,eg,ep,ev,re,r,rp,c,tuner,mg)
 	g:DeleteGroup()
 end
 function c12001023.discon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler():IsSetCard(0xfb0) and not re:GetHandler():IsCode(12001023) and Duel.IsChainNegatable(ev) and Duel.GetTurnPlayer()~=tp
+	return re:GetHandler():IsSetCard(0xfb0) and not re:GetHandler():IsCode(12001023) and Duel.IsChainNegatable(ev) and Duel.GetTurnPlayer()==1-tp
 end
 function c12001023.distg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,1) end
@@ -155,7 +155,7 @@ function c12001023.disop(e,tp,eg,ep,ev,re,r,rp)
 		local check=false
 		for i=1,ev do
 			local te=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_EFFECT)
-			if te:GetOwnerPlayer()~=tp then
+			if te:GetOwnerPlayer()==1-tp then
 				check=Duel.NegateActivation(i) or check
 			end
 		end

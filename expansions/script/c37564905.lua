@@ -66,7 +66,7 @@ function cm.disop3(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function cm.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function cm.costfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost() and Senya.check_set_sayuri(c)

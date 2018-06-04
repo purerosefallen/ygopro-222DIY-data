@@ -23,7 +23,7 @@ function c10113065.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c10113065.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttacker():GetControler()~=tp and aux.exccon(e)
+	return Duel.GetAttacker():GetControler()==1-tp and aux.exccon(e)
 end
 function c10113065.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end

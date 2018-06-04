@@ -26,7 +26,7 @@ function c2120001.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c2120001.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function c2120001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end

@@ -42,7 +42,7 @@ function c9990300.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c9990300.negatecondition(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep~=tp and Duel.IsChainNegatable(ev)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ep==1-tp and Duel.IsChainNegatable(ev)
 end
 function c9990300.negatetarget(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

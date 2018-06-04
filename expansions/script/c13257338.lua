@@ -43,7 +43,7 @@ function c13257338.spfilter(c)
 	return c:IsSetCard(0x351) and c:IsFaceup()
 end
 function c13257338.cfilter(c,tp)
-	return c:GetSummonPlayer()~=tp
+	return c:GetSummonPlayer()==1-tp
 end
 function c13257338.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c13257338.cfilter,1,nil,tp) and Duel.IsExistingMatchingCard(c13257338.spfilter,tp,LOCATION_MZONE,0,1,nil)

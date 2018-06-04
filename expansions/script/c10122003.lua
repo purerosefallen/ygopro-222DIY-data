@@ -20,7 +20,7 @@ function c10122003.initial_effect(c)
 end
 function c10122003.tkcon(e,tp,eg,ep,ev,re,r,rp)
 	local loc,p=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_CONTROLER)
-	return loc==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and p~=tp
+	return loc==LOCATION_MZONE and re:IsActiveType(TYPE_MONSTER) and p==1-tp
 end
 function c10122003.tktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetMZoneCount(tp)>0

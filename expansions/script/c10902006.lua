@@ -47,7 +47,7 @@ function cm.cnfilter(c,tp)
 end
 function cm.discon(e,tp,eg,ep,ev,re,r,rp)
     if re:GetHandler():GetColumnGroup():FilterCount(cm.cnfilter,nil,tp)>0 then return end
-    return rp~=tp and re:IsActiveType(TYPE_SPELL)  and Duel.IsExistingMatchingCard(cm.ngfilter,tp,LOCATION_SZONE,0,2,nil)
+    return rp==1-tp and re:IsActiveType(TYPE_SPELL)  and Duel.IsExistingMatchingCard(cm.ngfilter,tp,LOCATION_SZONE,0,2,nil)
 end
 function cm.disop(e,tp,eg,ep,ev,re,r,rp)
     Duel.NegateEffect(ev)

@@ -64,7 +64,7 @@ function c60150538.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c60150538.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:GetControler()~=tp and Duel.GetAttackTarget()==nil
+	return at:GetControler()==1-tp and Duel.GetAttackTarget()==nil
 end
 function c60150538.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

@@ -90,7 +90,7 @@ function c60150809.sfilter(c,sp)
 	return c:GetSummonPlayer()==sp
 end
 function c60150809.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_HAND)
+	return ep==1-tp and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_HAND)
 end
 function c60150809.drop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c60150809.sfilter,1,nil,1-tp) and Duel.GetFieldGroupCount(tp,0,LOCATION_GRAVE)>0 then
@@ -102,7 +102,7 @@ function c60150809.drop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c60150809.drcon2(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_GRAVE)
+	return ep==1-tp and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_GRAVE)
 end
 function c60150809.drop2(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c60150809.sfilter,1,nil,1-tp) and Duel.GetFieldGroupCount(tp,0,LOCATION_DECK)>0 then
@@ -114,7 +114,7 @@ function c60150809.drop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c60150809.drcon3(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_DECK)
+	return ep==1-tp and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_DECK)
 end
 function c60150809.drop3(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c60150809.sfilter,1,nil,1-tp) and Duel.GetFieldGroupCount(tp,0,LOCATION_EXTRA)>0 then
@@ -126,7 +126,7 @@ function c60150809.drop3(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c60150809.drcon4(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_EXTRA)
+	return ep==1-tp and eg:IsExists(Card.IsPreviousLocation,1,nil,LOCATION_EXTRA)
 end
 function c60150809.drop4(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c60150809.sfilter,1,nil,1-tp) and Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 then

@@ -12,7 +12,7 @@ function cm.initial_effect(c)
 	e1:SetCountLimit(1,m)
 	e1:SetCost(Senya.SelfDiscardCost)
 	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-		return re:GetHandler():IsOnField() and re:IsActiveType(TYPE_MONSTER) and ep~=tp
+		return re:GetHandler():IsOnField() and re:IsActiveType(TYPE_MONSTER) and ep==1-tp
 	end)
 	e1:SetTarget(cm.target)
 	e1:SetOperation(cm.operation)

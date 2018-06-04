@@ -92,7 +92,7 @@ function c33700207.drval(e,c)
 	return false
 end
 function c33700207.cfilter(c,tp)
-	return c:GetPreviousControler()~=tp and (c:IsLocation(LOCATION_GRAVE) or c:IsReason(REASON_DISCARD)) and c:IsPreviousLocation(LOCATION_HAND)
+	return c:GetPreviousControler()==1-tp and (c:IsLocation(LOCATION_GRAVE) or c:IsReason(REASON_DISCARD)) and c:IsPreviousLocation(LOCATION_HAND)
 end
 function c33700207.drcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c33700207.cfilter,1,nil,tp) 

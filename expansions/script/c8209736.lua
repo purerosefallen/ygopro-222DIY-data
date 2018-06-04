@@ -90,7 +90,7 @@ function c8209736.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c8209736.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and bit.band(r,REASON_EFFECT)~=0 and e:GetHandler():GetPreviousControler()==tp
+	return rp==1-tp and bit.band(r,REASON_EFFECT)~=0 and e:GetHandler():GetPreviousControler()==tp
 end
 function c8209736.filter(c,e,tp)
 	return c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

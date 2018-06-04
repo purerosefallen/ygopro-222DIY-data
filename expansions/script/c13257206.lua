@@ -102,7 +102,7 @@ function c13257206.regop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13257206.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return e:GetHandler():GetEquipTarget() and ep~=tp and c:GetFlagEffect(13257206)~=0
+	return e:GetHandler():GetEquipTarget() and ep==1-tp and c:GetFlagEffect(13257206)~=0
 end
 function c13257206.damop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
@@ -121,7 +121,7 @@ function c13257206.damcon1(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetEquipTarget() and eg:IsExists(c13257206.cfilter,1,nil,1-tp)
 end
 function c13257206.damcon2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetEquipTarget() and rp~=tp
+	return e:GetHandler():GetEquipTarget() and rp==1-tp
 end
 function c13257206.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end
@@ -194,7 +194,7 @@ end
 function c13257206.desop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:GetControler()~=tp then
+	if tc:IsRelateToEffect(e) and tc:GetControler()==1-tp then
 		local g=Group.CreateGroup()
 		g:AddCard(tc)
 		local seq=tc:GetSequence()

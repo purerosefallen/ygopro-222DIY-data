@@ -80,7 +80,7 @@ function c37564111.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(p,d,REASON_EFFECT)
 end
 function c37564111.condition(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()==1-tp
 end
 function c37564111.tfilter(c,e,tp)
 	return (not c:IsCode(37564111)) and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x772)

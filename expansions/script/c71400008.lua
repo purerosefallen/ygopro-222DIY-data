@@ -20,7 +20,7 @@ function c71400008.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c71400008.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp
+	return rp==1-tp
 end
 function c71400008.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

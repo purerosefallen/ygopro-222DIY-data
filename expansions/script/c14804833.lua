@@ -92,7 +92,7 @@ function c14804833.cfilter(c,tp)
 	return c:IsControler(tp) and c:IsPreviousLocation(LOCATION_DECK) 
 end
 function c14804833.spcon(e,tp,eg,ep,ev,re,r,rp)
-   return ep~=tp and bit.band(r,REASON_DRAW)==0 and re
+   return ep==1-tp and bit.band(r,REASON_DRAW)==0 and re
 		and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x4848) and eg:IsExists(c14804833.cfilter,1,nil,1-tp)
 end
 function c14804833.spfilter(c,e,tp)

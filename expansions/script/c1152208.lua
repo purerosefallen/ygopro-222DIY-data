@@ -35,7 +35,7 @@ function c1152208.IsFulsp(c)
 end
 --
 function c1152208.con1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and Duel.GetCurrentPhase()==PHASE_STANDBY 
+	return Duel.GetTurnPlayer()==1-tp and Duel.GetCurrentPhase()==PHASE_STANDBY 
 end
 --
 function c1152208.tfilter1(c)

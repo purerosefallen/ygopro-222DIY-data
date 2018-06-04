@@ -12,7 +12,7 @@ function c10113072.initial_effect(c)
 	c:RegisterEffect(e1)	
 end
 function c10113072.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and re:IsActiveType(TYPE_XYZ+TYPE_SYNCHRO+TYPE_RITUAL+TYPE_FUSION) and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
+	return rp==1-tp and re:IsActiveType(TYPE_XYZ+TYPE_SYNCHRO+TYPE_RITUAL+TYPE_FUSION) and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev)
 end
 function c10113072.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsType,1,nil,TYPE_XYZ+TYPE_SYNCHRO+TYPE_RITUAL+TYPE_FUSION) end

@@ -51,7 +51,7 @@ function c1157005.tg2(e,c)
 end
 --
 function c1157005.con4(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 --
 function c1157005.tg4(e,tp,eg,ep,ev,re,r,rp,chk)

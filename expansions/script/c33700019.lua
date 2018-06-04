@@ -12,7 +12,7 @@ function c33700019.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c33700019.condition(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and bit.band(r,REASON_DESTROY)~=0 and eg:IsExists(c33700019.filter,1,nil)
+	return rp==1-tp and bit.band(r,REASON_DESTROY)~=0 and eg:IsExists(c33700019.filter,1,nil)
 end
 function c33700019.filter(c)
 	return c:IsPreviousPosition(POS_FACEUP)  and c:IsPreviousLocation(LOCATION_MZONE) and c:IsReason(REASON_EFFECT) 

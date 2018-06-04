@@ -47,7 +47,7 @@ function c66619912.cfilter2(c,tp)
 	return c:GetSummonPlayer()==1-tp
 end
 function c66619912.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return rp~=tp and eg:IsExists(c66619912.cfilter2,1,nil,tp) end
+	if chk==0 then return rp==1-tp and eg:IsExists(c66619912.cfilter2,1,nil,tp) end
 	Duel.SetTargetCard(eg)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,nil,0,1-tp,0)
 end
@@ -86,7 +86,7 @@ function c66619912.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c66619912.retcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and e:GetHandler():GetPreviousControler()==tp
+	return rp==1-tp and e:GetHandler():GetPreviousControler()==tp
 end
 function c66619912.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_CONTINUOUS) and c:IsAbleToGraveAsCost()

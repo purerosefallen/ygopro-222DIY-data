@@ -114,11 +114,11 @@ function c60150919.cost(e,tp,eg,ep,ev,re,r,rp,chk)
     Duel.SendtoGrave(g,REASON_COST)
 end
 function c60150919.negcon(e,tp,eg,ep,ev,re,r,rp)
-    return rp~=tp and Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_MZONE
+    return rp==1-tp and Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_MZONE
         and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev) and e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO
 end
 function c60150919.target(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chkc then return chkc:GetLocation()==LOCATION_MZONE and chkc:GetControler()~=tp and chkc:IsControlerCanBeChanged() end
+    if chkc then return chkc:GetLocation()==LOCATION_MZONE and chkc:GetControler()==1-tp and chkc:IsControlerCanBeChanged() end
     if chk==0 then return Duel.IsExistingTarget(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,nil) end
     Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
     if re:GetHandler():IsRelateToEffect(re) then

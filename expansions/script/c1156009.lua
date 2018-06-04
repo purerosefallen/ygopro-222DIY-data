@@ -85,7 +85,7 @@ function c1156009.op1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1156009.tfilter2(c,tp)
-	return c:IsFaceup() and c:IsPreviousLocation(LOCATION_EXTRA) and c:GetSummonPlayer()~=tp and c:IsAbleToDeck() and c:IsLocation(LOCATION_MZONE)
+	return c:IsFaceup() and c:IsPreviousLocation(LOCATION_EXTRA) and c:GetSummonPlayer()==1-tp and c:IsAbleToDeck() and c:IsLocation(LOCATION_MZONE)
 end
 function c1156009.tg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return eg:IsExists(c1156009.tfilter2,1,nil,tp) end

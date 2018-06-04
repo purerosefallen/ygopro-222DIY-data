@@ -24,7 +24,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function cm.discon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and e:GetHandler():GetOriginalCode()==m and ep~=tp
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and e:GetHandler():GetOriginalCode()==m and ep==1-tp
 end
 function cm.DiscardHandCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ch=Duel.GetCurrentChain()

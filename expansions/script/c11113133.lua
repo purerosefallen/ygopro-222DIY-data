@@ -94,7 +94,7 @@ function c11113133.efilter(e,ct)
 	return p==tp
 end
 function c11113133.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return rp~=tp and Duel.IsChainDisablable(ev) 
+	return rp==1-tp and Duel.IsChainDisablable(ev) 
 end
 function c11113133.negop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()

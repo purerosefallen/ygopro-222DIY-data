@@ -81,7 +81,7 @@ end
 function c1000604.discon(e,tp,eg,ep,ev,re,r,rp)
    local g=Duel.GetMatchingGroup(c1000604.filter9,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,e,tp)
 	local ct=g:GetClassCount(Card.GetCode)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ct>=9 and ep~=tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and ct>=9 and ep==1-tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function c1000604.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

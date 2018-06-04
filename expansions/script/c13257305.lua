@@ -45,7 +45,7 @@ function c13257305.initial_effect(c)
 	
 end
 function c13257305.necon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Duel.IsChainNegatable(ev) and Duel.GetTurnPlayer()==tp
+	return ep==1-tp and Duel.IsChainNegatable(ev) and Duel.GetTurnPlayer()==tp
 end
 function c13257305.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x351) and c:IsAbleToHandAsCost() and not c:IsStatus(STATUS_BATTLE_DESTROYED)

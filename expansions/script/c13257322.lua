@@ -100,7 +100,7 @@ function c13257322.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Destroy(tg,REASON_EFFECT)
 end
 function c13257322.cfilter1(c,tp,re)
-	return c:IsCode(13257323) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()~=tp and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and not re:GetHandler():IsCode(13257322)))
+	return c:IsCode(13257323) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==1-tp and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and not re:GetHandler():IsCode(13257322)))
 end
 function c13257322.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end

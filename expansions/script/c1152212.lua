@@ -90,7 +90,7 @@ function c1152212.op1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1152212.con2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_HAND and rp~=tp and re:IsActiveType(TYPE_MONSTER)
+	return Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)==LOCATION_HAND and rp==1-tp and re:IsActiveType(TYPE_MONSTER)
 end
 --
 function c1152212.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -125,7 +125,7 @@ function c1152212.op2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c1152212.con2_2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetControler()==Duel.GetTurnPlayer() and rp~=tp
+	return e:GetHandler():GetControler()==Duel.GetTurnPlayer() and rp==1-tp
 end
 function c1152212.tg2_2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -81,8 +81,8 @@ function c60150516.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c60150516.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	if ep~=tp then return false end
-	if bit.band(r,REASON_EFFECT)~=0 then return rp~=tp end
+	if ep==1-tp then return false end
+	if bit.band(r,REASON_EFFECT)~=0 then return rp==1-tp end
 	return e:GetHandler():IsRelateToBattle()
 end
 function c60150516.atkop(e,tp,eg,ep,ev,re,r,rp)

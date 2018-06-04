@@ -103,7 +103,7 @@ function c12010026.penop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c12010026.condition(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
-	return at:GetControler()~=tp and Duel.GetAttackTarget()==nil
+	return at:GetControler()==1-tp and Duel.GetAttackTarget()==nil
 end
 function c12010026.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

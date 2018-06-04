@@ -96,7 +96,7 @@ function c1152205.op2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e2_1,tp)	
 end
 function c1152205.ofilter2_1(c,tp)
-	return c:GetControler()~=tp
+	return c:GetControler()==1-tp
 end
 function c1152205.ofilter2_2(c)
 	return c:IsType(TYPE_MONSTER) and c:IsFaceup()

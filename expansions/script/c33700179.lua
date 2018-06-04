@@ -22,7 +22,7 @@ function cm.initial_effect(c)
 	e2:SetCode(EVENT_TO_GRAVE)
 	e2:SetProperty(0x14000)
 	e2:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-		return rp~=tp
+		return rp==1-tp
 	end)
 	e2:SetTarget(cm.sptg) 
 	e2:SetOperation(cm.spop)

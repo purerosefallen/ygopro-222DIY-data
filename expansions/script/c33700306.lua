@@ -43,7 +43,7 @@ function cm.con(e)
 end
 function cm.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return ep~=tp and (tc:IsSetCard(0x1449) or tc:IsSetCard(0x3449))
+	return ep==1-tp and (tc:IsSetCard(0x1449) or tc:IsSetCard(0x3449))
 end
 function cm.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(ep,ev*2)

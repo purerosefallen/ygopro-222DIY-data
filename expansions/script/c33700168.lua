@@ -51,7 +51,7 @@ function c33700168.cfilter(c)
 	return c:IsSetCard(0x443) 
 end
 function c33700168.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c33700168.cfilter,1,nil) and bit.band(r,REASON_EFFECT)~=0 and ep~=tp
+	return eg:IsExists(c33700168.cfilter,1,nil) and bit.band(r,REASON_EFFECT)~=0 and ep==1-tp
 end
 function c33700168.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

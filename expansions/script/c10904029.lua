@@ -49,7 +49,7 @@ function cm.cfilter2(c)
     return c:IsFaceup() and c:IsCode(10904019)
 end
 function cm.repcon(e,tp,eg,ep,ev,re,r,rp)
-    return ep~=tp and Duel.IsExistingMatchingCard(cm.cfilter2,tp,LOCATION_MZONE+LOCATION_EXTRA,0,1,nil)
+    return ep==1-tp and Duel.IsExistingMatchingCard(cm.cfilter2,tp,LOCATION_MZONE+LOCATION_EXTRA,0,1,nil)
 end
 function cm.repfilter(c,tp)
     return c:IsFaceup() and c:IsSetCard(0x237) and c:IsLocation(LOCATION_ONFIELD)

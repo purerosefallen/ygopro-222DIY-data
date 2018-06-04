@@ -23,7 +23,7 @@ end
 function c60150805.spcon(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsChainNegatable(ev) then return false end
 	if not re:IsActiveType(TYPE_MONSTER) and not re:IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
-	return ep~=tp and Duel.GetTurnPlayer()==tp and re:IsHasCategory(CATEGORY_SPECIAL_SUMMON)
+	return ep==1-tp and Duel.GetTurnPlayer()==tp and re:IsHasCategory(CATEGORY_SPECIAL_SUMMON)
 end
 function c60150805.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetFlagEffect(60150805)==0 end

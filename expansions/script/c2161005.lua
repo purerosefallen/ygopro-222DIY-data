@@ -44,7 +44,7 @@ function c2161005.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c2161005.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return  Duel.GetTurnPlayer()~=tp
+	return  Duel.GetTurnPlayer()==1-tp
 end
 function c2161005.spfilter(c,e,tp)
 	return  c:IsSetCard(0x21e) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

@@ -32,7 +32,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function cm.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Duel.GetMatchingGroupCount(aux.TRUE,tp,LOCATION_ONFIELD,0,e:GetHandler())==0
+	return ep==1-tp and Duel.GetMatchingGroupCount(aux.TRUE,tp,LOCATION_ONFIELD,0,e:GetHandler())==0
 end
 function cm.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(ep,ev*2)

@@ -94,7 +94,7 @@ function c710237.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c710237.eqcon1(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function c710237.eqcon2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp)

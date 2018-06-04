@@ -22,7 +22,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function cm.descon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and Senya.CheckNoExtra(e,tp)
+	return ep==1-tp and Senya.CheckNoExtra(e,tp)
 end
 function cm.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) end

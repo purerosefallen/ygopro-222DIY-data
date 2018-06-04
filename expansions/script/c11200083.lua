@@ -63,7 +63,7 @@ function c11200083.cfilter(c)
 	return c:IsSetCard(0x131) and c:IsType(TYPE_MONSTER)
 end
 function c11200083.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and tp==rp and ((bit.band(r,REASON_BATTLE)~=0 and c11200083.cfilter(eg:GetFirst())) or (bit.band(r,REASON_EFFECT)~=0) and c11200083.cfilter(re:GetHandler()))
+	return ep==1-tp and tp==rp and ((bit.band(r,REASON_BATTLE)~=0 and c11200083.cfilter(eg:GetFirst())) or (bit.band(r,REASON_EFFECT)~=0) and c11200083.cfilter(re:GetHandler()))
 end
 function c11200083.ctop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(1-tp,550,REASON_EFFECT)

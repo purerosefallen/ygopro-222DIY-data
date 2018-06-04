@@ -51,7 +51,7 @@ function c33700336.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c33700336.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
-	return ep~=tp and tc:IsSetCard(0x5449) and tc:GetBattleTarget()==nil
+	return ep==1-tp and tc:IsSetCard(0x5449) and tc:GetBattleTarget()==nil
 end
 function c33700336.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(ep,ev*2)

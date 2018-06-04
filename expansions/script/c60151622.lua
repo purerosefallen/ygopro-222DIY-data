@@ -16,7 +16,7 @@ function c60151622.filter(c)
 end
 function c60151622.condition(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.IsExistingMatchingCard(c60151622.filter,tp,LOCATION_MZONE,0,1,nil) then return false end
-	return ep~=tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev) 
+	return ep==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev) 
 end
 function c60151622.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

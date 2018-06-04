@@ -88,7 +88,7 @@ function c33700096.jfilter(c)
 end
 function c33700096.cbcon(e,tp,eg,ep,ev,re,r,rp)
    local g=Duel.GetMatchingGroup(c33700096.confilter,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil)
-   return Duel.GetTurnPlayer()~=tp and Duel.GetAttackTarget()~=e:GetHandler() and  (g:GetClassCount(Card.GetCode)>=e:GetLabel() or e:GetLabel()==33700090)
+   return Duel.GetTurnPlayer()==1-tp and Duel.GetAttackTarget()~=e:GetHandler() and  (g:GetClassCount(Card.GetCode)>=e:GetLabel() or e:GetLabel()==33700090)
 end
 function c33700096.cbop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

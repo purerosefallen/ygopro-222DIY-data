@@ -37,7 +37,7 @@ function c33700159.tg(e,c)
 end
 function c33700159.recon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=eg:GetFirst()
-	return   ep~=tp and rc:IsControler(tp) and rc:IsRace(RACE_T) and Duel.GetAttackTarget()==nil and Duel.GetLP(tp)>=12000
+	return   ep==1-tp and rc:IsControler(tp) and rc:IsRace(RACE_T) and Duel.GetAttackTarget()==nil and Duel.GetLP(tp)>=12000
 end
 function c33700159.retg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

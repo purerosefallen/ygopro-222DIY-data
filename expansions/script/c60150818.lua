@@ -81,7 +81,7 @@ function c60150818.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c60150818.damcon(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetHandler():GetMaterial()
-	return ep~=tp and re:IsActiveType(TYPE_MONSTER) and g:FilterCount(c60150818.ccfilter,nil)>0
+	return ep==1-tp and re:IsActiveType(TYPE_MONSTER) and g:FilterCount(c60150818.ccfilter,nil)>0
 end
 function c60150818.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,60150818)

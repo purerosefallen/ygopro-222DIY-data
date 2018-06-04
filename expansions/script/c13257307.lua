@@ -77,7 +77,7 @@ function c13257307.caop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChainAttack(ec)
 end
 function c13257307.descon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and eg:GetFirst()==e:GetHandler():GetEquipTarget()
+	return ep==1-tp and eg:GetFirst()==e:GetHandler():GetEquipTarget()
 end
 function c13257307.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end

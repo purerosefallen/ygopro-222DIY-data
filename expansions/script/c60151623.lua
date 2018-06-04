@@ -43,7 +43,7 @@ function c60151623.activate(e,tp,eg,ep,ev,re,r,rp)
                 e1:SetTargetRange(0,1)
                 e1:SetValue(c60151623.aclimit)
                 e1:SetLabel(tc:GetCode())
-				if Duel.GetTurnPlayer()~=tp then
+				if Duel.GetTurnPlayer()==1-tp then
 					e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
 				else
 					e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)

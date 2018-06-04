@@ -124,7 +124,7 @@ function c1152001.op1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1152001.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetControler()==Duel.GetTurnPlayer() and rp~=tp end
+	if chk==0 then return e:GetHandler():GetControler()==Duel.GetTurnPlayer() and rp==1-tp end
 	return Duel.SelectYesNo(tp,aux.Stringid(1152001,3))
 end
 --

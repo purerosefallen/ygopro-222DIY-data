@@ -71,7 +71,7 @@ function c14804829.cfilter(c,tp)
 end
 function c14804829.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local cet=e:GetHandler():GetEquipTarget()
-	return ep~=tp and ((eg and eg:GetFirst() == cet) or (re and re:GetHandler() == cet)) and eg:IsExists(c14804829.cfilter,1,nil,1-tp)
+	return ep==1-tp and ((eg and eg:GetFirst() == cet) or (re and re:GetHandler() == cet)) and eg:IsExists(c14804829.cfilter,1,nil,1-tp)
 end
 function c14804829.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsPlayerCanDraw(1-tp,1) end

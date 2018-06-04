@@ -162,7 +162,7 @@ function c1007016.desop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c1007016.repfilter(c,tp)
     return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:IsSetCard(0x20f)
-        and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()~=tp))
+        and (c:IsReason(REASON_BATTLE) or (c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp))
 end
 function c1007016.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return eg:IsExists(c1007016.repfilter,1,e:GetHandler(),tp) and not e:GetHandler():IsStatus(STATUS_DESTROY_CONFIRMED) end

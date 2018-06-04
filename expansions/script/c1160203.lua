@@ -52,7 +52,7 @@ function c1160203.op2(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c1160203.op3(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetTurnPlayer()~=tp then return end
+	if Duel.GetTurnPlayer()==1-tp then return end
 	local c=e:GetHandler()
 	c:RegisterFlagEffect(1160204,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 	c:RegisterFlagEffect(1160205,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END+RESET_SELF_TURN,0,2)

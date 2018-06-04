@@ -102,7 +102,7 @@ end
 ---
 function cm.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local rc=eg:GetFirst()
-	return ep~=tp and rc:IsControler(tp) and rc:IsSetCard(0x50c)
+	return ep==1-tp and rc:IsControler(tp) and rc:IsSetCard(0x50c)
 end
 function cm.thfilter(c)
 	return c:IsSetCard(0x50c) and not c:IsCode(m) and c:IsAbleToHand()

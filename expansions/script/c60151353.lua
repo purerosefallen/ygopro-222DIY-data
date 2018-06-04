@@ -111,7 +111,7 @@ function c60151353.ac(e)
 	return e:GetHandler():GetEquipCount()
 end
 function c60151353.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and (e:GetHandler():GetBattleTarget()~=nil or e:GetHandler():GetBattleTarget()==nil) 
+	return ep==1-tp and (e:GetHandler():GetBattleTarget()~=nil or e:GetHandler():GetBattleTarget()==nil) 
 		and e:GetOwnerPlayer()==tp
 end
 function c60151353.damop(e,tp,eg,ep,ev,re,r,rp)

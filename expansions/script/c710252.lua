@@ -142,7 +142,7 @@ end
 
 
 function c710252.eqcon1(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function c710252.eqfilter(c,ec)
 	return c:IsType(TYPE_EQUIP) and c710252.IsRelic(c) and c:CheckEquipTarget(ec)
@@ -164,7 +164,7 @@ function c710252.eqop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c710252.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp
+	return ep==1-tp
 end
 function c710252.tdfilter(c)
 	return c:IsAbleToDeck()

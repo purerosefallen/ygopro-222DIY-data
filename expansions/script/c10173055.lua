@@ -56,7 +56,7 @@ end
 function c10173055.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local g,re=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS,CHAININFO_TRIGGERING_EFFECT)
-	if chk==0 then return c:IsFaceup() and c:GetReasonPlayer()~=tp and (not re or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) or not g:IsContains(c)) end
+	if chk==0 then return c:IsFaceup() and c:GetReasonPlayer()==1-tp and (not re or not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) or not g:IsContains(c)) end
 	return true
 end
 function c10173055.repop(e,tp,eg,ep,ev,re,r,rp)
