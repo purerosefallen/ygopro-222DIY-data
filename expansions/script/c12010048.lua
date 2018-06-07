@@ -74,14 +74,25 @@ function c12010048.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,c12010048.filter,tp,LOCATION_GRAVE,0,1,1,nil)
 end
 function c12010048.activate(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return false end
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return false end
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-		Duel.RaiseEvent(tc,EVENT_CHAIN_SOLVED,tc:GetActivateEffect(),0,tp,tp,Duel.GetCurrentChain())
-	end
+    local c=e:GetHandler()
+    if not c:IsRelateToEffect(e) then return false end
+    if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return false end
+    local tc=Duel.GetFirstTarget()
+    if tc:IsType(TYPE_MONSTER) then
+        Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+        local e1=Effect.CreateEffect(e:GetHandler())
+        e1:SetCode(EFFECT_CHANGE_TYPE)
+        e1:SetType(EFFECT_TYPE_SINGLE)
+        e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+        e1:SetReset(RESET_EVENT+0x1fc0000)
+        e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
+        tc:RegisterEffect(e1)
+    else
+      if tc:IsRelateToEffect(e) then
+        Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+        Duel.RaiseEvent(tc,EVENT_CHAIN_SOLVED,tc:GetActivateEffect(),0,tp,tp,Duel.GetCurrentChain())
+      end
+    end
 end
 function c12010048.nfilter(c)
 	return c:IsFaceup() and not c:IsDisabled()
