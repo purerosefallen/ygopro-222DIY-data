@@ -118,7 +118,6 @@ function c12001018.op1_3(e,tp,eg,ep,ev,re,r,rp)
 			if c:IsLocation(LOCATION_GRAVE) and tc:IsAbleToHand() then
 				Duel.DisableShuffleCheck()
 				Duel.SendtoDeck(tc,nil,1,REASON_EFFECT)
-				Duel.SendtoDeck(c,nil,0,REASON_EFFECT)
 				Duel.ShuffleHand(tp)
 			else
 				Duel.ShuffleDeck(tp)
