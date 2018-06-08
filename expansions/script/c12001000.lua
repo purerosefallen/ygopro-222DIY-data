@@ -40,7 +40,6 @@ function c12001000.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.DisableShuffleCheck()
 		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
 	else
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ShuffleDeck(tp)
 		Duel.SendtoDeck(e:GetHandler(),nil,0,REASON_EFFECT)
 end
