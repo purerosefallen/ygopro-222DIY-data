@@ -37,7 +37,6 @@ function c12001001.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
 		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
 	else
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ShuffleDeck(tp)
 		Duel.SendtoDeck(e:GetHandler(),nil,0,REASON_EFFECT)
 end
