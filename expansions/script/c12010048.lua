@@ -133,7 +133,7 @@ function c12010048.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c12010048.desfilter(c,atk)
-	return c:IsFaceup() and c:GetAttack()<atk
+	return c:IsFaceup() and c:GetAttack()<atk and c:IsType(TYPE_MONSTER)
 end
 function c12010048.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local atk=e:GetHandler():GetAttack()
