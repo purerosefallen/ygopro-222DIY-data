@@ -17,27 +17,23 @@ function cm.initial_effect(c)
 end
 function cm.tgfilter0(c,e,tp)
 	return c:IsFaceup() and Senya.check_set_3L(c) and Senya.MustMaterialCheck(c,tp,EFFECT_MUST_BE_FMATERIAL)
-		and c:IsCanBeFusionMaterial() and Duel.IsExistingMatchingCard(cm.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
-end
-function cm.tgfilter(c,e,tp)
-	return c:IsFaceup() and Senya.check_set_3L(c)
-		and c:IsCanBeFusionMaterial() and not c:IsImmuneToEffect(e)
 		and Duel.IsExistingMatchingCard(cm.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp,c)
 end
 function cm.spfilter(c,e,tp,tc)
 	if not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) then return false end
 	return Senya.check_set_3L(c) and c.fusion_att_3L and tc:IsFusionAttribute(c.fusion_att_3L) and Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(tc),c)>0
+		and tc:IsCanBeFusionMaterial(c)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc==0 then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and cm.tgfilter(chkc,e,tp) end
+	if chkc==0 then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and cm.tgfilter0(chkc,e,tp) end
 	if chk==0 then return Duel.IsExistingTarget(cm.tgfilter0,tp,LOCATION_MZONE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	Duel.SelectTarget(tp,cm.tgfilter,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
+	Duel.SelectTarget(tp,cm.tgfilter0,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsCanBeFusionMaterial() and not tc:IsImmuneToEffect(e) then
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsImmuneToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,cm.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc)
 		local sc=sg:GetFirst()
