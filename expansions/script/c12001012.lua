@@ -37,7 +37,7 @@ function c12001012.operation(e,tp,eg,ep,ev,re,r,rp)
     if tc:IsSetCard(0xfb0) then
         Duel.DisableShuffleCheck()
         Duel.SendtoGrave(g,REASON_EFFECT+REASON_REVEAL)
-    els
+    else
         Duel.ShuffleDeck(tp)
         Duel.SendtoDeck(e:GetHandler(),nil,0,REASON_EFFECT)
 end
