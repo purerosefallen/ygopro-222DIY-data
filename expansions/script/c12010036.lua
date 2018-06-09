@@ -47,7 +47,7 @@ function c12010036.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_END and Duel.GetLP(tp)>=Duel.GetLP(1-tp)
 end
 function c12010036.thfilter(c,lp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfba) and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and ( c:IsSetCard(0xfba) or c:IsSetCard(0xfb0) ) and c:IsAbleToHand()
 end
 function c12010036.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local lp1=Duel.GetLP(tp)
@@ -78,7 +78,7 @@ function c12010036.recon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_END and Duel.GetLP(tp)<Duel.GetLP(1-tp)
 end
 function c12010036.refilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfba) and c:IsReleasable()
+	return c:IsType(TYPE_MONSTER) and ( c:IsSetCard(0xfba) or c:IsSetCard(0xfb0) ) and c:IsReleasable()
 end
 function c12010036.retg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(c12010036.refilter,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil) end
@@ -100,7 +100,7 @@ function c12010036.reop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c12010036.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp==1-tp and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP) and not c:IsLocation(LOCATION_DECK) and c:GetPreviousControler()==tp
+	return rp~=tp and c:IsReason(REASON_EFFECT) and c:IsPreviousPosition(POS_FACEUP) and not c:IsLocation(LOCATION_DECK) and c:GetPreviousControler()==tp
 end
 function c12010036.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

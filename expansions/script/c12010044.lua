@@ -83,9 +83,9 @@ function c12010044.disop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		local e3=Effect.CreateEffect(e:GetHandler())
 		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetCode(EFFECT_EXTRA_ATTACK)
+		e3:SetCode(EFFECT_set)
 		e3:SetValue(1)
-		c:RegisterEffect(e3)
+		e:GetHandler():RegisterEffect(e3)
 	end
 end
 function c12010044.cd(e,tp,eg,ep,ev,re,r,rp)

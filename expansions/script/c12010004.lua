@@ -3,12 +3,11 @@ function c12010004.initial_effect(c)
 	--to deck
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(12010004,0))
-	e1:SetCategory(CATEGORY_TODECK+CATEGORY_SEARCH+CATEGORY_TOHAND)
+	e1:SetCategory(CATEGORY_TODECK+CATEGORY_SEARCH+CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetRange(LOCATION_HAND)
+	e1:SetRange(LOCATION_HAND+LOCATION_ONFIELD)
 	e1:SetCountLimit(1,12010004)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(c12010004.thcon)
 	e1:SetCost(c12010004.thcost)
 	e1:SetTarget(c12010004.thtg)
 	e1:SetOperation(c12010004.thop)
@@ -25,36 +24,23 @@ function c12010004.initial_effect(c)
 	e8:SetOperation(c12010004.spop)
 	c:RegisterEffect(e8)
 end
-function c12010004.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
-end
 function c12010004.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return not e:GetHandler():IsPublic() end
-	Duel.ConfirmCards(1-tp,e:GetHandler())
+	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
+	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
 function c12010004.thfilter(c)
 	return c:IsAbleToDeck() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfba)
 end
 function c12010004.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c12010004.thfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,0,LOCATION_HAND)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_DECK)
-end
-function c12010004.thfilter2(c,att)
-	return c:IsAbleToHand() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfba) and (c:IsRace(RACE_BEASTWARRIOR) or c:IsRace(RACE_MACHINE)) and c:IsAttribute(att)
+	if chk==0 then return Duel.IsExistingMatchingCard(c12010004.thfilter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,0,LOCATION_DECK)
 end
 function c12010004.thop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.SelectMatchingCard(tp,c12010004.thfilter,tp,LOCATION_HAND,0,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,c12010004.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then 
-		local att=g:GetFirst():GetAttribute()
-		Duel.ConfirmCards(1-tp,g)
-		if Duel.SendtoDeck(g,nil,2,REASON_EFFECT)>0 and Duel.IsExistingMatchingCard(c12010004.thfilter2,tp,LOCATION_DECK,0,1,nil,att) and Duel.SelectYesNo(tp,aux.Stringid(12010004,2)) then
-			Duel.BreakEffect()
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			local sg=Duel.SelectMatchingCard(tp,c12010004.thfilter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,att)
-			Duel.SendtoHand(sg,nil,REASON_EFFECT)
+			Duel.SendtoGrave(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)
-		end
 	end
 end
 function c12010004.spfilter(c,e,tp)

@@ -70,13 +70,16 @@ end
 function c12008015.cfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_LINK)
 end
+function c12008015.cfilter11(c)
+	return c:IsFaceup() and ( c:IsSetCard(0x1fb3) or c:IsSetCard(0xfbb) )
+end
 function c12008015.condition(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c12008015.ccfilter,1,nil) then
 	   e:SetLabel(100)
 	else 
 	   e:SetLabel(0)
 	end
-	return eg:IsExists(c12008015.cfilter,1,nil)
+	return Duel.IsExistingMatchingCard(c12008015.cfilter11,tp,LOCATION_MZONE,0,1,nil) and eg:IsExists(c12008015.cfilter,1,nil)
 end
 function c12008015.targetx(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_HAND,0,1,nil) end

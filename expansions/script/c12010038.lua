@@ -47,14 +47,15 @@ function c12010038.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return false end
 	--cannot be destroyed
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_FIELD)
-    e1:SetCode(EFFECT_INDESTRUCTABLE)
-    e1:SetRange(LOCATION_MZONE)
-    e1:SetTargetRange(LOCATION_MZONE,0)
-    e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xfba))
-    e1:SetValue(1)
-    Duel.RegisterEffect(e1,tp)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_INDESTRUCTABLE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetTargetRange(LOCATION_MZONE,0)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xfba))
+	e1:SetValue(1)
+	e1:SetReset(RESET_PHASE+PHASE_END,2)
+	Duel.RegisterEffect(e1,tp)
 end
 function c12010038.ccfilter(c,tp)
 	return c:IsReason(REASON_RELEASE) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp

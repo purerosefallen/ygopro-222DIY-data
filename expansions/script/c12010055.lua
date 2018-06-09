@@ -82,7 +82,7 @@ function c12010055.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local mc=g1:GetFirst()
 	local g2=g:FilterSelect(tp,c12010055.cfilter2,1,1,mc,tp,mc)
 	g1:Merge(g2)
-	Duel.Release(g1,POS_FACEUP,REASON_COST)
+	Duel.Release(g1,REASON_COST)
 end
 function c12010055.filter2(c)
 	return c:IsFaceup() and c:GetAttack()~=c:GetBaseAttack()
@@ -98,7 +98,7 @@ function c12010055.operation2(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local m=math.abs(tc:GetAttack()-tc:GetBaseAttack())
-		Duel.Damage(1-tp,m,REASON_EFFECT)
+		Duel.Recover(tp,2*m,REASON_EFFECT)
 		if c:IsFaceup() and c:IsRelateToEffect(e) then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

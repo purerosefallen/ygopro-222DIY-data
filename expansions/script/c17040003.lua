@@ -51,7 +51,8 @@ end
 function c17040003.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c17040003.tgfilter,tp,LOCATION_MZONE,0,e:GetHandler())
 	if g:GetCount()>0 then
-	   Duel.SendtoGrave(g,REASON_EFFECT)
+		dc=Duel.SendtoGrave(g,REASON_EFFECT)
+		Duel.Damage(tp,dc*100,REASON_EFFECT)
 	end
 end
 function c17040003.cfilter(c,tp)

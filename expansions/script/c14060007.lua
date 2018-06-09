@@ -2,7 +2,6 @@
 local m=14060007
 local cm=_G["c"..m]
 function cm.initial_effect(c)
-	Duel.EnableGlobalFlag(GLOBALFLAG_DECK_REVERSE_CHECK)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_TODECK)

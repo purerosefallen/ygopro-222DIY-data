@@ -1,0 +1,65 @@
+--占星少女  艾瑞斯
+function c22600201.initial_effect(c)
+    --todeck
+    local e1=Effect.CreateEffect(c)
+    e1:SetCategory(CATEGORY_TODECK)
+    e1:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
+    e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+    e1:SetCode(EVENT_SUMMON_SUCCESS)
+    e1:SetCountLimit(1)
+    e1:SetTarget(c22600201.target)
+    e1:SetOperation(c22600201.operation)
+    c:RegisterEffect(e1)
+    local e2=e1:Clone()
+    e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+    c:RegisterEffect(e2)
+    
+    --spsummon
+    local e3=Effect.CreateEffect(c)
+    e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+    e3:SetType(EFFECT_TYPE_IGNITION)
+    e3:SetCountLimit(1,22600201)
+    e3:SetRange(LOCATION_MZONE)
+    e3:SetTarget(c22600201.sptg)
+    e3:SetOperation(c22600201.spop)
+    c:RegisterEffect(e3)
+end
+
+function c22600201.target(e,tp,eg,ep,ev,re,r,rp,chk)
+    if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,nil) end
+    Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,99,tp,LOCATION_HAND)
+end
+
+function c22600201.operation(e,tp,eg,ep,ev,re,r,rp)
+    local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_HAND,0,nil)
+    if g:GetCount()==0 then return end
+        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+        local max=g:GetCount()
+        local sg=g:Select(tp,1,max,nil)
+        Duel.SendtoDeck(sg,tp,0,REASON_EFFECT)
+        Duel.SortDecktop(tp,tp,sg:GetCount())
+        for i=1,sg:GetCount() do
+            local mg=Duel.GetDecktopGroup(tp,1)
+            Duel.MoveSequence(mg:GetFirst(),0)
+        end
+    Duel.Recover(tp,500*sg:GetCount(),REASON_EFFECT)
+end
+function c22600201.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+    if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+end
+
+function c22600201.spop(e,tp,eg,ep,ev,re,r,rp)
+    if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 then return end
+    Duel.ConfirmDecktop(tp,1)
+    Duel.BreakEffect()
+    local g=Duel.GetDecktopGroup(tp,1)
+    local tc=g:GetFirst()
+    if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0x262) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then
+        Duel.DisableShuffleCheck()
+        Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+    else
+        Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
+        Duel.ShuffleDeck(tp)
+    end
+end
