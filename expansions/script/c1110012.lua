@@ -48,6 +48,7 @@ function c1110012.op2(e,tp,eg,ep,ev,re,r,rp)
 		local sg=g:RandomSelect(tp,1)
 		local sc=sg:GetFirst()
 		Duel.ConfirmCards(tp,sc)
+		Duel.ShuffleHand(1-tp)
 		if not c:IsFaceup() then return end
 		if not c:IsRelateToEffect(e) then return end
 		if not sc:IsType(TYPE_MONSTER) then return end

@@ -24,16 +24,16 @@ function c1111511.initial_effect(c)
 --
 end
 --
-function c1111511.ofilter1(c)
+function c1111511.ofilter1(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_SPIRIT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c1111511.op1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsHasEffect(EFFECT_NECRO_VALLEY) then return end
-	if not Duel.IsExistingMatchingCard(c1111511.ofilter1,tp,LOCATION_GRAVE,0,1,nil) then return end
+	if not Duel.IsExistingMatchingCard(c1111511.ofilter1,tp,LOCATION_GRAVE,0,1,nil,e,tp) then return end
 	if Duel.SelectYesNo(tp,aux.Stringid(1111511,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,c1111511.ofilter1,tp,LOCATION_GRAVE,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,c1111511.ofilter1,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 		if g:GetCount()<=0 then return end
 		local tc=g:GetFirst()
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)

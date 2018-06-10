@@ -49,7 +49,7 @@ function c1150039.tg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g1=Duel.SelectTarget(tp,c1150039.tfilter2,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g2=Duel.SelectTarget(tp,c1150039.tfilter2x,tp,LOCATION_ONFIELD,0,1,1,tc1) 
+	local g2=Duel.SelectTarget(tp,c1150039.tfilter2x,tp,0,LOCATION_ONFIELD,1,1,tc1) 
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g1,g1:GetCount(),0,0)   
 end

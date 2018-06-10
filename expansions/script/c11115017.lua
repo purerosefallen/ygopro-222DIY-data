@@ -10,6 +10,7 @@ function c11115017.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EVENT_TO_HAND)
 	e1:SetCountLimit(1,11115017)
+	e1:SetCost(c11115017.hdcost)
 	e1:SetTarget(c11115017.hdtg)
 	e1:SetOperation(c11115017.hdop)
 	c:RegisterEffect(e1)
@@ -25,6 +26,15 @@ function c11115017.initial_effect(c)
 	e2:SetTarget(c11115017.hdstg)
 	e2:SetOperation(c11115017.hdsop)
 	c:RegisterEffect(e2)
+end
+function c11115017.disfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x15e) and c:IsAbleToRemoveAsCost()
+end
+function c11115017.hdcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c11115017.disfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Duel.SelectMatchingCard(tp,c11115017.disfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c11115017.hdfilter(c,tp)
 	return c:IsControler(1-tp) and c:IsPreviousLocation(LOCATION_DECK) and not c:IsReason(REASON_DRAW)
