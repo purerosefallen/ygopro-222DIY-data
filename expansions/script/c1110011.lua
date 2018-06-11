@@ -99,7 +99,7 @@ function c1110011.op3_1(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(1-tp,LOCATION_MZONE)<1 then return end
 	if not Duel.IsPlayerCanSpecialSummonMonster(tp,1110197,0,0x4011,0,4800,3,RACE_PSYCHO,ATTRIBUTE_WATER) then return end
 	local token=Duel.CreateToken(tp,1110197)
-	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
+	Duel.SpecialSummon(token,0,tp,1-tp,false,false,POS_FACEUP)
 	local e3_1_1=Effect.CreateEffect(c)
 	e3_1_1:SetType(EFFECT_TYPE_SINGLE)
 	e3_1_1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)

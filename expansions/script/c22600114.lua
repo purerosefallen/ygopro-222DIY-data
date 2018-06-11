@@ -1,4 +1,4 @@
---传灵 花落
+--鬼脸精灵 花落
 local m=22600114
 local cm=_G["c"..m]
 function cm.initial_effect(c)
@@ -19,11 +19,11 @@ end
 function cm.counterfilter(c)
     return c:IsType(TYPE_SPIRIT)
 end
-function cm.filter(c)
-    return c:IsSetCard(0x261) and c:IsDiscardable()
+function cm.filter(c,e)
+    return c:IsSetCard(0x261) and c:IsDiscardable() and not e:GetHandler()
 end
 function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_HAND,0,1,nil) and Duel.GetCustomActivityCount(m,tp,ACTIVITY_SUMMON)==0
+    if chk==0 then return Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_HAND,0,1,nil,e) and Duel.GetCustomActivityCount(m,tp,ACTIVITY_SUMMON)==0
         and Duel.GetCustomActivityCount(m,tp,ACTIVITY_SPSUMMON)==0 end
     local e1=Effect.CreateEffect(e:GetHandler())
     e1:SetType(EFFECT_TYPE_FIELD)
@@ -36,7 +36,7 @@ function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
     local e2=e1:Clone()
     e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
     Duel.RegisterEffect(e2,tp)
-    Duel.DiscardHand(tp,cm.filter,1,1,REASON_COST+REASON_DISCARD)
+    Duel.DiscardHand(tp,cm.filter,1,1,REASON_COST+REASON_DISCARD,e)
 end
 function cm.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
     return not c:IsType(TYPE_SPIRIT)
