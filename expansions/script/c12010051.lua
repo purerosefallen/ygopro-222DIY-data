@@ -74,7 +74,7 @@ function c12010051.con(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_SYNCHRO 
 end
 function c12010051.rfilter(c)
-	return  c:IsSetCard(0xfbc) and c:IsSetCard(0xfba) and c:IsAbleToHand()
+    return  ( c:IsSetCard(0xfbc) or c:IsSetCard(0xfba) ) and c:IsAbleToHand()
 end
 function c12010051.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c12010051.rfilter,tp,LOCATION_ONFIELD,0,1,nil) and Duel.IsExistingMatchingCard(Card.IsReleasable,tp,0,LOCATION_ONFIELD,1,nil) end
