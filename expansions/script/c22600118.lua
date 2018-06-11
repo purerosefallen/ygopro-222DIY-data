@@ -1,4 +1,4 @@
---传灵 火噬
+--鬼脸精灵 火噬
 local m=22600118
 local cm=_G["c"..m]
 function cm.initial_effect(c)
@@ -23,12 +23,12 @@ end
 function cm.condition(e,tp,eg,ep,ev,re,r,rp)
     return rp~=tp and (re:IsActiveType(TYPE_MONSTER) or re:IsHasType(EFFECT_TYPE_ACTIVATE)) and Duel.IsChainNegatable(ev)
 end
-function cm.filter(c)
-    return c:IsSetCard(0x261) and c:IsDiscardable()
+function cm.filter(c,e)
+    return c:IsSetCard(0x261) and c:IsDiscardable() and not e:GetHandler()
 end
 function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_HAND,0,1,nil) end
-    Duel.DiscardHand(tp,cm.filter,1,1,REASON_COST+REASON_DISCARD)
+    if chk==0 then return Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_HAND,0,1,nil,e) end
+    Duel.DiscardHand(tp,cm.filter,1,1,REASON_COST+REASON_DISCARD,e)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return true end
@@ -46,5 +46,5 @@ function cm.cfilter(c)
     return c:IsFacedown() or not c:IsType(TYPE_SPIRIT)
 end
 function cm.handcon(e)
-    return not Duel.IsExistingMatchingCard(cm.cfilter,e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil)
+    return not Duel.IsExistingMatchingCard(cm.cfilter,e:GetHandler():GetControler(),LOCATION_MZONE,0,1,nil,e)
 end
