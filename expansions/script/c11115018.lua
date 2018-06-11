@@ -35,21 +35,12 @@ function c11115018.initial_effect(c)
 	e4:SetValue(c11115018.elimit)
 	c:RegisterEffect(e4)
 	local e5=e3:Clone()
-	e5:SetOperation(c11115018.aclimit3)
+	e5:SetOperation(c11115018.aclimit2)
 	c:RegisterEffect(e5)
 	local e6=e4:Clone()
 	e6:SetCondition(c11115018.econ2)
 	e6:SetTargetRange(0,1)
 	c:RegisterEffect(e6)
-	--spsummon count limit
-	local e7=Effect.CreateEffect(c)
-	e7:SetType(EFFECT_TYPE_FIELD)
-	e7:SetCode(EFFECT_SPSUMMON_COUNT_LIMIT)
-	e7:SetRange(LOCATION_MZONE)
-	e7:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e7:SetTargetRange(1,1)
-	e7:SetValue(1)
-	c:RegisterEffect(e7)
 	--extra to grave
 	local e8=Effect.CreateEffect(c)
 	e8:SetDescription(aux.Stringid(11115017,0))
@@ -61,6 +52,23 @@ function c11115018.initial_effect(c)
 	e8:SetTarget(c11115018.gytg)
 	e8:SetOperation(c11115018.gyop)
 	c:RegisterEffect(e8)
+	--spsummon count limit
+	local e9=e3:Clone()
+	e9:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e9:SetOperation(c11115018.aclimit3)
+	c:RegisterEffect(e9)
+	local e10=Effect.CreateEffect(c)
+	e10:SetType(EFFECT_TYPE_FIELD)
+	e10:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e10:SetRange(LOCATION_MZONE)
+	e10:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e10:SetTargetRange(1,0)
+    e10:SetCondition(c11115018.econ3)
+	c:RegisterEffect(e10)
+	local e11=e10:Clone()
+	e11:SetTargetRange(0,1)
+	e11:SetCondition(c11115018.econ4)
+	c:RegisterEffect(e11)
 end
 function c11115018.sfilter(c)
 	return c:IsSetCard(0xa15e) and c:IsType(TYPE_SYNCHRO)
@@ -72,12 +80,27 @@ end
 function c11115018.econ1(e)
 	return e:GetHandler():GetFlagEffect(11115018)~=0
 end
-function c11115018.aclimit3(e,tp,eg,ep,ev,re,r,rp)
+function c11115018.aclimit2(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp or not re:IsActiveType(TYPE_MONSTER) then return end
 	e:GetHandler():RegisterFlagEffect(111150180,RESET_EVENT+0x3ff0000+RESET_PHASE+PHASE_END,0,1)
 end
+function c11115018.aclimit3(e,tp,eg,ep,ev,re,r,rp)
+	local tc=eg:GetFirst()
+	local p=tc:GetSummonPlayer()
+    if p==tp then 
+	    e:GetHandler():RegisterFlagEffect(11115021,RESET_EVENT+0x3ff0000+RESET_PHASE+PHASE_END,0,1)
+	else
+	    e:GetHandler():RegisterFlagEffect(111150210,RESET_EVENT+0x3ff0000+RESET_PHASE+PHASE_END,0,1)
+	end
+end
 function c11115018.econ2(e)
 	return e:GetHandler():GetFlagEffect(111150180)~=0
+end
+function c11115018.econ3(e)
+	return e:GetHandler():GetFlagEffect(11115021)~=0
+end
+function c11115018.econ4(e)
+	return e:GetHandler():GetFlagEffect(111150210)~=0
 end
 function c11115018.elimit(e,re,tp)
 	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)

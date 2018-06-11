@@ -101,17 +101,17 @@ function c1111221.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ops={}
 	local opval={}
 	if b1 then
-		ops[off]=aux.Stringid(1111202,1)
+		ops[off]=aux.Stringid(1111221,1)
 		opval[off-1]=1
 		off=off+1
 	end
 	if b2 then
-		ops[off]=aux.Stringid(1111202,2)
+		ops[off]=aux.Stringid(1111221,2)
 		opval[off-1]=2
 		off=off+1
 	end
 	if b3 then
-		ops[off]=aux.Stringid(1111202,3)
+		ops[off]=aux.Stringid(1111221,3)
 		opval[off-1]=3
 		off=off+1
 	end
@@ -145,9 +145,9 @@ function c1111221.op2(e,tp,eg,ep,ev,re,r,rp)
 		g1:Merge(g2)
 		Duel.Remove(g1,POS_FACEUP,REASON_EFFECT)
 	elseif sel==2 then
-		if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
+		if Duel.GetLocationCount(tp,LOCATION_SZONE)<1 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-		local g=Duel.SelectMatchingCard(tp,c1111221.tfilter2_2,tp,LOCATION_GRAVE,0,1,nil)
+		local g=Duel.SelectMatchingCard(tp,c1111221.tfilter2_2,tp,LOCATION_GRAVE,0,1,1,nil)
 		if g:GetCount()<1 then return end
 		Duel.SSet(tp,g)
 		Duel.ConfirmCards(1-tp,g)
