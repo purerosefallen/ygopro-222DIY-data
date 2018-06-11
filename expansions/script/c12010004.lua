@@ -40,7 +40,6 @@ function c12010004.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c12010004.thfilter,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then 
 			Duel.SendtoGrave(g,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,sg)
 	end
 end
 function c12010004.spfilter(c,e,tp)
