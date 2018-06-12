@@ -1,2 +1,2 @@
 ## YGOPro-222DIY-data
-The data of YGOPro 222 Custom Server
+The card data of YGOPro 222 Custom Server
