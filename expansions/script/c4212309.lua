@@ -15,8 +15,8 @@ function c4212309.initial_effect(c)
 	e2:SetCategory(CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_ACTIVATE)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetTarget(c4212309.target)
-	e2:SetOperation(c4212309.activate)
+	e2:SetCountLimit(1,4212309) 
+	e2:SetOperation(c4212309.activate)	
 	c:RegisterEffect(e2)
 	--Activate(effect)
 	local e3=Effect.CreateEffect(c)
@@ -31,13 +31,14 @@ end
 function c4212309.cfilter(c) 
 	return c:IsAbleToDeck() and c:IsType(TYPE_SPELL) and c:IsType(TYPE_CONTINUOUS)
 end
-function c4212309.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c4212309.cfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil) end
-end
 function c4212309.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.SelectMatchingCard(tp,c4212309.cfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,3,nil,e)
-	if g:GetCount()>0 then
-		Duel.SendtoDeck(g,nil,2,REASON_EFFECT+REASON_RETURN)
+	if Duel.IsExistingMatchingCard(c4212309.cfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil) then
+		if Duel.SelectEffectYesNo(tp,e:GetHandler(),95) then
+			local g=Duel.SelectMatchingCard(tp,c4212309.cfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,3,nil,e)
+			if g:GetCount()>0 then
+				Duel.SendtoDeck(g,nil,2,REASON_EFFECT+REASON_RETURN)
+			end
+		end
 	end
 end
 function c4212309.exfilter(c)

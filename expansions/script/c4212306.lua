@@ -6,7 +6,6 @@ function c4212306.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_ACTIVATE)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetTarget(c4212306.target)
 	e2:SetOperation(c4212306.activate)
 	c:RegisterEffect(e2)
 	--Activate(effect)
@@ -26,21 +25,22 @@ end
 function c4212306.cfilter(c) 
 	return c:IsAbleToHand()
 end
-function c4212306.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c4212306.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) end
-end
 function c4212306.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectMatchingCard(tp,c4212306.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,e:GetHandler(),e)
-	if g:GetCount()>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-	end
-	if Duel.GetMatchingGroupCount(c4212306.mfilter,tp,LOCATION_SZONE,0,nil)>=3 then
-		if Duel.SelectEffectYesNo(tp,e:GetHandler(),aux.Stringid(4212306,1)) then
-			local tc = Duel.SelectMatchingCard(tp,Card.IsType,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,e:GetHandler(),TYPE_SPELL+TYPE_TRAP)
-			if tc:GetCount()>0 then
-				Duel.Destroy(tc,REASON_EFFECT)
-			end			
+	if Duel.IsExistingMatchingCard(c4212306.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) then
+		if Duel.SelectEffectYesNo(tp,e:GetHandler(),95) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+			local g=Duel.SelectMatchingCard(tp,c4212306.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,e:GetHandler(),e)
+			if g:GetCount()>0 then
+			Duel.SendtoHand(g,nil,REASON_EFFECT)
+			end
+			if Duel.GetMatchingGroupCount(c4212306.mfilter,tp,LOCATION_SZONE,0,nil)>=3 then
+				if Duel.SelectEffectYesNo(tp,e:GetHandler(),aux.Stringid(4212306,1)) then
+					local tc = Duel.SelectMatchingCard(tp,Card.IsType,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,e:GetHandler(),TYPE_SPELL+TYPE_TRAP)
+					if tc:GetCount()>0 then
+						Duel.Destroy(tc,REASON_EFFECT)
+					end			
+				end
+			end
 		end
 	end
 end

@@ -30,17 +30,21 @@ function c4212307.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c4212307.cfilter,tp,LOCATION_DECK,0,1,nil) end
 end
 function c4212307.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c4212307.cfilter,tp,LOCATION_DECK,0,1,1,nil,e)
-	if g:GetCount()>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-	end
-	if Duel.GetMatchingGroupCount(c4212307.mfilter,tp,LOCATION_SZONE,0,nil)>=3 then
-		if Duel.SelectEffectYesNo(tp,e:GetHandler(),aux.Stringid(4212307,1)) then
-			local tc = Duel.SelectMatchingCard(tp,Card.IsType,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,e:GetHandler(),TYPE_SPELL+TYPE_TRAP)
-			if tc:GetCount()>0 then
-				Duel.Destroy(tc,REASON_EFFECT)
-			end			
+	if Duel.IsExistingMatchingCard(c4212307.cfilter,tp,LOCATION_DECK,0,1,nil) then
+		if Duel.SelectEffectYesNo(tp,e:GetHandler(),95) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+			local g=Duel.SelectMatchingCard(tp,c4212307.cfilter,tp,LOCATION_DECK,0,1,1,nil,e)
+			if g:GetCount()>0 then
+				Duel.SendtoHand(g,nil,REASON_EFFECT)
+			end
+			if Duel.GetMatchingGroupCount(c4212307.mfilter,tp,LOCATION_SZONE,0,nil)>=3 then
+				if Duel.SelectEffectYesNo(tp,e:GetHandler(),aux.Stringid(4212307,1)) then
+					local tc = Duel.SelectMatchingCard(tp,Card.IsType,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,e:GetHandler(),TYPE_SPELL+TYPE_TRAP)
+					if tc:GetCount()>0 then
+						Duel.Destroy(tc,REASON_EFFECT)
+					end			
+				end
+			end
 		end
 	end
 end

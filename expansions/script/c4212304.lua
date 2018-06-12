@@ -5,7 +5,6 @@ function c4212304.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_ACTIVATE)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetTarget(c4212304.mvtg)
 	e2:SetOperation(c4212304.mvop)
 	c:RegisterEffect(e2)
 	--to hand
@@ -31,20 +30,21 @@ end
 function c4212304.mvfilter3(c)
 	return c:IsFaceup() and c:IsSetCard(0x2a5) and c:GetSequence()<5
 end
-function c4212304.mvtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c4212304.mvfilter1,tp,LOCATION_MZONE,0,1,nil)
-		and Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL)>0 end
-end
 function c4212304.mvop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(4212304,2))
-	local g=Duel.SelectMatchingCard(tp,c4212304.mvfilter1,tp,LOCATION_MZONE,0,1,1,nil)
-	if g:GetCount()>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
-		local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0)
-		local nseq=math.log(s,2)
-		Duel.MoveSequence(g:GetFirst(),nseq)
+	if Duel.IsExistingMatchingCard(c4212304.mvfilter1,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL)>0 then
+		if Duel.SelectEffectYesNo(tp,e:GetHandler(),95) then
+			if not e:GetHandler():IsRelateToEffect(e) then return end
+			if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(4212304,2))
+			local g=Duel.SelectMatchingCard(tp,c4212304.mvfilter1,tp,LOCATION_MZONE,0,1,1,nil)
+			if g:GetCount()>0 then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
+				local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0)
+				local nseq=math.log(s,2)
+				Duel.MoveSequence(g:GetFirst(),nseq)
+			end
+		end
 	end
 end
 function c4212304.mfilter(c)

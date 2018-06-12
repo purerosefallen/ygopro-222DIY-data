@@ -19,13 +19,14 @@ end
 function cm.counterfilter(c)
     return c:IsType(TYPE_SPIRIT)
 end
-function cm.filter(c,e)
-    return c:IsSetCard(0x261) and c:IsDiscardable() and not e:GetHandler()
+function cm.filter(c)
+    return c:IsSetCard(0x261) and c:IsDiscardable()
 end
 function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_HAND,0,1,nil,e) and Duel.GetCustomActivityCount(m,tp,ACTIVITY_SUMMON)==0
+	local c=e:GetHandler()
+    if chk==0 then return Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_HAND,0,1,c) and Duel.GetCustomActivityCount(m,tp,ACTIVITY_SUMMON)==0
         and Duel.GetCustomActivityCount(m,tp,ACTIVITY_SPSUMMON)==0 end
-    local e1=Effect.CreateEffect(e:GetHandler())
+    local e1=Effect.CreateEffect(c)
     e1:SetType(EFFECT_TYPE_FIELD)
     e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
     e1:SetCode(EFFECT_CANNOT_SUMMON)
@@ -36,7 +37,7 @@ function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
     local e2=e1:Clone()
     e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
     Duel.RegisterEffect(e2,tp)
-    Duel.DiscardHand(tp,cm.filter,1,1,REASON_COST+REASON_DISCARD,e)
+    Duel.DiscardHand(tp,cm.filter,1,1,REASON_COST+REASON_DISCARD)
 end
 function cm.sumlimit(e,c,sump,sumtype,sumpos,targetp,se)
     return not c:IsType(TYPE_SPIRIT)

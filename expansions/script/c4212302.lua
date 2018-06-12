@@ -6,7 +6,6 @@ function c4212302.initial_effect(c)
 	e2:SetCategory(CATEGORY_DECKDES)
 	e2:SetType(EFFECT_TYPE_ACTIVATE)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetTarget(c4212302.target)
 	e2:SetOperation(c4212302.activate)
 	c:RegisterEffect(e2)
 	--copy trap
@@ -38,20 +37,20 @@ end
 function c4212302.tffilter(c,tp)
 	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x2a5) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
-function c4212302.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,2) 
-		and Duel.IsExistingMatchingCard(c4212301.tffilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,2)
-end
 function c4212302.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.DiscardDeck(tp,2,REASON_EFFECT)~=0 then
-		if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-		local tc=Duel.SelectMatchingCard(tp,c4212302.tffilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
-		if tc then
-			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+	if Duel.IsPlayerCanDiscardDeck(tp,2) 
+		and Duel.IsExistingMatchingCard(c4212301.tffilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,tp) then
+		if Duel.SelectEffectYesNo(tp,e:GetHandler(),95) then
+			if Duel.DiscardDeck(tp,2,REASON_EFFECT)~=0 then
+				if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
+				local tc=Duel.SelectMatchingCard(tp,c4212302.tffilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()
+				if tc then
+					Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+				end
+			end	
 		end
-	end	
+	end
 end
 function c4212302.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.CheckEvent(EVENT_CHAINING)
