@@ -63,7 +63,9 @@ function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function cm.operation(e,tp,eg,ep,ev,re,r,rp)
     local at=Duel.GetAttacker()
-    Duel.SendtoDeck(at,nil,2,REASON_EFFECT)
+	if at:IsRelateToBattle() then
+		Duel.SendtoDeck(at,at:GetControler(),2,REASON_EFFECT)
+	end
 end
 function cm.filter(c)
     return c:IsFaceup() and c:IsType(TYPE_SPIRIT)

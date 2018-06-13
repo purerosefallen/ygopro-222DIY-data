@@ -52,13 +52,15 @@ function c1157001.con2(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(1-tp,1157001)~=Duel.GetFlagEffect(1-tp,1157002)
 end
 --
-function c1157001.sfilter2(c)
-	return c:IsRace(RACE_PLANT) and c:IsReleasable()
+function c1157001.sfilter2(c,tp)
+	return c:IsRace(RACE_PLANT) and c:IsReleasable() 
+		and (c:IsControler(tp)
+		or (c:IsControler(1-tp) and Duel.IsExistingTarget(Card.IsDestructable,tp,0,LOCATION_ONFIELD,1,c)))
 end
 function c1157001.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c1157001.sfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c1157001.sfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-	local sg=Duel.SelectMatchingCard(tp,c1157001.sfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	local sg=Duel.SelectMatchingCard(tp,c1157001.sfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tp)
 	Duel.Release(sg,REASON_EFFECT)
 end
 --
