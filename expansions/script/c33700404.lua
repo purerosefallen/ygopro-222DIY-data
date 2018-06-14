@@ -1,8 +1,8 @@
 --Ego-Doxxing
 --AlphaKretin
 --For Nemoma
-local card = c33700304
-local code = 33700304
+local card = c33700404
+local code = 33700404
 function card.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

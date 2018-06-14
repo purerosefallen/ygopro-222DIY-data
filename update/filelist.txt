@@ -23,7 +23,7 @@ deck/06.09new_card5.ydk	122
 deck/06.09new_card6.ydk	122
 deck/06.09new_card7.ydk	122
 expansions/222DIY.cdb	2506752
-expansions/lflist.conf	15010
+expansions/lflist.conf	21090
 expansions/strings.conf	8002
 expansions/pics/08209710.jpg	291099
 expansions/pics/1000400.jpg	49028
@@ -5166,7 +5166,7 @@ expansions/script/c33700400.lua	2306
 expansions/script/c33700401.lua	5340
 expansions/script/c33700402.lua	1688
 expansions/script/c33700403.lua	5127
-expansions/script/c33700404.lua	2582
+expansions/script/c33700404.lua	2650
 expansions/script/c33700501.lua	3790
 expansions/script/c33700502.lua	2097
 expansions/script/c33700503.lua	4516
