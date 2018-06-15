@@ -91,7 +91,8 @@ function c4210028.cfilter(c)
 	return c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 end
 function c4210028.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(function(c) return not c:IsSetCard(0x2af) end,tp,LOCATION_MZONE,0,1,nil)
+	return not Duel.IsExistingMatchingCard(function(c) return not c:IsSetCard(0x2af) or c:IsFacedown() end,tp,LOCATION_MZONE,0,1,nil)
+		and Duel.IsExistingMatchingCard(function(c) return c:IsFaceup() end,tp,LOCATION_MZONE,0,1,nil)
 end
 function c4210028.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
