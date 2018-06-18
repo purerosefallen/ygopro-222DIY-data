@@ -147,7 +147,8 @@ function c4210035.operation(e,tp,eg,ep,ev,re,r,rp)
 				Duel.ShuffleHand(tp)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 				local cd = Duel.SelectMatchingCard(tp,c4210035.cdfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-				Duel.SendtoHand(cd,nil,REASON_EFFECT)
+				Duel.ConfirmCards(1-tp,cd)
+				Duel.SendtoHand(cd,nil,REASON_EFFECT)				
 			end
 		end
 	end

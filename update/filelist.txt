@@ -23,7 +23,7 @@ deck/06.09new_card5.ydk	122
 deck/06.09new_card6.ydk	122
 deck/06.09new_card7.ydk	122
 expansions/222DIY.cdb	2506752
-expansions/lflist.conf	21090
+expansions/lflist.conf	21849
 expansions/strings.conf	8002
 expansions/pics/08209710.jpg	291099
 expansions/pics/1000400.jpg	49028
@@ -4466,7 +4466,7 @@ expansions/script/c14060008.lua	1745
 expansions/script/c14060009.lua	1766
 expansions/script/c14060010.lua	3604
 expansions/script/c14060011.lua	3641
-expansions/script/c14060012.lua	4034
+expansions/script/c14060012.lua	4142
 expansions/script/c14060013.lua	5073
 expansions/script/c14060014.lua	3592
 expansions/script/c14060015.lua	4785
@@ -5556,15 +5556,15 @@ expansions/script/c4210024.lua	3077
 expansions/script/c4210025.lua	3024
 expansions/script/c4210026.lua	3769
 expansions/script/c4210027.lua	2609
-expansions/script/c4210028.lua	4758
+expansions/script/c4210028.lua	4991
 expansions/script/c4210029.lua	2662
 expansions/script/c4210030.lua	3478
 expansions/script/c4210031.lua	7595
 expansions/script/c4210032.lua	6791
 expansions/script/c4210033.lua	6797
-expansions/script/c4210034.lua	8795
-expansions/script/c4210035.lua	7608
-expansions/script/c4210036.lua	7727
+expansions/script/c4210034.lua	9021
+expansions/script/c4210035.lua	7823
+expansions/script/c4210036.lua	7941
 expansions/script/c4210101.lua	3095
 expansions/script/c4210102.lua	2556
 expansions/script/c4210103.lua	2571
@@ -5947,7 +5947,7 @@ expansions/script/c60151016.lua	4211
 expansions/script/c60151017.lua	3333
 expansions/script/c60151031.lua	2535
 expansions/script/c60151032.lua	4430
-expansions/script/c60151033.lua	4063
+expansions/script/c60151033.lua	4519
 expansions/script/c60151034.lua	1322
 expansions/script/c60151101.lua	5575
 expansions/script/c60151102.lua	4570
@@ -6087,7 +6087,7 @@ expansions/script/c65010038.lua	3568
 expansions/script/c65010040.lua	3276
 expansions/script/c65010042.lua	2413
 expansions/script/c65010045.lua	2336
-expansions/script/c65010046.lua	2402
+expansions/script/c65010046.lua	2570
 expansions/script/c65010047.lua	2485
 expansions/script/c65010048.lua	4299
 expansions/script/c65010051.lua	3763

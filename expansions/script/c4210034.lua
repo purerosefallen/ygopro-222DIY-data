@@ -33,13 +33,12 @@ function c4210034.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCode(EVENT_RELEASE)
 	e3:SetCountLimit(1,4210034)
-	e3:SetCondition(c4210034.rtcon)
 	e3:SetTarget(c4210034.rttg)
 	e3:SetOperation(c4210034.rtop)
 	c:RegisterEffect(e3)
 	local e4 = e3:Clone()
 	e4:SetCode(EVENT_TO_GRAVE)
-	e4:SetCondition(c4210034.rtcon,1)
+	e4:SetTarget(c4210034.rttg,1)
 	c:RegisterEffect(e4)
 end
 function c4210034.filter(c,e,tp,m1,m2,ft)
@@ -54,7 +53,7 @@ end
 function c4210034.mfilterf(c,tp,mg,rc)
 	if c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 then
 		Duel.SetSelectedCard(c)
-		return mg:CheckWithSumEqual(Card.GetLevel,9,0,99,rc)
+		return mg:CheckWithSumEqual(Card.GetLevel,6,0,99,rc)
 	else return false end
 end
 function c4210034.relfilter(c)
@@ -121,7 +120,6 @@ function c4210034.spop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterFlagEffect(code,RESET_EVENT+0xcff0000,0,0)
 	end
 end
-
 function c4210034.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
 end
@@ -146,17 +144,16 @@ end
 function c4210034.cdexfilter(c,e) 
 	return c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_RITUAL) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true)
 end
-function c4210034.rtcon(e,num,c)	
-	if c==nil then return true end
+function c4210034.rttg(e,tp,eg,ep,ev,re,r,rp,chk,num)
+	if chk==0 then 
 		local mg1=Duel.GetMatchingGroup(c4210034.relfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,e:GetHandler())
-		local mg2=(Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND,0,1,nil,4210024) 
+		local mg2= (Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND,0,1,nil,4210024)
 			and {Duel.GetMatchingGroup(c4210034.repfilterex,tp,LOCATION_DECK,0,nil)} or {nil})[1]
-		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)	
-		return Duel.IsExistingMatchingCard(c4210034.filter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,nil,e,tp,mg1,mg2,ft)
+		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		return Duel.IsExistingMatchingCard(c4210034.cdexfilter,tp,LOCATION_DECK,0,1,nil,e) 
+			and Duel.IsExistingMatchingCard(c4210034.filter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,nil,e,tp,mg1,mg2,ft)
 			and (num~=1 or e:GetHandler():IsPreviousLocation(LOCATION_DECK))
-end
-function c4210034.rttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c4210034.cdexfilter,tp,LOCATION_DECK,0,1,nil,e) end	
+	end	
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c4210034.rtop(e,tp,eg,ep,ev,re,r,rp)
@@ -164,14 +161,16 @@ function c4210034.rtop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,c4210034.cdexfilter,tp,LOCATION_DECK,0,1,1,nil,e):GetFirst()
 	local mg1=Duel.GetMatchingGroup(c4210034.relfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,tc)
 	local mg2=nil
-	if Duel.SelectEffectYesNo(tp,e:GetHandler(),aux.Stringid(4210031,0))
-		and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND,0,1,nil,4210024)  then 
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-		local showcard = Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_HAND,0,nil,4210024):Select(tp,1,1,nil)
-		Duel.ConfirmCards(1-tp,showcard)
-		Duel.ShuffleHand(tp)
-		mg2 = Duel.GetMatchingGroup(c4210034.repfilterex,tp,LOCATION_DECK,0,nil)
-	end	
+	if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND,0,1,nil,4210024) then 
+		if Duel.SelectEffectYesNo(tp,e:GetHandler(),aux.Stringid(4210031,0))
+			and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND,0,1,nil,4210024) then 
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
+			local showcard = Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_HAND,0,nil,4210024):Select(tp,1,1,nil)
+			Duel.ConfirmCards(1-tp,showcard)
+			Duel.ShuffleHand(tp)
+			mg2 = Duel.GetMatchingGroup(c4210034.repfilterex,tp,LOCATION_DECK,0,nil)
+		end	
+	end
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if tc then
 		local mg=mg1:Filter(Card.IsReleasable,tc,tc)
@@ -192,13 +191,13 @@ function c4210034.rtop(e,tp,eg,ep,ev,re,r,rp)
 			mat:Merge(mat2)
 		end				
 		local rm= mat:Filter(Card.IsLocation,tp,LOCATION_DECK)
-		Duel.SendtoGrave(rm,nil,0,REASON_COST+REASON_REPLACE)
-		Duel.Release(mat,REASON_COST+REASON_RELEASE)
-		local code = tc:GetCode()
-		tc:RegisterFlagEffect(0,RESET_EVENT+0xcff0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(4210010,1))
-		tc:RegisterFlagEffect(4210010,RESET_EVENT+0xcff0000,0,0)
-		tc:RegisterFlagEffect(0,RESET_EVENT+0xcff0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(code,1))
-		tc:RegisterFlagEffect(code,RESET_EVENT+0xcff0000,0,0)
-		Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
+		if Duel.SendtoGrave(rm,nil,0,REASON_COST+REASON_REPLACE)~=0 or Duel.Release(mat,REASON_COST+REASON_RELEASE)~=0 then 
+			Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
+			local code = tc:GetCode()
+			tc:RegisterFlagEffect(0,RESET_EVENT+0xcff0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(4210010,1))
+			tc:RegisterFlagEffect(4210010,RESET_EVENT+0xcff0000,0,0)
+			tc:RegisterFlagEffect(0,RESET_EVENT+0xcff0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(code,1))
+			tc:RegisterFlagEffect(code,RESET_EVENT+0xcff0000,0,0)		
+		end
 	end
 end
