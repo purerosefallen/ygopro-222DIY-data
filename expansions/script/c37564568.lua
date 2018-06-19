@@ -59,6 +59,7 @@ function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		and Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp,TYPE_XYZ)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,3,tp,LOCATION_EXTRA)
+	Duel.SetChainLimit(aux.FALSE)
 end
 function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not cm.target(e,tp,eg,ep,ev,re,r,rp,0) then return end
