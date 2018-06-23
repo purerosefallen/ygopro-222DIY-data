@@ -73,7 +73,7 @@ function cm.filter(c,tp,l)
 	return c:IsPreviousLocation(l) and c:GetPreviousControler()==tp
 end
 function cm.drcon1(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetCode()==EFFECT_SPSUMMON_PROC then return false end
+	if re and re:GetCode()==EFFECT_SPSUMMON_PROC then return false end
 	return not re or not re:IsHasType(EFFECT_TYPE_ACTIONS) or re:IsHasType(EFFECT_TYPE_CONTINUOUS)
 end
 function cm.drop1(e,tp,eg,ep,ev,re,r,rp)
