@@ -39,7 +39,7 @@ function c4210005.initial_effect(c)
 	c:RegisterEffect(e3)	
 end
 function c4210005.tgfilter(c,e,tp)
-	return c:IsSetCard(0x2af) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c4210005.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c4210005.tgfilter(chkc,e,tp) end

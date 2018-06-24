@@ -46,14 +46,33 @@ function c12005000.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		local g=Duel.SelectMatchingCard(tp,c12005000.filter,tp,LOCATION_HAND,0,1,1,nil)
 		tc=g:GetFirst()
-		Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-		local te=tc:GetActivateEffect()
-		local tep=tc:GetControler()
-		local cost=te:GetCost()
-		if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
-		Duel.RaiseEvent(tc,EVENT_CHAIN_SOLVED,te,0,tp,tp,Duel.GetCurrentChain())
+			Duel.SSet(tp,tc)
+			Duel.ConfirmCards(1-tp,tc)
+			local e4_4=tc:GetActivateEffect()
+			e4_4:SetProperty(0,EFFECT_FLAG2_COF)
+			e4_4:SetHintTiming(0,0x1e0+TIMING_CHAIN_END)
+			e4_4:SetCondition(c12005000.con4_4)
+			tc:RegisterFlagEffect(12005000,RESET_EVENT+0x1fe0000,0,1)
+			local e4_5=Effect.CreateEffect(c)
+			e4_5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+			e4_5:SetCode(EVENT_ADJUST)
+			e4_5:SetOperation(c12005000.op4_5)
+			e4_5:SetLabelObject(tc)
+			Duel.RegisterEffect(e4_5,tp)
 	   end
 	 end
+end
+function c12005000.con4_4(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentChain()==0
+end
+function c12005000.op4_5(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	if tc:GetFlagEffect(12005000)~=0 then return end
+	local e4_5_1=tc:GetActivateEffect()
+	e4_5_1:SetProperty(nil)
+	e4_5_1:SetHintTiming(0)
+	e4_5_1:SetCondition(aux.TRUE)
+	e:Reset()   
 end
 function c12005000.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

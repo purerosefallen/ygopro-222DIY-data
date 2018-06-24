@@ -112,7 +112,7 @@ function cm.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	while tc do
 		local cg=tc:GetColumnGroup():Filter(Card.IsControler,nil,1-tp)
-		if tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT) and cg:GetCount()>0 then
+		if tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)~=0 and cg:GetCount()>0 then
 			Duel.BreakEffect()
 			Duel.Destroy(cg,REASON_EFFECT)
 		end

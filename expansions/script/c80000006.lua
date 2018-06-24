@@ -18,7 +18,7 @@ function cm.initial_effect(c)
 end
 function cm.spreg(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    if c:IsReason(REASON_DESTROY) and c:IsPreviousLocation(LOCATION_ONFIELD) then
+    if c:IsPreviousLocation(LOCATION_ONFIELD) then
         c:RegisterFlagEffect(m,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,2)
     end
 end

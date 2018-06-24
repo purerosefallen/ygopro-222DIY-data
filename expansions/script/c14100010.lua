@@ -114,9 +114,9 @@ function cm.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,0,nil)
 	local ct1=Duel.GetMatchingGroupCount(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
 	if g:GetCount()>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		local ct2=Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
-		if ct1>0 and Duel.SelectYesNo(tp,aux.Stringid(m,2)) then
+		if ct1>0 and ct2>0 and Duel.SelectYesNo(tp,aux.Stringid(m,2)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local sg=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,g:GetCount(),nil)

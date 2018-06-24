@@ -57,7 +57,7 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local g=eg:Filter(cm.cfilter,nil,e)
-	if Duel.SendtoHand(g,nil,REASON_EFFECT) then
+	if Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,cm.filter,tp,LOCATION_GRAVE+LOCATION_EXTRA,0,1,1,nil,e,tp)
 		if g:GetCount()>0 then
@@ -73,10 +73,10 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
-function cm.tgfilter(c,tp)
+function cm.tgfilter(c,e,tp)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsAbleToGraveAsCost() and Duel.IsExistingMatchingCard(cm.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,c,c:GetCode())
 end
-function cm.tgfilter1(c,tp)
+function cm.tgfilter1(c,e,tp)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsAbleToGraveAsCost()
 end
 function cm.thcost(e,tp,eg,ep,ev,re,r,rp,chk)

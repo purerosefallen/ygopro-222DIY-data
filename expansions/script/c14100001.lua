@@ -77,7 +77,7 @@ function cm.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local g=eg:Filter(cm.cfilter,nil,e)
-	if Duel.SendtoHand(g,nil,REASON_EFFECT) then
+	if Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
 		Duel.SendtoHand(c,nil,REASON_EFFECT)
 	end
 end

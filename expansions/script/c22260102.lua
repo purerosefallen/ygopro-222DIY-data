@@ -28,7 +28,7 @@ function cm.initial_effect(c)
     e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
     e3:SetProperty(EFFECT_FLAG_DELAY)
     e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-    e3:SetCountLimit(1,222601020)
+    e3:SetCondition(c22260102.comcon)
     e3:SetTarget(c22260102.tgtg)
     e3:SetOperation(c22260102.tgop)
     c:RegisterEffect(e3)
@@ -40,8 +40,9 @@ function cm.initial_effect(c)
     e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
     e4:SetCode(EVENT_FREE_CHAIN)
     e4:SetRange(LOCATION_MZONE)
-    e4:SetCountLimit(1,222601021)
+    e4:SetCountLimit(1)
     e4:SetHintTiming(0,0x1e0)
+    e4:SetCondition(c22260102.comcon)
     e4:SetTarget(c22260102.destg)
     e4:SetOperation(c22260102.desop)
     c:RegisterEffect(e4)
@@ -51,7 +52,7 @@ function cm.initial_effect(c)
     e5:SetCategory(CATEGORY_CONTROL)
     e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
     e5:SetCode(EVENT_BATTLE_START)
-    e5:SetCountLimit(c,222601022)
+    e5:SetCondition(c22260102.comcon)
     e5:SetTarget(c22260102.cttg)
     e5:SetOperation(c22260102.ctop)
     c:RegisterEffect(e5)
@@ -62,12 +63,40 @@ function cm.initial_effect(c)
     e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
     e6:SetProperty(EFFECT_FLAG_DELAY)
     e6:SetCode(EVENT_TO_GRAVE)
-    e6:SetCountLimit(1,222601023)
+    e1:SetCondition(c22260102.comcon)
     e6:SetTarget(c22260102.tg2)
     e6:SetOperation(c22260102.op2)
     c:RegisterEffect(e6)
+    --xyzlimit
+    local e10=Effect.CreateEffect(c)
+    e10:SetType(EFFECT_TYPE_SINGLE)
+    e10:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
+    e10:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+    e10:SetValue(c22260102.mlimit)
+    c:RegisterEffect(e10)
+    local e11=e10:Clone()
+    e11:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
+    c:RegisterEffect(e11)
+    local e12=e10:Clone()
+    e12:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
+    c:RegisterEffect(e12)
+    local e13=e10:Clone()
+    e13:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+    c:RegisterEffect(e13)
 end
 
+--
+function c22260102.mlimit(e,c)
+    if not c then return false end
+    return c:GetAttack()~=0
+end
+--
+function c22260102.comfilter(c)
+    return c:GetBaseAttack()~=0
+end 
+function c22260102.comcon(e)
+    return not Duel.IsExistingMatchingCard(c22260102.comfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,e:GetHandler())
+end
 --
 function c22260102.mfilter(c)
     return c:IsRace(RACE_PLANT) and c:IsCanBeFusionMaterial()
@@ -85,6 +114,7 @@ function c22260102.spfilter2(c,tp,mc)
     return Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(c,mc))>0
 end
 function c22260102.sprcon(e,c)
+    if not Duel.IsExistingMatchingCard(c22260018.comfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,e:GetHandler()) then return end
     if c==nil then return true end
     local tp=c:GetControler()
     local g=Duel.GetMatchingGroup(c22260102.spfilter,tp,LOCATION_MZONE,0,nil)

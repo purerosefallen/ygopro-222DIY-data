@@ -49,6 +49,7 @@ function c44444611.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if g>2 then g=2 end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
 	and Duel.CheckReleaseGroup(tp,c44444611.spfilter,2,e:GetHandler())
+	and Duel.GetTurnPlayer()~=tp
 	and e:GetHandler():IsSummonable(true,e) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,e:GetHandler(),1,0,0)
 end

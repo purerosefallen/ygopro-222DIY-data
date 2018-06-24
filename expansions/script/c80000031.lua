@@ -6,7 +6,7 @@ xpcall(function() require("expansions/script/c80000000") end,function() require(
 function cm.initial_effect(c)
     --link summon
     c:EnableReviveLimit()
-    aux.AddLinkProcedure(c,aux.FilterBoolFunction(Sym.isyvwan),2)  
+    aux.AddLinkProcedure(c,nil,2,99,cm.lcheck)  
     --Deus ex Machina
     local e1=Effect.CreateEffect(c)
     e1:SetDescription(aux.Stringid(m,0))
@@ -26,6 +26,7 @@ function cm.initial_effect(c)
     e2:SetCode(EVENT_SUMMON_SUCCESS)
     e2:SetRange(LOCATION_MZONE)
     e2:SetProperty(EFFECT_FLAG_DELAY)
+    e2:SetCountLimit(1)
     e2:SetCondition(cm.spcon)
     e2:SetTarget(cm.sptg)
     e2:SetOperation(cm.spop)
@@ -33,6 +34,9 @@ function cm.initial_effect(c)
     local e3=e2:Clone()
     e3:SetCode(EVENT_SPSUMMON_SUCCESS)
     c:RegisterEffect(e3)
+end
+function cm.lcheck(g,lc)
+    return g:IsExists(Sym.isyvwan,1,nil)
 end
 function cm.thfilter1(c)
     return Sym.isyvwan(c) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and c:IsFaceup()
@@ -77,6 +81,7 @@ function cm.con(e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.tg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return true end
+    Duel.SetChainLimit(aux.FALSE)
 end
 function cm.op(e,tp,eg,ep,ev,re,r,rp)
     --damage

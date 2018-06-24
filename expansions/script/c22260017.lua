@@ -8,7 +8,7 @@ function cm.initial_effect(c)
     e1:SetCategory(CATEGORY_TOKEN+CATEGORY_RECOVER)
     e1:SetType(EFFECT_TYPE_IGNITION)
     e1:SetRange(LOCATION_HAND)
-    e1:SetCountLimit(1,222600170)
+    e1:SetCondition(c22260017.comcon)
     e1:SetCost(c22260017.cost)
     e1:SetTarget(c22260017.target)
     e1:SetOperation(c22260017.operation)
@@ -19,7 +19,7 @@ function cm.initial_effect(c)
     e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
     e2:SetType(EFFECT_TYPE_IGNITION)
     e2:SetRange(LOCATION_HAND)
-    e2:SetCountLimit(1,222600171)
+    e2:SetCondition(c22260017.comcon)
     e2:SetCost(c22260017.cost)
     e2:SetTarget(c22260017.sptg)
     e2:SetOperation(c22260017.spop)
@@ -32,13 +32,41 @@ function cm.initial_effect(c)
     e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
     e3:SetRange(LOCATION_HAND)
     e3:SetCode(EVENT_FREE_CHAIN)
-    e3:SetCountLimit(1,222600172)
+    e3:SetCondition(c22260017.comcon)
     e3:SetCost(c22260017.cost)
     e3:SetTarget(c22260017.postg)
     e3:SetOperation(c22260017.posop)
     c:RegisterEffect(e3)
+    --xyzlimit
+    local e10=Effect.CreateEffect(c)
+    e10:SetType(EFFECT_TYPE_SINGLE)
+    e10:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
+    e10:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+    e10:SetValue(c22260017.mlimit)
+    c:RegisterEffect(e10)
+    local e11=e10:Clone()
+    e11:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
+    c:RegisterEffect(e11)
+    local e12=e10:Clone()
+    e12:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
+    c:RegisterEffect(e12)
+    local e13=e10:Clone()
+    e13:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+    c:RegisterEffect(e13)
 end
 
+--
+function c22260017.mlimit(e,c)
+    if not c then return false end
+    return c:GetAttack()~=0
+end
+--
+function c22260017.comfilter(c)
+    return c:GetBaseAttack()~=0
+end 
+function c22260017.comcon(e)
+    return not Duel.IsExistingMatchingCard(c22260017.comfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,e:GetHandler())
+end
 --
 function c22260017.cost(e,tp,eg,ep,ev,re,r,rp,chk)
     local c=e:GetHandler()
@@ -63,7 +91,7 @@ function c22260017.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c22260017.filter(c,e,tp)
-    return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+    return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetAttack()==0
 end
 function c22260017.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c22260017.filter(chkc,e,tp) end

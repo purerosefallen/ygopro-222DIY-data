@@ -46,7 +46,7 @@ function cm.actcon(e)
 	return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()
 end
 function cm.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and bit.band(r,REASON_EFFECT)~=0 and re:GetHandler():IsSetCard(0x1404)
+	return ep~=tp and bit.band(r,REASON_EFFECT)~=0 and re:GetHandler():IsSetCard(0x1404)
 end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end

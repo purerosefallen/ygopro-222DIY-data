@@ -3,6 +3,13 @@ local m=14000101
 local cm=_G["c"..m]
 cm.named_with_brave=1
 function cm.initial_effect(c)
+	--can not changepos
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetCode(EFFECT_CANNOT_CHANGE_POS_E)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
+	e0:SetRange(LOCATION_MZONE)
+	c:RegisterEffect(e0)
 	--summon with s/t
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -34,6 +41,7 @@ function cm.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e4:SetRange(LOCATION_MZONE)
+	e4:SetProperty(EFFECT_FLAG_DELAY)
 	e4:SetCountLimit(1)
 	e4:SetTarget(cm.target)
 	e4:SetOperation(cm.operation)
@@ -80,4 +88,11 @@ function cm.setop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEDOWN,true)
 	Duel.ConfirmCards(1-tp,c)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetCode(EFFECT_CHANGE_TYPE)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
+	e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
+	c:RegisterEffect(e1)
 end

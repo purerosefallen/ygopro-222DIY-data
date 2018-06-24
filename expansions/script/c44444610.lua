@@ -58,6 +58,7 @@ function c44444610.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroupCount(c44444610.spfilter1,tp,LOCATION_MZONE,0,nil)
 	if g>1 then g=1 end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+	and Duel.GetTurnPlayer()~=tp
 	and Duel.CheckReleaseGroup(tp,c44444610.spfilter,1,e:GetHandler())
 	and e:GetHandler():IsSummonable(true,e) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,e:GetHandler(),1,0,0)

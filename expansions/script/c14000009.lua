@@ -3,7 +3,7 @@ local m=14000009
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,cm.lkfilter,2,4)
+	aux.AddLinkProcedure(c,nil,2,4,cm.lcheck)
 	c:EnableReviveLimit()
 	 --direct attack
 	local e1=Effect.CreateEffect(c)
@@ -47,11 +47,8 @@ function cm.initial_effect(c)
 	e5:SetOperation(cm.regop)
 	c:RegisterEffect(e5)
 end
-function cm.lkfilter(c)
-	return c:IsSetCard(0x1404)
-end
-function cm.sfilter(c,e,tp,tc)
-	return c:IsSetCard(0x1404) and c:IsAbleToHand() and not c:IsCode(tc:GetCode())
+function cm.lcheck(g,lc)
+	return g:GetClassCount(Card.GetCode)==g:GetCount()
 end
 function cm.dircon(e)
 	return e:GetHandler():GetColumnGroupCount()==0
@@ -63,32 +60,34 @@ function cm.actcon(e)
 	return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()
 end
 function cm.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and bit.band(r,REASON_EFFECT)~=0 and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1404)
+	return ep~=tp and bit.band(r,REASON_EFFECT)~=0 and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1404)
 end
 function cm.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=re:GetHandler()
-	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>0 end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,0,LOCATION_ONFIELD)
 end
 function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=re:GetHandler()
-	local c=e:GetHandler()
-	if c:IsFaceup() and c:IsRelateToEffect(e) then
+	if Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>0 then
 		local g=Duel.GetMatchingGroup(nil,1-tp,LOCATION_ONFIELD,0,nil)
 		if g:GetCount()>0 then
 			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
 			local sg=g:Select(1-tp,1,1,nil)
 			Duel.HintSelection(sg)
 			Duel.SendtoGrave(sg,REASON_RULE)
-		end			  
+		end  
 	end
 end
 function cm.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
+function cm.matfilter(c)
+	return c:IsSetCard(0x1404)
+end
 function cm.regop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:GetMaterialCount()>=2 then
+	local g=c:GetMaterial():Filter(cm.matfilter,nil)
+	if g:GetCount()>=2 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetDescription(aux.Stringid(m,1))
 		e1:SetCategory(CATEGORY_DAMAGE)
@@ -103,7 +102,7 @@ function cm.regop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 		c:RegisterFlagEffect(0,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(m,2))
 	end
-	if c:GetMaterialCount()>=3 then
+	if g:GetCount()>=3 then
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetCode(EFFECT_IMMUNE_EFFECT)
@@ -114,7 +113,7 @@ function cm.regop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e3)
 		c:RegisterFlagEffect(0,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(m,3))
 	end
-	if c:GetMaterialCount()>=4 then
+	if g:GetCount()>=4 then
 		local e4=Effect.CreateEffect(c)
 		e4:SetType(EFFECT_TYPE_FIELD)
 		e4:SetCode(EFFECT_CANNOT_ACTIVATE)

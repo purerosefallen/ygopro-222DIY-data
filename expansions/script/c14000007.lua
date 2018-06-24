@@ -3,7 +3,7 @@ local m=14000007
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,cm.lkfilter,2,2,cm.lcheck)
+	aux.AddLinkProcedure(c,nil,2,2,cm.lcheck)
 	c:EnableReviveLimit()
 	 --direct attack
 	local e1=Effect.CreateEffect(c)
@@ -40,9 +40,6 @@ function cm.initial_effect(c)
 	e4:SetOperation(cm.atkop)
 	c:RegisterEffect(e4)
 end
-function cm.lkfilter(c)
-	return c:IsSetCard(0x1404)
-end
 function cm.lcheck(g,lc)
 	return g:GetClassCount(Card.GetCode)==g:GetCount()
 end
@@ -59,12 +56,12 @@ function cm.actcon(e)
 	return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()
 end
 function cm.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp and bit.band(r,REASON_EFFECT)~=0 and re:GetHandler():IsSetCard(0x1404)
+	return ep~=tp and bit.band(r,REASON_EFFECT)~=0 and re:GetHandler():IsSetCard(0x1404)
 end
 function cm.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) end
 	local tc=re:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(cm.sfilter,tp,LOCATION_DECK,0,1,nil,e,tp,tc) and Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL)>0 end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
@@ -74,7 +71,7 @@ function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
 	local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0)
 	local nseq=math.log(s,2)
-	if Duel.MoveSequence(c,nseq) then return true end
+	if Duel.MoveSequence(c,nseq) and Duel.IsExistingMatchingCard(cm.sfilter,tp,LOCATION_DECK,0,1,nil,e,tp,tc) then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,cm.sfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,tc)
 	if g:GetCount()>0 then

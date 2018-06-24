@@ -65,6 +65,7 @@ function c44444612.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 
 	and Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_EXTRA,0,nil,TYPE_MONSTER)<=1
 end
+--速攻召唤
 function c44444612.spfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsReleasable()
 end
@@ -76,6 +77,7 @@ function c44444612.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if g>2 then g=2 end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
 	and Duel.CheckReleaseGroup(tp,c44444612.spfilter,2,e:GetHandler())
+	and Duel.GetTurnPlayer()~=tp
 	and e:GetHandler():IsSummonable(true,e) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,e:GetHandler(),1,0,0)
 end
@@ -92,30 +94,26 @@ function c44444612.operation(e,tp,eg,ep,ev,re,r,rp)
         c:RegisterEffect(e4,true)
 	end
 end
+--特殊召唤墓地的魔法陷阱
 function c44444612.scon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return not c:IsReason(REASON_BATTLE) 
 
 end
-function c44444612.filter11(c,e,tp)
+function c44444612.hspfilter(c,e,tp)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsCanBeSpecialSummoned(e,0,tp,true,false) 
 end
-function c44444612.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c44444612.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c44444612.filter11,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp) end
-    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
+		and Duel.IsExistingMatchingCard(c44444612.hspfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function c44444612.spop(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	if ft<=0 then return end
-	local c=e:GetHandler()
-	if ft>2 then ft=2 end
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c44444612.filter11,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,ft,nil,e,tp)
-	if g:GetCount()>0 then
-		local tc=g:GetFirst()
-		while tc do
-		Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP)
+	local g=Duel.SelectMatchingCard(tp,c44444612.hspfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,e,tp)
+	local tc=g:GetFirst()
+	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP) then
         local e1=Effect.CreateEffect(e:GetHandler())
 	    e1:SetType(EFFECT_TYPE_SINGLE)
 	    e1:SetCode(EFFECT_CHANGE_TYPE)
@@ -124,7 +122,7 @@ function c44444612.spop(e,tp,eg,ep,ev,re,r,rp)
 	    tc:RegisterEffect(e1)
 	    local e2=e1:Clone()
 	    e2:SetCode(EFFECT_CHANGE_LEVEL)
-	    e2:SetValue(4)
+	    e2:SetValue(8)
 	    tc:RegisterEffect(e2)
 	    local e4=e1:Clone()
 	    e4:SetCode(EFFECT_CHANGE_RACE)
@@ -136,14 +134,12 @@ function c44444612.spop(e,tp,eg,ep,ev,re,r,rp)
 	    tc:RegisterEffect(e5)
 		local e6=e1:Clone()
 	    e6:SetCode(EFFECT_SET_BASE_ATTACK)
-	    e6:SetValue(1450)
+	    e6:SetValue(2950)
 	    tc:RegisterEffect(e6)
 		local e7=e1:Clone()
 	    e7:SetCode(EFFECT_SET_BASE_DEFENSE)
-	    e7:SetValue(1450)
+	    e7:SetValue(2950)
 	    tc:RegisterEffect(e7)
-		tc=g:GetNext()
-		end
-		Duel.SpecialSummonComplete()
 	end
+	Duel.SpecialSummonComplete()
 end

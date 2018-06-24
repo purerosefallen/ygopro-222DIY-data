@@ -94,12 +94,12 @@ function cm.retop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,cm.retfilter,tp,LOCATION_MZONE,0,1,ct1,nil)
 	if g:GetCount()>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		local ct3=Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
-		if ct2>0 and Duel.SelectYesNo(tp,aux.Stringid(m,3)) then
+		if ct2>0 and ct3>0 and Duel.SelectYesNo(tp,aux.Stringid(m,3)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			local sg=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,g:GetCount(),nil)
+			local sg=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,ct3,nil)
 			Duel.HintSelection(sg)
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(tp,sg)

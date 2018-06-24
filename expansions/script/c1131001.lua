@@ -98,7 +98,7 @@ function c1131001.op1(e,tp,eg,ep,ev,re,r,rp)
 		local cnum=Duel.GetMatchingGroupCount(Card.IsAbleToDeck,tp,LOCATION_HAND,0,nil)
 		if cnum>0 and Duel.SelectYesNo(tp,aux.Stringid(1131001,2)) then
 			Duel.BreakEffect()
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 			local tg=Duel.SelectMatchingCard(tp,Card.IsAbleToDeck,tp,LOCATION_HAND,0,1,cnum,nil)
 			if tg:GetCount()<1 then return end
 			Duel.SendtoDeck(tg,nil,2,REASON_EFFECT)
@@ -146,7 +146,7 @@ function c1131001.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 --
 function c1131001.tfilter2(c)
-	return c:IsFaceup() and muxu.check_set_Hinbackc(c)
+	return c:IsFaceup() and muxu.check_set_Hinbackc(c) and c:IsType(TYPE_MONSTER)
 end
 function c1131001.tg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()

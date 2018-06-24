@@ -26,7 +26,7 @@ function c44444613.initial_effect(c)
 	e13:SetDescription(aux.Stringid(44444613,1))
 	e13:SetCountLimit(1,99999673)
 	e13:SetCategory(CATEGORY_DESTROY)
-	e13:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e13:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e13:SetProperty(EFFECT_FLAG_DELAY)
 	e13:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e13:SetCode(EVENT_SUMMON_SUCCESS)
@@ -53,6 +53,7 @@ function c44444613.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if g>2 then g=2 end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
 	and Duel.CheckReleaseGroup(tp,c44444613.spfilter,2,e:GetHandler())
+	and Duel.GetTurnPlayer()~=tp
 	and e:GetHandler():IsSummonable(true,e) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,e:GetHandler(),1,0,0)
 end

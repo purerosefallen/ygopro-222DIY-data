@@ -43,7 +43,9 @@ function c44444606.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c44444606.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+			--and Duel.GetTurnPlayer()~=tp 
 		and e:GetHandler():IsSummonable(true,e) end
+
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,e:GetHandler(),1,0,0)
 end
 function c44444606.operation(e,tp,eg,ep,ev,re,r,rp)

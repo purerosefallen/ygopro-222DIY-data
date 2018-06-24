@@ -95,7 +95,7 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local g=eg:Filter(cm.cfilter,nil,tp,lg)
-	if Duel.SendtoHand(g,nil,REASON_EFFECT) and Duel.SelectYesNo(tp,aux.Stringid(m,2)) then
+	if Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 and Duel.SelectYesNo(tp,aux.Stringid(m,2)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g1=Duel.SelectMatchingCard(tp,cm.filter,tp,LOCATION_GRAVE+LOCATION_HAND,0,1,1,nil,e,tp)
