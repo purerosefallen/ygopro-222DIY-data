@@ -1,5 +1,5 @@
 --地心看门犬·加姆
-local m=14100015
+local m=14000225
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--special summon
@@ -46,7 +46,7 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	c:RegisterEffect(e1)
 end
 function cm.sdfilter(c)
-	return c:IsFaceup() and c:IsCode(14100000)
+	return c:IsFaceup() and c:IsCode(14000210)
 end
 function cm.sdcon(e)
 	return not Duel.IsExistingMatchingCard(cm.sdfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil)

@@ -1,5 +1,5 @@
 --地心中转站·洛基
-local m=14100011
+local m=14000221
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--Activate

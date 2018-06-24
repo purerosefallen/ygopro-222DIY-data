@@ -1,7 +1,7 @@
 --虚焱-等离子
-local m=14100106
+local m=14000116
 local cm=_G["c"..m]
-xpcall(function() require("expansions/script/c14100101") end,function() require("script/c14100101") end)
+xpcall(function() require("expansions/script/c14000111") end,function() require("script/c14000111") end)
 function cm.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()

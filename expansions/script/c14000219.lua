@@ -1,5 +1,5 @@
 --地心传讯器·塞壬
-local m=14100009
+local m=14000219
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--special summon
@@ -22,7 +22,7 @@ function cm.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,14101009)
+	e2:SetCountLimit(1,14001219)
 	e2:SetCost(cm.thcost)
 	e2:SetTarget(cm.thtg)
 	e2:SetOperation(cm.thop)

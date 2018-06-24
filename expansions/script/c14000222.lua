@@ -1,5 +1,5 @@
 --地心运载舰·利维坦
-local m=14100012
+local m=14000222
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--fusion material
@@ -41,7 +41,7 @@ function cm.ffilter(c)
 	return c:IsFusionAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_MACHINE) and c:GetBaseAttack()>=2000
 end
 function cm.ffilter1(c)
-	return (c:IsFusionAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_MACHINE) and c:GetOriginalLevel()>=10) or c:IsCode(14100000)
+	return (c:IsFusionAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_MACHINE) and c:GetOriginalLevel()>=10) or c:IsCode(14000210)
 end
 function cm.sprcon(e,c)
 	if c==nil then return true end
@@ -53,7 +53,7 @@ function cm.sprfilter1(c,tp,fc)
 		and Duel.IsExistingMatchingCard(cm.sprfilter2,tp,LOCATION_MZONE,0,1,c,tp,fc,c)
 end
 function cm.sprfilter2(c,tp,fc)
-	return ((c:IsFusionAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_MACHINE) and c:GetOriginalLevel()>=10) or c:IsCode(14100000)) and c:IsAbleToGraveAsCost() and c:IsCanBeFusionMaterial(fc) and Duel.GetLocationCountFromEx(tp,tp,g)>0
+	return ((c:IsFusionAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_MACHINE) and c:GetOriginalLevel()>=10) or c:IsCode(14000210)) and c:IsAbleToGraveAsCost() and c:IsCanBeFusionMaterial(fc) and Duel.GetLocationCountFromEx(tp,tp,g)>0
 end
 function cm.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
@@ -64,7 +64,7 @@ function cm.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.SendtoGrave(g1,REASON_COST)
 end
 function cm.sdfilter(c)
-	return c:IsFaceup() and c:IsCode(14100000)
+	return c:IsFaceup() and c:IsCode(14000210)
 end
 function cm.sdcon(e)
 	return not Duel.IsExistingMatchingCard(cm.sdfilter,e:GetHandlerPlayer(),LOCATION_ONFIELD+LOCATION_GRAVE,0,1,nil)

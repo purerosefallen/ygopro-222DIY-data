@@ -1,5 +1,5 @@
 --地心实验体·尼德霍格
-local m=14100010
+local m=14000220
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	 c:EnableReviveLimit()

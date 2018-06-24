@@ -1,5 +1,5 @@
 --地心运输机·耶梦加得
-local m=14100003
+local m=14000213
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--link summon
@@ -25,7 +25,7 @@ function cm.initial_effect(c)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCountLimit(1,14101003)
+	e2:SetCountLimit(1,14001213)
 	e2:SetCondition(cm.spcon)
 	e2:SetTarget(cm.sptg)
 	e2:SetOperation(cm.spop)

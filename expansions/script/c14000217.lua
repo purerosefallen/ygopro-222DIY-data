@@ -1,5 +1,5 @@
 --地心生产线·芬里尔
-local m=14100007
+local m=14000217
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--return

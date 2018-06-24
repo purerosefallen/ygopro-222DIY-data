@@ -1,5 +1,5 @@
 --地心连城塞·提亚马特
-local m=14100005
+local m=14000215
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--link summon

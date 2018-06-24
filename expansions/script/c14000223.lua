@@ -1,5 +1,5 @@
 --地心万融核·阿难陀
-local m=14100013
+local m=14000223
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--xyz summon

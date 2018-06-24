@@ -1,5 +1,5 @@
 --相似之焱 内焱
-local m=14100101
+local m=14000111
 local cm=_G["c"..m]
 if cm then
 function cm.initial_effect(c)

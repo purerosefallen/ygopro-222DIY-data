@@ -1,5 +1,5 @@
 --地心升降台·比蒙
-local m=14100000
+local m=14000210
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--Activate

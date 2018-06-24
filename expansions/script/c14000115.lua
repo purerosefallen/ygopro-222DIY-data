@@ -1,53 +1,53 @@
---星云焱
-local m=14100107
+--太阳风焱
+local m=14000115
 local cm=_G["c"..m]
-xpcall(function() require("expansions/script/c14100101") end,function() require("script/c14100101") end)
+xpcall(function() require("expansions/script/c14000111") end,function() require("script/c14000111") end)
 function cm.initial_effect(c)
+	--synchro summon
 	c:EnableReviveLimit()
+	aux.AddSynchroMixProcedure(c,aux.NonTuner(cm.synfilter),nil,nil,aux.Tuner(nil),2,2)
 	--pendulum summon
-	aux.EnablePendulumAttribute(c)
+	aux.EnablePendulumAttribute(c,false)
 	--Hono effect
 	Hono.fe1(c)
-	--search
+	--remove
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(m,2))
-	e5:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
+	e5:SetCategory(CATEGORY_REMOVE)
 	e5:SetType(EFFECT_TYPE_QUICK_O)
 	e5:SetRange(LOCATION_PZONE)
 	e5:SetCode(EVENT_FREE_CHAIN)
 	e5:SetHintTiming(0,TIMING_END_PHASE)
 	e5:SetCountLimit(1)
 	e5:SetCost(Hono.rmcost)
-	e5:SetTarget(cm.thtg)
-	e5:SetOperation(cm.thop)
+	e5:SetTarget(cm.rmtg)
+	e5:SetOperation(cm.rmop)
 	c:RegisterEffect(e5)
 	--destroy
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(m,3))
 	e6:SetCategory(CATEGORY_DESTROY)
-	e6:SetType(EFFECT_TYPE_QUICK_O)
+	e6:SetType(EFFECT_TYPE_IGNITION)
 	e6:SetRange(LOCATION_MZONE)
-	e6:SetCode(EVENT_FREE_CHAIN)
-	e6:SetHintTiming(0,TIMING_END_PHASE)
-	e6:SetCost(Hono.rmcost2)
+	e6:SetCountLimit(1)
+	e6:SetCost(Hono.rmcost1)
 	e6:SetTarget(cm.destg)
 	e6:SetOperation(cm.desop)
 	c:RegisterEffect(e6)
 end
-function cm.thfilter(c)
-	return Hono.OR(c) and c:IsAbleToHand()
+function cm.synfilter(c,e,tp)
+	return c:IsAttribute(ATTRIBUTE_FIRE)
 end
-function cm.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(cm.thfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+function cm.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,LOCATION_ONFIELD)
 end
-function cm.thop(e,tp,eg,ep,ev,re,r,rp)
+function cm.rmop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,cm.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil,e,tp)
 	if g:GetCount()>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
+		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
 end
 function cm.destg(e,tp,eg,ep,ev,re,r,rp,chk)

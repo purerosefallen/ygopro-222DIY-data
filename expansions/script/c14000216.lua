@@ -1,5 +1,5 @@
 --地心核控器·瓦尔哈啦
-local m=14100006
+local m=14000216
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--cannot special summon

@@ -1,5 +1,5 @@
 --地心速降员·赫尔墨斯
-local m=14100002
+local m=14000212
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	c:EnableReviveLimit()
@@ -30,7 +30,7 @@ function cm.initial_effect(c)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
-	e3:SetCountLimit(1,14101002)
+	e3:SetCountLimit(1,14001212)
 	e3:SetCondition(cm.ddcon)
 	e3:SetTarget(cm.ddtg)
 	e3:SetOperation(cm.ddop)
@@ -46,7 +46,7 @@ function cm.sprcon(e,c)
 		and Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_MZONE,0,1,nil)
 end
 function cm.thfilter(c)
-	return ((c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH)) or c:IsCode(14100000)) and not c:IsCode(m) and c:IsAbleToHand()
+	return ((c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH)) or c:IsCode(14000210)) and not c:IsCode(m) and c:IsAbleToHand()
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end

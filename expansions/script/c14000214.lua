@@ -1,5 +1,5 @@
 --地心中枢神·提丰
-local m=14100004
+local m=14000214
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--xyz summon

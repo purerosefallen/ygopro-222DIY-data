@@ -1,5 +1,5 @@
 --地心升降机·巴别泰坦
-local m=14100001
+local m=14000211
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--special summon
@@ -22,7 +22,7 @@ function cm.initial_effect(c)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCountLimit(1,14101001)
+	e2:SetCountLimit(1,14001211)
 	e2:SetCondition(cm.spcon1)
 	e2:SetTarget(cm.sptg1)
 	e2:SetOperation(cm.spop1)

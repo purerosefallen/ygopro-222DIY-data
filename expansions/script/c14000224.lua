@@ -1,5 +1,5 @@
 --地心号令官·赫拉
-local m=14100014
+local m=14000224
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--cannot special summon
@@ -37,7 +37,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function cm.filter(c,tp)
-	return c:IsCode(14100000) and c:IsType(TYPE_FIELD) and (c:IsSSetable() or c:GetActivateEffect():IsActivatable(tp,true,true))
+	return c:IsCode(14000210) and c:IsType(TYPE_FIELD) and (c:IsSSetable() or c:GetActivateEffect():IsActivatable(tp,true,true))
 end
 function cm.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,tp) end

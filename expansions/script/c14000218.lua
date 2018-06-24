@@ -1,5 +1,5 @@
 --地心嵌合兽·奇美拉
-local m=14100008
+local m=14000218
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--xyz summon

@@ -1,7 +1,7 @@
 --第四星态-核变体
-local m=14100108
+local m=14000118
 local cm=_G["c"..m]
-xpcall(function() require("expansions/script/c14100101") end,function() require("script/c14100101") end)
+xpcall(function() require("expansions/script/c14000111") end,function() require("script/c14000111") end)
 function cm.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()

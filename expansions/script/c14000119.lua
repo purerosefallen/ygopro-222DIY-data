@@ -1,7 +1,7 @@
 --完全氧化反应-烧却
-local m=14100109
+local m=14000119
 local cm=_G["c"..m]
-xpcall(function() require("expansions/script/c14100101") end,function() require("script/c14100101") end)
+xpcall(function() require("expansions/script/c14000111") end,function() require("script/c14000111") end)
 cm.named_with_Oxi=1
 function cm.initial_effect(c)
 	--Activate
