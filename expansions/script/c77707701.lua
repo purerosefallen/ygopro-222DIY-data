@@ -46,5 +46,5 @@ local e1=Effect.CreateEffect(e:GetHandler())
 end
 function c77707701.aclimit(e,re,tp)
 	local rc=re:GetHandler()
-	return rc:IsCode(e:GetLabel()) and (not rc:IsOnField() or rc:GetFieldID()~=e:GetLabelObject():GetLabel())
+	return rc:GetOriginalCode()==e:GetLabel() and (not rc:IsOnField() or rc:GetFieldID()~=e:GetLabelObject():GetLabel())
 end
