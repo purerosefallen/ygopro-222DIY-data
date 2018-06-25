@@ -201,23 +201,24 @@ function cm.initial_effect(c)
 		local nseq=math.log(s,2)
 		Duel.MoveSequence(tc,nseq)
 		if not Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_ONFIELD,0,1,nil,TYPE_SPELL+TYPE_TRAP) then
-			local zone=(0x0101 << nseq) | (0x01010000 << 4-nseq)
+			--[[local zone=(0x0101 << nseq) | (0x01010000 << 4-nseq)
 			if seq==1 then
 				zone=zone | 0x00400020
 			elseif seq==3 then
 				zone=zone | 0x00200040
-			end
+			end]]
 			local e4=Effect.CreateEffect(c)
 			e4:SetType(EFFECT_TYPE_FIELD)
 			e4:SetCode(EFFECT_DISABLE)
 			e4:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
 			e4:SetTarget(function(e,c)
-				local zone=e:GetLabel()
 				local tp=e:GetHandlerPlayer()
-				return Duel.GetCardsInZone(tp,zone):IsContains(c)
+				local tseq=aux.MZoneSequence(c:GetSequence())
+				local rp=c:GetControler()
+				return (rp==tp and seq==tseq) or (rp==1-tp and seq==4-tseq)
 			end)
 			e4:SetReset(RESET_PHASE+PHASE_END)
-			e4:SetLabel(zone)
+			e4:SetLabel(aux.MZoneSequence(seq))
 			Duel.RegisterEffect(e4,tp)
 			local e5=Effect.CreateEffect(c)
 			e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
