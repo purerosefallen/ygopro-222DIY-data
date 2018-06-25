@@ -27,7 +27,7 @@ function c44444606.initial_effect(c)
 	e22:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e22:SetType(EFFECT_TYPE_QUICK_O)
 	e22:SetCode(EVENT_FREE_CHAIN)
-	e22:SetRange(LOCATION_MZONE+LOCATION_GRAVE+LOCATION_REMOVED)
+	e22:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
 	e22:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
 	e22:SetCountLimit(1,99999666)
 	e22:SetCondition(c44444606.condition)
@@ -38,13 +38,16 @@ function c44444606.initial_effect(c)
 end
 --速攻召唤
 function c44444606.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 
-
+	return Duel.IsExistingMatchingCard(c44444606.cfilter,tp,0,LOCATION_MZONE,1,nil)
+    and Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_EXTRA,0,nil,TYPE_MONSTER)<=1
+end
+function c44444606.cfilter(c)
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsType(TYPE_EFFECT)
 end
 function c44444606.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 			--and Duel.GetTurnPlayer()~=tp 
-		and e:GetHandler():IsSummonable(true,e) end
+		and e:GetHandler():IsSummonable(true,nil) end
 
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,e:GetHandler(),1,0,0)
 end

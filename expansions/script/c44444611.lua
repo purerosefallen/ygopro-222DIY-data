@@ -34,23 +34,17 @@ end
 function c44444611.distg(e,c)
 	return c:GetCounter(0x1080)>0 and c:GetCode()~=44444611
 end
+--速攻召唤
 function c44444611.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 
-
+	return Duel.IsExistingMatchingCard(c44444611.cfilter,tp,0,LOCATION_MZONE,1,nil)
+    and Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_EXTRA,0,nil,TYPE_MONSTER)<=1
 end
-function c44444611.spfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsReleasable()
-end
-function c44444611.spfilter1(c)
-	return c:IsType(TYPE_MONSTER)
+function c44444611.cfilter(c)
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsType(TYPE_EFFECT)
 end
 function c44444611.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroupCount(c44444611.spfilter1,tp,LOCATION_MZONE,0,nil)
-	if g>2 then g=2 end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
-	and Duel.CheckReleaseGroup(tp,c44444611.spfilter,2,e:GetHandler())
-	and Duel.GetTurnPlayer()~=tp
-	and e:GetHandler():IsSummonable(true,e) end
+	if chk==0 then return Duel.GetTurnPlayer()~=tp
+	and e:GetHandler():IsSummonable(true,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,e:GetHandler(),1,0,0)
 end
 function c44444611.operation(e,tp,eg,ep,ev,re,r,rp)

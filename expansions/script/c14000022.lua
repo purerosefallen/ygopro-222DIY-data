@@ -52,6 +52,9 @@ function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
 	if chk==0 then return g:GetCount()>0 end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,0,LOCATION_ONFIELD)
+	if Duel.IsExistingMatchingCard(cm.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) then
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	end
 end
 function cm.spfilter(c,e,tp)
 	return c:IsCode(14000021) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

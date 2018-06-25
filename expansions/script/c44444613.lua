@@ -38,23 +38,17 @@ function c44444613.initial_effect(c)
 	c:RegisterEffect(e23)
 
 end
+--速攻召唤
 function c44444613.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 
-	and Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_EXTRA,0,nil,TYPE_MONSTER)<=1
+	return Duel.IsExistingMatchingCard(c44444613.cfilter,tp,0,LOCATION_MZONE,1,nil)
+    and Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_EXTRA,0,nil,TYPE_MONSTER)<=1
 end
-function c44444613.spfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsReleasable()
-end
-function c44444613.spfilter1(c)
-	return c:IsType(TYPE_MONSTER)
+function c44444613.cfilter(c)
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsType(TYPE_EFFECT)
 end
 function c44444613.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroupCount(c44444613.spfilter1,tp,LOCATION_MZONE,0,nil)
-	if g>2 then g=2 end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
-	and Duel.CheckReleaseGroup(tp,c44444613.spfilter,2,e:GetHandler())
-	and Duel.GetTurnPlayer()~=tp
-	and e:GetHandler():IsSummonable(true,e) end
+	if chk==0 then return Duel.GetTurnPlayer()~=tp
+	and e:GetHandler():IsSummonable(true,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,e:GetHandler(),1,0,0)
 end
 function c44444613.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -76,7 +70,7 @@ end
 function c44444613.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(c44444613.filter,tp,0xc,0xc,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,c44444613.filter,tp,0xc,0xc,1,2,nil)
+	local g=Duel.SelectTarget(tp,c44444613.filter,tp,0xc,0xc,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
 function c44444613.desop(e,tp,eg,ep,ev,re,r,rp)

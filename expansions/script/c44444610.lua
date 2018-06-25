@@ -32,7 +32,7 @@ function c44444610.initial_effect(c)
     --add counter
 	local e14=Effect.CreateEffect(c)
 	e14:SetDescription(aux.Stringid(44444610,1))
-	e14:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+
 	e14:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e14:SetProperty(EFFECT_FLAG_DELAY)
 	e14:SetCode(EVENT_LEAVE_FIELD)
@@ -45,22 +45,15 @@ function c44444610.initial_effect(c)
 end
 --速攻召唤
 function c44444610.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 
-
+	return Duel.IsExistingMatchingCard(c44444610.cfilter,tp,0,LOCATION_MZONE,1,nil)
+    and Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_EXTRA,0,nil,TYPE_MONSTER)<=1
 end
-function c44444610.spfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsReleasable()
-end
-function c44444610.spfilter1(c)
-	return c:IsType(TYPE_MONSTER)
+function c44444610.cfilter(c)
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsType(TYPE_EFFECT)
 end
 function c44444610.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=Duel.GetMatchingGroupCount(c44444610.spfilter1,tp,LOCATION_MZONE,0,nil)
-	if g>1 then g=1 end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
-	and Duel.GetTurnPlayer()~=tp
-	and Duel.CheckReleaseGroup(tp,c44444610.spfilter,1,e:GetHandler())
-	and e:GetHandler():IsSummonable(true,e) end
+	if chk==0 then return Duel.GetTurnPlayer()~=tp
+	and e:GetHandler():IsSummonable(true,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,e:GetHandler(),1,0,0)
 end
 function c44444610.operation(e,tp,eg,ep,ev,re,r,rp)

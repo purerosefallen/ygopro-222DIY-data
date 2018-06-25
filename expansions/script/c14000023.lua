@@ -49,12 +49,15 @@ end
 function cm.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsLocation(LOCATION_EXTRA)
 end
+function cm.spfilter(c,e,tp)
+	return c:IsCode(14000021) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(aux.disfilter1,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,nil,1,0,0)
-end
-function cm.spfilter(c,e,tp)
-	return c:IsCode(14000021) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	if Duel.IsExistingMatchingCard(cm.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) then
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	end
 end
 function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -2,7 +2,7 @@
 function c33330016.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0x556),2)
-	c:EnableReviveLimit()	
+	c:EnableReviveLimit()   
 	--seq
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(33330016,1))
@@ -61,7 +61,7 @@ function c33330016.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return tc and Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,tc,2,0,LOCATION_ONFIELD)
 end
-function c33330013.desop(e,tp,eg,ep,ev,re,r,rp)
+function c33330016.desop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 	if tc and Duel.Destroy(tc,REASON_EFFECT)~=0 and Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) then
 	   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)

@@ -36,13 +36,16 @@ function c44444602.initial_effect(c)
 end
 --速攻召唤
 function c44444602.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 
+	return Duel.IsExistingMatchingCard(c44444602.cfilter,tp,0,LOCATION_MZONE,1,nil)
     and Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_EXTRA,0,nil,TYPE_MONSTER)<=1
+end
+function c44444602.cfilter(c)
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsType(TYPE_EFFECT)
 end
 function c44444602.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.GetTurnPlayer()~=tp
-		and e:GetHandler():IsSummonable(true,e) end
+		and e:GetHandler():IsSummonable(true,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,e:GetHandler(),1,0,0)
 end
 function c44444602.operation(e,tp,eg,ep,ev,re,r,rp)

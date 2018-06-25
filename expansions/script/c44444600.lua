@@ -37,13 +37,16 @@ function c44444600.initial_effect(c)
 end
 --速攻召唤
 function c44444600.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 
+	return Duel.IsExistingMatchingCard(c44444600.cfilter,tp,0,LOCATION_MZONE,1,nil)
     and Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_EXTRA,0,nil,TYPE_MONSTER)<=1
+end
+function c44444600.cfilter(c)
+	return c:IsPosition(POS_FACEUP_ATTACK) and c:IsType(TYPE_EFFECT)
 end
 function c44444600.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.GetTurnPlayer()~=tp 
-		and e:GetHandler():IsSummonable(true,e) end
+		and e:GetHandler():IsSummonable(true,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,e:GetHandler(),1,0,0)
 end
 function c44444600.operation(e,tp,eg,ep,ev,re,r,rp)
@@ -61,9 +64,10 @@ function c44444600.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 --限制对方怪兽到魔陷区
 function c44444600.scost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c44444600.costfilter1,tp,LOCATION_MZONE,0,1,nil) end
+    local c=e:GetHandler()
+	if chk==0 then return Duel.IsExistingMatchingCard(c44444600.costfilter1,tp,LOCATION_MZONE,0,1,c) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOHAND)
-	local g=Duel.SelectMatchingCard(tp,c44444600.costfilter1,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c44444600.costfilter1,tp,LOCATION_MZONE,0,1,1,c)
 	Duel.SendtoHand(g,nil,2,REASON_COST)
 end
 function c44444600.costfilter1(c)
