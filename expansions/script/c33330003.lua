@@ -46,7 +46,7 @@ function c33330003.thfilter1(c)
 	return c:IsSetCard(0x557) and c:IsAbleToHand()
 end
 function c33330003.thtg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c50720316.thfilter1,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c33330003.thfilter1,tp,LOCATION_DECK,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c33330003.tgop1(e,tp,eg,ep,ev,re,r,rp)

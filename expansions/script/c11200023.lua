@@ -110,7 +110,7 @@ function c11200023.op3(e,tp,eg,ep,ev,re,r,rp)
 		e3_5:SetType(EFFECT_TYPE_SINGLE)
 		e3_5:SetRange(LOCATION_MZONE)
 		e3_5:SetCode(EFFECT_IMMUNE_EFFECT)
-		e3_5:SetValue(c1150035.efilter3_5)
+		e3_5:SetValue(c1120023.efilter3_5)
 		e3_5:SetReset(RESET_EVENT+0x1fe0000+RESET_CHAIN)
 		c:RegisterEffect(e3_5)
 	elseif dc>5 then

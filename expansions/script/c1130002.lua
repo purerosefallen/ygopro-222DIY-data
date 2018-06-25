@@ -45,23 +45,20 @@ function c1130002.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1_1,tp)
 end
 --
-function c1130002.cfilter1_1(c,fid)
-	return c:GetFlagEffectLabel(1130002)==fid
-end
 function c1130002.con1_1(e,tp,eg,ep,ev,re,r,rp)
-	local g=e:GetLabelObject()
-	if not g:IsExists(c1130002.cfilter1_1,1,nil,e:GetLabel()) then
-		g:DeleteGroup()
+	local fid=e:GetLabel()
+	local tc=e:GetLabelObject()
+	if not tc:GetFlagEffectLabel(1130002)==fid then
 		e:Reset()
 		return false
 	else return true end
 end
 function c1130002.op1_1(e,tp,eg,ep,ev,re,r,rp)
-	local g=e:GetLabelObject()
-	local sg=g:Filter(c1130002.cfilter1_1,nil,e:GetLabel())
-	g:DeleteGroup()
-	local tc=sg:GetFirst()
-	if tc then Duel.ReturnToField(tc) end
+	local fid=e:GetLabel()
+	local tc=e:GetLabelObject()
+	if tc and tc:GetFlagEffectLabel(1130002)==fid then 
+		Duel.ReturnToField(tc)
+	end
 end
 --
 function c1130002.tfilter1(c)
@@ -78,6 +75,7 @@ function c1130002.op1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if tg:GetCount()<1 then return end
 	Duel.ConfirmCards(tp,tg)
 	Duel.ShuffleHand(1-tp)
+	sg:KeepAlive()
 	local e1_2=Effect.CreateEffect(c)
 	e1_2:SetType(EFFECT_TYPE_FIELD)
 	e1_2:SetCode(EFFECT_IMMUNE_EFFECT)

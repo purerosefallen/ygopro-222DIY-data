@@ -31,7 +31,7 @@ function c33330024.initial_effect(c)
 	e4:SetCategory(CATEGORY_TOGRAVE+CATEGORY_COUNTER+CATEGORY_DRAW)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_FZONE)
-	e4:SetCountLimit(1)
+	e4:SetCountLimit(1,33330024)
 	e4:SetTarget(c33330024.stg)
 	e4:SetOperation(c33330024.sop)
 	c:RegisterEffect(e4) 
@@ -64,12 +64,12 @@ end
 function c33330024.tg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return true end
 	local ct=e:GetLabelObject():GetLabel()
-	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,ct*1000)
+	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct*1000)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 end
 function c33330024.op2(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabelObject():GetLabel()
-	if Duel.Damage(tp,ct*1000,REASON_EFFECT)<=0 then return end
+	if Duel.Damage(1-tp,ct*1000,REASON_EFFECT)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c33330024.filter3),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
 	if g:GetCount()>0 then

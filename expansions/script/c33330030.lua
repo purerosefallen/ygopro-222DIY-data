@@ -96,8 +96,8 @@ function c33330030.lvcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterEffect(e1,tp)
 end
 function c33330030.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	if sumtype~=SUMMON_TYPE_XYZ then return false end
-	return c:IsSetCard(0x556)
+	if bit.band(sumtype,SUMMON_TYPE_XYZ)==0 then return false end
+	return not c:IsSetCard(0x556)
 end
 function c33330030.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c33330030.lvfilter,tp,LOCATION_MZONE,0,1,nil) end
@@ -109,12 +109,12 @@ function c33330030.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetMatchingGroup(c33330030.lvfilter,tp,LOCATION_MZONE,0,nil)
 	if sg:GetCount()<=0 then return end
 	for tc in aux.Next(sg) do
-		local e1=Effect.CreateEffect(c)
+		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CHANGE_LEVEL)
 		e1:SetValue(8)
 		e1:SetReset(RESET_EVENT+0x1ff0000)
-		c:RegisterEffect(e1)
+		tc:RegisterEffect(e1)
 	end
 end
 function c33330030.destg2(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -144,16 +144,16 @@ function c33330030.desfilter(c)
 end
 function c33330030.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c33330030.desfilter,tp,LOCATION_ONFIELD,0,1,nil)
-		and Duel.IsExistingMatchingCard(c33330030.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil) end
+		and Duel.IsExistingMatchingCard(c33330030.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_PZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,tp,LOCATION_ONFIELD)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_PZONE)
 end
 function c33330030.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,c33330030.desfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
 	if g:GetCount()>0 and Duel.Destroy(g,REASON_EFFECT)~=0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c33330030.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
+		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c33330030.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_PZONE,0,1,1,nil)
 		if g:GetCount()>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)

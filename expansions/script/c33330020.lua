@@ -64,7 +64,7 @@ function c33330020.atktg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_COUNTER,nil,0,tp,1)
 end
 function c33330020.atkop(e,tp,eg,ep,ev,re,r,rp)
-	if not c:IsRelateToEffect(e) or c:IsFacedown() or not e:GetHandler():IsCanRemoveCounter(tp,0x1019,1,REASON_EFFECT) then return end
+	if not e:GetHandler():IsRelateToEffect(e) or e:GetHandler():IsFacedown() or not e:GetHandler():IsCanRemoveCounter(tp,0x1019,1,REASON_EFFECT) then return end
 	e:GetHandler():RemoveCounter(tp,0x1019,1,REASON_EFFECT)
 end
 function c33330020.contop(e,tp,eg,ep,ev,re,r,rp)
@@ -84,7 +84,7 @@ function c33330020.op2(e,tp,eg,ep,ev,re,r,rp)
 	local ct=e:GetLabelObject():GetLabel()
 	if Duel.Damage(tp,ct*500,REASON_EFFECT)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c33330019.filter3),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c33330020.filter3),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)

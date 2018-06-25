@@ -39,7 +39,7 @@ function c1130001.initial_effect(c)
 end
 --
 function c1130001.cfilter0(c)
-	return muxu.check_set_Hinbackc(c) and c:IsPreviousPosition(POS_FACEUP) and c:IsFaceup()
+	return muxu.check_set_Hinbackc(c) and c:IsFaceup()
 end
 function c1130001.con0(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c1130001.cfilter0,1,nil)

@@ -32,9 +32,6 @@ function c33330019.initial_effect(c)
 	e4:SetTargetRange(1,0)
 	e4:SetValue(c33330019.damval)
 	c:RegisterEffect(e4)
-	local e6=e4:Clone()
-	e6:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
-	c:RegisterEffect(e6)
 	--search
 	local e5=Effect.CreateEffect(c)
 	e5:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DAMAGE)
@@ -95,7 +92,7 @@ function c33330019.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveCounter(tp,0x1019,3,REASON_COST)
 end
 function c33330019.filter2(c)
-	return IsCode(33330020) and c:IsAbleToHand()
+	return c:IsCode(33330020) and c:IsAbleToHand()
 end
 function c33330019.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(c33330019.filter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
