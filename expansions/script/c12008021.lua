@@ -50,7 +50,7 @@ function c12008021.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		local att=tc:GetAttribute()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c12008021.filter2),tp,LOCATION_GRAVE,0,1,1,nil,e,tp,att)
+		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c12008021.filter2),tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,e,tp,att)
 		if g:GetCount()>0 then
 		   Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
