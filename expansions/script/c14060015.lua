@@ -58,7 +58,7 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
 		c:CancelToGrave()
-		if Duel.SendtoDeck(c,nil,2,REASON_EFFECT) then
+		if Duel.SendtoDeck(c,nil,2,REASON_EFFECT) and Duel.SelectYesNo(tp,aux.Stringid(m,3)) then
 			local tc1=Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_HAND,0,2,nil)
 			if tc1 and Duel.SelectYesNo(tp,aux.Stringid(m,2)) then
 				Duel.BreakEffect()
