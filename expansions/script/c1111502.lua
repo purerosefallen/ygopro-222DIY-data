@@ -118,14 +118,14 @@ function c1111502.op2(e,tp,eg,ep,ev,re,r,rp)
 	e2_2:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e2_2:SetTargetRange(1,0)
 	e2_2:SetValue(c1111502.val2_2)
-	e2_2:SetLabelObject(code)
+	e2_2:SetLabel(code)
 	e2_2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2_2,tp)
 end
 --
 function c1111502.val2_2(e,te,tp)
 	local tc=te:GetHandler()
-	local code=e:GetLabelObject()
+	local code=e:GetLabel()
 	return te:IsHasType(EFFECT_TYPE_ACTIVATE) and tc:IsCode(code)
 end
 --
