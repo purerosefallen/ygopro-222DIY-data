@@ -50,5 +50,5 @@ function cm.actcon1(e)
 	return Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_ONFIELD,0,1,nil) and ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function cm.actlimit(e,re,tp)
-	return not re:GetHandler():IsImmuneToEffect(e)
+	return true
 end

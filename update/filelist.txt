@@ -30,7 +30,7 @@ deck/06.23new_card5.ydk	1e266e976101246e7660ccd749b2b372
 deck/06.23new_card6.ydk	d5d0824dfee8e2e79c83939262365d48
 deck/06.23new_card7.ydk	8be0f6677d64bc5ff43c96cf455c3a58
 expansions/222DIY.cdb	b7d8ef9cedba40194ec225aa77558ff9
-expansions/lflist.conf	a924f7039473e821d94a8c05d7f589b6
+expansions/lflist.conf	30f32bdb51b1ddccc574253448c90dcb
 expansions/strings.conf	eb6d7c294c2b0eb53acddee5420707e6
 expansions/pics/08209710.jpg	ed0e60085631bfa641ffeebd6abbd910
 expansions/pics/1000400.jpg	7b02a7099b7cd3d79f72c977d00cface
@@ -4682,7 +4682,7 @@ expansions/script/c14000015.lua	5177090c9daf1cb4c9833430a2ceec36
 expansions/script/c14000021.lua	18d06506a2650e1c38e2b56b9d8410c0
 expansions/script/c14000022.lua	b0852f2a63cdee45ece73cdfd08fcae4
 expansions/script/c14000023.lua	a645daa1cb93122fe6bdaa89fe69f8c9
-expansions/script/c14000024.lua	34b7d86b0b782b1a016510615d9cea68
+expansions/script/c14000024.lua	f9642d79371875d09b58e84522a0c496
 expansions/script/c14000025.lua	708f298113395ed7c813b133a91027f6
 expansions/script/c14000101.lua	aa08f3aceb1bba0a2fe373b5b0d4a75f
 expansions/script/c14000102.lua	fc8a741d1bd2317529200dc99e3537c8
@@ -5095,7 +5095,7 @@ expansions/script/c22260008.lua	1242547f5dc3ac9e238661b4cb4cdeca
 expansions/script/c22260009.lua	21e3390aa9310aef070a49dd699923e5
 expansions/script/c22260016.lua	7aaf29de856b095458231f7878727454
 expansions/script/c22260017.lua	e2ed306ed1ae945e1037586b716de3c2
-expansions/script/c22260018.lua	44fe1bbac573d9e21ad2957ae32f44bf
+expansions/script/c22260018.lua	1c0b28c483ac191d111af9972ce08060
 expansions/script/c22260019.lua	f53b4da0e65087643fc009f836f996b4
 expansions/script/c22260020.lua	e4d73e87128f78f220b7d3c22537cabe
 expansions/script/c22260021.lua	b3a0a162ca703e00c26e034c573be08d
@@ -7061,10 +7061,10 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	9e24719644fd0c033ca145c45cc514a4
-update/rename.txt	c509c33cdee4e36b1cfaaed4315f2886
+update/filelist.txt	3086cb51caad554919d15c0ae6af3c4e
+update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
 update/update-push.bat	49e0e022872a85c5350b8ee445ecd4d8
-update/update-push.sh	2851eda10d831a5f8fc4a3deeabd9ce5
+update/update-push.sh	f63cbc1149f50ce5238bcd2ad55b9d5b
 update/update-server.sh	7cec4f75aa0cc3eafee86d9819b85f87
 update/update-without-sound.bat	22d7b973d79ef9311213aeff61d93d7c
-update/version.txt	3efd1e7d3c8265f2f2a039aa4741d100
+update/version.txt	8d123e30c0453fb5ed4984bf143af8bc
