@@ -1,5 +1,5 @@
 --魔创龙 贝琳
-function c23305008.initial_effect(c)    --fusion material
+function c23305008.initial_effect(c)    --fusion material
     c:EnableReviveLimit()
     aux.AddFusionProcFunRep(c,c23305008.ffilter,2,true)
     --spsummon condition
