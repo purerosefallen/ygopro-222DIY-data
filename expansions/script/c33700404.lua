@@ -19,7 +19,7 @@ end
 function card.cost(e, tp, eg, ep, ev, re, r, rp, chk)
 	if chk == 0 then return Duel.IsExistingMatchingCard(aux.NOT(Card.IsPublic), tp, LOCATION_HAND, 0, 1, nil) end
 	if e:IsHasType(EFFECT_TYPE_ACTIVATE) and e:GetHandler():GetOwner() == tp then
-		aux.RemainFieldCost(e, tp, eg, ep, ev, re, r, rp, 1)
+		e:GetHandler():CancelToGrave()
 	end
 	local tc = Duel.SelectMatchingCard(tp, aux.NOT(Card.IsPublic), tp, LOCATION_HAND, 0, 1, 1, nil):GetFirst()
 	Duel.ConfirmCards(1 - tp, tc)
@@ -32,6 +32,7 @@ end
 
 function card.activate(e, tp, eg, ep, ev, re, r, rp, chk)
 	local c = e:GetHandler()
+    if not e:GetLabelObject() then return end
 	if Duel.IsChainDisablable(0) and Duel.SelectYesNo(1 - tp, aux.Stringid(code, 0)) then
 		Duel.Recover(tp, 4000, REASON_EFFECT)
 		Duel.NegateEffect(0)
