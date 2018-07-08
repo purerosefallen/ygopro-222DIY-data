@@ -47,7 +47,7 @@ function c22260022.IsMayuAzaka(c)
     return m and m.named_with_MayuAzaka
 end
 --
-function c2226022.splrop(e,tp,eg,ep,ev,re,r,rp,c)
+function c22260022.splrop(e,tp,eg,ep,ev,re,r,rp,c)
     local e1=Effect.CreateEffect(e:GetHandler())
     e1:SetType(EFFECT_TYPE_FIELD)
     e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
@@ -57,7 +57,7 @@ function c2226022.splrop(e,tp,eg,ep,ev,re,r,rp,c)
     e1:SetTarget(c22260022.splimit)
     Duel.RegisterEffect(e1,tp)
 end
-function c22260166.splimit(e,c)
+function c22260022.splimit(e,c)
     return c:GetBaseAttack()~=0
 end
 --

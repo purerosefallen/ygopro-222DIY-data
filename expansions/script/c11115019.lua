@@ -40,7 +40,7 @@ function c11115019.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c11115019.spfilter1(c,tp,sc)
-	return c:IsSetCard(0xa15e) and c:IsType(TYPE_SYNCHRO) and c:IsControler(tp) and Duel.GetLocationCountFromEx(tp,tp,sc,c)>0
+	return c:IsSetCard(0xa15e) and c:IsType(TYPE_SYNCHRO) and c:IsControler(tp) and Duel.GetLocationCountFromEx(tp,tp,c,sc)>0
 end
 function c11115019.spfilter2(c)
 	return c:IsSetCard(0xa15e) and c:IsType(TYPE_SYNCHRO) and c:IsAbleToRemoveAsCost()

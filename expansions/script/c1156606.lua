@@ -21,7 +21,6 @@ function c1156606.initial_effect(c)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCost(c1156606.cost2)
 	e2:SetTarget(c1156606.tg2)
 	e2:SetOperation(c1156606.op2)
 	c:RegisterEffect(e2)
@@ -34,12 +33,6 @@ end
 --
 function c1156606.tg1(e,c)
 	return c~=e:GetHandler()
-end
---
-function c1156606.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsAbleToDeckOrExtraAsCost() end
-	Duel.SendtoDeck(c,nil,2,REASON_COST)
 end
 --
 function c1156606.tfilter2(c)
