@@ -1,64 +1,72 @@
 --漆黑的质点 波恋达斯
 function c12008019.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0x1fb3),2,2,c12008019.lcheck)
+	aux.AddLinkProcedure(c,c3679218.matfilter,1,1)
 	c:EnableReviveLimit()
-	--search
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(12008019,0))
-	e1:SetCategory(CATEGORY_TOGRAVE)
-	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e1:SetProperty(EFFECT_FLAG_DELAY)
-	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e1:SetCountLimit(1,12008119)
-	e1:SetTarget(c12008019.thtg)
-	e1:SetOperation(c12008019.thop)
-	c:RegisterEffect(e1)
-	--SendtoHand
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(12008019,1))
-	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,12008019)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCategory(CATEGORY_TOHAND)
-	e1:SetTarget(c12008019.destg)
-	e1:SetOperation(c12008019.desop)
-	c:RegisterEffect(e1)
+	--special summon
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(12008019,0))
+	e2:SetCategory(CATEGORY_DRAW)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1,12008019)
+	e2:SetCost(c12008019.spcost)
+	e2:SetTarget(c12008019.sptg)
+	e2:SetOperation(c12008019.spop)
+	c:RegisterEffect(e2)
+	--to deck
+	local e3=Effect.CreateEffect(c)
+	e3:SetCategory(CATEGORY_TODECK)
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetRange(LOCATION_GRAVE)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e3:SetCountLimit(1,12008019)
+	e3:SetTarget(c12008019.tdtg)
+	e3:SetOperation(c12008019.tdop)
+	c:RegisterEffect(e3)
 end
-function c12008019.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return false end
-	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,0,1,nil)
-		and Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g1=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,0,1,1,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g2=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
-	g1:Merge(g2)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g1,2,0,0)
+function c3679218.matfilter(c)
+	return c:IsLinkSetCard(0x1fb3) and not c:IsLinkCode(12008019)
 end
-function c12008019.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local tg=g:Filter(Card.IsRelateToEffect,nil,e)
-	if tg:GetCount()>0 then
-		Duel.SendtoHand(tg,nil,REASON_EFFECT)
+function c12008019.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeckAsCost,tp,LOCATION_HAND,0,1,nil) end
+	td=Duel.SelectMatchingCard(tp,Card.IsAbleToDeckAsCost,tp,LOCATION_HAND,0,1,1,nil)
+	Duel.SendtoDeck(td,nil,2,REASON_COST)
+end
+function c12008019.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+end
+function c12008019.spfilter(c,e,tp)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
+function c12008019.spop(e,tp,eg,ep,ev,re,r,rp)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
+	if Duel.Draw(tp,1,REASON_EFFECT)==0 then return end
+	local tc=Duel.GetOperatedGroup():GetFirst()
+	Duel.ConfirmCards(1-tp,tc)
+	if tc:IsSetCard(0xa9) and tc:IsType(TYPE_MONSTER) then
+		Duel.BreakEffect()
+	else
+		Duel.BreakEffect()
+		Duel.SendtoGrave(tc,REASON_EFFECT+REASON_DISCARD)
 	end
+	Duel.ShuffleHand(tp)
 end
-function c12008019.lcheck(g)
-	return g:GetClassCount(Card.GetLinkRace)==g:GetCount()
+function c12008019.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsAbleToDeck() and chkc~=e:GetHandler() end
+	if chk==0 then return e:GetHandler():IsAbleToExtra()
+		and Duel.IsExistingTarget(Card.IsAbleToDeck,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,e:GetHandler()) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,e:GetHandler())
+	g:AddCard(e:GetHandler())
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,2,0,0)
 end
-function c12008019.filter(c)
-	return c:IsSetCard(0x1fb3) and c:IsAbleToGrave()
-end
-function c12008019.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c12008019.filter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-end
-function c12008019.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c12008019.filter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then
-		Duel.SendtoGrave(g,REASON_EFFECT)
+function c12008019.tdop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tc=Duel.GetFirstTarget()
+	if c:IsRelateToEffect(e) and tc:IsRelateToEffect(e) then
+		local g=Group.FromCards(c,tc)
+		Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 	end
 end

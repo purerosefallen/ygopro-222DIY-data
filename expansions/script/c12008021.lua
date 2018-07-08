@@ -63,21 +63,30 @@ function c12008021.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c12008021.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) or Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)<=0 or Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL)<=0 or not Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,0,1,c) then return end
+	if not c:IsRelateToEffect(e) or Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)<=0 or Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL)<=0 or not Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,c) then return end
 	Duel.BreakEffect()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(12008021,2))
+	 and g:GetFirst():IsControler(1-tp) then
+		 --Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONTROL)
+		 --local tg=Duel.SelectMatchingCard(tp,Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,1,nil)
+		 Duel.GetControl(g,tp,PHASE_END,1)
+	else
+	--Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
+	--local g=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,c)
 	if g:GetCount()>0 then
 	   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
 	   local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0)
 	   local nseq=math.log(s,2)
 	   Duel.MoveSequence(g:GetFirst(),nseq)
+	end
 	end 
 end
 function c12008021.spcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.GetLocationCountFromEx(tp)<=0
 end
 function c12008021.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,100) end
-	Duel.PayLPCost(tp,100)
+	if chk==0 then return Duel.CheckLPCost(tp,2000) end
+	Duel.PayLPCost(tp,2000)
 end

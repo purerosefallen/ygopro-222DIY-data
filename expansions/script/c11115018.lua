@@ -1,7 +1,7 @@
 --苍之御龙骑士王
 function c11115018.initial_effect(c)
 	--synchro summon
-	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x115e),aux.NonTuner(c11115018.sfilter),1)
+	aux.AddSynchroMixProcedure(c,aux.Tuner(Card.IsSetCard,0x115e),aux.Tuner(Card.IsSetCard,0x115e),nil,aux.NonTuner(c11115018.sfilter),1,1)
 	c:EnableReviveLimit()
 	--spsummon
 	local e1=Effect.CreateEffect(c)
@@ -52,47 +52,6 @@ function c11115018.initial_effect(c)
 	e8:SetTarget(c11115018.gytg)
 	e8:SetOperation(c11115018.gyop)
 	c:RegisterEffect(e8)
-	--spsummon count limit
-	local e9=e3:Clone()
-	e9:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e9:SetOperation(c11115018.aclimit3)
-	c:RegisterEffect(e9)
-	local e10=Effect.CreateEffect(c)
-	e10:SetType(EFFECT_TYPE_FIELD)
-	e10:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e10:SetRange(LOCATION_MZONE)
-	e10:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e10:SetTargetRange(1,0)
-    e10:SetCondition(c11115018.econ3)
-	c:RegisterEffect(e10)
-	local e11=e10:Clone()
-	e11:SetTargetRange(0,1)
-	e11:SetCondition(c11115018.econ4)
-	c:RegisterEffect(e11)
-	local e12=e3:Clone()
-	e12:SetOperation(c11115018.aclimit4)
-	c:RegisterEffect(e12)
-	local e13=e4:Clone()
-	e13:SetCondition(c11115018.econ5)
-	e13:SetValue(c11115018.elimit2)
-	c:RegisterEffect(e13)
-	local e14=e4:Clone()
-	e14:SetTargetRange(0,1)
-	e14:SetCondition(c11115018.econ6)
-	e14:SetValue(c11115018.elimit2)
-	c:RegisterEffect(e14)
-	local e15=e3:Clone()
-	e15:SetCode(EVENT_CHAIN_NEGATED)
-	e15:SetOperation(c11115018.aclimit5)
-	c:RegisterEffect(e15)
-	local e16=e3:Clone()
-	e16:SetCode(EVENT_CHAIN_SOLVED)
-	e16:SetOperation(c11115018.aclimit6)
-	c:RegisterEffect(e16)
-	local e17=e3:Clone()
-	e17:SetCode(EVENT_SPSUMMON)
-	e17:SetOperation(c11115018.aclimit3)
-	c:RegisterEffect(e17)
 end
 function c11115018.sfilter(c)
 	return c:IsSetCard(0xa15e) and c:IsType(TYPE_SYNCHRO)
@@ -105,63 +64,14 @@ function c11115018.aclimit2(e,tp,eg,ep,ev,re,r,rp)
 	if ep==tp or not re:IsActiveType(TYPE_MONSTER) then return end
 	e:GetHandler():RegisterFlagEffect(111150180,RESET_EVENT+0x3ff0000+RESET_PHASE+PHASE_END,0,1)
 end
-function c11115018.aclimit3(e,tp,eg,ep,ev,re,r,rp)
-    if eg:IsContains(e:GetHandler()) then return end
-	local tc=eg:GetFirst()
-	local p=tc:GetSummonPlayer()
-    if p==tp then 
-	    e:GetHandler():RegisterFlagEffect(11115021,RESET_EVENT+0x3ff0000+RESET_PHASE+PHASE_END,0,1)
-	else
-	    e:GetHandler():RegisterFlagEffect(111150210,RESET_EVENT+0x3ff0000+RESET_PHASE+PHASE_END,0,1)
-	end
-end
-function c11115018.aclimit4(e,tp,eg,ep,ev,re,r,rp)
-	if not re:IsHasCategory(CATEGORY_SPECIAL_SUMMON) then return end
-    if ep==tp then
-	    e:GetHandler():RegisterFlagEffect(11115022,RESET_EVENT+0x3ff0000+RESET_PHASE+PHASE_END,0,1)
-	else
-	    e:GetHandler():RegisterFlagEffect(111150220,RESET_EVENT+0x3ff0000+RESET_PHASE+PHASE_END,0,1)
-	end
-end
-function c11115018.aclimit5(e,tp,eg,ep,ev,re,r,rp)
-	if not re:IsHasCategory(CATEGORY_SPECIAL_SUMMON) then return end
-	if ep==tp then
-	    e:GetHandler():ResetFlagEffect(11115022)
-	else
-	    e:GetHandler():ResetFlagEffect(111150220)
-	end
-end
-function c11115018.aclimit6(e,tp,eg,ep,ev,re,r,rp)
-	if not re:IsHasCategory(CATEGORY_SPECIAL_SUMMON) then return end
-	if ep==tp then
-	    e:GetHandler():RegisterFlagEffect(11115021,RESET_EVENT+0x3ff0000+RESET_PHASE+PHASE_END,0,1)
-	else
-	    e:GetHandler():RegisterFlagEffect(111150210,RESET_EVENT+0x3ff0000+RESET_PHASE+PHASE_END,0,1)
-	end
-end
 function c11115018.econ1(e)
 	return e:GetHandler():GetFlagEffect(11115018)~=0
 end
 function c11115018.econ2(e)
 	return e:GetHandler():GetFlagEffect(111150180)~=0
 end
-function c11115018.econ3(e)
-	return e:GetHandler():GetFlagEffect(11115021)~=0
-end
-function c11115018.econ4(e)
-	return e:GetHandler():GetFlagEffect(111150210)~=0
-end
-function c11115018.econ5(e)
-	return e:GetHandler():GetFlagEffect(11115022)~=0
-end
-function c11115018.econ6(e)
-	return e:GetHandler():GetFlagEffect(111150220)~=0
-end
 function c11115018.elimit(e,re,tp)
 	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
-end
-function c11115018.elimit2(e,re,tp)
-	return re:IsHasCategory(CATEGORY_SPECIAL_SUMMON)
 end
 function c11115018.gycon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

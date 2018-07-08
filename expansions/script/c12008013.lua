@@ -3,17 +3,13 @@ function c12008013.initial_effect(c)
 	--atk
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(12008013,0))
-	e1:SetCategory(CATEGORY_TODECK+CATEGORY_ATKCHANGE)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
+	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,12008013)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+0x1c0)
-	e1:SetCondition(c12008013.atkcon)
 	e1:SetCost(c12008013.atkcost)
-	e1:SetTarget(c12008013.atktg)
-	e1:SetOperation(c12008013.atkop)
+	e1:SetTarget(c12008013.target)
+	e1:SetOperation(c12008013.activate)
 	c:RegisterEffect(e1)
 	--tog
 	local e2=Effect.CreateEffect(c)
@@ -41,10 +37,7 @@ function c12008013.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c12008013.tgcon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsReason(REASON_DRAW)
-end
-function c12008013.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
+	return not e:GetHandler():IsReason(REASON_DRAW) and e:GetHandler():IsLocation(LOCATION_HAND)
 end
 function c12008013.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
@@ -64,20 +57,40 @@ function c12008013.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_DECK)
 end
 function c12008013.atkop(e,tp,eg,ep,ev,re,r,rp)
-    local tc=Duel.GetFirstTarget()
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-    local tgc=Duel.SelectMatchingCard(tp,c12008013.tgfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
-    Duel.ConfirmCards(1-tp,tgc)
-    mc=tgc:GetAttack()
-    if tc:IsRelateToEffect(e) and tc:IsFaceup() then
-        local e1=Effect.CreateEffect(e:GetHandler())
-        e1:SetType(EFFECT_TYPE_SINGLE)
-        e1:SetCode(EFFECT_UPDATE_ATTACK)
-        e1:SetReset(RESET_EVENT+0x1fe0000)
-        e1:SetValue(-mc)
-        tc:RegisterEffect(e1)
-        Duel.SendtoDeck(tgc,nil,0,REASON_EFFECT)
-    end
+	local tc=Duel.GetFirstTarget()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local tgc=Duel.SelectMatchingCard(tp,c12008013.tgfilter,tp,LOCATION_DECK,0,1,1,nil):GetFirst()
+	Duel.ConfirmCards(1-tp,tgc)
+	mc=tgc:GetAttack()
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetValue(-mc)
+		tc:RegisterEffect(e1)
+		Duel.SendtoDeck(tgc,nil,0,REASON_EFFECT)
+	end
 end
-
+function c12008013.tdfilter(c,e,tp)
+	return c:IsSetCard(0x1fb3) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+end
+function c12008013.tdfilter1(c,e,tp)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+end
+function c12008013.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c12008013.tdfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,e:GetHandler()) and Duel.IsPlayerCanDraw(tp,1) end
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,nil,tp,LOCATION_GRAVE+LOCATION_REMOVED)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,1,tp,nil)
+end
+function c12008013.activate(e,tp,eg,ep,ev,re,r,rp)
+	if not Duel.IsExistingMatchingCard(c12008013.tdfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,e:GetHandler()) then return false end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g1=Duel.SelectMatchingCard(tp,c12008013.tdfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,e:GetHandler())
+	local g2=Duel.SelectMatchingCard(tp,c12008013.tdfilter1,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,0,4,e:GetHandler())
+	if Duel.SendtoDeck(g1+g2,nil,2,REASON_EFFECT)>0 then
+		Duel.ShuffleDeck(tp)
+		Duel.Draw(tp,1,REASON_EFFECT)
+	end
+end
 

@@ -42,17 +42,18 @@ function c1110161.initial_effect(c)
 end
 --
 function c1110161.filter2(c)
-	return c:IsLinkType(TYPE_TOKEN) and aux.FilterBoolFunction(Card.IsLevel,3)
+	return c:IsLinkType(TYPE_TOKEN) and c:IsLevel(3)
 end
 --
 function c1110161.LCheckGoal(tp,sg,lc,minc,ct,gf)
-	return ct>=minc and sg:CheckWithSumEqual(aux.GetLinkCount,1,ct,ct) and Duel.GetLocationCountFromEx(tp,tp,sg,lc)>0 and (not gf or gf(sg))
+	return ct>=minc and sg:CheckWithSumEqual(aux.GetLinkCount,1,ct,ct) and Duel.GetLocationCountFromEx(tp,tp,sg,lc)>0 and (not gf or gf(sg)) and not sg:IsExists(aux.LUncompatibilityFilter,1,nil,sg,lc)
 end
+--
 function c1110161.LCheckRecursive(c,tp,sg,mg,lc,ct,minc,maxc,gf)
 	sg:AddCard(c)
 	ct=ct+1
 	local res=c1110161.LCheckGoal(tp,sg,lc,minc,ct,gf)
-		or (ct<maxc and mg:IsExists(c1110161.LCheckRecursive,1,sg,tp,sg,mg,lc,ct,minc,maxc,gf))
+		or ct<maxc and mg:IsExists(c1110161.LCheckRecursive,1,sg,tp,sg,mg,lc,ct,minc,maxc,gf)
 	sg:RemoveCard(c)
 	ct=ct-1
 	return res
@@ -64,52 +65,48 @@ function c1110161.LinkCondition(f,minc,maxc,gf)
 		if c==nil then return true end
 		if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
 		local tp=c:GetControler()
-		local mg=Duel.GetMatchingGroup(aux.LConditionFilter,tp,LOCATION_MZONE,0,nil,f,c)
-		local sg=Group.CreateGroup()
-		for i,pe in ipairs({Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_LMATERIAL)}) do
-			local pc=pe:GetHandler()
-			if not mg:IsContains(pc) then return false end
-			sg:AddCard(pc)
-		end
+		local mg=aux.GetLinkMaterials(tp,f,c)
+		local sg=aux.GetMustMaterialGroup(tp,EFFECT_MUST_BE_LMATERIAL)
+		if sg:IsExists(aux.MustMaterialCounterFilter,1,nil,mg) then return false end
 		local ct=sg:GetCount()
 		if ct>maxc then return false end
-		return c1110161.LCheckGoal(tp,sg,c,minc,ct,gf) or mg:IsExists(c1110161.LCheckRecursive,1,sg,tp,sg,mg,c,ct,minc,maxc,gf)
+		return c1110161.LCheckGoal(tp,sg,c,minc,ct,gf)
+			or mg:IsExists(c1110161.LCheckRecursive,1,sg,tp,sg,mg,c,ct,minc,maxc,gf)
 	end
 end
 --
 function c1110161.LinkTarget(f,minc,maxc,gf)
-	return  
+	return
 	function(e,tp,eg,ep,ev,re,r,rp,chk,c)
-		local mg=Duel.GetMatchingGroup(aux.LConditionFilter,tp,LOCATION_MZONE,0,nil,f,c)
-		local bg=Group.CreateGroup()
-		for i,pe in ipairs({Duel.IsPlayerAffectedByEffect(tp,EFFECT_MUST_BE_LMATERIAL)}) do
-			bg:AddCard(pe:GetHandler())
-		end
-		if bg:GetCount()>0 then
+		local mg=aux.GetLinkMaterials(tp,f,c)
+		local bg=aux.GetMustMaterialGroup(tp,EFFECT_MUST_BE_LMATERIAL)
+		if #bg>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LMATERIAL)
-			bg:Select(tp,bg:GetCount(),bg:GetCount(),nil)
+			bg:Select(tp,#bg,#bg,nil)
 		end
 		local sg=Group.CreateGroup()
 		sg:Merge(bg)
-		while sg:GetCount()<maxc do
-			local cg=mg:Filter(c1110161.LCheckRecursive,sg,tp,sg,mg,c,sg:GetCount(),minc,maxc,gf)
-			if cg:GetCount()==0 then break end
-			local finish=c1110161.LCheckGoal(tp,sg,c,minc,sg:GetCount(),gf)
-			local cancel=(sg:GetCount()==0 or finish)
+		local finish=false
+		while #sg<maxc do
+			finish=c1110161.LCheckGoal(tp,sg,c,minc,#sg,gf)
+			local cg=mg:Filter(c1110161.LCheckRecursive,sg,tp,sg,mg,c,#sg,minc,maxc,gf)
+			if #cg==0 then break end
+			local cancel=not finish
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LMATERIAL)
 			local tc=cg:SelectUnselect(sg,tp,finish,cancel,minc,maxc)
 			if not tc then break end
 			if not bg:IsContains(tc) then
 				if not sg:IsContains(tc) then
 					sg:AddCard(tc)
+					if #sg==maxc then finish=true end
 				else
 					sg:RemoveCard(tc)
 				end
-			elseif bg:GetCount()>0 and sg:GetCount()<=bg:GetCount() then
-				return false 
+			elseif #bg>0 and #sg<=#bg then
+				return false
 			end
 		end
-		if sg:GetCount()>0 then
+		if finish then
 			sg:KeepAlive()
 			e:SetLabelObject(sg)
 			return true
@@ -124,20 +121,20 @@ function c1110161.LinkOperation(f,min,max,gf)
 		c:SetMaterial(g)
 		Duel.SendtoGrave(g,REASON_MATERIAL+REASON_LINK)
 		g:DeleteGroup()
-		local e2_1=Effect.CreateEffect(c)
-		e2_1:SetType(EFFECT_TYPE_SINGLE)
-		e2_1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2_1:SetCode(EFFECT_ADD_TYPE)
-		e2_1:SetValue(TYPE_SPIRIT)
-		e2_1:SetReset(RESET_EVENT+0xfe0000)
-		c:RegisterEffect(e2_1)
-		local e2_2=Effect.CreateEffect(c)
-		e2_2:SetType(EFFECT_TYPE_SINGLE)
-		e2_2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-		e2_2:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
-		e2_2:SetValue(1)
-		e2_2:SetReset(RESET_EVENT+0xfe0000)
-		c:RegisterEffect(e2_2)
+		local e0_1=Effect.CreateEffect(c)
+		e0_1:SetType(EFFECT_TYPE_SINGLE)
+		e0_1:SetCode(EFFECT_CHANGE_TYPE)
+		e0_1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e0_1:SetValue(TYPE_SPIRIT+TYPE_MONSTER+TYPE_EFFECT)
+		e0_1:SetReset(RESET_EVENT+0xfe0000)
+		c:RegisterEffect(e0_1,true)
+		local e0_2=Effect.CreateEffect(c)
+		e0_2:SetType(EFFECT_TYPE_SINGLE)
+		e0_2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e0_2:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+		e0_2:SetValue(1)
+		e0_2:SetReset(RESET_EVENT+0xfe0000)
+		c:RegisterEffect(e0_2,true)
 	end
 end
 --
@@ -171,7 +168,7 @@ function c1110161.op3(e,tp,eg,ep,ev,re,r,rp)
 	else
 		local e3_1=Effect.CreateEffect(c)
 		e3_1:SetType(EFFECT_TYPE_FIELD)
---		e3_1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+--  e3_1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 		e3_1:SetCode(EFFECT_REFLECT_BATTLE_DAMAGE)
 		e3_1:SetTargetRange(LOCATION_MZONE,0)
 		e3_1:SetTarget(c1110161.tg3_1)

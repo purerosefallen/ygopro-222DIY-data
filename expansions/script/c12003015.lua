@@ -10,6 +10,7 @@ function c12003015.initial_effect(c)
 	e1:SetCountLimit(1,12003015)
 	e1:SetCondition(c12003015.spcon)
 	e1:SetValue(c12003015.spval)
+	e1:SetOperation(c12003015.sprop)
 	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
@@ -23,6 +24,14 @@ function c12003015.initial_effect(c)
 	e2:SetTarget(c12003015.sptg)
 	e2:SetOperation(c12003015.spop)
 	c:RegisterEffect(e2)
+end
+function c12003015.sprfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0xfb8) and c:IsAbleToDeckAsCost()
+end
+function c12003015.sprop(e,tp,eg,ep,ev,re,r,rp,c)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g=Duel.SelectMatchingCard(tp,c12003015.sprfilter,tp,LOCATION_REMOVED,0,1,1,nil)
+	Duel.SendtoDeck(g,nil,2,REASON_COST)
 end
 function c12003015.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
