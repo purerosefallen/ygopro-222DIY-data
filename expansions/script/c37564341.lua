@@ -44,6 +44,7 @@ function cm.spcon(e,c)
 	local tp=c:GetControler()
 	return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingMatchingCard(cm.spfilter,tp,LOCATION_HAND,0,3,nil)
+		and not Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,0,1,nil)
 end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
