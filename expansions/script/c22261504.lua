@@ -4,7 +4,7 @@ function c22261504.initial_effect(c)
     local e1=Effect.CreateEffect(c)
     e1:SetType(EFFECT_TYPE_ACTIVATE)
     e1:SetCode(EVENT_FREE_CHAIN)
-    Duel.AddCustomActivityCounter(22261504,ACTIVITY_SPSUMMON,c22261504.counterfilter)
+    e1:SetCost(c22261504.cost)
     c:RegisterEffect(e1)
     --spsummon
     local e2=Effect.CreateEffect(c)
@@ -49,6 +49,20 @@ function c22261504.IsMayuAzaka(c)
 end
 --
 function c22261504.counterfilter(c)
+    return c:GetBaseAttack()~=0
+end
+function c22261504.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+    if chk==0 then return Duel.GetCustomActivityCount(22261504,tp,ACTIVITY_SPSUMMON)==0 end
+    local e1=Effect.CreateEffect(e:GetHandler())
+    e1:SetType(EFFECT_TYPE_FIELD)
+    e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
+    e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+    e1:SetReset(RESET_PHASE+PHASE_END)
+    e1:SetTargetRange(1,0)
+    e1:SetTarget(c22261504.splimit)
+    Duel.RegisterEffect(e1,tp)
+end
+function c22261504.splimit(e,c,sump,sumtype,sumpos,targetp,se)
     return c:GetBaseAttack()~=0
 end
 --

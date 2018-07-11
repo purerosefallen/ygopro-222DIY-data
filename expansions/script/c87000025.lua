@@ -39,7 +39,7 @@ function c87000025.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE)
 	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e5:SetRange(LOCATION_MZONE)
-	e5:SetCode(EFFECT_UPDATE_DEFENCE)
+	e5:SetCode(EFFECT_UPDATE_DEFENSE)
 	e5:SetValue(c87000025.value)
 	c:RegisterEffect(e5)
 	--immune

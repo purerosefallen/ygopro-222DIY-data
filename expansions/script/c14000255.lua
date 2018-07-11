@@ -30,7 +30,7 @@ function cm.reop(e,tp,eg,ep,ev,re,r,rp)
 	if re and cm.war(re:GetHandler()) then
 		local tc=eg:GetFirst()
 		while tc do
-			if tc and tc:IsLocation(LOCATION_GRAVE) and tc:IsType(TYPE_MONSTER) and tc:GetFlagEffect(14000241)==0 then
+			if tc and tc:IsLocation(LOCATION_GRAVE) and tc:IsType(TYPE_MONSTER) then
 				tc:RegisterFlagEffect(14000241,RESET_EVENT+0x1fe0000,0,0,0)
 			end
 			tc=eg:GetNext()

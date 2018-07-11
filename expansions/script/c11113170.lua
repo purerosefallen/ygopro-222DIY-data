@@ -92,6 +92,7 @@ function c11113170.linkop(e,tp,eg,ep,ev,re,r,rp,c)
 		else
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LMATERIAL)
 		    local g1=g:FilterSelect(tp,c11113170.linkfilter3,1,1,nil,tp,g,c)
+			local mc=g1:GetFirst()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LMATERIAL)
 			local g2=g:FilterSelect(tp,c11113170.linkfilter4,1,1,mc,tp,mc,c)
 			g1:Merge(g2)
