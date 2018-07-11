@@ -2416,7 +2416,7 @@ function cm.TransformDFCCard(c)
 	c:SetEntityCode(tcode,true)
 	c:ReplaceEffect(tcode,0,0)
 	Duel.SetMetatable(c,_G["c"..tcode])
-	Duel.Hint(HINT_CARD,0,tcode)
+	--Duel.Hint(HINT_CARD,0,tcode)
 	--Duel.ConfirmCards(c:GetControler(),Group.FromCards(c))
 	--if c:IsLocation(LOCATION_DECK) then
 	--	Duel.ConfirmCards(1-c:GetControler(),Group.FromCards(c))
@@ -2438,10 +2438,10 @@ function cm.DFCBackSideCommonEffect(c)
 		local tcode=c.dfc_back_side
 		if not tcode then return end
 		c:SetEntityCode(tcode)
-		--Duel.ConfirmCards(tp,Group.FromCards(c))
-		--if c:IsLocation(LOCATION_DECK) then
-		--	Duel.ConfirmCards(1-tp,Group.FromCards(c))
-		--end
+	--	Duel.ConfirmCards(tp,Group.FromCards(c))
+	--	if c:IsLocation(LOCATION_DECK) then
+	--		Duel.ConfirmCards(1-tp,Group.FromCards(c))
+	--	end
 		c:ReplaceEffect(tcode,0,0)
 		Duel.SetMetatable(c,_G["c"..tcode])
 	end)
