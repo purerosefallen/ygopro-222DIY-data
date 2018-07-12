@@ -1,7 +1,7 @@
 --漆黑的质点 波恋达斯
 function c12008019.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,c3679218.matfilter,1,1)
+	aux.AddLinkProcedure(c,c12008019.matfilter,1,1)
 	c:EnableReviveLimit()
 	--special summon
 	local e2=Effect.CreateEffect(c)
@@ -25,7 +25,7 @@ function c12008019.initial_effect(c)
 	e3:SetOperation(c12008019.tdop)
 	c:RegisterEffect(e3)
 end
-function c3679218.matfilter(c)
+function c12008019.matfilter(c)
 	return c:IsLinkSetCard(0x1fb3) and not c:IsLinkCode(12008019)
 end
 function c12008019.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
