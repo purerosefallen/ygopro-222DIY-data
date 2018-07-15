@@ -1,10 +1,10 @@
---命运的王牌 假面骑士Joker
+﻿--命运的王牌 假面骑士Joker
 local m=22260105
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--fusion summon
 	c:EnableReviveLimit()
-	aux.AddFusionProcFunRep(c,22260027,1,true)
+	aux.AddFusionProcFunRep(c,22260027,1,true,true)
 	--direct attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

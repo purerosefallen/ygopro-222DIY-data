@@ -1,4 +1,4 @@
---二人一体 假面骑士W
+﻿--二人一体 假面骑士W
 local m=22260103
 local cm=_G["c"..m]
 function cm.initial_effect(c)
@@ -60,7 +60,7 @@ function cm.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,cm.eqfilter,tp,LOCATION_DECK,0,2,2,nil)
 	local tc=g:GetFirst()
 	while tc do
-		Duel.Equip(tp,tc,c,false)
+		Duel.Equip(tp,tc,c,true)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
 		e1:SetType(EFFECT_TYPE_SINGLE)

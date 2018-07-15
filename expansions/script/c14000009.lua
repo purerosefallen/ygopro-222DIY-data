@@ -63,7 +63,6 @@ function cm.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and bit.band(r,REASON_EFFECT)~=0 and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1404)
 end
 function cm.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local tc=re:GetHandler()
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,0,LOCATION_ONFIELD)
 end
