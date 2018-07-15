@@ -53,7 +53,7 @@ function c65010029.lfcon(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c65010029.serfil(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x3da0) and not c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsType(TYPE_MONSTER) and not c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 
 function c65010029.lftg(e,tp,eg,ep,ev,re,r,rp,chk)
