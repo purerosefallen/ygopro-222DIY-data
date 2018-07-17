@@ -6941,7 +6941,6 @@ expansions/script/c99600010.lua	35728c6a66628ff390c16a2613adfea8
 expansions/script/c99600099.lua	d792511c8932035d8fb932226b9157b6
 expansions/script/c9990300.lua	abd457851ba275481c7aa0fdcd1a9995
 expansions/script/c99998931.lua	1e92eb96752eaa1877afe9d273846fa7
-expansions/script/sed3LRHpT	d41d8cd98f00b204e9800998ecf8427e
 sound/activate.wav	ddb25ba52e523b0ebc94d538a43d9bf9
 sound/addcounter.wav	6f9e1ad242ec8694a5c0c014dd4be00a
 sound/attack.wav	40e3a24a95429503df06352fb0dd1b92
