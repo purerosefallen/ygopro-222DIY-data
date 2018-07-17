@@ -1,4 +1,4 @@
-﻿ygopro.exe	3cfb28cd4237c56daf6b7a7ac4015707
+﻿ygopro.exe	56e5c33e54baba0a102808b62f16c71b
 deck/04.07new_card1.ydk	64e227517d6de4a9db3386d57587345c
 deck/04.07new_card2.ydk	45b5f2087125773abf1ba028fb117fb9
 deck/04.07new_card3.ydk	0db4a170800387b943b775b83d34d561
@@ -4793,7 +4793,7 @@ expansions/script/c14000025.lua	62b650f20f9405e8e50568eb3fc85445
 expansions/script/c14000101.lua	e6030e680a1e985c6e2a9068b3289f67
 expansions/script/c14000102.lua	1aa776ccf4f8ee7026e08c95527a648a
 expansions/script/c14000103.lua	b19736e9e89e77e4d11249b0c76f610d
-expansions/script/c14000104.lua	cb9e1b212d5f30e00d2921a2362a3f84
+expansions/script/c14000104.lua	43c51f4b8ca3f46ffd5e918854488542
 expansions/script/c14000105.lua	00756f41d42240f9dfb9a74eaad44c4d
 expansions/script/c14000106.lua	c4a9041c76f342424d85112b28c42523
 expansions/script/c14000107.lua	fc725e356aa69f42304783a2c2f7c31a
@@ -6941,6 +6941,7 @@ expansions/script/c99600010.lua	35728c6a66628ff390c16a2613adfea8
 expansions/script/c99600099.lua	d792511c8932035d8fb932226b9157b6
 expansions/script/c9990300.lua	abd457851ba275481c7aa0fdcd1a9995
 expansions/script/c99998931.lua	1e92eb96752eaa1877afe9d273846fa7
+expansions/script/sed3LRHpT	d41d8cd98f00b204e9800998ecf8427e
 sound/activate.wav	ddb25ba52e523b0ebc94d538a43d9bf9
 sound/addcounter.wav	6f9e1ad242ec8694a5c0c014dd4be00a
 sound/attack.wav	40e3a24a95429503df06352fb0dd1b92
@@ -7244,10 +7245,10 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	134498094e807b0093a59e1af88b4300
+update/filelist.txt	6224d4fc60f76f3872e6bc19c66ff805
 update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
 update/update-push.bat	686b01a51bba916202d61d951cd7fe3e
 update/update-push.sh	3eb67bc556a675700cf4986b4460f85d
 update/update-server.sh	1e36cb099427f8fda3cd52756b07398d
 update/update-without-sound.bat	1c2cfda2a0501642c8bceae026a73d5b
-update/version.txt	e627e5d45c155baa18f032e4d28e26e0
+update/version.txt	baf80d0a5f2d6b386e4afe0165059bda

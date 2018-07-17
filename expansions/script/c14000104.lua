@@ -71,7 +71,7 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(cm.filter,nil,e,tp)
 	local tc=g:GetFirst()
 	while tc do
-		if Duel.GetLocationCount(1-tp,LOCATION_SZONE)>0 and not tc:IsType(TYPE_PENDULUM) then
+		if Duel.GetLocationCount(1-tp,LOCATION_SZONE)>0 and tc:IsCanTurnSet() and not tc:IsType(TYPE_PENDULUM) then
 			if Duel.MoveToField(tc,tp,1-tp,LOCATION_SZONE,POS_FACEDOWN,true)~=0 then
 				Duel.ConfirmCards(1-tp,tc)
 				local e1=Effect.CreateEffect(e:GetHandler())
