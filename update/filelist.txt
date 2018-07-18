@@ -1,4 +1,4 @@
-﻿ygopro.exe	56e5c33e54baba0a102808b62f16c71b
+﻿ygopro.exe	fe74d5c43ed0c65a57ac249dac890f4c
 deck/04.07new_card1.ydk	64e227517d6de4a9db3386d57587345c
 deck/04.07new_card2.ydk	45b5f2087125773abf1ba028fb117fb9
 deck/04.07new_card3.ydk	0db4a170800387b943b775b83d34d561
@@ -5970,7 +5970,7 @@ expansions/script/c37564837.lua	e7cf29d3f61f9a2c9eeead99ed3119f0
 expansions/script/c37564838.lua	eda859f177e3d30a664634f51d552758
 expansions/script/c37564839.lua	6b79d3f07ec94c277a3ad776a62a866b
 expansions/script/c37564840.lua	6c05abbaab2f49f76ae2678849992daf
-expansions/script/c37564841.lua	3ab8aa75e51f08a41eeeddbc5ccd2a78
+expansions/script/c37564841.lua	6b54b3b38d665dce03eb86c30208acd8
 expansions/script/c37564842.lua	a1aa648560ce297fa268d9e1448403d5
 expansions/script/c37564843.lua	4871a22a7877638ff09aa0ab5f127a38
 expansions/script/c37564844.lua	9a7fe8daf267c8aa65d29286ad4d21d6
@@ -7244,10 +7244,10 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	6224d4fc60f76f3872e6bc19c66ff805
+update/filelist.txt	8bb2db9acd7acfbd4d0d17a437e98494
 update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
 update/update-push.bat	686b01a51bba916202d61d951cd7fe3e
 update/update-push.sh	3eb67bc556a675700cf4986b4460f85d
 update/update-server.sh	1e36cb099427f8fda3cd52756b07398d
 update/update-without-sound.bat	1c2cfda2a0501642c8bceae026a73d5b
-update/version.txt	baf80d0a5f2d6b386e4afe0165059bda
+update/version.txt	d3989e4c6ec1277dc1f8736d1f0fcb0a
