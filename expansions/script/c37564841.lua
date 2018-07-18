@@ -20,7 +20,7 @@ function cm.effect_operation_3L(c,ctlm)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCode(EFFECT_DISABLE_FIELD)
-	e1:SetCondition(cm.discon)
+	e1:SetProperty(EFFECT_FLAG_REPEAT)
 	e1:SetOperation(cm.disop)
 	e1:SetReset(RESET_EVENT+0x1fe0000)
 	c:RegisterEffect(e1,true)
@@ -45,15 +45,11 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2,true)
 	end
 end
-function cm.discon(e)
-	e:SetValue(0)
-	return true
-end
 function cm.disop(e,tp)
 	local c=e:GetHandler()
 	local flag1=bit.band(c:GetColumnZone(LOCATION_MZONE),0xffffff00)
 	local flag2=bit.band(bit.lshift(c:GetColumnZone(LOCATION_SZONE),8),0xffff00ff)
 	local flag3=bit.band(c:GetColumnZone(LOCATION_MZONE),0xff00ffff)
 	local flag4=bit.band(bit.lshift(c:GetColumnZone(LOCATION_SZONE),8),0xffff)
-	return (flag1+flag2+flag3+flag4) | 0xffff0000
+	return (flag1+flag2+flag3+flag4) & 0xffff0000
 end
