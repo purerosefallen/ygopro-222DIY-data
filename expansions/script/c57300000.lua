@@ -424,6 +424,23 @@ function cm.IsWindbot(c)
 	end
 	return false
 end
+function cm.IsLinkWindbot(c)
+	local codet={c:GetLinkCode()}
+	for i,code in pairs(codet) do
+		local mt=_G["c"..code]
+		if not mt then
+			_G["c"..code]={}
+			if pcall(function() dofile("expansions/script/c"..code..".lua") end) or pcall(function() dofile("script/c"..code..".lua") end) then
+				mt=_G["c"..code]
+				_G["c"..code]=nil
+			else
+				_G["c"..code]=nil
+			end
+		end
+		if mt and mt.named_with_windbot then return true end
+	end
+	return false
+end
 function cm.IsFusionWindbot(c)
 	local codet={c:GetFusionCode()}
 	for i,code in pairs(codet) do
@@ -533,4 +550,67 @@ function cm.AddSummonMusic(c,desc,stype)
 	local e3=e1:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
+end
+function cm.WindbotTwinsCommonEffect(c,id)
+	c:EnableReviveLimit()
+	aux.AddLinkProcedure(c,cm.IsLinkWindbot,2,2)
+	local function twin_spfilter(c,e,tp)
+		return c:IsCode(57330015-id)
+	end
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(57330014*16)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1,57330014+id)
+	e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+		if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and chkc:IsControler(tp) and twin_spfilter(chkc,e,tp) end
+		if chk==0 then return Duel.GetMZoneCount(tp)>0
+			and Duel.IsExistingTarget(twin_spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp) end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local g=Duel.SelectTarget(tp,twin_spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+	end)
+	e1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
+		local tc=Duel.GetFirstTarget()
+		if tc:IsRelateToEffect(e)
+				and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+			local ex=Effect.CreateEffect(e:GetHandler())
+			ex:SetType(EFFECT_TYPE_SINGLE)
+			ex:SetCode(EFFECT_CANNOT_REMOVE)
+			ex:SetValue(1)
+			ex:SetReset(0x1fe1000+RESET_PHASE+PHASE_END)
+			tc:RegisterEffect(ex,true)
+			Duel.SpecialSummonComplete()
+		end
+	end)
+	c:RegisterEffect(e1)
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(57330015*16)
+	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_REMOVE)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e1:SetCode(EVENT_CHAINING)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
+		return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and e:GetHandler():GetMutualLinkedGroup():IsExists(Card.IsCode,1,nil,57330015-id)
+			and (function()
+				if id==0 then return re:IsActiveType(TYPE_MONSTER)
+				else return re:IsHasType(EFFECT_TYPE_ACTIVATE) end
+			end)()
+	end)
+	e1:SetCost(aux.bfgcost)
+	e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
+		if chk==0 then return re:GetHandler():IsAbleToRemove() end
+		Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
+		if re:GetHandler():IsRelateToEffect(re) then
+			Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,0)
+		end
+	end)
+	e1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
+		if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
+			Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)
+		end
+	end)
+	c:RegisterEffect(e1)
 end
