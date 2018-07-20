@@ -6348,7 +6348,7 @@ expansions/script/c57320013.lua	15e93b2f750fe493e21c464fac0b900b
 expansions/script/c57330001.lua	41aa8945f004e87d76f47676133c82a2
 expansions/script/c57330002.lua	39ccd8ffa8c3d1481c3a6b712b4c26ad
 expansions/script/c57330003.lua	effc60997957afa664704973c6fe488b
-expansions/script/c57330004.lua	8872fe2fe8edf41fd7b23130d7316563
+expansions/script/c57330004.lua	b7390dac5bad406afc5a0fb3dac962d4
 expansions/script/c57330005.lua	fbf2398b49f1c8151e852ab5d23022f1
 expansions/script/c57330006.lua	322fba23546d61ca3f46c5941f12c6d0
 expansions/script/c57330007.lua	a0dac8dd4d923c4de29963083907c524
@@ -6957,7 +6957,7 @@ sound/diceroll.wav	772ae1f7647970f6b7a835ff669c5458
 sound/directattack.wav	4c48130d92a63fe1abe78c86e40798a5
 sound/draw.wav	889074246757a5566ed4354cf6e5242f
 sound/equip.wav	e1817855edd17ae5d7ffc6ca25f60940
-sound/files.txt	0e03f5012d3c3bdda90e2fef592cf5eb
+sound/files.txt	3ff8c19c415105e53df718b0de618d7b
 sound/flip.wav	5e626ee6f5bae5765515d313ead70ee7
 sound/gainlp.wav	205e428b34dc66734f84369d23eeb7bd
 sound/info.wav	210ae540faf7efc8a010937dfe55f1f5
@@ -7244,10 +7244,10 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	ab0c9b571b34e9602ded42474620a37d
+update/filelist.txt	99d61fe3ea2daf967d24312e1c7bc5c9
 update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
 update/update-push.bat	686b01a51bba916202d61d951cd7fe3e
 update/update-push.sh	ee0ce539e77c8cec8965cb6d6a2b3149
 update/update-server.sh	1e36cb099427f8fda3cd52756b07398d
 update/update-without-sound.bat	1c2cfda2a0501642c8bceae026a73d5b
-update/version.txt	5c8ef51c3570f6e6eec19b50814ee0db
+update/version.txt	fe1a3b9435b89e4e462fc528c04cf34c
