@@ -1,4 +1,4 @@
-﻿ygopro.exe	b3cee4c962859c79ccc65c8f90c82af1
+﻿ygopro.exe	fb2cbb76c31e3f79ee821f8b13c007c6
 deck/04.07new_card1.ydk	64e227517d6de4a9db3386d57587345c
 deck/04.07new_card2.ydk	45b5f2087125773abf1ba028fb117fb9
 deck/04.07new_card3.ydk	0db4a170800387b943b775b83d34d561
@@ -6303,7 +6303,7 @@ expansions/script/c5200024.lua	4778c1eb045d7bc1b72c69841306d66e
 expansions/script/c5200025.lua	3299b88a2ae8a736eb662c4319b431ce
 expansions/script/c5200026.lua	6a60461a91aee59034c453dd1121bf79
 expansions/script/c5200027.lua	d3a28338f3388b29ab3776607d7afb5d
-expansions/script/c57300000.lua	53462f00f686e230cf96c18e347ea5d8
+expansions/script/c57300000.lua	2a6d2a88135acf60c4c9f86c60d7b989
 expansions/script/c57300001.lua	ac43b632917bd97f277b95493ccf7673
 expansions/script/c57300002.lua	eee8818da01de9751ccc1c6ab97cda3d
 expansions/script/c57300003.lua	8f2e933304392a2c4d47bebb89d14800
@@ -6855,6 +6855,7 @@ expansions/script/c77707704.lua	dd9a0cc1523e130240540bc403bacd6b
 expansions/script/c77707705.lua	061f9a8beb1b2f2a73b7452db5145073
 expansions/script/c77707706.lua	2ac28d9546912ee9bd04bc43bae72470
 expansions/script/c77707707.lua	f6e58831d050d65576c2af61b1efc281
+expansions/script/c77707716.lua	1b3d7829c3d25e9cdd287c4393b03d8e
 expansions/script/c77777777.lua	693b3b639aad5092899b166f6ff8ae9a
 expansions/script/c80000000.lua	fe03716ca5ee5dc363563e02b5b80652
 expansions/script/c80000001.lua	4270470d10f3c3a97cf7e8b7c57e59e9
@@ -7244,10 +7245,10 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	99d61fe3ea2daf967d24312e1c7bc5c9
+update/filelist.txt	4fcd56bb9574cc999737376221736bfb
 update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
 update/update-push.bat	686b01a51bba916202d61d951cd7fe3e
 update/update-push.sh	ee0ce539e77c8cec8965cb6d6a2b3149
 update/update-server.sh	1e36cb099427f8fda3cd52756b07398d
 update/update-without-sound.bat	1c2cfda2a0501642c8bceae026a73d5b
-update/version.txt	fe1a3b9435b89e4e462fc528c04cf34c
+update/version.txt	f755e21c5346d5eec2d3d61e97e6f716
