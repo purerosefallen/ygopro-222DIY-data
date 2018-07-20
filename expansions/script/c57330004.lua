@@ -7,7 +7,7 @@ function cm.initial_effect(c)
 	miyuki.WindbotCommonEffect(c,cm.target,cm.operation,0,0)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return Duel.IsPlayerCanSummon(tp) end
+	if chk==0 then return Duel.IsPlayerCanSummon(tp) and Duel.IsPlayerCanAddditionalSummon(tp) end
 end
 function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
