@@ -1,6 +1,5 @@
 --深海的回鸣
 function c12009045.initial_effect(c)
-	aux.AddRitualProcGreaterCode(c,12009044)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -21,6 +20,7 @@ function c12009045.initial_effect(c)
 	e2:SetOperation(c12009045.tdop)
 	c:RegisterEffect(e2)  
 end
+c12009045.fit_monster={12009044}
 function c12009045.tdcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c12009045.cfilter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.DiscardHand(tp,c12009045.cfilter,1,1,REASON_COST+REASON_DISCARD)
