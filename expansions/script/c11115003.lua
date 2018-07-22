@@ -2,11 +2,8 @@
 function c11115003.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,11115003+EFFECT_COUNT_CODE_OATH)
-	e1:SetOperation(c11115003.activate)
 	c:RegisterEffect(e1)
 	--extra summon
 	local e2=Effect.CreateEffect(c)
@@ -18,11 +15,12 @@ function c11115003.initial_effect(c)
 	c:RegisterEffect(e2)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(11115003,1))
-	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetDescription(aux.Stringid(11115003,0))
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_TO_GRAVE)
 	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
+	e3:SetCountLimit(1,11115003)
 	e3:SetCondition(c11115003.spcon)
 	e3:SetTarget(c11115003.sptg)
 	e3:SetOperation(c11115003.spop)
@@ -46,23 +44,29 @@ function c11115003.extg(e,c)
 end
 function c11115003.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_FZONE) and c:IsPreviousPosition(POS_FACEUP)
+	return c:IsReason(REASON_EFFECT) and c:IsPreviousLocation(LOCATION_FZONE)
 end
-function c11115003.spfilter(c,e,tp)
-	return ((c:IsSetCard(0x115e) and c:IsType(TYPE_TUNER)) or (c:IsSetCard(0x215e) and not c:IsType(TYPE_SYNCHRO))) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function c11115003.spfilter(c,e,tp,ft)
+	return ((c:IsSetCard(0x115e) and c:IsType(TYPE_TUNER)) or (c:IsSetCard(0x215e) and not c:IsType(TYPE_SYNCHRO))) 
+	    and (c:IsAbleToHand() or (ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)))
 end
 function c11115003.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c11115003.spfilter(chkc,e,tp) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingTarget(c11115003.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+    local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c11115003.spfilter(chkc,e,tp,ft) end
+	if chk==0 then return Duel.IsExistingTarget(c11115003.spfilter,tp,LOCATION_GRAVE,0,1,nil,e,tp,ft) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,c11115003.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectTarget(tp,c11115003.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,ft)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 end
 function c11115003.spop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
+	if tc:IsRelateToEffect(e) and ft>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+       and (not tc:IsAbleToHand() or Duel.SelectYesNo(tp,aux.Stringid(11115003,1))) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+	else
+	    Duel.SendtoHand(tc,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,tc)
 	end
 end

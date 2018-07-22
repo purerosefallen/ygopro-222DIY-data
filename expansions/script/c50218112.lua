@@ -1,6 +1,13 @@
 --炎之数码兽LV7 伽偻达兽
 function c50218112.initial_effect(c)
     c:EnableReviveLimit()
+    --cannot special summon
+    local e0=Effect.CreateEffect(c)
+    e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+    e0:SetType(EFFECT_TYPE_SINGLE)
+    e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+    e0:SetValue(aux.FALSE)
+    c:RegisterEffect(e0)
     --atkup
     local e1=Effect.CreateEffect(c)
     e1:SetType(EFFECT_TYPE_SINGLE)
@@ -39,8 +46,11 @@ c50218112.lvupcount=2
 c50218112.lvup={50218111,50218110}
 c50218112.lvdncount=2
 c50218112.lvdn={50218111,50218110}   
+function c50218112.atkfilter(c)
+    return c:IsSetCard(0xcb1) and c:IsType(TYPE_MONSTER)
+end
 function c50218112.atkup(e,c)
-    return Duel.GetMatchingGroupCount(Card.IsSetCard,c:IsType(TYPE_MONSTER),c:GetControler(),LOCATION_GRAVE,0,nil,0xcb1)*200
+    return Duel.GetMatchingGroupCount(c50218112.atkfilter,c:GetControler(),LOCATION_GRAVE,0,nil)*200
 end
 function c50218112.spfilter(c,e,tp)
     return c:IsCode(50218110) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)

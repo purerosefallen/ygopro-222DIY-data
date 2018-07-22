@@ -1,12 +1,23 @@
 --空想界限 乌托邦的引领神
 function c10122008.initial_effect(c)
 	c:EnableReviveLimit()
-	--cannot special summon
+	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsFusionCode,10122011),2,false)
+	--spsummon condition
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(c10122008.splimit)
+	c:RegisterEffect(e0)
+	--special summon rule
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	c:RegisterEffect(e1)  
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_SPSUMMON_PROC)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e1:SetRange(LOCATION_EXTRA)
+	e1:SetCondition(c10122008.sprcon)
+	e1:SetOperation(c10122008.sprop)
+	c:RegisterEffect(e1) 
 	--atk
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -14,14 +25,14 @@ function c10122008.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetValue(c10122008.atkval)
-	c:RegisterEffect(e2)
+	--c:RegisterEffect(e2)
 	--negate
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_REMOVE)
 	e2:SetDescription(aux.Stringid(10122008,0))
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)
-	e2:SetCountLimit(1)
+	e2:SetCountLimit(1,10122008)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(c10122008.discon)
@@ -38,24 +49,61 @@ function c10122008.initial_effect(c)
 	e3:SetCondition(c10122008.spcon)
 	e3:SetTarget(c10122008.sptg)
 	e3:SetOperation(c10122008.spop)
-	c:RegisterEffect(e3) 
+	--c:RegisterEffect(e3)
+	--avoid battle damage
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_FIELD)
+	e4:SetCode(EFFECT_AVOID_BATTLE_DAMAGE)
+	e4:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetTargetRange(LOCATION_MZONE,0)
+	e4:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xa330))
+	e4:SetValue(1)
+	c:RegisterEffect(e4) 
 end
-
+function c10122008.splimit(e,se,sp,st)
+	return e:GetHandler():GetLocation()~=LOCATION_EXTRA
+end
+function c10122008.sprfilter(c,fc)
+	return c:IsFusionCode(10122011) and c:IsCanBeFusionMaterial(fc) and not c:IsHasEffect(6205579)
+end
+function c10122008.sprfilter1(c,tp,g)
+	return g:IsExists(c10122008.sprfilter2,1,c,tp,c)
+end
+function c10122008.sprfilter2(c,tp,mc)
+	return Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(c,mc))>0
+end
+function c10122008.sprcon(e,c)
+	if c==nil then return true end
+	local tp=c:GetControler()
+	local g=Duel.GetReleaseGroup(tp):Filter(c10122008.sprfilter,nil,c)
+	return g:IsExists(c10122008.sprfilter1,1,nil,tp,g)
+end
+function c10122008.sprop(e,tp,eg,ep,ev,re,r,rp,c)
+	local g=Duel.GetReleaseGroup(tp):Filter(c10122008.sprfilter,nil,c)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	local g1=g:FilterSelect(tp,c10122008.sprfilter1,1,1,nil,tp,g)
+	local mc=g1:GetFirst()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	local g2=g:FilterSelect(tp,c10122008.sprfilter2,1,1,mc,tp,mc)
+	g1:Merge(g2)
+	c:SetMaterial(g1)
+	Duel.Release(g1,REASON_COST+REASON_FUSION+REASON_MATERIAL)
+end
 function c10122008.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousPosition(POS_FACEUP) and not c:IsLocation(LOCATION_DECK)
 end
-
 function c10122008.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	local ft=Duel.GetMZoneCount(tp)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,ft,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,ft,0,0)
 end
 
 function c10122008.spop(e,tp,eg,ep,ev,re,r,rp)
-	local ft=Duel.GetMZoneCount(tp)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ft<=0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,10122011,0xc333,0x4011,0,0,1,RACE_SPELLCASTER,ATTRIBUTE_DARK)then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	for i=1,ft do
@@ -70,15 +118,15 @@ function c10122008.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		token:RegisterEffect(e1,true)
 		local e2=e1:Clone()
-		e2:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
+		e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		e2:SetDescription(aux.Stringid(10122008,2))
-		token:RegisterEffect(e2,true)
+		--token:RegisterEffect(e2,true)
 	end
 	Duel.SpecialSummonComplete()
 end
 
 function c10122008.discon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and rp==1-tp 
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and rp~=tp 
 end
 
 function c10122008.discost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -107,6 +155,6 @@ function c10122008.atkval(e,c)
 end
 
 function c10122008.atkfilter(c)
-	return c:IsFaceup() and c:IsCode(10122011)
+	return c:IsFaceup() and c:IsSetCard(0xc333)
 end
 
