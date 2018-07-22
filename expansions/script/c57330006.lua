@@ -10,7 +10,7 @@ function cm.filter(c,e,tp)
 	return miyuki.IsWindbot(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsFaceup()
 end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and cm.filter(chkc,e,tp) end
+	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and cm.filter(chkc,e,tp) end
 	if chk==0 then return Duel.GetMZoneCount(tp)>0
 		and Duel.IsExistingTarget(cm.filter,tp,LOCATION_REMOVED,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
