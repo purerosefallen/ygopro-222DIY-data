@@ -64,7 +64,7 @@ function c12011004.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	if tc:IsSetCard(0xfb5) then
 		Duel.DisableShuffleCheck()
-		Duel.SendtoHand(g,REASON_EFFECT)
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	else
 		Duel.ShuffleDeck(tp)
