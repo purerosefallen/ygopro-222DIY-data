@@ -1,5 +1,6 @@
 --原数黑姬 2
 function c12011001.initial_effect(c)
+	aux.EnablePendulumAttribute(c)
 	--spsummon self
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(12011001,2))
