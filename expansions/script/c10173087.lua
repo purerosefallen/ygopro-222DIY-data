@@ -53,7 +53,7 @@ function c10173087.negop(e,tp,eg,ep,ev,re,r,rp)
 	  ops[off]=aux.Stringid(10173087,3)
 	  opval[off-1]=4
 	  off=off+1
-	  local op=Duel.SelectOption(tp,table.unpack(ops))
+	  local op=Duel.SelectOption(rp,table.unpack(ops))
 	  local sel=opval[op]
 	  if sel==1 then
 		 Duel.NegateEffect(ev)
