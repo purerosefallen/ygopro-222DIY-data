@@ -18,7 +18,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function cm.filter(c,e,tp)
-	return Senya.check_set_elem(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetLevel()==4
+	return Senya.check_set_elem(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLevel(4) and not c:IsCode(m)
 end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMZoneCount(tp)>0

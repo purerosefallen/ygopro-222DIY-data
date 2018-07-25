@@ -12,7 +12,7 @@ function cm.initial_effect(c)
 	e1:SetProperty(0x14000+EFFECT_FLAG_CARD_TARGET)
 	e1:SetTarget(cm.target)
 	e1:SetOperation(cm.operation)
-	c:RegisterEffect(e1)	
+	c:RegisterEffect(e1)
 end
 function cm.filter(c)
 	return c:IsType(TYPE_EFFECT)
