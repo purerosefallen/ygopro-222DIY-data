@@ -108,7 +108,7 @@ function c12011009.atkop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-function c12011009.aclimit(e,ep,re,tp)
+function c12011009.aclimit(e,re,tp)
 	local ph=Duel.GetCurrentPhase()
 	return re:GetHandler():IsImmuneToEffect(e) and (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE and Duel.GetTurnPlayer()==tp )
 end
