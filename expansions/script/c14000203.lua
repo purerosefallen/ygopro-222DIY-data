@@ -168,7 +168,7 @@ function cm.rmop(e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.negcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return Duel.IsChainNegatable(ev) and re:GetHandler()~=e:GetHandler() and not c:IsStatus(STATUS_BATTLE_DESTROYED)
+	return c:GetFlagEffect(14000202)~=0 and Duel.IsChainNegatable(ev) and re:GetHandler()~=e:GetHandler() and not c:IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function cm.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetEquipGroup():IsExists(Card.IsAbleToRemoveAsCost,1,nil,tp) end

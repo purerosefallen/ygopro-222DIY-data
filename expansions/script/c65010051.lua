@@ -62,7 +62,7 @@ function c65010051.pwcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 
 function c65010051.pwfil(c)
-	return c:IsSetCard(0x6da0) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0x6da0) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and not c:IsCode(65010051)
 end
 
 function c65010051.pwtg(e,tp,eg,ep,ev,re,r,rp,chk)

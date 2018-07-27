@@ -67,17 +67,17 @@ function cm.fusfilter(c,e,tp)
 	return (c:IsFacedown() or (c:IsRace(RACE_ZOMBIE) and c:IsAttribute(ATTRIBUTE_DARK))) and c:IsType(TYPE_MONSTER)
 end
 function cm.fusfilter1(c,e,tp)
-	return c:IsSetCard(0x1406) and c:IsType(TYPE_MONSTER)
+	return c:IsFusionSetCard(0x1406) and c:IsType(TYPE_MONSTER)
 end
 function cm.splimit(e,se,sp,st)
 	return e:GetHandler():GetLocation()~=LOCATION_EXTRA
 end
 function cm.cfilter(c,tp)
-	return ((c:IsFacedown() or (c:IsRace(RACE_ZOMBIE) and c:IsAttribute(ATTRIBUTE_DARK))) and c:IsType(TYPE_MONSTER))
+	return ((c:IsFusionSetCard(0x1406) or c:IsFacedown() or (c:IsRace(RACE_ZOMBIE) and c:IsAttribute(ATTRIBUTE_DARK))) and c:IsType(TYPE_MONSTER))
 		and c:IsCanBeFusionMaterial() 
 end
 function cm.fcheck(c,sg)
-	return (c:IsFacedown() or (c:IsRace(RACE_ZOMBIE) and c:IsAttribute(ATTRIBUTE_DARK))) and c:IsType(TYPE_MONSTER) and sg:FilterCount(cm.fcheck2,c)+1==sg:GetCount()
+	return c:IsFusionSetCard(0x1406) and c:IsType(TYPE_MONSTER) and sg:FilterCount(cm.fcheck2,c)+1==sg:GetCount()
 end
 function cm.fcheck2(c)
 	return (c:IsFacedown() or (c:IsRace(RACE_ZOMBIE) and c:IsAttribute(ATTRIBUTE_DARK))) and c:IsType(TYPE_MONSTER)

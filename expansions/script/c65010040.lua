@@ -43,7 +43,7 @@ function c65010040.spsop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c65010040.pwconfil(c)
-	return c:IsSetCard(0x6da0) and c:GetSequence()<5
+	return c:IsSetCard(0x6da0) and c:GetSequence()<5 and c:IsFaceup()
 end
 
 function c65010040.pwcon(e,tp,eg,ep,ev,re,r,rp)
@@ -67,8 +67,9 @@ function c65010040.pwop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 	else
 		for i=1,2 do
-		local token=Duel.CreateToken(tp,65010044)
-		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+			local token=Duel.CreateToken(tp,65010044)
+			Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		end
+		Duel.SpecialSummonComplete()
 	end
 end

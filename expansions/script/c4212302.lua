@@ -38,10 +38,11 @@ function c4212302.tffilter(c,tp)
 	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x2a5) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function c4212302.activate(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.IsPlayerCanDiscardDeck(tp,2) 
-		and Duel.IsExistingMatchingCard(c4212301.tffilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,tp) then
+	if Duel.IsPlayerCanDiscardDeck(tp,2) then
 		if Duel.SelectEffectYesNo(tp,e:GetHandler(),95) then
-			if Duel.DiscardDeck(tp,2,REASON_EFFECT)~=0 then
+			if Duel.DiscardDeck(tp,2,REASON_EFFECT)~=0 
+				and Duel.IsExistingMatchingCard(c4212301.tffilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,tp) 
+				and Duel.SelectEffectYesNo(tp,e:GetHandler(),527) then
 				if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 				local tc=Duel.SelectMatchingCard(tp,c4212302.tffilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,tp):GetFirst()

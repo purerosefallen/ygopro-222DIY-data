@@ -36,7 +36,9 @@ function c22200161.operation(e,tp,eg,ep,ev,re,r,rp)
 	local op=Duel.SelectOption(1-tp,70,71,72)
 	Duel.ConfirmCards(1-tp,tc)
 	if (op~=0 and tc:IsType(TYPE_MONSTER)) or (op~=1 and tc:IsType(TYPE_SPELL)) or (op~=2 and tc:IsType(TYPE_TRAP)) then
-		if not c:IsRelateToEffect(e) then return end
+		if not c:IsRelateToEffect(e) then
+			Duel.ShuffleHand(tp)
+		return end
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetRange(LOCATION_MZONE)

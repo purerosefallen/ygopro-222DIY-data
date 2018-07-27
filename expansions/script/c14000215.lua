@@ -29,7 +29,7 @@ function cm.initial_effect(c)
 	--spsummon2
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(m,1))
-	e4:SetCategory(CATEGORY_TOHAND)
+	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_DESTROY)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_SUMMON_SUCCESS)
 	e4:SetRange(LOCATION_MZONE)

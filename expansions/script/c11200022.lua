@@ -34,7 +34,7 @@ end
 --
 function c11200022.con1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return bit.band(c:GetSummonType(),SUMMON_TYPE_RITUAL)~=0
+	return bit.band(c:GetSummonType(),SUMMON_TYPE_FUSION)~=0
 		and c:GetMaterialCount()>0
 end
 --
