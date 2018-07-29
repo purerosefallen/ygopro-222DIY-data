@@ -49,7 +49,7 @@ function c33700335.get_zone(c,tp)
 	local zone=0
 	local lg=Duel.GetFieldGroup(tp,LOCATION_ONFIELD,LOCATION_ONFIELD)
 	for tc in aux.Next(lg) do
-		zone=bit.bor(zone,tc:GetColumnZone(LOCATION_MZONE,0,0,tp))
+		zone=bit.bor(zone,tc:GetColumnZone(LOCATION_MZONE,tp))
 	end
 	return zone
 end
