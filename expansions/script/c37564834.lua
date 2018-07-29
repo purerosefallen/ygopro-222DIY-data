@@ -33,11 +33,11 @@ end
 function cm.chkfilter_mokou(c)
 	return c:GetOriginalCode()==m
 end
-function cm.NegateEffectWithoutChainingCondition(e,tp,eg,ep,ev,re,r,rp)
+function cm.cnegcon(e,tp,eg,ep,ev,re,r,rp)
 	local loc,np=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_CONTROLER)
 	return e:GetHandler():GetFlagEffect(m)==0 and re:GetHandler():IsRelateToEffect(re) and not re:GetHandler():IsImmuneToEffect(e) and (loc & 0x0c)~=0 and np==1-tp and re:GetHandler():IsAbleToGrave()
 end
-function cm.NegateEffectWithoutChainingOperation(e,tp,eg,ep,ev,re,r,rp)
+function cm.cnegop(e,tp,eg,ep,ev,re,r,rp)
 	if not Duel.SelectYesNo(tp,m*16+2) then return end
 	Duel.Hint(HINT_CARD,0,e:GetHandler():GetOriginalCode())
 	e:GetHandler():RegisterFlagEffect(m,0x1fe1000+RESET_PHASE+PHASE_END,0,1)
