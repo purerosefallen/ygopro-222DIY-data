@@ -5,7 +5,7 @@ function c71400035.initial_effect(c)
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE)
 	e0:SetCode(EFFECT_QP_ACT_IN_NTPHAND)
-	e0:SetTarget(yume.nonYumeCon)
+	e0:SetCondition(yume.nonYumeCon)
 	c:RegisterEffect(e0)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -36,11 +36,12 @@ function c71400035.op1(e,tp,eg,ep,ev,re,r,rp)
 		end
 		Duel.MoveToField(tc,tp,1-tp,LOCATION_SZONE,POS_FACEUP,true)
 		local te=tc:GetActivateEffect()
+		te:UseCountLimit(tp,1,true)
 		local tep=tc:GetControler()
 		local cost=te:GetCost()
 		if cost then cost(te,tep,eg,ep,ev,re,r,rp,1) end
 		local id=yume.temp_card_field[tc].id or 0
-		Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
+		--Duel.RegisterFlagEffect(tp,id,RESET_PHASE+PHASE_END,0,1)
 		Duel.RaiseEvent(tc,4179255,te,0,tp,tp,Duel.GetCurrentChain())
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)

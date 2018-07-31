@@ -70,7 +70,11 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,cm.spfilter,tp,LOCATION_HAND+LOCATION_EXTRA,0,1,1,c,e,tp)
 	local tc=g:GetFirst()
-	if c:IsLocation(LOCATION_EXTRA) and tc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,sg)<2 then return end
+	if c:IsLocation(LOCATION_EXTRA) and tc:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,nil)<2 then
+		return
+	elseif ((c:IsLocation(LOCATION_EXTRA) and tc:IsLocation(LOCATION_HAND)) or (c:IsLocation(LOCATION_HAND) and tc:IsLocation(LOCATION_EXTRA))) and Duel.GetLocationCountFromEx(tp,tp,nil)<1 then
+		return
+	end
 	if g:GetCount()>0 then
 		g:AddCard(c)
 		if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP) then

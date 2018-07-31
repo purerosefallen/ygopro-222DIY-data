@@ -86,16 +86,18 @@ end
 --
 function c11200064.op2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local e2_1=Effect.CreateEffect(c)
-	e2_1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e2_1:SetCode(EVENT_TOSS_DICE)
-	e2_1:SetCondition(c11200064.con2_1)
-	e2_1:SetOperation(c11200064.op2_1)
-	e2_1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e2_1,tp)
+--
+	local e2_2=Effect.CreateEffect(c)
+	e2_2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2_2:SetCode(EVENT_TOSS_DICE_NEGATE)
+	e2_2:SetCondition(c11200064.con2_2)
+	e2_2:SetOperation(c11200064.op2_2)
+	e2_2:SetReset(RESET_PHASE+PHASE_END)
+	c:RegisterEffect(e2_2,tp)
+--
 end
 --
-function c11200064.con2_1(e,tp,eg,ep,ev,re,r,rp)
+function c11200064.con2_2(e,tp,eg,ep,ev,re,r,rp)
 	local checknum=0
 	local dc={Duel.GetDiceResult()}
 	for k,v in ipairs(dc) do
@@ -104,7 +106,7 @@ function c11200064.con2_1(e,tp,eg,ep,ev,re,r,rp)
 	return rp==tp and checknum==1
 end
 --
-function c11200064.op2_1(e,tp,eg,ep,ev,re,r,rp)
+function c11200064.op2_2(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(tp,1,REASON_EFFECT)
 end
 --
