@@ -111,7 +111,7 @@ function cm.eqop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetReset(RESET_EVENT+0x1fe0000)
 			e2:SetValue(cm.repval)
 			tc:RegisterEffect(e2)
-		else Duel.SendtoGrave(tc,REASON_EFFECT) end
+		else Duel.SendtoGrave(tc,REASON_RULE) end
 	end
 end
 function cm.repval(e,re,r,rp)
