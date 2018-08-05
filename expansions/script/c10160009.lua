@@ -79,7 +79,7 @@ function c10160009.op(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
 		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
-		--g:GetFirst():RegisterEffect(e1)
+		g:GetFirst():RegisterEffect(e1)
 	   end
 	 elseif sel==2 and b2 then
 	   Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(10160009,4))
