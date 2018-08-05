@@ -32,9 +32,9 @@ function c12005007.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=re:GetHandler()
 	if not tc:IsDisabled() then
 		if Duel.NegateEffect(ev) and tc:IsRelateToEffect(re) and Duel.IsExistingMatchingCard(c12005007.filter1,tp,LOCATION_HAND,0,1,nil) then
-			local g=Duel.SelectMatchingCard(tp,c12005007.filter1,tp,LOCATION_HAND,0,1,1,nil)
 			local sc=Duel.GetFirstMatchingCard(c12005007.sfilter,tp,LOCATION_EXTRA,0,nil,e,tp)
 			if sc and Duel.GetLocationCountFromEx(tp)>0 and Duel.SelectYesNo(tp,aux.Stringid(12005007,1)) then
+			local g=Duel.SelectMatchingCard(tp,c12005007.filter1,tp,LOCATION_HAND,0,1,1,nil)
 				Duel.BreakEffect()
 				Duel.SendtoGrave(g,REASON_EFFECT)
 				Duel.SpecialSummon(sc,0,tp,tp,false,false,POS_FACEUP)

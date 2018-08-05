@@ -39,7 +39,8 @@ function c12011003.efop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(rc)
 	e1:SetDescription(aux.Stringid(12011003,2))
 	e1:SetCategory(CATEGORY_DESTROY)
-	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetTarget(c12011003.settg)
@@ -85,14 +86,14 @@ function c12011003.thfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsSetCard(0xfb5)
 end
 function c12011003.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c12011003.thfilter,tp,LOCATION_EXTRA,0,2,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c12011003.thfilter,tp,LOCATION_EXTRA,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_EXTRA)
 end
 function c12011003.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local sg=Duel.SelectMatchingCard(tp,c12011003.thfilter,tp,LOCATION_EXTRA,0,2,2,nil)
+		local sg=Duel.SelectMatchingCard(tp,c12011003.thfilter,tp,LOCATION_EXTRA,0,1,2,nil)
 		if sg:GetCount()>0 then
 			Duel.SendtoGrave(sg,REASON_EFFECT)
 		end

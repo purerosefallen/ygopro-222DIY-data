@@ -31,7 +31,7 @@ function c4210038.initial_effect(c)
 	--damage
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(4210038,2))
-	e2:SetCategory(CATEGORY_DAMAGE)
+	e2:SetCategory(CATEGORY_RECOVER)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetCode(EVENT_RELEASE)
 	e2:SetRange(LOCATION_MZONE)	
@@ -95,7 +95,7 @@ function c4210038.damcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c4210038.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,4210038)
-	if Duel.Damage(1-tp,200,REASON_EFFECT) 
+	if Duel.Recover(tp,300,REASON_EFFECT) 
 		and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil) then
 		local g = Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,1,nil,e,tp)
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)

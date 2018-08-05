@@ -80,8 +80,9 @@ function c4210031.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardHand(tp,Card.IsCode,1,1,REASON_COST+REASON_DISCARD,nil,4210028)
 	if e:GetHandler():IsLocation(LOCATION_GRAVE) then 
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-		local showcard = Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_HAND,0,nil,4210024):Select(tp,1,1,nil)
+		local showcard = Duel.SelectMatchingCard(tp,Card.IsCode,tp,LOCATION_HAND,0,1,1,nil,4210024)
 		Duel.ConfirmCards(1-tp,showcard)
+		Duel.RaiseEvent(showcard,0x1420042a,e,REASON_COST,tp,0,0)
 		Duel.ShuffleHand(tp)
 	end
 	local mg1=Duel.GetMatchingGroup(c4210031.relfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,e:GetHandler())
@@ -152,8 +153,9 @@ function c4210031.rtop(e,tp,eg,ep,ev,re,r,rp)
 			and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND,0,1,nil,4210024) then
 			if Duel.SelectEffectYesNo(tp,e:GetHandler(),aux.Stringid(4210031,0)) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-				local showcard = Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_HAND,0,nil,4210024):Select(tp,1,1,nil)
+				local showcard = Duel.SelectMatchingCard(tp,Card.IsCode,tp,LOCATION_HAND,0,1,1,nil,4210024)
 				Duel.ConfirmCards(1-tp,showcard)
+				Duel.RaiseEvent(showcard,0x1420042a,e,REASON_COST,tp,0,0)
 				Duel.ShuffleHand(tp)
 				
 				local tc = Duel.GetMatchingGroup(c4210031.cdfilter,tp,LOCATION_MZONE,0,nil):Select(tp,1,1,nil):GetFirst()

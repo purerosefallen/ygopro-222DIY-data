@@ -38,6 +38,7 @@ function c4210034.initial_effect(c)
 	c:RegisterEffect(e3)
 	local e4 = e3:Clone()
 	e4:SetCode(EVENT_TO_GRAVE)
+	e4:SetCondition(function(e) return e:GetHandler():IsPreviousLocation(LOCATION_DECK) end)
 	e4:SetTarget(c4210034.rttg,1)
 	c:RegisterEffect(e4)
 end
@@ -83,8 +84,9 @@ function c4210034.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardHand(tp,Card.IsCode,1,1,REASON_COST+REASON_DISCARD,nil,4210028)
 	if e:GetHandler():IsLocation(LOCATION_GRAVE) then 
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-		local showcard = Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_HAND,0,nil,4210024):Select(tp,1,1,nil)
+		local showcard = Duel.SelectMatchingCard(tp,Card.IsCode,tp,LOCATION_HAND,0,1,1,nil,4210024)
 		Duel.ConfirmCards(1-tp,showcard)
+		Duel.RaiseEvent(showcard,0x1420042a,e,REASON_COST,tp,0,0)
 		Duel.ShuffleHand(tp)
 	end
 	local mg1=Duel.GetMatchingGroup(c4210034.relfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,e:GetHandler())
@@ -165,8 +167,9 @@ function c4210034.rtop(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.SelectEffectYesNo(tp,e:GetHandler(),aux.Stringid(4210031,0))
 			and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND,0,1,nil,4210024) then 
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-			local showcard = Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_HAND,0,nil,4210024):Select(tp,1,1,nil)
+			local showcard = Duel.SelectMatchingCard(tp,Card.IsCode,tp,LOCATION_HAND,0,1,1,nil,4210024)
 			Duel.ConfirmCards(1-tp,showcard)
+			Duel.RaiseEvent(showcard,0x1420042a,e,REASON_COST,tp,0,0)
 			Duel.ShuffleHand(tp)
 			mg2 = Duel.GetMatchingGroup(c4210034.repfilterex,tp,LOCATION_DECK,0,nil)
 		end	
@@ -196,8 +199,6 @@ function c4210034.rtop(e,tp,eg,ep,ev,re,r,rp)
 			local code = tc:GetCode()
 			tc:RegisterFlagEffect(0,RESET_EVENT+0xcff0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(4210010,1))
 			tc:RegisterFlagEffect(4210010,RESET_EVENT+0xcff0000,0,0)
-			tc:RegisterFlagEffect(0,RESET_EVENT+0xcff0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(code,1))
-			tc:RegisterFlagEffect(code,RESET_EVENT+0xcff0000,0,0)		
 		end
 	end
 end

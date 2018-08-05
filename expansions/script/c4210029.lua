@@ -18,6 +18,7 @@ function c4210029.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DELAY)	
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCondition(c4210029.otcon)
+	e3:SetCost(c4210029.otcost)
 	e3:SetTarget(c4210029.ottg)
 	e3:SetOperation(c4210029.otop)
 	c:RegisterEffect(e3)
@@ -38,10 +39,10 @@ function c4210029.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local gc=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_HAND,0,1,1,nil)		
-		if Duel.SendtoGrave(gc,REASON_EFFECT)~=0 and gc:FilterCount(function(c)return c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) end,nil,tp) then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-			if Duel.SelectEffectYesNo(tp,e:GetHandler(),500) 
-				and Duel.IsExistingMatchingCard(Card.IsReleasable,tp,LOCATION_MZONE,0,1,nil) then
+		if Duel.SendtoGrave(gc,REASON_EFFECT)~=0 and Duel.IsExistingMatchingCard(Card.IsReleasable,tp,LOCATION_MZONE,0,1,nil)
+			and gc:FilterCount(function(c)return c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) end,nil,tp) then
+			if Duel.SelectEffectYesNo(tp,e:GetHandler(),500) then
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 				local rel = Duel.SelectMatchingCard(tp,Card.IsReleasable,tp,LOCATION_MZONE,0,1,1,nil)
 				if Duel.Release(rel,REASON_EFFECT)~=0 then
 					Duel.Draw(tp,1,REASON_EFFECT)
@@ -55,6 +56,10 @@ function c4210029.spcfilter(c,tp,rp)
 end
 function c4210029.otcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c4210029.spcfilter,1,nil,tp,rp)
+end
+function c4210029.otcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.CheckLPCost(tp,500) end
+    Duel.PayLPCost(tp,500)
 end
 function c4210029.ottg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c = e:GetHandler()

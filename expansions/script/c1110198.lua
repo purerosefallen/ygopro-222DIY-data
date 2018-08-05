@@ -38,13 +38,13 @@ function muxu.check_set(c,setcode,v,f,...)
 	end
 	return false
 end
-function muxu.check_set_Soul(c)			  --灵曲
+function muxu.check_set_Soul(c)		   --灵曲
 	return muxu.check_set(c,"Soul")
 end
-function muxu.check_set_Border(c)			--交界
+function muxu.check_set_Border(c)		   --交界
 	return muxu.check_set(c,"Border")
 end
-function muxu.check_set_Legend(c)			--秘谈
+function muxu.check_set_Legend(c)		   --秘谈
 	return muxu.check_set(c,"Legend")
 end
 function muxu.check_set_Urban(c)			 --灵都
@@ -56,6 +56,12 @@ end
 function muxu.check_set_Lines(c)			 --灵纹
 	return muxu.check_set(c,"Lines")
 end
-function muxu.check_set_Hinbackc(c)		  --莱姆狐
+function muxu.check_set_Hinbackc(c)	   --莱姆狐
 	return muxu.check_set(c,"Hinbackc")
+end
+function muxu.check_set_Medicine(c)	   --梅蒂欣
+	return muxu.check_set(c,"Medicine")
+end
+function muxu.check_set_Poison(c)	   --毒符
+	return muxu.check_set(c,"Poison")
 end

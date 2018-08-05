@@ -76,10 +76,11 @@ function c12011017.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 		tc:CompleteProcedure()
 		Duel.BreakEffect()
+		local cs=mat1:GetCount()
 		local sg=Duel.GetMatchingGroup(c12011017.thfilter,tp,LOCATION_DECK,0,nil)
 		if ( not tc:IsType(TYPE_EFFECT) ) and sg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(12011017,3)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			sg=sg:Select(tp,2,2,nil)
+			sg=sg:Select(tp,cs,cs,nil)
 			Duel.BreakEffect()
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,sg)

@@ -14,7 +14,7 @@ function c4210016.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e2:SetRange(LOCATION_HAND)
+	e2:SetRange(LOCATION_DECK+LOCATION_HAND)
 	e2:SetValue(SUMMON_TYPE_SPECIAL)
 	e2:SetCondition(c4210016.spcon)
 	e2:SetOperation(c4210016.spop)
@@ -83,8 +83,9 @@ function c4210016.tgop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterFlagEffect(4210010,RESET_EVENT+0xcff0000,0,0)
 	end
 end
-function c4210016.spfilter(c,tp)
-	return c:IsFaceup() and c:GetFlagEffect(4210010)~=0 and c:IsControler(tp) and c:IsReleasable()
+function c4210016.spfilter(c,ft,tp)
+	return c:IsFaceup() and c:GetFlagEffect(4210010)~=0 
+		and c:IsControler(tp) and c:IsReleasable()
 end
 function c4210016.mzfilter(c,tp)
 	return c:IsControler(tp) and c:GetSequence()<5
@@ -92,27 +93,32 @@ end
 function c4210016.spcon(e,c)	
 	if c==nil then return true end
 	local tp=c:GetControler()
-	local rg=Duel.GetReleaseGroup(tp):Filter(c4210016.spfilter,nil,tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-	local ct=-ft+1
-	return ft>-2 and rg:GetCount()>1 and (ft>0 or rg:IsExists(c4210016.mzfilter,ct,nil,tp))
+	local rg=Duel.GetReleaseGroup(tp):Filter(c4210016.spfilter,nil,ft,tp)
+	local rgc=rg:GetCount()
+	local c=e:GetHandler()
+	return (rgc>0 and Duel.CheckReleaseGroup(tp,c4210016.spfilter,1,nil,rgc,tp) and c:IsLocation(LOCATION_HAND))
+		or (rgc>1 and Duel.CheckReleaseGroup(tp,c4210016.spfilter,2,nil,rgc,tp) and c:IsLocation(LOCATION_DECK))
 end
 function c4210016.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetReleaseGroup(tp):Filter(c4210016.spfilter,nil,tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local rg=Duel.GetReleaseGroup(tp):Filter(c4210016.spfilter,nil,ft,tp)
 	local g=nil
+	local rec = (c:IsLocation(LOCATION_DECK) and {2} or {1})[1]
 	if ft>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		g=rg:Select(tp,2,2,nil)
+		g=rg:Select(tp,rec,rec,nil)
 	elseif ft==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 		g=rg:FilterSelect(tp,c4210016.mzfilter,1,1,nil,tp)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local g2=rg:Select(tp,1,1,g:GetFirst())
-		g:Merge(g2)
+		if c:IsLocation(LOCATION_DECK) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+			local g2=rg:Select(tp,1,1,g:GetFirst())
+			g:Merge(g2)
+		end
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		g=rg:FilterSelect(tp,c4210016.mzfilter,2,2,nil,tp)
+		g=rg:FilterSelect(tp,c4210016.mzfilter,rec,rec,nil,tp)
 	end
 	Duel.Release(g,REASON_COST)
 	c:RegisterFlagEffect(0,RESET_EVENT+0xcff0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(4210010,1))

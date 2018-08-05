@@ -76,8 +76,9 @@ function c4210036.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardHand(tp,Card.IsCode,1,1,REASON_COST+REASON_DISCARD,nil,4210028)
 	if e:GetHandler():IsLocation(LOCATION_GRAVE) then 
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-		local showcard = Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_HAND,0,nil,4210024):Select(tp,1,1,nil)
+		local showcard = Duel.SelectMatchingCard(tp,Card.IsCode,tp,LOCATION_HAND,0,1,1,nil,4210024)
 		Duel.ConfirmCards(1-tp,showcard)
+		Duel.RaiseEvent(showcard,0x1420042a,e,REASON_COST,tp,0,0)
 		Duel.ShuffleHand(tp)
 	end
 	local mg1=Duel.GetMatchingGroup(c4210036.relfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,e:GetHandler())
@@ -140,13 +141,12 @@ function c4210036.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.SelectMatchingCard(tp,c4210036.cdfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp):GetFirst()
 	if Duel.SendtoHand(tc,nil,REASON_EFFECT)~=0 and
 		Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND,0,1,nil,4210024) then
-		tc:RegisterFlagEffect(0,RESET_EVENT+0xcff0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(4210010,1))
-		tc:RegisterFlagEffect(4210010,RESET_EVENT+0xcff0000,0,0)
 		if Duel.IsExistingMatchingCard(c4210036.cdrmfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp) then
 			if Duel.SelectEffectYesNo(tp,e:GetHandler(),aux.Stringid(4210036,0)) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-				local showcard = Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_HAND,0,nil,4210024):Select(tp,1,1,nil)
+				local showcard = Duel.SelectMatchingCard(tp,Card.IsCode,tp,LOCATION_HAND,0,1,1,nil,4210024)
 				Duel.ConfirmCards(1-tp,showcard)
+				Duel.RaiseEvent(showcard,0x1420042a,e,REASON_COST,tp,0,0)
 				Duel.ShuffleHand(tp)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 				local cd = Duel.SelectMatchingCard(tp,c4210036.cdrmfilter,tp,LOCATION_REMOVED,0,1,1,nil,e,tp)
@@ -162,8 +162,9 @@ function c4210036.rtcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND,0,1,nil,4210024) then
 		if Duel.SelectEffectYesNo(tp,e:GetHandler(),aux.Stringid(4210036,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-			local showcard = Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_HAND,0,nil,4210024):Select(tp,1,1,nil)
+			local showcard = Duel.SelectMatchingCard(tp,Card.IsCode,tp,LOCATION_HAND,0,1,1,nil,4210024)
 			Duel.ConfirmCards(1-tp,showcard)
+			Duel.RaiseEvent(showcard,0x1420042a,e,REASON_COST,tp,0,0)
 			Duel.ShuffleHand(tp)
 			else
 			Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)

@@ -55,14 +55,14 @@ function c12005003.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end
 function c12005003.filter(c)
-	return c:IsCode(12008006) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
+	return c:IsCode(12008006,12010037) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
 end
 function c12005003.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
 		and Duel.IsExistingMatchingCard(c12005003.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
 end
 function c12005003.thop(e,tp,eg,ep,ev,re,r,rp)
-        local c=e:GetHandler()
+		local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
 	local g=Duel.SelectMatchingCard(tp,c12005003.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
 	if g:GetCount()>0 then

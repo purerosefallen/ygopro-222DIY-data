@@ -5,5 +5,5 @@ function c12011020.initial_effect(c)
 	c:EnableReviveLimit()
 end
 function c12011020.matfilter(c)
-	return c:IsType(TYPE_MONSTER)
+	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_EFFECT)
 end

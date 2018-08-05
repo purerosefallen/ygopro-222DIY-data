@@ -21,6 +21,17 @@ function c12011007.initial_effect(c)
 	e2:SetCondition(c12011007.thcon)
 	e2:SetOperation(c12011007.rdop)
 	c:RegisterEffect(e2)
+	--search
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(12011007,1))
+	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_PZONE)
+	e2:SetCountLimit(1,12011007)
+	e2:SetCondition(c12011007.thcon)
+	e2:SetTarget(c12011007.thtg)
+	e2:SetOperation(c12011007.thop)
+	c:RegisterEffect(e2)
 	--Be Material
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -40,6 +51,23 @@ function c12011007.initial_effect(c)
 	local e5=e4:Clone()
 	e5:SetCode(EFFECT_NO_EFFECT_DAMAGE)
 	c:RegisterEffect(e5)
+end
+function c12011007.thfilter(c)
+	return c:IsType(TYPE_SPELL) and c:IsSetCard(0xfb5) and c:IsAbleToHand()
+end
+function c12011007.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c12011007.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
+end
+function c12011007.thop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local sg=Duel.SelectMatchingCard(tp,c12011007.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+		if sg:GetCount()>0 then
+			Duel.SendtoHand(sg,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,sg)
+		end
 end
 function c12011007.spfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_SPELLCASTER) and c:IsAttribute(ATTRIBUTE_DARK)

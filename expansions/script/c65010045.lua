@@ -39,7 +39,7 @@ function c65010045.lcheck(g,lc)
 	return g:GetClassCount(Card.GetCode)==g:GetCount()
 end
 function c65010045.indtg(e,c)
-	return c:IsRace(RACE_CYBERSE)
+	return c:IsRace(RACE_CYBERSE) and c:IsFaceup() and not c==e:GetHandler()
 end
 function c65010045.filter(c,tp)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL)>0 and c:IsFaceup() and c:IsRace(RACE_CYBERSE)

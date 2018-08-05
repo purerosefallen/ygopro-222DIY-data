@@ -95,14 +95,18 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsCanTurnSet() and not tc:IsType(TYPE_PENDULUM) then
 		tc:CancelToGrave()
 		Duel.ChangePosition(tc,POS_FACEDOWN)
-	elseif tc:IsType(TYPE_PENDULUM) or not tc:IsImmuneToEffect(e) then
+	elseif tc:IsType(TYPE_TOKEN) then
+		return
+	elseif tc:IsType(TYPE_PENDULUM) then
+		Duel.Remove(tc,POS_FACEDOWN,REASON_RULE)
+	elseif tc:IsFaceup() or not tc:IsLocation(LOCATION_REMOVED) then
 		Duel.Remove(tc,POS_FACEDOWN,REASON_RULE)
 	else
-		Duel.Remove(tc,POS_FACEDOWN,REASON_RULE)
+		return
 	end
 end
 function cm.setfilter(c,e,tp)
-	return c:IsFaceup() and not c:IsType(TYPE_FIELD)
+	return c:IsFaceup() and c:GetSequence()<5
 end
 function cm.setcon(e)
 	local tp=e:GetHandlerPlayer()
@@ -113,6 +117,7 @@ function cm.thfilter(c,e,tp)
 end
 function cm.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.thfilter,tp,LOCATION_DECK,0,1,nil,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function cm.setop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetFirstMatchingCard(cm.thfilter,tp,LOCATION_DECK,0,nil)

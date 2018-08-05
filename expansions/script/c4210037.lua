@@ -94,7 +94,7 @@ function c4210037.damcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c4210037.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,4210037)
-	if Duel.Damage(1-tp,200,REASON_EFFECT) and Duel.IsPlayerCanDraw(1-tp,1) and Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)<=7 then
+	if Duel.Damage(1-tp,300,REASON_EFFECT) and Duel.IsPlayerCanDraw(1-tp,1) and Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)<=7 then
 		Duel.Draw(1-tp,1,REASON_EFFECT)
 	end
 end

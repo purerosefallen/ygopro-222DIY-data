@@ -5,10 +5,15 @@ function c50218129.initial_effect(c)
     e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
     e1:SetType(EFFECT_TYPE_ACTIVATE)
     e1:SetCode(EVENT_FREE_CHAIN)
+    e1:SetCost(c50218129.cost)
     e1:SetCountLimit(1,50218129+EFFECT_COUNT_CODE_OATH)
     e1:SetTarget(c50218129.target)
     e1:SetOperation(c50218129.activate)
     c:RegisterEffect(e1)
+end
+function c50218129.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+    if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+    Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function c50218129.filter1(c)
     return c:IsCode(50218126) and c:IsAbleToHand()

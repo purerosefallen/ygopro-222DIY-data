@@ -19,6 +19,7 @@ function c4210030.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_DELAY)	
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCondition(c4210030.otcon)
+	e3:SetCost(c4210030.otcost)
 	e3:SetTarget(c4210030.ottg)
 	e3:SetOperation(c4210030.otop)
 	c:RegisterEffect(e3)
@@ -69,6 +70,10 @@ function c4210030.spcfilter(c,tp,rp)
 end
 function c4210030.otcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c4210030.spcfilter,1,nil,tp,rp)
+end
+function c4210030.otcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.CheckLPCost(tp,500) end
+    Duel.PayLPCost(tp,500)
 end
 function c4210030.ottg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c = e:GetHandler()

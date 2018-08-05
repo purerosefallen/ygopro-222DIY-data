@@ -35,7 +35,7 @@ function cm.BRAVE(c)
 	return m and m.named_with_brave
 end
 function cm.setfilter(c,e,tp)
-	return c:IsFaceup() and not c:IsType(TYPE_FIELD)
+	return c:IsFaceup() and c:GetSequence()<5
 end
 function cm.handcon(e)
 	local tp=e:GetHandlerPlayer()

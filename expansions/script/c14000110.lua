@@ -122,7 +122,7 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.sfilter(c,e,tp)
-	return c:IsFaceup() and not c:IsType(TYPE_FIELD)
+	return c:IsFaceup() and c:GetSequence()<5
 end
 function cm.thcon(e)
 	local tp=e:GetHandlerPlayer()

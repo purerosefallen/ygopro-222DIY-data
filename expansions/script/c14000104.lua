@@ -72,7 +72,7 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=g:GetFirst()
 	while tc do
 		if Duel.GetLocationCount(1-tp,LOCATION_SZONE)>0 and tc:IsCanTurnSet() and not tc:IsType(TYPE_PENDULUM) then
-			if Duel.MoveToField(tc,tp,1-tp,LOCATION_SZONE,POS_FACEDOWN,true)~=0 then
+			if Duel.MoveToField(tc,tp,1-tp,LOCATION_SZONE,POS_FACEDOWN,true)~=0 and not tc:IsType(TYPE_TOKEN) then
 				Duel.ConfirmCards(1-tp,tc)
 				local e1=Effect.CreateEffect(e:GetHandler())
 				e1:SetCode(EFFECT_CHANGE_TYPE)
@@ -81,17 +81,23 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
 				e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
 				tc:RegisterEffect(e1)
+			elseif tc:IsType(TYPE_TOKEN) then
+				true
 			else
 				Duel.Remove(tc,POS_FACEDOWN,REASON_RULE)
 			end
-		else
+		elseif tc:IsType(TYPE_TOKEN) then
+			true
+		elseif tc:IsFaceup() or not tc:IsLocation(LOCATION_REMOVED) then
 			Duel.Remove(tc,POS_FACEDOWN,REASON_RULE)
+		else
+			true
 		end
 		tc=g:GetNext()
 	end
 end
 function cm.setfilter(c,e,tp)
-	return c:IsFaceup() and not c:IsType(TYPE_FIELD)
+	return c:IsFaceup() and c:GetSequence()<5
 end
 function cm.setcon(e)
 	local tp=e:GetHandlerPlayer()

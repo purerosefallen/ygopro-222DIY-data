@@ -60,6 +60,7 @@ function c4210025.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=eg:FilterCount(c4210025.ctfilter,nil)
 	if ct>0 then
 		e:GetHandler():AddCounter(0x2af,ct)
+		Duel.Recover(tp,300*ct,REASON_EFFECT) 
 	end
 end
 function c4210025.repfilter(c,tp)

@@ -28,7 +28,7 @@ function c12005000.spfilter(c,tp)
 	return c:GetSummonPlayer()==tp
 end
 function c12005000.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c12005000.spfilter,1,nil,1-tp) and Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)==0
+	return eg:IsExists(c12005000.spfilter,1,nil,1-tp) and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0
 end
 function c12005000.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

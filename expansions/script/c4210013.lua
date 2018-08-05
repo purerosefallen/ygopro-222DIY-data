@@ -47,9 +47,14 @@ function c4210013.spcfilter(c,e,tp)
 	return c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) and c:GetSummonPlayer()==tp
 end
 function c4210013.ottg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(c4210013.spcfilter,1,nil,e,tp) end
-	local g=eg:Filter(c4210013.spcfilter,nil,e,tp)
-	Duel.SetTargetCard(eg)
+	if c==nil then return true end
+	local tp=c:GetControler()
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local rg=Duel.GetReleaseGroup(tp):Filter(c4210013.spfilter,nil,ft,tp)
+	local rgc=rg:GetCount()
+	local c=e:GetHandler()
+	return (rgc>0 and Duel.CheckReleaseGroup(tp,c4210013.spfilter,1,nil,rgc,tp) and c:IsLocation(LOCATION_HAND))
+		or (rgc>1 and Duel.CheckReleaseGroup(tp,c4210013.spfilter,2,nil,rgc,tp) and c:IsLocation(LOCATION_DECK))
 end
 function c4210013.otop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(c4210013.spcfilter,nil,e,tp)
@@ -108,21 +113,24 @@ function c4210013.spcon(e,c)
 	return ft>-2 and rg:GetCount()>1 and (ft>0 or rg:IsExists(c4210013.mzfilter,ct,nil,tp))
 end
 function c4210013.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local rg=Duel.GetReleaseGroup(tp):Filter(c4210013.spfilter,nil,tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local rg=Duel.GetReleaseGroup(tp):Filter(c4210013.spfilter,nil,ft,tp)
 	local g=nil
+	local rec = (c:IsLocation(LOCATION_DECK) and {2} or {1})[1]
 	if ft>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		g=rg:Select(tp,2,2,nil)
+		g=rg:Select(tp,rec,rec,nil)
 	elseif ft==0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 		g=rg:FilterSelect(tp,c4210013.mzfilter,1,1,nil,tp)
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		local g2=rg:Select(tp,1,1,g:GetFirst())
-		g:Merge(g2)
+		if c:IsLocation(LOCATION_DECK) then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+			local g2=rg:Select(tp,1,1,g:GetFirst())
+			g:Merge(g2)
+		end
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-		g=rg:FilterSelect(tp,c4210013.mzfilter,2,2,nil,tp)
+		g=rg:FilterSelect(tp,c4210013.mzfilter,rec,rec,nil,tp)
 	end
 	Duel.Release(g,REASON_COST)
 	c:RegisterFlagEffect(0,RESET_EVENT+0xcff0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(4210010,1))

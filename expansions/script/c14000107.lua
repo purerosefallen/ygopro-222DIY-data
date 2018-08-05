@@ -16,7 +16,7 @@ function cm.BRAVE(c)
 	return m and m.named_with_brave
 end
 function cm.setfilter(c,e,tp)
-	return c:IsFaceup() and not c:IsType(TYPE_FIELD)
+	return c:IsFaceup() and c:GetSequence()<5
 end
 function cm.actcon(e)
 	local tp=e:GetHandlerPlayer()
@@ -27,7 +27,7 @@ function cm.filter(c)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_DECK,0,2,nil)
-		and Duel.GetLocationCount(tp,LOCATION_SZONE)>2 end
+		and Duel.GetLocationCount(tp,LOCATION_SZONE)>1 end
 end
 function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=1 then return end

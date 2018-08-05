@@ -20,6 +20,17 @@ function c12011002.initial_effect(c)
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetCondition(c12011002.thcon)
 	c:RegisterEffect(e2)
+	--search
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(12011002,1))
+	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_PZONE)
+	e2:SetCountLimit(1,12011002)
+	e2:SetCondition(c12011002.thcon)
+	e2:SetTarget(c12011002.thtg)
+	e2:SetOperation(c12011002.thop)
+	c:RegisterEffect(e2)
 	--be material
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -60,11 +71,6 @@ function c12011002.setop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) and tc:IsSSetable() then
 		Duel.SSet(tp,tc)
 		Duel.ConfirmCards(1-tp,tc)
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CANNOT_TRIGGER)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e1)
 	end
 end
 function c12011002.thcon(e,tp,eg,ep,ev,re,r,rp)
@@ -88,4 +94,21 @@ function c12011002.spsop(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or not e:GetHandler():IsRelateToEffect(e) then return end
 		Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
 	end
+end
+function c12011002.thfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_PENDULUM) and c:IsAttribute(ATTRIBUTE_DARK)
+end
+function c12011002.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c12011002.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
+end
+function c12011002.thop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+		local sg=Duel.SelectMatchingCard(tp,c12011002.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+		if sg:GetCount()>0 then
+			Duel.SendtoHand(sg,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,sg)
+		end
 end

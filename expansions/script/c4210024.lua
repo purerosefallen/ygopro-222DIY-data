@@ -19,6 +19,17 @@ function c4210024.initial_effect(c)
 	e2:SetTarget(c4210024.rttg)
 	e2:SetOperation(c4210024.rtop)
 	c:RegisterEffect(e2)
+	--return to hand
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(4210024,2))
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)	
+	e3:SetCode(0x1420042a)
+	e3:SetRange(LOCATION_HAND)
+	--e3:SetCost(c4210024.hdcost)
+	e3:SetCondition(c4210024.hdcon)
+	--e3:SetTarget(c4210024.hdtg)	
+	e3:SetOperation(c4210024.hdop)
+	c:RegisterEffect(e3)
 	--equip limit
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
@@ -77,4 +88,21 @@ function c4210024.rtop(e,tp,eg,ep,ev,re,r,rp)
 	if sel==1 and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 	end
+end
+function c4210024.cfilter(c,eg,e)
+	return c:GetPreviousPosition(POS_FACEUP) 
+		and e:GetHandler():GetPreviousPosition(POS_FACEUP) 
+		and eg:IsContains(e:GetHandler()) 
+end
+function c4210024.hdcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c4210024.cfilter,1,nil,eg,e) 
+		and re:GetHandler():IsSetCard(0x2af)
+end
+function c4210024.hdop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.RegisterFlagEffect(tp,4210024,RESET_PHASE+PHASE_END,0,0)
+	if Duel.GetFlagEffect(tp,4210024)>=3 and Duel.CheckLPCost(tp,500) then Duel.PayLPCost(tp,500) end
+	if Duel.GetFlagEffect(tp,4210024)>=5 and Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) then 
+		Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_EFFECT+REASON_DISCARD) 
+	end
+	if Duel.GetFlagEffect(tp,4210024)>=7 and e:GetHandler():IsAbleToRemove() then Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT) end
 end
