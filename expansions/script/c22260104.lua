@@ -39,13 +39,30 @@ function cm.initial_effect(c)
 	e4:SetCondition(cm.eqcon)
 	e4:SetValue(aux.indoval)
 	c:RegisterEffect(e4)
-	--geteffect
+	--direct
 	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetOperation(cm.cjop)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetCode(EFFECT_DIRECT_ATTACK)
+	e5:SetCondition(cm.cjcon1)
 	c:RegisterEffect(e5)
+	--atk up
+	local e6=Effect.CreateEffect(c)
+	e6:SetCategory(CATEGORY_ATKCHANGE)
+	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e6:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
+	e6:SetCondition(cm.cjcon2)
+	e6:SetOperation(cm.upop)
+	c:RegisterEffect(e6)
+	--no39
+	local e7=Effect.CreateEffect(c)
+	e7:SetType(EFFECT_TYPE_FIELD)
+	e7:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e7:SetCode(EFFECT_CANNOT_ACTIVATE)
+	e7:SetRange(LOCATION_MZONE)
+	e7:SetTargetRange(0,1)
+	e7:SetValue(cm.aclimit)
+	e7:SetCondition(cm.cjcon3)
+	c:RegisterEffect(e7)
 end
 function cm.cfilter(c,e,tp)
 	return c:IsFaceup() and bit.band(c:GetOriginalType(),TYPE_MONSTER)==TYPE_MONSTER
@@ -98,11 +115,23 @@ end
 function cm.cfilter1(c,e,tp)
 	return c:IsFaceup() and bit.band(c:GetOriginalType(),TYPE_MONSTER)==TYPE_MONSTER and (c:IsAttribute(ATTRIBUTE_WIND) or c:IsAttribute(ATTRIBUTE_DARK))
 end
+function cm.cjcon1(e,c)
+	local c=e:GetHandler()
+	return c:GetEquipGroup():IsExists(cm.cfilter1,1,nil,tp)
+end
 function cm.cfilter2(c,e,tp)
 	return c:IsFaceup() and bit.band(c:GetOriginalType(),TYPE_MONSTER)==TYPE_MONSTER and (c:IsAttribute(ATTRIBUTE_FIRE) or c:IsAttribute(ATTRIBUTE_EARTH))
 end
+function cm.cjcon2(e,c)
+	local c=e:GetHandler()
+	return c:GetEquipGroup():IsExists(cm.cfilter2,1,nil,tp)
+end
 function cm.cfilter3(c,e,tp)
 	return c:IsFaceup() and bit.band(c:GetOriginalType(),TYPE_MONSTER)==TYPE_MONSTER and (c:IsAttribute(ATTRIBUTE_LIGHT) or c:IsAttribute(ATTRIBUTE_WATER))
+end
+function cm.cjcon3(e,c)
+	local c=e:GetHandler()
+	return c:GetEquipGroup():IsExists(cm.cfilter3,1,nil,tp) and (Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler())
 end
 function cm.cjop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

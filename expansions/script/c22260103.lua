@@ -81,7 +81,7 @@ function cm.cjcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:SetLabel(0)
 	if chk==0 then return e:GetHandler():GetEquipGroup():IsExists(cm.cjfilter,1,nil,tp) end
 	if e:GetLabel()~=0 then return false end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=e:GetHandler():GetEquipGroup():FilterSelect(tp,cm.cjfilter,1,1,nil,tp)
 	local tc=g:GetFirst()
 	e:SetLabel(tc:GetAttribute())
@@ -93,7 +93,7 @@ end
 function cm.cjop(e,tp,eg,ep,ev,re,r,rp)
 	local att=e:GetLabel()
 	local c=e:GetHandler()
-	if c:IsFaceup() and c:IsRelateToEffect(e) then return true end
+	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	if att==ATTRIBUTE_WIND or att==ATTRIBUTE_DARK then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
