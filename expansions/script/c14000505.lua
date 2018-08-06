@@ -10,17 +10,6 @@ function cm.initial_effect(c)
 	spo.SpositchSpellEffect(c,CATEGORY_TOHAND+CATEGORY_TOEXTRA,EFFECT_FLAG_CARD_TARGET,cm.stdtg,cm.stdop)
 	--peneffect
 	spo.SpositchPendulumEffect(c,CATEGORY_TOEXTRA+CATEGORY_SPECIAL_SUMMON,cm.tdtg,cm.tdop)
-	--spsummon condition
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(cm.splimit)
-	c:RegisterEffect(e1)
-end
-function cm.splimit(e,se,sp,st)
-	local sc=se:GetHandler()
-	return sc and spo.named(sc)
 end
 function cm.thfilter(c)
 	return c:IsFaceup() and c:IsAbleToHand()
@@ -60,7 +49,7 @@ function cm.stdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.spfilter(c,e,tp)
-	return spo.named(c) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return spo.named(c) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function cm.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -79,6 +68,6 @@ function cm.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,cm.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if tc then
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)
 	end
 end

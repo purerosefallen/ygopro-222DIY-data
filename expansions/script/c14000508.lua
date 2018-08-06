@@ -6,6 +6,7 @@ xpcall(function() require("expansions/script/c14000501") end,function() require(
 function cm.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,cm.xfilter,11,2)
+	c:EnableReviveLimit()
 	--to hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(m,0))

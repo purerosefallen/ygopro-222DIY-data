@@ -11,12 +11,12 @@ function cm.initial_effect(c)
 	--peneffect
 	spo.SpositchPendulumEffect(c,CATEGORY_TOEXTRA+CATEGORY_TOHAND,cm.thtg,cm.thop)
 	--spsummon condition
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(cm.splimit)
-	c:RegisterEffect(e1)
+	--local e1=Effect.CreateEffect(c)
+	--e1:SetType(EFFECT_TYPE_SINGLE)
+	--e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	--e1:SetCode(EFFECT_SPSUMMON_CONDITION)
+	--e1:SetValue(cm.splimit)
+	--c:RegisterEffect(e1)
 end
 function cm.splimit(e,se,sp,st)
 	local sc=se:GetHandler()

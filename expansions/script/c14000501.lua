@@ -7,7 +7,6 @@ if not Spositch then
 	Spositch=Spositch or {}
 	spo=Spositch
 	function spo.splimit(c)
-		c:EnableReviveLimit()
 		--pendulum summon
 		aux.EnablePendulumAttribute(c)
 		--revive limit
@@ -22,12 +21,12 @@ if not Spositch then
 		e0:SetTarget(spo.plimit)
 		c:RegisterEffect(e0)
 		--spsummon condition
-		--local e1=Effect.CreateEffect(c)
-		--e1:SetType(EFFECT_TYPE_SINGLE)
-		--e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-		--e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-		--e1:SetValue(spo.splimit)
-		--c:RegisterEffect(e1)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e1:SetCode(EFFECT_SPSUMMON_CONDITION)
+		e1:SetValue(aux.FALSE)
+		c:RegisterEffect(e1)
 	end
 	function spo.SpositchSpellEffect(c,cate,prop,tg,op)
 		local code=c:GetOriginalCodeRule()
@@ -88,7 +87,7 @@ function spo.named(c)
 	end
 	return mt and mt.named_with_Spositch
 end
---function spo.splimit(e,se,sp,st)
+--function spo.splimit1(e,se,sp,st)
 	--if not se then return end
 	--local sc=se:GetHandler()
 	--return sc and spo.named(sc)
@@ -126,17 +125,6 @@ function cm.initial_effect(c)
 	spo.SpositchSpellEffect(c,CATEGORY_DESTROY+CATEGORY_TOEXTRA,EFFECT_FLAG_CARD_TARGET,cm.destg,cm.desop)
 	--peneffect
 	spo.SpositchPendulumEffect(c,CATEGORY_TOEXTRA+CATEGORY_SEARCH+CATEGORY_TOHAND,cm.thtg,cm.thop)
-	--spsummon condition
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(cm.splimit)
-	c:RegisterEffect(e1)
-end
-function cm.splimit(e,se,sp,st)
-	local sc=se:GetHandler()
-	return sc and spo.named(sc)
 end
 function cm.filter(c)
 	return c:IsType(TYPE_MONSTER)
