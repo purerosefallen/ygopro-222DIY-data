@@ -22,17 +22,6 @@ function c22260106.initial_effect(c)
     e2:SetTarget(c22260106.sptg)
     e2:SetOperation(c22260106.spop)
     c:RegisterEffect(e2)
-    --atkdown
-    local e3=Effect.CreateEffect(c)
-    e3:SetDescription(aux.Stringid(22260106,1))
-    e3:SetCategory(CATEGORY_ATKCHANGE)
-    e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-    e3:SetCode(EVENT_DAMAGE_STEP_END)
-    e3:SetRange(LOCATION_MZONE)
-    e3:SetCondition(c22260106.atkcon)
-    e3:SetTarget(c22260106.atktg)
-    e3:SetOperation(c22260106.atkop)
-    c:RegisterEffect(e3)
 end
 --
 c22260106.named_with_NanayaShiki=1
@@ -40,7 +29,6 @@ function c22260106.IsNanayaShiki(c)
     local m=_G["c"..c:GetCode()]
     return m and m.named_with_NanayaShiki
 end
---
 function c22260106.dirtg(e,c)
     return c22260106.IsNanayaShiki(c)
 end

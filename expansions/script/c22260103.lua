@@ -1,4 +1,4 @@
-﻿--二人一体 假面骑士W
+--
 local m=22260103
 local cm=_G["c"..m]
 function cm.initial_effect(c)

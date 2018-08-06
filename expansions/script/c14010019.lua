@@ -37,6 +37,7 @@ function cm.snegop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.onegcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
 	return rp==1-tp and re:GetActiveType()==TYPE_SPELL and Duel.IsChainDisablable(ev) and c:IsAbleToRemove()
 end
