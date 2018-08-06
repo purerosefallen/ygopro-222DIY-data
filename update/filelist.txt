@@ -3634,7 +3634,6 @@ expansions/pics/field/65010015.jpg	f666f58bd6cbdbd05eee14a8606cab63
 expansions/pics/field/88800004.jpg	d1fd6739c97de90108c079c8989e6507
 expansions/pics/field/9334210.jpg	f7132f07fc22b80cfcd822f33d2bee44
 expansions/pics/field/image25.jpg	2c02f81fe4bb905ab0f8c7fac6b82d76
-expansions/pics/thumbnail/12003024.jpg	6b82289c06a7cb7ee4286b9f6a2c4d6c
 expansions/script/Millux.lua	8e81bd7f76f914fe1b2137bf9be19c92
 expansions/script/c100001009.lua	c9c61e50d65b26ba6a3191509764e30a
 expansions/script/c1000400.lua	182af2f680039faaa5496e4714c16f76
@@ -7378,10 +7377,10 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	f05f1b30ae1c00951b60276c0ccbae3c
+update/filelist.txt	01544ac9b615897af4bf1a356a2c19aa
 update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
 update/update-push.bat	686b01a51bba916202d61d951cd7fe3e
 update/update-push.sh	ee0ce539e77c8cec8965cb6d6a2b3149
 update/update-server.sh	1e36cb099427f8fda3cd52756b07398d
 update/update-without-sound.bat	1c2cfda2a0501642c8bceae026a73d5b
-update/version.txt	b859bc32c7812cc5e90818dc37558dd0
+update/version.txt	095e4b58b9aa41d5004cc360ede09efb
