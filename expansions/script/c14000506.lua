@@ -2,7 +2,7 @@
 local m=14000506
 local cm=_G["c"..m]
 cm.named_with_Spositch=1
-if not pcall(function() require("expansions/script/c14000501") end) then require("script/c14000501") end
+xpcall(function() require("expansions/script/c14000501") end,function() require("script/c14000501") end)
 function cm.initial_effect(c)
 	--splimit
 	spo.splimit(c)

@@ -82,16 +82,16 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
 				tc:RegisterEffect(e1)
 			elseif tc:IsType(TYPE_TOKEN) then
-				true
+				local c=e:GetHandler()
 			else
 				Duel.Remove(tc,POS_FACEDOWN,REASON_RULE)
 			end
 		elseif tc:IsType(TYPE_TOKEN) then
-			true
+			tc=g:GetNext()
 		elseif tc:IsFaceup() or not tc:IsLocation(LOCATION_REMOVED) then
 			Duel.Remove(tc,POS_FACEDOWN,REASON_RULE)
 		else
-			true
+			local c=e:GetHandler()
 		end
 		tc=g:GetNext()
 	end

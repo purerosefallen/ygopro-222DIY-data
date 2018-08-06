@@ -1,7 +1,6 @@
 --异态魔女·炉-01
 local m=14000501
 local cm=_G["c"..m]
-cm.named_with_Spositch=1
 --script thanks for Real_Scl and 777
 --functions
 if not Spositch then
@@ -119,6 +118,7 @@ function spo.pencon(e,tp,eg,ep,ev,re,r,rp)
 end
 
 if cm then
+cm.named_with_Spositch=1
 function cm.initial_effect(c)
 	--splimit
 	spo.splimit(c)
