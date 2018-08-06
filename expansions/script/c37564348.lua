@@ -72,8 +72,7 @@ function cm.op3(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.repfilter(c,e)
-	return c:IsFaceup()
-		and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
+	return c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED+STATUS_BATTLE_DESTROYED)
 end
 function cm.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
