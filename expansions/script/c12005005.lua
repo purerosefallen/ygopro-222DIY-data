@@ -10,7 +10,7 @@ function c12005005.initial_effect(c)
 	e1:SetTarget(c12005005.target)
 	e1:SetOperation(c12005005.operation)
 	c:RegisterEffect(e1)
-	local e3=e2:Clone()
+	local e3=e1:Clone()
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
 	--special summon
@@ -76,6 +76,7 @@ function c12005005.spop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(c12005005.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+end
 end
 function c12005005.splimit(e,c)
 	return not c:IsCode(12005005)
