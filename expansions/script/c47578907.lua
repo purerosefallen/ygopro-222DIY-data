@@ -40,6 +40,7 @@ function c47578907.initial_effect(c)
     e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
     e3:SetCode(EVENT_SPSUMMON_SUCCESS)
     e3:SetCountLimit(1,47578907)
+    e3:SetCondition(c47578907.con)
     e3:SetTarget(c47578907.sptg2)
     e3:SetOperation(c47578907.spop2)
     c:RegisterEffect(e3) 
@@ -54,6 +55,15 @@ function c47578907.initial_effect(c)
     e4:SetCost(c47578907.atkcost)
     e4:SetOperation(c47578907.atkop)
     c:RegisterEffect(e4)
+    --indes
+    local e5=Effect.CreateEffect(c)
+    e5:SetType(EFFECT_TYPE_FIELD)
+    e5:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+    e5:SetRange(LOCATION_MZONE)
+    e5:SetTargetRange(LOCATION_MZONE,0)
+    e5:SetTarget(c47578907.indtg)
+    e5:SetValue(c47578907.indval)
+    c:RegisterEffect(e5)
         --pendulum
     local e8=Effect.CreateEffect(c)
     e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -104,6 +114,9 @@ function c47578907.indval(e,re,r,rp)
 end
 function c47578907.ffilter2(c,e,tp,dam)
     return c:IsRace(RACE_WARRIOR) and c:IsType(TYPE_NORMAL) and c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+end
+function c47578907.con(e,tp,eg,ep,ev,re,r,rp)
+    return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
 function c47578907.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

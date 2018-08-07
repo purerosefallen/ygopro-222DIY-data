@@ -23,19 +23,24 @@ function cm.cfilter(c)
 	return cm.ANOTHER(c) and c:IsFaceup()
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_DECK)
+	if chk==0 then return Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_DECK,0,1,nil) and Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
 end
 function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,cm.filter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then
-		if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0 then
-			local g1=Duel.GetMatchingGroup(cm.cfilter,tp,LOCATION_REMOVED,0,nil)
-			local ct=g1:GetCount()
-			if ct>0 then
-				Duel.SetLP(tp,Duel.GetLP(tp)-ct*800)
-			end
+	local g1=Duel.GetMatchingGroup(cm.filter,tp,LOCATION_DECK,0,nil)
+	local g2=Duel.GetMatchingGroup(cm.filter,tp,LOCATION_HAND,0,nil)
+	if g1:GetCount()==0 or g2:GetCount()==0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local sg1=g1:Select(tp,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local sg2=g2:Select(tp,1,1,nil)
+	sg1:Merge(sg2)
+	if Duel.Remove(sg1,POS_FACEUP,REASON_EFFECT)~=0 then
+		local g1=Duel.GetMatchingGroup(cm.cfilter,tp,LOCATION_REMOVED,0,nil)
+		local ct=g1:GetCount()
+		if ct>0 then
+			Duel.SetLP(tp,Duel.GetLP(tp)-ct*800)
 		end
 	end
 	local e1=Effect.CreateEffect(e:GetHandler())

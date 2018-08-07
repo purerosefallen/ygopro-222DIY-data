@@ -102,8 +102,14 @@ end
 function c47598774.synfilter(c)
     return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_SYNCHRO)
 end
+function c47598774.synfilter2(c)
+    return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsType(TYPE_NORMAL)
+end
 function c47598774.costfilter(c)
     return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToGraveAsCost()
+end
+function c47598774.discon(e,tp,eg,ep,ev,re,r,rp)
+    return re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function c47598774.distg(e,c)
     return c:IsType(TYPE_TRAP)
