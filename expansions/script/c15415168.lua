@@ -30,7 +30,7 @@ function c15415168.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c15415168.cfilter,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function c15415168.thfilter(c)
-	return c:IsSetCard(0x161) and c:IsAbleToHand()
+	return c:IsSetCard(0x161) and c:IsAbleToHand() and c:IsType(TYPE_MONSTER)
 end
 function c15415168.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c15415168.thfilter(chkc) end

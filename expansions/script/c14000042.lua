@@ -27,13 +27,12 @@ function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_DECK+LOCATION_HAND)
 end
 function cm.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g1=Duel.GetMatchingGroup(cm.filter,tp,LOCATION_DECK,0,nil)
 	local g2=Duel.GetMatchingGroup(cm.filter,tp,LOCATION_HAND,0,nil)
 	if g1:GetCount()==0 or g2:GetCount()==0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local sg1=g1:Select(tp,1,1,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local sg2=g2:Select(tp,1,1,nil)
 	sg1:Merge(sg2)
 	if Duel.Remove(sg1,POS_FACEUP,REASON_EFFECT)~=0 then

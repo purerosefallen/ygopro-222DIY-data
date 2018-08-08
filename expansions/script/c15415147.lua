@@ -49,7 +49,7 @@ function c15415147.splimit(e,c,sump,sumtype,sumpos,targetp)
 	return bit.band(sumtype,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function c15415147.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x161)
+	return c:IsFaceup() and c:IsSetCard(0x161) and c:IsControler(tp)
 end
 function c15415147.spcons(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(c15415147.cfilter,1,nil)

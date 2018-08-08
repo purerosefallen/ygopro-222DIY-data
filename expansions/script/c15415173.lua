@@ -7,9 +7,13 @@ function c15415173.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMING_END_PHASE)
+	e1:SetCondition(c15415173.ctcon)
 	e1:SetTarget(c15415173.target)
 	e1:SetOperation(c15415173.activate)
 	c:RegisterEffect(e1)	
+end
+function c15415158.ctcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil,0x167)
 end
 function c15415173.filter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL+TYPE_TRAP)
