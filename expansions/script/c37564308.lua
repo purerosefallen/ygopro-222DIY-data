@@ -61,5 +61,11 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 			sg:Merge(g)
 		end
 	end
-	Duel.SpecialSummon(sg,SUMMON_TYPE_PENDULUM,tp,tp,false,false,POS_FACEUP)
+	if #sg<=0 then return end
+	for tc in aux.Next(sg) do
+		local bool=aux.PendulumSummonableBool(tc)
+		Duel.SpecialSummonStep(tc,SUMMON_TYPE_PENDULUM,tp,tp,bool,bool,POS_FACEUP)
+	end
+	Duel.SpecialSummonComplete()
+	for tc in aux.Next(sg) do tc:CompleteProcedure() end
 end

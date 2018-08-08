@@ -150,7 +150,8 @@ function cm.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.PConditionFilter(c,e,tp)
-	return (c:IsLocation(LOCATION_HAND) or (c:IsFaceup() and c:IsType(TYPE_PENDULUM))) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_PENDULUM,tp,false,false)
+	local bool=aux.PendulumSummonableBool(c)
+	return (c:IsLocation(LOCATION_HAND) or (c:IsFaceup() and c:IsType(TYPE_PENDULUM))) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_PENDULUM,tp,bool,bool)
 		and not c:IsForbidden()
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -226,7 +227,13 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 						sg:Merge(g)
 					end
 				end
-				Duel.SpecialSummon(sg,SUMMON_TYPE_PENDULUM,tp,tp,false,false,POS_FACEUP)
+				if #sg<=0 then return end
+				for tc in aux.Next(sg) do
+					local bool=aux.PendulumSummonableBool(tc)
+					Duel.SpecialSummonStep(tc,SUMMON_TYPE_PENDULUM,tp,tp,bool,bool,POS_FACEUP)
+				end
+				Duel.SpecialSummonComplete()
+				for tc in aux.Next(sg) do tc:CompleteProcedure() end
 end
 function cm.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousPosition(POS_FACEUP) and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
