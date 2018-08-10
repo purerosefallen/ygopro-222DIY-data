@@ -79,6 +79,7 @@ function c12011004.efop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=c:GetReasonCard()
 	local e1=Effect.CreateEffect(rc)
 	e1:SetDescription(aux.Stringid(12011004,2))
+	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -87,6 +88,14 @@ function c12011004.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(c12011004.tdtg)
 	e1:SetOperation(c12011004.tdop)
 	rc:RegisterEffect(e1,true)
+	if not rc:IsType(TYPE_EFFECT) then
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_ADD_TYPE)
+		e2:SetValue(TYPE_EFFECT)
+		e2:SetReset(RESET_EVENT+0x1fe0000)
+		rc:RegisterEffect(e2,true)
+	end
 end
 function c12011004.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and chkc:IsAbleToDeck() end

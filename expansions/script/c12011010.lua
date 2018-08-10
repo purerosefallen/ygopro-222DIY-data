@@ -113,6 +113,7 @@ function c12011010.efop(e,tp,eg,ep,ev,re,r,rp)
 	--spsummon
 	local e1=Effect.CreateEffect(rc)
 	e1:SetDescription(aux.Stringid(12011010,3))
+	e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
@@ -120,6 +121,15 @@ function c12011010.efop(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(c12011010.target)
 	e1:SetOperation(c12011010.operation)
 	rc:RegisterEffect(e1,true)
+
+	if not rc:IsType(TYPE_EFFECT) then
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_ADD_TYPE)
+		e2:SetValue(TYPE_EFFECT)
+		e2:SetReset(RESET_EVENT+0x1fe0000)
+		rc:RegisterEffect(e2,true)
+	end
 end
 function c12011010.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsReleasable() end

@@ -83,13 +83,22 @@ function c12011009.efop(e,tp,eg,ep,ev,re,r,rp)
 	rc:RegisterEffect(e2,true)
 	--
 	local e1=Effect.CreateEffect(rc)
+	e1:SetDescription(aux.Stringid(12011009,3))
 	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CLIENT_HINT)
 	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e1:SetTargetRange(0,1)
 	e1:SetValue(c12011009.aclimit)
 	e1:SetReset(RESET_PHASE+PHASE_BATTLE)
 	rc:RegisterEffect(e1,true)
+	if not rc:IsType(TYPE_EFFECT) then
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_ADD_TYPE)
+		e2:SetValue(TYPE_EFFECT)
+		e2:SetReset(RESET_EVENT+0x1fe0000)
+		rc:RegisterEffect(e2,true)
+	end
 end
 function c12011009.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
