@@ -32,6 +32,7 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		if Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
 			Duel.ConfirmCards(1-tp,g)
+			Duel.BreakEffect()
 			local g1=Duel.GetMatchingGroup(cm.cfilter,tp,LOCATION_REMOVED,0,nil)
 			local ct=g1:GetCount()
 			if ct>0 then

@@ -67,6 +67,7 @@ function cm.rmop(e,tp,eg,ep,ev,re,r,rp)
 		if g:GetCount()>0 then
 			local ct=Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 			if ct>0 then
+				Duel.BreakEffect()
 				Duel.SetLP(tp,Duel.GetLP(tp)-ct*400)
 				Duel.SetLP(1-tp,Duel.GetLP(1-tp)-ct*400)
 			end
@@ -76,6 +77,7 @@ function cm.rmop(e,tp,eg,ep,ev,re,r,rp)
 		if g:GetCount()>0 then
 			local ct=Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 			if ct>0 then
+				Duel.BreakEffect()
 				Duel.Recover(tp,ct*400,REASON_EFFECT)
 				Duel.Recover(1-tp,ct*400,REASON_EFFECT)
 			end

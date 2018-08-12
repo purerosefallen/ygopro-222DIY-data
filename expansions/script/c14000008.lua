@@ -61,6 +61,7 @@ function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0)
 	local nseq=math.log(s,2)
 	if Duel.MoveSequence(c,nseq) and Duel.IsPlayerCanDraw(tp,1) then return true end
+	Duel.BreakEffect()
 	Duel.Draw(tp,1,REASON_EFFECT)
 	Duel.Damage(1-tp,100,REASON_EFFECT)
 end

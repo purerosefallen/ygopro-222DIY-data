@@ -46,7 +46,8 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 		tc=g:GetNext()
 	end
-	if Duel.GetFlagEffect(tp,m)~=0 and g:GetCount()<=0 then return end
+	if Duel.GetFlagEffect(tp,m)~=0 or g:GetCount()<=0 then return end
+	Duel.BreakEffect()
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)

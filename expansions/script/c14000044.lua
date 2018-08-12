@@ -49,6 +49,7 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 				e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
 				e1:SetValue(LOCATION_REMOVED)
 				tc:RegisterEffect(e1,true)
+				Duel.BreakEffect()
 				local g1=Duel.GetMatchingGroup(cm.cfilter,tp,LOCATION_REMOVED,0,nil)
 				local ct=g1:GetCount()
 				if ct>0 then

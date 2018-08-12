@@ -49,6 +49,7 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	else
 		return
 	end
+	Duel.BreakEffect()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
 	local g=Duel.SelectMatchingCard(tp,cm.sumfilter,tp,LOCATION_HAND+LOCATION_SZONE,0,1,1,nil)
 	local tc=g:GetFirst()

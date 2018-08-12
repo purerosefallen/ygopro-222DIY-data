@@ -36,6 +36,7 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg2=g2:Select(tp,1,1,nil)
 	sg1:Merge(sg2)
 	if Duel.Remove(sg1,POS_FACEUP,REASON_EFFECT)~=0 then
+		Duel.BreakEffect()
 		local g1=Duel.GetMatchingGroup(cm.cfilter,tp,LOCATION_REMOVED,0,nil)
 		local ct=g1:GetCount()
 		if ct>0 then

@@ -33,6 +33,7 @@ end
 function cm.snegop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.NegateEffect(ev) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+		Duel.BreakEffect()
 		Duel.SpecialSummon(c,0,tp,tp,true,true,POS_FACEUP)
 	end
 end
@@ -44,6 +45,7 @@ end
 function cm.onegop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.NegateEffect(ev) then
+		Duel.BreakEffect()
 		Duel.Remove(c,POS_FACEUP,REASON_EFFECT)
 	end
 end

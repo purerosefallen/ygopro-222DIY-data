@@ -75,6 +75,7 @@ function cm.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoGrave(g1,REASON_EFFECT)~=0 then
 		if tc and tc:IsLocation(LOCATION_GRAVE) then
 			if Duel.GetFieldGroupCount(tp,LOCATION_GRAVE,0)>1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetMatchingGroupCount(cm.warfilter,tp,LOCATION_GRAVE,0,nil,nil)>0 and Duel.SelectYesNo(tp,aux.Stringid(m,2)) then
+				Duel.BreakEffect()
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 				local g=Duel.SelectMatchingCard(tp,cm.warfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 				if g:GetCount()>0 then

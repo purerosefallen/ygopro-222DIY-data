@@ -61,7 +61,8 @@ function cm.drop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,cm.rmfilter1,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
-		if Duel.Remove(g,POS_FACEUP,REASON_COST) then
+		if Duel.Remove(g,POS_FACEUP,REASON_EFFECT) then
+			Duel.BreakEffect()
 			Duel.Draw(tp,1,REASON_EFFECT)
 		end
 	end

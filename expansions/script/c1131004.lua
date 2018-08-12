@@ -137,6 +137,6 @@ end
 --
 function c1131004.val2_1_1_2(e,re,tp)
 	local rc=re:GetHandler()
-	return c:IsLocation(LOCATION_ONFIELD) and c:IsFacedown()
+	return rc:IsLocation(LOCATION_ONFIELD) and rc:IsFacedown()
 end
 --

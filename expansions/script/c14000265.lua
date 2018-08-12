@@ -92,4 +92,12 @@ function cm.indop(e,tp,eg,ep,ev,re,r,rp)
 	e4:SetCode(EFFECT_SET_ATTACK_FINAL)
 	e4:SetValue(0)
 	rc:RegisterEffect(e4,true)
+	if not rc:IsType(TYPE_EFFECT) then
+		local e5=Effect.CreateEffect(c)
+		e5:SetType(EFFECT_TYPE_SINGLE)
+		e5:SetCode(EFFECT_ADD_TYPE)
+		e5:SetValue(TYPE_EFFECT)
+		e5:SetReset(RESET_EVENT+RESETS_STANDARD)
+		rc:RegisterEffect(e5,true)
+	end
 end

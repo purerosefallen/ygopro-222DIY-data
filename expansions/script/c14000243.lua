@@ -65,6 +65,7 @@ function cm.tgop(e,tp,eg,ep,ev,re,r,rp)
 	g:Merge(g1)
 	if g:GetCount()<=0 then return end
 	if Duel.SendtoGrave(g,REASON_EFFECT)~=0 then
+		Duel.BreakEffect()
 		local tc=g:GetFirst()
 		while tc do
 			local ct=nil

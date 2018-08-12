@@ -57,6 +57,7 @@ function cm.rmop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0 then
+			Duel.BreakEffect()
 			local g1=Duel.GetMatchingGroup(cm.cfilter,tp,LOCATION_REMOVED,0,nil)
 			local ct=g1:GetCount()
 			if ct>0 then

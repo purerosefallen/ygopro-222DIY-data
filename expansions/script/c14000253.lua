@@ -120,6 +120,7 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 		local tc=g:GetFirst()
 		if tc then
 			if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 and tc:IsAbleToGrave() and Duel.SelectYesNo(tp,aux.Stringid(m,1)) then
+				Duel.BreakEffect()
 				Duel.SendtoGrave(tc,REASON_EFFECT)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 				local g=Duel.SelectMatchingCard(tp,cm.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
