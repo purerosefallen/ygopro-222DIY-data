@@ -45,7 +45,7 @@ function c12008019.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Draw(tp,1,REASON_EFFECT)==0 then return end
 	local tc=Duel.GetOperatedGroup():GetFirst()
 	Duel.ConfirmCards(1-tp,tc)
-	if tc:IsSetCard(0xa9) and tc:IsType(TYPE_MONSTER) then
+	if tc:IsSetCard(0x1fb3) and tc:IsType(TYPE_MONSTER) then
 		Duel.BreakEffect()
 	else
 		Duel.BreakEffect()
