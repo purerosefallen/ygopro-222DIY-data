@@ -1,4 +1,4 @@
-﻿ygopro.exe	7e0916eeca391e2d449f5ddd94604b36
+﻿ygopro.exe	c30f26c1bbb7137f023bb12712ea2c5c
 deck/07.08new_card1.ydk	9e363fc30e344d58424fd64c39057816
 deck/07.08new_card2.ydk	05e67734641591ac04a608866df41a8e
 deck/07.08new_card3.ydk	89d5da212f3ae1539b383e039d52e7db
@@ -4505,7 +4505,7 @@ expansions/script/c12003010.lua	4248de061330f59281730a5741f91f70
 expansions/script/c12003012.lua	f430d7e120a73013b9bc17102a8c8fcf
 expansions/script/c12003013.lua	d48195b142e981921c4da3e0adfb8bd6
 expansions/script/c12003014.lua	a92187d5b0e304b2e8dcfabec836757a
-expansions/script/c12003015.lua	edd88c8c1cae029be96da229b2ee24e3
+expansions/script/c12003015.lua	21a2422ae8afd379c072d14f57fef8ac
 expansions/script/c12003016.lua	fc208d237ef444df8533a414d1adaf3d
 expansions/script/c12003017.lua	2b2bd5eb10d0cefb586448209e5c0e7f
 expansions/script/c12003018.lua	d35e4bf5f40efb837dbc5be1ec7a427f
@@ -4582,7 +4582,7 @@ expansions/script/c12008015.lua	ef614b6f9e906052f41c9e5cdda9b270
 expansions/script/c12008016.lua	8cb0f976a476d464cfc5657921f19434
 expansions/script/c12008017.lua	7b53f7c070f5713a60770d30d13979a1
 expansions/script/c12008018.lua	04a86f229910770dc7f991fa207dc0c7
-expansions/script/c12008019.lua	fc1dd8712dec6f5c934ca1d8e391200e
+expansions/script/c12008019.lua	2b498674d518c852ea9e77d6eaf632b1
 expansions/script/c12008020.lua	b427eaa9728616883a6f108380a5f83b
 expansions/script/c12008021.lua	7ca51fbe5f5333afdf5f016572a56ce0
 expansions/script/c12009001.lua	66e0c5afeb6cc0d4a0c3eac37465d2dc
@@ -7388,10 +7388,10 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	ea08f03795fe259b541718900ac10071
+update/filelist.txt	4dc9343f183559d35797778ffd4847f3
 update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
 update/update-push.bat	686b01a51bba916202d61d951cd7fe3e
 update/update-push.sh	ee0ce539e77c8cec8965cb6d6a2b3149
 update/update-server.sh	1e36cb099427f8fda3cd52756b07398d
 update/update-without-sound.bat	1c2cfda2a0501642c8bceae026a73d5b
-update/version.txt	82836cfd07cbd01144f07ab697c4db31
+update/version.txt	989d6dc3da20e84ecd32d6b97b97c2e3
