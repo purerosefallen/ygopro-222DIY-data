@@ -41,7 +41,7 @@ function c12013011.activate(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()<=0 then return end
 	local tc=Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 	Duel.BreakEffect()
-	if tc>3 and Duel.SelectYesNo(tp,aux.Stringid(12013010,3)) then
+	if tc>3 and Duel.SelectYesNo(tp,aux.Stringid(12013011,3)) then
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local dg=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,tc-3,nil)
 	Duel.HintSelection(dg)
