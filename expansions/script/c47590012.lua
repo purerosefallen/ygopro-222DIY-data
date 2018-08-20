@@ -2,6 +2,7 @@
 local m=47590012
 local cm=_G["c"..m]
 function c47590012.initial_effect(c)
+    c:EnableCounterPermit(0x5d2)
     --link summon
     aux.AddLinkProcedure(c,nil,2,2,c47590012.lcheck)
     c:EnableReviveLimit()
@@ -28,24 +29,11 @@ function c47590012.initial_effect(c)
     --disable
     local e3=Effect.CreateEffect(c)
     e3:SetType(EFFECT_TYPE_FIELD)
-    e3:SetCode(EFFECT_DISABLE)
+    e3:SetCode(EFFECT_CANNOT_TRIGGER)
     e3:SetRange(LOCATION_MZONE)
     e3:SetTargetRange(0,LOCATION_MZONE)
     e3:SetTarget(c47590012.distg)
     c:RegisterEffect(e3)
-    --atk def
-    local e4=Effect.CreateEffect(c)
-    e4:SetType(EFFECT_TYPE_FIELD)
-    e4:SetCode(EFFECT_UPDATE_ATTACK)
-    e4:SetRange(LOCATION_MZONE)
-    e4:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-    e4:SetCondition(c47590012.adcon)
-    e4:SetTarget(c47590012.adtg)
-    e4:SetValue(-1000)
-    c:RegisterEffect(e4)
-    local e5=e4:Clone()
-    e5:SetCode(EFFECT_UPDATE_DEFENSE)
-    c:RegisterEffect(e5)
 end
 function c47590012.lcheck(g)
     return g:GetClassCount(Card.GetLinkAttribute)==g:GetCount()

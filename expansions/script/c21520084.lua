@@ -1,7 +1,7 @@
 --雪莲女王
 function c21520084.initial_effect(c)
 	--synchro summon
-	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_PLANT),aux.NonTuner(Card.IsRace,RACE_PLANT),1)
+	aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsRace,RACE_PLANT),1)
 	c:EnableReviveLimit()
 	--immune
 	local e1=Effect.CreateEffect(c)

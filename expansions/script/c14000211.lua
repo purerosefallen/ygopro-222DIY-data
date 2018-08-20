@@ -16,13 +16,13 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(m,0))
+	e2:SetDescription(aux.Stringid(m,2))
 	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCountLimit(1,14001211)
+	e2:SetCountLimit(1,m)
 	e2:SetCondition(cm.spcon1)
 	e2:SetTarget(cm.sptg1)
 	e2:SetOperation(cm.spop1)
@@ -78,6 +78,7 @@ function cm.spop1(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	local g=eg:Filter(cm.cfilter,nil,e)
 	if Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
+		Duel.BreakEffect()
 		Duel.SendtoHand(c,nil,REASON_EFFECT)
 	end
 end

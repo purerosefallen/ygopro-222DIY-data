@@ -5,14 +5,6 @@ function c75646500.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkAttribute,ATTRIBUTE_DARK),3,4,c75646500.lcheck)
 	c:EnableReviveLimit()
-	--immune
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EFFECT_IMMUNE_EFFECT)
-	e1:SetValue(c75646500.efilter)
-	c:RegisterEffect(e1)
 	--indes
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -81,9 +73,6 @@ function c75646500.initial_effect(c)
 end
 function c75646500.lcheck(g,lc)
 	return g:GetClassCount(Card.GetCode)==g:GetCount()
-end
-function c75646500.efilter(e,te)
-	return te:IsActiveType(TYPE_MONSTER) and not te:GetOwner():IsAttribute(ATTRIBUTE_DARK)
 end
 function c75646500.indval(e,c)
 	return not c:IsAttribute(ATTRIBUTE_DARK)

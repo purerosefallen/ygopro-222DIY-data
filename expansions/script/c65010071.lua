@@ -47,12 +47,10 @@ function c65010071.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsType(TYPE_SYNCHRO) and c:IsLocation(LOCATION_EXTRA)
 end
 function c65010071.filter(c,e,tp)
-	local race=c:GetRace()
-	local att=c:GetAttribute()
-	return c:IsType(TYPE_SYNCHRO) and c:IsFaceup() and ((c:GetSequence()>4 and Duel.GetLocationCount(tp,LOCATION_MZONE)>2) or Duel.GetLocationCount(tp,LOCATION_MZONE)>1) and Duel.IsExistingMatchingCard(c65010071.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,race,att)
+	return c:IsType(TYPE_SYNCHRO) and c:IsFaceup() and ((c:GetSequence()>4 and Duel.GetLocationCount(tp,LOCATION_MZONE)>2) or Duel.GetLocationCount(tp,LOCATION_MZONE)>1) 
 end
 function c65010071.spfilter(c,e,tp,race,att)
-	return c:IsType(TYPE_TUNER) and c:IsRace(race) and c:IsAttribute(att) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsType(TYPE_TUNER) and c.setname=="RagnaTravellers" and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c65010071.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c65010071.filter(chkc,e,tp) end
@@ -63,16 +61,14 @@ end
 function c65010071.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local c=e:GetHandler()
-	local race=tc:GetRace()
-	local att=tc:GetAttribute()
 	if not tc:IsRelateToEffect(e) or (tc:IsControler(tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)<1) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
 	local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0)
 	local nseq=math.log(s,2)
 	Duel.MoveSequence(tc,nseq)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c65010071.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp,race,att) then
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c65010071.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) then
 		Duel.BreakEffect()
-		local g=Duel.SelectMatchingCard(tp,c65010071.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,race,att)
+		local g=Duel.SelectMatchingCard(tp,c65010071.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,)
 		local gc=g:GetFirst()
 		Duel.SpecialSummonStep(gc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(c)

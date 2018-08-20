@@ -84,6 +84,7 @@ function cm.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,cm.tdfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_EXTRA,0,1,3,nil,e,tp)
 	if g:GetCount()>0 then
 		if Duel.SendtoDeck(g,nil,2,REASON_EFFECT) and Duel.GetFlagEffect(tp,m)==0 and Duel.SelectYesNo(tp,aux.Stringid(m,4)) then
+			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 			local g1=Duel.SelectMatchingCard(tp,cm.tgfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 			if g1:GetCount()>0 then

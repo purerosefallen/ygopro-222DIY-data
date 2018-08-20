@@ -85,7 +85,7 @@ function cm.CheckHandEffect(c,sec,e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.CopySpellNormalFilter(c,sec,e,tp,eg,ep,ev,re,r,rp)
 	local te=cm.GetHandEffect(c)
-	return c:IsType(TYPE_TUNER) and c:IsAttack(0) and c:IsDefense(1800) and c:IsLevel(3)
+	return c:IsType(TYPE_TUNER) and c:IsAttack(0) and c:IsDefense(1800) 
 		and c:IsAbleToGraveAsCost() and cm.CheckHandEffect(c,sec,e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.CopySpellNormalTarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

@@ -4,7 +4,7 @@ local cm=_G["c"..m]
 cm.card_code_list={14000260}
 function cm.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,nil,2,2,cm.lcheck)
+	aux.AddLinkProcedure(c,cm.matfilter,2,2)
 	c:EnableReviveLimit()
 	--atk up/indestructable
 	local e1=Effect.CreateEffect(c)
@@ -29,8 +29,8 @@ function cm.initial_effect(c)
 	e1:SetOperation(cm.spop)
 	c:RegisterEffect(e1)
 end
-function cm.lcheck(g,lc)
-	return g:IsExists(Card.IsType,1,nil,TYPE_TUNER)
+function cm.matfilter(c)
+	return c:IsLinkType(TYPE_TUNER)
 end
 function cm.tgtg(e,c)
 	return e:GetHandler():GetLinkedGroup():IsContains(c)

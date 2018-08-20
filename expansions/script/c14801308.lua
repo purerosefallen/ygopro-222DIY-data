@@ -27,11 +27,15 @@ function cm.initial_effect(c)
     local e3=e2:Clone()
     e3:SetCode(EFFECT_UPDATE_DEFENSE)
     c:RegisterEffect(e3)
-    --indes
+    --actlimit
     local e4=Effect.CreateEffect(c)
-    e4:SetType(EFFECT_TYPE_SINGLE)
-    e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
-    e4:SetValue(1)
+    e4:SetType(EFFECT_TYPE_FIELD)
+    e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+    e4:SetCode(EFFECT_CANNOT_ACTIVATE)
+    e4:SetRange(LOCATION_MZONE)
+    e4:SetTargetRange(0,1)
+    e4:SetValue(cm.aclimit)
+    e4:SetCondition(cm.actcon)
     c:RegisterEffect(e4)
     
 end
@@ -59,6 +63,19 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
         e1:SetCondition(cm.descon)
         e1:SetOperation(cm.desop)
         Duel.RegisterEffect(e1,tp)
+        local atk=c:GetBaseAttack()
+        local def=c:GetBaseDefense()
+        local e2=Effect.CreateEffect(c)
+        e2:SetType(EFFECT_TYPE_SINGLE)
+        e2:SetCode(EFFECT_SET_BASE_ATTACK)
+        e2:SetValue(atk/2)
+        e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
+        c:RegisterEffect(e2)
+        local e3=e2:Clone()
+        e3:SetCode(EFFECT_SET_BASE_DEFENSE)
+        e3:SetValue(def/2)
+        c:RegisterEffect(e3)
+        Duel.SpecialSummonComplete()
     end
 end
 function cm.descon(e,tp,eg,ep,ev,re,r,rp)
@@ -78,3 +95,9 @@ function cm.tgcon(e)
     return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
 end
 
+function cm.aclimit(e,re,tp)
+    return not re:GetHandler():IsImmuneToEffect(e)
+end
+function cm.actcon(e)
+    return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()
+end

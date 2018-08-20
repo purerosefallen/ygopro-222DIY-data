@@ -49,13 +49,13 @@ function c22202001.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.RegisterEffect(e1,tp)
 			tc=g:GetNext()
 		end
-		if Duel.IsExistingMatchingCard(nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(22202001,0)) then
+		if Duel.IsExistingMatchingCard(Card.IsFacedown,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(22202001,0)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			local dg=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
-			Duel.Destroy(dg,REASON_EFFECT)
+			local dg=Duel.SelectMatchingCard(tp,Card.IsFacedown,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+			if dg:GetCount()>0 then Duel.Destroy(dg,REASON_EFFECT) end
 		end
 	else
-		Duel.Draw(1-tp,1,REASON_EFFECT)
+		Duel.Draw(1-tp,2,REASON_EFFECT)
 	end
 end
 function c22202001.aclimit(e,re,tp)
@@ -66,5 +66,5 @@ function c22202001.handcon(e)
 	for i=0,4 do
 		if Duel.GetFieldCard(tp,LOCATION_SZONE,i) then return false end
 	end
-	return Duel.GetTurnPlayer()==tp
+	return true
 end

@@ -119,7 +119,7 @@ function cm.thop(e,tp,eg,ep,ev,re,r,rp)
 		if ct1>0 and ct2>0 and Duel.SelectYesNo(tp,aux.Stringid(m,2)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			local sg=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,g:GetCount(),nil)
+			local sg=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,ct2,nil)
 			Duel.HintSelection(sg)
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
 			Duel.ConfirmCards(tp,sg)

@@ -13,17 +13,18 @@ function cm.initial_effect(c)
     e1:SetTarget(cm.target)
     e1:SetOperation(cm.operation)
     c:RegisterEffect(e1)
-    --indes
+    --atk
     local e2=Effect.CreateEffect(c)
     e2:SetDescription(aux.Stringid(m,1))
+    e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
     e2:SetType(EFFECT_TYPE_QUICK_O)
     e2:SetCode(EVENT_FREE_CHAIN)
-    e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+    e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
     e2:SetRange(LOCATION_HAND)
     e2:SetCountLimit(1,m)
-    e2:SetCost(cm.indcost)
-    e2:SetTarget(cm.indtg)
-    e2:SetOperation(cm.indop)
+    e2:SetCost(cm.atkcost)
+    e2:SetTarget(cm.atktg)
+    e2:SetOperation(cm.atkop)
     c:RegisterEffect(e2)
     --tohand
     local e3=Effect.CreateEffect(c)
@@ -77,32 +78,48 @@ function cm.desop(e,tp,eg,ep,ev,re,r,rp)
     local tc=e:GetLabelObject()
     Duel.SendtoHand(tc,nil,REASON_EFFECT)
 end
-function cm.indcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function cm.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return e:GetHandler():IsDiscardable() end
     Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function cm.filter(c)
     return c:IsFaceup() and c:IsSetCard(0x4808)
 end
-function cm.indtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and cm.filter(chkc) end
+function cm.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+    if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and cm.filter(chkc) end
     if chk==0 then return Duel.IsExistingTarget(cm.filter,tp,LOCATION_MZONE,0,1,nil) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
     Duel.SelectTarget(tp,cm.filter,tp,LOCATION_MZONE,0,1,1,nil)
 end
-function cm.indop(e,tp,eg,ep,ev,re,r,rp)
+function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
     local tc=Duel.GetFirstTarget()
     if tc:IsRelateToEffect(e) and tc:IsFaceup() then
         local e1=Effect.CreateEffect(e:GetHandler())
         e1:SetType(EFFECT_TYPE_SINGLE)
-        e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+        e1:SetCode(EFFECT_SET_ATTACK_FINAL)
         e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-        e1:SetValue(1)
+        e1:SetValue(tc:GetAttack()*2)
         tc:RegisterEffect(e1)
-        local e2=e1:Clone()
-        e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+        local e2=Effect.CreateEffect(e:GetHandler())
+        e2:SetType(EFFECT_TYPE_SINGLE)
+        e2:SetCode(EFFECT_SET_DEFENSE_FINAL)
+        e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+        e2:SetValue(tc:GetDefense()*2)
         tc:RegisterEffect(e2)
+        local e3=Effect.CreateEffect(e:GetHandler())
+        e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+        e3:SetCode(EVENT_PRE_BATTLE_DAMAGE)
+        e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+        e3:SetCondition(cm.rdcon)
+        e3:SetOperation(cm.rdop)
+        tc:RegisterEffect(e3)
     end
+end
+function cm.rdcon(e,tp,eg,ep,ev,re,r,rp)
+    return ep~=tp
+end
+function cm.rdop(e,tp,eg,ep,ev,re,r,rp)
+    Duel.ChangeBattleDamage(ep,ev/2)
 end
 
 function cm.thcon(e,tp,eg,ep,ev,re,r,rp)

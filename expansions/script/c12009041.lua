@@ -80,5 +80,5 @@ function c12009041.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c12009041.aclimit(e,re,tp)
 	local rc=re:GetHandler()
-	return rc:IsLocation(LOCATION_HAND) and not rc:IsImmuneToEffect(e)
+	return rc:IsLocation(LOCATION_HAND) and re:IsType(TYPE_TRAP) and not rc:IsImmuneToEffect(e)
 end

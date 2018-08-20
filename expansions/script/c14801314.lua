@@ -114,5 +114,5 @@ function cm.filter(c)
     return c:IsCode(14801313)
 end
 function cm.atkup(e,c)
-    return Duel.GetMatchingGroupCount(cm.filter,c:GetControler(),LOCATION_GRAVE,0,nil)*1000
+    return Duel.GetMatchingGroupCount(cm.filter,c:GetControler(),LOCATION_GRAVE,0,nil)*500
 end

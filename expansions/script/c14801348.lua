@@ -51,7 +51,8 @@ function cm.initial_effect(c)
 end
 
 function cm.efilter(e,te)
-    return e:GetHandlerPlayer()~=re:GetOwnerPlayer() and re:IsActiveType(TYPE_MONSTER)
+    return te:GetOwnerPlayer()~=e:GetHandlerPlayer() and te:GetOwner()~=e:GetOwner()
+        and te:IsActiveType(TYPE_MONSTER)
 end
 
 function cm.spcon(e,tp,eg,ep,ev,re,r,rp)

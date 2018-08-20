@@ -16,13 +16,16 @@ end
 function cm.cfilter(c)
     return c:IsFaceup() and c:IsSetCard(0x4808)
 end
+function cm.filter2(c)
+    return c:IsFaceup() and c:IsType(TYPE_MONSTER)
+end
 function cm.condition(e,tp,eg,ep,ev,re,r,rp)
+    local c=e:GetHandler()
     return Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_MZONE,0,1,nil)
-        and (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated())
-        and Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil,0x4808)
+        and Duel.IsExistingMatchingCard(cm.filter2,tp,0,LOCATION_ONFIELD,4,nil,POS_FACEUP)
 end
 function cm.filter(c)
-    return c:IsType(TYPE_SPELL+TYPE_TRAP+TYPE_MONSTER)
+    return c:IsFaceup() and c:IsType(TYPE_MONSTER)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
     local c=e:GetHandler()

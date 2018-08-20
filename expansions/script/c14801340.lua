@@ -14,18 +14,16 @@ function cm.initial_effect(c)
     e1:SetCost(cm.cost)
     e1:SetOperation(cm.acop)
     c:RegisterEffect(e1)
-    
+    --special summon
     local e2=Effect.CreateEffect(c)
     e2:SetDescription(aux.Stringid(m,1))
-    e2:SetType(EFFECT_TYPE_IGNITION)
-    e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-    e2:SetRange(LOCATION_MZONE)
-    e2:SetCountLimit(1)
-    e2:SetCondition(cm.olcon)
-    e2:SetTarget(cm.oltg)
-    e2:SetOperation(cm.olop)
+    e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+    e2:SetCode(EVENT_BATTLE_DESTROYING)
+    e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+    e2:SetCondition(aux.bdogcon)
+    e2:SetTarget(cm.sptg1)
+    e2:SetOperation(cm.spop1)
     c:RegisterEffect(e2)
-
     --spsummon
     local e3=Effect.CreateEffect(c)
     e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -59,26 +57,28 @@ function cm.acop(e,tp,eg,ep,ev,re,r,rp)
     Duel.RegisterEffect(e1,tp)
 end
 
-function cm.olcon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():GetOverlayCount()==0 and e:GetHandler():IsType(TYPE_XYZ)
+function cm.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
+    local bc=e:GetHandler():GetBattleTarget()
+    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+        and bc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE) end
+    Duel.SetTargetCard(bc)
+    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,bc,1,0,0)
 end
-function cm.filter3(c)
-    return c:IsSetCard(0x4808) and c:IsType(TYPE_MONSTER)
-end
-function cm.oltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and cm.filter3(chkc) end
-    if chk==0 then return Duel.IsExistingTarget(cm.filter3,tp,LOCATION_GRAVE,0,1,nil,TYPE_MONSTER) end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-    local g=Duel.SelectTarget(tp,cm.filter3,tp,LOCATION_GRAVE,0,1,1,nil,TYPE_MONSTER)
-    Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
-end
-function cm.olop(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
-    if c:IsRelateToEffect(e) then
-        local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-        if g:GetCount()>0 then
-            Duel.Overlay(c,g)
-        end
+function cm.spop1(e,tp,eg,ep,ev,re,r,rp)
+    local tc=Duel.GetFirstTarget()
+    if tc:IsRelateToEffect(e) then
+        Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
+        local e1=Effect.CreateEffect(e:GetHandler())
+        e1:SetType(EFFECT_TYPE_SINGLE)
+        e1:SetCode(EFFECT_DISABLE)
+        e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+        tc:RegisterEffect(e1,true)
+        local e2=Effect.CreateEffect(e:GetHandler())
+        e2:SetType(EFFECT_TYPE_SINGLE)
+        e2:SetCode(EFFECT_DISABLE_EFFECT)
+        e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+        tc:RegisterEffect(e2,true)
+        Duel.SpecialSummonComplete()
     end
 end
 

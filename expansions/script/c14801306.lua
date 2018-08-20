@@ -58,7 +58,9 @@ end
 function cm.distg(e,c)
     return c==e:GetHandler():GetBattleTarget()
 end
-
+function cm.atkfilter(c)
+    return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x4808)
+end
 function cm.atkup(e,c)
-    return Duel.GetMatchingGroupCount(Card.IsSetCard,c:GetControler(),LOCATION_GRAVE,0,nil,0x4808)*100
+    return Duel.GetMatchingGroup(cm.atkfilter,c:GetControler(),LOCATION_GRAVE,0,nil):GetClassCount(Card.GetCode)*100
 end
