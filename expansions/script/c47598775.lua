@@ -3,7 +3,7 @@ local m=47598775
 local cm=_G["c"..m]
 function c47598775.initial_effect(c)
     --link summon
-    aux.AddLinkProcedure(c,nil,2,2,c47598775.lcheck)
+    aux.AddLinkProcedure(c,nil,2,3,c47598775.lcheck)
     c:EnableReviveLimit()
     --检索
     local e1=Effect.CreateEffect(c)
@@ -28,16 +28,16 @@ function c47598775.initial_effect(c)
     e2:SetOperation(c47598775.indop)
     c:RegisterEffect(e2)
     --atk,defdown
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_FIELD)
-    e1:SetCode(EFFECT_UPDATE_ATTACK)
-    e1:SetRange(LOCATION_MZONE)
-    e1:SetTargetRange(0,LOCATION_MZONE)
-    e1:SetValue(c47598775.atkval)
-    c:RegisterEffect(e1)
-    local e2=e1:Clone()
-    e2:SetCode(EFFECT_UPDATE_DEFENSE)
-    c:RegisterEffect(e2)
+    local e3=Effect.CreateEffect(c)
+    e3:SetType(EFFECT_TYPE_FIELD)
+    e3:SetCode(EFFECT_UPDATE_ATTACK)
+    e3:SetRange(LOCATION_MZONE)
+    e3:SetTargetRange(0,LOCATION_MZONE)
+    e3:SetValue(c47598775.atkval)
+    c:RegisterEffect(e3)
+    local e4=e3:Clone()
+    e4:SetCode(EFFECT_UPDATE_DEFENSE)
+    c:RegisterEffect(e4)
 end
 function c47598775.lcheck(g)
     return g:GetClassCount(Card.GetLinkAttribute)==g:GetCount()
@@ -49,12 +49,12 @@ function c47598775.filter(c)
     return c:IsAttribute(ATTRIBUTE_WIND) and c:IsAbleToHand() and c:IsLevelBelow(4)
 end
 function c47598775.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(c47598775.filter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil) end
-    Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED)
+    if chk==0 then return Duel.IsExistingMatchingCard(c47598775.filter,tp,LOCATION_DECK,0,1,nil) end
+    Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c47598775.thop(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-    local g=Duel.SelectMatchingCard(tp,c47598775.filter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
+    local g=Duel.SelectMatchingCard(tp,c47598775.filter,tp,LOCATION_DECK,0,1,1,nil)
     if g:GetCount()>0 then
         Duel.SendtoHand(g,nil,REASON_EFFECT)
         Duel.ConfirmCards(1-tp,g)
@@ -85,5 +85,5 @@ function c47598775.indop(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 function c47598775.atkval(e)
-    return Duel.GetMatchingGroupCount(Card.IsAttribute,e:GetHandlerPlayer(),LOCATION_GRAVE,0,nil,ATTRIBUTE_WIND)*-300
+    return Duel.GetMatchingGroupCount(Card.IsAttribute,e:GetHandlerPlayer(),LOCATION_MZONE,0,nil,ATTRIBUTE_WIND)*-300
 end

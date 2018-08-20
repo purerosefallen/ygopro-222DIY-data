@@ -4,7 +4,7 @@ local cm=_G["c"..m]
 function c47598774.initial_effect(c)
     c:EnableReviveLimit()
     --pendulum summon
-    aux.EnablePendulumAttribute(c,false)
+    aux.EnablePendulumAttribute(c)
     --synchro summon
     aux.AddSynchroProcedure(c,c47598774.synfilter2,aux.NonTuner(c47598774.synfilter),1)
     c:EnableReviveLimit()
@@ -17,20 +17,6 @@ function c47598774.initial_effect(c)
     e0:SetTargetRange(1,0)
     e0:SetTarget(c47598774.psplimit)
     c:RegisterEffect(e0)
-    --Negate
-    local e1=Effect.CreateEffect(c)
-    e1:SetDescription(aux.Stringid(47598774,0))
-    e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
-    e1:SetType(EFFECT_TYPE_QUICK_O)
-    e1:SetCode(EVENT_CHAINING)
-    e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-    e1:SetRange(LOCATION_PZONE)
-    e1:SetCountLimit(1,47598774)
-    e1:SetCondition(c47598774.discon)
-    e1:SetCost(c47598774.discost)
-    e1:SetTarget(c47598774.distg)
-    e1:SetOperation(c47598774.disop)
-    c:RegisterEffect(e1)
     --spsummon
     local e2=Effect.CreateEffect(c)
     e2:SetDescription(aux.Stringid(47598774,1))
@@ -53,12 +39,12 @@ function c47598774.initial_effect(c)
     e3:SetTarget(c47598774.sumtg)
     e3:SetOperation(c47598774.sumop)
     c:RegisterEffect(e3)
-    local e0=Effect.CreateEffect(c)
-    e0:SetType(EFFECT_TYPE_SINGLE)
-    e0:SetCode(EFFECT_MATERIAL_CHECK)
-    e0:SetValue(c47598774.valcheck)
-    e0:SetLabelObject(e3)
-    c:RegisterEffect(e0)
+    local e9=Effect.CreateEffect(c)
+    e9:SetType(EFFECT_TYPE_SINGLE)
+    e9:SetCode(EFFECT_MATERIAL_CHECK)
+    e9:SetValue(c47598774.valcheck)
+    e9:SetLabelObject(e9)
+    c:RegisterEffect(e9)
     --damage&recover
     local e4=Effect.CreateEffect(c)
     e4:SetDescription(aux.Stringid(47598774,3))
@@ -107,32 +93,6 @@ function c47598774.synfilter2(c)
 end
 function c47598774.costfilter(c)
     return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToGraveAsCost()
-end
-function c47598774.discon(e,tp,eg,ep,ev,re,r,rp)
-    return re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
-end
-function c47598774.distg(e,c)
-    return c:IsType(TYPE_TRAP)
-end
-function c47598774.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-    local c=e:GetHandler()
-    if chk==0 then return c:IsAbleToGraveAsCost() and 
-        Duel.IsExistingMatchingCard(c47598774.costfilter,tp,LOCATION_HAND,0,1,c) end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-    local g=Duel.SelectMatchingCard(tp,c47598774.costfilter,tp,LOCATION_HAND,0,1,1,c)
-    Duel.SendtoGrave(g,REASON_COST)
-end
-function c47598774.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return true end
-    Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-    if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
-        Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
-    end
-end
-function c47598774.disop(e,tp,eg,ep,ev,re,r,rp)
-    if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
-        Duel.Destroy(eg,REASON_EFFECT)
-    end
 end
 function c47598774.cfilter(c,tp)
     return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
