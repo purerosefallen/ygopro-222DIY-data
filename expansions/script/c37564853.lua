@@ -85,7 +85,7 @@ function cm.CheckHandEffect(c,sec,e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.CopySpellNormalFilter(c,sec,e,tp,eg,ep,ev,re,r,rp)
 	local te=cm.GetHandEffect(c)
-	return c:IsType(TYPE_TUNER) and c:IsAttack(0) and c:IsDefense(1800) 
+	return c:IsType(TYPE_TUNER) and c:IsAttack(0) and c:IsDefense(1800) and c:IsLevel(3)
 		and c:IsAbleToGraveAsCost() and cm.CheckHandEffect(c,sec,e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.CopySpellNormalTarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -147,6 +147,7 @@ end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then
+		if not c:IsLocation(LOCATION_HAND) then return false end
 		local chkf=tp
 		local mg1=Senya.GetFusionMaterial(tp,LOCATION_HAND,nil,Senya.check_set_3L,c)
 		local res=Duel.IsExistingMatchingCard(cm.spfilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,c,chkf)
