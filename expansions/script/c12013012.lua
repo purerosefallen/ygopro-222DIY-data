@@ -82,5 +82,5 @@ function c12013012.operation(e,tp,eg,ep,ev,re,r,rp)
 	end 
 end
 function c12013012.filter2(c)
-	return c:IsSetCard(0xfb6) and c:IsType(TYPE_TRAP+TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSetCard(0xfb6) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
 end
