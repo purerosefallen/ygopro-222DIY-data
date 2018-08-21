@@ -33,7 +33,7 @@ function c4212301.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c4212301.tffilter(c,tp)
-	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x2a5) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x2a5) and not c:IsForbidden() and not c:IsType(TYPE_FIELD) and c:CheckUniqueOnField(tp)
 end
 function c4212301.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

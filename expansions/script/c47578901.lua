@@ -15,7 +15,7 @@ function c47578901.initial_effect(c)
     c:RegisterEffect(e1)
     --spsum
     local e2=Effect.CreateEffect(c)
-    e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SEARCH)
+    e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
     e2:SetType(EFFECT_TYPE_IGNITION)
     e2:SetRange(LOCATION_PZONE)
     e2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
@@ -44,13 +44,6 @@ function c47578901.initial_effect(c)
     e5:SetCode(EVENT_SPSUMMON_SUCCESS)
     c:RegisterEffect(e5)
 end
-function c47578901.reg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return true end
-    e:GetHandler():RegisterFlagEffect(17330916,RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
-end
-function c47578901.thcon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():GetFlagEffect(47578901)~=0
-end
 function c47578901.psplimit(e,c,tp,sumtp,sumpos)
     return not c:IsRace(RACE_FAIRY) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
@@ -63,7 +56,7 @@ function c47578901.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c47578901.thop(e,tp,eg,ep,ev,re,r,rp)
-    if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+    if not e:GetHandler():IsRelateToEffect(e) then return end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
     local g=Duel.SelectMatchingCard(tp,c47578901.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
     if g:GetCount()>0 then

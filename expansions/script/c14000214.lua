@@ -3,7 +3,7 @@ local m=14000214
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,11,2,cm.ovfilter,aux.Stringid(m,0),99,cm.xyzop)
+	aux.AddXyzProcedure(c,cm.xyzfilter,11,2,cm.ovfilter,aux.Stringid(m,0),99,cm.xyzop)
 	c:EnableReviveLimit()
 	--tohand
 	local e1=Effect.CreateEffect(c)
@@ -37,6 +37,9 @@ function cm.initial_effect(c)
 	e3:SetTarget(cm.rettg)
 	e3:SetOperation(cm.retop)
 	c:RegisterEffect(e3)
+end
+function cm.xyzfilter(c)
+	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_MACHINE)
 end
 function cm.ovfilter(c)
 	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsType(TYPE_XYZ) and c:GetRank()==10
@@ -73,7 +76,6 @@ function cm.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,cm.thfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
 	end
 end
 function cm.retcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -95,14 +97,12 @@ function cm.retop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,cm.retfilter,tp,LOCATION_MZONE,0,1,ct1,nil)
 	if g:GetCount()>0 then
 		local ct3=Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
 		if ct2>0 and ct3>0 and Duel.SelectYesNo(tp,aux.Stringid(m,3)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local sg=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,ct3,nil)
 			Duel.HintSelection(sg)
 			Duel.SendtoHand(sg,nil,REASON_EFFECT)
-			Duel.ConfirmCards(tp,sg)
 		end
 	end
 end

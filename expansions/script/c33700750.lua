@@ -81,10 +81,10 @@ end
 function cm.coutg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetFieldGroup(tp,LOCATION_GRAVE,0)
 	local ct=g:GetClassCount(Card.GetCode)
-	if ct>=5 then ct5=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) else ct5=Duel.IsExistingMatchingCard(cm.pufilter,tp,LOCATION_HAND,0,1,nil) end
+	if ct>=5 then ct5=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP) else ct5=true end
 	if ct>=10 then ct10=Duel.IsPlayerCanDraw(tp,1) end
 	if ct>=20 then ct20=Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_DECK,0,1,nil) end
-	if chk==0 then return not Duel.IsExistingMatchingCard(cm.pufilter,tp,LOCATION_HAND,0,1,nil) and (ct5 or ct10 or ct20 or e:GetHandler():IsHasEffect(33700090)) end
+	if chk==0 then return Duel.IsExistingMatchingCard(cm.pufilter,tp,LOCATION_HAND,0,1,nil) and (ct5 or ct10 or ct20 or e:GetHandler():IsHasEffect(33700090)) end
 	if ct>=5 then
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,tp,LOCATION_HANDE)
 	end
@@ -101,14 +101,14 @@ function cm.couop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND+LOCATION_GRAVE,0)
 	local ct=g:GetClassCount(Card.GetCode)
 	if Duel.IsExistingMatchingCard(cm.pufilter,tp,LOCATION_HAND,0,1,nil) then
-		Duel.ConfirmCards(g,1-tp)
+		local g1=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
+		Duel.ConfirmCards(1-tp,g1)
 		Duel.ShuffleHand(tp)
 	end
 	if ct<5 then return end
 	local c=e:GetHandler()
-	local ct=g:FilterCount(cm.filter,nil)
 	if ct>=5 and c:IsRelateToEffect(e) then
-		Duel.SpecialSummon(c,0,tp,tp,false,false)
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 	if ct>=10 or e:GetLabel()==33700090 then
 		local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)

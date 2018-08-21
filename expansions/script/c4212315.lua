@@ -104,6 +104,7 @@ function c4212315.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc = Duel.SelectMatchingCard(tp,Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler(),TYPE_MONSTER)
 	if tc:GetCount()>0 then
 		local seq = tc:GetFirst():GetSequence()
+		seq = (((seq==5 or seq==6) and tc:GetFirst():GetControler()==1-tp) and { (seq==5 and {6} or {5})[1] } or {seq})[1]
 		if Duel.Destroy(tc,REASON_EFFECT)~=0 and Duel.GetMatchingGroupCount(c4212315.mfilter,tp,LOCATION_SZONE,0,nil)>=3  then
 			local e4=Effect.CreateEffect(c)
             e4:SetType(EFFECT_TYPE_FIELD)
@@ -127,25 +128,25 @@ function c4212315.distg(e,c)
     local seq=e:GetLabel()
     local p=c:GetControler()
     local tp=e:GetHandlerPlayer()
-    return c:IsType(TYPE_SPELL+TYPE_TRAP)
-        and ((p==tp and c:GetSequence()==seq
+    return c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsType(TYPE_FIELD)
+        and ((p==tp and (c:GetSequence()==seq
 			or (math.ceil(c:GetSequence())==1 and seq==5 ) 
-			or (math.ceil(c:GetSequence())==3 and seq==6 )		
-		) or (p==1-tp and c:GetSequence()==4-seq
+			or (math.ceil(c:GetSequence())==3 and seq==6 ))	
+		) or (p==1-tp and (c:GetSequence()==4-seq
 			or (math.ceil(c:GetSequence())==1 and seq==6 ) 
-			or (math.ceil(c:GetSequence())==3 and seq==5 ) 		
+			or (math.ceil(c:GetSequence())==3 and seq==5 ))
 		))
 end
 function c4212315.disop(e,tp,eg,ep,ev,re,r,rp)
     local tseq=e:GetLabel()
     local loc,seq=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_SEQUENCE)
     if bit.band(loc,LOCATION_SZONE)~=0 and re:IsActiveType(TYPE_SPELL+TYPE_TRAP)
-        and ((rp==tp and seq==tseq
+        and ((rp==tp and (seq==tseq
 			or (tseq==1 and seq==5 ) 
-			or (tseq==3 and seq==6 )	
-		) or (rp==1-tp and seq==4-tseq
-			or (tseq==1 and seq==6 ) 
-			or (tseq==3 and seq==5 ) 
+			or (tseq==3 and seq==6 ))
+		) or (rp==1-tp and (seq==4-tseq
+			or (tseq==1 and seq==5 ) 
+			or (tseq==3 and seq==6 ))
 		)) then
         Duel.NegateEffect(ev)
     end
