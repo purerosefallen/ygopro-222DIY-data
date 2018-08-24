@@ -68,7 +68,7 @@ function c47598774.initial_effect(c)
     e6:SetType(EFFECT_TYPE_FIELD)
     e6:SetCode(EFFECT_DISABLE)
     e6:SetRange(LOCATION_MZONE)
-    e6:SetTargetRange(LOCATION_SZONE,1)
+    e6:SetTargetRange(0,LOCATION_SZONE)
     e6:SetTarget(c47598774.distg)
     c:RegisterEffect(e6)
     --pendulum
@@ -168,6 +168,9 @@ function c47598774.damop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c47598774.aclimit(e,re,tp)
     return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:GetHandler():IsType(TYPE_TRAP)
+end
+function c47598774.distg(e,c)
+    return c:IsType(TYPE_TRAP)
 end
 function c47598774.pencon(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()

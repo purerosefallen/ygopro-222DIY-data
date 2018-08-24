@@ -3,7 +3,7 @@ function c4212307.initial_effect(c)
 	c:SetUniqueOnField(1,0,4212307)
 	--Activate
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_ACTIVATE)
 	e2:SetCode(EVENT_FREE_CHAIN)
 	e2:SetTarget(c4212307.target)
@@ -42,7 +42,7 @@ function c4212307.activate(e,tp,eg,ep,ev,re,r,rp)
 					local tc = Duel.SelectMatchingCard(tp,Card.IsType,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,e:GetHandler(),TYPE_SPELL+TYPE_TRAP)
 					if tc:GetCount()>0 then
 						Duel.Destroy(tc,REASON_EFFECT)
-					end			
+					end		 
 				end
 			end
 		end
@@ -63,11 +63,11 @@ function c4212307.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_MZONE,0,1,nil,4212303) then
 		if Duel.SelectEffectYesNo(tp,e:GetHandler(),aux.Stringid(4212307,2))
-			and	e:GetHandler():IsAbleToHand() then
+			and e:GetHandler():IsAbleToHand() then
 			local tc = Duel.SelectMatchingCard(tp,Card.IsCode,tp,LOCATION_MZONE,0,1,1,nil,4212303)
 			if Duel.Destroy(tc,REASON_EFFECT)~=0 then
 				Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
-			end			
+			end		 
 		end
 	end
 end

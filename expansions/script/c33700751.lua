@@ -19,12 +19,14 @@ function cm.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_DISCARD)
+	e2:SetRange(LOCATION_HAND)
 	e2:SetCost(cm.cost)
 	e2:SetTarget(cm.thtg1)
 	e2:SetOperation(cm.thop1)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_TO_GRAVE)
+	e3:SetCondition(cm.con)
 	e3:SetTarget(cm.thtg2)
 	e3:SetOperation(cm.thop2)
 	c:RegisterEffect(e3)
@@ -68,11 +70,11 @@ function cm.repfilter1(c,tp)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsPreviousLocation(LOCATION_HAND) and c:IsReason(REASON_DISCARD) and c:IsAbleToHand()
 end
 function cm.thtg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(cm.repfilter1,1,nil,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,eg:IsExists(cm.repfilter1,1,nil,tp):GetCount(),tp,LOCATION_GRAVE)
+	if chk==0 then return eg:IsExists(cm.repfilter1,1,e:GetHandler(),tp) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,eg:Filter(cm.repfilter1,e:GetHandler()):GetCount(),tp,LOCATION_GRAVE)
 end
 function cm.thop1(e,tp,eg,ep,ev,re,r,rp)
-	local sg=eg:IsExists(cm.repfilter1,1,nil,tp)
+	local sg=eg:Filter(cm.repfilter1,e:GetHandler())
 	local ct=sg:GetCount()
 	if ct>0 then
 		Duel.SendtoHand(sg,tp,REASON_EFFECT)
@@ -95,15 +97,18 @@ function cm.thop1(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
+function cm.con(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentChain()~=0
+end
 function cm.repfilter2(c,tp)
-	return c:IsControler(1-tp) and c:IsLocation(LOCATION_GRAVE) and c:IsPreviousLocation(LOCATION_HAND) and c:IsReason(REASON_COST) and c:IsAbleToHand()
+	return c:IsControler(1-tp) and c:IsLocation(LOCATION_GRAVE) and c:IsPreviousLocation(LOCATION_HAND) and c:IsReason(REASON_COST) and c:IsAbleToHand() and bit.band(c:GetReason(),REASON_MATERIAL)==0
 end
 function cm.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(cm.repfilter2,1,nil,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,eg:IsExists(cm.repfilter2,1,nil,tp):GetCount(),tp,LOCATION_GRAVE)
+	if chk==0 then return eg:IsExists(cm.repfilter2,1,e:GetHandler(),tp) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,eg:Filter(cm.repfilter2,e:GetHandler(),tp):GetCount(),tp,LOCATION_GRAVE)
 end
 function cm.thop2(e,tp,eg,ep,ev,re,r,rp)
-	local sg=eg:IsExists(cm.repfilter2,1,nil,tp)
+	local sg=eg:Filter(cm.repfilter2,e:GetHandler(),tp)
 	local ct=sg:GetCount()
 	if ct>0 then
 		Duel.SendtoHand(sg,tp,REASON_EFFECT)

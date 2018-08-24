@@ -60,14 +60,14 @@ function c47590011.ctop(e,tp,eg,ep,ev,re,r,rp)
     local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_ONFIELD,nil)
     local tc=g:GetFirst()
     while tc do
-        if not tc:IsCanAddCounter(0x5d4,2) then
-            tc:EnableCounterPermit(0x5d4)
+        if not tc:IsCanAddCounter(0x105d,2) then
+            tc:EnableCounterPermit(0x105d)
         end
-        tc:AddCounter(0x5d4,2)
+        tc:AddCounter(0x105d,2)
     end
 end
 function c47590011.atkval(e,c)
-    return Duel.GetCounter(0,1,1,0x5d4)*-300
+    return Duel.GetCounter(0,1,1,0x105d)*-300
 end
 function c47590011.filter(c,e,tp,id)
     return c:IsReason(REASON_DESTROY) and c:GetTurnID()==id and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
