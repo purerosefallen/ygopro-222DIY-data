@@ -4,7 +4,7 @@ local cm=_G["c"..m]
 cm.named_with_Circlia=1
 function cm.initial_effect(c)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,cm.matfilter,1,1)
+	aux.AddLinkProcedure(c,cm.check_link_set_CIR,1,1)
 	--activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(m,0))
@@ -29,9 +29,40 @@ function cm.CIR(c)
 	local m=_G["c"..c:GetCode()]
 	return m and m.named_with_Circlia
 end
-function cm.matfilter(c)
-	return cm.CIR(c) and not c:IsLinkType(TYPE_LINK)
+cm.loaded_metatable_list=cm.loaded_metatable_list or {}
+function cm.LoadMetatable(code)
+	local m1=_G["c"..code]
+	if m1 then return m1 end
+	local m2=cm.loaded_metatable_list[code]
+	if m2 then return m2 end
+	_G["c"..code]={}
+	if pcall(function() dofile("expansions/script/c"..code..".lua") end) or pcall(function() dofile("script/c"..code..".lua") end) then
+		local mt=_G["c"..code]
+		_G["c"..code]=nil
+		if mt then
+			cm.loaded_metatable_list[code]=mt
+			return mt
+		end
+	else
+		_G["c"..code]=nil
+	end
 end
+function cm.check_link_set_CIR(c)
+	if c:IsLinkType(TYPE_LINK) then return end
+	local codet={c:GetLinkCode()}
+	for j,code in pairs(codet) do
+		local mt=cm.LoadMetatable(code)
+		if mt then
+			for str,v in pairs(mt) do   
+				if type(str)=="string" and str:find("_Circlia") and v then return true end
+			end
+		end
+	end
+	return false
+end
+--function cm.matfilter(c)
+	--return cm.CIR(c) and not c:IsLinkType(TYPE_LINK)
+--end
 function cm.actcon(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp
 end

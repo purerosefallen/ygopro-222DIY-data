@@ -24,8 +24,39 @@ function cm.initial_effect(c)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 end
+cm.loaded_metatable_list=cm.loaded_metatable_list or {}
+function cm.LoadMetatable(code)
+	local m1=_G["c"..code]
+	if m1 then return m1 end
+	local m2=cm.loaded_metatable_list[code]
+	if m2 then return m2 end
+	_G["c"..code]={}
+	if pcall(function() dofile("expansions/script/c"..code..".lua") end) or pcall(function() dofile("script/c"..code..".lua") end) then
+		local mt=_G["c"..code]
+		_G["c"..code]=nil
+		if mt then
+			cm.loaded_metatable_list[code]=mt
+			return mt
+		end
+	else
+		_G["c"..code]=nil
+	end
+end
+function cm.check_link_set_SPO(c)
+	if c:IsLinkType(TYPE_LINK) then return end
+	local codet={c:GetLinkCode()}
+	for j,code in pairs(codet) do
+		local mt=cm.LoadMetatable(code)
+		if mt then
+			for str,v in pairs(mt) do   
+				if type(str)=="string" and str:find("_Spositch") and v then return true end
+			end
+		end
+	end
+	return false
+end
 function cm.lfilter(c)
-	return c:IsType(TYPE_TUNER) and spo.named(c)
+	return c:IsLinkType(TYPE_TUNER) and cm.check_link_set_SPO(c)
 end
 function cm.lcheck(g,lc)
 	return g:IsExists(cm.lfilter,1,nil)

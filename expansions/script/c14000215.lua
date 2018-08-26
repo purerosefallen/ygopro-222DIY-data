@@ -54,7 +54,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 function cm.matfilter(c)
-	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH)
+	return c:IsLinkRace(RACE_MACHINE) and c:IsLinkAttribute(ATTRIBUTE_EARTH)
 end
 function cm.splimit(e,se,sp,st)
 	return bit.band(st,SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK

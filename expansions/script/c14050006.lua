@@ -34,7 +34,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function cm.lcheck(g,lc)
-	return g:IsExists(Card.IsSetCard,1,nil,0x1405)
+	return g:IsExists(Card.IsLinkSetCard,1,nil,0x1405)
 end
 function cm.spfilter(c,e,tp,zone)
 	return c:IsSetCard(0x1405) and c:IsType(TYPE_MONSTER) and zone~=0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)

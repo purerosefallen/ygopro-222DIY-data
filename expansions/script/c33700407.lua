@@ -1,7 +1,7 @@
 --Destiny Mend
 --AlphaKretin
 --For Nemoma
-local card = c33700307
+local card = c33700407
 local code = 33700407
 function card.initial_effect(c)
 	--Activate

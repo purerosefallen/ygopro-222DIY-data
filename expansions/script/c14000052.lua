@@ -32,8 +32,39 @@ function cm.ANOTHER(c)
 	local m=_G["c"..c:GetCode()]
 	return m and m.named_with_another
 end
+cm.loaded_metatable_list=cm.loaded_metatable_list or {}
+function cm.LoadMetatable(code)
+	local m1=_G["c"..code]
+	if m1 then return m1 end
+	local m2=cm.loaded_metatable_list[code]
+	if m2 then return m2 end
+	_G["c"..code]={}
+	if pcall(function() dofile("expansions/script/c"..code..".lua") end) or pcall(function() dofile("script/c"..code..".lua") end) then
+		local mt=_G["c"..code]
+		_G["c"..code]=nil
+		if mt then
+			cm.loaded_metatable_list[code]=mt
+			return mt
+		end
+	else
+		_G["c"..code]=nil
+	end
+end
+function cm.check_link_set_ANOTHER(c)
+	if c:IsLinkType(TYPE_LINK) then return end
+	local codet={c:GetLinkCode()}
+	for j,code in pairs(codet) do
+		local mt=cm.LoadMetatable(code)
+		if mt then
+			for str,v in pairs(mt) do   
+				if type(str)=="string" and str:find("_another") and v then return true end
+			end
+		end
+	end
+	return false
+end
 function cm.lfilter(c)
-	return cm.ANOTHER(c)
+	return cm.check_link_set_ANOTHER(c)
 end
 function cm.lcheck(g,lc)
 	return g:IsExists(cm.lfilter,1,nil)
