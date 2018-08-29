@@ -35,7 +35,7 @@ function c4212307.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 			local g=Duel.SelectMatchingCard(tp,c4212307.cfilter,tp,LOCATION_DECK,0,1,1,nil,e)
 			if g:GetCount()>0 then
-				Duel.SendtoHand(g,nil,REASON_EFFECT)
+				Duel.SendtoHand(g,nil,REASON_EFFECT)  Duel.ConfirmCards(1-tp,g)
 			end
 			if Duel.GetMatchingGroupCount(c4212307.mfilter,tp,LOCATION_SZONE,0,nil)>=3 then
 				if Duel.SelectEffectYesNo(tp,e:GetHandler(),aux.Stringid(4212307,1)) then
@@ -66,7 +66,7 @@ function c4212307.op(e,tp,eg,ep,ev,re,r,rp)
 			and e:GetHandler():IsAbleToHand() then
 			local tc = Duel.SelectMatchingCard(tp,Card.IsCode,tp,LOCATION_MZONE,0,1,1,nil,4212303)
 			if Duel.Destroy(tc,REASON_EFFECT)~=0 then
-				Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
+				Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT) Duel.ConfirmCards(1-tp,e:GetHandler())
 			end		 
 		end
 	end
