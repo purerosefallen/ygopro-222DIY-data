@@ -7,6 +7,10 @@ cm.delay=0x14000
 cm.fix=0x40400
 cm.m=37564765
 
+json=nil
+--json lib
+xpcall(function() json=require("expansions/script/json") end,function() json=require("script/json") end)
+
 function cm.DescriptionInNanahira(id)
 	id=id or 0
 	return 37564765*16+id
