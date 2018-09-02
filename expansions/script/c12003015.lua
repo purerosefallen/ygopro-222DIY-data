@@ -53,7 +53,7 @@ function c12003015.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local zone=Duel.GetLinkedZone(tp)
-	return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0
+	return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_TOFIELD,zone)>0 and Duel.IsExistingMatchingCard(c12003015.sprfilter,tp,LOCATION_GRAVE,0,1,nil)
 end
 function c12003015.spval(e,c)
 	return 0,Duel.GetLinkedZone(c:GetControler())
