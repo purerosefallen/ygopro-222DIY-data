@@ -1,6 +1,7 @@
 muxu=muxu or {}
 local cm=muxu
 muxu.loaded_metatable_list={}
+--
 function muxu.load_metatable(code)
 	local m1=_G["c"..code]
 	if m1 then return m1 end
@@ -18,6 +19,7 @@ function muxu.load_metatable(code)
 		_G["c"..code]=nil
 	end
 end
+--
 function muxu.check_set(c,setcode,v,f,...) 
 	local codet=nil
 	if type(c)=="number" then
@@ -38,13 +40,14 @@ function muxu.check_set(c,setcode,v,f,...)
 	end
 	return false
 end
-function muxu.check_set_Soul(c)		   --灵曲
+--
+function muxu.check_set_Soul(c)  --灵曲
 	return muxu.check_set(c,"Soul")
 end
-function muxu.check_set_Border(c)		   --交界
+function muxu.check_set_Border(c)	  --交界
 	return muxu.check_set(c,"Border")
 end
-function muxu.check_set_Legend(c)		   --秘谈
+function muxu.check_set_Legend(c)	  --秘谈
 	return muxu.check_set(c,"Legend")
 end
 function muxu.check_set_Urban(c)			 --灵都
@@ -56,12 +59,55 @@ end
 function muxu.check_set_Lines(c)			 --灵纹
 	return muxu.check_set(c,"Lines")
 end
-function muxu.check_set_Hinbackc(c)	   --莱姆狐
+function muxu.check_set_Hinbackc(c) --莱姆狐
 	return muxu.check_set(c,"Hinbackc")
 end
-function muxu.check_set_Medicine(c)	   --梅蒂欣
+function muxu.check_set_Medicine(c) --梅蒂欣
 	return muxu.check_set(c,"Medicine")
 end
-function muxu.check_set_Poison(c)	   --毒符
+function muxu.check_set_Poison(c)   --毒符
 	return muxu.check_set(c,"Poison")
 end
+--
+function muxu.check_set_Tatara(c)   --小伞
+	return muxu.check_set(c,"Tatara")
+end
+function muxu.check_fusion_set_Tatara(c)
+	if c:IsHasEffect(6205579) then return false end
+	local codet={c:GetFusionCode()}
+	for j,code in pairs(codet) do
+		local mt=muxu.load_metatable(code)
+		if mt then
+			for str,v in pairs(mt) do
+				if type(str)=="string" and str:find("_Tatara") and v then return true end
+			end
+		end
+	end
+	return false
+end
+function muxu.check_link_set_Tatara(c)
+	local codet={c:GetLinkCode()}
+	for j,code in pairs(codet) do
+		local mt=muxu.load_metatable(code)
+		if mt then
+			for str,v in pairs(mt) do
+				if type(str)=="string" and str:find("_Tatara") and v then return true end
+			end
+		end
+	end
+	return false
+end
+--
+function muxu.check_link_set_Urban(c)
+	local codet={c:GetLinkCode()}
+	for j,code in pairs(codet) do
+		local mt=muxu.load_metatable(code)
+		if mt then
+			for str,v in pairs(mt) do
+				if type(str)=="string" and str:find("_Urban") and v then return true end
+			end
+		end
+	end
+	return false
+end
+--

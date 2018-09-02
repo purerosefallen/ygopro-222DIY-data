@@ -1,159 +1,132 @@
---ｼｼﾗﾗ・ﾊﾟﾋﾟﾖﾝｿｰﾄﾞ
-function c17060896.initial_effect(c)
-	--pendulum summon
-	aux.EnablePendulumAttribute(c,false)
-	--Activate
-	local e0=Effect.CreateEffect(c)
-	e0:SetDescription(1160)
-	e0:SetType(EFFECT_TYPE_ACTIVATE)
-	e0:SetCode(EVENT_FREE_CHAIN)
-	e0:SetRange(LOCATION_HAND)
-	e0:SetCost(c17060896.threg)
-	c:RegisterEffect(e0)
-	--to hand
+--オルトリート
+local m=17060896
+local cm=_G["c"..m]
+function cm.initial_effect(c)
+	aux.EnablePendulumAttribute(c)
+	--splimit
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(17060896,0))
-	e1:SetCategory(CATEGORY_TOHAND)
-	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetDescription(aux.Stringid(m,0))
+	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetRange(LOCATION_PZONE)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCountLimit(1,17060896)
-	e1:SetCondition(c17060896.thcon)
-	e1:SetTarget(c17060896.thtg)
-	e1:SetOperation(c17060896.thop)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE)
+	e1:SetTargetRange(1,0)
+	e1:SetCondition(cm.splimcon)
+	e1:SetTarget(cm.splimit)
 	c:RegisterEffect(e1)
 	--pendulum set
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(17060896,1))
+	e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCountLimit(1,17060896+100)
-	e2:SetTarget(c17060896.pstg)
-	e2:SetOperation(c17060896.psop)
-	c:RegisterEffect(e2)
-	local e2b=e2:Clone()
-	e2b:SetCode(EVENT_SPSUMMON_SUCCESS)
-	c:RegisterEffect(e2b)
-	--activate
+	e2:SetTarget(cm.pstg)
+	e2:SetOperation(cm.psop)
+	c:RegisterEffect(e2)	
+	--Activate
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(17060896,2))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1,17060896+200)
-	e3:SetCost(c17060896.cost)
-	e3:SetTarget(c17060896.target)
-	e3:SetOperation(c17060896.activate)
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetCode(EVENT_FREE_CHAIN)
+	e3:SetRange(LOCATION_HAND)
+	e3:SetCountLimit(1,m)
+	e3:SetCost(cm.spcost)
+	e3:SetTarget(cm.target)
+	e3:SetOperation(cm.activate)
 	c:RegisterEffect(e3)
 end
-c17060896.is_named_with_Opera_type=1
-function c17060896.IsOpera_type(c)
+cm.is_named_with_Opera_type=1
+function cm.IsOpera_type(c)
 	local m=_G["c"..c:GetCode()]
 	return m and m.is_named_with_Opera_type
 end
-function c17060896.threg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	e:GetHandler():RegisterFlagEffect(17060896,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
+function cm.splimcon(e)
+	return not e:GetHandler():IsForbidden()
 end
-function c17060896.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(17060896)~=0
+function cm.splimit(e,c,tp,sumtp,sumpos)
+	return not c:IsType(TYPE_PENDULUM) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
-function c17060896.thfilter(c)
-	return c:GetLevel()==1 and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
+function cm.psfilter(c)
+	return cm.IsOpera_type(c) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 end
-function c17060896.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c17060896.thfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c17060896.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectTarget(tp,c17060896.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
-end
-function c17060896.thop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.SendtoHand(tc,nil,REASON_EFFECT)
-	end
-end
-function c17060896.psfilter(c)
-	return c:IsCode(17060900) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
-end
-function c17060896.pstg(e,tp,eg,ep,ev,re,r,rp,chk)
+function cm.pstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
-		and Duel.IsExistingMatchingCard(c17060896.psfilter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,1,nil) end
+		and Duel.IsExistingMatchingCard(cm.psfilter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,1,nil) end
 end
-function c17060896.psop(e,tp,eg,ep,ev,re,r,rp)
-	if chkc then return chkc:IsLocation(LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA) and chkc:IsControler(tp) and c17060896.psfilter(chkc) end
+function cm.psop(e,tp,eg,ep,ev,re,r,rp)
+	if chkc then return chkc:IsLocation(LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA) and chkc:IsControler(tp) and cm.psfilter(chkc) end
 		if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return false end
 	local seq=e:GetHandler():GetSequence()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-	local g=Duel.SelectMatchingCard(tp,c17060896.psfilter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,cm.psfilter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	end
 end
-
-function c17060896.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() end
-	Duel.Release(e:GetHandler(),REASON_COST)
+function cm.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsDiscardable() end
+	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
-function c17060896.mfilter(c)
-	return c:IsType(TYPE_PENDULUM) and c:IsAbleToRemove()
-end
-function c17060896.filter(c,e,tp,m1,m2,ft)
-	if not c:IsCode(17060900) or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
+function cm.filter(c,e,tp,m1,m2,ft)
+	if not cm.IsOpera_type(c) or bit.band(c:GetType(),0x81)~=0x81
+		or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	local mg=m1:Filter(Card.IsCanBeRitualMaterial,c,c)
 	mg:Merge(m2)
 	if ft>0 then
-		return mg:CheckWithSumGreater(Card.GetRitualLevel,4,c)
+		return mg:CheckWithSumGreater(Card.GetRitualLevel,c:GetLevel(),c)
 	else
-		return mg:IsExists(c17060896.mfilterf,1,nil,tp,mg,c)
+		return mg:IsExists(cm.mfilterf,1,nil,tp,mg,c)
 	end
 end
-function c17060896.mfilterf(c,tp,mg,rc)
-	if c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) then
+function cm.mfilterf(c,tp,mg,rc)
+	if c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 then
 		Duel.SetSelectedCard(c)
-		return mg:CheckWithSumGreater(Card.GetRitualLevel,4,rc)
+		return mg:CheckWithSumGreater(Card.GetRitualLevel,rc:GetLevel(),rc)
 	else return false end
 end
-function c17060896.target(e,tp,eg,ep,ev,re,r,rp,chk)
+function cm.mfilter(c)
+	return c:GetLevel()>0 and c:IsType(TYPE_PENDULUM) and c:IsAbleToRemove()
+end
+function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local mg1=Duel.GetRitualMaterial(tp)
-		mg1:RemoveCard(e:GetHandler())
-		local mg2=Duel.GetMatchingGroup(c17060896.mfilter,tp,LOCATION_GRAVE,0,nil)
-		local ft=Duel.GetMZoneCount(tp)
-		if e:GetHandler():IsLocation(LOCATION_MZONE) then ft=ft+1 end
-		return ft>-1 and Duel.IsExistingMatchingCard(c17060896.filter,tp,LOCATION_PZONE,0,1,nil,e,tp,mg1,mg2,ft)
+		local mg2=Duel.GetMatchingGroup(cm.mfilter,tp,LOCATION_EXTRA,0,nil)
+		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+		return ft>-1 and Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp,mg1,mg2,ft)
 	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_PZONE)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,0,tp,LOCATION_EXTRA)
 end
-function c17060896.activate(e,tp,eg,ep,ev,re,r,rp)
+function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 	local mg1=Duel.GetRitualMaterial(tp)
-	local mg2=Duel.GetMatchingGroup(c17060896.mfilter,tp,LOCATION_GRAVE,0,nil)
-	local ft=Duel.GetMZoneCount(tp)
+	local mg2=Duel.GetMatchingGroup(cm.mfilter,tp,LOCATION_EXTRA,0,nil)
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c17060896.filter,tp,LOCATION_PZONE,0,1,1,nil,e,tp,mg1,mg2,ft)
-	local tc=g:GetFirst()
+	local tg=Duel.SelectMatchingCard(tp,cm.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp,mg1,mg2,ft)
+	local tc=tg:GetFirst()
 	if tc then
 		local mg=mg1:Filter(Card.IsCanBeRitualMaterial,tc,tc)
 		mg:Merge(mg2)
 		local mat=nil
 		if ft>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-			mat=mg:SelectWithSumGreater(tp,Card.GetRitualLevel,4,tc)
+			mat=mg:SelectWithSumGreater(tp,Card.GetRitualLevel,tc:GetLevel(),tc)
 		else
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-			mat=mg:FilterSelect(tp,c17060896.mfilterf,1,1,nil,tp,mg,tc)
+			mat=mg:FilterSelect(tp,cm.mfilterf,1,1,nil,tp,mg,tc)
 			Duel.SetSelectedCard(mat)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-			local mat2=mg:SelectWithSumGreater(tp,Card.GetRitualLevel,4,tc)
+			local mat2=mg:SelectWithSumEqual(tp,Card.GetRitualLevel,tc:GetLevel(),0,99,tc)
 			mat:Merge(mat2)
 		end
 		tc:SetMaterial(mat)
+		local mat2=mat:Filter(Card.IsLocation,nil,LOCATION_EXTRA):Filter(Card.IsType,nil,TYPE_PENDULUM)
+		mat:Sub(mat2)
 		Duel.ReleaseRitualMaterial(mat)
+		Duel.SendtoGrave(mat2,nil,2,REASON_EFFECT+REASON_MATERIAL+REASON_RITUAL)
 		Duel.BreakEffect()
 		Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
 		tc:CompleteProcedure()
 	end
 end
+

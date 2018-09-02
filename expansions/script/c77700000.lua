@@ -1,5 +1,7 @@
 --千本鸽
+xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 function c77700000.initial_effect(c)
+	Senya.AddSummonMusic(c,aux.Stringid(77700000,0))
 	--reflect battle dam
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)

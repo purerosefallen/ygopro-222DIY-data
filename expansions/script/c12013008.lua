@@ -7,6 +7,7 @@ function c12013008.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
+	e1:SetCondition(c12013008.excon)
 	e1:SetTarget(c12013008.extg)
 	c:RegisterEffect(e1)
 	--to hand
@@ -21,6 +22,12 @@ function c12013008.initial_effect(c)
 	e2:SetTarget(c12013008.thtg2)
 	e2:SetOperation(c12013008.thop2)
 	c:RegisterEffect(e2)
+end
+function c12013008.exfilter(c)
+	return c:IsFacedown() or not c:IsSetCard(0xfb6)
+end
+function c12013008.excon(e,tp,eg,ep,ev,re,r,rp)
+	return not Duel.IsExistingMatchingCard(c12013008.exfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c12013008.extg(e,c)
 	return c:IsLevelBelow(4) and c:IsRace(RACE_PLANT)

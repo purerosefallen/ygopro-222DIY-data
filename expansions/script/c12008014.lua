@@ -45,7 +45,7 @@ function c12008014.spop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c12008014.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c12008014.rmfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
 	e:SetLabel(Duel.AnnounceNumber(tp,2,3,4))
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end

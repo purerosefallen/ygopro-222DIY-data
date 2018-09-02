@@ -3,8 +3,8 @@ local m=47598775
 local cm=_G["c"..m]
 function c47598775.initial_effect(c)
     --link summon
-    aux.AddLinkProcedure(c,nil,2,3,c47598775.lcheck)
-    c:EnableReviveLimit()
+    aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),2,2,c47598775.lcheck)
+    c:EnableReviveLimit() 
     --检索
     local e1=Effect.CreateEffect(c)
     e1:SetDescription(aux.Stringid(47598775,1))
@@ -40,13 +40,13 @@ function c47598775.initial_effect(c)
     c:RegisterEffect(e4)
 end
 function c47598775.lcheck(g)
-    return g:GetClassCount(Card.GetLinkAttribute)==g:GetCount()
+    return g:IsExists(Card.IsLinkRace,1,nil,RACE_FAIRY) or g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_WIND)
 end
 function c47598775.poscon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c47598775.filter(c)
-    return c:IsAttribute(ATTRIBUTE_WIND) and c:IsAbleToHand() and c:IsLevelBelow(4)
+    return c:IsAttribute(ATTRIBUTE_WIND) and c:IsAbleToHand() and c:IsLevelBelow(4) and c:IsLevelAbove(2)
 end
 function c47598775.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.IsExistingMatchingCard(c47598775.filter,tp,LOCATION_DECK,0,1,nil) end

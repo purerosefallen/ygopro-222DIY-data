@@ -9,7 +9,7 @@ function c10125013.initial_effect(c)
 	e1:SetCode(EFFECT_EXTRA_SUMMON_COUNT)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_MACHINE))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x9334))
 	c:RegisterEffect(e1)  
 	--duel status
 	local e2=Effect.CreateEffect(c)
