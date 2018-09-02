@@ -46,7 +46,7 @@ function c12001001.dscon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_DECK) and c:IsReason(REASON_REVEAL)
 end
 function c12001001.filter(c)
-	return c:IsPosition(POS_FACEUP_ATTACK)
+	return c:IsPosition(POS_FACEU)
 end
 function c12001001.dstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c12001001.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
