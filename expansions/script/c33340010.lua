@@ -4,7 +4,7 @@ local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,cm.matfilter,2,2) 
+	aux.AddLinkProcedure(c,cm.check_link_set_Rcore,2,2) 
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(m,0))
 	e1:SetCategory(CATEGORY_TODECK)
@@ -112,6 +112,37 @@ function cm.tdop(e,tp,eg,ep,ev,re,r,rp)
 	   Duel.ConfirmCards(1-tp,g)
 	   Duel.SendtoDeck(g,1-tp,0,REASON_EFFECT)
 	end
+end
+cm.loaded_metatable_list=cm.loaded_metatable_list or {}
+function cm.LoadMetatable(code)
+	local m1=_G["c"..code]
+	if m1 then return m1 end
+	local m2=cm.loaded_metatable_list[code]
+	if m2 then return m2 end
+	_G["c"..code]={}
+	if pcall(function() dofile("expansions/script/c"..code..".lua") end) or pcall(function() dofile("script/c"..code..".lua") end) then
+		local mt=_G["c"..code]
+		_G["c"..code]=nil
+		if mt then
+			cm.loaded_metatable_list[code]=mt
+			return mt
+		end
+	else
+		_G["c"..code]=nil
+	end
+end
+function cm.check_link_set_Rcore(c)
+	if c.setcard=="Rcore" then return true end
+	local codet={c:GetLinkCode()}
+	for j,code in pairs(codet) do
+		local mt=cm.LoadMetatable(code)
+		if mt then
+			for str,v in pairs(mt) do   
+				if type(str)=="string" and str:find("Rcore") and v then return true end
+			end
+		end
+	end
+	return false
 end
 function cm.matfilter(c)
 	return c.setcard=="Rcore"

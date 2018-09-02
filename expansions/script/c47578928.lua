@@ -38,7 +38,7 @@ function c47578928.thcfilter(c,ec)
 end
 function c47578928.thcon(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    return not eg:IsContains(c) and eg:FilterCount(c22423493.thcfilter,nil,c)==3
+    return not eg:IsContains(c) and eg:FilterCount(c47578928.thcfilter,nil,c)==3
 end
 function c47578928.thfilter(c)
     return c:IsRace(RACE_FAIRY) and c:IsLevelAbove(7) and c:IsAbleToHand()

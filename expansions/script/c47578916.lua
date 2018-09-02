@@ -31,6 +31,7 @@ function c47578916.cost(e,tp,eg,ep,ev,re,r,rp,chk)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
     local g=Duel.SelectMatchingCard(tp,c47578916.cfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,3,3,nil)
     Duel.SendtoDeck(g,nil,3,REASON_COST)
+    Duel.ConfirmCards(1-tp,g)
 end
 function c47578916.cfilter(c)
     return c:IsSetCard(0x5de) and c:IsAbleToDeckAsCost()
