@@ -3,7 +3,7 @@ local m=37564349
 local cm=_G["c"..m]
 xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 function cm.initial_effect(c)
-	Senya.AddSummonMusic(c,m*16)
+	--Senya.AddSummonMusic(c,m*16)
 	c:EnableReviveLimit()
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -101,6 +101,8 @@ function cm.operation1(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e1)
 		Duel.SetLP(tp,0)
+		Duel.Hint(HINT_CARD,0,m)
+		Duel.Hint(HINT_MUSIC,0,m*16)
 	end
 end
 function cm.copyfilter(c)
