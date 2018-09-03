@@ -48,6 +48,7 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 		else
 			Duel.DisableShuffleCheck()
 			Duel.SendtoHand(tc,1-tp,REASON_EFFECT)
+			Duel.ShuffleHand(1-tp)
 		end
 	end
 end

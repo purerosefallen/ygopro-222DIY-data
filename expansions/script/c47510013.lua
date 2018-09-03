@@ -134,7 +134,7 @@ function c47510013.ssop(e,tp,eg,ep,ev,re,r,rp)
     e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
     e2:SetTargetRange(LOCATION_MZONE,0)
     e2:SetValue(1)
-    e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+    e2:SetReset(RESET_PHASE+PHASE_END)
     Duel.RegisterEffect(e2,tp)
 end
 function c47510013.sccon(e,tp,eg,ep,ev,re,r,rp)

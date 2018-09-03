@@ -61,13 +61,13 @@ function c65030018.edop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND)
 	local check=0
 	local i=0
-	if num<=0 then return false end
+	if num<=0 or g:GetCount()==0 then return false end
 	while check==0 do
 		local gc=g:RandomSelect(tp,1):GetFirst()
 		g:RemoveCard(gc)
 		Duel.Remove(gc,POS_FACEDOWN,REASON_EFFECT)
 		i=i+1
-		if i==num or not Duel.SelectYesNo(tp,aux.Stringid(65030018,0)) then check=1 end
+		if i==num or not Duel.SelectYesNo(tp,aux.Stringid(65030018,0))  or g:GetCount()==0 then check=1 end
 	end
 end
 

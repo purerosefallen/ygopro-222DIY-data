@@ -70,7 +70,7 @@ function c47510022.efilter(e,c)
     return c:IsAttribute(ATTRIBUTE_DARK) or c:IsAttribute(ATTRIBUTE_LIGHT)
 end
 function c47510022.rfilter(c)
-    return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x5de) or c:IsSetCard(0x5da) and c:IsAttribute(ATTRIBUTE_DARK) or c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsAbleToHand()
+    return c:IsType(TYPE_PENDULUM) and (c:IsSetCard(0x5de) or c:IsSetCard(0x5da)) and (c:IsAttribute(ATTRIBUTE_DARK) or c:IsAttribute(ATTRIBUTE_LIGHT)) and c:IsAbleToHand()
 end
 function c47510022.cfilter(c,att)
     return c:IsFaceup() and c:IsAttribute(att)
