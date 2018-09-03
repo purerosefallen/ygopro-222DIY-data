@@ -15,6 +15,10 @@ function cm.initial_effect(c)
 	e1:SetOperation(cm.thop)
 	c:RegisterEffect(e1)
 end
+function cm.IsOpera_type(c)
+	local m=_G["c"..c:GetCode()]
+	return m and m.is_named_with_Opera_type
+end
 function cm.ritual_filter(c)
 	return c:IsType(TYPE_RITUAL) and cm.IsOpera_type(c)
 end

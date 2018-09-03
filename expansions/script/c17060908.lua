@@ -36,8 +36,11 @@ function cm.IsOpera_type(c)
 	local m=_G["c"..c:GetCode()]
 	return m and m.is_named_with_Opera_type
 end
+function cm.filter1(c)
+	return cm.IsOpera_type(c)
+end
 function cm.lcheck(g,lc)
-	return g:IsExists(Card.IsType,1,nil,TYPE_TUNER)
+	return g:IsExists(cm.filter1,1,nil,tp)
 end
 function cm.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
