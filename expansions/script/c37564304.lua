@@ -31,7 +31,7 @@ function cm.DiscardHandCost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local cd=ch*1000+m-6400
 	if chk==0 then return Duel.GetFlagEffect(tp,cd+1000)==0 end
 	Duel.RegisterFlagEffect(tp,cd,RESET_PHASE+PHASE_END,0,1)
-	c:RegisterFlagEffect(cd,0x1fe1000+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,m*16+ch-2)
+	e:GetHandler():RegisterFlagEffect(cd,0x1fe1000+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,m*16+ch-2)
 end
 function cm.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
