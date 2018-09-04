@@ -33,7 +33,7 @@ function c12013000.immcost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c12013000.immop(e,tp,eg,ep,ev,re,r,rp)
 	--cannot be target
-	local e5=Effect.CreateEffect(c)
+	local e5=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
