@@ -59,8 +59,6 @@ function c11113129.CheckRecursive(c,mg,sg,fc,chkf)
 	local sg1=sg:Clone()
 	sg1:AddCard(c)
 	if sg1:GetCount()==6 then
-		if fc:GetFlagEffect(11113130)>0 and sg1:IsExists(Card.IsLocation,5,nil,LOCATION_DECK) then return false end
-		if chkf~=PLAYER_NONE and not sg1:IsExists(aux.FConditionCheckF,1,nil,chkf) then return false end
 		local att=0
 		for tc in aux.Next(sg1) do
 			att=bit.bor(tc:GetAttribute(),att)

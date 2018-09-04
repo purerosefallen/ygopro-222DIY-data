@@ -7,7 +7,7 @@ cm.named_with_Tatara=true
 function c1141021.initial_effect(c)
 --
 	c:EnableReviveLimit()  
-	aux.AddFusionProcFun2(c,c1141021.FusFilter1,c1141021.FusFilter,1,true,true)
+	aux.AddFusionProcMix(c,false,true,c1141021.FusFilter1,c1141021.FusFilter2)
 --
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(1141021,0))
@@ -36,16 +36,16 @@ function c1141021.FusFilter1(c)
 	return muxu.check_fusion_set_Tatara(c)
 end
 function c1141021.FusFilter2(c)
+	local p=c:GetControler()
 	return c:IsFusionType(TYPE_FLIP)
+		or (Duel.GetFlagEffect(p,1141002)>0 and c:IsFacedown())
 end
 --
 c1141021.muxu_fus_mat={
 c1141021.FusFilter1,
 c1141021.FusFilter2,}
 --
-c1141021.muxu_check_fus_mat={0,1,}
---
-c1141021.muxu_ih_Tatara=1
+c1141021.muxu_ih_KTatara=1
 --
 function c1141021.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFacedown,tp,0,LOCATION_MZONE,1,nil) end

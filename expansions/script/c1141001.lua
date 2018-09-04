@@ -28,7 +28,7 @@ function c1141001.initial_effect(c)
 --
 end
 --
-c1141001.muxu_ih_Tatara=1
+c1141001.muxu_ih_KTatara=1
 --
 function c1141001.tfilter1(c)
 	return c:IsFaceup() and c:IsCanTurnSet()
@@ -57,7 +57,7 @@ end
 function c1141001.tfilter2(c,e,tp)
 	return ((c:IsType(TYPE_MONSTER) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE))
 		or ((c:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0) and c:IsSSetable()))
-		and c.muxu_ih_Tatara 
+		and c.muxu_ih_KTatara 
 end
 function c1141001.tg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c1141001.tfilter2(chkc) end

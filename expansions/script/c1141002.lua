@@ -28,10 +28,10 @@ function c1141002.initial_effect(c)
 --
 end
 --
-c1141002.muxu_ih_Tatara=1
+c1141002.muxu_ih_KTatara=1
 --
 function c1141002.tfilter1(c)
-	return c.muxu_ih_Tatara and c:IsAbleToHand()
+	return c.muxu_ih_KTatara and c:IsAbleToHand()
 end
 function c1141002.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c1141002.tfilter1,tp,LOCATION_DECK,0,1,nil) end
@@ -61,91 +61,15 @@ end
 function c1141002.ollfilter2(c,e)
 	return not c:IsImmuneToEffect(e)
 end
-function c1141002.decfilter2_1(c,e)
-	return c:IsFaceup() and not c:IsImmuneToEffect(e)
-end
-function c1141002.decfilter2_2(c,e)
-	return c:IsFacedown() and not c:IsImmuneToEffect(e)
-end
---
-function c1141002.cfdfilter2(c,sg)
-	local checknum=0
-	local sc=sg:GetFirst()
-	local mg=Group.CreateGroup()
-	while sc do
-		mg=sc:GetColumnGroup()
-		if mg:IsContains(c) then checknum=1 end
-		sc=sg:GetNext()
-	end
-	return c:IsFacedown() and checknum==1
-end
---
-function c1141002.checkmat(c,fc,tp)
-	local t=fc.muxu_fus_mat
-	if not t then return false end
-	for i,f in pairs(t) do
-		if (c:IsFaceup() and f(c))
-			or (c:IsControler(tp) and f(c))
-			or (c:IsControler(1-tp) and c:IsFacedown()) then
-			return c:IsCanBeFusionMaterial(fc) end
-	end
-	return false
-end
-function c1141002.checkfup(fc)
-	local l=fc.muxu_check_fus_mat
-	if not l then return false end
-	for i,l in pairs(l) do
-		if i==1 then return true end
-	end
-	return false
-end
-function c1141002.CheckFusionFilter2(c,sc,fc,tp,exg)
-	local checknum1=0
-	local checknum2=0
-	local t=fc.muxu_fus_mat
-	if not c1141002.checkfup(fc) then
-		local checknum1=0
-		local checknum2=0
-		local t=fc.muxu_fus_mat
-		if t[1](sc) then checknum1=1 end
-		if t[2](sc) then checknum2=1 end
-		return (checknum1==0 and t[1](c))
-			or (checknum2==0 and t[2](c))
-			or (checknum1~=0 and checknum2~=0)
-	else
-		local l=fc.muxu_check_fus_mat
-		if (l[1]==1 and l[2]~=1) then
-			if exg:IsContains(sc) then checknum1=1 end
-			if t[1](sc) and not exg:IsContains(sc) then checknum1=1 end
-			if t[2](sc) and not exg:IsContains(sc) then checknum2=2 end
-			return (checknum1==0 and (exg:IsContains(c) or (t[1](c) and not exg:IsContains(c))))
-				or (checknum2==0 and t[2](c) and not exg:IsContains(c))
-				or (checknum1~=0 and checknum2~=0)
-		elseif (l[2]==1 and l[1]~=1) then
-			if exg:IsContains(sc) then checknum2=1 end
-			if t[1](sc) and not exg:IsContains(sc) then checknum1=1 end
-			if t[2](sc) and not exg:IsContains(sc) then checknum2=2 end
-			return (checknum1==0 and t[1](c) and not exg:IsContains(c)) 
-				or (checknum2==0 and (exg:IsContains(c) or (t[2](c) and not exg:IsContains(c))))
-				or (checknum1~=0 and checknum2~=0)
-		else
-			if t[1](sc) or exg:IsContains(sc) then checknum1=1 end
-			if t[2](sc) or exg:IsContains(sc) then checknum2=1 end
-			return (checknum1==0 and (t[1](c) or exg:IsContains(c)))
-				or (checknum2==0 and (t[2](c) or exg:IsContains(c)))
-				or (checknum1~=0 and checknum2~=0)
-		end
-	end
+function c1141002.decfilter2(c,e)
+	return not c:IsImmuneToEffect(e)
 end
 --
 function c1141002.CheckRecursive2(c,mg,sg,exg,tp,fc,chkf)
-	if exg:IsContains(c) and not c1141002.checkfup(fc) then return false end
-	if not c1141002.checkmat(c,fc,tp) then return false end
-	if sg:GetCount()>0 and not sg:IsExists(c1141002.CheckFusionFilter2,1,nil,c,fc,tp,exg) then return false end
 	sg:AddCard(c)
 	local res=false
-	if sg:GetCount()==2 then
-		res=Duel.GetLocationCountFromEx(chkf,tp,sg,fc)>0
+	if sg:GetCount()>=#fc.muxu_fus_mat then
+		res=Duel.GetLocationCountFromEx(chkf,tp,sg,fc)>0 and fc:CheckFusionMaterial(sg,nil,chkf)
 	else
 		res=mg:IsExists(c1141002.CheckRecursive2,1,sg,mg,sg,exg,tp,fc,chkf)
 	end
@@ -172,10 +96,10 @@ function c1141002.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
 		local mg=Duel.GetFusionMaterial(tp)
 		mg=mg:Filter(c1141002.allfilter2,nil)
 		mg=mg:Filter(c1141002.ollfilter2,nil,e)
-		local cg=Duel.GetMatchingGroup(c1141002.decfilter2_1,tp,0,LOCATION_MZONE,mg,e)
-		mg:Merge(cg)
-		local exg=Duel.GetMatchingGroup(c1141002.decfilter2_2,tp,0,LOCATION_MZONE,mg,e)
+		Duel.RegisterFlagEffect(1-tp,1141002,0,0,0)
+		local exg=Duel.GetMatchingGroup(c1141002.decfilter2,tp,0,LOCATION_MZONE,mg,e)
 		local res=Duel.IsExistingMatchingCard(c1141002.tfilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg,exg,nil,chkf)
+		Duel.ResetFlagEffect(1-tp,1141002)
 		if not res then
 			local ce=Duel.GetChainMaterial(tp)
 			if ce~=nil then
@@ -195,10 +119,10 @@ function c1141002.op2(e,tp,eg,ep,ev,re,r,rp)
 	local mg=Duel.GetFusionMaterial(tp)
 	mg=mg:Filter(c1141002.allfilter2,nil)
 	mg=mg:Filter(c1141002.ollfilter2,nil,e)
-	local cg=Duel.GetMatchingGroup(c1141002.decfilter2_1,tp,0,LOCATION_MZONE,mg,e)
-	mg:Merge(cg)
-	local exg=Duel.GetMatchingGroup(c1141002.decfilter2_2,tp,0,LOCATION_MZONE,mg,e)
+	Duel.RegisterFlagEffect(1-tp,1141002,0,0,0)
+	local exg=Duel.GetMatchingGroup(c1141002.decfilter2,tp,0,LOCATION_MZONE,mg,e)
 	local sg1=Duel.GetMatchingGroup(c1141002.tfilter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg,exg,nil,chkf)
+	Duel.ResetFlagEffect(1-tp,1141002)
 	local mg3=nil
 	local sg2=nil
 	local ce=Duel.GetChainMaterial(tp)
@@ -216,13 +140,15 @@ function c1141002.op2(e,tp,eg,ep,ev,re,r,rp)
 		local tc=tg:GetFirst()
 		if sg1:IsContains(tc) and (sg2==nil or not sg2:IsContains(tc) or not Duel.SelectYesNo(tp,ce:GetDescription())) then
 			local lg=Group.CreateGroup()
+			Duel.RegisterFlagEffect(1-tp,1141002,0,0,0)
 			mg:Merge(exg)
 			repeat
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
 				local g=mg:FilterSelect(tp,c1141002.CheckRecursive2,1,1,lg,mg,lg,exg,tp,tc,chkf)
 				lg:Merge(g)
-			until lg:GetCount()==2
+			until lg:GetCount()>=#fc.muxu_fus_mat
 			tc:SetMaterial(lg)
+			Duel.ResetFlagEffect(1-tp,1141002)
 			Duel.SendtoGrave(lg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 			Duel.BreakEffect()
 			Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)

@@ -46,19 +46,11 @@ function c11113130.spfilter1(c,e,tp,m,f,chkf)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
 function c11113130.spfilter2(c,e,tp,m,f,chkf)
-	return c:IsType(TYPE_FUSION) and c:IsCode(11113129) and (not f or f(c)) 
-	    and m:IsExists(c11113130.mfilter1,1,nil,m,c)
+	return c:IsType(TYPE_FUSION) and c:IsCode(11113129) and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
-function c11113130.mfilter1(c,g,fc)
-	return c:GetLevel()==4 and c:GetAttack()==1000 and c:GetDefense()==1000 
-	    and c:IsLocation(LOCATION_GRAVE+LOCATION_MZONE) and c:IsCanBeFusionMaterial(fc)
-	    and g:IsExists(c11113130.mfilter2,1,nil,c:GetAttribute(),fc)
-end
-function c11113130.mfilter2(c,att,fc)
-	return c:GetLevel()==4 and c:GetAttack()==1000 and c:GetDefense()==1000 
-	    and c:IsLocation(LOCATION_GRAVE+LOCATION_MZONE) and c:IsCanBeFusionMaterial(fc)
-	    and not c:IsAttribute(att)
+function c11113130.fcheck(tp,sg,fc)
+	return sg:FilterCount(Card.IsLocation,nil,LOCATION_DECK)<=4
 end
 function c11113130.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -70,8 +62,10 @@ function c11113130.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		if res then return true end
 		local mg3=Duel.GetMatchingGroup(c11113130.filter2,tp,LOCATION_DECK,0,nil)
 		mg3:Merge(mg1)
+		Auxiliary.FCheckAdditional=c11113130.fcheck
 		res=Duel.IsExistingMatchingCard(c11113130.spfilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg3,nil,chkf)
-		if not res then
+		Auxiliary.FCheckAdditional=nil
+		if not res then 
 			local ce=Duel.GetChainMaterial(tp)
 			if ce~=nil then
 				local fgroup=ce:GetTarget()
@@ -92,7 +86,9 @@ function c11113130.spop(e,tp,eg,ep,ev,re,r,rp)
 	local sg1=Duel.GetMatchingGroup(c11113130.spfilter1,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
 	local mg3=Duel.GetMatchingGroup(c11113130.filter2,tp,LOCATION_DECK,0,nil)
 	mg3:Merge(mg1)
+	Auxiliary.FCheckAdditional=c11113130.fcheck
 	local sg2=Duel.GetMatchingGroup(c11113130.spfilter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg3,nil,chkf)
+	Auxiliary.FCheckAdditional=nil
 	sg1:Merge(sg2)
 	local mg4=nil
 	local sg3=nil
@@ -110,9 +106,10 @@ function c11113130.spop(e,tp,eg,ep,ev,re,r,rp)
 		local tg=sg:Select(tp,1,1,nil)
 		local tc=tg:GetFirst()
 		if sg1:IsContains(tc) and (sg3==nil or not sg3:IsContains(tc) or not Duel.SelectYesNo(tp,ce:GetDescription())) then
-		    if tc:IsCode(11113129) and mg3:IsExists(c11113130.mfilter1,1,nil,mg3) then
-			    tc:RegisterFlagEffect(11113130,RESET_CHAIN,0,1)
+		    if tc:IsCode(11113129) then
+			    Auxiliary.FCheckAdditional=c11113130.fcheck
 				local mat1=Duel.SelectFusionMaterial(tp,tc,mg3,nil,chkf)
+				Auxiliary.FCheckAdditional=nil
 				tc:SetMaterial(mat1)
 				Duel.Remove(mat1,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 			else	

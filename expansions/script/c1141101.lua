@@ -25,7 +25,7 @@ function c1141101.initial_effect(c)
 --
 end
 --
-c1141101.muxu_ih_Tatara=1
+c1141101.muxu_ih_KTatara=1
 --
 function c1141101.tfilter1(c)
 	return c:IsType(TYPE_FLIP) and c:IsType(TYPE_MONSTER)
@@ -78,35 +78,14 @@ function c1141101.cfdfilter2(c,sg)
 	return c:IsFacedown() and checknum==1
 end
 --
-function c1141101.checkmat(c,fc)
-	local t=fc.muxu_fus_mat
-	if not t then return false end
-	for i,f in pairs(t) do
-		if f(c) then return c:IsCanBeFusionMaterial(fc) end
-	end
-	return false
-end
-function c1141101.CheckFusionFilter2(c,sc,fc)
-	local checknum1=0
-	local checknum2=0
-	local t=fc.muxu_fus_mat
-	if t[1](sc) then checknum1=1 end
-	if t[2](sc) then checknum2=1 end
-	return (checknum1==0 and t[1](c))
-		or (checknum2==0 and t[2](c))
-		or (checknum1~=0 and checknum2~=0)
-end
---
 function c1141101.CheckRecursive2(c,mg,sg,exg,tp,fc,chkf)
 --
-	if not c1141101.checkmat(c,fc) then return false end
 	if exg and exg:IsContains(c) and not Duel.IsExistingMatchingCard(c1141101.cfdfilter2,tp,0,LOCATION_MZONE,1,nil,sg) then return false end
-	if sg:GetCount()>0 and not sg:IsExists(c1141101.CheckFusionFilter2,1,nil,c,fc) then return false end
 --
 	sg:AddCard(c)
 	local res=false
-	if sg:GetCount()==2 then
-		res=Duel.GetLocationCountFromEx(chkf,tp,sg,fc)>0
+	if sg:GetCount()>=#fc.muxu_fus_mat then
+		res=Duel.GetLocationCountFromEx(chkf,tp,sg,fc)>0 and fc:CheckFusionMaterial(sg,nil,chkf)
 	else
 		res=mg:IsExists(c1141101.CheckRecursive2,1,sg,mg,sg,exg,tp,fc,chkf)
 	end
@@ -119,7 +98,7 @@ function c1141101.tfilter2(c,e,tp,mg,exg,f,chkf)
 	local sg=Group.CreateGroup()
 	return c:IsType(TYPE_FUSION) 
 		and muxu.check_set_Tatara(c) and (not f or f(c))
-		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false)and mg:IsExists(c1141101.CheckRecursive2,1,sg,mg,sg,exg,tp,c,chkf)
+		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and mg:IsExists(c1141101.CheckRecursive2,1,sg,mg,sg,exg,tp,c,chkf)
 end
 function c1141101.mfilter2(c,e,tp,m,f,chkf)
 	return c:IsType(TYPE_FUSION)
@@ -178,7 +157,7 @@ function c1141101.op2(e,tp,eg,ep,ev,re,r,rp)
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FMATERIAL)
 				local g=mg:FilterSelect(tp,c1141101.CheckRecursive2,1,1,lg,mg,lg,exg,tp,tc,chkf)
 				lg:Merge(g)
-			until lg:GetCount()==2
+			until lg:GetCount()==#tc.muxu_fus_mat
 			tc:SetMaterial(lg)
 			Duel.SendtoGrave(lg,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 			Duel.BreakEffect()

@@ -148,7 +148,7 @@ end
 function c47510001.chaincon(e,tp,eg,ep,ev,re,r,rp)
     local ct1=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD+LOCATION_HAND,0)
     local ct2=Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD+LOCATION_HAND)
-    if ct1>=ct2 then return false end
+    return ct1<ct2
 end
 function c47510001.chainop(e,tp,eg,ep,ev,re,r,rp)
     if re:GetHandler():IsSetCard(0x5da) and re:IsActiveType(TYPE_MONSTER) and ep==tp then
