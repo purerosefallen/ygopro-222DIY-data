@@ -147,13 +147,13 @@ function c47510010.spfilter(c)
     return c:IsSetCard(0x5da) or c:IsSetCard(0x5de) and c:IsFaceup() and c:IsAbleToHand() and not c:IsCode(47510010)
 end
 function c47510010.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c47510010.spfilter(chkc) end
+    if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_ONFIELD) and c47510010.spfilter(chkc) end
     local c=e:GetHandler()
     if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
         and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-        and Duel.IsExistingTarget(c47510010.spfilter,tp,LOCATION_MZONE,0,1,nil) end
+        and Duel.IsExistingTarget(c47510010.spfilter,tp,LOCATION_ONFIELD,0,1,nil) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-    local g=Duel.SelectTarget(tp,c47510010.spfilter,tp,LOCATION_MZONE,0,1,1,nil)
+    local g=Duel.SelectTarget(tp,c47510010.spfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
     Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end

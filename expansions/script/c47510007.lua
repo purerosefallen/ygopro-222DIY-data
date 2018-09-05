@@ -120,7 +120,7 @@ function c47510007.synlimit(e,c)
     return not c:IsRace(RACE_FAIRY) or c:IsRace(RACE_DRAGON) or c:IsRace(RACE_WYRM) or c:IsSetCard(0x5da) 
 end
 function c47510007.spfilter(c,e,tp)
-    return c:IsSetCard(0x5da) or c:IsSetCard(0x5de) and not c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+    return (c:IsSetCard(0x5da) or c:IsSetCard(0x5de)) and not c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c47510007.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCountFromEx(tp,tp,e:GetHandler())>0

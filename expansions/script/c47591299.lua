@@ -75,31 +75,10 @@ function c47591299.thop(e,tp,eg,ep,ev,re,r,rp)
         Duel.ConfirmCards(1-tp,g)
     end
 end
-function c47591299.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
-end
-function c47591299.disop(e,tp,eg,ep,ev,re,r,rp)
-    local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-    local tc=g:GetFirst()
-    local c=e:GetHandler()
-    while tc do
-        local e1=Effect.CreateEffect(c)
-        e1:SetType(EFFECT_TYPE_SINGLE)
-        e1:SetCode(EFFECT_DISABLE)
-        e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-        tc:RegisterEffect(e1)
-        local e2=Effect.CreateEffect(c)
-        e2:SetType(EFFECT_TYPE_SINGLE)
-        e2:SetCode(EFFECT_DISABLE_EFFECT)
-        e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-        tc:RegisterEffect(e2)
-        tc=g:GetNext()
-    end
-end
 function c47591299.condition(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     local rc=re:GetHandler()
-    return re:IsActiveType(TYPE_MONSTER) and rc~=c and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
+    return re:IsActiveType(TYPE_MONSTER) and rc~=c and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and rp==1-tp
 end
 function c47591299.target(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return true end
@@ -109,15 +88,7 @@ function c47591299.target(e,tp,eg,ep,ev,re,r,rp,chk)
     end
 end
 function c47591299.operation(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
-    local rc=re:GetHandler()
-    if Duel.NegateActivation(ev) and rc:IsRelateToEffect(re) and Duel.Destroy(rc,REASON_EFFECT)~=0 and rc:GetBaseAttack()>=0
-        and c:IsRelateToEffect(e) and c:IsFaceup() then
-        local e1=Effect.CreateEffect(c)
-        e1:SetType(EFFECT_TYPE_SINGLE)
-        e1:SetCode(EFFECT_UPDATE_ATTACK)
-        e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END)
-        e1:SetValue(rc:GetBaseAttack())
-        c:RegisterEffect(e1)
+    if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
+        Duel.Destroy(eg,REASON_EFFECT)
     end
 end

@@ -59,7 +59,7 @@ function c47578909.psplimit(e,c,tp,sumtp,sumpos)
     return not c:IsRace(RACE_FAIRY) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function c47578909.filter(c)
-    return c:IsSetCard(0x5de) and c:IsAbleToHand()
+    return c:IsSetCard(0x5de) and c:IsAbleToHand() and c:IsFaceup()
 end
 function c47578909.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE+LOCATION_REMOVED) and c47578909.filter(chkc) end

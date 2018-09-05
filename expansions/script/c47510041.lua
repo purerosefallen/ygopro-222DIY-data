@@ -83,6 +83,7 @@ function c47510041.tetg(e,tp,eg,ep,ev,re,r,rp,chk)
     Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,nil,1,tp,LOCATION_DECK)
 end
 function c47510041.teop(e,tp,eg,ep,ev,re,r,rp)
+    if not e:GetHandler():IsRelateToEffect(e) then return end
     Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(47510041,0))
     local g=Duel.SelectMatchingCard(tp,c47510041.tefilter,tp,LOCATION_DECK,0,1,1,nil)
     if g:GetCount()>0 then
@@ -135,7 +136,7 @@ function c47510041.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
     Duel.SetChainLimit(aux.FALSE)
 end
 function c47510041.ssop(e,tp,eg,ep,ev,re,r,rp)
-    local g=Duel.GetMatchingGroup(c47510041.ssfilter,tp,0,LOCATION_ONFIELD,nil)
+    local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)
     Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 end
 function c47510041.efilter(e,re)

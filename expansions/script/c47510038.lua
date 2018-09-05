@@ -138,9 +138,22 @@ function c47510038.ssop(e,tp,eg,ep,ev,re,r,rp)
     e1:SetValue(c47510038.actlimit)
     e1:SetReset(RESET_PHASE+PHASE_END)
     Duel.RegisterEffect(e1,tp)
+    local e2=Effect.CreateEffect(e:GetHandler())
+    e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+    e2:SetCode(EVENT_CHAIN_SOLVING)
+    e2:SetCondition(c47510038.discon)
+    e2:SetOperation(c47510038.disop)
+    e2:SetReset(RESET_PHASE+PHASE_END)
+    Duel.RegisterEffect(e2,tp)
+end
+function c47510038.discon(e,tp,eg,ep,ev,re,r,rp)
+    return re:IsActiveType(TYPE_TRAP) and rp==1-tp
+end
+function c47510038.disop(e,tp,eg,ep,ev,re,r,rp)
+    Duel.NegateEffect(ev)
 end
 function c47510038.aclimit(e,re,tp)
-    return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_TRAP+TYPE_FLIP)
+    return re:IsActiveType(TYPE_FLIP)
 end
 function c47510038.cfilter(c,tp)
     return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousSetCard(0x5da) or c:IsRace(RACE_FAIRY)

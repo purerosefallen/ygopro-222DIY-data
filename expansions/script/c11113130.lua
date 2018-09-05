@@ -54,6 +54,7 @@ function c11113130.fcheck(tp,sg,fc)
 end
 function c11113130.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
+	    Duel.RegisterFlagEffect(tp,11113130,RESET_CHAIN,0,1)
 		local chkf=tp
 		local mg1=Duel.GetFusionMaterial(tp):Filter(c11113130.filter0,nil)
 		local mg2=Duel.GetMatchingGroup(c11113130.filter2,tp,LOCATION_GRAVE,0,nil)
@@ -62,9 +63,7 @@ function c11113130.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		if res then return true end
 		local mg3=Duel.GetMatchingGroup(c11113130.filter2,tp,LOCATION_DECK,0,nil)
 		mg3:Merge(mg1)
-		Auxiliary.FCheckAdditional=c11113130.fcheck
 		res=Duel.IsExistingMatchingCard(c11113130.spfilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg3,nil,chkf)
-		Auxiliary.FCheckAdditional=nil
 		if not res then 
 			local ce=Duel.GetChainMaterial(tp)
 			if ce~=nil then
@@ -86,9 +85,7 @@ function c11113130.spop(e,tp,eg,ep,ev,re,r,rp)
 	local sg1=Duel.GetMatchingGroup(c11113130.spfilter1,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
 	local mg3=Duel.GetMatchingGroup(c11113130.filter2,tp,LOCATION_DECK,0,nil)
 	mg3:Merge(mg1)
-	Auxiliary.FCheckAdditional=c11113130.fcheck
 	local sg2=Duel.GetMatchingGroup(c11113130.spfilter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg3,nil,chkf)
-	Auxiliary.FCheckAdditional=nil
 	sg1:Merge(sg2)
 	local mg4=nil
 	local sg3=nil
@@ -107,9 +104,7 @@ function c11113130.spop(e,tp,eg,ep,ev,re,r,rp)
 		local tc=tg:GetFirst()
 		if sg1:IsContains(tc) and (sg3==nil or not sg3:IsContains(tc) or not Duel.SelectYesNo(tp,ce:GetDescription())) then
 		    if tc:IsCode(11113129) then
-			    Auxiliary.FCheckAdditional=c11113130.fcheck
 				local mat1=Duel.SelectFusionMaterial(tp,tc,mg3,nil,chkf)
-				Auxiliary.FCheckAdditional=nil
 				tc:SetMaterial(mat1)
 				Duel.Remove(mat1,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 			else	

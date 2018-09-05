@@ -7,7 +7,7 @@ function c47510101.initial_effect(c)
     c:EnableReviveLimit()
     aux.AddFusionProcMix(c,false,true,c47510101.fusfilter1,c47510101.fusfilter2)
     aux.EnablePendulumAttribute(c,false)
-        --destroy replace
+    --destroy replace
     local e1=Effect.CreateEffect(c)
     e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
     e1:SetCode(EFFECT_DESTROY_REPLACE)
@@ -72,13 +72,11 @@ function c47510101.repval(e,c)
     return c47510101.repfilter(c,e:GetHandlerPlayer())
 end
 function c47510101.repop(e,tp,eg,ep,ev,re,r,rp)
-    if not e:GetHandler():IsRelateToEffect(e) then return end
     Duel.Hint(HINT_CARD,1-tp,47510101)
     local tc=e:GetLabelObject()
     tc:SetStatus(STATUS_DESTROY_CONFIRMED,false)
-    if Duel.Destroy(tc,REASON_EFFECT+REASON_REPLACE) ~=0 then
+    Duel.Destroy(tc,REASON_EFFECT+REASON_REPLACE)
     Duel.Destroy(e:GetHandler(),REASON_EFFECT)
-    end
 end
 function c47510101.sumcon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
@@ -117,7 +115,7 @@ end
 function c47510101.actlimit(e,te,tp)
     return te:GetHandler():IsFacedown()
 end
-function c47510101.desfilter(c,rtype)
+function c47510101.desfilter2(c,rtype)
     return c:IsType(rtype)
 end
 function c47510101.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -131,11 +129,11 @@ function c47510101.tg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return true end
     local g1=Duel.GetMatchingGroup(Card.IsFacedown,tp,0,LOCATION_ONFIELD,nil)
     Duel.ConfirmCards(tp,g1)
-    local g=Duel.GetMatchingGroup(c47510101.desfilter,tp,0,LOCATION_ONFIELD,nil,e:GetLabel())
+    local g=Duel.GetMatchingGroup(c47510101.desfilter2,tp,0,LOCATION_ONFIELD,nil,e:GetLabel())
     Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
 function c47510101.op(e,tp,eg,ep,ev,re,r,rp)
-    local g=Duel.GetMatchingGroup(c47510101.desfilter,tp,0,LOCATION_ONFIELD,nil,e:GetLabel())
+    local g=Duel.GetMatchingGroup(c47510101.desfilter2,tp,0,LOCATION_ONFIELD,nil,e:GetLabel())
     Duel.Destroy(g,REASON_EFFECT)
 end
 function c47510101.pencon(e,tp,eg,ep,ev,re,r,rp)

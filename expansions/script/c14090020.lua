@@ -121,16 +121,18 @@ function cm.fuop(e,tp,eg,ep,ev,re,r,rp)
 			local mat1=Duel.SelectFusionMaterial(tp,tc,mg1,nil,chkf)
 			tc:SetMaterial(mat1)
 			local tc1=mat1:GetFirst()
-			local mat=Group.CreateGroup()
+			local tgmat=Group.CreateGroup()
+			local rmmat=Group.CreateGroup()
 			while tc1 do
 				if tc1:IsLocation(LOCATION_GRAVE) then
-					mat1:RemoveCard(tc1)
-					mat:AddCard(tc1)
+					rmmat:AddCard(tc1)
+				else
+					tgmat:AddCard(tc1)
 				end
 				tc1=mat1:GetNext()
 			end
-			Duel.SendtoGrave(mat1,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
-			Duel.Remove(mat,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+			Duel.SendtoGrave(tgmat,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
+			Duel.Remove(rmmat,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 			Duel.BreakEffect()
 			Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
 		else
