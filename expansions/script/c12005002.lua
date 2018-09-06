@@ -32,7 +32,7 @@ function c12005002.rthcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(c12005002.rthcfilter,tp,LOCATION_ONFIELD,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectMatchingCard(tp,c12005002.rthcfilter,tp,LOCATION_ONFIELD,0,1,1)
+	local g=Duel.SelectMatchingCard(tp,c12005002.rthcfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
 	Duel.SendtoHand(g,nil,REASON_COST)
 end
 function c12005002.rthtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
