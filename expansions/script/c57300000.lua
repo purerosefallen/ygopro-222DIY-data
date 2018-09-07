@@ -1,5 +1,12 @@
 miyuki=miyuki or {}
 local cm=miyuki
+
+--for compat
+function Auxiliary.dogcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:GetPreviousControler()==tp and c:IsReason(REASON_DESTROY) and rp==1-tp
+end
+
 --updated overlay
 function cm.OverlayCard(c,tc,xm,nchk)
 	if not nchk and (not c:IsLocation(LOCATION_MZONE) or c:IsFacedown() or not c:IsType(TYPE_XYZ) or tc:IsType(TYPE_TOKEN)) then return end
