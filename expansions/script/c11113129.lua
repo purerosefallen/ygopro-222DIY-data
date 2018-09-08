@@ -54,12 +54,16 @@ end
 function c11113129.fsfilter(c,fc)
 	return c:GetLevel()==4 and c:GetAttack()==1000 and c:GetDefense()==1000 and c:IsCanBeFusionMaterial(fc) and c:GetAttribute()>0
 end
+function c11113129.fcfilter(c,chkf)
+	return c:IsLocation(LOCATION_MZONE) and c:IsControler(chkf)
+end
 function c11113129.CheckRecursive(c,mg,sg,fc,chkf)
 	if sg:IsContains(c) then return false end
 	local sg1=sg:Clone()
 	sg1:AddCard(c)
 	if sg1:GetCount()==6 then
 	    if Duel.GetFlagEffect(chkf,11113130)>0 and sg1:IsExists(Card.IsLocation,5,nil,LOCATION_DECK) then return false end
+		if Duel.GetLocationCountFromEx(chkf)<=0 and not sg1:IsExists(c11113129.fcfilter,1,nil,chkf) then return false end
 		local att=0
 		for tc in aux.Next(sg1) do
 			att=bit.bor(tc:GetAttribute(),att)
@@ -78,9 +82,8 @@ function c11113129.fscon(e,g,gc,chkf)
 	if gc then sg:AddCard(gc) end
 	local fs=false
 	local mg=g:Filter(c11113129.fsfilter,nil,e:GetHandler())
-	if mg:IsExists(aux.FConditionCheckF,1,nil,chkf) then fs=true end
 	return mg:IsExists(c11113129.CheckRecursive,1,nil,mg,sg,e:GetHandler(),chkf) 
-	    and (fs or Duel.GetLocationCountFromEx(chkf,chkf,mg,e:GetHandler())>0)
+	    and Duel.GetLocationCountFromEx(chkf,chkf,mg,e:GetHandler())>0
 end
 function c11113129.fsop(e,tp,eg,ep,ev,re,r,rp,gc,chkf)
 	local sg=Group.CreateGroup()

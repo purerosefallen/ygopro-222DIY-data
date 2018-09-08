@@ -156,7 +156,7 @@ function c47510038.aclimit(e,re,tp)
     return re:IsActiveType(TYPE_FLIP)
 end
 function c47510038.cfilter(c,tp)
-    return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousSetCard(0x5da) or c:IsRace(RACE_FAIRY)
+    return c:IsReason(REASON_BATTLE+REASON_EFFECT) and (c:IsPreviousSetCard(0x5da) or c:IsRace(RACE_FAIRY))
         and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEUP)
 end
 function c47510038.con(e,tp,eg,ep,ev,re,r,rp)

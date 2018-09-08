@@ -69,7 +69,7 @@ function c47510088.cfilter(c,e,tp,ft)
         and (ft>0 or (c:IsControler(tp) and c:GetSequence()<5)) and (c:IsControler(tp) or c:IsFaceup())
 end
 function c47510088.spfilter(c,lv,e,tp)
-    return c:IsLevel(lv) and c:IsSetCard(0x5da) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+    return c:IsLevel(lv) and (c:IsSetCard(0x5da) or c:IsSetCard(0x5de)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c47510088.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
     local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)

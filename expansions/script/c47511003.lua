@@ -67,21 +67,18 @@ end
 function c47511003.filter(c)
     return c:IsFaceup() and c:IsType(TYPE_EFFECT)
 end
-function c47511003.target(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(c47511003.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
-    local g=Duel.GetMatchingGroup(c47511003.filter,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
+function c47511003.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+    if chkc then return chkc:IsLocation(LOCATION_MZONE) and c47511003.filter(chkc) and chkc~=e:GetHandler() end
+    if chk==0 then return Duel.IsExistingTarget(c47511003.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+    Duel.SelectTarget(tp,c47511003.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler())
 end
 function c47511003.operation(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    local g=Duel.GetMatchingGroup(c47511003.filter,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
-    if g:GetCount()>0 then
-        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-        local sg=g:Select(tp,1,1,nil)
-        Duel.HintSelection(sg)
-        if sg and c:IsRelateToEffect(e) and c:IsFaceup() and sg:IsFaceup() and sg:IsRelateToEffect(e) then
-        local code=sg:GetOriginalCode()
+    local tc=Duel.GetFirstTarget()
+    if tc and c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+        local code=tc:GetOriginalCode()
         c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
-        end
     end
 end
 function c47511003.pencon(e,tp,eg,ep,ev,re,r,rp)

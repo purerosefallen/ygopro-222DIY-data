@@ -136,7 +136,7 @@ function c47510041.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
     Duel.SetChainLimit(aux.FALSE)
 end
 function c47510041.ssop(e,tp,eg,ep,ev,re,r,rp)
-    local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)
+    local g=Duel.GetMatchingGroup(c47510041.ssfilter,tp,0,LOCATION_ONFIELD,nil)
     Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 end
 function c47510041.efilter(e,re)
