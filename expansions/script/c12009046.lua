@@ -37,21 +37,23 @@ function c12009046.initial_effect(c)
 	e3:SetOperation(c12009046.thop)
 	c:RegisterEffect(e3)
 end
+--
+function c12009046.thfilter(c)
+   return c:IsFacedown() and c:IsAbleToHand()
+end
 function c12009046.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c12009046.thfilter,tp,0xc,0xc,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,PLAYER_ALL,0xc)
+	if chk==0 then return Duel.IsExistingMatchingCard(c12009046.thfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,PLAYER_ALL,LOCATION_ONFIELD)
 end
 function c12009046.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectMatchingCard(tp,c12009046.thfilter,tp,0xc,0xc,1,99,nil)
+	local g=Duel.SelectMatchingCard(tp,c12009046.thfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,99,nil)
 	if g:GetCount()>0 then
 	   Duel.HintSelection(g)
 	   Duel.SendtoHand(g,nil,REASON_EFFECT)
 	end
 end
-function c12009046.thfilter(c)
-   return c:IsFacedown() and c:IsAbleToHand()
-end
+--
 function c12009046.filter1(c,tp)
 	return c:IsType(TYPE_RITUAL) and c:IsType(TYPE_SPELL) and c:IsAbleToDeck() and Duel.IsExistingTarget(c12009046.filter2,tp,LOCATION_GRAVE,0,1,nil,c)
 end
@@ -116,64 +118,71 @@ end
 function c12009046.acfilter(c,tp)
 	return  (c:GetType()==TYPE_SPELL or c:GetType()==TYPE_SPELL+TYPE_RITUAL) and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
+
+--
 function c12009046.gf(g,lc)
 	return g:IsExists(Card.IsFacedown,1,nil)
 end
+function c12009046.LConditionFilter(c,f,lc)
+	return c:IsCanBeLinkMaterial(lc) and (not f or f(c))
+end
+function c12009046.GetLinkMaterials(tp,f,lc)
+	local mg=Duel.GetMatchingGroup(c12009046.LConditionFilter,tp,LOCATION_MZONE,0,nil,f,lc)
+	local mg2=Duel.GetMatchingGroup(aux.LExtraFilter,tp,LOCATION_HAND+LOCATION_SZONE,LOCATION_ONFIELD,nil,f,lc)
+	if mg2:GetCount()>0 then mg:Merge(mg2) end
+	return mg
+end
 function c12009046.LinkCondition(f,minc,maxc,gf)
-	return  function(e,c)
-				if c==nil then return true end
-				if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
-				local f=Card.IsFaceup
-				Card.IsFaceup=aux.TRUE
-				local tp=c:GetControler()
-				local mg=Auxiliary.GetLinkMaterials(tp,f,c)
-				local sg=Auxiliary.GetMustMaterialGroup(tp,EFFECT_MUST_BE_LMATERIAL)
-				if sg:IsExists(Auxiliary.MustMaterialCounterFilter,1,nil,mg) then Card.IsFaceup=f return false end
-				local ct=sg:GetCount()
-				if ct>maxc then Card.IsFaceup=f return false end
-				if Auxiliary.LCheckGoal(tp,sg,c,minc,ct,gf)
-					or mg:IsExists(Auxiliary.LCheckRecursive,1,sg,tp,sg,mg,c,ct,minc,maxc,gf) then Card.IsFaceup=f return true end
+	return  
+	function(e,c)
+		if c==nil then return true end
+		if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
+		local tp=c:GetControler()
+		local mg=c12009046.GetLinkMaterials(tp,f,c)
+		local sg=aux.GetMustMaterialGroup(tp,EFFECT_MUST_BE_LMATERIAL)
+		if sg:IsExists(aux.MustMaterialCounterFilter,1,nil,mg) then return false end
+		local ct=sg:GetCount()
+		if ct>maxc then return false end
+		return aux.LCheckGoal(tp,sg,c,minc,ct,gf)
+			or mg:IsExists(aux.LCheckRecursive,1,sg,tp,sg,mg,c,ct,minc,maxc,gf)
+	end
+end
+--
+function c12009046.LinkTarget(f,minc,maxc,gf)
+	return
+	function(e,tp,eg,ep,ev,re,r,rp,chk,c)
+		local mg=c12009046.GetLinkMaterials(tp,f,c)
+		local bg=aux.GetMustMaterialGroup(tp,EFFECT_MUST_BE_LMATERIAL)
+		if #bg>0 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LMATERIAL)
+			bg:Select(tp,#bg,#bg,nil)
+		end
+		local sg=Group.CreateGroup()
+		sg:Merge(bg)
+		local finish=false
+		while #sg<maxc do
+			finish=aux.LCheckGoal(tp,sg,c,minc,#sg,gf)
+			local cg=mg:Filter(aux.LCheckRecursive,sg,tp,sg,mg,c,#sg,minc,maxc,gf)
+			if #cg==0 then break end
+			local cancel=not finish
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LMATERIAL)
+			local tc=cg:SelectUnselect(sg,tp,finish,cancel,minc,maxc)
+			if not tc then break end
+			if not bg:IsContains(tc) then
+				if not sg:IsContains(tc) then
+					sg:AddCard(tc)
+					if #sg==maxc then finish=true end
+				else
+					sg:RemoveCard(tc)
+				end
+			elseif #bg>0 and #sg<=#bg then
 				return false
 			end
-end
-function c12009046.LinkTarget(f,minc,maxc,gf)
-	return  function(e,tp,eg,ep,ev,re,r,rp,chk,c)
-				local f=Card.IsFaceup
-				Card.IsFaceup=aux.TRUE
-				local mg=Auxiliary.GetLinkMaterials(tp,f,c)
-				local bg=Auxiliary.GetMustMaterialGroup(tp,EFFECT_MUST_BE_LMATERIAL)
-				if #bg>0 then
-					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LMATERIAL)
-					bg:Select(tp,#bg,#bg,nil)
-				end
-				local sg=Group.CreateGroup()
-				sg:Merge(bg)
-				local finish=false
-				while #sg<maxc do
-					finish=Auxiliary.LCheckGoal(tp,sg,c,minc,#sg,gf)
-					local cg=mg:Filter(Auxiliary.LCheckRecursive,sg,tp,sg,mg,c,#sg,minc,maxc,gf)
-					if #cg==0 then break end
-					local cancel=not finish
-					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LMATERIAL)
-					local tc=cg:SelectUnselect(sg,tp,finish,cancel,minc,maxc)
-					if not tc then break end
-					if not bg:IsContains(tc) then
-						if not sg:IsContains(tc) then
-							sg:AddCard(tc)
-							if #sg==maxc then finish=true end
-						else
-							sg:RemoveCard(tc)
-						end
-					elseif #bg>0 and #sg<=#bg then
-						Card.IsFaceup=f
-						return false
-					end
-				end
-				Card.IsFaceup=f
-				if finish then
-					sg:KeepAlive()
-					e:SetLabelObject(sg)
-					return true
-				else return false end
-			end
+		end
+		if finish then
+			sg:KeepAlive()
+			e:SetLabelObject(sg)
+			return true
+		else return false end
+	end
 end
