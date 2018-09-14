@@ -7,12 +7,16 @@ addons:
   - github.com
   apt:
     packages:
-    - libevent-dev
-    - libsqlite3-dev
+      - gcc-6
+      - g++-6
+      - libevent-dev
+      - libsqlite3-dev
 env:
 - DATABASE_FILE=expansions/222DIY.cdb
 
 before_install:
+- sudo ln -s /usr/bin/gcc-6 /usr/local/bin/gcc
+- sudo ln -s /usr/bin/g++-6 /usr/local/bin/g++
 - git config --global user.name purerosefallen
 - git config --global user.email 78877@qq.com
 
