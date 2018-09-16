@@ -2,6 +2,7 @@
 local m=37564570
 local cm=_G["c"..m]
 xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
+cm.Senya_desc_with_nanahira=true
 function cm.initial_effect(c)
 	Senya.Nanahira(c)
 	Senya.NegateEffectModule(c,1,m,Senya.SelfDiscardCost,aux.AND(Senya.NanahiraExistingCondition(false),function(e,tp,eg,ep,ev,re,r,rp)
