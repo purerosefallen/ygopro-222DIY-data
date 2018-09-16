@@ -68,11 +68,11 @@ function cm.setop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function cm.cfilter(c,tp)
-	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH)
+function cm.cfilter(c)
+	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and (c:GetRank()>0 or c:GetLevel()>0)
 end
 function cm.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(cm.cfilter,1,nil,tp)
+	return eg:IsExists(cm.cfilter,1,nil)
 end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -84,10 +84,10 @@ end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g=eg:Filter(cm.cfilter,nil,e)
+	local g=eg:Filter(cm.cfilter,nil)
 	local tc=g:GetFirst()
 	while tc do
-		if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:IsType(TYPE_XYZ) then
+		if tc:IsRelateToEffect(e) and tc:IsFaceup() and tc:GetRank()>0 then
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)

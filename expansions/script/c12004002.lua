@@ -6,6 +6,7 @@ function c12004002.initial_effect(c)
 	e2:SetCode(EVENT_CHAIN_NEGATED)
 	e2:SetRange(LOCATION_REMOVED+LOCATION_HAND)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetCondition(c12004002.condition)
 	e2:SetTarget(c12004002.sptg)
 	e2:SetOperation(c12004002.spop)
 	c:RegisterEffect(e2)
@@ -19,6 +20,9 @@ function c12004002.initial_effect(c)
 	e2:SetTarget(c12004002.tktg)
 	e2:SetOperation(c12004002.tkop)
 	c:RegisterEffect(e2)
+end
+function c12004002.condition(e,tp,eg,ep,ev,re,r,rp)
+	return rp==1-tp 
 end
 function c12004002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

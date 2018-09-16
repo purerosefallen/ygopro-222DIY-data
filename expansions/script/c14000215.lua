@@ -68,14 +68,14 @@ end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return true end
-	local g=eg:Filter(cm.cfilter,nil)
+	local g=eg:Filter(cm.cfilter,nil,tp)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,nil,g,g:GetCount(),tp,LOCATION_MZONE)
 end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g=eg:Filter(cm.cfilter,nil,e)
+	local g=eg:Filter(cm.cfilter,nil,tp)
 	local tc=g:GetFirst()
 	while tc do
 		if tc:IsRelateToEffect(e) and tc:IsFaceup() then
@@ -100,7 +100,7 @@ end
 function cm.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return true end
-	local g=eg:Filter(cm.cfilter,nil)
+	local g=eg:Filter(cm.cfilter,nil,tp)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,g:GetCount(),tp,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,nil,0,0)
@@ -108,7 +108,7 @@ end
 function cm.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g=eg:Filter(cm.cfilter,nil,e)
+	local g=eg:Filter(cm.cfilter,nil,tp)
 	local tc=g:GetFirst()
 	while tc do
 		local cg=tc:GetColumnGroup():Filter(Card.IsControler,nil,1-tp)

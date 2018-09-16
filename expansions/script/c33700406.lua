@@ -95,7 +95,7 @@ end
 
 --lose ATK
 function card.atkval(e, c)
-	if card.mcount(e:GetControler()) > 0 then
+	if card.mcount(e:GetHandlerPlayer()) > 0 then
 		return -800
 	else
 		return 0
@@ -104,17 +104,17 @@ end
 
 --cannot NS
 function card.nscon(e)
-	return card.mcount(e:GetControler()) > 2
+	return card.mcount(e:GetHandlerPlayer()) > 2
 end
 
 --cannot SS
 function card.sscon(e)
-	return card.mcount(e:GetControler()) > 3
+	return card.mcount(e:GetHandlerPlayer()) > 3
 end
 
 --negate
 function card.negcon(e)
-	return card.mcount(e:GetControler()) > 4
+	return card.mcount(e:GetHandlerPlayer()) > 4
 end
 function card.negtg(e, c)
 	return c:IsFaceup() and c ~= e:GetHandler()

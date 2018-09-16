@@ -96,10 +96,9 @@ function c47510122.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c47510122.poop(e,tp,eg,ep,ev,re,r,rp)
     local lg=e:GetHandler():GetLinkedGroup():Filter(Card.IsFacedown,nil)
-    Duel.ChangePosition(lg,POS_FACEUP_ATTACK)
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-    local g=Duel.SelectMatchingCard(tp,c47510122.tgfilter,tp,LOCATION_HAND,0,1,1,nil)
-    if g:GetCount()>0 then
+    if Duel.ChangePosition(lg,POS_FACEUP_ATTACK) then
+        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+        local g=Duel.SelectMatchingCard(tp,c47510122.tgfilter,tp,LOCATION_HAND,0,1,1,nil)
         Duel.BreakEffect()
         Duel.SendtoGrave(g,REASON_EFFECT)
     end   

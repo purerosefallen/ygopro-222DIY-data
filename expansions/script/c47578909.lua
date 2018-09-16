@@ -44,7 +44,7 @@ function c47578909.initial_effect(c)
     c:RegisterEffect(e4)
     --spsummon
     local e5=Effect.CreateEffect(c)
-    e5:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
+    e5:SetCategory(CATEGORY_SPECIAL_SUMMON)
     e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
     e5:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
     e5:SetCode(EVENT_DESTROYED)

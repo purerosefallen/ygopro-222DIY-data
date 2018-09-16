@@ -70,11 +70,11 @@ function cm.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	g1:Merge(g2)
 	Duel.SendtoGrave(g1,REASON_COST)
 end
-function cm.cfilter(c,tp)
+function cm.cfilter(c)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and not c:IsPreviousLocation(LOCATION_DECK)
 end
 function cm.rmcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(cm.cfilter,1,nil,tp)
+	return eg:IsExists(cm.cfilter,1,nil)
 end
 function cm.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

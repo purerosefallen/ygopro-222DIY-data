@@ -28,11 +28,11 @@ function cm.initial_effect(c)
 	e2:SetOperation(cm.thop)
 	c:RegisterEffect(e2)
 end
-function cm.cfilter(c,tp)
+function cm.cfilter(c)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and not c:IsPreviousLocation(LOCATION_DECK)
 end
 function cm.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(cm.cfilter,1,nil,tp)
+	return eg:IsExists(cm.cfilter,1,nil)
 end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()

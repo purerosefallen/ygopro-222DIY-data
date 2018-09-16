@@ -6,7 +6,7 @@ function c47510115.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)
     --synchro summon
-    aux.AddSynchroMixProcedure(c,aux.Tuner(nil),aux.Tuner(nil),nil,aux.NonTuner(c47510115.sfilter),1,1)
+    aux.AddSynchroMixProcedure(c,nil,aux.NonTuner(c47510115.sfilter),1,1)
     c:EnableReviveLimit() 
     --Fraunhofer
     local e1=Effect.CreateEffect(c)

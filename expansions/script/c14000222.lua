@@ -52,14 +52,14 @@ function cm.sprfilter1(c,tp,fc)
 	return c:IsFusionAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_MACHINE) and c:GetBaseAttack()>=2000 and c:IsAbleToGraveAsCost() and c:IsCanBeFusionMaterial(fc)
 		and Duel.IsExistingMatchingCard(cm.sprfilter2,tp,LOCATION_MZONE,0,1,c,tp,fc,c)
 end
-function cm.sprfilter2(c,tp,fc)
+function cm.sprfilter2(c,tp,fc,g)
 	return ((c:IsFusionAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_MACHINE) and c:GetOriginalLevel()>=10) or c:IsCode(14000210)) and c:IsAbleToGraveAsCost() and c:IsCanBeFusionMaterial(fc) and Duel.GetLocationCountFromEx(tp,tp,g)>0
 end
 function cm.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g1=Duel.SelectMatchingCard(tp,cm.sprfilter1,tp,LOCATION_MZONE,0,1,1,nil,tp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g2=Duel.SelectMatchingCard(tp,cm.sprfilter2,tp,LOCATION_ONFIELD,0,1,1,g1:GetFirst(),tp,c,g1:GetFirst())
+	local g2=Duel.SelectMatchingCard(tp,cm.sprfilter2,tp,LOCATION_ONFIELD,0,1,1,g1:GetFirst(),tp,c,g1)
 	g1:Merge(g2)
 	Duel.SendtoGrave(g1,REASON_COST)
 end

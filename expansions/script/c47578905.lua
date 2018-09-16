@@ -54,15 +54,6 @@ function c47578905.initial_effect(c)
     e4:SetCondition(c47578905.actcon)
     e4:SetOperation(c47578905.actop)
     c:RegisterEffect(e4)
-    --tohand
-    local e5=Effect.CreateEffect(c)
-    e5:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-    e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-    e5:SetCode(EVENT_TO_GRAVE)
-    e5:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-    e5:SetTarget(c47578905.thtg)
-    e5:SetOperation(c47578905.thop)
-    c:RegisterEffect(e5)
         --pendulum
     local e8=Effect.CreateEffect(c)
     e8:SetDescription(aux.Stringid(47578905,3))
@@ -165,20 +156,5 @@ function c47578905.penop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     if c:IsRelateToEffect(e) then
         Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-    end
-end
-function c47578905.filter(c)
-    return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x5de) and c:IsAbleToHand()
-end
-function c47578905.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(c47578905.filter,tp,LOCATION_DECK,0,1,nil) end
-    Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-end
-function c47578905.thop(e,tp,eg,ep,ev,re,r,rp)
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-    local g=Duel.SelectMatchingCard(tp,c47578905.filter,tp,LOCATION_DECK,0,1,1,nil)
-    if g:GetCount()>0 then
-        Duel.SendtoHand(g,nil,REASON_EFFECT)
-        Duel.ConfirmCards(1-tp,g)
     end
 end

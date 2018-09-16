@@ -47,7 +47,7 @@ function cm.filter(c,e,tp)
 end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_GRAVE+LOCATION_EXTRA,0,1,nil,e,tp) end
-	local g=eg:Filter(cm.cfilter,nil)
+	local g=eg:Filter(cm.cfilter,nil,tp)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,g:GetCount(),tp,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_EXTRA)
@@ -56,7 +56,7 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g=eg:Filter(cm.cfilter,nil,e)
+	local g=eg:Filter(cm.cfilter,nil,tp)
 	if Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
@@ -74,10 +74,10 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
 end
-function cm.tgfilter(c,e,tp)
+function cm.tgfilter(c)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsAbleToGraveAsCost() and Duel.IsExistingMatchingCard(cm.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,c,c:GetCode())
 end
-function cm.tgfilter1(c,e,tp)
+function cm.tgfilter1(c)
 	return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsAbleToGraveAsCost()
 end
 function cm.thcost(e,tp,eg,ep,ev,re,r,rp,chk)

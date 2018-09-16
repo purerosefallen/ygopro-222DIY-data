@@ -68,7 +68,7 @@ end
 function cm.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return true end
-	local g=eg:Filter(cm.cfilter,nil)
+	local g=eg:Filter(cm.cfilter,nil,tp)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,g:GetCount(),tp,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,c,1,tp,LOCATION_MZONE)
@@ -76,7 +76,7 @@ end
 function cm.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g=eg:Filter(cm.cfilter,nil,e)
+	local g=eg:Filter(cm.cfilter,nil,tp)
 	if Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
 		Duel.BreakEffect()
 		Duel.SendtoHand(c,nil,REASON_EFFECT)

@@ -47,3 +47,9 @@ end
 function baka.check_set_AzayakaSin(c)
     return baka.check_set(c,"AzakayaSin")
 end
+function baka.check_set_MechanicalCrafter(c)
+    return baka.check_set(c,"MechanicalCrafter")
+end
+function baka.check_set_ApocryphaSaver(c)
+    return baka.check_set(c,"ApocryphaSaver")
+end

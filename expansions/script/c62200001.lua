@@ -30,6 +30,27 @@ function c62200001.initial_effect(c)
     e3:SetTarget(c62200001.setg)
     e3:SetOperation(c62200001.seop)
     c:RegisterEffect(e3)
+    --xyzlimit
+    local e10=Effect.CreateEffect(c)
+    e10:SetType(EFFECT_TYPE_SINGLE)
+    e10:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
+    e10:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+    e10:SetValue(c62200001.mlimit)
+    c:RegisterEffect(e10)
+    local e11=e10:Clone()
+    e11:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
+    c:RegisterEffect(e11)
+    local e12=e10:Clone()
+    e12:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
+    c:RegisterEffect(e12)
+    local e13=e10:Clone()
+    e13:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+    c:RegisterEffect(e13)
+end
+--
+function c62200001.mlimit(e,c)
+    if not c then return false end
+    return c:GetAttack()~=0
 end
 --
 function c62200001.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -50,6 +71,11 @@ function c62200001.tgop(e,tp,eg,ep,ev,re,r,rp)
     if g:GetCount()>0 then
         Duel.SendtoGrave(g,REASON_EFFECT)
     end
+end
+--
+function c22260016.mlimit(e,c)
+    if not c then return false end
+    return c:GetAttack()~=0
 end
 --
 function c62200001.secon(e,tp,eg,ep,ev,re,r,rp)

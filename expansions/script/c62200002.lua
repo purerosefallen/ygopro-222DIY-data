@@ -26,8 +26,29 @@ function c62200002.initial_effect(c)
     e2:SetCondition(c62200002.spcon)
     e2:SetTarget(c62200002.sptg)
     e2:SetOperation(c62200002.spop)
-    c:RegisterEffect(e2)    
+    c:RegisterEffect(e2)
+    --xyzlimit
+    local e10=Effect.CreateEffect(c)
+    e10:SetType(EFFECT_TYPE_SINGLE)
+    e10:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
+    e10:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+    e10:SetValue(c62200002.mlimit)
+    c:RegisterEffect(e10)
+    local e11=e10:Clone()
+    e11:SetCode(EFFECT_CANNOT_BE_SYNCHRO_MATERIAL)
+    c:RegisterEffect(e11)
+    local e12=e10:Clone()
+    e12:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
+    c:RegisterEffect(e12)
+    local e13=e10:Clone()
+    e13:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+    c:RegisterEffect(e13)
 end
+--
+function c62200002.mlimit(e,c)
+    if not c then return false end
+    return c:GetAttack()~=0
+end    
 --
 function c62200002.cost(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.CheckLPCost(tp,1000) end

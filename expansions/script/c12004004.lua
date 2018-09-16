@@ -27,7 +27,7 @@ function c12004004.thcon2(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r==REASON_LINK
 end
 function c12004004.filter(c)
-	return c:IsRace(RACE_MACHINE) and ( c:IsAttribute(ATTRIBUTE_FIRE) or c:IsAttribute(ATTRIBUTE_WATER) ) and c:IsSummonable(true,nil)
+	return c:IsRace(RACE_MACHINE) and ( c:IsAttribute(ATTRIBUTE_FIRE) or c:IsAttribute(ATTRIBUTE_LIGHT) ) and c:IsSummonable(true,nil)
 end
 function c12004004.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

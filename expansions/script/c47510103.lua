@@ -7,7 +7,7 @@ function c47510103.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)
     --synchro summon
-    aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsSynchroType,TYPE_SYNCHRO),aux.NonTuner(c47510103.sfilter),1,1)
+    aux.AddSynchroProcedure(c,nil,aux.NonTuner(c47510103.sfilter),1,1)
     c:EnableReviveLimit()
     --Astro Horizon
     local e1=Effect.CreateEffect(c)
