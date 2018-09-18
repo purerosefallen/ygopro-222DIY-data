@@ -37,10 +37,10 @@ function c65060020.initial_effect(c)
 end
 
 function c65060020.splimit(e,c,tp,sumtp,sumpos)
-	return not (c:IsSetCard(0xdd2) or (c:IsRace(RACE_FAIRY) and c:IsType(TYPE_LINK)))
+	return not (c:IsSetCard(0x6da4) or (c:IsRace(RACE_FAIRY) and c:IsType(TYPE_LINK)))
 end
 function c65060020.filter(c)
-	return c:IsSetCard(0xdd2) and c:IsAbleToHand()
+	return c:IsSetCard(0x6da4) and c:IsAbleToHand()
 end
 function c65060020.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c65060020.filter,tp,LOCATION_DECK,0,1,nil) end
@@ -55,11 +55,11 @@ function c65060020.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c65060020.distarget(e,c)
-	return c:IsSetCard(0xdd2)
+	return c:IsSetCard(0x6da4)
 end
 
 function c65060020.effectfilter(e,ct)
 	local p=e:GetHandler():GetControler()
 	local te,tp,loc=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_LOCATION)
-	return p==tp and te:GetHandler():IsSetCard(0xdd2) and te:GetHandler():IsType(TYPE_MONSTER) and bit.band(loc,LOCATION_ONFIELD)~=0
+	return p==tp and te:GetHandler():IsSetCard(0x6da4) and te:GetHandler():IsType(TYPE_MONSTER) and bit.band(loc,LOCATION_ONFIELD)~=0
 end

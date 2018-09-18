@@ -32,7 +32,7 @@ function c10173074.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e4:SetTargetRange(1,1)
+	e4:SetTargetRange(0,1)
 	e4:SetValue(c10173074.aclimit)
 	c:RegisterEffect(e4)
 	--cannot release
@@ -45,7 +45,7 @@ function c10173074.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c10173074.atkval(e,c)
-	local ct=Duel.GetMatchingGroupCount(Card.IsType,tp,0,LOCATION_ONFIELD,nil,TYPE_TRAP+TYPE_SPELL)
+	local ct=Duel.GetMatchingGroupCount(Card.IsType,e:GetHandlerPlayer(),0,LOCATION_ONFIELD,nil,TYPE_TRAP+TYPE_SPELL)
 	local ct2=c:GetAttackAnnouncedCount()
 	if ct2<ct then return ct
 	else return 0

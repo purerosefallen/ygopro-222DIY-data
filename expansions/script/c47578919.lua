@@ -4,15 +4,6 @@ local cm=_G["c"..m]
 function c47578919.initial_effect(c)
     aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)
     c:EnableReviveLimit()
-     --splimit
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_FIELD)
-    e1:SetRange(LOCATION_PZONE)
-    e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-    e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
-    e1:SetTargetRange(1,0)
-    e1:SetTarget(c47578919.psplimit)
-    c:RegisterEffect(e1) 
         --avoid damage
     local e2=Effect.CreateEffect(c)
     e2:SetType(EFFECT_TYPE_FIELD)
