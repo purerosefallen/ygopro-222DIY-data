@@ -6,7 +6,7 @@ deck/09.16new_card4.ydk	b0b49f18eebb07faf9a32526b2bf775c
 deck/09.16new_card5.ydk	45a870fcd9f48aea043456e562877791
 deck/09.16new_card6.ydk	122c193025a13b001f7184d024a95af3
 deck/09.16new_card7.ydk	5a471917c229dd0b78a94e69c6eab204
-expansions/222DIY.cdb	6f3d77718a055e8ce6834de6dc15cfcf
+expansions/222DIY.cdb	f1dd52b01369d118b9d0328fb37618cf
 expansions/lflist.conf	a44b49a4f37cffa7056b8570eb8458bb
 expansions/strings.conf	2eac3a740e84ae59f0f58a0f7fc3c7a1
 expansions/pics/08209710.jpg	ed0e60085631bfa641ffeebd6abbd910
@@ -3733,8 +3733,6 @@ expansions/pics/75646420.jpg	4bc04918b882ab997aa09dbd15e9df7d
 expansions/pics/75646421.jpg	a6e42dbcb43c64cfda0b9dde2a859ff9
 expansions/pics/75646422.jpg	569aae5b59adeebd896c10651d2b325a
 expansions/pics/75646500.jpg	102e7cf32a688e3663a1e8ae457fefbb
-expansions/pics/76121021.jpg	2e59fab6096b64d7d0392bce3188a063
-expansions/pics/76121023.jpg	0d123317aa4e6ca32a9538b510ecf750
 expansions/pics/76121033.jpg	17056a88053ac75dc19aac1ed0837dae
 expansions/pics/76121034.jpg	dbb29a356cfc1f2a9c091b856fc5cf56
 expansions/pics/76600000.jpg	f3017439d20680fa6b7daab66e000b53
@@ -7637,8 +7635,6 @@ expansions/script/c75646420.lua	c18ad6c6dd01f9ff3a3e8ca275762e90
 expansions/script/c75646421.lua	577d15c21d6e3362fbff67d04a50c403
 expansions/script/c75646422.lua	b3f273b15682501155cb69f635ac8967
 expansions/script/c75646500.lua	4984aa6cc4b2b48cda0235cc36d21fc7
-expansions/script/c76121021.lua	671558df82ca9989533fa930c1804a1c
-expansions/script/c76121023.lua	6c97287f5e8bddf62b558f87bb444e73
 expansions/script/c76121033.lua	f3b84f3a4dc14f87307eae7169b038d3
 expansions/script/c76121034.lua	b66dadac6dba73ebb4fa76a0656853cd
 expansions/script/c76600000.lua	6d4c525bf2c54050cd75dc7d7cba13f4
@@ -8084,10 +8080,10 @@ sound/custom/yata_battle.wav	da8f0e30d6c23c066be364993f3dbc92
 sound/custom/yata_effe01.wav	edf949c75a32c7b91f6029a6e6640ea6
 sound/custom/yata_summon.wav	17b569892284748d19f441e6972d6cce
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	735b7690e466896da0e38b44ad310daf
+update/filelist.txt	c54184446a1d0d091cdcaa846d5c21cc
 update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
 update/update-push.bat	686b01a51bba916202d61d951cd7fe3e
 update/update-push.sh	ee0ce539e77c8cec8965cb6d6a2b3149
 update/update-server.sh	1e36cb099427f8fda3cd52756b07398d
 update/update-without-sound.bat	1c2cfda2a0501642c8bceae026a73d5b
-update/version.txt	aa3a717f5ef71d0b71ae69bdef8f6556
+update/version.txt	fdcb3e4e7a87ac7f47b315c7fc31ef74
