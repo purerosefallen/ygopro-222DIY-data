@@ -1,4 +1,3 @@
-77708001
 c77707028.dfc_back_side=77707028-1
 xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 function c77707028.initial_effect(c)
