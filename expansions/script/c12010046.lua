@@ -30,7 +30,7 @@ function c12010046.initial_effect(c)
 	c:RegisterEffect(e6)
 end
 function c12010046.chcon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_TRAP+TYPE_SPELL) and rp==1-tp
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or re:IsActiveType(TYPE_TRAP+TYPE_SPELL) and rp==1-tp
 end
 function c12010046.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xfbc) and c:IsDestructable()
