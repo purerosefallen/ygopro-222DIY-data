@@ -47,7 +47,7 @@ function cm.effect_operation_3L(c,ctlm)
 	e1:SetCategory(CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCoundLimit(ctlm)
+	e1:SetCountLimit(ctlm)
 	e1:SetCost(function(e,tp,eg,ep,ev,re,r,rp,chk)
 		if chk==0 then return Duel.GetCurrentPhase()~=PHASE_MAIN2 end
 		local e1=Effect.CreateEffect(e:GetHandler())
