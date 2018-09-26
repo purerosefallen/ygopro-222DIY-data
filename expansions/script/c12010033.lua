@@ -89,9 +89,9 @@ function c12010033.tgfilter(c)
 end
 function c12010033.ttarget(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c12010033.tfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c12010033.tfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(c12010033.tgfilter,tp,LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c12010033.tfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.IsExistingMatchingCard(c12010033.tgfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,c12010033.tfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c12010033.tfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,0,1,tp,LOCATION_DECK)
 end
 function c12010033.toperation(e,tp,eg,ep,ev,re,r,rp)
