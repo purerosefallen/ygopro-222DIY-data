@@ -51,9 +51,9 @@ function c12010013.cfilter(c,tc,tp)
 	return c:IsSetCard(0xfba) and c:IsType(TYPE_MONSTER) and Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(c,tc))>0
 end
 function c12010013.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() and Duel.IsExistingMatchingCard(c12010013.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,tc,tc,tp) end
+	if chk==0 then return e:GetHandler():IsReleasable() and Duel.IsExistingMatchingCard(c12010013.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,c,tc,tp) end
 	local tc=e:GetHandler()
-	local g=Duel.SelectMatchingCard(tp,c12010013.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,1,tc,tc,tp)
+	local g=Duel.SelectMatchingCard(tp,c12010013.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,1,c,tc,tp)
 	g:AddCard(tc)
 	Duel.Release(g,REASON_COST)
 end
