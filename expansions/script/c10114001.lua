@@ -96,7 +96,7 @@ end
 if cm then
 function cm.initial_effect(c)
 	nrrsv.NightRavenSpecialSummonRule(c,5)
-	nrrsv.NightRavenSpecialSummonEffect(c,m,CATEGORY_TOHAND+CATEGORY_SEARCH,cm.thtg,cm.thop)
+	nrrsv.NightRavenSpecialSummonEffect(c,CATEGORY_TOHAND+CATEGORY_SEARCH,cm.thtg,cm.thop)
 end
 function cm.thfilter(c,e,tp)
 	return c:IsSetCard(0x3331) and (c:IsAbleToHand() or ((c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) or (c:IsType(TYPE_TRAP+TYPE_SPELL) and c:IsSSetable())))

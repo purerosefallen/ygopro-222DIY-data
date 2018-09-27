@@ -12,6 +12,7 @@ function c47510213.initial_effect(c)
     e1:SetRange(LOCATION_PZONE)
     e1:SetCountLimit(1,47510213)
     e1:SetCost(c47510213.mcost)
+    e1:SetTarget(c47510213.mtg)
     e1:SetOperation(c47510213.mop)
     c:RegisterEffect(e1)
     --splimit
@@ -68,6 +69,9 @@ function c47510213.dtfilter(c)
 end
 function c47510213.mfilter(c)
     return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK)
+end
+function c47510213.mtg(e,tp,eg,ep,ev,re,r,rp,chk)
+    if chk==0 then return Duel.IsExistingMatchingCard(c47510213.mfilter,tp,LOCATION_MZONE,0,1,nil) end
 end
 function c47510213.mop(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

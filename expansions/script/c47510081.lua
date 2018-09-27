@@ -5,9 +5,9 @@ function c47510081.initial_effect(c)
     --link summon
     aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),3,4,c47510081.lcheck)
     c:EnableReviveLimit() 
-    --to hand
+    --to grave
     local e1=Effect.CreateEffect(c)
-    e1:SetCategory(CATEGORY_TOHAND)
+    e1:SetCategory(CATEGORY_TOGRAVE)
     e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
     e1:SetCode(EVENT_SPSUMMON_SUCCESS)
     e1:SetCondition(c47510081.tgcon)

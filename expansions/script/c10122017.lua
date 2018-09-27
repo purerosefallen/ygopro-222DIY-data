@@ -1,4 +1,5 @@
 --乌托兰的织梦人
+if not pcall(function() require("expansions/script/c10199990") end) then require("script/c10199990") end
 function c10122017.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
@@ -20,7 +21,7 @@ function c10122017.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(c10122017.con)
 	e2:SetValue(aux.imval1)
-	c:RegisterEffect(e2)
+	--c:RegisterEffect(e2)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(10122017,0))
@@ -28,24 +29,42 @@ function c10122017.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetCountLimit(1)
+	e3:SetCountLimit(1,10122017)
 	e3:SetHintTiming(0,0x1e0)
 	e3:SetCondition(c10122017.con2)
 	e3:SetTarget(rsv.UtolandTokenTg)
-	e3:SetOperation(rsv.UtolandTokenOp(c10122017.op))
-	c:RegisterEffect(e3)	
+	e3:SetOperation(rsv.UtolandTokenOp(c10122017.op,true))
+	c:RegisterEffect(e3) 
+	--immue  
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e4:SetCode(EFFECT_IMMUNE_EFFECT)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCondition(c10122017.con)
+	e4:SetValue(c10122017.efilter)
+	c:RegisterEffect(e4) 
+end
+function c10122017.efilter(e,te)
+	return e:GetOwnerPlayer()~=te:GetOwnerPlayer()
 end
 function c10122017.con2(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
 	return (ph==PHASE_MAIN1 or ph==PHASE_MAIN2)
 end
 function c10122017.con(e)
-	return Duel.IsExistingMatchingCard(c10122017.tgfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,e:GetHandler())
+	--stack over limit
+	--if not Duel.IsExistingMatchingCard(c10122017.tgfilter2,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,e:GetHandler()) then return false end
+	return Duel.IsExistingMatchingCard(c10122017.tgfilter2,e:GetHandlerPlayer(),LOCATION_ONFIELD,0,1,e:GetHandler())
+end
+function c10122017.tgfilter2(c)
+	--return c:IsFaceup() and (c:GetOriginalCode()==10122011 or (c:IsHasEffect(10122018) and c:IsCode(10122011)))
+	return c:IsFaceup() and ((c:IsType(TYPE_TOKEN) and c:IsCode(10122011)) or (c:IsHasEffect(10122018) and c:IsCode(10122011)))
 end
 function c10122017.tgfilter(c)
 	return c:IsFaceup() and c:IsCode(10122011)
 end
 function c10122017.op(c,tc)
-	rsv.SingleValEffect(c,10122017,2,EFFECT_CANNOT_BE_LINK_MATERIAL,1,nil,RESETFE)
+	rsv.SingleValEffect(c,10122017,2,EFFECT_CANNOT_BE_LINK_MATERIAL,1,nil,RESETFE+RESET_PHASE+PHASE_END)
 	rsv.SingleValEffect(c,10122017,1,EFFECT_UNRELEASABLE_SUM,1,nil,RESETFE)
 end
