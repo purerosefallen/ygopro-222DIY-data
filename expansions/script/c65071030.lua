@@ -1,4 +1,4 @@
-﻿--谐奏放射器
+--谐奏放射器
 function c65071030.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
