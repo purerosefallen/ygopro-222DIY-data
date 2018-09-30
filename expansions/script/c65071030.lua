@@ -15,7 +15,7 @@ end
 function c65071030.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,100) end
 	local lp=Duel.GetLP(tp)
-	local m=63
+	local m=math.floor(lp/100)
 	local t={}
 	for i=1,m do
 		t[i]=i*100
