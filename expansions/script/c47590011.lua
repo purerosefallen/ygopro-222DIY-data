@@ -1,9 +1,9 @@
---辉夜姬
+﻿--辉夜姬
 local m=47590011
 local cm=_G["c"..m]
 function c47590011.initial_effect(c)
     --link summon
-    aux.AddLinkProcedure(c,nil,2,2,c47590011.lcheck)
+    aux.AddLinkProcedure(c,nil,2,5,c47590011.lcheck)
     c:EnableReviveLimit()
     --cannot special summon
     local e1=Effect.CreateEffect(c)
@@ -39,11 +39,10 @@ function c47590011.initial_effect(c)
     local e3=Effect.CreateEffect(c)
     e3:SetDescription(aux.Stringid(47590011,1))
     e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
-    e3:SetType(EFFECT_TYPE_IGNITION)
+    e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+    e3:SetCode(EVENT_PHASE+PHASE_BATTLE_START)
     e3:SetRange(LOCATION_MZONE)
-    e3:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
     e3:SetCountLimit(1,47590012)
-    e3:SetCondition(c47590011.con)
     e3:SetOperation(c47590011.operation)
     c:RegisterEffect(e3)
 end
@@ -60,25 +59,22 @@ function c47590011.ctop(e,tp,eg,ep,ev,re,r,rp)
     local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_ONFIELD,nil)
     local tc=g:GetFirst()
     while tc do
-        if not tc:IsCanAddCounter(0x105d,2) then
+        if not tc:IsCanAddCounter(0x105d,4) then
             tc:EnableCounterPermit(0x105d)
         end
-        tc:AddCounter(0x105d,2)
+        tc:AddCounter(0x105d,4)
     end
 end
 function c47590011.atkval(e,c)
     return Duel.GetCounter(0,1,1,0x105d)*-300
 end
 function c47590011.filter(c,e,tp,id)
-    return c:IsReason(REASON_DESTROY) and c:GetTurnID()==id and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
-function c47590011.con(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.IsAbleToEnterBP() or (Duel.GetCurrentPhase()>=PHASE_BATTLE_START and Duel.GetCurrentPhase()<=PHASE_BATTLE)
+    return c:IsReason(REASON_DESTROY) and c:GetTurnID()==id and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsFaceup()
 end
 function c47590011.operation(e,tp,eg,ep,ev,re,r,rp)
     local e1=Effect.CreateEffect(e:GetHandler())
     e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-    e1:SetCode(EVENT_PHASE_START+PHASE_BATTLE)
+    e1:SetCode(EVENT_PHASE+PHASE_BATTLE)
     e1:SetCountLimit(1)
     e1:SetOperation(c47590011.spop)
     e1:SetReset(RESET_PHASE+PHASE_END)
@@ -86,7 +82,7 @@ function c47590011.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c47590011.spop(e,tp,eg,ep,ev,re,r,rp)
     local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-    local tg=Duel.GetMatchingGroup(c47590011.filter,tp,LOCATION_GRAVE,0,nil,e,tp,Duel.GetTurnCount())
+    local tg=Duel.GetMatchingGroup(c47590011.filter,tp,LOCATION_GRAVE+LOCATION_EXTRA,0,nil,e,tp,Duel.GetTurnCount())
     if ft<=0 then return end
     if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
     local g=nil

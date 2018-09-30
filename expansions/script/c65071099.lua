@@ -1,0 +1,95 @@
+﻿--迷魂梦境
+function c65071099.initial_effect(c)
+	--Activate
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetTarget(c65071099.target)
+	e1:SetOperation(c65071099.activate)
+	c:RegisterEffect(e1)
+	--
+	local e2=Effect.CreateEffect(c)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCost(aux.bfgcost)
+	e2:SetOperation(c65071099.effop)
+	c:RegisterEffect(e2)
+end
+
+function c65071099.efilter(c)
+	return c:IsFaceup() and c:IsType(TYPE_NORMAL)
+end
+function c65071099.effop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local g=Duel.GetMatchingGroup(c65071099.efilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+	local tc=g:GetFirst()
+	while tc do
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetValue(1)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,2)
+		tc:RegisterEffect(e1)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e2:SetValue(1)
+		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,2)
+		tc:RegisterEffect(e2)
+		local e3=Effect.CreateEffect(c)
+		e3:SetType(EFFECT_TYPE_SINGLE)
+		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e3:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+		e3:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,2)
+		e3:SetValue(1)
+		tc:RegisterEffect(e3)
+		tc=g:GetNext()
+	end
+end
+
+function c65071099.filter(c)
+	return c:IsFaceup() and c:IsSummonType(SUMMON_TYPE_SPECIAL) and c:IsType(TYPE_EFFECT)
+end
+
+function c65071099.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c65071099.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c65071099.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+	Duel.SelectTarget(tp,c65071099.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+end
+function c65071099.activate(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_ADD_TYPE)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,2)
+		e1:SetValue(TYPE_NORMAL)
+		tc:RegisterEffect(e1)
+		local e9=Effect.CreateEffect(e:GetHandler())
+		e9:SetType(EFFECT_TYPE_SINGLE)
+		e9:SetCode(EFFECT_CANNOT_TRIGGER)
+		e9:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e9:SetRange(LOCATION_MZONE)
+		e9:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,2)
+		tc:RegisterEffect(e9)
+		local e0=Effect.CreateEffect(e:GetHandler())
+		e0:SetType(EFFECT_TYPE_SINGLE)
+		e0:SetCode(EFFECT_DISABLE)
+		e0:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,2)
+		tc:RegisterEffect(e0)
+		local e2=Effect.CreateEffect(e:GetHandler())
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_DISABLE_EFFECT)
+		e2:SetValue(RESET_TURN_SET)
+		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,2)
+		tc:RegisterEffect(e2)
+	end
+end

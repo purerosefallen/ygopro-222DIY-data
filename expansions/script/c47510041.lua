@@ -1,4 +1,4 @@
---堕天的星晶兽 奥利维尔
+﻿--堕天的星晶兽 奥利维尔
 local m=47510041
 local cm=_G["c"..m]
 function c47510041.initial_effect(c)
@@ -131,12 +131,15 @@ function c47510041.ssfilter(c)
 end
 function c47510041.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return true end
-    local g=Duel.GetMatchingGroup(c47510041.ssfilter,tp,0,LOCATION_ONFIELD,nil)
+    local g=Duel.GetMatchingGroup(c47510041.ssfilter,tp,0,LOCATION_SZONE,nil)
     Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
-    Duel.SetChainLimit(aux.FALSE)
+    Duel.SetChainLimit(c47510041.chainlimit)
+end
+function c47510041.chainlimit(e,rp,tp)
+    return not (e:IsHasType(EFFECT_TYPE_ACTIVATE) and e:GetHandler():IsType(TYPE_TRAP))
 end
 function c47510041.ssop(e,tp,eg,ep,ev,re,r,rp)
-    local g=Duel.GetMatchingGroup(c47510041.ssfilter,tp,0,LOCATION_ONFIELD,nil)
+    local g=Duel.GetMatchingGroup(c47510041.ssfilter,tp,0,LOCATION_SZONE,nil)
     Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 end
 function c47510041.efilter(e,re)

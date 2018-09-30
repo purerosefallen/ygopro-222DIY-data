@@ -1,4 +1,4 @@
---LA Da'ath 理解的亞夫結
+﻿--LA Da'ath 理解的亞夫結
 function c12010003.initial_effect(c)
 	--tograve+copy
 	local e2=Effect.CreateEffect(c)
@@ -21,9 +21,25 @@ function c12010003.initial_effect(c)
 	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e8:SetCode(EVENT_RELEASE)
 	e8:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e8:SetCost(c12010003.spcost)
 	e8:SetTarget(c12010003.sptg)
 	e8:SetOperation(c12010003.spop)
 	c:RegisterEffect(e8)
+	Duel.AddCustomActivityCounter(12010003,ACTIVITY_SPSUMMON,c12010003.counterfilter)
+end
+function c12010003.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetCustomActivityCount(12010003,tp,ACTIVITY_SPSUMMON)==0 end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTargetRange(1,0)
+	e1:SetTarget(c12010003.splimit)
+	Duel.RegisterEffect(e1,tp)
+end
+function c12010003.counterfilter(c)
+	return c:IsSetCard(0xfba)
 end
 function c12010003.filter(c)
 	return c:IsSetCard(0xfba) and c:IsAbleToGrave()

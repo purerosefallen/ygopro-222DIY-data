@@ -1,4 +1,4 @@
---晴空下的展望 鹿目圆香
+﻿--晴空下的展望 鹿目圆香
 function c60151603.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)
@@ -30,7 +30,7 @@ function c60151603.initial_effect(c)
     e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
     e3:SetCode(EVENT_SUMMON_SUCCESS)
     e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-    e3:SetCountLimit(1,60151603)
+    e3:SetCountLimit(1,6011603)
     e3:SetTarget(c60151603.sptg)
     e3:SetOperation(c60151603.spop)
     c:RegisterEffect(e3)

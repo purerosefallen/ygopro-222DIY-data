@@ -1,4 +1,4 @@
---是丢啦的魔法
+﻿--是丢啦的魔法
 function c4212202.initial_effect(c)
     --Activate
     local e1=Effect.CreateEffect(c)
@@ -27,7 +27,7 @@ function c4212202.filter(c)
     return c:IsType(TYPE_TUNER) and c:IsRace(RACE_SPELLCASTER) and c:GetLevel()==3 and c:IsDiscardable()
 end
 function c4212202.smfilter(c)
-    return c:IsLevelBelow(4) and c:IsType(TYPE_MONSTER) and c:IsSummonable(true,nil)
+    return c:IsLevelBelow(4) and c:IsType(TYPE_MONSTER) and c:IsRace(RACE_SPELLCASTER) and c:IsSummonable(true,nil)
 end
 function c4212202.filter2(c)
     return c:IsType(TYPE_MONSTER) and c:IsRace(RACE_SPELLCASTER)
