@@ -7,7 +7,7 @@
 *.zip
 *.swp
 /ygopro
-
+/.gitingore
 /expansions/pre-*.cdb
 /pics
 /localdata

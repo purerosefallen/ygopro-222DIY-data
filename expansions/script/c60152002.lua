@@ -92,28 +92,22 @@ function c60152002.activate(e,tp,eg,ep,ev,re,r,rp)
     local ctn=true
     while ft>0 and ctn do
         local token=Duel.CreateToken(tp,60152099)
-        if Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP) then
-            local atk=Duel.GetMatchingGroupCount(c60152002.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)*300
-            local e1=Effect.CreateEffect(e:GetHandler())
-            e1:SetType(EFFECT_TYPE_SINGLE)
-            e1:SetCode(EFFECT_SET_BASE_ATTACK)
-            e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-            e1:SetRange(LOCATION_MZONE)
-            e1:SetValue(atk)
-            token:RegisterEffect(e1,true)
-            --release limit
-            local e4=Effect.CreateEffect(e:GetHandler())
-            e4:SetType(EFFECT_TYPE_SINGLE)
-            e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE)
-            e4:SetRange(LOCATION_MZONE)
-            e4:SetCode(EFFECT_UNRELEASABLE_NONSUM)
-            e4:SetValue(c60152002.sumval)
-            token:RegisterEffect(e4,true)
-            local e5=e4:Clone()
-            e5:SetCode(EFFECT_UNRELEASABLE_SUM)
-            e5:SetValue(c60152002.sumval)
-            token:RegisterEffect(e5,true)
-        end
+        Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP) 
+        local atk=Duel.GetMatchingGroupCount(c60152002.filter,tp,LOCATION_MZONE,LOCATION_MZONE,nil)*300
+        local e1=Effect.CreateEffect(e:GetHandler())
+        e1:SetType(EFFECT_TYPE_SINGLE)
+        e1:SetCode(EFFECT_SET_BASE_ATTACK)
+        e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+        e1:SetRange(LOCATION_MZONE)
+        e1:SetValue(atk)
+        token:RegisterEffect(e1,true)
+        local e5=Effect.CreateEffect(e:GetHandler())
+        e5:SetType(EFFECT_TYPE_SINGLE)
+        e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE)
+        e5:SetRange(LOCATION_MZONE)
+        e5:SetCode(EFFECT_UNRELEASABLE_SUM)
+        e5:SetValue(function(e,c) return not c:IsSetCard(0x6b25) end)
+        token:RegisterEffect(e5,true)
         ft=ft-1
         if ft<=0 or not Duel.SelectYesNo(tp,aux.Stringid(60152002,1)) then ctn=false end
     end

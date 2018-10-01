@@ -37,11 +37,11 @@ function c12010014.cfilter(c,tc,tp)
 	return c:IsSetCard(0xfba) and c:IsType(TYPE_MONSTER) and c:IsReleasable() and Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(c,tc))>0
 end
 function c12010014.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReleasable() and Duel.IsExistingMatchingCard(c12010014.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,c,tc,tp) end
 	local tc=e:GetHandler()
-	local g=Duel.SelectMatchingCard(tp,c12010014.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,1,c,tc,tp)
-	g:AddCard(tc)
-	Duel.Release(g,REASON_COST)
+    if chk==0 then return e:GetHandler():IsReleasable() and Duel.IsExistingMatchingCard(c12010014.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,tc,tp) end
+    local g=Duel.SelectMatchingCard(tp,c12010014.cfilter,tp,LOCATION_MZONE+LOCATION_HAND,0,1,1,tc,tp)
+    g:AddCard(tc)
+    Duel.Release(g,REASON_COST)
 end
 function c12010014.tgfilter(c,e,tp)
 	return c:IsSetCard(0xfba) and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_XYZ) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,true,false)

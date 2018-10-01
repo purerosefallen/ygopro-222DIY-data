@@ -7,7 +7,7 @@ function c47520005.initial_effect(c)
     c:SetCounterLimit(0x5d8,3)
     --material
     c:EnableReviveLimit() 
-    aux.AddXyzProcedureLevelFree(c,c47520005.mfilter,c47520005.xyzcheck,2,2)
+    aux.AddXyzProcedureLevelFree(c,c47520005.mfilter,c47520005.xyzcheck,2,2,c47520005.ovfilter,aux.Stringid(47520005,0),2,c47520005.xyzop)
     aux.EnablePendulumAttribute(c,false)  
     --atkup
     local e1=Effect.CreateEffect(c)
@@ -38,6 +38,13 @@ function c47520005.initial_effect(c)
     e3:SetTarget(c47520005.target)
     e3:SetOperation(c47520005.opd1)
     c:RegisterEffect(e3)
+end
+function c47520005.ovfilter(c)
+    return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_BEASTWARRIOR) and c:IsType(TYPE_XYZ) and not c:IsCode(47520005)
+end
+function c47520005.xyzop(e,tp,chk)
+    if chk==0 then return Duel.GetFlagEffect(tp,47520005)==0 end
+    Duel.RegisterFlagEffect(tp,47520005,RESET_PHASE+PHASE_END,0,1)
 end
 function c47520005.mfilter(c)
     return c:IsLevel(8)

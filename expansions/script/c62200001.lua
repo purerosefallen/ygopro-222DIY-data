@@ -73,7 +73,7 @@ function c62200001.tgop(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 --
-function c22260016.mlimit(e,c)
+function c62200001.mlimit(e,c)
     if not c then return false end
     return c:GetAttack()~=0
 end
