@@ -75,11 +75,11 @@ function c47578919.filter2(c)
     return c:IsRace(RACE_FAIRY) and c:IsType(TYPE_FUSION+TYPE_SYNCHRO) and not c:IsCode(47578919)
 end
 function c47578919.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(c47578919.filter2,tp,LOCATION_MZONE,0,1,nil) end
+    if chk==0 then return Duel.IsExistingMatchingCard(c47578919.filter2,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
 end
 function c47578919.lvop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    local g=Duel.GetMatchingGroup(c47578919.filter2,tp,LOCATION_MZONE,0,nil)
+    local g=Duel.GetMatchingGroup(c47578919.filter2,tp,LOCATION_MZONE,0,e:GetHandler())
     local tc=g:GetFirst()
     while tc do
         local e1=Effect.CreateEffect(c)

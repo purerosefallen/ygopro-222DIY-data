@@ -24,7 +24,7 @@ function cm.filter(c,e,tp,m1,ft)
 	if ft>0 then
 		return mg:CheckWithSumEqual(Card.GetRitualLevel,c:GetLevel(),1,99,c)
 	else
-		return ft>-1 and mg:IsExists(cm.mfilterf,1,nil,tp,mg,c)
+		return mg:IsExists(cm.mfilterf,1,nil,tp,mg,c)
 	end
 end
 function cm.mfilterf(c,tp,mg,rc)
@@ -35,9 +35,9 @@ function cm.mfilterf(c,tp,mg,rc)
 end
 function cm.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		local mg1=Duel.GetRitualMaterial(tp)
+		local mg=Duel.GetRitualMaterial(tp)
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-		return Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_HAND,0,1,nil,e,tp,mg1,ft)
+		return ft>-1 and Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_HAND,0,1,nil,e,tp,mg,ft)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,0,LOCATION_ONFIELD)
@@ -45,13 +45,13 @@ function cm.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,0,LOCATION_ONFIELD)
 end
 function cm.op(e,tp,eg,ep,ev,re,r,rp)
-	local mg1=Duel.GetRitualMaterial(tp)
+	local mg=Duel.GetRitualMaterial(tp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,cm.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp,mg1,ft)
-	local tc=g:GetFirst()
+	local tg=Duel.SelectMatchingCard(tp,cm.filter,tp,LOCATION_HAND,0,1,1,nil,e,tp,mg,ft)
+	local tc=tg:GetFirst()
 	if tc then
-		local mg=mg1:Filter(Card.IsCanBeRitualMaterial,tc,tc)
+		mg=mg:Filter(Card.IsCanBeRitualMaterial,tc,tc)
 		local mat=nil
 		if ft>0 then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
