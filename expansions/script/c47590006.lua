@@ -1,4 +1,3 @@
---风之天司 拉斐尔
 local m=47590006
 local cm=_G["c"..m]
 function c47590006.initial_effect(c)
@@ -24,7 +23,6 @@ function c47590006.initial_effect(c)
     e4:SetTarget(c47590006.indtg)
     e4:SetValue(c47590006.indval)
     c:RegisterEffect(e4)
-    --indes
     --immune (FAQ in Card Target)
     local e1=Effect.CreateEffect(c)
     e1:SetType(EFFECT_TYPE_FIELD)

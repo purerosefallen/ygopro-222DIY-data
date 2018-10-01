@@ -108,8 +108,7 @@ end
 function c47520015.rtop(e,tp,eg,ep,ev,re,r,rp)
     local tc=Duel.GetFirstTarget()
     if tc:IsRelateToEffect(e) then
-            Duel.Damage(1-tp,tc:GetAttack(),REASON_EFFECT)
-        end
+       Duel.Damage(1-tp,tc:GetAttack(),REASON_EFFECT)
     end
 end
 function c47520015.ssfilter(c)

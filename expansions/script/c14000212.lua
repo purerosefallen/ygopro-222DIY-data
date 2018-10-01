@@ -59,17 +59,17 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
-		if c:IsRelateToEffect(e) and c:IsFaceup() and Duel.SelectYesNo(tp,aux.Stringid(m,1)) then
-			Duel.BreakEffect()
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-			e1:SetRange(LOCATION_MZONE)
-			e1:SetCode(EFFECT_CHANGE_LEVEL)
-			e1:SetValue(10)
-			e1:SetReset(RESET_EVENT+0xff0000)
-			c:RegisterEffect(e1)
-		end
+	end
+	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(m,1)) then
+		Duel.BreakEffect()
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetCode(EFFECT_CHANGE_LEVEL)
+		e1:SetValue(10)
+		e1:SetReset(RESET_EVENT+0xff0000)
+		e:GetHandler():RegisterEffect(e1)
 	end
 end
 function cm.cfilter(c,tp)
