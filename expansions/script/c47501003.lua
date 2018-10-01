@@ -1,4 +1,4 @@
-﻿--军神 格里姆尼尔
+--军神 格里姆尼尔
 local m=47501003
 local cm=_G["c"..m]
 function c47501003.initial_effect(c)

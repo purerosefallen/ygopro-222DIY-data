@@ -1,4 +1,4 @@
-﻿--源初数码兽 APOCALYPSE
+--源初数码兽 APOCALYPSE
 function c50218149.initial_effect(c)
     c:EnableReviveLimit()
     --splimit

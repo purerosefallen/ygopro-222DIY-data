@@ -1,4 +1,4 @@
-﻿--割腕者
+--割腕者
 function c65071051.initial_effect(c)
 	--atk
 	local e2=Effect.CreateEffect(c)

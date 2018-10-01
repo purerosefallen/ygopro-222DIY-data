@@ -1,4 +1,4 @@
-﻿--奇迹的巧合-库洛伊
+--奇迹的巧合-库洛伊
 local m=4231003
 local cm=_G["c"..m]
 function cm.initial_effect(c)

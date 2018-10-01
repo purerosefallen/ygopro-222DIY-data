@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 幽灵
+--星之骑士拟身 幽灵
 function c65090048.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090048)

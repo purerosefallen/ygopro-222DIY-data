@@ -1,4 +1,4 @@
-﻿--谢顶之灾
+--谢顶之灾
 function c65071059.initial_effect(c)
 	--
 	local e2=Effect.CreateEffect(c)

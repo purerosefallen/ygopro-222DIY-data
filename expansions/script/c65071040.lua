@@ -1,4 +1,4 @@
-﻿--目灯
+--目灯
 function c65071040.initial_effect(c)
 	--attack target
 	local e1=Effect.CreateEffect(c)

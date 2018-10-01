@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 英雄
+--星之骑士拟身 英雄
 function c65090052.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090052)

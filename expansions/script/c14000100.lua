@@ -1,4 +1,4 @@
-﻿--死境勇士·斯巴达克斯
+--死境勇士·斯巴达克斯
 local m=14000100
 local cm=_G["c"..m]
 cm.named_with_brave=1

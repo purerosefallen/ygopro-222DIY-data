@@ -1,4 +1,4 @@
-﻿--赫里奥波里斯之圣喻龙
+--赫里奥波里斯之圣喻龙
 function c76121041.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,nil,2,2,c76121041.lcheck)

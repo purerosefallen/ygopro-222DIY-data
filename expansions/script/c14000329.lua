@@ -1,4 +1,4 @@
-﻿--吞式者的异化
+--吞式者的异化
 local m=14000329
 local cm=_G["c"..m]
 cm.named_with_Aotual=1

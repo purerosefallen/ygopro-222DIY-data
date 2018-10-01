@@ -1,4 +1,4 @@
-﻿--唤灵质源 奥尔库
+--唤灵质源 奥尔库
 function c65050001.initial_effect(c)
 	--Activate
 	local e0=Effect.CreateEffect(c)

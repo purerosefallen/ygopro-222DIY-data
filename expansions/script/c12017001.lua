@@ -1,4 +1,4 @@
-﻿--忍妖 粉雪
+--忍妖 粉雪
 function c12017001.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(12017001,0))

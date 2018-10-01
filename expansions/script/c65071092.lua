@@ -1,4 +1,4 @@
-﻿--此刻的神色
+--此刻的神色
 function c65071092.initial_effect(c)
 	--move
 	local e1=Effect.CreateEffect(c)

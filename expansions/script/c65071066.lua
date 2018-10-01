@@ -1,4 +1,4 @@
-﻿--荧光菌孢
+--荧光菌孢
 function c65071066.initial_effect(c)
 	--cont
 	local e1=Effect.CreateEffect(c)

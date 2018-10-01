@@ -1,4 +1,4 @@
-﻿--唤灵祈姬 菲莉
+--唤灵祈姬 菲莉
 function c65050005.initial_effect(c)
 	c:EnableReviveLimit()
 	--activate

@@ -1,4 +1,4 @@
-﻿--古记災鼬 烈
+--古记災鼬 烈
 function c76121007.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)

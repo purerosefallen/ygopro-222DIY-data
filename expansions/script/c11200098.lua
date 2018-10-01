@@ -1,4 +1,4 @@
-﻿--人偶
+--人偶
 function c11200098.initial_effect(c)
 	--rec
 	local e1=Effect.CreateEffect(c)

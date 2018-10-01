@@ -1,4 +1,4 @@
-﻿--星之骑士协力 刃骑士
+--星之骑士协力 刃骑士
 function c65090023.initial_effect(c)
 	--spsummon
 	local e0=Effect.CreateEffect(c)

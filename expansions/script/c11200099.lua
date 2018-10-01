@@ -1,4 +1,4 @@
-﻿--星辰钟塔的玛利亚
+--星辰钟塔的玛利亚
 function c11200099.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()

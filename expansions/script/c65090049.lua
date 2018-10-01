@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 针刺
+--星之骑士拟身 针刺
 function c65090049.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090049)

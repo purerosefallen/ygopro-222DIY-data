@@ -1,4 +1,4 @@
-﻿--堕天的星晶兽 奥利维尔
+--堕天的星晶兽 奥利维尔
 local m=47510041
 local cm=_G["c"..m]
 function c47510041.initial_effect(c)

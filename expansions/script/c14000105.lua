@@ -1,4 +1,4 @@
-﻿--死境战壕
+--死境战壕
 local m=14000105
 local cm=_G["c"..m]
 function cm.initial_effect(c)

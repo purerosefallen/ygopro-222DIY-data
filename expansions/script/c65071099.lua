@@ -1,4 +1,4 @@
-﻿--迷魂梦境
+--迷魂梦境
 function c65071099.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

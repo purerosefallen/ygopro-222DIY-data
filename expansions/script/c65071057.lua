@@ -1,4 +1,4 @@
-﻿--猩红创痕
+--猩红创痕
 function c65071057.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

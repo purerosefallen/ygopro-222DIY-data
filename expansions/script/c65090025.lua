@@ -1,4 +1,4 @@
-﻿--星之骑士协力 胶囊喷气火箭
+--星之骑士协力 胶囊喷气火箭
 function c65090025.initial_effect(c)
 	--spsummon
 	local e0=Effect.CreateEffect(c)

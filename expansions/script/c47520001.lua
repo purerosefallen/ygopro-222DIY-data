@@ -1,4 +1,4 @@
-﻿--南南西的守护神 阿尼拉
+--南南西的守护神 阿尼拉
 local m=47520001
 local cm=_G["c"..m]
 function c47520001.initial_effect(c)

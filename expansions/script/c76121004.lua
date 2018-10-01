@@ -1,4 +1,4 @@
-﻿--古记妖狐 弗拉姆
+--古记妖狐 弗拉姆
 function c76121004.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

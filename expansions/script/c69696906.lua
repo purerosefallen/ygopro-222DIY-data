@@ -1,4 +1,4 @@
-﻿--全副武装
+--全副武装
 function c69696906.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

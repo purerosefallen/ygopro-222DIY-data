@@ -1,4 +1,4 @@
-﻿--LA SG Gluttony 阿庫亞
+--LA SG Gluttony 阿庫亞
 function c12010013.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

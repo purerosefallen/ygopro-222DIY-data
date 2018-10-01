@@ -1,4 +1,4 @@
-﻿--死境残存
+--死境残存
 local m=14000107
 local cm=_G["c"..m]
 function cm.initial_effect(c)

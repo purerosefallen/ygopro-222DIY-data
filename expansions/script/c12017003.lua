@@ -1,4 +1,4 @@
-﻿--忍妖 百变
+--忍妖 百变
 function c12017003.initial_effect(c)
 	--fusion substitute
 	local e2=Effect.CreateEffect(c)

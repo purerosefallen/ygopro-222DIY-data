@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 涂鸦
+--星之骑士拟身 涂鸦
 function c65090028.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090028)

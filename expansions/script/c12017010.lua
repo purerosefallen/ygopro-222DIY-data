@@ -1,4 +1,4 @@
-﻿--忍妖 魔神龙
+--忍妖 魔神龙
 function c12017010.initial_effect(c)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)

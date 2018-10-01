@@ -1,4 +1,4 @@
-﻿--时终结
+--时终结
 function c65011007.initial_effect(c)
 	--Activate
 	local e0=Effect.CreateEffect(c)

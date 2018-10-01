@@ -1,4 +1,4 @@
-﻿--古记牙龙 艾利杰
+--古记牙龙 艾利杰
 function c76121008.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(nil),1)

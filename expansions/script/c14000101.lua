@@ -1,4 +1,4 @@
-﻿--死境勇士·赫拉克洛斯
+--死境勇士·赫拉克洛斯
 local m=14000101
 local cm=_G["c"..m]
 cm.named_with_brave=1

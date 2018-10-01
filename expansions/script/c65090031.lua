@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 歌唱
+--星之骑士拟身 歌唱
 function c65090031.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090031)

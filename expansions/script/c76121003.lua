@@ -1,4 +1,4 @@
-﻿--古记猎犬 杰特
+--古记猎犬 杰特
 function c76121003.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

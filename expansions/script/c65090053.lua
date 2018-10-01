@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 魔术
+--星之骑士拟身 魔术
 function c65090053.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090053)

@@ -1,4 +1,4 @@
-﻿--新星之声
+--新星之声
 function c65071093.initial_effect(c)
 	--multi attack
 	local e1=Effect.CreateEffect(c)

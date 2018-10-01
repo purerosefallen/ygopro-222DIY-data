@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 悠悠
+--星之骑士拟身 悠悠
 function c65090004.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090004)

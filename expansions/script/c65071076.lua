@@ -1,4 +1,4 @@
-﻿--凝视
+--凝视
 function c65071076.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

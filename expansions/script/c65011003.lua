@@ -1,4 +1,4 @@
-﻿--时终语的沉迷者
+--时终语的沉迷者
 function c65011003.initial_effect(c)
 	--tograve
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,4 @@
-﻿--死境突入
+--死境突入
 local m=14000108
 local cm=_G["c"..m]
 function cm.initial_effect(c)

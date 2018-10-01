@@ -1,4 +1,4 @@
-﻿--闪金冲锋
+--闪金冲锋
 function c65071064.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

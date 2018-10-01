@@ -1,4 +1,4 @@
-﻿--风之天司 拉斐尔
+--风之天司 拉斐尔
 local m=47590006
 local cm=_G["c"..m]
 function c47590006.initial_effect(c)

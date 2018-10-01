@@ -1,4 +1,4 @@
-﻿--猎头长耙
+--猎头长耙
 function c65071087.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

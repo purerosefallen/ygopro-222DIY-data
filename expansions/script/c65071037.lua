@@ -1,4 +1,4 @@
-﻿--霜之碎片
+--霜之碎片
 function c65071037.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

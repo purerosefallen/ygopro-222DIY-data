@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 缩小
+--星之骑士拟身 缩小
 function c65090042.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()

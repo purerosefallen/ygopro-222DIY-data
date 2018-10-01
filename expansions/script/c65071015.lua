@@ -1,4 +1,4 @@
-﻿--泣婴
+--泣婴
 function c65071015.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_HANDES)

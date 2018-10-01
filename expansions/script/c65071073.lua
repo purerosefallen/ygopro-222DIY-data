@@ -1,4 +1,4 @@
-﻿--盈泪之剑
+--盈泪之剑
 function c65071073.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

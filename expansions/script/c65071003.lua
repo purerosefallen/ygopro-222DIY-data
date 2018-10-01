@@ -1,4 +1,4 @@
-﻿--忏悔
+--忏悔
 function c65071003.initial_effect(c)
 	--draw
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,4 @@
-﻿--星之骑士协力 生身星火
+--星之骑士协力 生身星火
 function c65090015.initial_effect(c)
 	--spsummon
 	local e0=Effect.CreateEffect(c)

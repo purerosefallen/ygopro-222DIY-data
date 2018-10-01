@@ -1,4 +1,4 @@
-﻿--沉醉
+--沉醉
 function c65071071.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

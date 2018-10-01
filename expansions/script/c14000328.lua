@@ -1,4 +1,4 @@
-﻿--吞式者·重装
+--吞式者·重装
 local m=14000328
 local cm=_G["c"..m]
 cm.named_with_Aotual=1

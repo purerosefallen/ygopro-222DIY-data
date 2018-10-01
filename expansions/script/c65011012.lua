@@ -1,4 +1,4 @@
-﻿--时终结 星币
+--时终结 星币
 function c65011012.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddFusionProcFun2(c,aux.TRUE,aux.TRUE,true)

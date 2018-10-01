@@ -1,4 +1,4 @@
-﻿--时终的溯行
+--时终的溯行
 function c65011009.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

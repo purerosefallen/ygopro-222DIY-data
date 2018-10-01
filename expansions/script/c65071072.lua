@@ -1,4 +1,4 @@
-﻿--穿刺极乐
+--穿刺极乐
 function c65071072.initial_effect(c)
 	--Activate
 	local e2=Effect.CreateEffect(c)

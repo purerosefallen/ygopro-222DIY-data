@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 推进
+--星之骑士拟身 推进
 function c65090024.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090024)

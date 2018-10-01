@@ -1,4 +1,4 @@
-﻿--齐备武装的士兵
+--齐备武装的士兵
 function c69696920.initial_effect(c)
 	--destroy
 	local e1=Effect.CreateEffect(c)

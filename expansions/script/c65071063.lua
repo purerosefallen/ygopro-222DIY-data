@@ -1,4 +1,4 @@
-﻿--薄暝
+--薄暝
 function c65071063.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

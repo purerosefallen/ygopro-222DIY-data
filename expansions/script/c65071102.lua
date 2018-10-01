@@ -1,4 +1,4 @@
-﻿--不和
+--不和
 function c65071102.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

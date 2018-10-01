@@ -1,4 +1,4 @@
-﻿--小喙
+--小喙
 function c65071056.initial_effect(c)
 	--tograve
 	local e2=Effect.CreateEffect(c)

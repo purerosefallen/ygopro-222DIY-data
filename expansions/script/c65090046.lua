@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 厨师
+--星之骑士拟身 厨师
 function c65090046.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090046)

@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 鼹鼠
+--星之骑士拟身 鼹鼠
 function c65090034.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090034)

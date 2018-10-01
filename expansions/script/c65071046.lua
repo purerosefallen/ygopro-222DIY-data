@@ -1,4 +1,4 @@
-﻿--白夜失乐园
+--白夜失乐园
 function c65071046.initial_effect(c)
 	 c:EnableCounterPermit(0x10da)
 	c:SetCounterLimit(0x10da,3)

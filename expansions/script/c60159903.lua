@@ -1,4 +1,4 @@
-﻿--青龙的化身 木莉
+--青龙的化身 木莉
 function c60159903.initial_effect(c)
     --spsummon
     local e1=Effect.CreateEffect(c)

@@ -1,4 +1,4 @@
-﻿--死境终点
+--死境终点
 local m=14000110
 local cm=_G["c"..m]
 function cm.initial_effect(c)

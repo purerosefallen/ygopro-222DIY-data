@@ -1,4 +1,4 @@
-﻿--小小银河
+--小小银河
 function c65071055.initial_effect(c)
 	 --Destroy
 	local e1=Effect.CreateEffect(c)

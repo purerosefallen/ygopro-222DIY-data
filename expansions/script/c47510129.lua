@@ -1,4 +1,4 @@
-﻿--魅惑的星晶兽 萨提洛斯
+--魅惑的星晶兽 萨提洛斯
 local m=47510129
 local cm=_G["c"..m]
 function c47510129.initial_effect(c)

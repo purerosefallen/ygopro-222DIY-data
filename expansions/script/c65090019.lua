@@ -1,4 +1,4 @@
-﻿--星之骑士协力 关节小子
+--星之骑士协力 关节小子
 function c65090019.initial_effect(c)
 	--spsummon
 	local e0=Effect.CreateEffect(c)

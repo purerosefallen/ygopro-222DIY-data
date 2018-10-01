@@ -1,4 +1,4 @@
-﻿--吞式者·猎手
+--吞式者·猎手
 local m=14000326
 local cm=_G["c"..m]
 cm.named_with_Aotual=1

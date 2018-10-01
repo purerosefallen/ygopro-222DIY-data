@@ -1,4 +1,4 @@
-﻿--蕾蒂希雅
+--蕾蒂希雅
 function c65071067.initial_effect(c)
 	--Destroy
 	local e2=Effect.CreateEffect(c)

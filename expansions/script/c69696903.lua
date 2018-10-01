@@ -1,4 +1,4 @@
-﻿--连接之网
+--连接之网
 function c69696903.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()

@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 忍者
+--星之骑士拟身 忍者
 function c65090014.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090014)

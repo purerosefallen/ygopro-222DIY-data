@@ -1,4 +1,4 @@
-﻿--唤灵幻姬 茶
+--唤灵幻姬 茶
 function c65050004.initial_effect(c)
 	c:EnableReviveLimit()
 	--atkup

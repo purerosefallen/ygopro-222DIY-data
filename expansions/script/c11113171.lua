@@ -1,4 +1,4 @@
-﻿--小死神
+--小死神
 function c11113171.initial_effect(c)
 	--
 	local e1=Effect.CreateEffect(c)

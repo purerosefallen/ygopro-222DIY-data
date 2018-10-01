@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 水泡
+--星之骑士拟身 水泡
 function c65090043.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090043)

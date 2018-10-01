@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 冰霜
+--星之骑士拟身 冰霜
 function c65090002.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090002)

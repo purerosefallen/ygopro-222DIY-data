@@ -1,4 +1,4 @@
-﻿--因乐癫狂
+--因乐癫狂
 function c65071098.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

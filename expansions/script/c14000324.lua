@@ -1,4 +1,4 @@
-﻿--吞式者·战锤
+--吞式者·战锤
 local m=14000324
 local cm=_G["c"..m]
 cm.named_with_Aotual=1

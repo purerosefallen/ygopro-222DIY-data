@@ -1,4 +1,4 @@
-﻿--伟大的秩序 佐伊
+--伟大的秩序 佐伊
 local m=47501000
 local cm=_G["c"..m]
 function c47501000.initial_effect(c)

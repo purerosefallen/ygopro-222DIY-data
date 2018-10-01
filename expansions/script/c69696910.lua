@@ -1,4 +1,4 @@
-﻿--黏土怪
+--黏土怪
 function c69696910.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

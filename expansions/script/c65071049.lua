@@ -1,4 +1,4 @@
-﻿--悲惨圣诞
+--悲惨圣诞
 function c65071049.initial_effect(c)
 	--change effect
 	local e1=Effect.CreateEffect(c)

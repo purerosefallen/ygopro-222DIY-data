@@ -1,4 +1,4 @@
-﻿--摘星魔法使的赠礼
+--摘星魔法使的赠礼
 function c4212203.initial_effect(c)
     --Activate
     local e1=Effect.CreateEffect(c)

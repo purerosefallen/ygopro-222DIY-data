@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 阳伞
+--星之骑士拟身 阳伞
 function c65090026.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090026)

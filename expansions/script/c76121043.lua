@@ -1,4 +1,4 @@
-﻿--荷鲁斯之眼
+--荷鲁斯之眼
 function c76121043.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

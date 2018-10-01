@@ -1,4 +1,4 @@
-﻿--白虎的化身 哈克
+--白虎的化身 哈克
 function c60159902.initial_effect(c)
     --spsummon
     local e1=Effect.CreateEffect(c)

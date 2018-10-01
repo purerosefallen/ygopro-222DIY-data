@@ -1,4 +1,4 @@
-﻿--事件的草莓蛋糕
+--事件的草莓蛋糕
 function c65090061.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

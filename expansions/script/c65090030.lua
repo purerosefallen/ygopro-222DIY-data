@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 毁灭
+--星之骑士拟身 毁灭
 function c65090030.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090030)

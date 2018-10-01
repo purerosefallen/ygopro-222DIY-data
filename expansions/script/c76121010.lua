@@ -1,4 +1,4 @@
-﻿--古记影狐 莫里
+--古记影狐 莫里
 function c76121010.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()

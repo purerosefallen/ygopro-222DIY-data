@@ -1,4 +1,4 @@
-﻿--唤灵咒形 布拉
+--唤灵咒形 布拉
 function c65050006.initial_effect(c)
 	c:EnableReviveLimit()
 	local e0=Effect.CreateEffect(c)

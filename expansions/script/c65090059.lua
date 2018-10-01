@@ -1,4 +1,4 @@
-﻿--星之骑士的传送星
+--星之骑士的传送星
 function c65090059.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

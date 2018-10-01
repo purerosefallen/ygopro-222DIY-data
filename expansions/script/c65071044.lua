@@ -1,4 +1,4 @@
-﻿--犄角
+--犄角
 function c65071044.initial_effect(c)
 	--draw
 	local e1=Effect.CreateEffect(c)

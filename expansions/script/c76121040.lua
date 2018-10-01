@@ -1,4 +1,4 @@
-﻿--赫里奥波里斯之护城龙
+--赫里奥波里斯之护城龙
 function c76121040.initial_effect(c)
 	c:EnableReviveLimit()
 	--announce

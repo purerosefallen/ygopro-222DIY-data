@@ -1,4 +1,4 @@
-﻿--圣宣
+--圣宣
 function c65071068.initial_effect(c)
 	--Activate(summon)
 	local e1=Effect.CreateEffect(c)

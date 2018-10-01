@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 光鞭
+--星之骑士拟身 光鞭
 function c65090008.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090008)

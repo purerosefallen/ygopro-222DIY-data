@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 锤
+--星之骑士拟身 锤
 function c65090039.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090039)

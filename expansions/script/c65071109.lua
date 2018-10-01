@@ -1,4 +1,4 @@
-﻿--爱慕
+--爱慕
 function c65071109.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

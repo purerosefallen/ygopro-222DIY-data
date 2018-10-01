@@ -1,4 +1,4 @@
-﻿--星之骑士协力 雏鸟
+--星之骑士协力 雏鸟
 function c65090013.initial_effect(c)
 	--spsummon
 	local e0=Effect.CreateEffect(c)

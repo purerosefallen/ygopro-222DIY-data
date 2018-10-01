@@ -1,4 +1,4 @@
-﻿--时终间的伫立者
+--时终间的伫立者
 function c65011006.initial_effect(c)
 	--tograve
 	local e1=Effect.CreateEffect(c)

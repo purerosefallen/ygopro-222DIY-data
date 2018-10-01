@@ -1,4 +1,4 @@
-﻿ --代理巫女 佐伊
+ --代理巫女 佐伊
 local m=47520013
 local cm=_G["c"..m]
 function c47520013.initial_effect(c)

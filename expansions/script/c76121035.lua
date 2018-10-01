@@ -1,4 +1,4 @@
-﻿--赫里奥波里斯之操龙士
+--赫里奥波里斯之操龙士
 function c76121035.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

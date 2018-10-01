@@ -1,4 +1,4 @@
-﻿--封灭之人魂
+--封灭之人魂
 function c46270002.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

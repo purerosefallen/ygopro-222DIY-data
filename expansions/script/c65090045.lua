@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 球
+--星之骑士拟身 球
 function c65090045.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090045)

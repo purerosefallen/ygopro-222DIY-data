@@ -1,4 +1,4 @@
-﻿--星之骑士协力 电离幽火
+--星之骑士协力 电离幽火
 function c65090021.initial_effect(c)
 	--spsummon
 	local e0=Effect.CreateEffect(c)

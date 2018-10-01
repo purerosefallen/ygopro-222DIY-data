@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 复制
+--星之骑士拟身 复制
 function c65090016.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090016)

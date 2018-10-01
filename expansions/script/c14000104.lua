@@ -1,4 +1,4 @@
-﻿--死境勇士·齐格弗里德
+--死境勇士·齐格弗里德
 local m=14000104
 local cm=_G["c"..m]
 cm.named_with_brave=1

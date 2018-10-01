@@ -1,4 +1,4 @@
-﻿--古记绒棉 温德
+--古记绒棉 温德
 function c76121001.initial_effect(c)
 	--spsummon
 	local e1=Effect.CreateEffect(c)

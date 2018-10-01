@@ -1,4 +1,4 @@
-﻿--群星万华镜-伊莉雅
+--群星万华镜-伊莉雅
 local m=4231004
 local cm=_G["c"..m]
 function cm.initial_effect(c)

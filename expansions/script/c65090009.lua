@@ -1,4 +1,4 @@
-﻿--星之骑士协力 瓦多度
+--星之骑士协力 瓦多度
 function c65090009.initial_effect(c)
 	--spsummon
 	local e0=Effect.CreateEffect(c)

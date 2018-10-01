@@ -1,4 +1,4 @@
-﻿local m=47501001
+local m=47501001
 local cm=_G["c"..m]
 function c47501001.initial_effect(c)
     c:SetSPSummonOnce(47501001)

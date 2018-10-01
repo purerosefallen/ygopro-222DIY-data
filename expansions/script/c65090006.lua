@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 岩石
+--星之骑士拟身 岩石
 function c65090006.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090006)

@@ -1,4 +1,4 @@
-﻿--悔恨
+--悔恨
 function c65071054.initial_effect(c)
 	--damage
 	local e1=Effect.CreateEffect(c)

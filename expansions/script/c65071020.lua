@@ -1,4 +1,4 @@
-﻿--拟态
+--拟态
 function c65071020.initial_effect(c)
 	--atk
 	local e1=Effect.CreateEffect(c)

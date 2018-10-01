@@ -1,4 +1,4 @@
-﻿--跳跳兔
+--跳跳兔
 function c11200100.initial_effect(c)
 	--xyz summon
 	c:EnableReviveLimit()

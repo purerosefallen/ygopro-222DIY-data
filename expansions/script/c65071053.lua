@@ -1,4 +1,4 @@
-﻿--余香
+--余香
 function c65071053.initial_effect(c)
 	--Activate
 	local e3=Effect.CreateEffect(c)

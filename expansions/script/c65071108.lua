@@ -1,4 +1,4 @@
-﻿--伪善
+--伪善
 function c65071108.initial_effect(c)
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)

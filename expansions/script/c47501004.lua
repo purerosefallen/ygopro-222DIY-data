@@ -1,4 +1,4 @@
-﻿--神盾 布罗迪亚
+--神盾 布罗迪亚
 local m=47501004
 local cm=_G["c"..m]
 function c47501004.initial_effect(c)

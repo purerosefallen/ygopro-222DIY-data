@@ -1,4 +1,4 @@
-﻿--踏无暴威
+--踏无暴威
 local m=60159927
 local cm=_G["c"..m]
 function cm.initial_effect(c)

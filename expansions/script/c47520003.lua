@@ -1,4 +1,4 @@
-﻿--西南西的守护神 安琪拉
+--西南西的守护神 安琪拉
 local m=47520003
 local cm=_G["c"..m]
 function c47520003.initial_effect(c)

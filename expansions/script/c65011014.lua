@@ -1,4 +1,4 @@
-﻿--时终焉 阿卡纳
+--时终焉 阿卡纳
 function c65011014.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,nil,2,2,c65011014.lcheck)

@@ -1,4 +1,4 @@
-﻿--魔法师打捞
+--魔法师打捞
 local m=4212204
 local cm=_G["c"..m]
 function cm.initial_effect(c)

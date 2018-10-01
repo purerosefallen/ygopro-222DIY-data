@@ -1,4 +1,4 @@
-﻿--忍妖 变化之术
+--忍妖 变化之术
 function c12017020.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

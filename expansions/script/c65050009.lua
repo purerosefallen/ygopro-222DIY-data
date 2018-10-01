@@ -1,4 +1,4 @@
-﻿--唤灵术 理解
+--唤灵术 理解
 function c65050009.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

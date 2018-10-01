@@ -1,4 +1,4 @@
-﻿--以爱与恨之名
+--以爱与恨之名
 function c65071004.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

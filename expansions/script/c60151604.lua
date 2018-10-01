@@ -1,4 +1,4 @@
-﻿--夜空下的思念 鹿目圆香
+--夜空下的思念 鹿目圆香
 function c60151604.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)

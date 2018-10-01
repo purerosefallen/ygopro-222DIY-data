@@ -1,4 +1,4 @@
-﻿--赫里奥波里斯之太阳城
+--赫里奥波里斯之太阳城
 function c76121042.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

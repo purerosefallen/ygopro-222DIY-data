@@ -1,4 +1,4 @@
-﻿--绿色枝干
+--绿色枝干
 function c65071042.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_ATKCHANGE)

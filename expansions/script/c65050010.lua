@@ -1,4 +1,4 @@
-﻿--唤灵终形 瑟
+--唤灵终形 瑟
 function c65050010.initial_effect(c)
 	c:EnableReviveLimit()
 	local e0=Effect.CreateEffect(c)

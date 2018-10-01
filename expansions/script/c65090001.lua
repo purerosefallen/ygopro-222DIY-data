@@ -1,4 +1,4 @@
-﻿--星之骑士的希望 卡比
+--星之骑士的希望 卡比
 function c65090001.initial_effect(c)
 	--FUSION
 	local e1=Effect.CreateEffect(c)

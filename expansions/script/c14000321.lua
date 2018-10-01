@@ -1,4 +1,4 @@
-﻿--吞式者的爆发
+--吞式者的爆发
 local m=14000321
 local cm=_G["c"..m]
 cm.named_with_Aotual=1

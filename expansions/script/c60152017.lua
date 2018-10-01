@@ -1,4 +1,4 @@
-﻿--无法救赎的彼端
+--无法救赎的彼端
 local m=60152017
 local cm=_G["c"..m]
 function cm.initial_effect(c)

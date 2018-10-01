@@ -1,4 +1,4 @@
-﻿--伐木者
+--伐木者
 function c65071032.initial_effect(c)
 	--tograve and copy
 	local e2=Effect.CreateEffect(c)

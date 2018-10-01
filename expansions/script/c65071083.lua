@@ -1,4 +1,4 @@
-﻿--翅振
+--翅振
 function c65071083.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

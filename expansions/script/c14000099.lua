@@ -1,4 +1,4 @@
-﻿--死境征途
+--死境征途
 local m=14000099
 local cm=_G["c"..m]
 function cm.initial_effect(c)

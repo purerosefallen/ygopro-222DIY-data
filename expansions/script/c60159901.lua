@@ -1,4 +1,4 @@
-﻿--朱雀的化身 蕾拉昂
+--朱雀的化身 蕾拉昂
 function c60159901.initial_effect(c)
     --spsummon
     local e1=Effect.CreateEffect(c)

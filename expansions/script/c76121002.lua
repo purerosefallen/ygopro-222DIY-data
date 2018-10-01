@@ -1,4 +1,4 @@
-﻿--古记仓鼠 巴雷特
+--古记仓鼠 巴雷特
 function c76121002.initial_effect(c)
 	 --spsummon
 	local e1=Effect.CreateEffect(c)

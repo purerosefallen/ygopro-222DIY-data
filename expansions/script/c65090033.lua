@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 投掷
+--星之骑士拟身 投掷
 function c65090033.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090033)

@@ -1,4 +1,4 @@
-﻿--决死之心
+--决死之心
 function c65071061.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

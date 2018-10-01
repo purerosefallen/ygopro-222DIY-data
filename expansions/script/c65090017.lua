@@ -1,4 +1,4 @@
-﻿--星之骑士协力 策术
+--星之骑士协力 策术
 function c65090017.initial_effect(c)
 	 --spsummon
 	local e0=Effect.CreateEffect(c)

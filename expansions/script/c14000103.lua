@@ -1,4 +1,4 @@
-﻿--死境勇士·列奥尼达
+--死境勇士·列奥尼达
 local m=14000103
 local cm=_G["c"..m]
 cm.named_with_brave=1

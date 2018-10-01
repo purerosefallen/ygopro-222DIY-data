@@ -1,4 +1,4 @@
-﻿--时终夜的坠落者
+--时终夜的坠落者
 function c65011004.initial_effect(c)
 	--tograve
 	local e1=Effect.CreateEffect(c)

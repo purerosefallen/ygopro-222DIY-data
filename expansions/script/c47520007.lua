@@ -1,4 +1,4 @@
-﻿--西北西的守护神 瓦吉拉
+--西北西的守护神 瓦吉拉
 local m=47520007
 local cm=_G["c"..m]
 function c47520007.initial_effect(c)

@@ -1,4 +1,4 @@
-﻿--死境勇士·阿喀琉斯
+--死境勇士·阿喀琉斯
 local m=14000102
 local cm=_G["c"..m]
 cm.named_with_brave=1

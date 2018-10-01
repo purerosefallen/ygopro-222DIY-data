@@ -1,4 +1,4 @@
-﻿--血之渴望
+--血之渴望
 function c65071006.initial_effect(c)
 	 --Activate
 	local e1=Effect.CreateEffect(c)

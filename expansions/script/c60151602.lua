@@ -1,4 +1,4 @@
-﻿--粉色的回忆 鹿目圆香
+--粉色的回忆 鹿目圆香
 function c60151602.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)

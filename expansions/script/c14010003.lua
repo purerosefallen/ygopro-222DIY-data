@@ -1,4 +1,4 @@
-﻿--绘本天魔·虚言
+--绘本天魔·虚言
 local m=14010003
 local cm=_G["c"..m]
 function cm.initial_effect(c)

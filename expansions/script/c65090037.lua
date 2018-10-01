@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 车轮
+--星之骑士拟身 车轮
 function c65090037.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090037)

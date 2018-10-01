@@ -1,4 +1,4 @@
-﻿--是丢啦的魔法
+--是丢啦的魔法
 function c4212202.initial_effect(c)
     --Activate
     local e1=Effect.CreateEffect(c)

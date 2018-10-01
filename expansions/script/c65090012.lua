@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 羽毛
+--星之骑士拟身 羽毛
 function c65090012.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090012)

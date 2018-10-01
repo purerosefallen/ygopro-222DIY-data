@@ -1,4 +1,4 @@
-﻿--无暇的硝烟 鹿目圆香
+--无暇的硝烟 鹿目圆香
 function c60151606.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)

@@ -1,4 +1,4 @@
-﻿--唤灵缚形 霍克玛
+--唤灵缚形 霍克玛
 function c65050008.initial_effect(c)
 	c:EnableReviveLimit()
 	local e0=Effect.CreateEffect(c)

@@ -1,4 +1,4 @@
-﻿--辉夜姬
+--辉夜姬
 local m=47590011
 local cm=_G["c"..m]
 function c47590011.initial_effect(c)

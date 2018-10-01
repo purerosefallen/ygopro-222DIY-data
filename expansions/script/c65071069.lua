@@ -1,4 +1,4 @@
-﻿--魔弹
+--魔弹
 function c65071069.initial_effect(c)
 	--roll and destroy
 	local e1=Effect.CreateEffect(c)

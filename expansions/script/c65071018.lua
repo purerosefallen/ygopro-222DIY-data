@@ -1,4 +1,4 @@
-﻿--刺耳嚎叫
+--刺耳嚎叫
 function c65071018.initial_effect(c)
 	--tohand
 	local e1=Effect.CreateEffect(c)

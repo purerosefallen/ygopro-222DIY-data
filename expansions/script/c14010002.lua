@@ -1,4 +1,4 @@
-﻿--黑之绘本
+--黑之绘本
 local m=14010002
 local cm=_G["c"..m]
 function cm.initial_effect(c)

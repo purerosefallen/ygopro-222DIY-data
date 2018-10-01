@@ -1,4 +1,4 @@
-﻿--巨可爱！！！！！
+--巨可爱！！！！！
 function c65071107.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

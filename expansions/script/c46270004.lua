@@ -1,4 +1,4 @@
-﻿--操魂师 凯萨拉
+--操魂师 凯萨拉
 function c46270004.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xfc1),4,2)

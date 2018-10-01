@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 激光
+--星之骑士拟身 激光
 function c65090027.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090002)

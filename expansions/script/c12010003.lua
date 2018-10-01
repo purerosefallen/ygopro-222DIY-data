@@ -1,4 +1,4 @@
-﻿--LA Da'ath 理解的亞夫結
+--LA Da'ath 理解的亞夫結
 function c12010003.initial_effect(c)
 	--tograve+copy
 	local e2=Effect.CreateEffect(c)

@@ -1,4 +1,4 @@
-﻿--晴空下的展望 鹿目圆香
+--晴空下的展望 鹿目圆香
 function c60151603.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)

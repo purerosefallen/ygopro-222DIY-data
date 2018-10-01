@@ -1,4 +1,4 @@
-﻿--万华镜手杖-魔法红宝石
+--万华镜手杖-魔法红宝石
 local m=4231006
 local cm=_G["c"..m]
 function cm.initial_effect(c)--red

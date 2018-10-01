@@ -1,4 +1,4 @@
-﻿--星之骑士协力牵手
+--星之骑士协力牵手
 function c65090058.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

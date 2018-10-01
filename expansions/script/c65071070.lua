@@ -1,4 +1,4 @@
-﻿--黑天鹅
+--黑天鹅
 function c65071070.initial_effect(c)
 	--draw
 	local e1=Effect.CreateEffect(c)

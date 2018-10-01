@@ -1,4 +1,4 @@
-﻿--衍生物唤灵祭
+--衍生物唤灵祭
 function c65050011.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

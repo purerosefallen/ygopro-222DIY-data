@@ -1,4 +1,4 @@
-﻿--西的守护神 玛琪拉
+--西的守护神 玛琪拉
 local m=47520005
 local cm=_G["c"..m]
 function c47520005.initial_effect(c)

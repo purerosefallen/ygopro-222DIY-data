@@ -1,4 +1,4 @@
-﻿--忍妖 暗化龙
+--忍妖 暗化龙
 function c12017011.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()

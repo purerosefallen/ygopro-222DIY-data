@@ -1,4 +1,4 @@
-﻿--平行的起点 鹿目圆香
+--平行的起点 鹿目圆香
 function c60151601.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)

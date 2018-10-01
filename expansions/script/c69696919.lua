@@ -1,4 +1,4 @@
-﻿--死冥王 恶魂
+--死冥王 恶魂
 local m=69696919
 local cm=_G["c"..m]
 function cm.initial_effect(c)

@@ -1,4 +1,4 @@
-﻿--落樱
+--落樱
 function c65071100.initial_effect(c)
 	--tograve
 	local e2=Effect.CreateEffect(c)

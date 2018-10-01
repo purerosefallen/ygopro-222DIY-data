@@ -1,4 +1,4 @@
-﻿--星之骑士协力 冷雪
+--星之骑士协力 冷雪
 function c65090003.initial_effect(c)
 	--spsummon
 	local e0=Effect.CreateEffect(c)

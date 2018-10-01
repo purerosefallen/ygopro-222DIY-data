@@ -1,4 +1,4 @@
-﻿--正义裁决者
+--正义裁决者
 function c65071062.initial_effect(c)
 	--gain effect
 	local e1=Effect.CreateEffect(c)

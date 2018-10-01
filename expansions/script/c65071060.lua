@@ -1,4 +1,4 @@
-﻿--彼方的裂片
+--彼方的裂片
 function c65071060.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,4 @@
-﻿--黄蜂
+--黄蜂
 function c65071050.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

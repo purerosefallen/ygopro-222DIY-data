@@ -1,4 +1,4 @@
-﻿--束缚之人魂
+--束缚之人魂
 function c46270000.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

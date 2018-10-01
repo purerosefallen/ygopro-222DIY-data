@@ -1,4 +1,4 @@
-﻿--别碰我
+--别碰我
 function c65071047.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

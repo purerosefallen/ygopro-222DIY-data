@@ -1,4 +1,4 @@
-﻿--星之骑士导师 魅塔骑士
+--星之骑士导师 魅塔骑士
 function c65090057.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,c65090057.matfilter,1,1)

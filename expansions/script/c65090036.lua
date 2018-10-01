@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 割裂
+--星之骑士拟身 割裂
 function c65090036.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()

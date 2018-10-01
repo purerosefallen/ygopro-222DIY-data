@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 摔跤
+--星之骑士拟身 摔跤
 function c65090035.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090035)

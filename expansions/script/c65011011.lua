@@ -1,4 +1,4 @@
-﻿--时终结 宝剑
+--时终结 宝剑
 function c65011011.initial_effect(c)
 	 c:EnableReviveLimit()
 	aux.AddFusionProcFun2(c,aux.TRUE,aux.TRUE,true)

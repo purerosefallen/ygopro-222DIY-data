@@ -1,4 +1,4 @@
-﻿--星之骑士协力 拟镜
+--星之骑士协力 拟镜
 function c65090011.initial_effect(c)
 	--spsummon
 	local e0=Effect.CreateEffect(c)

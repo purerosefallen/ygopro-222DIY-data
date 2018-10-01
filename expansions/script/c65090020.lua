@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 雷电
+--星之骑士拟身 雷电
 function c65090020.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090020)

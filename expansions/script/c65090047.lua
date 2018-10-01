@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 旋风
+--星之骑士拟身 旋风
 function c65090047.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090047)

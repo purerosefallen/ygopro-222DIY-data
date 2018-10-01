@@ -1,4 +1,4 @@
-﻿--时终结 权杖
+--时终结 权杖
 function c65011013.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddFusionProcFun2(c,aux.TRUE,aux.TRUE,true)

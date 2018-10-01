@@ -1,4 +1,4 @@
-﻿--时终咒的封闭者
+--时终咒的封闭者
 function c65011005.initial_effect(c)
 	--tograve
 	local e1=Effect.CreateEffect(c)

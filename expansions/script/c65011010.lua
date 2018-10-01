@@ -1,4 +1,4 @@
-﻿--时终结 圣杯
+--时终结 圣杯
 function c65011010.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddFusionProcFun2(c,aux.TRUE,aux.TRUE,true)

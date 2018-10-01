@@ -1,4 +1,4 @@
-﻿--时终塔的幽禁者
+--时终塔的幽禁者
 function c65011002.initial_effect(c)
 	--tograve
 	local e1=Effect.CreateEffect(c)

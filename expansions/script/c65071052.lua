@@ -1,4 +1,4 @@
-﻿--美味苏打
+--美味苏打
 function c65071052.initial_effect(c)
 	--Control
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,4 @@
-﻿--地之天司 乌列尔
+--地之天司 乌列尔
 local m=47590005
 local cm=_G["c"..m]
 function c47590005.initial_effect(c)

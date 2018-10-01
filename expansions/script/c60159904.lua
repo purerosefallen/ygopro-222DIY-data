@@ -1,4 +1,4 @@
-﻿--玄武的化身 芽殃
+--玄武的化身 芽殃
 function c60159904.initial_effect(c)
     --spsummon
     local e1=Effect.CreateEffect(c)

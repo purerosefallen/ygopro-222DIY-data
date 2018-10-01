@@ -1,4 +1,4 @@
-﻿--唤灵术 光荣
+--唤灵术 光荣
 function c65050003.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

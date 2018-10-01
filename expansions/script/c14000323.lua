@@ -1,4 +1,4 @@
-﻿--吞式者的伴兽
+--吞式者的伴兽
 local m=14000323
 local cm=_G["c"..m]
 cm.named_with_Aotual=1

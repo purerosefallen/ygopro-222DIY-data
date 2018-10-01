@@ -1,4 +1,4 @@
-﻿--足枷之人魂
+--足枷之人魂
 function c46270001.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

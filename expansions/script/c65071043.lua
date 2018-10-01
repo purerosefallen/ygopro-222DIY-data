@@ -1,4 +1,4 @@
-﻿--赤瞳
+--赤瞳
 function c65071043.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DISABLE)

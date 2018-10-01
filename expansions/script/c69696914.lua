@@ -1,4 +1,4 @@
-﻿--自拟态
+--自拟态
 function c69696914.initial_effect(c)
 	--fusion summon
 	c:EnableReviveLimit()

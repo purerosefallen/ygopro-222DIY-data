@@ -1,4 +1,4 @@
-﻿--荣耀之羽
+--荣耀之羽
 function c65071101.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

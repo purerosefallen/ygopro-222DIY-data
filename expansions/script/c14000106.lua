@@ -1,4 +1,4 @@
-﻿--死境血战
+--死境血战
 local m=14000106
 local cm=_G["c"..m]
 function cm.initial_effect(c)

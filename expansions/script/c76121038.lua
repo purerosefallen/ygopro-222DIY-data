@@ -1,4 +1,4 @@
-﻿--赫里奥波里斯之圣盾龙
+--赫里奥波里斯之圣盾龙
 function c76121038.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,4 @@
-﻿--觉醒的调停者 佐伊
+--觉醒的调停者 佐伊
 local m=47520015
 local cm=_G["c"..m]
 function cm.initial_effect(c)

@@ -1,4 +1,4 @@
-﻿--终焉数码兽 OMEGA
+--终焉数码兽 OMEGA
 function c50218150.initial_effect(c)
     c:EnableReviveLimit()
     --spsummon limit

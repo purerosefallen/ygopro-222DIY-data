@@ -1,4 +1,4 @@
-﻿--孤独
+--孤独
 function c65071012.initial_effect(c)
 	--
 	local e2=Effect.CreateEffect(c)

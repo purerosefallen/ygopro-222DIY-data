@@ -1,4 +1,4 @@
-﻿--唤灵影姬 俄索
+--唤灵影姬 俄索
 function c65050002.initial_effect(c)
 	c:EnableReviveLimit()
 	--ritual level

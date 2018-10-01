@@ -1,4 +1,4 @@
-﻿--脱落之皮
+--脱落之皮
 function c65071074.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

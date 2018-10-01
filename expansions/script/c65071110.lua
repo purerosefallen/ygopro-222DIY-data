@@ -1,4 +1,4 @@
-﻿--无量
+--无量
 function c65071110.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_DRAW)

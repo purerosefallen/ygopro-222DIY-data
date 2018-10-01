@@ -1,4 +1,4 @@
-﻿--星之骑士协力 小石
+--星之骑士协力 小石
 function c65090007.initial_effect(c)
 	 --spsummon
 	local e0=Effect.CreateEffect(c)

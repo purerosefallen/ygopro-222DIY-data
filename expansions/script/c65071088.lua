@@ -1,4 +1,4 @@
-﻿--虚无衍射体
+--虚无衍射体
 function c65071088.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

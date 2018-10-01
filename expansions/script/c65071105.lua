@@ -1,4 +1,4 @@
-﻿--月光
+--月光
 function c65071105.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_RECOVER)

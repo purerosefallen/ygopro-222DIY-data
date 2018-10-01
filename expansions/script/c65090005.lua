@@ -1,4 +1,4 @@
-﻿--星之骑士协力 吉姆
+--星之骑士协力 吉姆
 function c65090005.initial_effect(c)
 	 --spsummon
 	local e0=Effect.CreateEffect(c)

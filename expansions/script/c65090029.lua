@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 火炎
+--星之骑士拟身 火炎
 function c65090029.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090029)

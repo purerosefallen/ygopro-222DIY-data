@@ -1,4 +1,4 @@
-﻿--赫里奥波里斯之重矛龙
+--赫里奥波里斯之重矛龙
 function c76121039.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)

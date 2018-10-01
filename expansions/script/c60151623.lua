@@ -1,4 +1,4 @@
-﻿--居于世界的真理
+--居于世界的真理
 function c60151623.initial_effect(c)
     --Activate
     local e1=Effect.CreateEffect(c)

@@ -1,4 +1,4 @@
-﻿--革命铁骑士
+--革命铁骑士
 local m=14010044
 local cm=_G["c"..m]
 function cm.initial_effect(c)

@@ -1,4 +1,4 @@
-﻿--熊熊抱
+--熊熊抱
 function c65071005.initial_effect(c)
 	--tograve
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,4 @@
-﻿--因果的破却 鹿目圆香
+--因果的破却 鹿目圆香
 function c60151605.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)

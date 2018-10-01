@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 镜子
+--星之骑士拟身 镜子
 function c65090010.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090010)

@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 睡眠
+--星之骑士拟身 睡眠
 function c65090050.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()

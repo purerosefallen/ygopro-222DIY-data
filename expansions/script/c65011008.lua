@@ -1,4 +1,4 @@
-﻿--时线的缔合
+--时线的缔合
 function c65011008.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)

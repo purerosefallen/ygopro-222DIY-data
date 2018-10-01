@@ -1,4 +1,4 @@
-﻿--吞式者的招来
+--吞式者的招来
 local m=14000322
 local cm=_G["c"..m]
 cm.named_with_Aotual=1

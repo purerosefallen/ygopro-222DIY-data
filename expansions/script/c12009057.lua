@@ -1,4 +1,4 @@
-﻿--三面的水神
+--三面的水神
 function c12009057.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,nil,3,3,c12009057.lcheck)

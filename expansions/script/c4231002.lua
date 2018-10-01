@@ -1,4 +1,4 @@
-﻿--必然的命运-伊莉雅
+--必然的命运-伊莉雅
 local m=4231002
 local cm=_G["c"..m]
 function cm.initial_effect(c)

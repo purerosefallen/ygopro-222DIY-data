@@ -1,4 +1,4 @@
-﻿--星之骑士拟身 万形
+--星之骑士拟身 万形
 function c65090044.initial_effect(c)
 	--fusion material
 	c:SetSPSummonOnce(65090044)

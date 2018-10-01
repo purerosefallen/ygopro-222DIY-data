@@ -1,4 +1,4 @@
-﻿--吞式者·强袭
+--吞式者·强袭
 local m=14000327
 local cm=_G["c"..m]
 cm.named_with_Aotual=1

@@ -1,4 +1,4 @@
-﻿--诱捕幻灯
+--诱捕幻灯
 function c65071084.initial_effect(c)
 	--Activate(summon)
 	local e1=Effect.CreateEffect(c)
