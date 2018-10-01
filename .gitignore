@@ -10,3 +10,6 @@
 
 /expansions/pre-*.cdb
 /pics
+/localdata
+/datapush.sln
+/.vs

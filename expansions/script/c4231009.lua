@@ -34,7 +34,7 @@ Duel.RegisterFlagEffect(tp,m,RESET_PHASE+PHASE_END,0,1)
                 Duel.Equip(tp,tc,g) 
         local e2=Effect.CreateEffect(e:GetHandler())
         e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-        e2:SetCode(EVENT_PHASE+PHASE_STANDBY)
+        e2:SetReset(EVENT_PHASE+PHASE_STANDBY)
         e2:SetCountLimit(1)
         e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
         e2:SetLabelObject(tc)
@@ -57,7 +57,7 @@ Duel.RegisterFlagEffect(tp,m,RESET_PHASE+PHASE_END,0,1)
         .e("SetCondition",function(e,c)
             if c==nil then return true end 
             local tp=c:GetControler()
-            return Duel.GetMZoneCount(tp)>-2
+            return Duel.GetMZoneCount(tp)>-2 and Duel.GetLocationCountFromEx(tp)>0
                 and Duel.IsExistingMatchingCard(cm.spfilter1,tp,LOCATION_MZONE,0,1,nil,tp) end)
         .e("SetOperation",function(e,tp,eg,ep,ev,re,r,rp,c)
             Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
