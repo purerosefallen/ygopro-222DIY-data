@@ -24,7 +24,7 @@ function cm.filter(c,e,tp,m1,ft)
 	if ft>0 then
 		return mg:IsExists(cm.mfilterf,1,nil,tp,mg,c)
 	else
-		return ft>-1 and mg:IsExists(cm.mfilterf,1,nil,tp,mg,c)
+		return mg:IsExists(cm.mfilterf,1,nil,tp,mg,c)
 	end
 end
 function cm.rmfilter(c,rc)
