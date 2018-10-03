@@ -16,9 +16,9 @@ function c5200017.filter(c)
 	return c:IsSetCard(0x360) and c:IsLocation(LOCATION_HAND) and c:IsAbleToGraveAsCost()
 end
 function c5200017.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c5200017.filter,tp,LOCATION_HAND,0,1,nil) end
-	local g=Duel.SelectMatchingCard(tp,c5200017.filter,tp,LOCATION_HAND,0,1,1,nil)
-	Duel.SendtoGrave(g,REASON_COST)
+    if chk==0 then return Duel.IsExistingMatchingCard(c5200017.filter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+    local g=Duel.SelectMatchingCard(tp,c5200017.filter,tp,LOCATION_HAND,0,1,1,e:GetHandler())
+    Duel.SendtoGrave(g,REASON_COST)
 end
 function c5200017.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
