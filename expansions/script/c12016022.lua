@@ -25,7 +25,7 @@ function c12016022.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c12016022.filter(c)
-	return (c:IsType(TYPE_SPELL) or (c:IsType(TYPE_MONSTER) and c:IsType(TYPE_LINK))) and c:IsAbleToDeck()
+	return (c:IsType(TYPE_SPELL) or (c:IsSetCard(0xfb9)  and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_LINK))) and c:IsAbleToDeck()
 end
 function c12016022.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c12016022.filter(chkc) end

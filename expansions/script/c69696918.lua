@@ -11,7 +11,7 @@ function cm.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e1:SetCountLimit(1,696969181)
+	e1:SetCountLimit(1,6969691)
 	e1:SetTarget(cm.destg)
 	e1:SetOperation(cm.desop)
 	c:RegisterEffect(e1)
@@ -22,7 +22,7 @@ function cm.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_DESTROYED)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,696969182)
+	e2:SetCountLimit(1,6969692)
 	e2:SetCondition(cm.spcon)
 	e2:SetTarget(cm.sptg)
 	e2:SetOperation(cm.spop)
@@ -119,9 +119,10 @@ function cm.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=eg:GetFirst()
-	if eg:Filter(Card.IsControler,nil,tp):GetCount()==1 and tc:IsReason(REASON_BATTLE+REASON_EFFECT) and tc:IsPreviousLocation(LOCATION_MZONE) and tc:GetControler()==tp and tc~=e:GetHandler() then
-		e:SetLabel(tc:GetRace())
+	local sg=eg:Filter(Card.IsControler,e:GetHandler(),tp)
+	local tc=sg:GetFirst()
+	if sg:GetCount()==1 and tc:IsReason(REASON_BATTLE+REASON_EFFECT) and tc:IsPreviousLocation(LOCATION_MZONE) and tc:GetControler()==tp then
+		e:SetLabel(tc:GetPreviousRaceOnField())
 		return true
 	else return false end
 end
@@ -141,19 +142,17 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,cm.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,race)
 	local tc=g:GetFirst()
-	if tc then 
-		if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP) then
+	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetCode(EFFECT_DISABLE)
 			e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e1)
+			tc:RegisterEffect(e1,true)
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetCode(EFFECT_DISABLE_EFFECT)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e2)
+			tc:RegisterEffect(e2,true)
 			Duel.SpecialSummonComplete()
-		end
 	end
 end
