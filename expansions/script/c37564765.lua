@@ -1926,7 +1926,7 @@ function cm.RemoveEffectCost_3L(ct,...)
 local omit_list={...}
 return function(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
-		if e:GetHandler():IsHasEffect(37564827) then return false end
+		--if e:GetHandler():IsHasEffect(37564827) then return false end
 		return cm.RemoveEffect_3L(tp,e:GetHandler(),ct,ct,true,table.unpack(omit_list))
 	end
 	cm.RemoveEffect_3L(tp,e:GetHandler(),ct,ct,false,table.unpack(omit_list))
@@ -1996,7 +1996,20 @@ function cm.ContinuousEffectReplaceCondition_3L(f,con,cd)
 		if (f(c):IsExists(aux.FilterEqualFunction(Card.GetOriginalCode,cd),1,nil) and c:IsHasEffect(37564827)) then
 			return (not con or con(e,tp,eg,ep,ev,re,r,rp))
 		else
-			cm.RemoveCertainEffect_3L(e:GetHandler(),cd)
+			if Duel.GetCurrentChain()>0 then --Delay the effect removing to prevent stack overflow crash
+				local ex=Effect.CreateEffect(e:GetHandler())
+				ex:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+				ex:SetCode(EVENT_ADJUST)
+				ex:SetOperation(function(e)
+					cm.RemoveCertainEffect_3L(e:GetOwner(),e:GetLabel())
+					e:Reset()
+				end)
+				ex:SetLabel(cd)
+				ex:SetReset(RESET_CHAIN)
+				Duel.RegisterEffect(ex,tp)
+			else
+				cm.RemoveCertainEffect_3L(e:GetHandler(),cd)
+			end
 			return false
 		end
 	end

@@ -15,14 +15,15 @@ end
 --function c12005006.condition(e,tp,eg,ep,ev,re,r,rp)
 --  if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or not Duel.IsChainNegatable(ev) then return false end
 --  if re:IsHasCategory(CATEGORY_NEGATE)
---	and Duel.GetChainInfo(ev-1,CHAININFO_TRIGGERING_EFFECT):IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
+--  and Duel.GetChainInfo(ev-1,CHAININFO_TRIGGERING_EFFECT):IsHasType(EFFECT_TYPE_ACTIVATE) then return false end
 --  local ex,tg,tc=Duel.GetOperationInfo(ev,CATEGORY_DESTROY)
 --  return ex and tg~=nil and tc+tg:FilterCount(Card.IsOnField,nil)-tg:GetCount()>0
 --end
-function c12005006.filter11(c,tp)
+function c12005006.filter11(c)
 	return c:IsLocation(LOCATION_MZONE)
+end
 function c12005006.condition(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c12005006.filter11,1,nil,tp) and Duel.IsChainDisablable(ev)
+	return eg:IsExists(c12005006.filter11,1,nil) and Duel.IsChainDisablable(ev)
 end
 function c12005006.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

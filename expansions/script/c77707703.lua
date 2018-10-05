@@ -16,7 +16,7 @@ function c77707703.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
 end
 function c77707703.operation(e,tp,eg,ep,ev,re,r,rp)
-	local op=Duel.SelectOption(tp,m*16,m*16+1)
+	local op=Duel.SelectOption(tp,77707703*16,77707703*16+1)
 	if op==1 then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD)

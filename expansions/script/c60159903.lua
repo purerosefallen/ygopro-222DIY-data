@@ -40,7 +40,8 @@ function c60159903.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c60159903.operation(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+    if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 then return end
+    Duel.ConfirmDecktop(tp,1)
     local g=Duel.GetDecktopGroup(tp,1)
     local tc=g:GetFirst()
     if (tc:IsAttribute(ATTRIBUTE_WIND) or tc:IsAttribute(ATTRIBUTE_FIRE) or tc:IsAttribute(ATTRIBUTE_WATER))

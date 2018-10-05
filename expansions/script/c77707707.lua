@@ -42,6 +42,7 @@ function c77707707.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c77707707.operation(e,tp,eg,ep,ev,re,r,rp)
 	local rg=Group.CreateGroup()
+	local g={}
 	for p=0,1 do
 		local mg=Duel.GetMatchingGroup(c77707707.filter,p,LOCATION_MZONE,0,nil)
 		if #mg>0 then

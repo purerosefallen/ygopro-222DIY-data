@@ -54,9 +54,11 @@ function c12010041.cfilter(c)
 	return c:IsSetCard(0xfba) and c:IsReleasable()
 end
 function c12010041.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c12010041.cfilter,tp,LOCATION_MZONE,0,1,nil) end
-	local cg=Duel.SelectMatchingCard(tp,c12010041.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	Duel.Release(cg,REASON_COST)
+    c=e:GetHandler()
+    if chk==0 then return c:GetFlagEffect(12010041)==0 and Duel.IsExistingMatchingCard(c12010041.cfilter,tp,LOCATION_MZONE,0,1,nil) end
+    local cg=Duel.SelectMatchingCard(tp,c12010041.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
+    Duel.Release(cg,REASON_COST)
+    Duel.RegisterFlagEffect(c,12010041,RESET_EVENT+RESET_PHASE+PHASE_END,0,1)
 end
 function c12010041.spfilter(c,e,tp)
 	return c:IsSetCard(0xfba) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(12010041)

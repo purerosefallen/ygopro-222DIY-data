@@ -44,6 +44,7 @@ function c47501004.initial_effect(c)
     e4:SetCode(EVENT_FREE_CHAIN)
     e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_NO_TURN_RESET)
     e4:SetRange(LOCATION_MZONE)
+    e4:SetCountLimit(1)
     e4:SetOperation(c47501004.immop)
     c:RegisterEffect(e4)
 end

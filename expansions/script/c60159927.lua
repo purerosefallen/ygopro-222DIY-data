@@ -10,7 +10,7 @@ function cm.initial_effect(c)
     c:RegisterEffect(e1)
     --
     local e2=Effect.CreateEffect(c)
-    e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+    e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
     e2:SetProperty(EFFECT_FLAG_DELAY)
     e2:SetCode(EVENT_SPSUMMON_SUCCESS)
     e2:SetRange(LOCATION_SZONE)
@@ -24,13 +24,13 @@ end
 function c60159927.condition(e,tp,eg,ep,ev,re,r,rp)
     return not Duel.IsExistingMatchingCard(c60159927.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
-function c60159927.filter(c,sp)
-    return c:GetSummonPlayer()==tp and c:IsPreviousLocation(LOCATION_EXTRA)
+function c60159927.filter(c)
+    return c:IsPreviousLocation(LOCATION_EXTRA)
 end
 function c60159927.drcon1(e,tp,eg,ep,ev,re,r,rp)
-    return eg:IsExists(c60159927.filter,1,nil,1-tp) 
+    return eg:IsExists(c60159927.filter,1,nil) 
 end
 function c60159927.drop1(e,tp,eg,ep,ev,re,r,rp)
-    local damp=eg:GetFirst():GetPreviousControler()
-    Duel.SetLP(damp,Duel.GetLP(damp)/2)
+    local tp=eg:GetFirst():GetPreviousControler()
+    Duel.SetLP(tp,Duel.GetLP(tp)/2)
 end

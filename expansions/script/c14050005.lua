@@ -46,7 +46,7 @@ function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 	end
 end
-function cm.rmfilter(c)
+function cm.rmfilter1(c)
 	return c:IsRace(RACE_ZOMBIE) and c:IsAbleToRemove()
 end
 function cm.drcon(e,tp,eg,ep,ev,re,r,rp)
