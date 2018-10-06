@@ -95,6 +95,7 @@ function c12017002.thop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,c12017002.filter2,tp,LOCATION_REMOVED,0,1,1,nil,e,tp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
+		Duel.RegisterFlagEffect(tp,12017002+200,RESET_PHASE+PHASE_END,0,1)
 		end
 		end
 	end

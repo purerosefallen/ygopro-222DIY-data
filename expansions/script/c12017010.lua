@@ -1,5 +1,7 @@
 --忍妖 魔神龙
 function c12017010.initial_effect(c)
+	--fusion material
+	c:EnableReviveLimit()
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -102,13 +104,13 @@ function c12017010.op(e,tp,eg,ep,ev,re,r,rp)
 --   if g:GetCount() then
 --   local tc=g:GetFirst()
 --   while tc do
---	  local e1=Effect.CreateEffect(e:GetHandler())
---	  e1:SetType(EFFECT_TYPE_SINGLE)
---	  e1:SetCode(EFFECT_CANNOT_TRIGGER)
---	  e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
---	  e1:SetReset(RESET_PHASE+PHASE_END)
---	 tc:RegisterEffect(e1)
+--  local e1=Effect.CreateEffect(e:GetHandler())
+--  e1:SetType(EFFECT_TYPE_SINGLE)
+--  e1:SetCode(EFFECT_CANNOT_TRIGGER)
+--  e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+--  e1:SetReset(RESET_PHASE+PHASE_END)
+--   tc:RegisterEffect(e1)
 --  end
---	  tc=g:GetNext()
+--  tc=g:GetNext()
 --  end
 end

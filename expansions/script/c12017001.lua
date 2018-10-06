@@ -144,6 +144,7 @@ function c12017001.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c12017001.cfilter1,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		Duel.RegisterFlagEffect(tp,12017002+200,RESET_PHASE+PHASE_END,0,1)
 		end
 		end
 	end
