@@ -26,6 +26,7 @@ function c76121001.initial_effect(c)
 	e2:SetOperation(c76121001.thop)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
+	e3:SetDescription(aux.Stringid(76121001,2))
 	e3:SetCode(EVENT_BE_MATERIAL)
 	e3:SetCondition(c76121001.thcon2)
 	c:RegisterEffect(e3)
@@ -72,7 +73,7 @@ function c76121001.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c76121001.filter,tp,LOCATION_DECK,0,1,1,nil)
 	local tc=g:GetFirst()
-	if tc and tc:IsAbleToHand() and (not tc:IsAbleToGrave() or Duel.SelectYesNo(tp,aux.Stringid(76121001,2))) then
+	if tc and tc:IsAbleToHand() and (not tc:IsAbleToGrave() or Duel.SelectYesNo(tp,aux.Stringid(76121001,3))) then
 		Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,tc)
 	else

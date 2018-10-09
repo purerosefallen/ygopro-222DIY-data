@@ -44,7 +44,7 @@ function c60159903.operation(e,tp,eg,ep,ev,re,r,rp)
     Duel.ConfirmDecktop(tp,1)
     local g=Duel.GetDecktopGroup(tp,1)
     local tc=g:GetFirst()
-    if (tc:IsAttribute(ATTRIBUTE_WIND) or tc:IsAttribute(ATTRIBUTE_FIRE) or tc:IsAttribute(ATTRIBUTE_WATER))
+    if (tc:IsAttribute(ATTRIBUTE_EARTH) or tc:IsAttribute(ATTRIBUTE_FIRE) or tc:IsAttribute(ATTRIBUTE_WATER))
     and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then
         if Duel.SelectYesNo(tp,aux.Stringid(60159901,1)) then
             Duel.DisableShuffleCheck()

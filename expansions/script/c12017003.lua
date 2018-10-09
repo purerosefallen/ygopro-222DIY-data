@@ -40,7 +40,6 @@ function c12017003.sctg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c12017003.scop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local mg=Duel.GetMatchingGroup(c12017003.mfilter,tp,LOCATION_MZONE,0,nil)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local tc=Duel.SelectMatchingCard(tp,c12017003.tgfilter,tp,LOCATION_DECK,0,1,1,nil,c):GetFirst()
@@ -56,7 +55,7 @@ function c12017003.scop(e,tp,eg,ep,ev,re,r,rp)
 		  if g:GetCount()>0 then
 			 Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			 local sg=g:Select(tp,1,1,nil)
-			 Duel.SynchroSummon(tp,sg:GetFirst(),c,mg)
+			 Duel.SynchroSummon(tp,sg:GetFirst(),c)
 		  end
 	   end
 	   local e2=Effect.CreateEffect(c)

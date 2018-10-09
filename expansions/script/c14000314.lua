@@ -36,11 +36,11 @@ function cm.filter(c,ec,e)
 	return not ec:IsHasCardTarget(c)
 end
 function cm.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chkc then return chkc:IsOnField() and cm.filter(chkc,c) end
-	if chk==0 then return Duel.IsExistingTarget(cm.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,c) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,cm.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,99,99,nil,c)
+	if chkc then return chkc:IsOnField() and cm.filter(chkc,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingTarget(cm.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil,e:GetHandler()) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local g=Duel.GetMatchingGroup(function(c,e) return Card.IsCanBeEffectTarget and not e:GetHandler():IsHasCardTarget(c) end,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil,e)
+	Duel.SetTargetCard(g)
 end
 function cm.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

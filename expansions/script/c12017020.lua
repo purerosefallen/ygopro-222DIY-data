@@ -45,7 +45,7 @@ function c12017020.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(h,REASON_EFFECT+REASON_DISCARD)
 	Duel.DiscardDeck(tp,h1,REASON_EFFECT)
 	local g=Duel.GetMatchingGroup(c12017020.filter,tp,LOCATION_DECK,0,nil)
-	if Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)==1 and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(12017020,0)) then
+	if Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)<2  and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(12017020,0)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=g:Select(tp,1,1,nil)

@@ -23,7 +23,7 @@ function c12017002.initial_effect(c)
 	c:RegisterEffect(e2)  
 end
 function c12017002.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,2,nil) or (Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0 and Duel.GetFlagEffect(tp,12017002)==0 ) and e:GetHandler():IsAbleToRemoveAsCost() end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,2,e:GetHandler()) or (Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0 and Duel.GetFlagEffect(tp,12017002)==0 ) and e:GetHandler():IsAbleToRemoveAsCost() end
 	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 	if Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)==0 then Duel.RegisterFlagEffect(tp,12017002,RESET_EVENT+RESET_PHASE+PHASE_END,0,1)
 	else
@@ -95,6 +95,7 @@ function c12017002.thop(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,c12017002.filter2,tp,LOCATION_REMOVED,0,1,1,nil,e,tp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
+		Duel.RegisterFlagEffect(tp,12017002+200,RESET_PHASE+PHASE_END,0,1)
 		end
 		end
 	end

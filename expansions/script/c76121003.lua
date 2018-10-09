@@ -26,6 +26,7 @@ function c76121003.initial_effect(c)
 	e2:SetOperation(c76121003.spop2)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
+	e3:SetDescription(aux.Stringid(76121003,2))
 	e3:SetCode(EVENT_BE_MATERIAL)
 	e3:SetCondition(c76121003.spcon3)
 	c:RegisterEffect(e3)
@@ -62,18 +63,18 @@ end
 function c76121003.spcon3(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r==REASON_SYNCHRO
 end
-function c76121003.filter(c,e,tp)
+function c76121003.spfilter2(c,e,tp)
 	return c:IsSetCard(0xea1) and not c:IsCode(76121003) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c76121003.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c76121003.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+		and Duel.IsExistingMatchingCard(c76121003.spfilter2,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
 function c76121003.spop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c76121003.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c76121003.spfilter2),tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
