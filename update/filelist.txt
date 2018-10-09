@@ -6,9 +6,9 @@ deck/09.29new_card4.ydk	03e2a5cfb1a833223733701b03e985f4
 deck/09.29new_card5.ydk	2ca2653334d53db366ba16a899aaac21
 deck/09.29new_card6.ydk	081e129b5097019db0c4c7f1d97efeee
 deck/09.29new_card7.ydk	8b3d3f31eb75ce3e3d18bdec0f5f60f1
-expansions/222DIY.cdb	6d041819eb26cb029ebb8a068d9fc0c0
-expansions/lflist.conf	e4fedba5613be57011315ed1f2ac1757
-expansions/strings.conf	194c12f020ed519bc8e90c2baba779f9
+expansions/222DIY.cdb	e794c5804e30bd3a8adfb81cce7fd04b
+expansions/lflist.conf	f49b0e56d391a47783f0cbde075c2da2
+expansions/strings.conf	de390f54ef34d9d8694a00151db6971e
 expansions/pics/08209710.jpg	ed0e60085631bfa641ffeebd6abbd910
 expansions/pics/1000400.jpg	7b02a7099b7cd3d79f72c977d00cface
 expansions/pics/1000401.jpg	0e283b3c737d978d3e3345b27a6ce937
