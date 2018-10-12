@@ -51,7 +51,7 @@ function c76121038.spop(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function c76121038.chainop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if re:IsActiveType(TYPE_MONSTER) and rc:IsSetCard(0xea4) then
+	if rc:IsSetCard(0xea4) then
 		Duel.SetChainLimit(c76121038.chainlm)
 	end
 end
