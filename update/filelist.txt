@@ -1,4 +1,4 @@
-﻿ygopro.exe	5208aa55ea9dec235cf0eb6588159de3
+ygopro.exe	5208aa55ea9dec235cf0eb6588159de3
 deck/10.13new_card1.ydk	6593f7b0d6d97c0fad82e60483e4a62a
 deck/10.13new_card10.ydk	818df3409b15a1e75623c4e7ade814e5
 deck/10.13new_card11.ydk	7284d9e0e0a68bf8beaa68e3a032be7b
