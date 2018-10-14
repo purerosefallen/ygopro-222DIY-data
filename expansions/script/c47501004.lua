@@ -27,7 +27,6 @@ function c47501004.initial_effect(c)
     e2:SetRange(LOCATION_MZONE)
     e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
     e2:SetTargetRange(LOCATION_MZONE,0)
-    e2:SetTarget(c47501004.indtg)
     e2:SetValue(c47501004.efilter2)
     c:RegisterEffect(e2)
     local e3=Effect.CreateEffect(c)
@@ -75,10 +74,6 @@ end
 function c47501004.efilter1(e,re)
     return e:GetOwnerPlayer()~=re:GetOwnerPlayer()
 end
-function c47501004.indtg(e,c)
-    local te,g=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TARGET_CARDS)
-    return not te or not te:IsHasProperty(EFFECT_FLAG_CARD_TARGET) or not g or not g:IsContains(c)
-end
 function c47501004.efilter2(e,te)
     return te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
@@ -87,7 +82,7 @@ function c47501004.immop(e,tp,eg,ep,ev,re,r,rp)
     e1:SetType(EFFECT_TYPE_FIELD)
     e1:SetCode(EFFECT_IMMUNE_EFFECT)
     e1:SetTargetRange(0,LOCATION_ONFIELD)
-    e1:SetReset(RESET_PHASE+PHASE_END)
+    e1:SetReset(RESET_PHASE+PHASE_END,2)
     e1:SetValue(c47501004.efilter3)
     Duel.RegisterEffect(e1,tp)
 end

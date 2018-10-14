@@ -61,7 +61,7 @@ function c4210007.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c4210007.filter(c)
-	return c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0xa2f) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 end
 function c4210007.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c4210007.filter,tp,LOCATION_GRAVE,0,2,nil) end

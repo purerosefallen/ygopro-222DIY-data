@@ -49,7 +49,7 @@ function c4212114.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
     Duel.Release(g,REASON_COST)
 end
 function c4212114.spfilter(c,e,tp)
-    return c:IsSetCard(0x2aa) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
+    return c:IsSetCard(0xa2a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function c4212114.sploc(flag)
     return LOCATION_DECK + (flag and { LOCATION_GRAVE } or { 0x0 })[1]

@@ -26,7 +26,7 @@ function c4210045.filter1(c,e)
 	return c:IsFaceup() and c:IsCanBeFusionMaterial() and not c:IsImmuneToEffect(e)
 end
 function c4210045.filter2(c,e,tp,m,f,chkf)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x2af) and (not f or f(c))
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(0xa2f) and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
 function c4210045.filter3(c,e)
@@ -105,7 +105,7 @@ function c4210045.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 	end
 end
-function c4210045.efilter(e,te) return not te:GetHandler():IsSetCard(0x2af) end
+function c4210045.efilter(e,te) return not te:GetHandler():IsSetCard(0xa2f) end
 function c4210045.tgfilter(c)
 	return c:IsType(TYPE_PENDULUM) and c:IsType(TYPE_MONSTER) and c:IsRace(RACE_BEASTWARRIOR) and c:IsFaceup()
 end

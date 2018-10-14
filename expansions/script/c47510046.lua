@@ -49,7 +49,6 @@ function c47510046.initial_effect(c)
     e6:SetCode(EFFECT_IMMUNE_EFFECT)
     e6:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
     e6:SetRange(LOCATION_MZONE)
-    e6:SetCondition(c47510046.imcon)
     e6:SetValue(c47510046.efilter)
     c:RegisterEffect(e6) 
     --atk

@@ -24,11 +24,11 @@ function c4212304.mvfilter1(c)
 	return c:IsFaceup()
 end
 function c4212304.mvfilter2(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x2a5) and c:GetSequence()<5
+	return c:IsFaceup() and c:IsSetCard(0xa25) and c:GetSequence()<5
 		and Duel.IsExistingMatchingCard(c4212304.mvfilter3,tp,LOCATION_MZONE,0,1,c)
 end
 function c4212304.mvfilter3(c)
-	return c:IsFaceup() and c:IsSetCard(0x2a5) and c:GetSequence()<5
+	return c:IsFaceup() and c:IsSetCard(0xa25) and c:GetSequence()<5
 end
 function c4212304.mvop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsExistingMatchingCard(c4212304.mvfilter1,tp,LOCATION_MZONE,0,1,nil)
@@ -48,7 +48,7 @@ function c4212304.mvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c4212304.mfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2a5) and c:IsType(TYPE_SPELL)
+	return c:IsFaceup() and c:IsSetCard(0xa25) and c:IsType(TYPE_SPELL)
 end
 function c4212304.mfilter2(c)
 	return c:IsFaceup() and c:IsType(TYPE_CONTINUOUS) and c:IsType(TYPE_SPELL)

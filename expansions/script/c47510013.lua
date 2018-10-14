@@ -3,16 +3,7 @@ local m=47510013
 local cm=_G["c"..m]
 function c47510013.initial_effect(c)
     --pendulum summon
-    aux.EnablePendulumAttribute(c)
-    --splimit
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_FIELD)
-    e1:SetRange(LOCATION_PZONE)
-    e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-    e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
-    e1:SetTargetRange(1,0)
-    e1:SetTarget(c47510013.psplimit)
-    c:RegisterEffect(e1)   
+    aux.EnablePendulumAttribute(c) 
     --spsummon
     local e2=Effect.CreateEffect(c)
     e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -59,12 +50,6 @@ function c47510013.initial_effect(c)
     e6:SetTarget(c47510013.xyztg)
     e6:SetOperation(c47510013.xyzop)
     c:RegisterEffect(e6)
-end
-function c47510013.pefilter(c)
-    return c:IsRace(RACE_WINDBEAST) or c:IsSetCard(0x5da) or c:IsAttribute(ATTRIBUTE_WIND)
-end
-function c47510013.psplimit(e,c,tp,sumtp,sumpos)
-    return not c47510013.pefilter(c) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function c47510013.cfilter(c,tp)
     return c:IsFaceup() and c:IsSetCard(0x5da) or c:IsAttribute(ATTRIBUTE_WIND) and c:IsControler(tp) and c:IsSummonType(SUMMON_TYPE_SPECIAL)

@@ -30,4 +30,3 @@ function c4200011.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsSummonType(SUMMON_TYPE_LINK)
 end
 
-

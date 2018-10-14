@@ -1,7 +1,7 @@
 --月光
 function c65071105.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_RECOVER)
+	e1:SetCategory(CATEGORY_RECOVER+CATEGORY_REMOVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CARD_TARGET)
@@ -30,7 +30,7 @@ function c65071105.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		local lp=Duel.GetLP(mp)
 		Duel.SetLP(mp,lp/2)
-		Duel.Destroy(tc,REASON_EFFECT)
+		Duel.Remove(tc,POS_FACEDOWN,REASON_EFFECT)
 		end
 	end
 end

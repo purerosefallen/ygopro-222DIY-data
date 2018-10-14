@@ -21,7 +21,7 @@ function c4212312.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c4212312.tffilter(c,tp)
-	return c:IsType(TYPE_SPELL) and c:IsType(TYPE_CONTINUOUS) and c:IsSetCard(0x2a5) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsType(TYPE_SPELL) and c:IsType(TYPE_CONTINUOUS) and c:IsSetCard(0xa25) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function c4212312.tfop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 
@@ -42,7 +42,7 @@ function c4212312.tfop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c4212312.filter1(c,e)
-	return c:IsAbleToDeck() and c:IsType(TYPE_SPELL) and c:IsType(TYPE_CONTINUOUS) and c:IsSetCard(0x2a5)
+	return c:IsAbleToDeck() and c:IsType(TYPE_SPELL) and c:IsType(TYPE_CONTINUOUS) and c:IsSetCard(0xa25)
 end
 function c4212312.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToHand() 

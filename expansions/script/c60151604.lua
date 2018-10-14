@@ -40,7 +40,7 @@ function c60151604.initial_effect(c)
     c:RegisterEffect(e4)
 end
 function c60151604.spcondition(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():GetSummonType()==SUMMON_TYPE_PENDULUM
+    return e:GetHandler():GetFlagEffect(60151601)==0
 end
 function c60151604.filter(c)
     return c:IsFaceup() and c:IsSetCard(0xcb25) and c:IsType(TYPE_MONSTER)
@@ -89,20 +89,23 @@ function c60151604.operation(e,tp,eg,ep,ev,re,r,rp)
             e1:SetValue(LOCATION_REMOVED)
             c:RegisterEffect(e1,true)
         end
+		c:RegisterFlagEffect(60151601,RESET_EVENT+0x1fe0000,0,1)
     end
 end
 function c60151604.filter3(c,e,tp)
-    return c:IsSetCard(0xcb25) and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+    return c:IsSetCard(0xcb25) and c:IsType(TYPE_PENDULUM) 
+		and ((c:IsLocation(LOCATION_HAND+LOCATION_GRAVE)) or (c:IsLocation(LOCATION_REMOVED) and c:IsFaceup())) 
+		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c60151604.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
-        and Duel.IsExistingMatchingCard(c60151604.filter3,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp) end
-    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_REMOVED)
+        and Duel.IsExistingMatchingCard(c60151604.filter3,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp) end
+    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_REMOVED)
 end
 function c60151604.spop(e,tp,eg,ep,ev,re,r,rp)
     if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-    local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c60151604.filter3),tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
+    local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c60151604.filter3),tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
     if g:GetCount()>0 then
         Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
     end

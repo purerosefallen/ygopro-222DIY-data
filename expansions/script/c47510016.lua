@@ -3,16 +3,7 @@ local m=47510016
 local cm=_G["c"..m]
 function c47510016.initial_effect(c)
     --pendulum summon
-    aux.EnablePendulumAttribute(c)
-    --splimit
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_FIELD)
-    e1:SetRange(LOCATION_PZONE)
-    e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-    e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
-    e1:SetTargetRange(1,0)
-    e1:SetTarget(c47510016.psplimit)
-    c:RegisterEffect(e1) 
+    aux.EnablePendulumAttribute(c) 
     --spsummon
     local e2=Effect.CreateEffect(c)
     e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -79,14 +70,14 @@ function c47510016.spfilter(c,e,tp)
 end
 function c47510016.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-        and Duel.IsExistingMatchingCard(c47510016.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
-    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+        and Duel.IsExistingMatchingCard(c47510016.spfilter,tp,LOCATION_HAND+LOCATION_EXTRA,0,1,nil,e,tp) end
+    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_EXTRA)
 end
 function c47510016.spop(e,tp,eg,ep,ev,re,r,rp)
     if not e:GetHandler():IsRelateToEffect(e) then return end
     if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-    local g=Duel.SelectMatchingCard(tp,c47510016.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+    local g=Duel.SelectMatchingCard(tp,c47510016.spfilter,tp,LOCATION_HAND+LOCATION_EXTRA,0,1,1,nil,e,tp)
     if g:GetCount()>0 then
         Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
     end

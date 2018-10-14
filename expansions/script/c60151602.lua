@@ -40,7 +40,7 @@ function c60151602.initial_effect(c)
     c:RegisterEffect(e4)
 end
 function c60151602.spcondition(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():GetSummonType()==SUMMON_TYPE_PENDULUM
+    return e:GetHandler():GetFlagEffect(60151601)==0
 end
 function c60151602.filter(c)
     return c:IsFaceup() and c:IsSetCard(0xcb25) and c:IsType(TYPE_MONSTER)
@@ -89,6 +89,7 @@ function c60151602.operation(e,tp,eg,ep,ev,re,r,rp)
             e1:SetValue(LOCATION_REMOVED)
             c:RegisterEffect(e1,true)
         end
+		c:RegisterFlagEffect(60151601,RESET_EVENT+0x1fe0000,0,1)
     end
 end
 function c60151602.filter3(c)

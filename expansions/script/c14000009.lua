@@ -5,7 +5,7 @@ function cm.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,nil,4,4,cm.lcheck)
 	c:EnableReviveLimit()
-	 --direct attack
+	--direct attack
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetCode(EFFECT_DIRECT_ATTACK)
@@ -48,7 +48,7 @@ function cm.actcon(e)
 	return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()
 end
 function cm.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep~=tp and bit.band(r,REASON_EFFECT)~=0 and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsSetCard(0x1404)
+	return ep~=tp and bit.band(r,REASON_EFFECT)~=0 and re:GetHandler():IsSetCard(0x1404)
 end
 function cm.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

@@ -31,7 +31,7 @@ function c4210103.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	else return false end
 end
 function c4210103.spfilter(c,e,tp)
-	return c:IsSetCard(0x2ac) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xa2c) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c4210103.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
@@ -49,7 +49,7 @@ function c4210103.spop(e,tp,eg,ep,ev,re,r,rp)
 		local tc=Duel.GetOperatedGroup():GetFirst()
 		Duel.ConfirmCards(1-tp,tc)
 		Duel.BreakEffect()
-		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0x2ac) then
+		if tc:IsType(TYPE_MONSTER) and tc:IsSetCard(0xa2c) then
 			if Duel.IsExistingTarget(function(c)return c:IsFacedown() and c:IsType(TYPE_SPELL+TYPE_TRAP) end,tp,0,LOCATION_ONFIELD,1,nil)then
 				if Duel.SelectYesNo(tp,aux.Stringid(4210103,1)) then
 					local tc=Duel.SelectMatchingCard(tp,function(c)return c:IsFacedown() and c:IsType(TYPE_SPELL+TYPE_TRAP) end,tp,0,LOCATION_ONFIELD,1,1,nil)

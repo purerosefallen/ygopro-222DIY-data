@@ -42,7 +42,7 @@ function c12011016.rmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SendtoGrave(g,REASON_EFFECT)
 end
 function c12011016.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xfb5)
+	return c:IsFaceup() and c:IsSetCard(0x3fbe)
 end
 function c12011016.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c12011016.ctfilter,1,nil) then

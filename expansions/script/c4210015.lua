@@ -44,7 +44,7 @@ function c4210015.initial_effect(c)
 	c:RegisterEffect(e4)	
 end
 function c4210015.spcfilter(c,tp,rp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsPreviousSetCard(0x2af)
+	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsPreviousSetCard(0xa2f)
 end
 function c4210015.otcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c4210015.spcfilter,1,nil,tp,rp)
@@ -66,10 +66,10 @@ function c4210015.otop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c4210015.splimit(e,se,sp,st)
-	return se:GetHandler():IsSetCard(0x2af)
+	return se:GetHandler():IsSetCard(0xa2f)
 end
 function c4210015.tgfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x2af) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsSetCard(0xa2f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c4210015.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c4210015.tgfilter(chkc,e,tp) end

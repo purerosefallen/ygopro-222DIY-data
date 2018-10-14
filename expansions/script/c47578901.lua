@@ -4,15 +4,6 @@ local cm=_G["c"..m]
 function c47578901.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)
-    --splimit
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_FIELD)
-    e1:SetRange(LOCATION_PZONE)
-    e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-    e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
-    e1:SetTargetRange(1,0)
-    e1:SetTarget(c47578901.psplimit)
-    c:RegisterEffect(e1)
     --spsum
     local e2=Effect.CreateEffect(c)
     e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
@@ -44,11 +35,8 @@ function c47578901.initial_effect(c)
     e5:SetCode(EVENT_SPSUMMON_SUCCESS)
     c:RegisterEffect(e5)
 end
-function c47578901.psplimit(e,c,tp,sumtp,sumpos)
-    return not c:IsRace(RACE_FAIRY) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
-end
 function c47578901.filter(c)
-    return c:IsAttribute(ATTRIBUTE_DARK) and c:IsSetCard(0x5de) 
+    return c:IsCode(47578901) 
 end
 function c47578901.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -68,7 +56,7 @@ function c47578901.synlimit(e,c)
     return not c:IsRace(RACE_FAIRY)
 end
 function c47578901.spfilter(c,e,tp)
-    return c:IsSetCard(0x5de) and not c:IsType(TYPE_TUNER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+    return (c:IsSetCard(0x5de) or c:IsSetCard(0x5da)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c47578901.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

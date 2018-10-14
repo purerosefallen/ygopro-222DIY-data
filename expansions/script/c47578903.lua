@@ -12,7 +12,14 @@ function c47578903.initial_effect(c)
     e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
     e1:SetTargetRange(1,0)
     e1:SetTarget(c47578903.psplimit)
-    c:RegisterEffect(e1) 
+    c:RegisterEffect(e1)
+    --synchro level
+    local e5=Effect.CreateEffect(c)
+    e5:SetType(EFFECT_TYPE_SINGLE)
+    e5:SetRange(LOCATION_MZONE)
+    e5:SetCode(EFFECT_SYNCHRO_LEVEL)
+    e5:SetValue(c47578903.slevel)
+    c:RegisterEffect(e5) 
     --spsummon
     local e2=Effect.CreateEffect(c)
     e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
@@ -42,6 +49,10 @@ function c47578903.initial_effect(c)
     e6:SetCode(EFFECT_UPDATE_ATTACK)
     e6:SetValue(c47578903.value)
     c:RegisterEffect(e6)
+end
+function c47578903.slevel(e,c)
+    local lv=e:GetHandler():GetLevel()
+    return 1*65536+lv
 end
 function c47578903.psplimit(e,c,tp,sumtp,sumpos)
     return not c:IsRace(RACE_FAIRY) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM

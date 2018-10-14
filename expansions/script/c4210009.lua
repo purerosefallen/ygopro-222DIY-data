@@ -32,7 +32,7 @@ function c4210009.initial_effect(c)
 	c4210009.tgcard = nil
 end
 function c4210009.cfilter(c,ft)
-	return c:IsFaceup() and c:IsSetCard(0x2af) and c:IsReleasable() and (ft>0 or c:GetSequence()<5)
+	return c:IsFaceup() and c:IsSetCard(0xa2f) and c:IsReleasable() and (ft>0 or c:GetSequence()<5)
 end
 function c4210009.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -51,7 +51,7 @@ function c4210009.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.SpecialSummonStep(c,0,tp,tp,false,false,POS_FACEUP) then
 		if e:GetLabel()==1 then
-			local g=Duel.SelectMatchingCard(tp,function(c) return c:IsSetCard(0x2af) end,tp,LOCATION_GRAVE,0,1,1,c4210009.tgcard,ft)			
+			local g=Duel.SelectMatchingCard(tp,function(c) return c:IsSetCard(0xa2f) end,tp,LOCATION_GRAVE,0,1,1,c4210009.tgcard,ft)			
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)
 			c4210009.tgcard = nil
@@ -62,7 +62,7 @@ function c4210009.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c4210009.filter(c)
-	return c:IsSetCard(0x2af) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0xa2f) and c:IsAbleToRemoveAsCost()
 end
 function c4210009.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c4210009.filter,tp,LOCATION_HAND,0,1,nil) end

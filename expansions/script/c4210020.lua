@@ -62,7 +62,7 @@ function c4210020.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function c4210020.spfilter(c,e,tp)
-	return c:IsSetCard(0x2af) and c:IsAbleToHand()
+	return c:IsSetCard(0xa2f) and c:IsAbleToHand()
 end
 function c4210020.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c4210020.spfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp) end

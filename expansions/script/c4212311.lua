@@ -37,10 +37,10 @@ function c4212311.initial_effect(c)
 	c:RegisterEffect(e3)	
 end
 function c4212311.tffilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2a5) and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xa25) and c:IsAbleToHand()
 end
 function c4212311.spcfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x2a5)
+	return c:IsType(TYPE_SPELL) and c:IsSetCard(0xa25)
 end
 function c4212311.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c4212311.tffilter,tp,LOCATION_DECK,0,1,nil,tp) end

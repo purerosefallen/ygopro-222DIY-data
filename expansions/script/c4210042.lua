@@ -14,14 +14,14 @@ function c4210042.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
-	e2:SetCondition(function(e)return Duel.GetMatchingGroupCount(function(c) return c:IsFaceup() and c:IsSetCard(0x2af)end,e:GetHandler():GetControler(),LOCATION_MZONE,0,nil)>=3 end)
+	e2:SetCondition(function(e)return Duel.GetMatchingGroupCount(function(c) return c:IsFaceup() and c:IsSetCard(0xa2f)end,e:GetHandler():GetControler(),LOCATION_MZONE,0,nil)>=3 end)
 	c:RegisterEffect(e2)
 end
 function c4210042.cfilter(c,ft)
-	return c:IsFaceup() and c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) and c:IsReleasable()
+	return c:IsFaceup() and c:IsSetCard(0xa2f) and c:IsType(TYPE_MONSTER) and c:IsReleasable()
 end
 function c4210042.setfilter(c)
-    return c:IsSetCard(0x2af) and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP)) and c:IsSSetable() and not c:IsCode(4210042)
+    return c:IsSetCard(0xa2f) and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP)) and c:IsSSetable() and not c:IsCode(4210042)
 end
 function c4210042.condition(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_MONSTER) and Duel.IsChainNegatable(ev) 

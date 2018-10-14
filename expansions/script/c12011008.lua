@@ -68,7 +68,7 @@ function c12011008.checkop(e,tp,eg,ep,ev,re,r,rp)
 	eg:ForEach(c12011008.callback)
 end
 function c12011008.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,e:GetHandler(),0xfb5)
+	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,e:GetHandler(),0x3fbe)
 end
 function c12011008.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

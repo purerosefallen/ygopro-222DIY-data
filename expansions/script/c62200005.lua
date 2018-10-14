@@ -17,7 +17,7 @@ function c62200005.initial_effect(c)
     local e2=e1:Clone()
     e2:SetCode(EVENT_SPSUMMON_SUCCESS)
     c:RegisterEffect(e2)
-    --search
+    --spsummon
     local e3=Effect.CreateEffect(c)
     e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
     e3:SetProperty(EFFECT_FLAG_CARD_TARGET)

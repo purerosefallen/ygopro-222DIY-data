@@ -59,7 +59,7 @@ function c12010046.repop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c12010046.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) and e:GetHandler():GetOverlayCount()~=0
+	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) and c:IsReason(REASON_EFFECT) and c:GetReasonPlayer()==1-tp  and e:GetHandler():GetOverlayCount()~=0
 end
 function c12010046.spfilter(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,true,true) and c:IsSetCard(0xfba) and c:IsType(TYPE_XYZ)

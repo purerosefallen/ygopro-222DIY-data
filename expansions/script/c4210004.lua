@@ -39,7 +39,7 @@ function c4210004.initial_effect(c)
 	c:RegisterEffect(e3)	
 end
 function c4210004.tgfilter(c)
-	return c:IsSetCard(0x2af) and c:IsAbleToHand()
+	return c:IsSetCard(0xa2f) and c:IsAbleToHand()
 end
 function c4210004.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c4210004.tgfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -61,7 +61,7 @@ function c4210004.spfilter2(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_EARTH) and Duel.CheckReleaseGroup(tp,Card.IsAttribute,1,nil,ATTRIBUTE_EARTH)
 end
 function c4210004.spfilter3(c,attr)
-	return c:IsFaceup() and c:IsSetCard(0x2af) and not(c:IsAttribute(attr)) 
+	return c:IsFaceup() and c:IsSetCard(0xa2f) and not(c:IsAttribute(attr)) 
 end
 function c4210004.spcon(e,c)
 	if c==nil then return true end
@@ -87,7 +87,7 @@ function c4210004.smcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(e:GetHandler(),nil,0,REASON_COST)
 end
 function c4210004.smfilter1(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x2af) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsFaceup() and c:IsSetCard(0xa2f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 		and Duel.IsExistingTarget(c4210004.smfilter2,tp,LOCATION_REMOVED,0,1,c,e,tp)
 end
 function c4210004.smfilter2(c,e,tp)

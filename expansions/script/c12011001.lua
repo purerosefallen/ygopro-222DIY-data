@@ -69,7 +69,7 @@ function c12011001.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function c12011001.filter1(c)
-	return c:IsSetCard(0xfb5) and c:IsType(TYPE_PENDULUM)
+	return c:IsSetCard(0x3fbe) and c:IsType(TYPE_PENDULUM)
 end
 function c12011001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c12011001.filter1,tp,LOCATION_DECK,0,2,nil) end
@@ -110,7 +110,7 @@ function c12011001.spsop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c12011001.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,e:GetHandler(),0xfb5)
+	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,e:GetHandler(),0x3fbe)
 end
 function c12011001.adtg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c12011001.filter(chkc) end

@@ -12,9 +12,9 @@ function c12011029.initial_effect(c)
 		.e("SetCondition",function(e,tp,eg,ep,ev,re,r,rp)
 			return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) end)
 		.e("SetTarget",function (e,tp,eg,ep,ev,re,r,rp,chk) if chk==0 then 
-			return Duel.IsExistingMatchingCard(c12011029.cfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil) end end)		
+			return Duel.IsExistingMatchingCard(c12011029.cfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil) end end)	  
 		.e("SetOperation",function(e,tp,eg,ep,ev,re,r,rp)
-			local g=Duel.SelectMatchingCard(tp,c12011029.cfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil)			
+			local g=Duel.SelectMatchingCard(tp,c12011029.cfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil)		 
 			if g:GetCount()>0 then Duel.Overlay(e:GetHandler(),g) end
 		end)
 	.Return()).c("RegisterEffect",iFunc(c)
@@ -32,13 +32,13 @@ function c12011029.initial_effect(c)
 			if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then Duel.ConfirmCards(1-tp,g)
 				if Duel.SelectYesNo(tp,504) then 
 					Duel.SendtoGrave(Duel.SelectMatchingCard(tp,function(c) return c:GetLevel()==3 and c:IsAbleToGrave() and c12011029.cfilter(c) end,tp,LOCATION_DECK,0,1,1,nil),REASON_EFFECT)
-				end			
+				end		 
 			end end)
 	.Return()).c("RegisterEffect",iFunc(c)
 		.e("SetCategory",CATEGORY_SPECIAL_SUMMON)
 		.e("SetType",EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 		.e("SetRange",LOCATION_MZONE)
-		.e("SetCode",EVENT_DESTROYED)		
+		.e("SetCode",EVENT_DESTROYED)	   
 		.e("SetProperty",EFFECT_FLAG_DELAY)
 		.e("SetCost",function(e,tp,eg,ep,ev,re,r,rp,chk)if chk==0 then 
 			return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
@@ -64,7 +64,7 @@ end
 function iFunc(c,x)
 	local __this = (aux.GetValueType(c) == "Card" and {(x == nil and {Effect.CreateEffect(c)} or {x})[1]} or {x})[1] 
 	local fe = function(name,...) (type(__this[name])=="function" and {__this[name]} or {""})[1](__this,...) return iFunc(c,__this) end
-	local fc = function(name,...) this = (type(c[name])=="function" and {c[name]} or {""})[1](c,...) return iFunc(c,c) end	
+	local fc = function(name,...) this = (type(c[name])=="function" and {c[name]} or {""})[1](c,...) return iFunc(c,c) end  
 	local func ={e = fe,c = fc,g = fc,v = function() return this end,Return = function() return __this:Clone() end}
 	return func
 end

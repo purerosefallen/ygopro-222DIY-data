@@ -93,7 +93,7 @@ function c47510050.recop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c47510050.thcon(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    return c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsPreviousLocation(LOCATION_HAND)
+    return c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function c47510050.lvfilter(c)
     return c:IsRace(RACE_PLANT) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave() and c:IsType(TYPE_TUNER)
@@ -156,7 +156,7 @@ function c47510050.ntrop(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 function c47510050.efcon(e,tp,eg,ep,ev,re,r,rp)
-    return r==REASON_SYNCHRO and e:GetHandler():GetReasonCard():IsRace(RACE_DRAGON)
+    return r==REASON_SYNCHRO
 end
 function c47510050.efop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()

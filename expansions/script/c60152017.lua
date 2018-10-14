@@ -48,21 +48,10 @@ end
 function c60152017.activate(e,tp,eg,ep,ev,re,r,rp)
     local g=Duel.GetMatchingGroup(c60152017.filter,tp,LOCATION_MZONE,0,nil)
     if Duel.Release(g,REASON_EFFECT)>0 then
-		local sg=Duel.GetOperatedGroup()
-		if sg:GetCount()>0 then
-			local atk=0
-			local tc=sg:GetFirst()
-			while tc do
-				local tatk=tc:GetAttack()
-				if tatk<0 then tatk=0 end
-				atk=atk+tatk
-				tc=sg:GetNext()
-			end
-			Duel.BreakEffect()
-			Duel.Damage(tp,atk,REASON_EFFECT,true)
-			Duel.Damage(1-tp,atk,REASON_EFFECT,true)
-			Duel.RDComplete()
-		end
+		local atk=g:GetSum(Card.GetAttack)
+		Duel.Damage(tp,atk,REASON_EFFECT,true)
+		Duel.Damage(1-tp,atk,REASON_EFFECT,true)
+		Duel.RDComplete()
 	end
 end
 function c60152017.descost(e,tp,eg,ep,ev,re,r,rp,chk)

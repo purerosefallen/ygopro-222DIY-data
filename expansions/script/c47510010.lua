@@ -99,7 +99,7 @@ function c47510010.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
     local g=Duel.GetMatchingGroup(c47510010.filter2,tp,LOCATION_HAND,0,nil)
     local ct=math.min(ft-1,g:GetCount())
     local sg=g:Select(tp,1,ct,nil)
-    e:SetLabel(sg:GetCount())
+    e:SetLabel(sg:GetCount()+1)
     Duel.SendtoGrave(sg,REASON_COST)
 end
 function c47510010.drtg(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -5,7 +5,125 @@ if not RSVAL then
    RSVAL=RSVAL or {}
    rsv=RSVAL
    RESETFE = RESET_EVENT+0x1fe0000
-
+-------------#########XB Quick Effect##########-----------------
+function rsv.XBPlayerHintFunction(c)
+	if Duel.GetFlagEffect(0,10111001)<=0 then
+	   Duel.RegisterFlagEffect(0,10111001,0,0,1)
+	   local e1=Effect.CreateEffect(c)
+	   e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	   e1:SetCode(EVENT_MOVE)
+	   e1:SetOperation(rsv.xbhintpop)
+	   Duel.RegisterEffect(e1,0)
+	end
+end
+function rsv.xbhintpop(e,tp,eg,ep,ev,re,r,rp)
+	local hg=eg:Filter(Card.IsOnField,nil):Filter(Card.IsFaceup,nil)
+	if hg:GetCount()<=0 then return end
+	for tc in aux.Next(hg) do
+		local hintop=tc:IsControler(tc:GetOwner()) and 4 or 5
+		tc:ResetFlagEffect(10111001)
+		tc:RegisterFlagEffect(10111001,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(10111001,hintop))
+	end
+end
+function rsv.rsdfilter(c,tp)
+	return c:GetOwner()~=tp and c:IsAbleToRemove() and Duel.IsPlayerAffectedByEffect(tp,10111009)
+end
+function rsv.tsdfilter(c,tp)
+	if not (c:GetOwner()==tp and c:IsAbleToHand() and Duel.IsPlayerAffectedByEffect(tp,10111003)) then return false end
+	local tbl={Duel.IsPlayerAffectedByEffect(tp,10111003)}
+	for _,te in ipairs(tbl) do
+		if te:GetHandler():GetFlagEffect(10111003)<=0 then return true end
+	end
+	return false
+end
+function rsv.exgfilter(c,tg)
+	return tg:IsContains(c)
+end
+function rsv.RSDestroy(corg,tp)
+	local dg=Group.CreateGroup()
+	if getmetatable(corg)==Group then
+	   dg:Merge(corg)
+	else
+	   dg:AddCard(corg)
+	end
+	local rg,tg,rtbl,ttbl={},{},{},{}
+	local pp={tp,1-tp}
+	local rflag,tflag={},{}
+	for i=1,2 do
+		local p=pp[i]
+		if not rflag[p] then rflag[p]=0 end
+		if not tflag[p] then 
+		   tflag[p]=0 
+		   tflag[p+2]=Group.CreateGroup() 
+		end
+		rg[p]=dg:Filter(rsv.rsdfilter,nil,p)
+		if rg[p]:GetCount()>0 and Duel.SelectYesNo(p,aux.Stringid(10111009,0)) then 
+		   Duel.Hint(HINT_OPSELECTED,1-p,aux.Stringid(10111009,3))
+		   rtbl[p]={Duel.IsPlayerAffectedByEffect(p,10111009)}
+		   for _,te in ipairs(rtbl[p]) do
+			   rflag[p]=math.max(rflag[p],te:GetFieldID())
+		   end
+		else
+		   rg[p]:Clear()
+		end   
+		tg[p]=dg:Filter(rsv.tsdfilter,nil,p)
+		if tg[p]:GetCount()>0 and Duel.SelectYesNo(p,aux.Stringid(10111003,3)) then 
+		   Duel.Hint(HINT_OPSELECTED,1-p,aux.Stringid(10111003,4))
+		   tg[p+2]=tg[p]:Clone()
+		   ttbl[p]={Duel.IsPlayerAffectedByEffect(p,10111003)}
+		   for _,te in ipairs(ttbl[p]) do
+			   tflag[p]=math.max(tflag[p],te:GetFieldID())
+			   tflag[p+2]:AddCard(te:GetHandler())
+		   end
+		else
+		   tg[p]:Clear()
+		end
+	end
+	for i=1,2 do
+		local p=pp[i]
+		local exg=rg[p]:Filter(rsv.exgfilter,nil,tg[1-p])
+		if exg:GetCount()>0 then
+		   if rflag[p]>tflag[1-p] then
+			  tg[1-p]:Sub(exg)
+		   else
+			  rg[p]:Sub(exg)
+		   end
+		end
+	end
+	local tgs=nil
+	for i=1,2 do
+		local p=pp[i]
+		if tg[p]:GetCount()>0 then
+		   if tflag[p+2]:GetCount()<2 then
+			  tgs=tflag[p+2]:Clone()
+		   else
+			  Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+			  tgs=tflag[p+2]:Select(tp,1,1,nil)
+		   end
+		   tgs:GetFirst():RegisterFlagEffect(10111003,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(10111003,6))
+		end
+	end
+	local rct,tct,dct=0,0,0
+	rg[3]=rg[0]:Clone()
+	tg[3]=tg[0]:Clone()
+	rg[3]:Merge(rg[1])
+	tg[3]:Merge(tg[1])
+	if rg[3]:GetCount()>0 then 
+	   Duel.Hint(HINT_CARD,0,10111009)
+	   rct=Duel.Remove(rg[3],POS_FACEUP,REASON_EFFECT)
+	   dg:Sub(rg[3])
+	end
+	if tg[3]:GetCount()>0 then 
+	   Duel.Hint(HINT_CARD,0,10111003)
+	   Duel.HintSelection(tgs)
+	   tct=Duel.SendtoHand(tg[3],nil,REASON_EFFECT)
+	   dg:Sub(tg[3])
+	end
+	if dg:GetCount()>0 then
+	   dct=Duel.Destroy(dg,REASON_EFFECT)
+	end
+	return rct+tct+dct,rct,tct,dct
+end
 -------------#########Utoland Quick Effect#####-----------------
 function rsv.UtolandSpecialOrPlaceBool(tp,rc)
 	local szone1,szone2=0,1
@@ -673,7 +791,40 @@ function rsv.conmp(e)
 	return ph==PHASE_MAIN1 or ph==PHASE_MAIN2
 end
 -------------#########RSV Special Edition#####-----------------
-
+--other link material bug repair
+function Auxiliary.LCheckOtherMaterial(c,mg,lc)
+	local le={c:IsHasEffect(EFFECT_EXTRA_LINK_MATERIAL)}
+	if #le==0 then return true end
+	for _,te in pairs(le) do
+		local f=te:GetValue()
+		if not f or f(te,lc,mg) then return true end
+	end
+	return false
+end
+--get excatly sequence
+function rsv.GetExcatlySequence(c,tp)
+	local seq=aux.MZoneSequence(c:GetSequence())
+	if c:IsControler(1-tp) then
+	   seq=4-seq
+	end
+	return seq
+end
+--get excatly colomn zone
+function rsv.GetExcatlyColumnZone(seq)
+	local zone={}
+	for i=0,1 do
+		zone[i]={}
+		if i==1 then seq=seq+16 end
+		zone[i][1]=seq^2 
+		zone[i][2]=(seq^2)*0x100
+		zone[i][3]=zone[i][1]+zone[i][2]
+	end
+	zone[3]={}
+	zone[3][1]=zone[1][1]+zone[2][1]
+	zone[3][2]=zone[1][2]+zone[2][2]
+	zone[3][3]=zone[1][3]+zone[2][3]
+	return zone
+end
 -------------------E-----N-----D--------------------------
 end
 ------------########################-----------------

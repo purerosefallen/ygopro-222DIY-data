@@ -4,15 +4,6 @@ local cm=_G["c"..m]
 function c47510025.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)
-    --splimit
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_FIELD)
-    e1:SetRange(LOCATION_PZONE)
-    e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-    e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
-    e1:SetTargetRange(1,0)
-    e1:SetTarget(c47510025.psplimit)
-    c:RegisterEffect(e1) 
     --tohand
     local e2=Effect.CreateEffect(c)
     e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -20,7 +11,6 @@ function c47510025.initial_effect(c)
     e2:SetCode(EVENT_FREE_CHAIN)
     e2:SetRange(LOCATION_PZONE)
     e2:SetCountLimit(1,47510025)
-    e2:SetCondition(c47510025.tkcon)
     e2:SetTarget(c47510025.tktg)
     e2:SetOperation(c47510025.tkop)
     c:RegisterEffect(e2) 
@@ -80,18 +70,6 @@ function c47510025.initial_effect(c)
     e8:SetTarget(c47510025.destg2)
     e8:SetOperation(c47510025.desop2)
     c:RegisterEffect(e8)
-end
-function c47510025.pefilter(c)
-    return c:IsRace(RACE_PYRO) or c:IsSetCard(0x5da) or c:IsAttribute(ATTRIBUTE_FIRE)
-end
-function c47510025.psplimit(e,c,tp,sumtp,sumpos)
-    return not c47510025.pefilter(c) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
-end
-function c47510025.cfilter(c)
-    return c:GetSequence()<5
-end
-function c47510025.tkcon(e,tp,eg,ep,ev,re,r,rp)
-    return not Duel.IsExistingMatchingCard(c47510025.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c47510025.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
     local atk=2000

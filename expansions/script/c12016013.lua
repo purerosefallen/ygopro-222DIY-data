@@ -1,6 +1,6 @@
 --炫灵姬 我卡手了
 function c12016013.initial_effect(c)
-	c:SetSPSummonOnce(12016013)
+	c:SetSPSummonOnce(12016013,1156018)
 	--spirit return
 	aux.EnableSpiritReturn(c,EVENT_SPSUMMON_SUCCESS)
 	--link summon

@@ -41,7 +41,7 @@ function c12011005.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c12011005.thfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsSetCard(0xfb5) and c:IsAbleToHand()
+	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x1fbe) and c:IsAbleToHand()
 end
 function c12011005.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c12011005.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -77,7 +77,7 @@ function c12011005.spsop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c12011005.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,e:GetHandler(),0xfb5)
+	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,e:GetHandler(),0x1fbe)
 end
 function c12011005.efcon(e,tp,eg,ep,ev,re,r,rp)
 	return ( r==REASON_LINK or r==REASON_SYNCHRO or r==REASON_XYZ ) and not re:GetHandler():IsType(TYPE_EFFECT)

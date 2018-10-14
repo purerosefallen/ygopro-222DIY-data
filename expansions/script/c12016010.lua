@@ -1,6 +1,6 @@
 --炫灵姬 A
 function c12016010.initial_effect(c)
-	c:SetSPSummonOnce(12016010)
+	c:SetSPSummonOnce(12016010,1156018)
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,c12016010.matfilter,1,1)
 	--search

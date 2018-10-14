@@ -32,14 +32,14 @@ function c4212303.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c4212303.cdfilter(c)
-	return c:IsSetCard(0x2a5) and c:IsDiscardable()
+	return c:IsSetCard(0xa25) and c:IsDiscardable()
 end
 function c4212303.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c4212303.cdfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.DiscardHand(tp,c4212303.cdfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function c4212303.filter(c,e,tp)
-	return c:IsSetCard(0x2a5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xa25) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c4212303.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

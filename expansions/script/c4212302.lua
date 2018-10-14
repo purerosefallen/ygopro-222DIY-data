@@ -35,7 +35,7 @@ function c4212302.mfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL)
 end
 function c4212302.tffilter(c,tp)
-	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x2a5) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
+	return c:IsType(TYPE_SPELL) and c:IsSetCard(0xa25) and not c:IsForbidden() and c:CheckUniqueOnField(tp)
 end
 function c4212302.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerCanDiscardDeck(tp,2) then
@@ -57,7 +57,7 @@ function c4212302.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.CheckEvent(EVENT_CHAINING)
 end
 function c4212302.filter1(c)
-	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x2a5) and c:CheckActivateEffect(false,true,false)~=nil
+	return c:IsType(TYPE_SPELL) and c:IsSetCard(0xa25) and c:CheckActivateEffect(false,true,false)~=nil
 end
 function c4212302.target1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then
@@ -84,7 +84,7 @@ function c4212302.operation(e,tp,eg,ep,ev,re,r,rp)
 	if op then op(e,tp,eg,ep,ev,re,r,rp) end
 end
 function c4212302.filter2(c,e,tp,eg,ep,ev,re,r,rp)
-	if c:IsType(TYPE_SPELL) and c:IsSetCard(0x2a5) then
+	if c:IsType(TYPE_SPELL) and c:IsSetCard(0xa25) then
 		if c:CheckActivateEffect(false,true,false)~=nil then return true end
 		local te=c:GetActivateEffect()
 		if te:GetCode()~=EVENT_CHAINING then return false end

@@ -24,7 +24,7 @@ function c4210021.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c4210021.tgfilter(c,e,tp)
-	return c:IsSetCard(0x2af) and (c:IsAttribute(ATTRIBUTE_DARK) or  c:IsAttribute(ATTRIBUTE_LIGHT)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xa2f) and (c:IsAttribute(ATTRIBUTE_DARK) or  c:IsAttribute(ATTRIBUTE_LIGHT)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c4210021.filter(c)
 	return (c:IsAttribute(ATTRIBUTE_DARK) or c:IsAttribute(ATTRIBUTE_LIGHT)) and c:IsType(TYPE_MONSTER)

@@ -12,14 +12,14 @@ function c4210027.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c4210027.tfilter(c,att,e,tp)
-	return c:IsSetCard(0x2af) and not c:IsAttribute(att) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(0xa2f) and not c:IsAttribute(att) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function c4210027.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x2af)
+	return c:IsFaceup() and c:IsSetCard(0xa2f)
 		and Duel.IsExistingMatchingCard(c4210027.tfilter,tp,LOCATION_DECK,0,1,nil,c:GetAttribute(),e,tp)
 end
 function c4210027.chkfilter(c,att)
-	return c:IsFaceup() and c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) and not c:IsAttribute(att)
+	return c:IsFaceup() and c:IsSetCard(0xa2f) and c:IsType(TYPE_MONSTER) and not c:IsAttribute(att)
 end
 function c4210027.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c4210027.chkfilter(chkc,e:GetLabel()) end

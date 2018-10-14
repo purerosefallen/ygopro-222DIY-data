@@ -62,7 +62,7 @@ function c4210002.spfilter2(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_WIND) and Duel.CheckReleaseGroup(tp,Card.IsAttribute,1,nil,ATTRIBUTE_WIND)
 end
 function c4210002.spfilter3(c,attr)
-	return c:IsFaceup() and c:IsSetCard(0x2af) and not(c:IsAttribute(attr)) 
+	return c:IsFaceup() and c:IsSetCard(0xa2f) and not(c:IsAttribute(attr)) 
 end
 function c4210002.spcon(e,c)
 	if c==nil then return true end
@@ -88,7 +88,7 @@ function c4210002.smcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(e:GetHandler(),nil,0,REASON_COST)
 end
 function c4210002.smfilter1(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x2af) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return c:IsFaceup() and c:IsSetCard(0xa2f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 		and Duel.IsExistingTarget(c4210002.smfilter2,tp,LOCATION_REMOVED,0,1,c,e,tp)
 end
 function c4210002.smfilter2(c,e,tp)

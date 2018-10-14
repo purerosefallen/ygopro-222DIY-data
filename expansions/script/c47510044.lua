@@ -157,8 +157,8 @@ function c47510044.opd1(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 function c47510044.chcost(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x5db,5,REASON_COST) end
-    e:GetHandler():RemoveCounter(tp,0x5db,5,REASON_COST)
+    if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x5db,2,REASON_COST) end
+    e:GetHandler():RemoveCounter(tp,0x5db,2,REASON_COST)
 end
 function c47510044.changetg(e,tp,eg,ep,ev,re,r,rp,chk)
     local c=e:GetHandler()

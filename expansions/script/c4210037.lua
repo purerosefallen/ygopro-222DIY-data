@@ -5,7 +5,7 @@ function c4210037.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
 	aux.AddFusionProcFun2(c,
-		function(c)return c:IsFusionSetCard(0x2af) and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_LINK) end,
+		function(c)return c:IsFusionSetCard(0xa2f) and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_LINK) end,
 		function(c)return c:IsType(TYPE_MONSTER) and (c:IsType(TYPE_PENDULUM) or c:IsType(TYPE_LINK)) end,false)
 	--spsummon
 	local ep=Effect.CreateEffect(c)
@@ -54,11 +54,11 @@ function c4210037.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
 function c4210037.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsSetCard,2,nil,0x2af)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsSetCard,2,nil,0xa2f)
 		 and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND,0,1,nil,4210026) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
 	Duel.DiscardHand(tp,Card.IsCode,1,1,REASON_COST+REASON_DISCARD,nil,4210026)
-	local g=Duel.SelectReleaseGroup(tp,Card.IsSetCard,2,2,nil,0x2af)	
+	local g=Duel.SelectReleaseGroup(tp,Card.IsSetCard,2,2,nil,0xa2f)	
 	Duel.Release(g,REASON_COST)
 end
 function c4210037.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -69,7 +69,7 @@ function c4210037.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)
 end
 function c4210037.setfilter(c)
-    return c:IsSetCard(0x2af) and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP)) and c:IsSSetable()
+    return c:IsSetCard(0xa2f) and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP)) and c:IsSSetable()
 end
 function c4210037.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
@@ -87,7 +87,7 @@ function c4210037.setop(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 function c4210037.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsSetCard(0xa2f) and c:IsType(TYPE_MONSTER)
 end
 function c4210037.damcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c4210037.filter,1,nil)
@@ -99,7 +99,7 @@ function c4210037.damop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c4210037.tgfilter(c,e,tp)
-	return c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xa2f) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c4210037.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c4210037.tgfilter(chkc,e,tp) end

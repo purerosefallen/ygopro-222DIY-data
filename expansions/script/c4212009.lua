@@ -22,16 +22,16 @@ function c4212009.initial_effect(c)
     c:RegisterEffect(e2)
 end
 function c4212009.spfilter(c,e,tp)
-    return c:IsSetCard(0x2aa) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+    return c:IsSetCard(0xa2a) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c4212009.filtergrave(c)
-    return c:IsSetCard(0x2aa) and c:IsType(TYPE_MONSTER)
+    return c:IsSetCard(0xa2a) and c:IsType(TYPE_MONSTER)
 end
 function c4212009.posfilter(c)
     return c:IsFaceup() and c:IsCanTurnSet()
 end
 function c4212009.thcfilter(c)
-    return c:IsSetCard(0x2aa) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+    return c:IsSetCard(0xa2a) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end
 function c4212009.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

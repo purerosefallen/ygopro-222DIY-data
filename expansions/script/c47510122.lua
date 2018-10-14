@@ -47,7 +47,7 @@ function c47510122.filter(c,tp)
         and Duel.IsExistingMatchingCard(c47510122.thfilter,tp,LOCATION_DECK,0,1,c)
 end
 function c47510122.spfilter(c,e,tp)
-    return c:IsType(TYPE_FLIP) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+    return c:IsType(TYPE_FLIP) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function c47510122.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -1,6 +1,7 @@
 --泛之调停者
 local m=14010014
 local cm=_G["c"..m]
+cm.named_with_Engraver=1
 function cm.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,cm.matfilter,3,3,cm.lcheck)

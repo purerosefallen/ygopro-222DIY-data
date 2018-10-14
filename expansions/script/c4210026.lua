@@ -23,11 +23,11 @@ function c4210026.initial_effect(c)
     c:RegisterEffect(e2)
 end
 function c4210026.tgfilter(c,e,tp)
-	return c:IsSetCard(0x2af) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xa2f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c4210026.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsSetCard,2,nil,0x2af) end
-	local g=Duel.SelectReleaseGroup(tp,Card.IsSetCard,2,2,nil,0x2af)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsSetCard,2,nil,0xa2f) end
+	local g=Duel.SelectReleaseGroup(tp,Card.IsSetCard,2,2,nil,0xa2f)
 	for tc in aux.Next(g) do
 		if tc:GetFlagEffect(4210010)~=0 then c4210026.count = c4210026.count +1 end
 	end
@@ -73,7 +73,7 @@ function c4210026.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c4210026.filter(c)
-	return c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0xa2f) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 end
 function c4210026.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c4210026.filter,tp,LOCATION_GRAVE,0,1,nil) end

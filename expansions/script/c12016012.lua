@@ -1,6 +1,6 @@
 --炫灵姬 愿健康常伴
 function c12016012.initial_effect(c)
-	c:SetSPSummonOnce(12016012)
+	c:SetSPSummonOnce(12016012,1156018)
 	--link summon
 	aux.AddLinkProcedure(c,nil,2,4,c12016012.lcheck)
 	c:EnableReviveLimit()
@@ -84,8 +84,8 @@ function c12016012.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c12016012.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
+	if g:GetCount()>0 then Duel.SendtoHand(g,nil,REASON_EFFECT) 
+	Duel.ConfirmCards(1-tp,g)
 	end
 end
 function c12016012.retreg(e,tp,eg,ep,ev,re,r,rp)

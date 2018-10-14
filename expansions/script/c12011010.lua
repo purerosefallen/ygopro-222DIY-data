@@ -51,20 +51,20 @@ function c12011010.spsop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c12011010.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,e:GetHandler(),0xfb5)
+	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,e:GetHandler(),0x3fbe)
 end
 function c12011010.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetDecktopGroup(tp,1)
 	if chk==0 then return g:FilterCount(Card.IsAbleToGraveAsCost,nil)==1 end
-	if g:GetFirst():IsSetCard(0xfb5) then e:SetLabel(1) else e:SetLabel(0) end
+	if g:GetFirst():IsSetCard(0x3fbe) then e:SetLabel(1) else e:SetLabel(0) end
 	Duel.DisableShuffleCheck()
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function c12011010.thfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xfb5)
+	return c:IsFaceup() and c:IsSetCard(0x3fbe)
 end
 function c12011010.thspfilter(c,e,tp)
-	return c:IsSetCard(0xfb5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x3fbe) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c12011010.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(tp) and c12011010.thfilter(chkc) end

@@ -26,7 +26,7 @@ function c4210030.initial_effect(c)
 	c4210030.tg = 0
 end
 function c4210030.cfilter(c,ft,tp)
-	return ft>0 or (c:IsControler(tp) and c:GetSequence()<5) and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2af)
+	return ft>0 or (c:IsControler(tp) and c:GetSequence()<5) and c:IsType(TYPE_MONSTER) and c:IsSetCard(0xa2f)
 end
 function c4210030.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -37,7 +37,7 @@ function c4210030.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c4210030.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c4210030.filter,tp,LOCATION_HAND,0,1,nil)
-		and Duel.IsExistingMatchingCard(function(c) return c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end,tp,LOCATION_HAND,0,1,nil) end
+		and Duel.IsExistingMatchingCard(function(c) return c:IsSetCard(0xa2f) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) end,tp,LOCATION_HAND,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
 	if c4210030.tg == 1 then
 		Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_REMOVED)
@@ -66,7 +66,7 @@ function c4210030.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c4210030.spcfilter(c,tp,rp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsPreviousSetCard(0x2af)
+	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsPreviousSetCard(0xa2f)
 end
 function c4210030.otcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c4210030.spcfilter,1,nil,tp,rp)

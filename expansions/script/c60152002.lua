@@ -85,7 +85,7 @@ function c60152002.filter(c)
 end
 function c60152002.activate(e,tp,eg,ep,ev,re,r,rp)
     local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-    local ct=4
+    local ct=2
     if ft>ct then ft=ct end
     if ft<=0 then return end
     if not Duel.IsPlayerCanSpecialSummonMonster(tp,60152099,0,0x4011,-2,0,4,RACE_PYRO,ATTRIBUTE_FIRE) then return end
@@ -101,13 +101,6 @@ function c60152002.activate(e,tp,eg,ep,ev,re,r,rp)
         e1:SetRange(LOCATION_MZONE)
         e1:SetValue(atk)
         token:RegisterEffect(e1,true)
-        local e5=Effect.CreateEffect(e:GetHandler())
-        e5:SetType(EFFECT_TYPE_SINGLE)
-        e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE)
-        e5:SetRange(LOCATION_MZONE)
-        e5:SetCode(EFFECT_UNRELEASABLE_SUM)
-        e5:SetValue(function(e,c) return not c:IsSetCard(0x6b25) end)
-        token:RegisterEffect(e5,true)
         ft=ft-1
         if ft<=0 or not Duel.SelectYesNo(tp,aux.Stringid(60152002,1)) then ctn=false end
     end

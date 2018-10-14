@@ -43,7 +43,7 @@ function c12011025.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,3)
 end
 function c12011025.cfilter(c)
-	return c:IsSetCard(0xfb5) and c:IsLocation(LOCATION_GRAVE)
+	return c:IsSetCard(0x3fbe) and c:IsLocation(LOCATION_GRAVE)
 end
 function c12011025.drop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)

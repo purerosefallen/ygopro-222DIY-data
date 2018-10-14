@@ -7,6 +7,7 @@ function cm.initial_effect(c)
     e1:SetType(EFFECT_TYPE_ACTIVATE)
     e1:SetCode(EVENT_FREE_CHAIN)
     e1:SetCountLimit(1,60159927+EFFECT_COUNT_CODE_OATH)
+    e1:SetCondition(c60159927.condition)
     c:RegisterEffect(e1)
     --
     local e2=Effect.CreateEffect(c)

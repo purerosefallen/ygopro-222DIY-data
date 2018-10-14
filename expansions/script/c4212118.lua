@@ -28,7 +28,7 @@ function c4212118.hspcon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c4212118.hspfilter(c,e,tp)
-    return c:IsSetCard(0x2aa) and c:IsType(TYPE_MONSTER) and not c:IsCode(4212018) and c:IsAbleToHand()
+    return c:IsSetCard(0xa2a) and c:IsType(TYPE_MONSTER) and not c:IsCode(4212018) and c:IsAbleToHand()
 end
 function c4212118.hsptg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.IsExistingMatchingCard(c4212118.hspfilter,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,nil,e,tp) end

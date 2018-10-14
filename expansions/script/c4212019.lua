@@ -26,13 +26,13 @@ function c4212019.initial_effect(c)
     c:RegisterEffect(e2)
 end
 function c4212019.filtergrave(c)
-    return c:IsSetCard(0x2aa) and c:IsType(TYPE_MONSTER)
+    return c:IsSetCard(0xa2a) and c:IsType(TYPE_MONSTER)
 end
 function c4212019.filter(c)
     return c:IsType(TYPE_MONSTER)
 end
 function c4212019.costfilter(c,tp)
-    return c:IsSetCard(0x2aa) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+    return c:IsSetCard(0xa2a) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end
 function c4212019.spcon(e,tp,eg,ep,ev,re,r,rp)
     return not e:GetHandler():IsReason(REASON_DRAW)
@@ -91,7 +91,7 @@ function c4212019.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c4212019.spcon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetHandler():IsReason(REASON_COST) and re:IsHasType(0x7f0)
-        and re:GetHandler():IsSetCard(0x2aa)
+        and re:GetHandler():IsSetCard(0xa2a)
 end
 function c4212019.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 

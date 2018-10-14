@@ -51,7 +51,7 @@ function c4210014.initial_effect(c)
 	c:RegisterEffect(e5)	
 end
 function c4210014.spcfilter(c,e,tp)
-	return c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) and c:GetSummonPlayer()==tp
+	return c:IsSetCard(0xa2f) and c:IsType(TYPE_MONSTER) and c:GetSummonPlayer()==tp
 end
 function c4210014.ottg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(c4210014.spcfilter,1,nil,e,tp) end
@@ -83,7 +83,7 @@ function c4210014.otop(e,tp,eg,ep,ev,re,r,rp)
 	end	
 end
 function c4210014.tgfilter(c,e,tp)
-	return c:IsSetCard(0x2af) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xa2f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c4210014.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_HAND) and chkc:IsControler(tp) and c4210014.tgfilter(chkc,e,tp) end
@@ -102,7 +102,7 @@ function c4210014.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c4210014.splimit(e,se,sp,st)
-	return se:GetHandler():IsSetCard(0x2af)
+	return se:GetHandler():IsSetCard(0xa2f)
 end
 function c4210014.spfilter(c,tp)
 	return c:IsFaceup() and c:GetFlagEffect(4210010)~=0 and c:IsControler(tp) and c:IsReleasable()

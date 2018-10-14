@@ -3,7 +3,7 @@ local m=47598773
 local cm=_G["c"..m]
 function c47598773.initial_effect(c)
     --xyz summon
-    aux.AddXyzProcedure(c,nil,8,2,c47598773.ovfilter,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK),2,c47598773.xyzop)
+    aux.AddXyzProcedure(c,nil,8,2)
     c:EnableReviveLimit()
     --maintain
     local e5=Effect.CreateEffect(c)
@@ -46,19 +46,15 @@ function c47598773.initial_effect(c)
     --indes
     local e6=Effect.CreateEffect(c)
     e6:SetType(EFFECT_TYPE_SINGLE)
-    e6:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+    e6:SetCode(EFFECT_IMMUNE_EFFECT)
     e6:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
     e6:SetRange(LOCATION_MZONE)
     e6:SetCondition(c47598773.indcon)
-    e6:SetValue(1)
+    e6:SetValue(c47598773.efilter)
     c:RegisterEffect(e6)
 end
-function c47598773.ovfilter(c)
-    return c:IsFaceup() and c:IsSetCard(0x5d3) and c:IsType(TYPE_SYNCHRO)
-end
-function c47598773.xyzop(e,tp,chk)
-    if chk==0 then return Duel.GetFlagEffect(tp,47598773)==0 end
-    Duel.RegisterFlagEffect(tp,47598773,RESET_PHASE+PHASE_END,0,1)
+function c47598773.efilter(e,te)
+    return te:GetOwner()~=e:GetOwner()
 end
 function c47598773.indcon(e)
     return e:GetHandler():GetOverlayCount()>0

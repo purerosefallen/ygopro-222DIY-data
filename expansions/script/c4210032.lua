@@ -135,7 +135,7 @@ function c4210032.operation(e,tp,eg,ep,ev,re,r,rp)
 	end	
 end
 function c4210032.cdfilter(c,nekopara) 
-	return c:IsSetCard(0x2af) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
+	return c:IsSetCard(0xa2f) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c4210032.cdcfilter(c,nekopara) 
 	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()

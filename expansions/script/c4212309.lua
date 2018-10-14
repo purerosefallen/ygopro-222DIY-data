@@ -6,9 +6,9 @@ function c4212309.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetRange(LOCATION_FZONE)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x2a5))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xa25))
 	e1:SetTargetRange(LOCATION_MZONE,0)
-	e1:SetValue(function(e,c) return Duel.GetMatchingGroupCount(function(c,e) return c:IsSetCard(0x2a5) and c:IsFaceup() and c:IsType(TYPE_SPELL) end,c:GetControler(),LOCATION_SZONE,0,nil)*300 end)
+	e1:SetValue(function(e,c) return Duel.GetMatchingGroupCount(function(c,e) return c:IsSetCard(0xa25) and c:IsFaceup() and c:IsType(TYPE_SPELL) end,c:GetControler(),LOCATION_SZONE,0,nil)*300 end)
 	c:RegisterEffect(e1)
 	--Activate
 	local e2=Effect.CreateEffect(c)
@@ -42,7 +42,7 @@ function c4212309.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c4212309.exfilter(c)
-	return c:IsAbleToHand() and c:IsSetCard(0x2a5)
+	return c:IsAbleToHand() and c:IsSetCard(0xa25)
 end
 function c4212309.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,3)	end

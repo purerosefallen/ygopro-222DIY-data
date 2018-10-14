@@ -139,7 +139,7 @@ function c4210031.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c4210031.cdfilter(c) 
-	return c:IsSetCard(0x2af) and c:IsFaceup() 
+	return c:IsSetCard(0xa2f) and c:IsFaceup() 
 end
 function c4210031.rttg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c4210031.cdfilter,tp,LOCATION_REMOVED,0,1,nil) end

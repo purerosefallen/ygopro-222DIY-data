@@ -24,7 +24,7 @@ function c4210029.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c4210029.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x2af)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0xa2f)
 end
 function c4210029.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c4210029.filter,tp,LOCATION_DECK,0,1,nil)
@@ -40,7 +40,7 @@ function c4210029.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local gc=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_HAND,0,1,1,nil)		
 		if Duel.SendtoGrave(gc,REASON_EFFECT)~=0 and Duel.IsExistingMatchingCard(Card.IsReleasable,tp,LOCATION_MZONE,0,1,nil)
-			and gc:FilterCount(function(c)return c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) end,nil,tp) then
+			and gc:FilterCount(function(c)return c:IsSetCard(0xa2f) and c:IsType(TYPE_MONSTER) end,nil,tp) then
 			if Duel.SelectEffectYesNo(tp,e:GetHandler(),500) then
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
 				local rel = Duel.SelectMatchingCard(tp,Card.IsReleasable,tp,LOCATION_MZONE,0,1,1,nil)
@@ -52,7 +52,7 @@ function c4210029.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c4210029.spcfilter(c,tp,rp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsPreviousSetCard(0x2af)
+	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsPreviousSetCard(0xa2f)
 end
 function c4210029.otcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c4210029.spcfilter,1,nil,tp,rp)

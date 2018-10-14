@@ -31,19 +31,19 @@ function c4210104.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.DiscardDeck(tp,1,REASON_COST)
 end
 function c4210104.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingTarget(function(c)return c:IsSetCard(0x2ac) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() end,tp,LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(function(c)return c:IsSetCard(0xa2c) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() end,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 end
 function c4210104.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,function(c)return c:IsSetCard(0x2ac) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() end,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,function(c)return c:IsSetCard(0xa2c) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() end,tp,LOCATION_GRAVE,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
 function c4210104.spfilter(c,e,tp)
-	return c:IsSetCard(0x2ac) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xa2c) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c4210104.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

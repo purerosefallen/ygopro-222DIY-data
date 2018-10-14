@@ -45,7 +45,7 @@ function c4212306.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c4212306.cdfilter(c,e,tp) 
-	return c:IsSetCard(0x2a5) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xa25) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c4212306.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c4212306.cdfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end

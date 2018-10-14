@@ -1,7 +1,7 @@
 --猫耳天堂-La Soleil
 function c4210025.initial_effect(c)
-	c:EnableCounterPermit(0x2af)
-	c:SetCounterLimit(0x2af,9)
+	c:EnableCounterPermit(0xa2f)
+	c:SetCounterLimit(0xa2f,9)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -13,8 +13,8 @@ function c4210025.initial_effect(c)
 	atk:SetCode(EFFECT_UPDATE_ATTACK)
 	atk:SetRange(LOCATION_FZONE)
 	atk:SetTargetRange(LOCATION_MZONE,0)
-	atk:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x2af))
-	atk:SetValue(function(e,c) return Duel.GetMatchingGroupCount(function(c,e) return c:IsSetCard(0x2af)and c:IsType(TYPE_MONSTER) end,c:GetControler(),LOCATION_REMOVED,0,nil)*150 end)
+	atk:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xa2f))
+	atk:SetValue(function(e,c) return Duel.GetMatchingGroupCount(function(c,e) return c:IsSetCard(0xa2f)and c:IsType(TYPE_MONSTER) end,c:GetControler(),LOCATION_REMOVED,0,nil)*150 end)
 	c:RegisterEffect(atk)
 	--def
 	local def=Effect.CreateEffect(c)
@@ -22,8 +22,8 @@ function c4210025.initial_effect(c)
 	def:SetCode(EFFECT_UPDATE_DEFENSE)
 	def:SetRange(LOCATION_FZONE)
 	def:SetTargetRange(LOCATION_MZONE,0)
-	def:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x2af))
-	def:SetValue(function(e,c) return Duel.GetMatchingGroupCount(function(c,e) return c:IsSetCard(0x2af)and c:IsType(TYPE_MONSTER) end,c:GetControler(),LOCATION_REMOVED,0,nil)*150 end)
+	def:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xa2f))
+	def:SetValue(function(e,c) return Duel.GetMatchingGroupCount(function(c,e) return c:IsSetCard(0xa2f)and c:IsType(TYPE_MONSTER) end,c:GetControler(),LOCATION_REMOVED,0,nil)*150 end)
 	c:RegisterEffect(def)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -33,7 +33,7 @@ function c4210025.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetTargetRange(LOCATION_MZONE,0)
-	e4:SetTarget(function(e,c) return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2af) end)
+	e4:SetTarget(function(e,c) return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xa2f) end)
 	e4:SetLabelObject(e3)
 	c:RegisterEffect(e4)
 	--add counter
@@ -59,21 +59,21 @@ end
 function c4210025.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=eg:FilterCount(c4210025.ctfilter,nil)
 	if ct>0 then
-		e:GetHandler():AddCounter(0x2af,ct)
+		e:GetHandler():AddCounter(0xa2f,ct)
 		Duel.Recover(tp,300*ct,REASON_EFFECT) 
 	end
 end
 function c4210025.repfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x2af) and c:IsControler(tp) 
+	return c:IsFaceup() and c:IsSetCard(0xa2f) and c:IsControler(tp) 
 		and c:IsReason(REASON_EFFECT+REASON_BATTLE) and not c:IsReason(REASON_REPLACE)
 end
 function c4210025.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():GetCounter(0x2af)>=3 and eg:IsExists(c4210025.repfilter,1,nil,tp) end
+	if chk==0 then return e:GetHandler():GetCounter(0xa2f)>=3 and eg:IsExists(c4210025.repfilter,1,nil,tp) end
 	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
 function c4210025.repval(e,c)--c is not exgit
 	return c4210025.repfilter(c,e:GetHandlerPlayer()) --and (bit.band(r,REASON_BATTLE)~=0 or bit.band(r,REASON_EFFECT)~=0)
 end
 function c4210025.repop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RemoveCounter(ep,0x2af,3,REASON_EFFECT)
+	e:GetHandler():RemoveCounter(ep,0xa2f,3,REASON_EFFECT)
 end

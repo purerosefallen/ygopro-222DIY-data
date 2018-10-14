@@ -44,6 +44,9 @@ end
 function c12016000.con(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
 end
+function c12016000.cfilter5(c)
+	return c:GetMutualLinkedGroupCount()>0
+end
 function c12016000.op(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -52,6 +55,11 @@ function c12016000.op(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(c12016000.actfilter)
 	e1:SetReset(RESET_PHASE+PHASE_END+PHASE_STANDBY,1)
 	Duel.RegisterEffect(e1,tp)
+	Duel.BreakEffect()
+	 if Duel.IsExistingMatchingCard(c12016000.cfilter5,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(12016000,3)) then
+	   local sg=Duel.GetMatchingGroup(c12016000.cfilter5,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
+		   Duel.SendtoDeck(sg,nil,REASON_EFFECT)
+	 end   
 end
 function c12016000.actfilter(e,c)
 	return c:IsLevelBelow(4) and c:IsType(TYPE_MONSTER)
@@ -87,11 +95,14 @@ function c12016000.desop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(RESET_TURN_SET)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
-		if Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL)>=3 and tc:IsControlerCanBeChanged() and Duel.SelectYesNo(tp,aux.Stringid(12016000,1)) then
-			Duel.BreakEffect()
-			Duel.Destroy(tc,REASON_EFFECT)
-		end
+	 if Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_GRAVE,0,nil,TYPE_SPELL)>=3 and Duel.IsExistingMatchingCard(c12016000.filter2,tp,0,LOCATION_MZONE,1,nil,tp) and Duel.SelectYesNo(tp,aux.Stringid(12016000,1)) then
+		local g=Duel.GetMatchingGroup(c12016000.filter2,tp,0,LOCATION_MZONE,nil,tp)
+		Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+	 end
    end
+end
+function c12016000.filter2(c)
+	return c:GetSequence()>=5 and c:IsControler(1-tp) and c:IsAbleToDeck()
 end
 function c12016000.retreg(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

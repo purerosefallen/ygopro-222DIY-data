@@ -38,18 +38,22 @@ function baka.check_set(c,setcode,v,f,...)
     end
     return false
 end
+--fool
 function baka.check_set_FragileArticles(c)
     return baka.check_set(c,"FragileArticles")
 end
 function baka.check_set_FragileLyric(c)
     return baka.check_set(c,"FragileLyric")
 end
+--lover
 function baka.check_set_AzayakaSin(c)
     return baka.check_set(c,"AzakayaSin")
 end
+--magician
 function baka.check_set_MechanicalCrafter(c)
     return baka.check_set(c,"MechanicalCrafter")
 end
+--judgement
 function baka.check_set_ApocryphaSaver(c)
     return baka.check_set(c,"ApocryphaSaver")
 end

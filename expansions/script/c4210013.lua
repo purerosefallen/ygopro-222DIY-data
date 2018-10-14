@@ -44,7 +44,7 @@ function c4210013.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c4210013.spcfilter(c,e,tp)
-	return c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) and c:GetSummonPlayer()==tp
+	return c:IsSetCard(0xa2f) and c:IsType(TYPE_MONSTER) and c:GetSummonPlayer()==tp
 end
 function c4210013.ottg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if c==nil then return true end
@@ -81,7 +81,7 @@ function c4210013.otop(e,tp,eg,ep,ev,re,r,rp)
 	end	
 end
 function c4210013.tgfilter(c,e,tp)
-	return c:IsSetCard(0x2af) and c:IsAbleToHand()
+	return c:IsSetCard(0xa2f) and c:IsAbleToHand()
 end
 function c4210013.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c4210013.tgfilter,tp,LOCATION_REMOVED,0,1,nil) end
@@ -96,7 +96,7 @@ function c4210013.tgop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c4210013.splimit(e,se,sp,st)
-	return se:GetHandler():IsSetCard(0x2af)
+	return se:GetHandler():IsSetCard(0xa2f)
 end
 function c4210013.spfilter(c,tp)
 	return c:IsFaceup() and c:GetFlagEffect(4210010)~=0 and c:IsControler(tp) and c:IsReleasable()
@@ -139,7 +139,7 @@ function c4210013.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	c:RegisterFlagEffect(4210013,RESET_EVENT+0xcff0000,0,0)
 end
 function c4210013.thfilter(c)
-	return c:IsSetCard(0x2af) and c:IsAbleToHand()
+	return c:IsSetCard(0xa2f) and c:IsAbleToHand()
 end
 function c4210013.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end

@@ -28,7 +28,7 @@ function c4212117.hspcon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c4212117.hspfilter(c,e,tp)
-    return c:IsSetCard(0x2aa) and c:IsType(TYPE_MONSTER) and not c:IsCode(4212017) 
+    return c:IsSetCard(0xa2a) and c:IsType(TYPE_MONSTER) and not c:IsCode(4212017) 
         and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP)
 end
 function c4212117.hsptg(e,tp,eg,ep,ev,re,r,rp,chk)

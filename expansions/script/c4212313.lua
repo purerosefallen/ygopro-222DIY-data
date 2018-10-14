@@ -38,17 +38,17 @@ function c4212313.initial_effect(c)
 	c:RegisterEffect(e3)	
 end
 function c4212313.cdfilter(c)
-	return c:IsSetCard(0x2a5) and c:IsDiscardable()
+	return c:IsSetCard(0xa25) and c:IsDiscardable()
 end
 function c4212313.tffilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x2a5) and c:IsAbleToHand()
+	return c:IsType(TYPE_SPELL) and c:IsSetCard(0xa25) and c:IsAbleToHand()
 end
 function c4212313.tfcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c4212303.cdfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.DiscardHand(tp,c4212303.cdfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function c4212313.spcfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x2a5)
+	return c:IsType(TYPE_SPELL) and c:IsSetCard(0xa25)
 end
 function c4212313.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c4212313.tffilter,tp,LOCATION_GRAVE,0,1,nil) end

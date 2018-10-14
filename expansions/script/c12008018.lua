@@ -83,7 +83,7 @@ function c12008018.desop(e,tp,eg,ep,ev,re,r,rp)
 		local ct=Duel.Destroy(g,REASON_EFFECT)
 		if ct>0 then
 			Duel.Recover(tp,1000,REASON_EFFECT)
-			local fg=Duel.GetMatchingGroup(aux.NecroValleyFilter(c12008018.ffilter),tp,LOCATION_DECK+LOCATION_GRAVE,0,nil)
+			local fg=Duel.GetMatchingGroup(aux.NecroValleyFilter(c12008018.ffilter),tp,LOCATION_GRAVE,LOCATION_GRAVE,nil)
 			if fg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(12008018,2)) then
 				Duel.BreakEffect()
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
@@ -98,18 +98,17 @@ function c12008018.thcon(e)
 	return e:GetHandler():GetSequence()<4
 end
 function c12008018.thfilter(c)
-	return c:IsSetCard(0x2fb3) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSetCard(0x1fb3) and c:IsType(TYPE_MONSTER) and c:IsFaceup()
 end
 function c12008018.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c12008018.thfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	if chk==0 then return Duel.IsExistingMatchingCard(c12008018.thfilter,tp,LOCATION_EXTRA,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_EXTRA)
 end
 function c12008018.tgop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c12008018.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,c12008018.thfilter,tp,LOCATION_EXTRA,0,1,1,nil)
 	if g:GetCount()>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
+		Duel.SendtoGrave(g,nil,REASON_EFFECT)
 	end
 end
 function c12008018.matfilter(c)

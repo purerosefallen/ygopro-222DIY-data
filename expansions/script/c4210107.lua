@@ -23,7 +23,7 @@ function c4210107.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c4210107.filter(c)
-	return c:IsSetCard(0x2ac) and c:IsType(TYPE_MONSTER) and not c:IsPublic() 
+	return c:IsSetCard(0xa2c) and c:IsType(TYPE_MONSTER) and not c:IsPublic() 
 end
 function c4210107.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp)
@@ -41,7 +41,7 @@ function c4210107.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_FIELD)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetTargetRange(LOCATION_MZONE,0)
-		e1:SetTarget(function(e,c)return c:IsSetCard(0x2ac)end)
+		e1:SetTarget(function(e,c)return c:IsSetCard(0xa2c)end)
 		e1:SetValue(300)
 		e1:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e1,tp)
@@ -52,7 +52,7 @@ function c4210107.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoHand(e:GetHandler(),nil,REASON_COST)
 end
 function c4210107.matfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0x2ac)
+	return c:IsFaceup() and c:IsType(TYPE_XYZ) and c:IsSetCard(0xa2c)
 end
 function c4210107.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c4210107.matfilter(chkc) end
@@ -62,7 +62,7 @@ function c4210107.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SelectTarget(tp,c4210107.matfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function c4210107.op(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.SelectMatchingCard(tp,function(c)return c:IsSetCard(0x2ac) and c:IsType(TYPE_MONSTER) end,tp,LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,function(c)return c:IsSetCard(0xa2c) and c:IsType(TYPE_MONSTER) end,tp,LOCATION_HAND,0,1,1,nil)
 	local tc=Duel.GetFirstTarget()
 	if g:GetCount()>0 and not tc:IsImmuneToEffect(e) then
 		Duel.Overlay(tc,g)

@@ -132,7 +132,7 @@ function c65071064.operation(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e9)
 end
 function c65071064.decon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetAttackTarget()~=nil
+	return Duel.GetAttacker()==e:GetHandler()
 end
 function c65071064.detg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

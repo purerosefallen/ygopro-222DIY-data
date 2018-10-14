@@ -26,16 +26,16 @@ function c4212018.initial_effect(c)
     c:RegisterEffect(e2)
 end
 function c4212018.filtergrave(c)
-    return c:IsSetCard(0x2aa) and c:IsType(TYPE_MONSTER)
+    return c:IsSetCard(0xa2a) and c:IsType(TYPE_MONSTER)
 end
 function c4212018.thfilter(c)
-    return c:IsSetCard(0x2aa) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+    return c:IsSetCard(0xa2a) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c4212018.costfilter(c,tp)
-    return c:IsSetCard(0x2aa) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+    return c:IsSetCard(0xa2a) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end
 function c4212018.spfilter(c,e,tp)
-    return c:IsSetCard(0x2aa) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+    return c:IsSetCard(0xa2a) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c4212018.spcon(e,tp,eg,ep,ev,re,r,rp)
     return not e:GetHandler():IsReason(REASON_DRAW)

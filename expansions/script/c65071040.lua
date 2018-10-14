@@ -27,9 +27,10 @@ function c65071040.atkfil(c,tp)
 	return c:IsControler(tp) and c:IsFaceup()
 end
 
-function c65071040.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
-	local g=Duel.SelectTarget(tp,c65071040.atkfil,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,tp)
+function c65071040.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c65071040.atkfil(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c65071040.atkfil,tp,LOCATION_MZONE,0,1,nil) end
+	local g=Duel.SelectTarget(tp,c65071040.atkfil,tp,LOCATION_MZONE,0,1,1,nil,tp)
 end
 function c65071040.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()

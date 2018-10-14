@@ -20,7 +20,7 @@ function c4210102.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x2ac))
+	e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xa2c))
 	e2:SetTargetRange(LOCATION_MZONE,0)
 	e2:SetValue(function(e,c) return math.floor(Duel.GetMatchingGroupCount(function(c,e) return c:IsType(TYPE_MONSTER) end,c:GetControler(),LOCATION_GRAVE,0,nil)/5)*300 end)
 	c:RegisterEffect(e2)
@@ -30,7 +30,7 @@ function c4210102.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c4210102.filter(c)
-	return c:IsSetCard(0x2ac) and c:IsAbleToDeck()
+	return c:IsSetCard(0xa2c) and c:IsAbleToDeck()
 end
 function c4210102.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c4210102.filter(chkc) end

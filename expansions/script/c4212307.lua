@@ -24,7 +24,7 @@ function c4212307.mfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL)
 end
 function c4212307.cfilter(c) 
-	return c:IsSetCard(0x2a5) and c:IsAbleToHand()
+	return c:IsSetCard(0xa25) and c:IsAbleToHand()
 end
 function c4212307.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c4212307.cfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -49,7 +49,7 @@ function c4212307.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c4212307.cdfilter(c) 
-	return c:IsSetCard(0x2a5) and c:IsAbleToGrave()
+	return c:IsSetCard(0xa25) and c:IsAbleToGrave()
 end
 function c4212307.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c4212307.cdfilter,tp,LOCATION_DECK,0,1,nil) end

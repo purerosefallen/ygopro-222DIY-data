@@ -71,7 +71,7 @@ function c65071108.discon(e,c)
 end
 
 function c65071108.imcon(e,c)
-	return e:GetHandler():GetCounter(0x10da)>=4 
+	return e:GetHandler():GetCounter(0x10da)>=2 
 end
 
 function c65071108.efilter(e,te)

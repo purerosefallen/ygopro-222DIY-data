@@ -39,7 +39,8 @@ Duel.RegisterFlagEffect(tp,m,RESET_PHASE+PHASE_END,0,1)
             local g=Duel.SelectReleaseGroup(tp,cm.relfilter,1,1,nil,tp)
             Duel.Release(g,REASON_COST) end)
         .e("SetTarget",function(e,tp,eg,ep,ev,re,r,rp,chk) 
-            if chk==0 then return iCount(0,tp,m,1) and Duel.IsExistingMatchingCard(cm.deckfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+            if chk==0 then return iCount(0,tp,m,2) and Duel.IsExistingMatchingCard(cm.deckfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+Duel.RegisterFlagEffect(tp,m,RESET_PHASE+PHASE_END,0,1)
 Duel.RegisterFlagEffect(tp,m,RESET_PHASE+PHASE_END,0,1)
             Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,LOCATION_DECK) end)
         .e("SetOperation",function(e,tp,eg,ep,ev,re,r,rp) 

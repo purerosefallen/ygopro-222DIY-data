@@ -29,7 +29,7 @@ function c4210109.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c4210109.filter(c)
-	return c:IsSetCard(0x2ac)
+	return c:IsSetCard(0xa2c)
 end
 function c4210109.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
@@ -43,7 +43,7 @@ function c4210109.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ShuffleHand(p)
 	Duel.BreakEffect()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(p,Card.IsSetCard,p,LOCATION_HAND,0,1,1,nil,0x2ac)
+	local g=Duel.SelectMatchingCard(p,Card.IsSetCard,p,LOCATION_HAND,0,1,1,nil,0xa2c)
 	local tg=g:GetFirst()
 	if tg then
 		if Duel.SendtoGrave(tg,REASON_EFFECT)==0 then

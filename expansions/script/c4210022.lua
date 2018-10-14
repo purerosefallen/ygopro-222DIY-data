@@ -44,8 +44,8 @@ end
 function c4210022.operation(e,tp,eg,ep,ev,re,r,rp)
 	local gs=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=gs:Filter(Card.IsRelateToEffect,nil,e)
-	if Duel.Remove(sg,POS_FACEUP,REASON_EFFECT) and sg:Filter(Card.IsSetCard,nil,0x2af):GetCount()>0 then
-		local g=Duel.SelectMatchingCard(tp,function(c)return c:IsSetCard(0x2af) and c:IsAbleToHand()end,tp,LOCATION_DECK,0,1,1,nil)
+	if Duel.Remove(sg,POS_FACEUP,REASON_EFFECT) and sg:Filter(Card.IsSetCard,nil,0xa2f):GetCount()>0 then
+		local g=Duel.SelectMatchingCard(tp,function(c)return c:IsSetCard(0xa2f) and c:IsAbleToHand()end,tp,LOCATION_DECK,0,1,1,nil)
 		if g:GetCount()>0 then
 			Duel.SendtoHand(g,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,g)

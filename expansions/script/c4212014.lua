@@ -24,16 +24,16 @@ function c4212014.initial_effect(c)
     c:RegisterEffect(e2)
 end
 function c4212014.filtergrave(c)
-    return c:IsSetCard(0x2aa) and c:IsType(TYPE_MONSTER)
+    return c:IsSetCard(0xa2a) and c:IsType(TYPE_MONSTER)
 end
 function c4212014.filterdeck(c)
-    return c:IsSetCard(0x2aa) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+    return c:IsSetCard(0xa2a) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c4212014.costfilter(c,tp)
-    return c:IsSetCard(0x2aa) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+    return c:IsSetCard(0xa2a) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end
 function c4212014.spfilter(c,e,tp)
-    return c:IsSetCard(0x2aa) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+    return c:IsSetCard(0xa2a) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c4212014.cost(e,tp,eg,ep,ev,re,r,rp,chk)
     local loc=LOCATION_HAND

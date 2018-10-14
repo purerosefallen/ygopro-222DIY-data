@@ -38,12 +38,12 @@ function c12010041.thfilter(c)
 	return c:IsSetCard(0xfbc) and c:IsAbleToHand() and (c:IsType(TYPE_SPELL) or c:IsType(TYPE_TRAP))
 end
 function c12010041.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c12010041.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c12010041.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,0)
 end
 function c12010041.thop(e,tp,eg,ep,ev,re,r,rp)
-	if not Duel.IsExistingMatchingCard(c12010041.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) then return false end
-	local g=Duel.SelectMatchingCard(tp,c12010041.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+	if not Duel.IsExistingMatchingCard(c12010041.thfilter,tp,LOCATION_GRAVE,0,1,nil) then return false end
+	local g=Duel.SelectMatchingCard(tp,c12010041.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	if g:GetCount()>0 then
 		if Duel.SendtoHand(g,nil,REASON_EFFECT) then
 			Duel.ConfirmCards(1-tp,g)
@@ -54,11 +54,11 @@ function c12010041.cfilter(c)
 	return c:IsSetCard(0xfba) and c:IsReleasable()
 end
 function c12010041.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-    c=e:GetHandler()
-    if chk==0 then return c:GetFlagEffect(12010041)==0 and Duel.IsExistingMatchingCard(c12010041.cfilter,tp,LOCATION_MZONE,0,1,nil) end
-    local cg=Duel.SelectMatchingCard(tp,c12010041.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
-    Duel.Release(cg,REASON_COST)
-    Duel.RegisterFlagEffect(c,12010041,RESET_EVENT+RESET_PHASE+PHASE_END,0,1)
+	c=e:GetHandler()
+	if chk==0 then return c:GetFlagEffect(12010041)==0 and Duel.IsExistingMatchingCard(c12010041.cfilter,tp,LOCATION_MZONE,0,1,nil) end
+	local cg=Duel.SelectMatchingCard(tp,c12010041.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.Release(cg,REASON_COST)
+	Duel.RegisterFlagEffect(c,12010041,RESET_EVENT+RESET_PHASE+PHASE_END,0,1)
 end
 function c12010041.spfilter(c,e,tp)
 	return c:IsSetCard(0xfba) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(12010041)

@@ -64,7 +64,7 @@ function c4210034.repfilter(c)
 	return c:GetLevel()>0 and c:IsType(TYPE_MONSTER) and c:IsRace(RACE_BEASTWARRIOR) and c:IsAbleToDeck() 
 end
 function c4210034.repfilterex(c)
-	return c:GetLevel()>0 and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2af) and c:IsAbleToGrave()
+	return c:GetLevel()>0 and c:IsType(TYPE_MONSTER) and c:IsSetCard(0xa2f) and c:IsAbleToGrave()
 end
 function c4210034.spcon(e,c)	
 	if c==nil then return true end
@@ -138,13 +138,13 @@ function c4210034.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c4210034.cdfilter(c) 
-	return c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) and c:IsLevelAbove(6) and c:IsAbleToHand()
+	return c:IsSetCard(0xa2f) and c:IsType(TYPE_MONSTER) and c:IsLevelAbove(6) and c:IsAbleToHand()
 end
 function c4210034.cdcfilter(c) 
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
 function c4210034.cdexfilter(c,e) 
-	return c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_RITUAL) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true)
+	return c:IsSetCard(0xa2f) and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_RITUAL) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true)
 end
 function c4210034.rttg(e,tp,eg,ep,ev,re,r,rp,chk,num)
 	if chk==0 then 

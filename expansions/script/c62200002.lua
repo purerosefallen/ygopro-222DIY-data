@@ -16,17 +16,17 @@ function c62200002.initial_effect(c)
     e1:SetOperation(c62200002.tgop)
     c:RegisterEffect(e1)
     --spsummon
-    local e2=Effect.CreateEffect(c)
-    e2:SetDescription(aux.Stringid(62200002,1))
-    e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-    e2:SetType(EFFECT_TYPE_IGNITION)
-    e2:SetCode(EVENT_FREE_CHAIN)
-    e2:SetRange(LOCATION_GRAVE)
-    e2:SetCost(c62200002.cost)
-    e2:SetCondition(c62200002.spcon)
-    e2:SetTarget(c62200002.sptg)
-    e2:SetOperation(c62200002.spop)
-    c:RegisterEffect(e2)
+    --local e2=Effect.CreateEffect(c)
+    --e2:SetDescription(aux.Stringid(62200002,1))
+    --e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+    --e2:SetType(EFFECT_TYPE_IGNITION)
+    --e2:SetCode(EVENT_FREE_CHAIN)
+    --e2:SetRange(LOCATION_GRAVE)
+    --e2:SetCost(c62200002.cost)
+    --e2:SetCondition(c62200002.spcon)
+    --e2:SetTarget(c62200002.sptg)
+    --e2:SetOperation(c62200002.spop)
+    --c:RegisterEffect(e2)
     --xyzlimit
     local e10=Effect.CreateEffect(c)
     e10:SetType(EFFECT_TYPE_SINGLE)
@@ -70,16 +70,16 @@ function c62200002.tgop(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 --
-function c62200002.spcon(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.GetLP(tp)<Duel.GetLP(1-tp)
-end
-function c62200002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
-    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-end
-function c62200002.spop(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
-    if c:IsRelateToEffect(e) then 
-        Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
-    end
-end
+--function c62200002.spcon(e,tp,eg,ep,ev,re,r,rp)
+    --return Duel.GetLP(tp)<Duel.GetLP(1-tp)
+--end
+--function c62200002.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+    --if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+    --Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+--end
+--function c62200002.spop(e,tp,eg,ep,ev,re,r,rp)
+    --local c=e:GetHandler()
+    --if c:IsRelateToEffect(e) then 
+        --Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+    --end
+--end

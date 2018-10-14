@@ -61,5 +61,5 @@ function c4212119.efilter(e,re,rp)
     if not re:IsActiveType(TYPE_SPELL+TYPE_TRAP) then return false end
     if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return true end
     local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-    return not g:IsContains(e:GetHandler())
+    return e:GetOwnerPlayer()~=re:GetOwnerPlayer() and not g:IsContains(e:GetHandler())
 end

@@ -20,17 +20,17 @@ function c62200003.initial_effect(c)
     local e2=e1:Clone()
     e2:SetCode(EVENT_SPSUMMON_SUCCESS)
     c:RegisterEffect(e2)
-    --search
-    local e3=Effect.CreateEffect(c)
-    e3:SetDescription(aux.Stringid(62200003,1))
-    e3:SetCategory(CATEGORY_TOHAND+CATEGORY_DRAW)
-    e3:SetType(EFFECT_TYPE_IGNITION)
-    e3:SetRange(LOCATION_HAND)
-    e3:SetCondition(c62200003.dwcon)
-    e3:SetCost(c62200003.dwcost)
-    e3:SetTarget(c62200003.dwtg)
-    e3:SetOperation(c62200003.dwop)
-    c:RegisterEffect(e3)
+    --draw
+    --local e3=Effect.CreateEffect(c)
+    --e3:SetDescription(aux.Stringid(62200003,1))
+    --e3:SetCategory(CATEGORY_TOHAND+CATEGORY_DRAW)
+    --e3:SetType(EFFECT_TYPE_IGNITION)
+    --e3:SetRange(LOCATION_HAND)
+    --e3:SetCondition(c62200003.dwcon)
+    --e3:SetCost(c62200003.dwcost)
+    --e3:SetTarget(c62200003.dwtg)
+    --e3:SetOperation(c62200003.dwop)
+    --c:RegisterEffect(e3)
     --xyzlimit
     local e10=Effect.CreateEffect(c)
     e10:SetType(EFFECT_TYPE_SINGLE)
@@ -55,8 +55,8 @@ function c62200003.mlimit(e,c)
 end
 --
 function c62200003.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.CheckLPCost(tp,1000) end
-    Duel.PayLPCost(tp,1000)
+    if chk==0 then return Duel.CheckLPCost(tp,10000000) end
+    Duel.PayLPCost(tp,10000000)
 end
 --
 function c62200003.cfilter(c,tp)
@@ -77,22 +77,22 @@ function c62200003.spop(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 --
-function c62200003.dwcon(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.GetLP(tp)<Duel.GetLP(1-tp)
-end
-function c62200003.dwcost(e,tp,eg,ep,ev,re,r,rp,chk)
-    local c=e:GetHandler()
-    if chk==0 then return Duel.CheckLPCost(tp,1000) and c:IsDiscardable() end
-    Duel.PayLPCost(tp,1000)
-    Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
-end
-function c62200003.dwtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
-    Duel.SetTargetPlayer(tp)
-    Duel.SetTargetParam(1)
-    Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
-end
-function c62200003.dwop(e,tp,eg,ep,ev,re,r,rp)
-    local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-    Duel.Draw(p,d,REASON_EFFECT)
-end
+--function c62200003.dwcon(e,tp,eg,ep,ev,re,r,rp)
+    --return Duel.GetLP(tp)<Duel.GetLP(1-tp)
+--end
+--function c62200003.dwcost(e,tp,eg,ep,ev,re,r,rp,chk)
+    --local c=e:GetHandler()
+    --if chk==0 then return Duel.CheckLPCost(tp,10000000) and c:IsDiscardable() end
+    --Duel.PayLPCost(tp,10000000)
+    --Duel.SendtoGrave(c,REASON_COST+REASON_DISCARD)
+--end
+--function c62200003.dwtg(e,tp,eg,ep,ev,re,r,rp,chk)
+    --if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
+    --Duel.SetTargetPlayer(tp)
+    --Duel.SetTargetParam(1)
+    --Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+--end
+--function c62200003.dwop(e,tp,eg,ep,ev,re,r,rp)
+    --local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+    --Duel.Draw(p,d,REASON_EFFECT)
+--end

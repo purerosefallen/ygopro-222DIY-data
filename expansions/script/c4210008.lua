@@ -37,7 +37,7 @@ function c4210008.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function c4210008.spfilter(c,e,tp)
-	return c:IsSetCard(0x2af) and  not c:IsCode(4210008) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xa2f) and  not c:IsCode(4210008) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c4210008.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -58,7 +58,7 @@ function c4210008.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c4210008.filter(c,tp,rp)
-	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsPreviousSetCard(0x2af) and not c:IsCode(4210008)
+	return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and c:IsPreviousSetCard(0xa2f) and not c:IsCode(4210008)
 end
 function c4210008.otcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c4210008.filter,1,nil,tp,rp)

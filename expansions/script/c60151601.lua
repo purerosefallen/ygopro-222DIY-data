@@ -40,7 +40,7 @@ function c60151601.initial_effect(c)
     c:RegisterEffect(e4)
 end
 function c60151601.spcondition(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():GetSummonType()==SUMMON_TYPE_PENDULUM
+    return e:GetHandler():GetFlagEffect(60151601)==0
 end
 function c60151601.filter(c)
     return c:IsFaceup() and c:IsSetCard(0xcb25) and c:IsType(TYPE_MONSTER)
@@ -89,18 +89,19 @@ function c60151601.operation(e,tp,eg,ep,ev,re,r,rp)
             e1:SetValue(LOCATION_REMOVED)
             c:RegisterEffect(e1,true)
         end
+		c:RegisterFlagEffect(60151601,RESET_EVENT+0x1fe0000,0,1)
     end
 end
 function c60151601.filter3(c)
-    return c:IsSetCard(0xcb25) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
+    return c:IsFaceup() and c:IsSetCard(0xcb25) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
 function c60151601.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(c60151601.filter3,tp,LOCATION_GRAVE,0,1,nil) end
-    Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
+    if chk==0 then return Duel.IsExistingMatchingCard(c60151601.filter3,tp,LOCATION_GRAVE+LOCATION_EXTRA,0,1,nil) end
+    Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE+LOCATION_EXTRA)
 end
 function c60151601.spop(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-    local g=Duel.SelectMatchingCard(tp,c60151601.filter3,tp,LOCATION_GRAVE,0,1,1,nil)
+    local g=Duel.SelectMatchingCard(tp,c60151601.filter3,tp,LOCATION_GRAVE+LOCATION_EXTRA,0,1,1,nil)
     if g:GetCount()>0 then
         Duel.SendtoHand(g,nil,REASON_EFFECT)
         Duel.ConfirmCards(1-tp,g)

@@ -21,7 +21,7 @@ function c4210028.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c4210028.filter(c,e,tp,m1,m2,ft)
-	if not(c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) and c:GetLevel()==9 and c:IsCanBeSpecialSummoned(e,0,tp,false,true)) then return false end
+	if not(c:IsSetCard(0xa2f) and c:IsType(TYPE_MONSTER) and c:GetLevel()==9 and c:IsCanBeSpecialSummoned(e,0,tp,false,true)) then return false end
 	local mg=m1:Filter(Card.IsReleasable,c)
 	mg:Merge(m2)
 	if ft>0 then
@@ -37,7 +37,7 @@ function c4210028.mfilterf(c,tp,mg,rc)
 	else return false end
 end
 function c4210028.repfilter(c)
-	return c:GetLevel()>0 and c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
+	return c:GetLevel()>0 and c:IsSetCard(0xa2f) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
 end
 function c4210028.relfilter(c)
 	return c:GetLevel()>0 and c:IsType(TYPE_MONSTER) and c:IsReleasable()
@@ -88,10 +88,10 @@ function c4210028.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c4210028.cfilter(c)
-	return c:IsSetCard(0x2af) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0xa2f) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 end
 function c4210028.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(function(c) return not c:IsSetCard(0x2af) or c:IsFacedown() end,tp,LOCATION_MZONE,0,1,nil)
+	return not Duel.IsExistingMatchingCard(function(c) return not c:IsSetCard(0xa2f) or c:IsFacedown() end,tp,LOCATION_MZONE,0,1,nil)
 		and Duel.IsExistingMatchingCard(function(c) return c:IsFaceup() end,tp,LOCATION_MZONE,0,1,nil)
 end
 function c4210028.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -103,7 +103,7 @@ function c4210028.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c4210028.thfilter(c)
-	return c:IsSetCard(0x2af) and c:IsAbleToHand()
+	return c:IsSetCard(0xa2f) and c:IsAbleToHand()
 end
 function c4210028.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c4210028.thfilter,tp,LOCATION_DECK,0,1,nil) end

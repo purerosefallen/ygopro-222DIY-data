@@ -13,12 +13,12 @@ function c65071030.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c65071030.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.CheckLPCost(tp,100) end
+	if chk==0 then return Duel.CheckLPCost(tp,200) end
 	local lp=Duel.GetLP(tp)
-	local m=math.floor(lp/100)
+	local m=math.floor(math.min(lp,12000)/200)
 	local t={}
 	for i=1,m do
-		t[i]=i*100
+		t[i]=i*200
 	end
 	local ac=Duel.AnnounceNumber(tp,table.unpack(t))
 	Duel.PayLPCost(tp,ac)
@@ -26,7 +26,7 @@ function c65071030.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c65071030.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ct=e:GetHandler():GetFlagEffectLabel(65071030)
-	if chk==0 then return true end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 	Duel.SetTargetPlayer(1-tp)
 	Duel.SetTargetParam(ct/2)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,ct/2)

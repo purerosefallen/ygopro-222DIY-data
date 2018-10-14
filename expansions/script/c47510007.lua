@@ -54,6 +54,7 @@ function c47510007.initial_effect(c)
     e6:SetOperation(c47510007.chop)
     c:RegisterEffect(e6)
 end
+c47510007.pendulum_level=8
 function c47510007.pefilter(c)
     return c:IsRace(RACE_DRAGON) or c:IsRace(RACE_WYRM) or c:IsSetCard(0x5de) or c:IsSetCard(0x5da) or c:IsAttribute(ATTRIBUTE_LIGHT)
 end

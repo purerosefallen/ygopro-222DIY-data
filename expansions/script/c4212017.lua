@@ -27,13 +27,13 @@ function c4212017.initial_effect(c)
     c:RegisterEffect(e2)
 end
 function c4212017.filtergrave(c)
-    return c:IsSetCard(0x2aa) and c:IsType(TYPE_MONSTER)
+    return c:IsSetCard(0xa2a) and c:IsType(TYPE_MONSTER)
 end
 function c4212017.filter(c)
     return c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function c4212017.costfilter(c,tp)
-    return c:IsSetCard(0x2aa) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
+    return c:IsSetCard(0xa2a) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()
 end
 function c4212017.costfilter2(c,tp)
     return  c:IsType(TYPE_MONSTER) and c:IsAbleToDeckAsCost()

@@ -96,7 +96,7 @@ function c4210024.cfilter(c,eg,e)
 end
 function c4210024.hdcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c4210024.cfilter,1,nil,eg,e) 
-		and re:GetHandler():IsSetCard(0x2af)
+		and re:GetHandler():IsSetCard(0xa2f)
 end
 function c4210024.hdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(tp,4210024,RESET_PHASE+PHASE_END,0,0)

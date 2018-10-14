@@ -45,7 +45,7 @@ function c4212308.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c4212308.cdfilter(c) 
-	return c:IsAbleToHand() and c:IsSetCard(0x2a5) and not c:IsCode(4212308)
+	return c:IsAbleToHand() and c:IsSetCard(0xa25) and not c:IsCode(4212308)
 end
 function c4212308.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c4212308.cdfilter,tp,LOCATION_GRAVE,0,1,nil) end

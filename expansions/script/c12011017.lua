@@ -20,7 +20,7 @@ function c12011017.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c12011017.filter1(c,e)
-	return not c:IsImmuneToEffect(e) and c:IsSetCard(0xfb5)
+	return not c:IsImmuneToEffect(e) and c:IsSetCard(0x3fbe)
 end
 function c12011017.filter2(c,e,tp,m,f,chkf)
 	return c:IsType(TYPE_FUSION) and (not f or f(c))
@@ -89,10 +89,10 @@ function c12011017.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c12011017.thfilter(c)
-	return c:IsSetCard(0xfb5) and c:IsAbleToHand()
+	return c:IsSetCard(0x3fbe) and c:IsAbleToHand()
 end
 function c12011017.spfilter1(c,e)
-	return c:IsSetCard(0xfb5) and not c:IsImmuneToEffect(e)
+	return c:IsSetCard(0x3fbe) and not c:IsImmuneToEffect(e)
 end
 function c12011017.spfilter2(c,e,tp,m,f,chkf)
 	return c:IsType(TYPE_FUSION) and (not f or f(c))
@@ -104,7 +104,7 @@ end
 function c12011017.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local chkf=tp
-		local mg1=Duel.GetFusionMaterial(tp):Filter(Card.IsSetCard,nil,0xfb5)
+		local mg1=Duel.GetFusionMaterial(tp):Filter(Card.IsSetCard,nil,0x3fbe)
 		local res=Duel.IsExistingMatchingCard(c12011017.spfilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)
 		if not res then
 			local ce=Duel.GetChainMaterial(tp)
@@ -160,5 +160,5 @@ function c12011017.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c12011017.thfilter1(c)
-	return c:IsSetCard(0xfb5) and c:IsAbleToGrave() and c:IsFaceup()
+	return c:IsSetCard(0x3fbe) and c:IsAbleToGrave() and c:IsFaceup()
 end

@@ -53,7 +53,7 @@ function c12011007.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 function c12011007.thfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsSetCard(0xfb5) and c:IsAbleToHand()
+	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x3fbe) and c:IsAbleToHand()
 end
 function c12011007.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c12011007.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -89,7 +89,7 @@ function c12011007.spsop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c12011007.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,e:GetHandler(),0xfb5)
+	return Duel.IsExistingMatchingCard(Card.IsSetCard,e:GetHandlerPlayer(),LOCATION_PZONE,0,1,e:GetHandler(),0x3fbe)
 end
 function c12011007.rdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(tp,ev/2)

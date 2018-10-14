@@ -35,7 +35,7 @@ function c4210010.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c4210010.filter(c,e,sp)
-	return c:IsSetCard(0x2af) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
+	return c:IsSetCard(0xa2f) and c:IsCanBeSpecialSummoned(e,0,sp,false,false)
 end
 function c4210010.cfilter(c,e)
 	return c==e:GetHandler()
@@ -60,7 +60,7 @@ function c4210010.operation(e,tp,eg,ep,ev,re,r,rp)
 	end	
 end
 function c4210010.spfilter2(c,e,tp)
-	return c:IsSetCard(0x2af) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xa2f) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c4210010.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -78,6 +78,6 @@ end
 function c4210010.eftg(e,c)
 	local g=e:GetHandler():GetColumnGroup(1,1)
 	local sg=e:GetHandler():GetColumnGroup()
-	return c:IsType(TYPE_EFFECT) and c:IsSetCard(0x2af) and c:GetFlagEffect(4210010)~=0
+	return c:IsType(TYPE_EFFECT) and c:IsSetCard(0xa2f) and c:GetFlagEffect(4210010)~=0
 		and c:GetSequence()<5 and g:IsContains(c) and not sg:IsContains(c)
 end

@@ -57,7 +57,7 @@ function c4210101.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetBattleTarget()
 end
 function c4210101.tgfilter(c)
-	return c:IsSetCard(0x2ac) and c:IsAbleToGrave()
+	return c:IsSetCard(0xa2c) and c:IsAbleToGrave()
 end
 function c4210101.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c4210101.tgfilter,tp,LOCATION_HAND,0,1,nil) end

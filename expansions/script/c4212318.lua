@@ -24,7 +24,7 @@ function c4212318.mfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_SPELL)
 end
 function c4212318.cfilter(c) 
-	return c:IsSetCard(0x2a5) and c:IsType(TYPE_SPELL) and c:IsAbleToGrave()
+	return c:IsSetCard(0xa25) and c:IsType(TYPE_SPELL) and c:IsAbleToGrave()
 end
 function c4212318.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsExistingMatchingCard(c4212318.cfilter,tp,LOCATION_DECK,0,1,e:GetHandler()) then

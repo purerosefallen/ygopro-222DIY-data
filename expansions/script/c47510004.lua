@@ -98,9 +98,9 @@ function c47510004.serop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c47510004.atkop(e,tp,eg,ep,ev,re,r,rp)
     local d=Duel.TossDice(tp,1)
-    if d==1 or d==2 or d==3 then
+    if d==5 or d==6 then
     Duel.NegateAttack()
-    elseif d==4 or d==5 or d==6 then
+    elseif d==1 or d==2 or d==3 or d==4 then
     local c=e:GetHandler()
         if c:IsRelateToEffect(e) and c:IsFaceup() then
             local e1=Effect.CreateEffect(c)
