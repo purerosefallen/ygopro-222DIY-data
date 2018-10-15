@@ -6,7 +6,6 @@ function c12005006.initial_effect(c)
 	e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_BECOME_TARGET)
-	e1:SetRange(LOCATION_ONFIELD)
 	e1:SetCondition(c12005006.condition)
 	e1:SetTarget(c12005006.target)
 	e1:SetOperation(c12005006.operation)
@@ -20,7 +19,7 @@ end
 --  return ex and tg~=nil and tc+tg:FilterCount(Card.IsOnField,nil)-tg:GetCount()>0
 --end
 function c12005006.filter11(c)
-	return c:IsLocation(LOCATION_MZONE)
+	return c:IsLocation(LOCATION_ONFIELD)
 end
 function c12005006.condition(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c12005006.filter11,1,nil) and Duel.IsChainDisablable(ev)
