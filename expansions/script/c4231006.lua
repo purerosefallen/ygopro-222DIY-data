@@ -36,8 +36,7 @@ function cm.initial_effect(c)--red
         .e("SetTarget",function(e,tp,eg,ep,ev,re,r,rp,chk,chkc)  
             if e:GetHandler():GetEquipTarget()==nil then return false end
             if chk==0 then return iCount(0,tp,m,1) and e:GetHandler():GetEquipTarget():IsType(TYPE_NORMAL) 
-                and e:GetHandler():GetEquipTarget() == re:GetHandler():GetEquipTarget()
-                and re:GetOwner() == e:GetOwner()
+                and eg:IsContains(e:GetHandler())
                 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 
                 and Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,4231001,e,tp) end 
 Duel.RegisterFlagEffect(tp,m,RESET_PHASE+PHASE_END,0,1) end)

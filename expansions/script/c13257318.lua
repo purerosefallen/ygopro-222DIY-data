@@ -121,7 +121,7 @@ function c13257318.tdfilter(c)
 end
 function c13257318.pccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local eq=e:GetHandler():GetEquipGroup()
-	if chk==0 then return eg:IsExists(c13257318.tdfilter,1,nil) end
+	if chk==0 then return eq:IsExists(c13257318.tdfilter,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=eq:FilterSelect(tp,c13257318.tdfilter,1,1,nil)
 	Duel.SendtoDeck(g,nil,2,REASON_COST)

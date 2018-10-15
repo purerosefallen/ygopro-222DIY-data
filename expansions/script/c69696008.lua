@@ -26,16 +26,16 @@ function cm.initial_effect(c)
 	e2:SetOperation(cm.thop)
 	c:RegisterEffect(e2)
 end
-function cm.spfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_ZOMBIE)
+function cm.spfilter(c,ft,tp)
+	return c:IsFaceup() and c:IsRace(RACE_ZOMBIE) and (ft>0 or (c:GetSequence()<5 and c:IsControler(tp)))
 end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and cm.spfilter(chkc) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingTarget(cm.spfilter,tp,LOCATION_MZONE,0,1,nil) end
+	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and cm.spfilter(chkc,ft) end
+	if chk==0 then return ft>-1 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
+		and Duel.IsExistingTarget(cm.spfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,ft,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,cm.spfilter,tp,LOCATION_MZONE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,cm.spfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,ft,tp)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end

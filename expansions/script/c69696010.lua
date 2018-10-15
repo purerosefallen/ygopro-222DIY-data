@@ -38,7 +38,6 @@ function cm.desop(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.Destroy(tc,REASON_EFFECT)==0 or bit.band(tc:GetPreviousRaceOnField(),RACE_ZOMBIE)==0 then return end
 		if Duel.IsPlayerCanDraw(tp,1) and Duel.SelectYesNo(tp,aux.Stringid(m,2)) then 
 			Duel.BreakEffect()
-			Duel.ShuffleDeck(tp)
 			Duel.Draw(tp,1,REASON_EFFECT)
 		end
 	end

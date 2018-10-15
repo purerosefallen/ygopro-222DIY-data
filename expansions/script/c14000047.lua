@@ -67,7 +67,7 @@ function cm.rmop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.lpcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(tp,14000041)==0
+	return Duel.GetFlagEffect(tp,14000041)==0 and e:GetHandler():IsFaceup()
 end
 function cm.lpop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterFlagEffect(tp,14000041,RESET_PHASE+PHASE_END,0,1)

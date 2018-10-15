@@ -13,15 +13,14 @@ function cm.initial_effect(c)
         .e("SetTarget",function(e,tp,eg,ep,ev,re,r,rp,chk)
             if chk==0 then return iCount(0,tp,m,1)                 
                 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) 
-                and Duel.GetLocationCount(tp,LOCATION_MZONE)>0   end
+                and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 Duel.RegisterFlagEffect(tp,m,RESET_PHASE+PHASE_END,0,1)
-            Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,tp,LOCATION_HAND)            
+            Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,tp,LOCATION_HAND)         
         end)
         .e("SetOperation",function(e,tp,eg,ep,ev,re,r,rp)
             if e:GetHandler():IsLocation(LOCATION_HAND) then
-                if Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)~=0
-                    and Duel.IsExistingMatchingCard(cm.thfilter,tp,LOCATION_DECKE,0,1,nil)then
-                    if Duel.SelectYesNo(tp,aux.Stringid(m,1)) then
+                if Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.IsExistingMatchingCard(cm.thfilter,tp,LOCATION_DECK,0,1,nil)then
+                    if Duel.SelectYesNo(tp,aux.Stringid(m,0)) then
                         local g=Duel.SelectMatchingCard(tp,cm.thfilter,tp,LOCATION_DECK,0,1,1,nil)
                         Duel.SendtoHand(g,nil,REASON_EFFECT)
                         Duel.ConfirmCards(1-tp,g)

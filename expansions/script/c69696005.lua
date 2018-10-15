@@ -79,7 +79,8 @@ function cm.desfilter(c,tp)
 	return c:IsControler(tp) and c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function cm.desop(e,tp,eg,ep,ev,re,r,rp)
-	if eg:IsExists(cm.desfilter,1,nil,tp) and Duel.SelectYesNo(tp,aux.Stringid(m,1)) then
+	if eg:IsExists(cm.desfilter,1,nil,tp) and Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) 
+		and Duel.SelectYesNo(tp,aux.Stringid(m,1)) then
 		Duel.Hint(HINT_CARD,0,m)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local g=Duel.SelectMatchingCard(tp,nil,tp,0,LOCATION_ONFIELD,1,1,nil)
@@ -89,4 +90,3 @@ function cm.desop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-

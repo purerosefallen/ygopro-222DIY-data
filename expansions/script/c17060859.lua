@@ -1,40 +1,47 @@
---暗堕丢手机
-function c17060859.initial_effect(c)
+--フェデルマ
+local m=17060859
+local cm=_G["c"..m]
+function cm.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--spsummon success
 	local e7=Effect.CreateEffect(c)
-	e7:SetDescription(aux.Stringid(17060859,0))
+	e7:SetDescription(aux.Stringid(m,0))
 	e7:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e7:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e7:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e7:SetCountLimit(1,17060859)
-	e7:SetCondition(c17060859.spcon)
-	e7:SetTarget(c17060859.sptg)
-	e7:SetOperation(c17060859.spop)
+	e7:SetCountLimit(1,m)
+	e7:SetCondition(cm.spcon)
+	e7:SetTarget(cm.sptg)
+	e7:SetOperation(cm.spop)
 	c:RegisterEffect(e7)
 end
-c17060859.is_named_with_Dark_Degenerate=1
-function c17060859.IsDark_Degenerate(c)
+cm.is_named_with_Ma_Elf=1
+cm.is_named_with_Dark_Degenerate=1
+function cm.IsMa_Elf(c)
+	local m=_G["c"..c:GetCode()]
+	return m and m.is_named_with_Ma_Elf 
+end
+function cm.IsDark_Degenerate(c)
 	local m=_G["c"..c:GetCode()]
 	return m and m.is_named_with_Dark_Degenerate
 end
-function c17060859.spcon(e,tp,eg,ep,ev,re,r,rp)
+function cm.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonLocation()==LOCATION_SZONE
 end
-function c17060859.spfilter(c,e,tp)
-	return c17060859.IsDark_Degenerate(c) and c:IsType(TYPE_PENDULUM) and not c:IsCode(17060859)
+function cm.spfilter(c,e,tp)
+	return cm.IsDark_Degenerate(c) and c:IsType(TYPE_PENDULUM) and not c:IsCode(m)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
-function c17060859.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMZoneCount(tp)>0
-		and Duel.IsExistingMatchingCard(c17060859.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+		and Duel.IsExistingMatchingCard(cm.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
-function c17060859.spop(e,tp,eg,ep,ev,re,r,rp)
+function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetMZoneCount(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c17060859.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,cm.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
 		local c=e:GetHandler()

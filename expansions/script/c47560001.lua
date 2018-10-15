@@ -77,6 +77,7 @@ function c47560001.spcons(e,c)
         Duel.IsExistingMatchingCard(c47560001.filters,c:GetControler(),0,LOCATION_MZONE,1,nil)
 end
 function c47560001.inmcon(e,c)
+    local c=e:GetHandler()
     return Duel.IsExistingMatchingCard(c47560001.filters,c:GetControler(),0,LOCATION_MZONE,1,nil)
 end
 function c47560001.tdfilter(c)
