@@ -6,7 +6,7 @@ function cm.initial_effect(c)
         .e("SetCategory",CATEGORY_NEGATE+CATEGORY_DESTROY)
         .e("SetType",EFFECT_TYPE_QUICK_O)
         .e("SetCode",EVENT_CHAINING)
-        .e("SetRange",LOCATION_MZONE+LOCATION_HAND)
+        .e("SetRange",LOCATION_HAND)
         .e("SetCondition",function(e,tp,eg,ep,ev,re,r,rp)
             return ep~=tp and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev) end)
         .e("SetCost",function(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -22,13 +22,13 @@ function cm.initial_effect(c)
             if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
                 Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
             end 
-            if Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_MZONE,0,1,nil) then
+            if Duel.IsExistingMatchingCard(cm.mfilter,tp,LOCATION_MZONE,0,1,nil) then
                 Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,0)
             end end)
         .e("SetOperation",function(e,tp,eg,ep,ev,re,r,rp)
             if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
                 if Duel.Destroy(eg,REASON_EFFECT) 
-                    and Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_MZONE,0,1,nil)  then
+                    and Duel.IsExistingMatchingCard(cm.mfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_DECK,0,1,nil) then
                     if Duel.SelectYesNo(tp,aux.Stringid(m,0)) then 
                         local g = Duel.SelectMatchingCard(tp,cm.cfilter,tp,LOCATION_DECK,0,1,1,nil)
                         Duel.SendtoHand(g,nil,REASON_EFFECT) 

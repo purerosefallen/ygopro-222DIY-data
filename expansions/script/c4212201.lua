@@ -15,8 +15,8 @@ function c4212201.filter(c)
 end
 function c4212201.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     local g = Duel.GetMatchingGroup(c4212201.filter,tp,LOCATION_GRAVE,0,nil) 
-    if chkc then return chkc:GetControler()==tp and chkc:GetLocation()==LOCATION_GRAVE and chkc:GetClassCount(Card.GetCode)>=2 and chkc:FilterCount(c4212201.filter)>=2 end
-    if chk==0 then return Duel.IsExistingTarget(c4212201.filter,tp,LOCATION_GRAVE,0,2,nil) and g:GetClassCount(Card.GetCode)>=2 end
+    if chkc then return chkc:GetControler()==tp and chkc:GetLocation()==LOCATION_GRAVE and chkc:GetClassCount(Card.GetAttribute)>=2 and chkc:FilterCount(c4212201.filter)>=2 end
+    if chk==0 then return Duel.IsExistingTarget(c4212201.filter,tp,LOCATION_GRAVE,0,2,nil) and g:GetClassCount(Card.GetAttribute)>=2 end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
     local g1=g:Select(tp,1,1,nil)
     g:Remove(Card.IsAttribute,nil,g1:GetFirst():GetAttribute())
