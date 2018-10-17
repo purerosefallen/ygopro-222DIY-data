@@ -40,7 +40,7 @@ function c12005002.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c12005002.rthcon(e,tp,eg,ep,ev,re,r,rp)
-	return not  Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,0,1,c)
+	return not  Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,0,1,e:GetHandler())
 end
 function c12005002.rthcfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xfbb) and c:IsAbleToHandAsCost()
