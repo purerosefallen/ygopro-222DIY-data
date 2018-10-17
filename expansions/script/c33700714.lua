@@ -17,7 +17,7 @@ function cm.thfilter(c)
 	return c:IsSetCard(0x144b) and c:IsAbleToHand()
 end
 function cm.filter(c)
-	return c:IsLevelAbove(1) and c:IsSetCard(0x144b) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave() and rsve.addcounter(c:GetLevel()*2,0)
+	return c:IsLevelAbove(1) and c:IsSetCard(0x144b) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave() and rsve.addcounter(tp,c:GetLevel()*2,0)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(cm.thfilter,tp,LOCATION_DECK,0,1,nil)
@@ -50,7 +50,7 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,cm.filter,tp,LOCATION_HAND+LOCATION_EXTRA,0,1,1,nil)
 		if g:GetCount()>0 and Duel.SendtoGrave(g,REASON_EFFECT)~=0 then
-		   rsve.addcounter(g:GetFirst():GetLevel()*2,nil,e:GetHandler())
+		   rsve.addcounter(tp,g:GetFirst():GetLevel()*2,nil,e:GetHandler())
 		end
 	end
 end

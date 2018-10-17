@@ -64,7 +64,7 @@ function c10101013.cfilter(c,e,tp)
 	return c:IsFaceup() and c:IsCanBeEffectTarget(e) and Duel.IsExistingMatchingCard(c10101013.spfilter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp,c:GetCode())
 end
 function c10101013.spfilter2(c,e,tp,code)
-	return c:IsCode(code) and ((c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) or c:IsAbleToHand())
+	return c:IsCode(code) and ((c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0) or c:IsAbleToHand()) and c:IsType(TYPE_MONSTER)
 end
 function c10101013.spfilter(c,e,tp)
 	return c:IsSetCard(0x6330) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

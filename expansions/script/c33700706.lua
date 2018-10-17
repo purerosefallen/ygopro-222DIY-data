@@ -36,6 +36,6 @@ function cm.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc:IsRelateToEffect(e) then return end
 	local ct=tc:GetCounter(0x144b)
 	if ct>0 and tc:IsCanRemoveCounter(tp,0x144b,ct,REASON_EFFECT) and tc:RemoveCounter(tp,0x144b,ct,REASON_EFFECT) and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 then
-	   rsve.addcounter(ct)
+	   rsve.addcounter(tp,ct)
 	end
 end

@@ -66,7 +66,7 @@ function cm.efop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.ctop(e,tp,eg,ep,ev,re,r,rp)
-	rsve.addcounter(4)
+	rsve.addcounter(tp,4)
 end
 function cm.rdcon(e,tp,eg,ep,ev,re,r,rp)
 	local ct=math.floor(ev/100)

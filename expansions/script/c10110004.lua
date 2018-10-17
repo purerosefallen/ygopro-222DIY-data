@@ -16,7 +16,8 @@ function c10110004.initial_effect(c)
 	e2:SetDescription(aux.Stringid(10110004,0))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCountLimit(1,10110004)
-	e2:SetLabel(LOCATION_HAND+LOCATION_MZONE)
+	e2:SetRange(LOCATION_HAND+LOCATION_MZONE)
+	e2:SetLabel(LOCATION_GRAVE+LOCATION_DECK)
 	e2:SetCost(c10110004.thcost)
 	e2:SetTarget(c10110004.thtg)
 	e2:SetOperation(c10110004.thop)
@@ -81,6 +82,7 @@ function c10110004.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	end
 end
 function c10110004.retcon(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
 	local tc,fid=e:GetLabelObject(),e:GetLabel()
 	return tc:GetFlagEffectLabel(10110004)==fid
 end

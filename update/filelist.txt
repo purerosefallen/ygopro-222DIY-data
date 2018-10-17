@@ -18,7 +18,7 @@ deck/10.13new_card8.ydk	38b4257278f45aae58a768d1b1884167
 deck/10.13new_card9.ydk	f9087cb4e52c50166bf8992afa6c7a7c
 expansions/222DIY.cdb	c007ea3fc14461fef00eb38426b418f7
 expansions/lflist.conf	a1472e09ca833f1eb4c6f6d95ca16d95
-expansions/strings.conf	7129ae4e6ddc70db2559020c34901630
+expansions/strings.conf	fceff6117e64e0c5d4363574d9f09c08
 expansions/pics/08209710.jpg	ed0e60085631bfa641ffeebd6abbd910
 expansions/pics/1000400.jpg	7b02a7099b7cd3d79f72c977d00cface
 expansions/pics/1000401.jpg	0e283b3c737d978d3e3345b27a6ce937

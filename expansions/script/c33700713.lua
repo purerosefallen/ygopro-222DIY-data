@@ -26,10 +26,10 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function cm.damcon1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.GetTurnPlayer()==tp and Duel.GetCounter(tp,1,1,0x144b)>0
 end
 function cm.damcon2(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
+	return Duel.GetTurnPlayer()~=tp and Duel.GetCounter(tp,0,1,0x144b)>0
 end
 function cm.damop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetCounter(tp,1,1,0x144b)
@@ -39,7 +39,7 @@ function cm.damop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.damop2(e,tp,eg,ep,ev,re,r,rp)
-	local ct=Duel.GetCounter(tp,1,1,0x144b)
+	local ct=Duel.GetCounter(tp,0,1,0x144b)
 	if ct>0 and Duel.GetTurnPlayer()~=tp then 
 	   Duel.Hint(HINT_CARD,0,m)
 	   Duel.Damage(1-tp,ct*100,REASON_EFFECT)

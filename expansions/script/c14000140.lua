@@ -10,12 +10,9 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e1)
 	--todeck
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(m,0))
-	e2:SetCategory(CATEGORY_TODECK)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_DAMAGE_STEP_END)
+	e2:SetCode(EVENT_BATTLED)
 	e2:SetRange(LOCATION_SZONE)
-	e2:SetCondition(cm.tdcon)
 	e2:SetOperation(cm.tdop)
 	c:RegisterEffect(e2)
 	--spsummon
@@ -34,22 +31,14 @@ function cm.CIR(c)
 	local m=_G["c"..c:GetCode()]
 	return m and m.named_with_Circlia
 end
-function cm.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	local d=Duel.GetAttackTarget()
-	return (a and a:IsControler(tp) and cm.CIR(a) and d) or (d and d:IsControler(tp) and cm.CIR(d) and a)
-end
 function cm.tdop(e,tp,eg,ep,ev,re,r,rp)
-	local a=Duel.GetAttacker()
-	local d=Duel.GetAttackTarget()
-	if a and a:IsControler(tp) and cm.CIR(a) then
+	local a,d=Duel.GetAttacker(),Duel.GetAttackTarget()
+	if not d or a:GetControler()==d:GetControler() then return end
+	if d:IsControler(tp) then a,d=d,a end
+	if cm.CIR(a) and d:IsAbleToDeck() then
 		d:CancelToGrave()
+		Duel.Hint(HINT_CARD,0,m)
 		Duel.SendtoDeck(d,nil,2,REASON_EFFECT)
-	elseif d and d:IsControler(tp) and cm.CIR(d) then
-		a:CancelToGrave()
-		Duel.SendtoDeck(a,nil,2,REASON_EFFECT)
-	else
-		return
 	end
 end
 function cm.spcon(e,tp,eg,ep,ev,re,r,rp)

@@ -4,7 +4,7 @@ local cm=_G["c"..m]
 if not RSVeVal then
    RSVeVal=RSVeVal or {}
    rsve=RSVeVal
-function rsve.addcounter(ct,chk,rc)
+function rsve.addcounter(tp,ct,chk,rc)
    local g=Duel.GetMatchingGroup(rsve.ctfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,rc)
    if chk then return g:GetCount()>0 end
    if g:GetCount()<=0 then return end
@@ -87,7 +87,7 @@ function rsve.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker()==e:GetHandler() and Duel.GetAttackTarget()==nil
 end
 function rsve.ctop(e,tp,eg,ep,ev,re,r,rp)
-	rsve.addcounter(4)
+	rsve.addcounter(tp,4)
 end
 function rsve.NormalSummonFunction(c,ct)
 	local e1=Effect.CreateEffect(c)
@@ -126,7 +126,7 @@ function rsve.ToGraveFunction(c,ct,con,cost)
 	c:RegisterEffect(e1)
 end
 function rsve.ctop2(e,tp,eg,ep,ev,re,r,rp)
-	rsve.addcounter(e:GetLabel())
+	rsve.addcounter(tp,e:GetLabel())
 end
 function rsve.AttackUpFunction(c,ct)
 	--
@@ -185,7 +185,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e2)  
 end
 function cm.ctop(e,tp,eg,ep,ev,re,r,rp)
-	rsve.addcounter(4)
+	rsve.addcounter(tp,4)
 end
 function cm.spcon(e,c)
 	if c==nil then return true end

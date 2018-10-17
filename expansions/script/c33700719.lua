@@ -95,5 +95,5 @@ function cm.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Damage(p,ct*50,REASON_EFFECT)
 end
 function cm.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
+	return Duel.GetTurnPlayer()~=tp
 end

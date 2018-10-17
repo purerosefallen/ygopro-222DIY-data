@@ -97,6 +97,7 @@ function c10110002.retcon(e,tp,eg,ep,ev,re,r,rp)
 	return tc:GetFlagEffectLabel(10110002)==fid
 end
 function c10110002.retop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
 	if tc:IsPreviousLocation(LOCATION_HAND) then
 	   Duel.SendtoHand(tc,tc:GetPreviousControler(),REASON_EFFECT)
 	else

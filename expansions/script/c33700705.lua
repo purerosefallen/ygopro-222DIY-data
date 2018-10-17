@@ -19,5 +19,5 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e3)  
 end
 function cm.ctop(e,tp,eg,ep,ev,re,r,rp)
-	rsve.addcounter(5)
+	rsve.addcounter(tp,5)
 end
