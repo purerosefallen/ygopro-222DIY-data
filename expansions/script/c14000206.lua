@@ -15,9 +15,8 @@ function cm.initial_effect(c)
 	e2:SetCategory(CATEGORY_EQUIP)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e2:SetCode(EVENT_CHAINING)
-	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE+EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(cm.discon)
 	e2:SetTarget(cm.distg)
 	e2:SetOperation(cm.disop)
 	c:RegisterEffect(e2)
@@ -26,7 +25,7 @@ function cm.initial_effect(c)
 	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_CHAINING)
-	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_UNCOPYABLE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCondition(cm.negcon)
 	e3:SetCost(cm.negcost)
@@ -38,12 +37,9 @@ cm.lvupcount=1
 cm.lvup={14000205}
 cm.lvdncount=5
 cm.lvdn={14000201,14000202,14000203,14000204,14000205}
-function cm.discon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(14000205)~=0 and re:GetHandler()~=e:GetHandler() and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
-end
 function cm.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,eg,1,0,0)
+	local c=e:GetHandler()
+	if chk==0 then return (Duel.GetLocationCount(tp,LOCATION_SZONE)>0 or eg:GetFirst():IsLocation(LOCATION_SZONE)) and eg:GetFirst():IsAbleToChangeControler() and c:GetFlagEffect(14000205)~=0 and re:GetHandler()~=c and not c:IsStatus(STATUS_BATTLE_DESTROYED) end
 end
 function cm.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -52,6 +48,7 @@ function cm.disop(e,tp,eg,ep,ev,re,r,rp)
 		if not Duel.Equip(tp,tc,c,true) then return end
 		if eg:GetCount()>0 then
 			Duel.HintSelection(eg)
+			Duel.Hint(HINT_CARD,0,m)
 		end
 		c:RegisterFlagEffect(m,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(m,3))
 		tc:CancelToGrave()
