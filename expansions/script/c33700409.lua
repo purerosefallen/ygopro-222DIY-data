@@ -9,10 +9,6 @@ function scard.initial_effect(c)
     e1:SetType(EFFECT_TYPE_ACTIVATE)
     e1:SetCode(EVENT_FREE_CHAIN)
     e1:SetTarget(scard.regtg)
-	e1:SetCost(function(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return true end
-    Duel.Hint(HINT_MUSIC,0,aux.Stringid(33700409,6))
-    end)
     c:RegisterEffect(e1)
     --indes
     local e2 = Effect.CreateEffect(c)

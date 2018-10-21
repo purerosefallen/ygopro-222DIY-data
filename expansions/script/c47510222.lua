@@ -22,7 +22,7 @@ function c47510222.initial_effect(c)
     e1:SetDescription(aux.Stringid(47510222,0))
     e1:SetType(EFFECT_TYPE_IGNITION)
     e1:SetRange(LOCATION_MZONE)
-    e1:SetCountLimit(1,47510222)
+    e1:SetCondition(c47510222.chcon)
     e1:SetTarget(c47510222.changetg)
     e1:SetOperation(c47510222.changeop)
     c:RegisterEffect(e1)  
@@ -59,6 +59,7 @@ function c47510222.initial_effect(c)
     e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
     e5:SetRange(LOCATION_MZONE)
     e5:SetCode(EFFECT_IMMUNE_EFFECT)
+    e5:SetTarget(c47510222.inmtg)
     e5:SetValue(c47510222.efilter2)
     c:RegisterEffect(e5) 
 end
@@ -80,16 +81,21 @@ function c47510222.spop(e,tp,eg,ep,ev,re,r,rp)
         Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
     end
 end
-function c47510222.efilter2(e,re,rp)
-    if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return true end
-    local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-    return not g:IsContains(e:GetHandler())
+function c47510222.inmtg(e,c)
+    local te,g=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TARGET_CARDS)
+    return not te or not te:IsHasProperty(EFFECT_FLAG_CARD_TARGET) or not g or not g:IsContains(c)
+end
+function c47510222.efilter2(e,te)
+    return te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
 function c47510222.atlimit(e,c)
     return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c~=e:GetHandler()
 end
 function c47510222.efftg(e,c)
     return c~=e:GetHandler()
+end
+function c47510222.chcon(e)
+    return e:GetHandler():GetFlagEffect(47510223)==0
 end
 function c47510222.changetg(e,tp,eg,ep,ev,re,r,rp,chk)
     local c=e:GetHandler()
@@ -101,7 +107,9 @@ function c47510222.changeop(e,tp,eg,ep,ev,re,r,rp,chk)
     if not c:IsRelateToEffect(e) or c:IsFacedown() or c:IsImmuneToEffect(e) then return end
     local tcode=c.dfc_back_side
     c:SetEntityCode(tcode,true)
-    c:ReplaceEffect(tcode,0,0)
+    if c:ReplaceEffect(tcode,0,0) then   
+    c:RegisterFlagEffect(47510223,RESET_EVENT+0x7e0000+RESET_PHASE+PHASE_END,0,1)
+    end
 end
 function c47510222.damcon(e,tp,eg,ep,ev,re,r,rp)
     if ep~=tp then return false end

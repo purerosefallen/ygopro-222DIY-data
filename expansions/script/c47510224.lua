@@ -20,7 +20,7 @@ function c47510224.initial_effect(c)
     e1:SetDescription(aux.Stringid(47510224,0))
     e1:SetType(EFFECT_TYPE_IGNITION)
     e1:SetRange(LOCATION_MZONE)
-    e1:SetCountLimit(1,47510224)
+    e1:SetCondition(c47510224.chcon)
     e1:SetTarget(c47510224.changetg)
     e1:SetOperation(c47510224.changeop)
     c:RegisterEffect(e1) 
@@ -68,6 +68,9 @@ function c47510224.spop(e,tp,eg,ep,ev,re,r,rp)
         Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
     end
 end
+function c47510224.chcon(e)
+    return e:GetHandler():GetFlagEffect(47510223)==0
+end
 function c47510224.changetg(e,tp,eg,ep,ev,re,r,rp,chk)
     local c=e:GetHandler()
     if chk==0 then return c.dfc_front_side and c.dfc_back_side==c:GetOriginalCode() end
@@ -78,7 +81,9 @@ function c47510224.changeop(e,tp,eg,ep,ev,re,r,rp,chk)
     if not c:IsRelateToEffect(e) or c:IsFacedown() or c:IsImmuneToEffect(e) then return end
     local tcode=c.dfc_front_side
     c:SetEntityCode(tcode,true)
-    c:ReplaceEffect(tcode,0,0)
+    if c:ReplaceEffect(tcode,0,0) then 
+    c:RegisterFlagEffect(47510223,RESET_EVENT+0x7e0000+RESET_PHASE+PHASE_END,0,1)
+    end
 end
 function c47510224.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return true end
@@ -96,8 +101,8 @@ function c47510224.atkop(e,tp,eg,ep,ev,re,r,rp)
         local e2=Effect.CreateEffect(c)
         e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
         e2:SetCode(EVENT_ATTACK_ANNOUNCE)
-        e2:SetCondition(c475100224.actcon)
-        e2:SetOperation(c475100224.inmop)
+        e2:SetCondition(c47510224.actcon)
+        e2:SetOperation(c47510224.inmop)
         e2:SetReset(RESET_PHASE+PHASE_END)
         c:RegisterEffect(e2)
         local e3=e2:Clone()
@@ -106,27 +111,27 @@ function c47510224.atkop(e,tp,eg,ep,ev,re,r,rp)
     end
     c:RegisterFlagEffect(47510224,RESET_EVENT+0x7e0000+RESET_PHASE+PHASE_END,0,1)
 end
-function c475100224.actcon(e,tp,eg,ep,ev,re,r,rp)
+function c47510224.actcon(e,tp,eg,ep,ev,re,r,rp)
     local tc=Duel.GetAttacker()
     if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
     return tc and tc:IsControler(tp)
 end
-function c475100224.inmop(e,tp,eg,ep,ev,re,r,rp)
+function c47510224.inmop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     if c:IsRelateToEffect(e) and c:IsFaceup() then
         local e1=Effect.CreateEffect(c)
         e1:SetType(EFFECT_TYPE_SINGLE)
         e1:SetCode(EFFECT_IMMUNE_EFFECT)
-        e1:SetValue(c475100224.efilter)
+        e1:SetValue(c47510224.efilter)
         e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
         c:RegisterEffect(e1)
     end
 end
-function c475100224.efilter(e,re)
+function c47510224.efilter(e,re)
     return re:GetOwner()~=e:GetOwner()
 end
-function c475100224.dacon(e)
-    return e:GetHandler():GetFlagEffect(475100224)==0
+function c47510224.dacon(e)
+    return e:GetHandler():GetFlagEffect(47510224)==0
 end
 function c47510224.backon(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()

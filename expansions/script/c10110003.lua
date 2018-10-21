@@ -49,7 +49,7 @@ function c10110003.spop2(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c10110003.dfilter(c,e,tp)
-	return c:IsSetCard(0x9332) and c:IsType(TYPE_MONSTER) and c:IsDiscardable() and Duel.IsExistingMatchingCard(c10110003.spfilter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c:GetAttribute(),e,tp)
+	return c:IsType(TYPE_MONSTER) and c:IsDiscardable() and Duel.IsExistingMatchingCard(c10110003.spfilter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c:GetAttribute(),e,tp)
 end
 function c10110003.spfilter2(c,att,e,tp)
 	return c:IsSetCard(0x9332) and not c:IsAttribute(att) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetLevel()==3
@@ -87,7 +87,6 @@ function c10110003.retcon(e,tp,eg,ep,ev,re,r,rp)
 	return tc:GetFlagEffectLabel(10110003)==fid
 end
 function c10110003.retop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
 	if tc:IsPreviousLocation(LOCATION_HAND) then
 	   Duel.SendtoHand(tc,tc:GetPreviousControler(),REASON_EFFECT)
 	else
