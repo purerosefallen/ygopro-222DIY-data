@@ -55,15 +55,15 @@ function c47510254.initial_effect(c)
     e8:SetCondition(c47510254.discon2)
     e8:SetOperation(c47510254.disop2)
     c:RegisterEffect(e8) 
-    --pendulum
-    local e7=Effect.CreateEffect(c)
-    e7:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-    e7:SetCode(EVENT_DESTROYED)
-    e7:SetProperty(EFFECT_FLAG_DELAY)
-    e7:SetCondition(c47510254.pencon2)
-    e7:SetTarget(c47510254.pentg2)
-    e7:SetOperation(c47510254.penop2)
-    c:RegisterEffect(e7)
+    --back
+    local e9=Effect.CreateEffect(c)
+    e9:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+    e9:SetCode(EVENT_ADJUST)
+    e9:SetRange(LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_HAND+LOCATION_EXTRA)
+    e9:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_SET_AVAILABLE)
+    e9:SetCondition(c47510254.backon)
+    e9:SetOperation(c47510254.backop)
+    c:RegisterEffect(e9)
 end
 c47510254.list={
         CATEGORY_DESTROY,
@@ -134,17 +134,15 @@ function c47510254.disop2(e,tp,eg,ep,ev,re,r,rp)
     Duel.NegateEffect(ev)
     c:RegisterFlagEffect(47510255,RESET_EVENT+0x7e0000+RESET_PHASE+PHASE_END,0,1)
 end
-function c47510254.pencon2(e,tp,eg,ep,ev,re,r,rp)
+function c47510254.backon(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0 and c:IsPreviousLocation(LOCATION_MZONE) and c:IsFaceup()
+    return c.dfc_front_side and c:GetOriginalCode()==c.dfc_back_side
 end
-function c47510254.pentg2(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1) end
-end
-function c47510254.penop2(e,tp,eg,ep,ev,re,r,rp)
-    if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return false end
+function c47510254.backop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    if c:IsRelateToEffect(e) then
-        Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-    end
+    local tcode=c.dfc_front_side
+    c:SetEntityCode(tcode)
+    Duel.ConfirmCards(tp,Group.FromCards(c))
+    Duel.ConfirmCards(1-tp,Group.FromCards(c))
+    c:ReplaceEffect(tcode,0,0)
 end

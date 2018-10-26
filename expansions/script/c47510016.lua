@@ -7,7 +7,7 @@ function c47510016.initial_effect(c)
     --spsummon
     local e2=Effect.CreateEffect(c)
     e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-    e2:SetType(EFFECT_TYPE_QUICK_O)
+    e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
     e2:SetProperty(EFFECT_FLAG_DELAY)
     e2:SetRange(LOCATION_PZONE)
     e2:SetCode(EVENT_TO_GRAVE)
@@ -60,7 +60,7 @@ function c47510016.psplimit(e,c,tp,sumtp,sumpos)
     return not c47510016.pefilter(c) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function c47510016.tfcfilter(c,tp)
-    return c:IsPreviousPosition(POS_FACEUP) and (c:IsPreviousSetCard(0x5da) or c:IsAttribute(ATTRIBUTE_WATER)) and c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_DECK+LOCATION_HAND) and c:GetPreviousControler()==tp
+    return (c:IsPreviousSetCard(0x5da) or c:IsAttribute(ATTRIBUTE_WATER)) and c:IsType(TYPE_MONSTER)and c:GetPreviousControler()==tp
 end
 function c47510016.tfcon(e,tp,eg,ep,ev,re,r,rp)
     return eg:IsExists(c47510016.tfcfilter,1,e:GetHandler(),tp)

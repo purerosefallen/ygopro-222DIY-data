@@ -1,10 +1,10 @@
 --水无月的新娘 纯白型歌姬亚瑟
 function c60150731.initial_effect(c)
     c:SetUniqueOnField(1,0,60150731)
-	--fusion material
+    --fusion material
     c:EnableReviveLimit()
     aux.AddFusionProcCode2(c,60150721,60150798,true,true)
-	--cannot fusion material
+    --cannot fusion material
     local e11=Effect.CreateEffect(c)
     e11:SetType(EFFECT_TYPE_SINGLE)
     e11:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -27,7 +27,7 @@ function c60150731.initial_effect(c)
     e2:SetCondition(c60150731.spcon)
     e2:SetOperation(c60150731.spop)
     c:RegisterEffect(e2)
-	--2
+    --2
     local e3=Effect.CreateEffect(c)
     e3:SetDescription(aux.Stringid(60150731,2))
     e3:SetCategory(CATEGORY_DISABLE)
@@ -40,7 +40,7 @@ function c60150731.initial_effect(c)
     e3:SetTarget(c60150731.distg)
     e3:SetOperation(c60150731.disop)
     c:RegisterEffect(e3)
-	--3
+    --3
     local e4=Effect.CreateEffect(c)
     e4:SetDescription(aux.Stringid(60150731,4))
     e4:SetCategory(CATEGORY_DESTROY+CATEGORY_DAMAGE+CATEGORY_DRAW)
@@ -50,6 +50,11 @@ function c60150731.initial_effect(c)
     e4:SetTarget(c60150731.distg2)
     e4:SetOperation(c60150731.disop2)
     c:RegisterEffect(e4)
+end
+c60150731.is_named_with_Million_Arthur=1
+function c60150731.IsMillion_Arthur(c)
+    local m=_G["c"..c:GetCode()]
+    return m and m.is_named_with_Million_Arthur
 end
 function c60150731.splimit(e,se,sp,st)
     return bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
@@ -66,31 +71,31 @@ function c60150731.spcon(e,c)
     local tp=c:GetControler()
     local c1=Duel.GetFieldCard(tp,LOCATION_SZONE,6)
     local c2=Duel.GetFieldCard(tp,LOCATION_SZONE,7)
-	if (c1 and c1:IsCode(60150798)) or (c2 and c2:IsCode(60150798)) then
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
-			and Duel.IsExistingMatchingCard(c60150731.spfilter1,tp,LOCATION_ONFIELD,0,1,nil,tp,fc)
-	else
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
-			and Duel.IsExistingMatchingCard(c60150731.spfilter1,tp,LOCATION_ONFIELD,0,1,nil,tp,fc)
-	end
+    if (c1 and c1:IsCode(60150798)) or (c2 and c2:IsCode(60150798)) then
+        return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+            and Duel.IsExistingMatchingCard(c60150731.spfilter1,tp,LOCATION_ONFIELD,0,1,nil,tp,fc)
+    else
+        return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
+            and Duel.IsExistingMatchingCard(c60150731.spfilter1,tp,LOCATION_ONFIELD,0,1,nil,tp,fc)
+    end
 end
 function c60150731.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(60150731,0))
-		local g1=Duel.SelectMatchingCard(tp,c60150731.spfilter1,tp,LOCATION_MZONE,0,1,1,nil,tp,c)
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(60150731,1))
-		local g2=Duel.SelectMatchingCard(tp,c60150731.spfilter2,tp,LOCATION_ONFIELD,0,1,1,g1:GetFirst(),c)
-		g1:Merge(g2)
-		c:SetMaterial(g1)
-		Duel.Release(g1,REASON_COST+REASON_FUSION+REASON_MATERIAL)
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(60150731,0))
-		local g1=Duel.SelectMatchingCard(tp,c60150731.spfilter1,tp,LOCATION_ONFIELD,0,1,1,nil,tp,c)
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(60150731,1))
-		local g2=Duel.SelectMatchingCard(tp,c60150731.spfilter2,tp,LOCATION_ONFIELD,0,1,1,g1:GetFirst(),c)
-		g1:Merge(g2)
-		c:SetMaterial(g1)
-		Duel.Release(g1,REASON_COST+REASON_FUSION+REASON_MATERIAL)
+    if Duel.GetLocationCount(tp,LOCATION_MZONE)==0 then
+        Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(60150731,0))
+        local g1=Duel.SelectMatchingCard(tp,c60150731.spfilter1,tp,LOCATION_MZONE,0,1,1,nil,tp,c)
+        Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(60150731,1))
+        local g2=Duel.SelectMatchingCard(tp,c60150731.spfilter2,tp,LOCATION_ONFIELD,0,1,1,g1:GetFirst(),c)
+        g1:Merge(g2)
+        c:SetMaterial(g1)
+        Duel.Release(g1,REASON_COST+REASON_FUSION+REASON_MATERIAL)
+    else
+        Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(60150731,0))
+        local g1=Duel.SelectMatchingCard(tp,c60150731.spfilter1,tp,LOCATION_ONFIELD,0,1,1,nil,tp,c)
+        Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(60150731,1))
+        local g2=Duel.SelectMatchingCard(tp,c60150731.spfilter2,tp,LOCATION_ONFIELD,0,1,1,g1:GetFirst(),c)
+        g1:Merge(g2)
+        c:SetMaterial(g1)
+        Duel.Release(g1,REASON_COST+REASON_FUSION+REASON_MATERIAL)
     end
 end
 function c60150731.filter(c)
@@ -108,10 +113,10 @@ function c60150731.disop(e,tp,eg,ep,ev,re,r,rp)
     if tc:IsRelateToEffect(e) and tc:IsFaceup() and not tc:IsDisabled() and tc:IsControler(1-tp) then
         Duel.NegateRelatedChain(tc,RESET_TURN_SET)
         local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.Stringid(60150731,2))
+        e1:SetDescription(aux.Stringid(60150731,2))
         e1:SetType(EFFECT_TYPE_SINGLE)
         e1:SetCode(EFFECT_DISABLE)
-		e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+        e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
         e1:SetReset(RESET_EVENT+0x1fe0000)
         tc:RegisterEffect(e1)
         local e2=Effect.CreateEffect(c)
@@ -120,12 +125,12 @@ function c60150731.disop(e,tp,eg,ep,ev,re,r,rp)
         e2:SetValue(RESET_TURN_SET)
         e2:SetReset(RESET_EVENT+0x1fe0000)
         tc:RegisterEffect(e2)
-		local e3=Effect.CreateEffect(c)
+        local e3=Effect.CreateEffect(c)
         e3:SetType(EFFECT_TYPE_SINGLE)
         e3:SetCode(EFFECT_CANNOT_ATTACK)
         e3:SetReset(RESET_EVENT+0x1fe0000)
         tc:RegisterEffect(e3)
-		tc:RegisterFlagEffect(60150731,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(60150731,3))
+        tc:RegisterFlagEffect(60150731,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(60150731,3))
     end
 end
 function c60150731.discost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -142,7 +147,7 @@ function c60150731.filter2(c)
 end
 function c60150731.distg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chk==0 then return Duel.IsExistingTarget(c60150731.filter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) 
-		and Duel.IsPlayerCanDraw(tp,1) end
+        and Duel.IsPlayerCanDraw(tp,1) end
     local g=Duel.GetMatchingGroup(c60150731.filter2,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
     Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
     Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,g:GetCount()*1000)
@@ -155,6 +160,6 @@ function c60150731.disop2(e,tp,eg,ep,ev,re,r,rp)
     if ct>0 then
         Duel.BreakEffect()
         Duel.Damage(1-tp,ct*1000,REASON_EFFECT)
-		Duel.Draw(tp,1,REASON_EFFECT)
+        Duel.Draw(tp,1,REASON_EFFECT)
     end
 end

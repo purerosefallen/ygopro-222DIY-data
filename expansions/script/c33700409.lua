@@ -9,6 +9,10 @@ function scard.initial_effect(c)
     e1:SetType(EFFECT_TYPE_ACTIVATE)
     e1:SetCode(EVENT_FREE_CHAIN)
     e1:SetTarget(scard.regtg)
+	e1:SetCost(function(e,tp,eg,ep,ev,re,r,rp,chk)
+    if chk==0 then return true end
+    Duel.Hint(HINT_MUSIC,0,aux.Stringid(33700409,6))
+    end)
     c:RegisterEffect(e1)
     --indes
     local e2 = Effect.CreateEffect(c)
@@ -27,40 +31,61 @@ function scard.initial_effect(c)
     e3:SetTargetRange(1, 0)
     e3:SetValue(scard.efilter)
     c:RegisterEffect(e3)
-    --Special Summon token
+    --cannot set
     local e4 = Effect.CreateEffect(c)
-    e4:SetCategory(CATEGORY_SPECIAL_SUMMON + CATEGORY_TOKEN)
-    e4:SetType(EFFECT_TYPE_IGNITION)
+    e4:SetType(EFFECT_TYPE_FIELD)
+    e4:SetCode(EFFECT_CANNOT_SSET)
+    e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
     e4:SetRange(LOCATION_FZONE)
-    e4:SetProperty(EFFECT_FLAG_BOTH_SIDE)
-    e4:SetTarget(scard.tktg)
-    e4:SetOperation(scard.tkop)
+    e4:SetTargetRange(1, 0)
+    e4:SetTarget(scard.setfilter)
     c:RegisterEffect(e4)
-    --cannot special summon
+    --Special Summon token
     local e5 = Effect.CreateEffect(c)
-    e5:SetType(EFFECT_TYPE_FIELD)
+    e5:SetCategory(CATEGORY_SPECIAL_SUMMON + CATEGORY_TOKEN)
+    e5:SetType(EFFECT_TYPE_IGNITION)
     e5:SetRange(LOCATION_FZONE)
-    e5:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-    e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-    e5:SetTargetRange(1, 0)
-    e5:SetTarget(scard.splimit)
+    e5:SetProperty(EFFECT_FLAG_BOTH_SIDE)
+    e5:SetTarget(scard.tktg)
+    e5:SetOperation(scard.tkop)
     c:RegisterEffect(e5)
-    --cannot link material
+    --cannot special summon
     local e6 = Effect.CreateEffect(c)
     e6:SetType(EFFECT_TYPE_FIELD)
-    e6:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
-    e6:SetTargetRange(LOCATION_MZONE, LOCATION_MZONE)
-    e6:SetTarget(aux.TargetBoolFunction(Card.IsCode, id + 1))
-    e6:SetValue(1)
+    e6:SetRange(LOCATION_FZONE)
+    e6:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+    e6:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+    e6:SetTargetRange(1, 0)
+    e6:SetTarget(scard.splimit)
     c:RegisterEffect(e6)
-    --release all
+    --cannot link material
     local e7 = Effect.CreateEffect(c)
-    e7:SetCategory(CATEGORY_RECOVER)
-    e7:SetType(EFFECT_TYPE_TRIGGER_F + EFFECT_TYPE_SINGLE)
-    e7:SetCode(EVENT_LEAVE_FIELD)
-    e7:SetTarget(scard.reltg)
-    e7:SetOperation(scard.relop)
+    e7:SetType(EFFECT_TYPE_FIELD)
+    e7:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+    e7:SetTargetRange(LOCATION_MZONE, LOCATION_MZONE)
+    e7:SetTarget(aux.TargetBoolFunction(Card.IsCode, id + 1))
+    e7:SetValue(1)
     c:RegisterEffect(e7)
+    --release all
+    local e8 = Effect.CreateEffect(c)
+    e8:SetCategory(CATEGORY_RECOVER)
+    e8:SetType(EFFECT_TYPE_TRIGGER_F + EFFECT_TYPE_SINGLE)
+    e8:SetCode(EVENT_LEAVE_FIELD)
+    e8:SetTarget(scard.reltg)
+    e8:SetOperation(scard.relop)
+    c:RegisterEffect(e8)
+    --oops tcg didn't ban cannon soldier
+    local e9 = Effect.CreateEffect(c)
+    e9:SetType(EFFECT_TYPE_FIELD)
+    e9:SetCode(EFFECT_CHANGE_DAMAGE)
+    e9:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+    e9:SetRange(LOCATION_FZONE)
+    e9:SetTargetRange(1, 1)
+    e9:SetValue(scard.damval)
+    c:RegisterEffect(e9)
+    local ea = e9:Clone()
+    ea:SetCode(EFFECT_NO_EFFECT_DAMAGE)
+    c:RegisterEffect(ea)
     if not scard.global_check then
         scard.global_check = true
         scard[0] = 0
@@ -71,6 +96,9 @@ function scard.initial_effect(c)
 end
 function scard.efilter(e, re, tp)
     return re:GetHandler():IsType(TYPE_FIELD) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+end
+function scard.setfilter(e, c)
+    return c:IsType(TYPE_FIELD)
 end
 function scard.regtg(e, tp, eg, ep, ev, re, r, rp, chk)
     if chk == 0 then
@@ -243,8 +271,9 @@ function scard.relfilter(c)
 end
 function scard.reltg(e, tp, eg, ep, ev, re, r, rp, chk)
     scard.release_check = true
+    local c = e:GetHandler()
     if chk == 0 then
-        return not e:GetHandler():IsLocation(LOCATION_DECK) and not (c:IsLocation(LOCATION_REMOVED) and c:IsFacedown())
+        return not c:IsLocation(LOCATION_DECK) and not (c:IsLocation(LOCATION_REMOVED) and c:IsFacedown())
     end
     local g = Duel.GetMatchingGroup(scard.relfilter, tp, LOCATION_MZONE, LOCATION_MZONE, nil)
     Duel.SetOperationInfo(0, CATEGORY_RELEASE, g, #g, 0, 0)
@@ -262,4 +291,10 @@ function scard.relop(e, tp, eg, ep, ev, re, r, rp)
         Duel.Recover(1 - tp, atk, REASON_EFFECT)
     end
     scard.release_check = false
+end
+function scard.damval(e, re, val, r, rp, rc)
+    if r & REASON_EFFECT ~= 0 then
+        return 0
+    end
+    return val
 end
