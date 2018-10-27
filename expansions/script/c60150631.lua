@@ -86,22 +86,22 @@ function c60150631.operation(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     local bc=c:GetBattleTarget()
     local atk=bc:GetAttack()
-    local def=bc:GetDefence()
+    local def=bc:GetDefense()
     if c:IsFaceup() and c:IsRelateToBattle() and bc:IsFaceup() and bc:IsRelateToBattle() then
         if atk>def then
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(atk/2)
-			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-			c:RegisterEffect(e1)
-		else
-			local e1=Effect.CreateEffect(c)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_UPDATE_ATTACK)
-			e1:SetValue(def/2)
-			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
-			c:RegisterEffect(e1)
-		end
+            local e1=Effect.CreateEffect(c)
+            e1:SetType(EFFECT_TYPE_SINGLE)
+            e1:SetCode(EFFECT_UPDATE_ATTACK)
+            e1:SetValue(atk/2)
+            e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+            c:RegisterEffect(e1)
+        else
+            local e1=Effect.CreateEffect(c)
+            e1:SetType(EFFECT_TYPE_SINGLE)
+            e1:SetCode(EFFECT_UPDATE_ATTACK)
+            e1:SetValue(def/2)
+            e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+            c:RegisterEffect(e1)
+        end
     end
 end
