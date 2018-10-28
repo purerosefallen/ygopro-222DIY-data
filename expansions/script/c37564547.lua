@@ -120,6 +120,7 @@ function cm.syncon(e,c,tuner,mg)
 	end
 end
 function cm.syntg(e,tp,eg,ep,ev,re,r,rp,chk,c,tuner,mg)
+	local c=c or e:GetHandler()
 	local minc=2
 	local maxc=c:GetLevel()
 	local g1=nil
