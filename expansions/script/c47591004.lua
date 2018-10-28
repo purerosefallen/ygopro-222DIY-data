@@ -2,11 +2,11 @@
 local m=47591004
 local cm=_G["c"..m]
 function c47591004.initial_effect(c)
+    c:SetUniqueOnField(1,0,47591004)
     --Activate
     local e1=Effect.CreateEffect(c)
     e1:SetType(EFFECT_TYPE_ACTIVATE)
     e1:SetCode(EVENT_FREE_CHAIN)
-    e1:SetCountLimit(1,47591004)
     c:RegisterEffect(e1)
     --damage
     local e2=Effect.CreateEffect(c)
@@ -16,7 +16,7 @@ function c47591004.initial_effect(c)
     e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
     e2:SetCode(EVENT_DAMAGE)
     e2:SetRange(LOCATION_SZONE)
-    e2:SetCountLimit(1)
+    e2:SetCountLimit(2)
     e2:SetCondition(c47591004.con)
     e2:SetTarget(c47591004.tg)
     e2:SetOperation(c47591004.op)
@@ -31,7 +31,7 @@ end
 function c47591004.tg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return true end
     Duel.SetTargetPlayer(1-tp)
-    Duel.SetTargetParam(1600)
+    Duel.SetTargetParam(ev)
     Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1600)
 end
 function c47591004.op(e,tp,eg,ep,ev,re,r,rp)

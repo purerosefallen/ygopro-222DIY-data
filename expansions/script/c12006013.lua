@@ -26,7 +26,7 @@ function c12006013.filter1(c,e)
 	return not c:IsImmuneToEffect(e)
 end
 function c12006013.filter2(c,e,tp,m,f,chkf)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0xfbd) and (not f or f(c))
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x8fbd) and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,true,true) and c:CheckFusionMaterial(m,nil,chkf)
 end
 function c12006013.filter4(c,e)
@@ -94,7 +94,7 @@ function c12006013.thfilter(c,atk,race)
 	return c:IsType(TYPE_MONSTER) and c:GetAttack()==atk and c:GetRace()==race and c:IsAbleToHand()
 end
 function c12006013.filter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0xfbd) and Duel.IsExistingMatchingCard(c12006013.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetAttack(),c:GetRace())
+	return c:IsFaceup() and c:IsSetCard(0x8fbd) and Duel.IsExistingMatchingCard(c12006013.thfilter,tp,LOCATION_DECK,0,1,nil,c:GetAttack(),c:GetRace())
 end
 function c12006013.chkfilter(c,lv,race)
 	return c:IsFaceup() and c:GetAttack()==atk

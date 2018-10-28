@@ -10,7 +10,64 @@ function c47511101.initial_effect(c)
     e1:SetCountLimit(1,47511101+EFFECT_COUNT_CODE_OATH)
     e1:SetTarget(c47511101.target)
     e1:SetOperation(c47511101.activate)
-    c:RegisterEffect(e1)  
+    c:RegisterEffect(e1) 
+    local e2=Effect.CreateEffect(c)
+    e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+    e2:SetCode(EVENT_CHAIN_SOLVING)
+    e2:SetRange(LOCATION_GRAVE)
+    e2:SetCondition(c47511101.discon)
+    e2:SetOperation(c47511101.disop)
+    c:RegisterEffect(e2)  
+end
+c47511101.list={
+        CATEGORY_DESTROY,
+        CATEGORY_RELEASE,
+        CATEGORY_REMOVE,
+        CATEGORY_TOHAND,
+        CATEGORY_TODECK,
+        CATEGORY_TOGRAVE,
+        CATEGORY_DECKDES,
+        CATEGORY_HANDES,
+        CATEGORY_POSITION,
+        CATEGORY_CONTROL,
+        CATEGORY_DISABLE,
+        CATEGORY_DISABLE_SUMMON,
+        CATEGORY_EQUIP,
+        CATEGORY_DAMAGE,
+        CATEGORY_RECOVER,
+        CATEGORY_ATKCHANGE,
+        CATEGORY_DEFCHANGE,
+        CATEGORY_COUNTER,
+        CATEGORY_LVCHANGE,
+        CATEGORY_NEGATE,
+}
+function c47511101.nfilter(c)
+    return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsType(TYPE_PENDULUM)
+end
+function c47511101.discon2(e,tp,eg,ep,ev,re,r,rp)
+    local c=e:GetHandler()
+    if e:GetHandler():GetFlagEffect(47510255)~=0 then return end
+    if not rp==1-tp then return end
+    if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or not Duel.IsChainNegatable(ev) then return false end
+    if c47511101.nfilter(re:GetHandler()) then return true end
+    local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
+    if g and g:IsExists(c47511101.nfilter,1,nil) then return true end
+    local res,ceg,cep,cev,re,r,rp=Duel.CheckEvent(re:GetCode())
+    if res and ceg and ceg:IsExists(c47511101.nfilter,1,nil) then return true end
+    for i,ctg in pairs(c47511101.list) do
+        local ex,tg,ct,p,v=Duel.GetOperationInfo(ev,ctg)
+        if tg then
+            if tg:IsExists(c47511101.nfilter,1,c) then return true end
+        elseif v and v>0 and Duel.IsExistingMatchingCard(c47511101.nfilter,tp,v,0,1,nil) then
+            return true
+        end
+    end
+    return false
+end
+function c47511101.disop2(e,tp,eg,ep,ev,re,r,rp)
+    local c=e:GetHandler()
+    Duel.NegateEffect(ev)
+    Duel.Remove(c,POS_FACEUP,REASON_EFFECT)
 end
 function c47511101.filter1(c,e)
     return c:IsAbleToGrave() and not c:IsImmuneToEffect(e)
@@ -25,7 +82,7 @@ function c47511101.exfilter1(c,e)
     return c:IsFaceup() and c:IsCanBeFusionMaterial() and c:IsAbleToGrave() and not c:IsImmuneToEffect(e)
 end
 function c47511101.filter2(c,e,tp,m,f,chkf)
-    return c:IsType(TYPE_FUSION) and c:IsSetCard(0x5da) and c:IsType(TYPE_PENDULUM) and (not f or f(c))
+    return c:IsType(TYPE_FUSION) and c:IsType(TYPE_PENDULUM) and (not f or f(c))
         and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
 function c47511101.fcheck(tp,sg,fc)

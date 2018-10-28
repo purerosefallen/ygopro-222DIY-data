@@ -69,16 +69,25 @@ function c47511003.filter(c)
 end
 function c47511003.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chkc then return chkc:IsLocation(LOCATION_MZONE) and c47511003.filter(chkc) and chkc~=e:GetHandler() end
-    if chk==0 then return Duel.IsExistingTarget(c47511003.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-    Duel.SelectTarget(tp,c47511003.filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler())
+    if chk==0 then return Duel.IsExistingMatchingCard(c47511003.filter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_EXTRA,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_EXTRA,1,e:GetHandler()) end
 end
 function c47511003.operation(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
+    local g=Duel.SelectMatchingCard(tp,c47511003.filter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_EXTRA,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_EXTRA,1,1,nil)
     local tc=Duel.GetFirstTarget()
     if tc and c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+        local f=Card.RegisterEffect
+        Card.RegisterEffect=function(tc,e,forced)
+            if e:IsHasType(EFFECT_TYPE_IGNITION) then
+                e:SetType((e:GetType()-EFFECT_TYPE_IGNITION | EFFECT_TYPE_QUICK_O))
+                e:SetCode(EVENT_FREE_CHAIN)
+                e:SetHintTiming(0,0x1c0)
+            end
+            f(tc,e,forced)
+        end
         local code=tc:GetOriginalCode()
         c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
+        Card.RegisterEffect=f
     end
 end
 function c47511003.pencon(e,tp,eg,ep,ev,re,r,rp)

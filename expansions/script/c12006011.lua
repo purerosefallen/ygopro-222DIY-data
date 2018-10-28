@@ -30,7 +30,7 @@ function cm.MergeCard(g,p,loc,seq)
 	end
 end
 function cm.filter(c,e,tp,zones)
-	return c:IsSetCard(0xfbd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK,1-tp)
+	return c:IsSetCard(0x8fbd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_ATTACK,1-tp)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -60,7 +60,7 @@ end
 function cm.tdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Draw(tp,1,REASON_EFFECT)
 	local tc=Duel.GetOperatedGroup():GetFirst()
-	if tc and tc:IsSetCard(0xfbd) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.SelectYesNo(tp,m*16) then
+	if tc and tc:IsSetCard(0x8fbd) and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.SelectYesNo(tp,m*16) then
 		Duel.BreakEffect()
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end

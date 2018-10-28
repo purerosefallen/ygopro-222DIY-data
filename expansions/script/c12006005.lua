@@ -20,7 +20,7 @@ function c12006005.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c12006005.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xfbd)
+	return c:IsFaceup() and c:IsSetCard(0x8fbd)
 end
 function c12006005.spcon2(e,c)
 	if c==nil then return true end
@@ -29,7 +29,7 @@ function c12006005.spcon2(e,c)
 		and Duel.IsExistingMatchingCard(c12006005.cfilter,tp,0,LOCATION_MZONE,1,nil)
 end
 function c12006005.filter(c,e,tp)
-	return c:IsAttackBelow(1500) and c:IsSetCard(0xfbd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsAttackBelow(1500) and c:IsSetCard(0x8fbd) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c12006005.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

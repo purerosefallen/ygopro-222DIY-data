@@ -15,7 +15,7 @@ function c12006002.initial_effect(c)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTargetRange(LOCATION_MZONE,0)
-	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0xfbd))
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x8fbd))
 	e3:SetValue(c12006002.atkval)
 	c:RegisterEffect(e3)
    
@@ -30,7 +30,7 @@ function c12006002.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c12006002.actfilter(c,tp)
-	return c and c:IsFaceup() and c:IsSetCard(0xfbd) and c:IsType(TYPE_MONSTER)
+	return c and c:IsFaceup() and c:IsSetCard(0x8fbd) and c:IsType(TYPE_MONSTER)
 end
 function c12006002.aclimit(e,re,tp)
 	return not re:GetHandler():IsImmuneToEffect(e)
@@ -40,7 +40,7 @@ function c12006002.actcon(e)
 	return c12006002.actfilter(Duel.GetAttacker(),tp) or c12006002.actfilter(Duel.GetAttackTarget(),tp)
 end
 function c12006002.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xfbd) and c:GetCode()~=12006002
+	return c:IsFaceup() and c:IsSetCard(0x8fbd) and c:GetCode()~=12006002
 end
 function c12006002.spcon(e,c)
 	if c==nil then return true end
@@ -48,7 +48,7 @@ function c12006002.spcon(e,c)
 		Duel.IsExistingMatchingCard(c12006002.filter,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function c12006002.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xfbd)
+	return c:IsFaceup() and c:IsSetCard(0x8fbd)
 end
 function c12006002.atkval(e,c)
 	return Duel.GetMatchingGroupCount(c12006002.atkfilter,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil)*200

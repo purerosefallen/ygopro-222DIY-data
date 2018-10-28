@@ -97,6 +97,13 @@ function c47510084.initial_effect(c)
     e14:SetTarget(c47510084.pentg)
     e14:SetOperation(c47510084.penop)
     c:RegisterEffect(e14)
+    --control
+    local e15=Effect.CreateEffect(c)
+    e15:SetType(EFFECT_TYPE_SINGLE)
+    e15:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+    e15:SetRange(LOCATION_MZONE)
+    e15:SetCode(EFFECT_CANNOT_CHANGE_CONTROL)
+    c:RegisterEffect(e15)
 end
 function c47510084.efilter1(e,te)
     return te:GetOwner()~=e:GetOwner()
@@ -162,7 +169,7 @@ function c47510084.rmcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c47510084.rmop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    local sg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
+    local sg=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,e:GetHandler())
     if sg:GetCount()>0 then
         Duel.Remove(sg,POS_FACEDOWN,REASON_EFFECT)
     end

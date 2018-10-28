@@ -16,7 +16,7 @@ function cm.thfilter(c)
 end
 function cm.stdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
-	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(tp) and cm.thfilter(chkc) end
+	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and cm.thfilter(chkc) end
 	if chk==0 then
 		local checknum=0
 		local e1_2=Effect.CreateEffect(c)
@@ -29,12 +29,12 @@ function cm.stdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		local ce=c:GetActivateEffect()
 		if ce:IsActivatable(tp,false,true) then checknum=1 end
 		e1_2:Reset()
-		return checknum==1 and Duel.IsExistingTarget(cm.thfilter,tp,LOCATION_ONFIELD,0,1,c) and not c:IsForbidden()
+		return checknum==1 and Duel.IsExistingTarget(cm.thfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,c) and not c:IsForbidden()
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectTarget(tp,cm.tdfilter,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler())
+	local g=Duel.SelectTarget(tp,cm.tdfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,c)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g1,2,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,e:GetHandler(),1,tp,LOCATION_SZONE)
+	Duel.SetOperationInfo(0,CATEGORY_TOEXTRA,c,1,tp,LOCATION_SZONE)
 	c:CancelToGrave(false)
 end
 function cm.stdop(e,tp,eg,ep,ev,re,r,rp)

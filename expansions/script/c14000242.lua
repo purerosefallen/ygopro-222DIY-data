@@ -56,7 +56,7 @@ function cm.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,2,tp,LOCATION_EXTRA)
 end
 function cm.warfilter(c,e,tp)
-	return c:GetFlagEffect(14000241)~=0 and c:IsType(TYPE_MONSTER)
+	return c:GetFlagEffect(14000241)~=0 and c:IsType(TYPE_MONSTER) and Duel.IsExistingMatchingCard(cm.spfilter1,tp,LOCATION_GRAVE,0,1,c,e,tp)
 end
 function cm.spfilter1(c,e,tp)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -74,7 +74,7 @@ function cm.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if g1:GetCount()<=0 then return end
 	if Duel.SendtoGrave(g1,REASON_EFFECT)~=0 then
 		if tc and tc:IsLocation(LOCATION_GRAVE) then
-			if Duel.GetFieldGroupCount(tp,LOCATION_GRAVE,0)>1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.GetMatchingGroupCount(cm.warfilter,tp,LOCATION_GRAVE,0,nil,nil)>0 and Duel.SelectYesNo(tp,aux.Stringid(m,2)) then
+			if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(cm.warfilter1,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.SelectYesNo(tp,aux.Stringid(m,2)) then
 				Duel.BreakEffect()
 				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 				local g=Duel.SelectMatchingCard(tp,cm.warfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
@@ -100,7 +100,7 @@ function cm.tgop(e,tp,eg,ep,ev,re,r,rp)
 			end
 		end
 		if tc1 and tc1:IsLocation(LOCATION_GRAVE) then
-			if Duel.GetFieldGroupCount(1-tp,LOCATION_GRAVE,0)>1 and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 and Duel.GetMatchingGroupCount(cm.warfilter,1-tp,LOCATION_GRAVE,0,nil,nil)>0 and Duel.SelectYesNo(1-tp,aux.Stringid(m,2)) then
+			if Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(cm.warfilter1,1-tp,LOCATION_GRAVE,0,1,nil,e,1-tp) and Duel.SelectYesNo(1-tp,aux.Stringid(m,2)) then
 				Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_REMOVE)
 				local g=Duel.SelectMatchingCard(1-tp,cm.warfilter,1-tp,LOCATION_GRAVE,0,1,1,nil,e,1-tp)
 				if g:GetCount()>0 then

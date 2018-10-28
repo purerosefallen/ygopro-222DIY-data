@@ -14,6 +14,33 @@ function c65020023.initial_effect(c)
 	e2:SetDescription(aux.Stringid(65020023,2))
 	e2:SetOperation(c65020023.ac2)
 	c:RegisterEffect(e2)
+	--reward
+	local e3=Effect.CreateEffect(c)
+	e3:SetCategory(CATEGORY_DRAW)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetCode(EVENT_TO_GRAVE)
+	e3:SetCondition(c65020023.drcon)
+	e3:SetTarget(c65020023.drtg)
+	e3:SetOperation(c65020023.drop)
+	c:RegisterEffect(e3)
+	local e4=e3:Clone()
+	e4:SetCode(EVENT_REMOVE)
+	c:RegisterEffect(e4)
+end
+function c65020023.drcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN) and c:GetReasonPlayer()~=tp
+end
+function c65020023.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetTargetPlayer(1-tp)
+	Duel.SetTargetParam(2)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
+end
+function c65020023.drop(e,tp,eg,ep,ev,re,r,rp)
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	Duel.Draw(p,d,REASON_EFFECT)
 end
 function c65020023.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xda5)

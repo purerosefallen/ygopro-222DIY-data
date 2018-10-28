@@ -58,6 +58,7 @@ end
 function cm.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetFieldGroupCount(tp,LOCATION_EXTRA,0)<=0 and Duel.GetFieldGroupCount(1-tp,LOCATION_EXTRA,0)<=0 then return end
+	local type=TYPE_RITUAL+TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_PENDULUM+TYPE_LINK
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
@@ -68,90 +69,41 @@ function cm.tgop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		local tc=g:GetFirst()
 		while tc do
-			local ct=nil
-			if tc:IsType(TYPE_RITUAL) then
-				ct=TYPE_RITUAL
-				c:RegisterFlagEffect(0,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(m,2))
-				local e1=Effect.CreateEffect(c)
-				e1:SetType(EFFECT_TYPE_FIELD)
-				e1:SetRange(LOCATION_ONFIELD)
-				e1:SetCode(EFFECT_IMMUNE_EFFECT)
-				e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-				e1:SetLabel(ct)
-				e1:SetReset(RESET_EVENT+0x1fe0000)
-				e1:SetTarget(cm.etarget)
-				e1:SetValue(cm.efilter)
-				c:RegisterEffect(e1,true)
-			end
-			if tc:IsType(TYPE_FUSION) then
-				ct=TYPE_FUSION
-				c:RegisterFlagEffect(0,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(m,3))
-				local e1=Effect.CreateEffect(c)
-				e1:SetType(EFFECT_TYPE_FIELD)
-				e1:SetRange(LOCATION_ONFIELD)
-				e1:SetCode(EFFECT_IMMUNE_EFFECT)
-				e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-				e1:SetLabel(ct)
-				e1:SetReset(RESET_EVENT+0x1fe0000)
-				e1:SetTarget(cm.etarget)
-				e1:SetValue(cm.efilter)
-				c:RegisterEffect(e1,true)
-			end
-			if tc:IsType(TYPE_SYNCHRO) then
-				ct=TYPE_SYNCHRO
-				c:RegisterFlagEffect(0,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(m,4))
-				local e1=Effect.CreateEffect(c)
-				e1:SetType(EFFECT_TYPE_FIELD)
-				e1:SetRange(LOCATION_ONFIELD)
-				e1:SetCode(EFFECT_IMMUNE_EFFECT)
-				e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-				e1:SetLabel(ct)
-				e1:SetReset(RESET_EVENT+0x1fe0000)
-				e1:SetTarget(cm.etarget)
-				e1:SetValue(cm.efilter)
-				c:RegisterEffect(e1,true)
-			end
-			if tc:IsType(TYPE_XYZ) then
-				ct=TYPE_XYZ 
-				c:RegisterFlagEffect(0,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(m,5))
-				local e1=Effect.CreateEffect(c)
-				e1:SetType(EFFECT_TYPE_FIELD)
-				e1:SetRange(LOCATION_ONFIELD)
-				e1:SetCode(EFFECT_IMMUNE_EFFECT)
-				e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-				e1:SetLabel(ct)
-				e1:SetReset(RESET_EVENT+0x1fe0000)
-				e1:SetTarget(cm.etarget)
-				e1:SetValue(cm.efilter)
-				c:RegisterEffect(e1,true)
-			end
-			if tc:IsType(TYPE_PENDULUM) then
-				ct=TYPE_PENDULUM
-				c:RegisterFlagEffect(0,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(m,6))
-				local e2=Effect.CreateEffect(c)
-				e2:SetType(EFFECT_TYPE_FIELD)
-				e2:SetRange(LOCATION_ONFIELD)
-				e2:SetCode(EFFECT_IMMUNE_EFFECT)
-				e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-				e2:SetLabel(ct)
-				e2:SetReset(RESET_EVENT+0x1fe0000)
-				e2:SetTarget(cm.etarget)
-				e2:SetValue(cm.efilter)
-				c:RegisterEffect(e2,true)
-			end
-			if tc:IsType(TYPE_LINK) then
-				ct=TYPE_LINK
-				c:RegisterFlagEffect(0,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(m,7))
-				local e1=Effect.CreateEffect(c)
-				e1:SetType(EFFECT_TYPE_FIELD)
-				e1:SetRange(LOCATION_ONFIELD)
-				e1:SetCode(EFFECT_IMMUNE_EFFECT)
-				e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
-				e1:SetLabel(ct)
-				e1:SetReset(RESET_EVENT+0x1fe0000)
-				e1:SetTarget(cm.etarget)
-				e1:SetValue(cm.efilter)
-				c:RegisterEffect(e1,true)
+			local ct=0
+			if tc and tc:IsLocation(LOCATION_GRAVE) then
+				if bit.band(type,tc:GetType())~=0 then
+					ct=bit.band(type,tc:GetType())
+				end
+				if ct~=0 then
+					if tc:IsType(TYPE_RITUAL) then
+						c:RegisterFlagEffect(0,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(m,2))
+					end
+					if tc:IsType(TYPE_FUSION) then
+						c:RegisterFlagEffect(0,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(m,3))
+					end
+					if tc:IsType(TYPE_SYNCHRO) then
+						c:RegisterFlagEffect(0,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(m,4))
+					end
+					if tc:IsType(TYPE_XYZ) then
+						c:RegisterFlagEffect(0,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(m,5))
+					end
+					if tc:IsType(TYPE_PENDULUM) then
+						c:RegisterFlagEffect(0,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(m,6))
+					end
+					if tc:IsType(TYPE_LINK) then
+						c:RegisterFlagEffect(0,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(m,7))
+					end
+					local e1=Effect.CreateEffect(c)
+					e1:SetType(EFFECT_TYPE_FIELD)
+					e1:SetRange(LOCATION_ONFIELD)
+					e1:SetCode(EFFECT_IMMUNE_EFFECT)
+					e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+					e1:SetLabel(ct)
+					e1:SetReset(RESET_EVENT+0x1fe0000)
+					e1:SetTarget(cm.etarget)
+					e1:SetValue(cm.efilter)
+					c:RegisterEffect(e1,true)
+				end
 			end
 			tc=g:GetNext()
 		end

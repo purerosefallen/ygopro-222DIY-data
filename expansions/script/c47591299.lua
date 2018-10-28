@@ -3,23 +3,19 @@ local m=47591299
 local cm=_G["c"..m]
 function c47591299.initial_effect(c)
     --synchro summon
-    aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_WIND),aux.NonTuner(nil),1)
+    aux.AddSynchroProcedure(c,nil,aux.NonTuner(c47591299.synfilter),1)
     c:EnableReviveLimit()
     --检索
     local e1=Effect.CreateEffect(c)
     e1:SetDescription(aux.Stringid(47591299,1))
     e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-    e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-    e1:SetCode(EVENT_SUMMON_SUCCESS)
+    e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+    e1:SetCode(EVENT_SPSUMMON_SUCCESS)
     e1:SetProperty(EFFECT_FLAG_DELAY)
-    e1:SetCountLimit(1,47591299)
     e1:SetCondition(c47591299.poscon)
     e1:SetTarget(c47591299.thtg)
     e1:SetOperation(c47591299.thop)
     c:RegisterEffect(e1)
-    local e2=e1:Clone()
-    e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-    c:RegisterEffect(e2)
     --boost
     local e3=Effect.CreateEffect(c)
     e3:SetType(EFFECT_TYPE_FIELD)
@@ -37,7 +33,6 @@ function c47591299.initial_effect(c)
     e5:SetCode(EFFECT_CANNOT_SELECT_EFFECT_TARGET+EFFECT_INDESTRUCTABLE_EFFECT)
     e5:SetRange(LOCATION_MZONE)
     e5:SetTargetRange(LOCATION_MZONE,0)
-    e5:SetTarget(c47591299.atktg)
     e5:SetValue(EFFECT_CANNOT_SELECT_EFFECT_TARGET+EFFECT_INDESTRUCTABLE_EFFECT)
     c:RegisterEffect(e5)
     --disable
@@ -54,8 +49,8 @@ function c47591299.initial_effect(c)
     e1:SetOperation(c47591299.operation)
     c:RegisterEffect(e1)
 end
-function c47591299.atktg(e,c)
-    return c:IsAttribute(ATTRIBUTE_WIND)
+function c47591299.synfilter(c)
+    return c:IsType(TYPE_SYNCHRO) and c:IsAttribute(ATTRIBUTE_WIND)
 end
 function c47591299.poscon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
@@ -75,10 +70,31 @@ function c47591299.thop(e,tp,eg,ep,ev,re,r,rp)
         Duel.ConfirmCards(1-tp,g)
     end
 end
+function c47591299.distg(e,tp,eg,ep,ev,re,r,rp,chk)
+    if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
+end
+function c47591299.disop(e,tp,eg,ep,ev,re,r,rp)
+    local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+    local tc=g:GetFirst()
+    local c=e:GetHandler()
+    while tc do
+        local e1=Effect.CreateEffect(c)
+        e1:SetType(EFFECT_TYPE_SINGLE)
+        e1:SetCode(EFFECT_DISABLE)
+        e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+        tc:RegisterEffect(e1)
+        local e2=Effect.CreateEffect(c)
+        e2:SetType(EFFECT_TYPE_SINGLE)
+        e2:SetCode(EFFECT_DISABLE_EFFECT)
+        e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+        tc:RegisterEffect(e2)
+        tc=g:GetNext()
+    end
+end
 function c47591299.condition(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     local rc=re:GetHandler()
-    return re:IsActiveType(TYPE_MONSTER) and rc~=c and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and rp==1-tp
+    return re:IsActiveType(TYPE_MONSTER) and rc~=c and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev)
 end
 function c47591299.target(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return true end
@@ -88,7 +104,9 @@ function c47591299.target(e,tp,eg,ep,ev,re,r,rp,chk)
     end
 end
 function c47591299.operation(e,tp,eg,ep,ev,re,r,rp)
-    if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
-        Duel.Destroy(eg,REASON_EFFECT)
+    local c=e:GetHandler()
+    local rc=re:GetHandler()
+    if Duel.NegateActivation(ev) and rc:IsRelateToEffect(re) then
+        Duel.GetControl(rc,tp,PHASE_END,1)
     end
 end

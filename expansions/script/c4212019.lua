@@ -90,8 +90,7 @@ function c4212019.spop(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 function c4212019.spcon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():IsReason(REASON_COST) and re:IsHasType(0x7f0)
-        and re:GetHandler():IsSetCard(0xa2a)
+    return e:GetHandler():IsReason(REASON_COST)
 end
 function c4212019.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 

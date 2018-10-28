@@ -27,7 +27,7 @@ function c12006021.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function c12006021.thfilter(c)
-	return c:IsSetCard(0xfbd) and c:IsAbleToHand()
+	return c:IsSetCard(0x8fbd) and c:IsAbleToHand()
 end
 function c12006021.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c12006021.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -48,7 +48,7 @@ function c12006021.condition(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c12006021.filter(c,e,tp)
-	return c:IsSetCard(0xfbd) and not c:IsCode(12006021) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x8fbd) and not c:IsCode(12006021) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c12006021.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

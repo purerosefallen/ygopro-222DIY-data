@@ -17,6 +17,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e1)
 	--todeck
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(m,1))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCategory(CATEGORY_TODECK+CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e2:SetRange(LOCATION_GRAVE)
@@ -58,6 +59,7 @@ end
 function cm.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetFieldGroupCount(tp,LOCATION_EXTRA,0)<=0 and Duel.GetFieldGroupCount(1-tp,LOCATION_EXTRA,0)<=0 then return end
+	local type=TYPE_RITUAL+TYPE_FUSION+TYPE_SYNCHRO+TYPE_XYZ+TYPE_PENDULUM+TYPE_LINK
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g1=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 	Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_TOGRAVE)
@@ -67,75 +69,12 @@ function cm.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SendtoGrave(g1,REASON_EFFECT)~=0 then
 		local tc=g1:GetFirst()
 		while tc do
+			local ct=0
 			if tc and tc:IsLocation(LOCATION_GRAVE) then
-				local ct=nil
-				if tc:IsType(TYPE_RITUAL) then
-					ct=TYPE_RITUAL 
-					local e1=Effect.CreateEffect(c)
-					e1:SetType(EFFECT_TYPE_FIELD)
-					e1:SetRange(LOCATION_GRAVE)
-					e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-					e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-					e1:SetTargetRange(1,0)
-					e1:SetLabel(ct)
-					e1:SetReset(RESET_EVENT+0x1fe0000)
-					e1:SetTarget(cm.splimit)
-					tc:RegisterEffect(e1)
+				if bit.band(type,tc:GetType())~=0 then
+					ct=bit.band(type,tc:GetType())
 				end
-				if tc:IsType(TYPE_FUSION) then
-					ct=TYPE_FUSION 
-					local e1=Effect.CreateEffect(c)
-					e1:SetType(EFFECT_TYPE_FIELD)
-					e1:SetRange(LOCATION_GRAVE)
-					e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-					e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-					e1:SetTargetRange(1,0)
-					e1:SetLabel(ct)
-					e1:SetReset(RESET_EVENT+0x1fe0000)
-					e1:SetTarget(cm.splimit)
-					tc:RegisterEffect(e1)
-				end
-				if tc:IsType(TYPE_SYNCHRO) then
-					ct=TYPE_SYNCHRO 
-					local e1=Effect.CreateEffect(c)
-					e1:SetType(EFFECT_TYPE_FIELD)
-					e1:SetRange(LOCATION_GRAVE)
-					e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-					e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-					e1:SetTargetRange(1,0)
-					e1:SetLabel(ct)
-					e1:SetReset(RESET_EVENT+0x1fe0000)
-					e1:SetTarget(cm.splimit)
-					tc:RegisterEffect(e1)
-				end
-				if tc:IsType(TYPE_XYZ) then
-					ct=TYPE_XYZ 
-					local e1=Effect.CreateEffect(c)
-					e1:SetType(EFFECT_TYPE_FIELD)
-					e1:SetRange(LOCATION_GRAVE)
-					e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-					e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-					e1:SetTargetRange(1,0)
-					e1:SetLabel(ct)
-					e1:SetReset(RESET_EVENT+0x1fe0000)
-					e1:SetTarget(cm.splimit)
-					tc:RegisterEffect(e1)
-				end
-				if tc:IsType(TYPE_PENDULUM) then
-					ct=TYPE_PENDULUM
-					local e1=Effect.CreateEffect(c)
-					e1:SetType(EFFECT_TYPE_FIELD)
-					e1:SetRange(LOCATION_GRAVE)
-					e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-					e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-					e1:SetTargetRange(1,0)
-					e1:SetLabel(ct)
-					e1:SetReset(RESET_EVENT+0x1fe0000)
-					e1:SetTarget(cm.splimit)
-					tc:RegisterEffect(e1)
-				end
-				if tc:IsType(TYPE_LINK) then
-					ct=TYPE_LINK 
+				if ct~=0 then
 					local e1=Effect.CreateEffect(c)
 					e1:SetType(EFFECT_TYPE_FIELD)
 					e1:SetRange(LOCATION_GRAVE)

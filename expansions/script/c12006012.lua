@@ -10,7 +10,7 @@ function c12006012.initial_effect(c)
 	c:RegisterEffect(e1)
  end
 function c12006012.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xfbd)
+	return c:IsFaceup() and c:IsSetCard(0x8fbd)
 end
 function c12006012.con(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()

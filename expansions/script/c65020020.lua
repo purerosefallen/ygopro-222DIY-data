@@ -18,6 +18,9 @@ function c65020020.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN)
 end
+function c65020020.setfil(c)
+	return c:IsSetCard(0x6da5) and c:IsType(TYPE_TRAP) and c:IsSSetable()
+end
 function c65020020.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local b1=c:GetReasonPlayer()==tp
@@ -26,8 +29,11 @@ function c65020020.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local op=0
 	if b2 then op=1 end
 	e:SetLabel(op)
-	if chk==0 then return (Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,65020025) or Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_FZONE,0,1,nil,65020025)) and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) and ((b1 and Duel.GetFlagEffect(tp,65020020)==0) or b2) end
+	if chk==0 then return (Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,65020025) or Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_FZONE,0,1,nil,65020025)) and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,nil) and ((b1 and Duel.GetFlagEffect(tp,65020020)==0 and Duel.IsExistingMatchingCard(c65020020.setfil,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil)) or b2) end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_ONFIELD)
+end
+function c65020020.stfil(c)
+	return c:IsFacedown() and not c:IsLocation(LOCATION_FZONE)
 end
 function c65020020.spop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()
@@ -35,7 +41,15 @@ function c65020020.spop(e,tp,eg,ep,ev,re,r,rp)
 		local g1=Duel.SelectMatchingCard(1-tp,Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,1,nil)
 		if g1:GetCount()>0 then
 			Duel.HintSelection(g1)
-			Duel.Remove(g1,POS_FACEUP,REASON_EFFECT)
+			if Duel.Remove(g1,POS_FACEUP,REASON_EFFECT)~=0 then
+				local g2=Duel.SelectMatchingCard(tp,c65020020.setfil,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+				if g2:GetCount()>0 then
+					Duel.SSet(tp,g2)
+					Duel.ConfirmCards(1-tp,g2)
+					local ng=Duel.GetMatchingGroup(c65020020.stfil,tp,LOCATION_SZONE,0,1,nil)
+					Duel.ShuffleSetCard(ng)
+				end
+			end
 		end
 		Duel.RegisterFlagEffect(tp,65020020,RESET_PHASE+PHASE_END,0,1)
 	elseif op==1 then

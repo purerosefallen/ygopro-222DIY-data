@@ -24,6 +24,9 @@ end
 function c65020019.spfil2(c,e,tp)
 	return c:IsSetCard(0xda5) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
+function c65020019.setfil(c)
+	return c:IsSetCard(0x6da5) and c:IsType(TYPE_TRAP) and c:IsSSetable()
+end
 function c65020019.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local b1=c:GetReasonPlayer()==tp
@@ -32,7 +35,7 @@ function c65020019.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local op=0
 	if b2 then op=1 end
 	e:SetLabel(op)
-	if chk==0 then return (Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,65020025) or Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_FZONE,0,1,nil,65020025)) and ft>0 and ((b1 and Duel.GetFlagEffect(tp,65020019)==0 and Duel.IsExistingMatchingCard(c65020019.spfil,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp)) or (b2 and Duel.IsExistingMatchingCard(c65020019.spfil2,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp))) end
+	if chk==0 then return (Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,65020025) or Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_FZONE,0,1,nil,65020025)) and ft>0 and ((b1 and Duel.GetFlagEffect(tp,65020019)==0 and Duel.IsExistingMatchingCard(c65020019.spfil,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) and Duel.IsExistingMatchingCard(c65020019.setfil,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil)) or (b2 and Duel.IsExistingMatchingCard(c65020019.spfil2,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp))) end
 	if b1 then
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 	elseif b2 then
@@ -41,6 +44,9 @@ function c65020019.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 	end
 end
+function c65020019.stfil(c)
+	return c:IsFacedown() and not c:IsLocation(LOCATION_FZONE)
+end
 function c65020019.spop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
@@ -48,7 +54,15 @@ function c65020019.spop(e,tp,eg,ep,ev,re,r,rp)
 		if ft>0 then
 		local g1=Duel.SelectMatchingCard(tp,c65020019.spfil,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
 		if g1:GetCount()>0 then
-			Duel.SpecialSummon(g1,0,tp,tp,false,false,POS_FACEUP)
+			if Duel.SpecialSummon(g1,0,tp,tp,false,false,POS_FACEUP)~=0 then
+				local g2=Duel.SelectMatchingCard(tp,c65020019.setfil,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
+				if g2:GetCount()>0 then
+					Duel.SSet(tp,g2)
+					Duel.ConfirmCards(1-tp,g2)
+					local ng=Duel.GetMatchingGroup(c65020019.stfil,tp,LOCATION_SZONE,0,1,nil)
+					Duel.ShuffleSetCard(ng)
+				end
+			end
 		end
 		end
 		Duel.RegisterFlagEffect(tp,65020019,RESET_PHASE+PHASE_END,0,1)

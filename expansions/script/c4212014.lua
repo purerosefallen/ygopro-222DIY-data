@@ -27,7 +27,7 @@ function c4212014.filtergrave(c)
     return c:IsSetCard(0xa2a) and c:IsType(TYPE_MONSTER)
 end
 function c4212014.filterdeck(c)
-    return c:IsSetCard(0xa2a) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+    return c:IsSetCard(0xa2a) and c:IsAbleToHand()
 end
 function c4212014.costfilter(c,tp)
     return c:IsSetCard(0xa2a) and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost()

@@ -7,8 +7,9 @@ function cm.initial_effect(c)
 	c:EnableReviveLimit()
 	--pendulum summon
 	aux.EnablePendulumAttribute(c,false)
-	--atk&def
+	--atk up
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(m,0))
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_UPDATE_ATTACK)
 	e1:SetRange(LOCATION_PZONE)
@@ -17,6 +18,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e1)
 	--to grave
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(m,1))
 	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
@@ -24,8 +26,9 @@ function cm.initial_effect(c)
 	e2:SetCondition(cm.tgcon)
 	e2:SetOperation(cm.tgop)
 	c:RegisterEffect(e2)
-	--atkup
+	--atk up
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(m,2))
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetCode(EFFECT_UPDATE_ATTACK)
@@ -34,6 +37,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e3)
 	--pendulum
 	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(m,3))
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetCode(EVENT_DESTROYED)
 	e4:SetProperty(EFFECT_FLAG_DELAY)

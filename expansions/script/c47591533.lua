@@ -38,18 +38,13 @@ function c47591533.initial_effect(c)
     e4:SetCost(c47591533.cost)
     e4:SetOperation(c47591533.operation)
     c:RegisterEffect(e4)
-    --draw
-    local e7=Effect.CreateEffect(c)
-    e7:SetDescription(aux.Stringid(47591533,2))
-    e7:SetCategory(CATEGORY_SPECIAL_SUMMON)
-    e7:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-    e7:SetProperty(EFFECT_FLAG_DELAY)
-    e7:SetCode(EVENT_TO_GRAVE)
-    e7:SetCountLimit(1)
-    e7:SetCondition(c47591533.drcon)
-    e7:SetTarget(c47591533.drtg)
-    e7:SetOperation(c47591533.drop)
-    c:RegisterEffect(e7)
+    local e5=Effect.CreateEffect(c)
+    e5:SetCategory(CATEGORY_TOGRAVE)
+    e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+    e5:SetCode(EVENT_BATTLE_DESTROYING)
+    e5:SetTarget(c47591533.tgtg)
+    e5:SetOperation(c47591533.tgop)
+    c:RegisterEffect(e5)
 end
 function c47591533.lcheck(g,lc)
     return g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_EARTH)
@@ -101,16 +96,14 @@ function c47591533.operation(e,tp,eg,ep,ev,re,r,rp)
         c:RegisterEffect(e1)
     end
 end
-function c47591533.drcon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
+function c47591533.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+    if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsAbleToGrave() end
+    if chk==0 then return true end
 end
-function c47591533.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
-    Duel.SetTargetPlayer(tp)
-    Duel.SetTargetParam(1)
-    Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
-end
-function c47591533.drop(e,tp,eg,ep,ev,re,r,rp)
-    local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-    Duel.Draw(p,d,REASON_EFFECT)
+function c47591533.tgop(e,tp,eg,ep,ev,re,r,rp)
+    local g=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,0,LOCATION_MZONE,1,1,nil)
+    local tc=g:GetFirst()
+    if tc then
+        Duel.SendtoGrave(tc,REASON_EFFECT)
+    end
 end

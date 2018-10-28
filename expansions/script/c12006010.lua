@@ -29,7 +29,7 @@ function c12006010.initial_effect(c)
 	
 end
 function c12006010.thfilter(c)
-	return c:IsSetCard(0xfbd) and c:IsAbleToHand() and not c:IsCode(12006010)
+	return c:IsSetCard(0x8fbd) and c:IsAbleToHand() and not c:IsCode(12006010)
 end
 function c12006010.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -47,7 +47,7 @@ function c12006010.condition(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp
 end
 function c12006010.filter(c,e,tp)
-	return c:IsSetCard(0xfbd) and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
+	return c:IsSetCard(08fbd) and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function c12006010.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c12006010.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
@@ -71,7 +71,7 @@ function c12006010.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c12006010.cfilter2(c,tp)
-	return c:IsSetCard(0xfbd) and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE)
+	return c:IsSetCard(0x8fbd) and c:IsReason(REASON_DESTROY) and c:IsReason(REASON_BATTLE)
 		and c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
 end
 function c12006010.recon2(e,tp,eg,ep,ev,re,r,rp)

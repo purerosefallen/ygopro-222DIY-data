@@ -40,20 +40,24 @@ function baka.check_set(c,setcode,v,f,...)
 end
 --fool
 function baka.check_set_FragileArticles(c)
-    return baka.check_set(c,"FragileArticles")
+    return baka.check_set(c,"FragileArticles")--玻 离 之 物
 end
 function baka.check_set_FragileLyric(c)
-    return baka.check_set(c,"FragileLyric")
+    return baka.check_set(c,"FragileLyric")--玻 离 乐 章
 end
 --lover
 function baka.check_set_AzayakaSin(c)
-    return baka.check_set(c,"AzakayaSin")
+    return baka.check_set(c,"AzakayaSin")--华 欲
 end
 --magician
 function baka.check_set_MechanicalCrafter(c)
-    return baka.check_set(c,"MechanicalCrafter")
+    return baka.check_set(c,"MechanicalCrafter")--机 匠 工 造
 end
 --judgement
-function baka.check_set_ApocryphaSaver(c)
-    return baka.check_set(c,"ApocryphaSaver")
+function baka.check_set_ApocryphaSavior(c)
+    return baka.check_set(c,"ApocryphaSavior")--外 典 救 世 主
+end
+--
+function baka.check_set_PregnantSwordHime(c)
+    return baka.check_set(c,"PregnantSwordHime")--孕 剑 姬
 end

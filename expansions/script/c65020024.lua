@@ -14,6 +14,33 @@ function c65020024.initial_effect(c)
 	e2:SetDescription(aux.Stringid(65020024,2))
 	e2:SetOperation(c65020024.ac2)
 	c:RegisterEffect(e2)
+	--reward
+	local e3=Effect.CreateEffect(c)
+	e3:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+	e3:SetCode(EVENT_TO_GRAVE)
+	e3:SetCondition(c65020024.drcon)
+	e3:SetTarget(c65020024.drtg)
+	e3:SetOperation(c65020024.drop)
+	c:RegisterEffect(e3)
+	local e4=e3:Clone()
+	e4:SetCode(EVENT_REMOVE)
+	c:RegisterEffect(e4)
+end
+function c65020024.drcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN) and c:GetReasonPlayer()~=tp
+end
+function c65020024.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,1-tp,LOCATION_DECK)
+end
+function c65020024.drop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.SelectMatchingCard(1-tp,Card.IsAbleToHand,1-tp,LOCATION_DECK,0,1,nil)
+	if g:GetCount()>0 then
+		Duel.SendtoHand(g,1-tp,REASON_EFFECT)
+		Duel.ConfirmCards(tp,g)
+	end
 end
 function c65020024.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xda5)
