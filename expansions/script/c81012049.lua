@@ -44,7 +44,7 @@ function c81012049.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c81012049.mfilter(c)
-	return c:IsType(TYPE_RITUAL) and c:IsAbleToRemove()
+	return c:IsType(TYPE_RITUAL) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
 end
 function c81012049.mfilterf(c,tp,mg,rc)
 	if c:IsControler(tp) and c:IsLocation(LOCATION_MZONE) then
@@ -63,7 +63,6 @@ function c81012049.target(e,tp,eg,ep,ev,re,r,rp,chk)
 		return ft>-1 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
-	Duel.Hint(HINT_MUSIC,0,aux.Stringid(81012049,1))
 end
 function c81012049.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -92,6 +91,7 @@ function c81012049.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
 		c:CompleteProcedure()
 	end
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(81012049,1))
 end
 function c81012049.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()

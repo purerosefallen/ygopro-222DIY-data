@@ -61,7 +61,7 @@ end
 function c60151324.desop(e,tp,eg,ep,ev,re,r,rp)
     local g=Duel.GetMatchingGroup(Card.IsAbleToGrave,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
     if g:GetCount()>0 then
-        Duel.SendtoGrave(g,REASON_EFFECT)>0
+        Duel.SendtoGrave(g,REASON_EFFECT)
         if Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and e:GetHandler():IsRelateToEffect(e) then
             local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
             Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(60151324,3))

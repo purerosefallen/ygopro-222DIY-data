@@ -55,7 +55,7 @@ function c65020022.spop(e,tp,eg,ep,ev,re,r,rp)
 	elseif op==1 then
 		local g22=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
 		Duel.ConfirmCards(tp,g22)
-		local g2=g22:FilterSelect(tp,Card.IsAbleToRemove,1,2,nil)
+		local g2=g22:FilterSelect(tp,Card.IsAbleToRemove,1,1,nil)
 		if g2:GetCount()>0 then
 			Duel.HintSelection(g2)
 			if Duel.Remove(g2,POS_FACEDOWN,REASON_EFFECT)~=0 and Duel.GetLocationCountFromEx(tp)>0 and Duel.IsExistingMatchingCard(Card.IsCanBeSpecialSummoned,tp,0,LOCATION_EXTRA,1,nil,e,0,tp,true,false) and Duel.SelectYesNo(tp,aux.Stringid(65020022,0)) then

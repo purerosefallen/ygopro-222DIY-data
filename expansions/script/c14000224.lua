@@ -41,6 +41,7 @@ function cm.filter(c,tp)
 end
 function cm.settg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,tp) end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 end
 function cm.setop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(m,1))
@@ -55,7 +56,7 @@ function cm.setop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.ConfirmCards(1-tp,g)
 		else
 			local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
-			if fc then
+			if fc and tc:IsType(TYPE_FIELD) then
 				Duel.SendtoGrave(fc,REASON_RULE)
 				Duel.BreakEffect()
 			end
@@ -69,7 +70,7 @@ function cm.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.cfilter(c)
-	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and (c:GetRank()>0 or c:GetLevel()>0)
+	return c:IsFaceup() and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and (c:GetRank()>0 or c:GetLevel()>0) and c:IsLocation(LOCATION_MZONE)
 end
 function cm.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(cm.cfilter,1,nil)
@@ -79,6 +80,7 @@ function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local g=eg:Filter(cm.cfilter,nil)
 	Duel.SetTargetCard(g)
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,nil,g,g:GetCount(),tp,LOCATION_MZONE)
 end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp)

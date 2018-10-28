@@ -69,7 +69,7 @@ function c47500107.xyzop(e,tp,chk)
     e:GetHandler():RegisterFlagEffect(47500107,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END,0,1)
 end
 function c47500107.condition(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+    return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ) and Duel.GetTurnPlayer()==tp
 end
 function c47500107.cost(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
@@ -151,8 +151,10 @@ function c47500107.discon2(e,tp,eg,ep,ev,re,r,rp)
     return false
 end
 function c47500107.disop2(e,tp,eg,ep,ev,re,r,rp)
-    if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
-        Duel.SendtoDeck(eg,tp,REASON_EFFECT)
+    local c=e:GetHandler()
+    local rc=re:GetHandler()
+    if Duel.NegateEffect(ev) and re:GetHandler():IsRelateToEffect(re) then
+        Duel.SendtoHand(rc,tp,REASON_EFFECT)
         c:RegisterFlagEffect(47511107,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
     end
 end

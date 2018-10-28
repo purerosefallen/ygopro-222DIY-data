@@ -34,7 +34,7 @@ function c47510247.initial_effect(c)
     --special summon
     local e3=Effect.CreateEffect(c)
     e3:SetDescription(aux.Stringid(47510247,1))
-    e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+    e3:SetCategory(CATEGORY_TOHAND)
     e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
     e3:SetCode(EVENT_SPSUMMON_SUCCESS)
     e3:SetProperty(EFFECT_FLAG_DELAY)
@@ -59,7 +59,7 @@ function c47510247.initial_effect(c)
     e5:SetCode(EFFECT_UPDATE_ATTACK)
     e5:SetRange(LOCATION_MZONE)
     e5:SetTargetRange(LOCATION_MZONE,0)
-    e5:SetTarget(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_WIND))
+    e5:SetTarget(c47510247.bffilter)
     e5:SetValue(2000)
     c:RegisterEffect(e5)
     local e6=Effect.CreateEffect(c)
@@ -67,7 +67,7 @@ function c47510247.initial_effect(c)
     e6:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
     e6:SetRange(LOCATION_MZONE)
     e6:SetTargetRange(LOCATION_MZONE,0)
-    e6:SetTarget(aux.TargetBoolFunction(Card.IsAttribute,ATTRIBUTE_WIND))
+    e6:SetTarget(c47510247.bffilter)
     e6:SetValue(1)
     c:RegisterEffect(e6)
     --xyzchange
@@ -83,6 +83,9 @@ function c47510247.initial_effect(c)
 end
 function c47510247.pefilter(c)
     return c:IsRace(RACE_WARRIOR) or c:IsSetCard(0x5da) or c:IsAttribute(ATTRIBUTE_WIND)
+end
+function c47510247.bffilter(c,e)
+    return c:IsRace(RACE_WARRIOR) or c:IsSetCard(0x5da) or c:IsAttribute(ATTRIBUTE_WIND) and c~=e:GetHandler()
 end
 function c47510247.psplimit(e,c,tp,sumtp,sumpos)
     return not c47510247.pefilter(c) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
@@ -122,7 +125,7 @@ function c47510247.spop(e,tp,eg,ep,ev,re,r,rp,c)
     c:RegisterFlagEffect(0,RESET_EVENT+0x4fc0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(47510247,1))
 end
 function c47510247.filter(c,e,tp)
-    return (c:IsSetCard(0x5da) or c:IsAttribute(ATTRIBUTE_WIND) or c:IsRace(RACE_WARRIOR)) and c:IsFaceup() and c:IsAbleToHand() and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+    return (c:IsSetCard(0x5da) or c:IsAttribute(ATTRIBUTE_WIND) or c:IsRace(RACE_WARRIOR)) and c:IsFaceup() and c:IsAbleToHand() 
 end
 function c47510247.pptg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
@@ -136,8 +139,8 @@ function c47510247.ppop(e,tp,eg,ep,ev,re,r,rp)
     if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
     local g=Duel.SelectMatchingCard(tp,c47510247.filter,tp,LOCATION_EXTRA,0,1,ft,nil,e,tp)
-    if g:GetCount()~=0 and Duel.SendtoHand(g,nil,REASON_EFFECT) then    
-        Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+    if g:GetCount()~=0 then 
+        Duel.SendtoHand(g,nil,REASON_EFFECT)    
     end
 end
 function c47510247.cost(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,8 +1,5 @@
 --吉姆强袭型改
-local m=47530026
-local cm=_G["c"..m]
 function c47530026.initial_effect(c)
-    c:EnableReviveLimit()
     --pendulum summon
     aux.EnablePendulumAttribute(c)
     --splimit
@@ -19,8 +16,9 @@ function c47530026.initial_effect(c)
     e2:SetDescription(aux.Stringid(47530026,1))
     e2:SetCategory(CATEGORY_SUMMON)
     e2:SetType(EFFECT_TYPE_QUICK_O)
-    e2:SetRange(LOCATION_HAND)
+    e2:SetRange(LOCATION_PZONE)
     e2:SetCode(EVENT_FREE_CHAIN)
+    e2:SetCountLimit(1)
     e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
     e2:SetTarget(c47530026.sumtg)
     e2:SetOperation(c47530026.sumop)
@@ -88,6 +86,10 @@ function c47530026.initial_effect(c)
     e10:SetOperation(c47530026.rmop)
     c:RegisterEffect(e10)
 end
+function c47530026.IsEFSF(c)
+    local m=_G["c"..c:GetCode()]
+    return m and m.is_named_with_EFSF
+end
 function c47530026.rmcon(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     local bc=c:GetBattleTarget()
@@ -117,20 +119,16 @@ end
 function c47530026.advcon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE)
 end
-function c47530026.IsEFSF(c)
-    local m=_G["c"..c:GetCode()]
-    return m and m.is_named_with_EFSF
-end
 function c47530026.psplimit(e,c)
     return not c:IsRace(RACE_MACHINE)
+end
+function c47530026.setfilter(c)
+    return c47530026.IsEFSF(c) and c:IsType(TYPE_TRAP) and c:IsType(TYPE_COUNTER)
 end
 function c47530026.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
     local c=e:GetHandler()
     if chk==0 then return c:IsSummonable(true,nil,1) or c:IsMSetable(true,nil,1) end
     Duel.SetOperationInfo(0,CATEGORY_SUMMON,c,1,0,0)
-end
-function c47530026.setfilter(c)
-    return c47530026.IsEFSF and c:IsType(TYPE_TRAP) and c:IsType(TYPE_COUNTER)
 end
 function c47530026.sumop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()

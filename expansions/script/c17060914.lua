@@ -52,7 +52,8 @@ function cm.filter(c)
 	return c:IsType(TYPE_PENDULUM) and c:IsAbleToGrave()
 end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) 
+	and Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_EXTRA,0,1,nil)end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_EXTRA)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end

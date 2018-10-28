@@ -9,7 +9,6 @@ function c47550006.initial_effect(c)
     e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
     e1:SetRange(LOCATION_PZONE)
     e1:SetCondition(c47550006.pencon)
-    e1:SetTarget(c47550006.pentg)
     e1:SetOperation(c47550006.penop)
     c:RegisterEffect(e1)  
     --Double damage
@@ -70,39 +69,31 @@ function c47550006.initial_effect(c)
     e8:SetOperation(c47550006.damop)
     c:RegisterEffect(e8)
     local e9=Effect.CreateEffect(c)
-    e9:SetType(EFFECT_TYPE_SINGLE)
-    e9:SetCode(EFFECT_SET_ATTACK_FINAL)
-    e9:SetCondition(c47550006.akcon)
-    e9:SetValue(5000)
-    c:RegisterEffect(e9)   
+    e9:SetCategory(CATEGORY_ATKCHANGE)
+    e9:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+    e9:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
+    e9:SetCondition(c47550006.atkcon)
+    e9:SetOperation(c47550006.atkop)
+    c:RegisterEffect(e9)
 end
 function c47550006.cfilter(c)
-    return (c:IsRace(RACE_WARRIOR) or c:IsRace(RACE_SPELLCASTER)) and c;GetLeftScale()<10 and c:GetRightScale()<10
+    return (c:GetLeftScale()<10 and c:GetRightScale()<10)
 end
 function c47550006.pencon(e,tp,eg,ep,ev,re,r,rp)
     return Duel.IsExistingMatchingCard(c47550006.cfilter,tp,LOCATION_PZONE,0,1,e:GetHandler())
 end
-function c47550006.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
-    local sc=Duel.GetFirstMatchingCard(nil,tp,LOCATION_PZONE,0,e:GetHandler())
-    if chk==0 then return e:GetHandler():IsDestructable() end
-    Duel.SetTargetCard(sc)
-    Duel.SetOperationInfo(0,CATEGORY_DESTROY,sc,1,0,0)
-end
 function c47550006.penop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     local sc=Duel.GetFirstMatchingCard(nil,tp,LOCATION_PZONE,0,e:GetHandler())
-    if not e:GetHandler():IsRelateToEffect(e) then return end
-        local e4=Effect.CreateEffect(c)
-        e4:SetType(EFFECT_TYPE_SINGLE)
-        e4:SetCode(EFFECT_CHANGE_LSCALE)
-        e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-        e4:SetRange(LOCATION_PZONE)
-        e4:SetValue(10)
-        sc:RegisterEffect(e4)
-        local e5=e4:Clone()
-        e5:SetCode(EFFECT_CHANGE_RSCALE)
-        sc:RegisterEffect(e5)
-    end    
+    local e4=Effect.CreateEffect(c)
+    e4:SetType(EFFECT_TYPE_SINGLE)
+    e4:SetCode(EFFECT_CHANGE_LSCALE)
+    e4:SetRange(LOCATION_PZONE)
+    e4:SetValue(10)
+    sc:RegisterEffect(e4)
+    local e5=e4:Clone()
+    e5:SetCode(EFFECT_CHANGE_RSCALE)
+    sc:RegisterEffect(e5)   
 end
 function c47550006.descost(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.CheckReleaseGroup(tp,nil,1,nil) end
@@ -144,8 +135,19 @@ function c47550006.sumsuc(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     c:RegisterFlagEffect(47550006,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
 end
-function c47550006.akcon(e,tp,eg,ep,ev,re,r,rp)
+function c47550006.atkcon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetHandler():GetFlagEffect(47550006)>0 and e:GetHandler():GetFlagEffect(47551006)<1
+end
+function c47550006.atkop(e,tp,eg,ep,ev,re,r,rp)
+    local c=e:GetHandler()
+    if c:IsFaceup() then
+        local e1=Effect.CreateEffect(c)
+        e1:SetType(EFFECT_TYPE_SINGLE)
+        e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+        e1:SetReset(RESET_PHASE+PHASE_DAMAGE_CAL)
+        e1:SetValue(5000)
+        c:RegisterEffect(e1)
+    end
 end
 function c47550006.spcon(e,tp,eg,ep,ev,re,r,rp)
     return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0
@@ -171,7 +173,8 @@ function c47550006.damcon(e,tp,eg,ep,ev,re,r,rp)
     return ep~=tp and e:GetHandler():GetFlagEffect(47550006)>0 and e:GetHandler():GetFlagEffect(47551006)<1
 end
 function c47550006.damop(e,tp,eg,ep,ev,re,r,rp)
-   local c=e:GetHandler()
-   if Duel.ChangeBattleDamage(ep,ev*2) then
-   c:RegisterFlagEffect(47551006,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
+    local c=e:GetHandler()
+    if Duel.ChangeBattleDamage(ep,ev*2) then
+    c:RegisterFlagEffect(47551006,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
+    end
 end

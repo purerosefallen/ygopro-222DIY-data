@@ -36,7 +36,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function cm.cfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsLocation(LOCATION_MZONE)
 end
 function cm.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(cm.cfilter,1,nil,tp)
@@ -57,7 +57,7 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local g=eg:Filter(cm.cfilter,nil,tp)
-	if Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
+	if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,cm.filter,tp,LOCATION_GRAVE+LOCATION_EXTRA,0,1,1,nil,e,tp)

@@ -1,8 +1,4 @@
---吉姆强袭型改
-local m=47530027
-local cm=_G["c"..m]
 function c47530027.initial_effect(c)
-    c:EnableReviveLimit()
     --pendulum summon
     aux.EnablePendulumAttribute(c)
     --splimit
@@ -19,7 +15,7 @@ function c47530027.initial_effect(c)
     e2:SetDescription(aux.Stringid(47530027,1))
     e2:SetCategory(CATEGORY_SUMMON)
     e2:SetType(EFFECT_TYPE_QUICK_O)
-    e2:SetRange(LOCATION_HAND)
+    e2:SetRange(LOCATION_PZONE)
     e2:SetCode(EVENT_FREE_CHAIN)
     e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
     e2:SetTarget(c47530027.sumtg)
@@ -90,6 +86,10 @@ function c47530027.initial_effect(c)
     e10:SetOperation(c47530027.desop)
     c:RegisterEffect(e10)
 end
+function c47530027.IsZEON(c)
+    local m=_G["c"..c:GetCode()]
+    return m and m.is_named_with_ZEON
+end
 function c47530027.descon(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     local bc=c:GetBattleTarget()
@@ -120,20 +120,16 @@ end
 function c47530027.advcon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE)
 end
-function c47530027.IsEFSF(c)
-    local m=_G["c"..c:GetCode()]
-    return m and m.is_named_with_EFSF
-end
 function c47530027.psplimit(e,c)
     return not c:IsRace(RACE_MACHINE)
+end
+function c47530027.setfilter(c)
+    return c47530027.IsZEON(c) and c:IsType(TYPE_TRAP) and c:IsType(TYPE_COUNTER)
 end
 function c47530027.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
     local c=e:GetHandler()
     if chk==0 then return c:IsSummonable(true,nil,1) or c:IsMSetable(true,nil,1) end
     Duel.SetOperationInfo(0,CATEGORY_SUMMON,c,1,0,0)
-end
-function c47530027.setfilter(c)
-    return c47530027.IsEFSF and c:IsType(TYPE_TRAP) and c:IsType(TYPE_COUNTER)
 end
 function c47530027.sumop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
@@ -146,12 +142,6 @@ function c47530027.sumop(e,tp,eg,ep,ev,re,r,rp)
         Duel.Summon(tp,c,true,nil,1)
     else
         Duel.MSet(tp,c,true,nil,1)
-    end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-    local g=Duel.SelectMatchingCard(tp,c47530027.setfilter,tp,LOCATION_DECK,0,1,1,nil,false)
-    if g:GetCount()>0 then
-       Duel.SSet(tp,g:GetFirst())
-       Duel.ConfirmCards(1-tp,g)
     end
 end
 function c47530027.otfilter(c)

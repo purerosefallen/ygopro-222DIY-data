@@ -186,10 +186,10 @@ function c60151124.tdop(e,tp,eg,ep,ev,re,r,rp)
                 if Duel.SelectYesNo(tp,aux.Stringid(60151124,3)) then
                     Duel.SendtoHand(tc2,nil,REASON_EFFECT)
                 else
-                    Duel.SendtoGrave(tc2,,REASON_EFFECT)
+                    Duel.SendtoGrave(tc2,REASON_EFFECT)
                 end
             elseif tc2:IsAbleToHand() and not tc2:IsAbleToGrave() then
-                Duel.SendtoGrave(tc2,,REASON_EFFECT)
+                Duel.SendtoGrave(tc2,REASON_EFFECT)
             elseif not tc2:IsAbleToHand() and tc2:IsAbleToGrave() then
                 Duel.SendtoHand(tc2,nil,REASON_EFFECT)
             end

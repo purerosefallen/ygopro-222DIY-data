@@ -60,7 +60,7 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.cfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH)  and c:IsLocation(LOCATION_MZONE)
 end
 function cm.spcon1(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(cm.cfilter,1,nil,tp)
@@ -77,7 +77,7 @@ function cm.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	local g=eg:Filter(cm.cfilter,nil,tp)
-	if Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
+	if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
 		Duel.BreakEffect()
 		Duel.SendtoHand(c,nil,REASON_EFFECT)
 	end

@@ -60,7 +60,7 @@ function cm.splimit(e,se,sp,st)
 	return bit.band(st,SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
 end
 function cm.cfilter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH)
+	return c:IsFaceup() and c:IsControler(tp) and c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsLocation(LOCATION_MZONE)
 end
 function cm.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(cm.cfilter,1,nil,tp)
@@ -70,6 +70,7 @@ function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local g=eg:Filter(cm.cfilter,nil,tp)
 	Duel.SetTargetCard(g)
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,nil,g,g:GetCount(),tp,LOCATION_MZONE)
 end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -102,6 +103,7 @@ function cm.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local g=eg:Filter(cm.cfilter,nil,tp)
 	Duel.SetTargetCard(g)
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,g:GetCount(),tp,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,nil,0,0)
 end

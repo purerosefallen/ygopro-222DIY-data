@@ -8,8 +8,6 @@ function c47550005.initial_effect(c)
     local e1=Effect.CreateEffect(c)
     e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
     e1:SetRange(LOCATION_PZONE)
-    e1:SetCondition(c47550005.pencon)
-    e1:SetTarget(c47550005.pentg)
     e1:SetOperation(c47550005.penop)
     c:RegisterEffect(e1)  
     --Double damage
@@ -66,32 +64,22 @@ function c47550005.initial_effect(c)
     c:RegisterEffect(e7)
 end
 function c47550005.cfilter(c)
-    return (c:IsRace(RACE_WARRIOR) or c:IsRace(RACE_SPELLCASTER)) and c;GetLeftScale()<10 and c:GetRightScale()<10
-end
-function c47550005.pencon(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.IsExistingMatchingCard(c47550005.cfilter,tp,LOCATION_PZONE,0,1,e:GetHandler())
-end
-function c47550005.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
-    local sc=Duel.GetFirstMatchingCard(nil,tp,LOCATION_PZONE,0,e:GetHandler())
-    if chk==0 then return e:GetHandler():IsDestructable() end
-    Duel.SetTargetCard(sc)
-    Duel.SetOperationInfo(0,CATEGORY_DESTROY,sc,1,0,0)
+    return (c:GetLeftScale()<10 and c:GetRightScale()<10) and (c:IsRace(RACE_WARRIOR) or c:IsRace(RACE_SPELLCASTER))
 end
 function c47550005.penop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    local sc=Duel.GetFirstMatchingCard(nil,tp,LOCATION_PZONE,0,e:GetHandler())
-    if not e:GetHandler():IsRelateToEffect(e) then return end
+    local sc=Duel.GetFirstMatchingCard(c47550005.cfilter,tp,LOCATION_PZONE,0,e:GetHandler())
+    if sc then
         local e4=Effect.CreateEffect(c)
         e4:SetType(EFFECT_TYPE_SINGLE)
         e4:SetCode(EFFECT_CHANGE_LSCALE)
-        e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
         e4:SetRange(LOCATION_PZONE)
         e4:SetValue(10)
         sc:RegisterEffect(e4)
         local e5=e4:Clone()
         e5:SetCode(EFFECT_CHANGE_RSCALE)
         sc:RegisterEffect(e5)
-    end    
+    end
 end
 function c47550005.dbcon(e,tp,eg,ep,ev,re,r,rp)
     return Duel.IsAbleToEnterBP()
@@ -153,13 +141,6 @@ function c47550005.sumcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c47550005.sumsuc(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-    e1:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-    e1:SetCondition(c47550005.rdcon)
-    e1:SetOperation(c47550005.rdop)
-    e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END)
-    c:RegisterEffect(e1)
     local e2=Effect.CreateEffect(c)
     e2:SetType(EFFECT_TYPE_SINGLE)
     e2:SetCode(EFFECT_EXTRA_ATTACK)

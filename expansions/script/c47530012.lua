@@ -33,7 +33,7 @@ end
 function c47530012.cost(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.IsExistingMatchingCard(c47530012.cfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-    local g=Duel.SelectMatchingCard(tp,c35419032.cfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
+    local g=Duel.SelectMatchingCard(tp,c47530012.cfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
     if g:GetFirst():IsLocation(LOCATION_REMOVED) and g:GetFirst():IsFacedown() then
         Duel.ConfirmCards(1-tp,g)
     end

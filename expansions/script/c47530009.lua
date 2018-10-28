@@ -17,6 +17,7 @@ function c47530009.initial_effect(c)
     e1:SetCategory(CATEGORY_EQUIP)
     e1:SetType(EFFECT_TYPE_IGNITION)
     e1:SetRange(LOCATION_MZONE)
+    e1:SetCountLimit(1)
     e1:SetTarget(c47530009.eqtg)
     e1:SetOperation(c47530009.eqop)
     c:RegisterEffect(e1)  
@@ -35,8 +36,8 @@ function c47530009.filter(c)
     return c:IsRace(RACE_MACHINE) and not c:IsForbidden()
 end
 function c47530009.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return e:GetHandler():IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-        and Duel.IsExistingMatchingCard(c47530009.filter,tp,LOCATION_GRAVE,0,1,nil,e:GetHandler()) end
+    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+        and Duel.IsExistingMatchingCard(c47530009.filter,tp,LOCATION_GRAVE,0,1,nil,nil) end
     Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_GRAVE)
 end
 function c47530009.eqop(e,tp,eg,ep,ev,re,r,rp)
