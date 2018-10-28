@@ -33,7 +33,7 @@ function c12010007.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp
 end
 function c12010007.thfilter(c,e,tp)
-	return c:IsSetCard(0xfba) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return ( c:IsSetCard(0xfba) or c:IsSetCard(0x1fbd)  ) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c12010007.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -49,7 +49,7 @@ function c12010007.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c12010007.spfilter(c)
-	return c:IsSetCard(0xfba) and c:IsFaceup() and c:IsAbleToHand()
+	return ( c:IsSetCard(0xfba) or c:IsSetCard(0x1fbd)  )  and c:IsFaceup() and c:IsAbleToHand()
 end
 function c12010007.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and c12010007.spfilter(chkc) and chkc:IsControler(tp) end
