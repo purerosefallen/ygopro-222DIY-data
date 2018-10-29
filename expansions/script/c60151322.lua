@@ -131,7 +131,7 @@ function c60151322.thop(e,tp,eg,ep,ev,re,r,rp)
     if g:GetCount()>0 then
         if g:GetCount()>0 then
             Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(60151322,2))
-            local sg=tg:Select(tp,1,1,nil)
+            local sg=g:Select(tp,1,1,nil)
             Duel.HintSelection(sg)
             local tc=sg:GetFirst()
             if tc:IsImmuneToEffect(e) then return end

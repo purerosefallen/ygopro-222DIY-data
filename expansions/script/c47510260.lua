@@ -1,12 +1,11 @@
 --月读
 local m=47510260
 local cm=_G["c"..m]
-function cm.initial_effect(c)
 function c47510260.initial_effect(c)
     aux.EnablePendulumAttribute(c,false)
     --fusion material
     c:EnableReviveLimit()
-    aux.AddFusionProcCodeFun(c,c47510260.fusfilter1,aux.FilterBoolFunction(Card.IsFusionRace,RACE_ZOMBIE),1,true,true)
+    aux.AddFusionProcCodeFun(c,c47510260.fusfilter1,aux.FilterBoolFunction(Card.IsRace,RACE_ZOMBIE),1,true,true)
     --special summon rule
     local e0=Effect.CreateEffect(c)
     e0:SetType(EFFECT_TYPE_FIELD)
@@ -14,8 +13,8 @@ function c47510260.initial_effect(c)
     e0:SetProperty(EFFECT_FLAG_UNCOPYABLE)
     e0:SetRange(LOCATION_EXTRA)
     e0:SetValue(SUMMON_TYPE_FUSION)
-    e0:SetCondition(c47510260.spcon)
-    e0:SetOperation(c47510260.spop)
+    e0:SetCondition(c47510260.sprcon)
+    e0:SetOperation(c47510260.sprop)
     c:RegisterEffect(e0)    
     --splimit
     local e1=Effect.CreateEffect(c)

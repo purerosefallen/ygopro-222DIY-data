@@ -1,7 +1,7 @@
 --Answer·梅木音叶
 function c81012046.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,6,2,c81012046.ovfilter,aux.Stringid(81012046,0))
+	aux.AddXyzProcedure(c,nil,6,2)
 	c:EnableReviveLimit()
 	--pendulum summon
 	aux.EnablePendulumAttribute(c,false)
@@ -15,15 +15,6 @@ function c81012046.initial_effect(c)
 	e1:SetTarget(c81012046.atktg)
 	e1:SetOperation(c81012046.atkop)
 	c:RegisterEffect(e1)
-	--cannot be target
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetValue(aux.tgoval)
-	c:RegisterEffect(e2)
 	--copy effect
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(81012046,1))
@@ -47,9 +38,6 @@ function c81012046.initial_effect(c)
 	e4:SetTarget(c81012046.pentg)
 	e4:SetOperation(c81012046.penop)
 	c:RegisterEffect(e4)
-end
-function c81012046.ovfilter(c)
-	return c:IsFaceup() and c:IsRank(4)
 end
 function c81012046.filter(c)
 	local lv=c:GetLevel()
@@ -87,7 +75,7 @@ function c81012046.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c81012046.cpfilter(c)
-	return (c:GetType()==TYPE_TRAP or c:GetType()==TYPE_SPELL) and c:IsAbleToRemove() and c:CheckActivateEffect(false,true,false)~=nil
+	return c:GetType()==TYPE_SPELL and c:IsAbleToRemove() and c:CheckActivateEffect(false,true,false)~=nil
 end
 function c81012046.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then

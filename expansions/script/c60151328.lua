@@ -91,11 +91,8 @@ end
 function c60151328.eqlimit(e,c)
     return c==e:GetLabelObject()
 end
-function c60151328.cfilter(c)
-    return c:IsFaceup() and c:IsSetCard(0xd7)
-end
 function c60151328.e2filter2(c)
-    return c:IsSetCard(0xcb23) and c:IsType(TYPE_XYZ)
+    return c:IsType(TYPE_XYZ)
 end
 function c60151328.e2con(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
@@ -124,10 +121,11 @@ function c60151328.e4con(e,tp,eg,ep,ev,re,r,rp)
 	local g=c:GetMaterial():FilterCount(c60151328.e2filter2,nil)
     return g==2
 end
-function c60151328.e4filter(c,e)
-    return c:IsSetCard(0xcb23) and c:IsType(TYPE_XYZ) and c:IsCanBeEffectTarget(e) and not c:IsForbidden()
+function c60151328.e4filter(c)
+    return c:IsSetCard(0xcb23) and c:IsType(TYPE_XYZ) and not c:IsForbidden()
 end
 function c60151328.e4tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+    local c=e:GetHandler()
     if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c60151328.e4filter(chkc,e) end
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
         and Duel.IsExistingMatchingCard(c60151328.e4filter,tp,LOCATION_GRAVE,0,1,nil,e) end

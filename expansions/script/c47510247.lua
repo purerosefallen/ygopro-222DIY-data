@@ -59,7 +59,7 @@ function c47510247.initial_effect(c)
     e5:SetCode(EFFECT_UPDATE_ATTACK)
     e5:SetRange(LOCATION_MZONE)
     e5:SetTargetRange(LOCATION_MZONE,0)
-    e5:SetTarget(c47510247.bffilter)
+    e5:SetTarget(c47510247.bftg)
     e5:SetValue(2000)
     c:RegisterEffect(e5)
     local e6=Effect.CreateEffect(c)
@@ -67,7 +67,7 @@ function c47510247.initial_effect(c)
     e6:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
     e6:SetRange(LOCATION_MZONE)
     e6:SetTargetRange(LOCATION_MZONE,0)
-    e6:SetTarget(c47510247.bffilter)
+    e6:SetTarget(c47510247.bftg)
     e6:SetValue(1)
     c:RegisterEffect(e6)
     --xyzchange
@@ -84,8 +84,8 @@ end
 function c47510247.pefilter(c)
     return c:IsRace(RACE_WARRIOR) or c:IsSetCard(0x5da) or c:IsAttribute(ATTRIBUTE_WIND)
 end
-function c47510247.bffilter(c,e)
-    return c:IsRace(RACE_WARRIOR) or c:IsSetCard(0x5da) or c:IsAttribute(ATTRIBUTE_WIND) and c~=e:GetHandler()
+function c47510247.bftg(e,c)
+    return (c:IsRace(RACE_WARRIOR) or c:IsSetCard(0x5da) or c:IsAttribute(ATTRIBUTE_WIND)) and c~=e:GetHandler()
 end
 function c47510247.psplimit(e,c,tp,sumtp,sumpos)
     return not c47510247.pefilter(c) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM

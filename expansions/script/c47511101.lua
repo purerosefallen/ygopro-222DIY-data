@@ -44,7 +44,7 @@ c47511101.list={
 function c47511101.nfilter(c)
     return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 end
-function c47511101.discon2(e,tp,eg,ep,ev,re,r,rp)
+function c47511101.discon(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     if e:GetHandler():GetFlagEffect(47510255)~=0 then return end
     if not rp==1-tp then return end
@@ -64,7 +64,7 @@ function c47511101.discon2(e,tp,eg,ep,ev,re,r,rp)
     end
     return false
 end
-function c47511101.disop2(e,tp,eg,ep,ev,re,r,rp)
+function c47511101.disop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     Duel.NegateEffect(ev)
     Duel.Remove(c,POS_FACEUP,REASON_EFFECT)

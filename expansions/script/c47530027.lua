@@ -143,6 +143,12 @@ function c47530027.sumop(e,tp,eg,ep,ev,re,r,rp)
     else
         Duel.MSet(tp,c,true,nil,1)
     end
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
+    local g=Duel.SelectMatchingCard(tp,c47530027.setfilter,tp,LOCATION_DECK,0,1,1,nil,false)
+    if g:GetCount()>0 then
+       Duel.SSet(tp,g:GetFirst())
+       Duel.ConfirmCards(1-tp,g)
+    end
 end
 function c47530027.otfilter(c)
     return c:GetSummonLocation()==LOCATION_EXTRA and c:IsRace(RACE_MACHINE)

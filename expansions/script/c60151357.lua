@@ -58,11 +58,11 @@ end
 function c60151357.filter1(c,e,tp)
     if c:IsType(TYPE_XYZ) then
         local rk=c:GetRank()
-        return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0xcb23)
+        return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0xcb23) and not c:IsType(TYPE_LINK)
             and Duel.IsExistingMatchingCard(c60151357.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,rk)
     else
         local rk=c:GetLevel()
-        return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0xcb23)
+        return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0xcb23) and not c:IsType(TYPE_LINK)
             and Duel.IsExistingMatchingCard(c60151357.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,rk)
     end
 end

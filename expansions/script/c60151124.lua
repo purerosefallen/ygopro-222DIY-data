@@ -95,21 +95,15 @@ function c60151124.coinop(e,tp,eg,ep,ev,re,r,rp)
         c:RegisterEffect(e3)
         --
         local e4=Effect.CreateEffect(c)
+        e4:SetDescription(aux.Stringid(60151124,1))
         e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+        e4:SetCategory(CATEGORY_DAMAGE)
         e4:SetCode(EVENT_TO_GRAVE)
+        e4:SetProperty(EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY+EFFECT_FLAG_CLIENT_HINT)
         e4:SetRange(LOCATION_MZONE)
         e4:SetCondition(c60151124.regcon2)
         e4:SetOperation(c60151124.regop2)
         c:RegisterEffect(e4)
-        local e5=Effect.CreateEffect(c)
-        e5:SetDescription(aux.Stringid(60151124,1))
-        e5:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-        e5:SetCategory(CATEGORY_DAMAGE)
-        e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-        e5:SetCode(EVENT_CUSTOM+60151124)
-        e5:SetTarget(c60151124.damtg2)
-        e5:SetOperation(c60151124.damop2)
-        c:RegisterEffect(e5)
     end
 end
 function c60151124.regop(e,tp,eg,ep,ev,re,r,rp)
@@ -124,42 +118,19 @@ function c60151124.damop(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_CARD,0,60151124)
     Duel.Damage(1-tp,500,REASON_EFFECT)
 end
+function c60151124.cfilter(c)
+    return c:IsSetCard(0x9b23) and c:IsReason(REASON_EFFECT)
+end
 function c60151124.regcon2(e,tp,eg,ep,ev,re,r,rp)
-    local d1=false
-    local d2=false
-    local tc=eg:GetFirst()
-    while tc do
-        if tc:IsSetCard(0x9b23) and tc:IsReason(REASON_EFFECT) then
-            if tc:GetControler()==0 then d1=true
-            else d2=true end
-        end
-        tc=eg:GetNext()
-    end
-    local evt_p=PLAYER_NONE
-    if d1 and d2 then evt_p=PLAYER_ALL
-    elseif d1 then evt_p=0
-    elseif d2 then evt_p=1 end
-    e:SetLabel(evt_p)
-    return evt_p~=PLAYER_NONE
+    return eg and eg:IsExists(c60151124.cfilter,1,nil)
 end
 function c60151124.regop2(e,tp,eg,ep,ev,re,r,rp)
-    Duel.RaiseSingleEvent(e:GetHandler(),EVENT_CUSTOM+60151124,e,0,tp,e:GetLabel(),0)
-end
-function c60151124.damtg2(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return true end
-    Duel.SetTargetParam(500)
-    Duel.SetOperationInfo(0,CATEGORY_DAMAGE,0,0,ep,500)
-end
-function c60151124.damop2(e,tp,eg,ep,ev,re,r,rp)
-    if not e:GetHandler():IsRelateToEffect(e) then return end
-    local d=Duel.GetChainInfo(0,CHAININFO_TARGET_PARAM)
-    if ep==PLAYER_ALL then
-        Duel.Damage(tp,d,REASON_EFFECT,true)
-        Duel.Damage(1-tp,d,REASON_EFFECT,true)
-        Duel.RDComplete()
-    else
-        Duel.Damage(ep,d,REASON_EFFECT)
-    end
+    if not eg then return end
+    local ct=eg:FilterCount(c60151199.cfilter,nil)
+    if ct>0 then
+		Duel.Hint(HINT_CARD,0,60151124)
+		Duel.Damage(1-tp,500,REASON_EFFECT)
+	end
 end
 function c60151124.tdtgfilter(c,tp)
     return c:IsSetCard(0x9b23) and c:IsAbleToRemove() 
@@ -169,9 +140,9 @@ function c60151124.tdtgfilter2(c,tc)
     return c:IsSetCard(0x9b23) and (c:IsAbleToGrave() or c:IsAbleToHand()) and c:GetCode()~=tc:GetCode()
 end
 function c60151124.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    if chk==0 then return Duel.IsExistingTarget(c60151124.tdtgfilter,tp,LOCATION_GRAVE,0,1,nil) end
+    if chk==0 then return Duel.IsExistingTarget(c60151124.tdtgfilter,tp,LOCATION_GRAVE,0,1,nil,tp) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-    local g=Duel.SelectTarget(tp,c60151124.tdtgfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+    local g=Duel.SelectTarget(tp,c60151124.tdtgfilter,tp,LOCATION_GRAVE,0,1,1,nil,tp)
     Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
     Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
     Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
