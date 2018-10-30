@@ -73,13 +73,16 @@ function c60151324.desop(e,tp,eg,ep,ev,re,r,rp)
                 e3:SetType(EFFECT_TYPE_SINGLE)
                 e3:SetCode(EFFECT_EQUIP_LIMIT)
                 e3:SetReset(RESET_EVENT+0x1fe0000)
-                e3:SetValue(1)
+                e3:SetValue(c60151324.eqlimit2)
                 tc:RegisterEffect(e3)
                 tc=sg:GetNext()
             end
             Duel.EquipComplete()
         end
     end
+end
+function c60151324.eqlimit2(e,c)
+    return e:GetOwner()==c
 end
 function c60151324.cfilter(c)
     return c:IsSetCard(0xcb23)

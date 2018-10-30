@@ -33,7 +33,7 @@ function cm.initial_effect(c)
     e3:SetCode(EFFECT_PIERCE)
     e3:SetCondition(c60151328.e3con)
     c:RegisterEffect(e3)
-	--equip
+    --equip
     local e4=Effect.CreateEffect(c)
     e4:SetDescription(aux.Stringid(60151328,1))
     e4:SetCategory(CATEGORY_EQUIP)
@@ -96,7 +96,7 @@ function c60151328.e2filter2(c)
 end
 function c60151328.e2con(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-	local g=c:GetMaterial():FilterCount(c60151328.e2filter2,nil)
+    local g=c:GetMaterial():FilterCount(c60151328.e2filter2,nil)
     return g==0
 end
 function c60151328.e2filter(c,e,tp)
@@ -118,7 +118,7 @@ function c60151328.e2op(e,tp,eg,ep,ev,re,r,rp)
 end
 function c60151328.e4con(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-	local g=c:GetMaterial():FilterCount(c60151328.e2filter2,nil)
+    local g=c:GetMaterial():FilterCount(c60151328.e2filter2,nil)
     return g==2
 end
 function c60151328.e4filter(c)
@@ -131,15 +131,15 @@ function c60151328.e4tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
         and Duel.IsExistingMatchingCard(c60151328.e4filter,tp,LOCATION_GRAVE,0,1,nil,e) end
     local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
     local ft2=Duel.GetMatchingGroupCount(c60151328.e4filter,tp,LOCATION_GRAVE,0,nil,e)
-	if ft>ft2 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-		local g=Duel.SelectTarget(tp,c60151328.e4filter,tp,LOCATION_GRAVE,0,1,ft2,nil)
-		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,g:GetCount(),0,0)
-	else
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-		local g=Duel.SelectTarget(tp,c60151328.e4filter,tp,LOCATION_GRAVE,0,1,ft,nil)
-		Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,g:GetCount(),0,0)
-	end
+    if ft>ft2 then
+        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+        local g=Duel.SelectTarget(tp,c60151328.e4filter,tp,LOCATION_GRAVE,0,1,ft2,nil)
+        Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,g:GetCount(),0,0)
+    else
+        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+        local g=Duel.SelectTarget(tp,c60151328.e4filter,tp,LOCATION_GRAVE,0,1,ft,nil)
+        Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,g:GetCount(),0,0)
+    end
     c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(5043010,2))
 end
 function c60151328.e4op(e,tp,eg,ep,ev,re,r,rp)
@@ -151,11 +151,17 @@ function c60151328.e4op(e,tp,eg,ep,ev,re,r,rp)
     local tc=g:GetFirst()
     while tc do
         Duel.Equip(tp,tc,c,true,true)
+        local e3=Effect.CreateEffect(e:GetHandler())
+        e3:SetType(EFFECT_TYPE_SINGLE)
+        e3:SetCode(EFFECT_EQUIP_LIMIT)
+        e3:SetReset(RESET_EVENT+0x1fe0000)
+        e3:SetValue(c60151328.eqlimit2)
+        tc:RegisterEffect(e3)
         tc=g:GetNext()
     end
     Duel.EquipComplete()
-	local atk=g:GetSum(Card.GetRank)*300
-	local e2=Effect.CreateEffect(c)
+    local atk=g:GetSum(Card.GetRank)*300
+    local e2=Effect.CreateEffect(c)
     e2:SetType(EFFECT_TYPE_SINGLE)
     e2:SetCode(EFFECT_UPDATE_ATTACK)
     e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -166,4 +172,7 @@ end
 function c60151328.e3con(e,tp,eg,ep,ev,re,r,rp)
     local tg=e:GetHandler():GetEquipTarget()
     return tg:IsSetCard(0xcb23) and tg:IsType(TYPE_MONSTER)
+end
+function c60151328.eqlimit2(e,c)
+    return e:GetOwner()==c
 end

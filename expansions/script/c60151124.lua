@@ -128,9 +128,9 @@ function c60151124.regop2(e,tp,eg,ep,ev,re,r,rp)
     if not eg then return end
     local ct=eg:FilterCount(c60151199.cfilter,nil)
     if ct>0 then
-		Duel.Hint(HINT_CARD,0,60151124)
-		Duel.Damage(1-tp,500,REASON_EFFECT)
-	end
+        Duel.Hint(HINT_CARD,0,60151124)
+        Duel.Damage(1-tp,500,REASON_EFFECT)
+    end
 end
 function c60151124.tdtgfilter(c,tp)
     return c:IsSetCard(0x9b23) and c:IsAbleToRemove() 
@@ -156,6 +156,7 @@ function c60151124.tdop(e,tp,eg,ep,ev,re,r,rp)
             if tc2:IsAbleToHand() and tc2:IsAbleToGrave() then
                 if Duel.SelectYesNo(tp,aux.Stringid(60151124,3)) then
                     Duel.SendtoHand(tc2,nil,REASON_EFFECT)
+                    Duel.ConfirmCards(1-tp,tc2)
                 else
                     Duel.SendtoGrave(tc2,REASON_EFFECT)
                 end
@@ -163,6 +164,7 @@ function c60151124.tdop(e,tp,eg,ep,ev,re,r,rp)
                 Duel.SendtoGrave(tc2,REASON_EFFECT)
             elseif not tc2:IsAbleToHand() and tc2:IsAbleToGrave() then
                 Duel.SendtoHand(tc2,nil,REASON_EFFECT)
+                Duel.ConfirmCards(1-tp,tc2)
             end
         end
     end

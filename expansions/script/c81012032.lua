@@ -11,14 +11,14 @@ function c81012032.initial_effect(c)
 end
 function c81012032.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,81012032,0,0x21,2850,2100,7,RACE_FAIRY,ATTRIBUTE_WIND) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,81012032,0x810,0x21,2850,2100,7,RACE_FAIRY,ATTRIBUTE_WIND) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c81012032.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,81012032,0,0x21,2850,2100,7,RACE_FAIRY,ATTRIBUTE_WIND) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,81012032,0x810,0x21,2850,2100,7,RACE_FAIRY,ATTRIBUTE_WIND) then return end
 	c:AddMonsterAttribute(TYPE_EFFECT+TYPE_TRAP)
 	Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
 	local e1=Effect.CreateEffect(c)
