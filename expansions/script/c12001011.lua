@@ -20,7 +20,7 @@ function c12001011.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c12001011.filter(c)
-	return c:IsSetCard(0xfb0) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
+	return c:IsSetCard(0xfb0) and c:IsType(TYPE_PENDULUM) 
 end
 function c12001011.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c12001011.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) end
