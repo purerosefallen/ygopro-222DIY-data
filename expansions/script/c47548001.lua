@@ -7,7 +7,6 @@ function c47548001.initial_effect(c)
     c:EnableReviveLimit()
     --material
     c:EnableReviveLimit() 
-    aux.AddXyzProcedure(c,nil,8,2)
     aux.EnablePendulumAttribute(c,false)  
     --material
     local e1=Effect.CreateEffect(c)
@@ -124,7 +123,7 @@ function c47548001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
     c:RemoveOverlayCard(tp,2,2,REASON_COST)
 end
 function c47548001.filter(c,e,tp)
-    return c:IsRank(9) and c:IsRace(RACE_WYRM) or c:IsRace(RACE_DRAGON) and e:GetHandler():IsCanBeXyzMaterial(c)
+    return c:IsRank(9) and (c:IsRace(RACE_WYRM) or c:IsRace(RACE_DRAGON)) and e:GetHandler():IsCanBeXyzMaterial(c)
         and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
 end
 function c47548001.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

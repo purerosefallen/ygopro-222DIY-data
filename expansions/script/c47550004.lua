@@ -16,7 +16,6 @@ function c47550004.initial_effect(c)
     c:RegisterEffect(e1)
     --special summon
     local e2=Effect.CreateEffect(c)
-    e2:SetDescription(aux.Stringid(47550004,0))
     e2:SetCategory(CATEGORY_DESTROY+CATEGORY_SPECIAL_SUMMON)
     e2:SetType(EFFECT_TYPE_IGNITION)
     e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
@@ -103,7 +102,7 @@ function c47550004.otop(e,tp,eg,ep,ev,re,r,rp,c)
     Duel.Release(sg,REASON_SUMMON+REASON_MATERIAL)
 end
 function c47550004.spfilter(c,e,tp)
-    return c:IsSetCard(0x5d5) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+    return c:IsSetCard(0x5d0) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c47550004.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chkc then return chkc:IsLocation(e:GetLabel()) and chkc:IsControler(tp) and chkc:IsFaceup() end

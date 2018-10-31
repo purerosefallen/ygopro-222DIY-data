@@ -108,7 +108,7 @@ function c47500107.regcon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetHandler():GetFlagEffect(47501107)>0
 end
 function c47500107.exatk(e,tp,eg,ep,ev,re,r,rp)
-    local val=Duel.GetFlagEffect(47501117)*1
+    local val=Duel.GetFlagEffect(tp,47501117)*1
     return val
 end
 function c47500107.regop(e,tp,eg,ep,ev,re,r,rp)
@@ -117,14 +117,14 @@ function c47500107.regop(e,tp,eg,ep,ev,re,r,rp)
     e1:SetType(EFFECT_TYPE_SINGLE)
     e1:SetCode(EFFECT_UPDATE_ATTACK)
     e1:SetValue(1500)
-    e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_BATTLE)
+    e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_BATTLE,2)
     c:RegisterEffect(e1)
-    c:RegisterFlagEffect(47501117,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
+    c:RegisterFlagEffect(tp,47501117,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,2)
     local e4=Effect.CreateEffect(c)
     e4:SetType(EFFECT_TYPE_SINGLE)
     e4:SetCode(EFFECT_EXTRA_ATTACK)
     e4:SetValue(c47500107.exatk)
-    e4:SetReset(RESET_PHASE+PHASE_BATTLE+RESET_SELF_TURN)
+    e4:SetReset(RESET_PHASE+PHASE_BATTLE+RESET_SELF_TURN,2)
     c:RegisterEffect(e4)
 end
 function c47500107.nfilter(c)
@@ -133,8 +133,7 @@ end
 function c47500107.discon2(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     if e:GetHandler():GetFlagEffect(47511107)~=0 then return end
-    if not rp==1-tp then return end
-    if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or not Duel.IsChainNegatable(ev) then return false end
+    if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or not Duel.IsChainNegatable(ev) or rp~=1-tp then return false end
     if c47500107.nfilter(re:GetHandler()) then return true end
     local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
     if g and g:IsExists(c47500107.nfilter,1,nil) then return true end

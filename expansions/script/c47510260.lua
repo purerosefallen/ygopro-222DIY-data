@@ -157,7 +157,7 @@ function c47510260.thop(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
     local g=Duel.SelectMatchingCard(tp,c47510260.thfilter,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,1,1,nil)
     if g:GetCount()>0 then
-        Duel.SendtoHand(g,nil,REASON_EFFECT) 
+        Duel.SendtoHand(g,tp,REASON_EFFECT) 
     end
 end
 function c47510260.pencon(e,tp,eg,ep,ev,re,r,rp)

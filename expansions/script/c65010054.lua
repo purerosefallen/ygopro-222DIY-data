@@ -48,7 +48,7 @@ function c65010054.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetOverlayCount()>0 and c:IsPreviousPosition(POS_FACEUP)
 end
 function c65010054.spfil(c,e,tp)
-	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsRace(RACE_CYBERSE) and not c:IsType(TYPE_LINK)
+	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsSetCard(0x6da0) and not c:IsType(TYPE_LINK)
 end
 
 function c65010054.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
