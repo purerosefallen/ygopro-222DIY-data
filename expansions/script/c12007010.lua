@@ -17,6 +17,7 @@ function cm.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetCountLimit(1,m)
 	e1:SetCondition(cm.condition)
@@ -43,18 +44,19 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function cm.datg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDestructable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,1,0,LOCATION_ONFIELD)
-end
-
-function cm.daop(e,tp,eg,ep,ev,re,r,rp)
+	if chkc then return chkc:IsOnField() and chkc~=e:GetHandler() end
+	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local dg=Duel.SelectMatchingCard(tp,Card.IsDestructable,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
-	if dg:GetCount()>0 then
-	   Duel.HintSelection(dg)
-	   Duel.Destroy(dg,REASON_EFFECT)   
-	   Duel.BreakEffect()
-	   Duel.Destroy(e:GetHandler(),REASON_EFFECT)   
+	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,e:GetHandler())
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+end
+function cm.daop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	local c = e:GetHandler()
+	if tc:IsRelateToEffect(e) then
+		if Duel.Destroy(tc,REASON_EFFECT)~=0 and c:IsLocation(LOCATION_MZONE) then 
+			Duel.Destroy(e:GetHandler(),REASON_EFFECT) 
+		end
 	end
 end
 function cm.tfilter1(c,e,tp)
@@ -107,7 +109,7 @@ function cm.condition(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==tp
 end
 function cm.filter(c,e,tp)
-	return c:IsSetCard(0xfb2) and not c:IsCode(m) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xfb2) and c:IsType(TYPE_MONSTER) and not c:IsCode(m) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -121,5 +123,5 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 end
 function cm.eftg(e,c)
-	return c:IsType(TYPE_EFFECT) and c:IsSetCard(0xfb2) and e:GetHandler():GetEquipTarget()==c  
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xfb2) and e:GetHandler():GetEquipTarget()==c  
 end

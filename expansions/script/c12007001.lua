@@ -64,13 +64,13 @@ function cm.initial_effect(c)
 	e10:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e10)
 	--special summon
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e1:SetRange(LOCATION_HAND)
-	e1:SetCondition(cm.ttcon)
-	c:RegisterEffect(e1)
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_FIELD)
+	e0:SetCode(EFFECT_SPSUMMON_PROC)
+	e0:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e0:SetRange(LOCATION_HAND)
+	e0:SetCondition(cm.ttcon)
+	c:RegisterEffect(e0)
 end
 function cm.ttcon(e,c)
 	if c==nil then return true end
@@ -89,6 +89,7 @@ function cm.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,cm.filter,tp,LOCATION_MZONE,0,1,1,c)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
 end
+
 function cm.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
@@ -115,6 +116,11 @@ function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,true,false) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
+function cm.spop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
+	Duel.SpecialSummon(c,0,tp,tp,true,false,POS_FACEUP)
+end
 function cm.filter1(c)
 	return c:IsSetCard(0xfb2) and not c:IsCode(12007000,12007001)
 end
@@ -127,15 +133,15 @@ function cm.tgop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	local g=Duel.SelectMatchingCard(tp,cm.filter1,tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
-	local tc=g:GetFirst()
-			Duel.Equip(tp,tc,c,true)
-			local e1=Effect.CreateEffect(tc)
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_EQUIP_LIMIT)
-			e1:SetReset(RESET_EVENT+0x1fe0000)
-			e1:SetValue(cm.eqlimit)
-			e1:SetLabelObject(c)
-			tc:RegisterEffect(e1)
+		local tc=g:GetFirst()
+		Duel.Equip(tp,tc,c,true)
+		local e1=Effect.CreateEffect(tc)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_EQUIP_LIMIT)
+		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetValue(cm.eqlimit)
+		e1:SetLabelObject(c)
+		tc:RegisterEffect(e1)
 	end
 end
 function cm.eqlimit(e,c)

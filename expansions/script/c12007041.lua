@@ -8,6 +8,7 @@ function cm.initial_effect(c)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e2:SetCountLimit(1,m)
 	e2:SetCondition(cm.spcon)
 	e2:SetOperation(cm.spop)
 	c:RegisterEffect(e2)
@@ -29,6 +30,7 @@ function cm.initial_effect(c)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
+	e3:SetTarget(cm.target)
 	e3:SetOperation(cm.operation)
 	c:RegisterEffect(e3)
 end
@@ -80,7 +82,7 @@ function cm.filter1(c)
 end
 function cm.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(cm.filter1,tp,LOCATION_GRAVE,0,1,nil) end
+		and Duel.IsExistingMatchingCard(cm.filter1,tp,LOCATION_GRAVE,0,1,nil) and e:GetHandler():GetFlagEffect(m)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,nil,1,tp,LOCATION_GRAVE)
 end
 function cm.desop(e,tp,eg,ep,ev,re,r,rp)
@@ -112,6 +114,9 @@ function cm.eqlimit(e,c)
 end
 function cm.tfilter(c,e)
 	return c:GetEquipTarget()
+end
+function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():GetEquipCount()>0 end
 end
 function cm.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
