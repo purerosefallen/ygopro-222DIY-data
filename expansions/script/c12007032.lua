@@ -32,63 +32,63 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function cm.filter2(c,ec)
-	return c:GetEquipTarget()==ec
+	return c:IsSetCard(0xfb2)
 end
 function cm.thfilter(c)
-	return c:IsSetCard(0xfb2)
+	return c:IsSetCard(0xfb2) and c:IsType(TYPE_MONSTER)
 end
 function cm.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.filter2,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil,e:GetHandler()) and Duel.IsExistingTarget(cm.thfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_SZONE)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,0,tp,LOCATION_SZONE)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_DECK)
 end
 function cm.thop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.filter2,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil,e:GetHandler()) and Duel.IsExistingTarget(cm.thfilter,tp,LOCATION_DECK,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g=Duel.SelectMatchingCard(tp,cm.filter2,tp,LOCATION_SZONE,LOCATION_SZONE,1,99,nil,e:GetHandler())
-	local ct=Duel.GetOperatedGroup():GetCount()
-	Duel.Destroy(g,REASON_EFFECT)
+	local ct=Duel.Destroy(g,REASON_EFFECT)
 	Duel.BreakEffect()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	g=Duel.SelectMatchingCard(tp,cm.thfilter,tp,LOCATION_DECK,0,1,ct,nil)
-	tc=g:GetFirst()
+	local sg=Duel.SelectMatchingCard(tp,cm.thfilter,tp,LOCATION_DECK,0,1,ct,nil)
+	tc=sg:GetFirst()
 	while tc do
-	if not Duel.Equip(tp,tc,c,true) then return end
-	--if c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsRelateToEffect(e) and tc:CheckEquipTarget(c) then
-		--Duel.Equip(tp,tc,c,true)
-		local e1=Effect.CreateEffect(c)
-		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_OWNER_RELATE)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_EQUIP_LIMIT)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
-		e1:SetValue(cm.eqlimit)
-		e1:SetLabelObject(c)
-		tc:RegisterEffect(e1)
-		Duel.EquipComplete()
-	tc=g:GetNext()
-end
+		if Duel.Equip(tp,tc,c,true)~=0 then 
+			local e1=Effect.CreateEffect(c)
+			e1:SetProperty(EFFECT_FLAG_COPY_INHERIT+EFFECT_FLAG_OWNER_RELATE)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_EQUIP_LIMIT)
+			e1:SetReset(RESET_EVENT+0x1fe0000)
+			e1:SetValue(cm.eqlimit)
+			e1:SetLabelObject(c)
+			tc:RegisterEffect(e1)
+			Duel.EquipComplete()
+		end
+		tc=sg:GetNext()
+	end
 end
 function cm.eqlimit(e,c)
 	return c==e:GetLabelObject()
 end
-function cm.filter2(c,ec)
+function cm.filter4(c,ec)
 	return c:GetEquipTarget()==ec and c:IsAbleToGraveAsCost()
 end
 function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(cm.filter2,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingMatchingCard(cm.filter4,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,cm.filter2,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,nil,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,cm.filter4,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,nil,e:GetHandler())
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function cm.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local t=Duel.GetAttackTarget()
-	if chk ==0 then return Duel.GetAttacker()==e:GetHandler() and t~=nil and not t:IsAttackPos() and t:IsAbleToDeck() end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,t,1,0,0)
+	if chk ==0 then return Duel.GetAttacker()==e:GetHandler() and t~=nil and t:IsAbleToDeck() and e:GetHandler():IsAbleToDeck() end
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,Group.FromCards(t,e:GetHandler()),2,0,0)
 end
 function cm.op(e,tp,eg,ep,ev,re,r,rp)
 	local t=Duel.GetAttackTarget()
-	if t~=nil and t:IsRelateToBattle() and not t:IsAttackPos() then
-		Duel.SendtoDeck(t,nil,2,REASON_EFFECT)
+	if t~=nil and t:IsRelateToBattle() then
+		local sg = Group.FromCards(t,e:GetHandler())
+		Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
 	end
 end 
 function cm.repfilter(c)

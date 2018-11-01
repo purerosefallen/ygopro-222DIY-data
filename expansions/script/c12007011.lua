@@ -9,7 +9,6 @@ function cm.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetRange(LOCATION_HAND+LOCATION_MZONE)
-	e1:SetCondition(cm.eqcon)
 	e1:SetTarget(cm.eqtg)
 	e1:SetOperation(cm.eqop)
 	c:RegisterEffect(e1)
@@ -20,6 +19,7 @@ function cm.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_TO_GRAVE)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,m)
 	e1:SetCondition(cm.condition)
 	e1:SetTarget(cm.target)
@@ -28,8 +28,7 @@ function cm.initial_effect(c)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(m,2))
-	e2:SetCategory(CATEGORY_DAMAGE)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
@@ -44,18 +43,16 @@ function cm.initial_effect(c)
 	e3:SetLabelObject(e2)
 	c:RegisterEffect(e3)
 end
-function cm.eqcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():CheckUniqueOnField(tp)
-end
 function cm.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xfb2)
 end
 function cm.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and cm.filter(chkc) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingTarget(cm.filter,tp,LOCATION_MZONE,0,1,nil) end
+		and Duel.IsExistingTarget(cm.filter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	Duel.SelectTarget(tp,cm.filter,tp,LOCATION_MZONE,0,1,1,nil)
+	local g = Duel.SelectTarget(tp,cm.filter,tp,LOCATION_MZONE,0,1,1,e:GetHandler())
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,g,1,0,0)
 end
 function cm.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -66,21 +63,22 @@ function cm.eqop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(c,REASON_EFFECT)
 		return
 	end
-	Duel.Equip(tp,c,tc,true)
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_EQUIP_LIMIT)
-	e1:SetReset(RESET_EVENT+0x1fe0000)
-	e1:SetValue(cm.eqlimit)
-	e1:SetLabelObject(tc)
-	c:RegisterEffect(e1)
-	--atkup
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_EQUIP)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetValue(1000)
-	e2:SetReset(RESET_EVENT+0x1fe0000)
-	c:RegisterEffect(e2)
+	if Duel.Equip(tp,c,tc,true)~=0 then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_EQUIP_LIMIT)
+		e1:SetReset(RESET_EVENT+0x1fe0000)
+		e1:SetValue(cm.eqlimit)
+		e1:SetLabelObject(tc)
+		c:RegisterEffect(e1)
+		--atkup
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_EQUIP)
+		e2:SetCode(EFFECT_UPDATE_ATTACK)
+		e2:SetValue(1000)
+		e2:SetReset(RESET_EVENT+0x1fe0000)
+		c:RegisterEffect(e2)
+	end
 end
 function cm.eqlimit(e,c)
 	return c==e:GetLabelObject()
@@ -91,7 +89,7 @@ function cm.condition(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsPreviousLocation(LOCATION_ONFIELD) and c:GetPreviousControler()==tp
 end
 function cm.filter1(c,e,tp)
-	return c:IsSetCard(0xfb2) and not c:IsCode(m) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xfb2) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(m)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -107,13 +105,11 @@ end
 function cm.eftg(e,c)
 	return c:IsType(TYPE_EFFECT) and c:IsSetCard(0xfb2) and e:GetHandler():GetEquipTarget()==c  
 end
-function cm.filter2(c,ec)
-	return c:GetEquipTarget()==ec and c:IsAbleToGraveAsCost()
-end
 function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(cm.filter2,tp,LOCATION_SZONE,LOCATION_SZONE,1,nil,e:GetHandler()) end
+	local c=e:GetHandler()
+	if chk==0 then return c:GetEquipGroup():IsExists(Card.IsAbleToGraveAsCost,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,cm.filter2,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,nil,e:GetHandler())
+	local g=c:GetEquipGroup():FilterSelect(tp,Card.IsAbleToGraveAsCost,1,1,nil)
 	Duel.SendtoGrave(g,REASON_COST)
 end
 function cm.spfilter(c,e,tp)

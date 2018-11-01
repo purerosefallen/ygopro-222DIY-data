@@ -1,11 +1,11 @@
 local m=12007026
 local cm=_G["c"..m]
---蛋黄兔姬，今天开始上课
+--蛋黄兔姬 独自努力
 function c12007026.initial_effect(c)
 	--CopyEffect
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(m,0))
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_TOGRAVE)
+	e1:SetCategory(CATEGORY_EQUIP)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCountLimit(1,m)
 	e1:SetRange(LOCATION_HAND)
@@ -20,14 +20,14 @@ function c12007026.initial_effect(c)
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetCountLimit(1,m+100)
+	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTarget(cm.atktg)
 	e2:SetOperation(cm.atkop)
 	c:RegisterEffect(e2)
 end
 function cm.tgfilter1(c)
-	return c:IsFaceup() and c:IsAbleToHand() and c:IsSetCard(0xfb2) and c:IsType(TYPE_MONSTER)
+	return c:IsFaceup() and c:IsAbleToHand() and c:IsSetCard(0xfb2) and bit.band(0x20,c:GetOriginalType())==0x20
 end
 function cm.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.tgfilter1,tp,LOCATION_ONFIELD,0,1,nil) end
@@ -36,11 +36,11 @@ end
 function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return false end
-	if not Duel.IsExistingMatchingCard(cm.tgfilter1,tp,LOCATION_MZONE,0,1,nil) then return false end
-	local g=Duel.SelectMatchingCard(tp,cm.tgfilter1,tp,LOCATION_MZONE,0,1,1,nil)
+	if not Duel.IsExistingMatchingCard(cm.tgfilter1,tp,LOCATION_ONFIELD,0,1,nil) then return false end
+	local g=Duel.SelectMatchingCard(tp,cm.tgfilter1,tp,LOCATION_ONFIELD,0,1,1,nil)
 	local tc=g:GetFirst()
 	if tc then 
-		local atk=tc:GetAttack()
+		local atk=tc:GetTextAttack()
 		if Duel.SendtoHand(tc,nil,REASON_EFFECT) and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,LOCATION_MZONE,0,1,nil) then
 			Duel.BreakEffect()
 			local sg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
