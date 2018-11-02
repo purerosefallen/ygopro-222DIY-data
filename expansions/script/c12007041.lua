@@ -128,7 +128,7 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 		   if c:IsRelateToEffect(e) and c:IsFaceup() then
 			  if c:GetFlagEffect(code)>0 then return end
 				c:CopyEffect(code,RESET_EVENT+0x1fe0000,1)
-				c:RegisterFlagEffect(code,0x1fe0000,0,1)
+				c:RegisterFlagEffect(code,RESET_EVENT+0x1fe000,0,1)
 			end
 	tc=g:GetNext() 
 	end
