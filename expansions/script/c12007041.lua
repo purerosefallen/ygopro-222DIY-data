@@ -71,7 +71,7 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Release(g1,REASON_COST)
 		local tt=g1:GetCount()
 		for i=1,tt do
-			 c:RegisterFlagEffect(12007041,0x1fe0000-RESET_TOFIELD,0,1)
+			 c:RegisterFlagEffect(12007041,RESET_EVENT+0x1fe0000-RESET_TOFIELD,0,1)
 		end
 end
 function cm.descon(e,tp,eg,ep,ev,re,r,rp)
