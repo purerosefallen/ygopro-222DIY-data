@@ -52,7 +52,7 @@ function cm.IsHot_Summer(c)
 	return m and m.is_named_with_Hot_Summer
 end
 function cm.atkval(e,c)
-	return Duel.GetMatchingGroupCount(cm.filter,0,0x14,0,nil)*400
+	return Duel.GetMatchingGroupCount(cm.filter,0,LOCATION_MZONE+LOCATION_GRAVE,0,nil)*400
 end
 function cm.filter(c)
 	return c:IsType(TYPE_PENDULUM) and (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup())

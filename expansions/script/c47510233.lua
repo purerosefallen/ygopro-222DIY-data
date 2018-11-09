@@ -58,6 +58,7 @@ function c47510233.defop(e,tp,eg,ep,ev,re,r,rp)
     local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
     local tc=g:GetFirst()
     local c=e:GetHandler()
+    local dg=Group.CreateGroup()
     while tc do
         local e3=Effect.CreateEffect(e:GetHandler())
         e3:SetType(EFFECT_TYPE_SINGLE)

@@ -40,6 +40,14 @@ function c47500003.initial_effect(c)
     e7:SetCode(EVENT_SUMMON_SUCCESS)
     e7:SetOperation(c47500003.sumop)
     c:RegisterEffect(e7)  
+    --code
+    local e5=Effect.CreateEffect(c)
+    e5:SetType(EFFECT_TYPE_SINGLE)
+    e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+    e5:SetCode(EFFECT_CHANGE_CODE)
+    e5:SetRange(LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_EXTRA)
+    e5:SetValue(47500000)
+    c:RegisterEffect(e5)
 end
 c47500003.card_code_list={47500000}
 function c47500003.atkval(e,c)

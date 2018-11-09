@@ -108,7 +108,7 @@ function c47530017.desop(e,tp,eg,ep,ev,re,r,rp)
         local e1=Effect.CreateEffect(c)
         e1:SetType(EFFECT_TYPE_SINGLE)
         e1:SetCode(EFFECT_UPDATE_DEFENSE)
-        e1:SetValue(atk)
+        e1:SetValue(-atk)
         e1:SetReset(RESET_EVENT+RESETS_STANDARD)
         tc:RegisterEffect(e1)
         if predef~=0 and tc:IsDefense(0) or tc:IsType(TYPE_LINK) then dg:AddCard(tc) end

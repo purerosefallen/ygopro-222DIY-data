@@ -80,7 +80,7 @@ function c47510250.scfilter1(c,e,tp,mc)
     return c:IsCanBeSynchroMaterial() and Duel.IsExistingMatchingCard(c47510250.scfilter2,tp,LOCATION_EXTRA,0,1,nil,mg)
 end
 function c47510250.scfilter2(c,mg)
-    return c:IsSynchroSummonable(nil,mg) and c:IsType(TYPE_PENDULUM)
+    return c:IsSynchroSummonable(nil,mg)
 end
 function c47510250.sctg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     local c=e:GetHandler()

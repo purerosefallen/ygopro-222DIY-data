@@ -34,7 +34,7 @@ function rsvo.LPLinkFunction(c)
 end
 function rsvo.lmfilter(c,lc)
 	local tp=lc:GetControler()
-	return c:IsFaceup() and c:IsCanBeLinkMaterial(lc) and c:IsLinkRace(RACE_CYBERSE+RACE_MACHINE) and aux.MustMaterialCheck(c,tp,EFFECT_MUST_BE_LMATERIAL) and (not c:IsType(TYPE_LINK) or c:GetLink()==1) and Duel.GetLocationCountFromEx(tp,tp,c)>0
+	return c:IsFaceup() and c:IsCanBeLinkMaterial(lc) and c:IsLinkRace(RACE_CYBERSE+RACE_MACHINE) and aux.MustMaterialCheck(c,tp,EFFECT_MUST_BE_LMATERIAL) and Duel.GetLocationCountFromEx(tp,tp,c)>0
 end
 function rsvo.linkcon(e,c)
 	if c==nil then return true end
