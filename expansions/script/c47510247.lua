@@ -59,6 +59,7 @@ function c47510247.initial_effect(c)
     e5:SetCode(EFFECT_UPDATE_ATTACK)
     e5:SetRange(LOCATION_MZONE)
     e5:SetTargetRange(LOCATION_MZONE,0)
+    e5:SetCondition(c47510247.atkcon)
     e5:SetTarget(c47510247.bftg)
     e5:SetValue(2000)
     c:RegisterEffect(e5)
@@ -67,6 +68,7 @@ function c47510247.initial_effect(c)
     e6:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
     e6:SetRange(LOCATION_MZONE)
     e6:SetTargetRange(LOCATION_MZONE,0)
+    e6:SetCondition(c47510247.atkcon)
     e6:SetTarget(c47510247.bftg)
     e6:SetValue(1)
     c:RegisterEffect(e6)
@@ -128,12 +130,12 @@ function c47510247.filter(c,e,tp)
     return (c:IsSetCard(0x5da) or c:IsAttribute(ATTRIBUTE_WIND) or c:IsRace(RACE_WARRIOR)) and c:IsFaceup() and c:IsAbleToHand() 
 end
 function c47510247.pptg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(c47510247.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
-    Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_EXTRA)
+    if chk==0 then return Duel.IsExistingMatchingCard(c47510247.filter,tp,LOCATION_EXTRA,0,2,nil,e,tp) end
+    Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_EXTRA)
 end
 function c47510247.ppop(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-    local g=Duel.SelectMatchingCard(tp,c47510247.filter,tp,LOCATION_EXTRA,0,1,ft,nil,e,tp)
+    local g=Duel.SelectMatchingCard(tp,c47510247.filter,tp,LOCATION_EXTRA,0,2,2,nil,e,tp)
     if g:GetCount()~=0 then 
         Duel.SendtoHand(g,nil,REASON_EFFECT)    
     end
@@ -159,13 +161,13 @@ function c47510247.operation(e,tp,eg,ep,ev,re,r,rp)
         e2:SetRange(LOCATION_SZONE)
         e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
         e2:SetCode(EFFECT_LINK_SPELL_KOISHI)
-        e2:SetValue(LINK_MARKER_TOP+LINK_MARKER_TOP_LEFT+LINK_MARKER_TOP_RIGHT)
+        e2:SetValue(LINK_MARKER_TOP+LINK_MARKER_TOP_LEFT)
         e2:SetReset(RESET_EVENT+RESETS_STANDARD)
         tc:RegisterEffect(e2)
     end
 end
 function c47510247.xfilter(c)
-    return c:IsSummonableCard()
+    return c:IsSummonableCard() and c:IsFaceup()
 end
 function c47510247.xcost(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.IsExistingMatchingCard(c47510247.xfilter,tp,LOCATION_EXTRA,0,1,nil) end
@@ -193,4 +195,7 @@ function c47510247.xop(e,tp,eg,ep,ev,re,r,rp)
         lc:RegisterEffect(e1)
         lc=g:GetNext()
     end
+end
+function c47510247.atkcon(e,tp,eg,ep,ev,re,r,rp)
+    return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
 end

@@ -92,7 +92,7 @@ function c47591200.atk(e,c)
 end
 function c47591200.drcon(e,tp,eg,ep,ev,re,r,rp)
     local bc=e:GetHandler():GetBattleTarget()
-    return bc:IsType(TYPE_MONSTER) and bc:IsLocation(LOCATION_GRAVE) and bc:IsReason(REASON_BATTLE)
+    return bc:IsType(TYPE_MONSTER) and bc:IsReason(REASON_BATTLE)
 end
 function c47591200.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return true end
