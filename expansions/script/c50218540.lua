@@ -1,54 +1,68 @@
---伏龙王-狂啸
+--伏龙王-硝烟
 function c50218540.initial_effect(c)
     --xyz summon
-    aux.AddXyzProcedure(c,nil,6,2)
+    aux.AddXyzProcedure(c,nil,5,2)
     c:EnableReviveLimit()
-    --disable
+    --atk
     local e1=Effect.CreateEffect(c)
     e1:SetDescription(aux.Stringid(50218540,0))
-    e1:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
-    e1:SetType(EFFECT_TYPE_QUICK_O)
-    e1:SetRange(LOCATION_MZONE)
+    e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+    e1:SetCode(EVENT_ATTACK_ANNOUNCE)
     e1:SetCountLimit(1)
-    e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-    e1:SetCode(EVENT_CHAINING)
-    e1:SetCondition(c50218540.discon)
-    e1:SetCost(c50218540.discost)
-    e1:SetTarget(c50218540.distg)
-    e1:SetOperation(c50218540.disop)
+    e1:SetCondition(c50218540.atkcon)
+    e1:SetCost(c50218540.atkcost)
+    e1:SetTarget(c50218540.atktg)
+    e1:SetOperation(c50218540.atkop)
     c:RegisterEffect(e1)
     --get effect
     local e2=Effect.CreateEffect(c)
     e2:SetDescription(aux.Stringid(50218540,1))
-    e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
-    e2:SetType(EFFECT_TYPE_QUICK_O+EFFECT_TYPE_XMATERIAL)
-    e2:SetRange(LOCATION_MZONE)
+    e2:SetType(EFFECT_TYPE_XMATERIAL+EFFECT_TYPE_TRIGGER_O)
+    e2:SetCode(EVENT_ATTACK_ANNOUNCE)
     e2:SetCountLimit(1)
-    e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-    e2:SetCode(EVENT_CHAINING)
-    e2:SetCondition(c50218540.discon)
-    e2:SetCost(c50218540.discost)
-    e2:SetTarget(c50218540.distg)
-    e2:SetOperation(c50218540.disop)
+    e2:SetCondition(c50218540.atkcon)
+    e2:SetCost(c50218540.atkcost)
+    e2:SetTarget(c50218540.atktg)
+    e2:SetOperation(c50218540.atkop)
     c:RegisterEffect(e2)
 end
-function c50218540.discon(e,tp,eg,ep,ev,re,r,rp)
-    if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-    return rp==1-tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
+function c50218540.atkcon(e,tp,eg,ep,ev,re,r,rp)
+    local at=Duel.GetAttackTarget()
+    return at and at:IsFaceup()
 end
-function c50218540.discost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c50218540.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
     e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
-function c50218540.distg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c50218540.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return true end
-    Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-    if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
-        Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
-    end
+    Duel.SetTargetCard(Duel.GetAttackTarget())
 end
-function c50218540.disop(e,tp,eg,ep,ev,re,r,rp)
-    if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
-        Duel.Destroy(eg,REASON_EFFECT)
+function c50218540.atkop(e,tp,eg,ep,ev,re,r,rp)
+    local c=e:GetHandler()
+    local tc=Duel.GetFirstTarget()
+    if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+        local e1=Effect.CreateEffect(c)
+        e1:SetType(EFFECT_TYPE_SINGLE)
+        e1:SetCode(EFFECT_DISABLE)
+        e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+        tc:RegisterEffect(e1)
+        local e2=Effect.CreateEffect(c)
+        e2:SetType(EFFECT_TYPE_SINGLE)
+        e2:SetCode(EFFECT_DISABLE_EFFECT)
+        e2:SetValue(RESET_TURN_SET)
+        e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+        tc:RegisterEffect(e2)
+        Duel.AdjustInstantly(tc)
+        local atk=tc:GetAttack()
+        if c:IsFaceup() and c:IsRelateToEffect(e) then
+            local e1=Effect.CreateEffect(c)
+            e1:SetType(EFFECT_TYPE_SINGLE)
+            e1:SetCode(EFFECT_UPDATE_ATTACK)
+            e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+            e1:SetValue(atk)
+            e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+            c:RegisterEffect(e1)
+        end
     end
 end

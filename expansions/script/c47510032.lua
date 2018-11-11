@@ -1,6 +1,4 @@
 --魔眼的星晶兽 美杜莎
-local m=47510032
-local cm=_G["c"..m]
 function c47510032.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)
@@ -50,6 +48,7 @@ function c47510032.initial_effect(c)
     e5:SetTarget(c47510032.sstg)
     e5:SetOperation(c47510032.ssop)
     c:RegisterEffect(e5)
+    c47510032.ss_effect=e5
     --defenseattack
     local e6=Effect.CreateEffect(c)
     e6:SetType(EFFECT_TYPE_SINGLE)

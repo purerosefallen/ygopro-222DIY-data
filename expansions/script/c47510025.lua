@@ -1,6 +1,4 @@
 --双子的星晶兽 弗拉姆=格拉姆
-local m=47510025
-local cm=_G["c"..m]
 function c47510025.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)
@@ -43,9 +41,9 @@ function c47510025.initial_effect(c)
     e6:SetCountLimit(1,47510000)
     e6:SetCondition(c47510025.condition)
     e6:SetCost(c47510025.cost)
-    e6:SetTarget(c47510025.distg)
     e6:SetOperation(c47510025.disop)
     c:RegisterEffect(e6)
+    c47510025.ss_effect=e6
     --recover
     local e7=Effect.CreateEffect(c)
     e7:SetCategory(CATEGORY_RECOVER)
@@ -118,9 +116,6 @@ end
 function c47510025.cost(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
     Duel.SendtoGrave(e:GetHandler(),REASON_COST)
-end
-function c47510025.distg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
 end
 function c47510025.disop(e,tp,eg,ep,ev,re,r,rp)
     local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)

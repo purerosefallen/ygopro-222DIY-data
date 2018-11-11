@@ -47,7 +47,7 @@ function c12006010.condition(e,tp,eg,ep,ev,re,r,rp)
 		and c:IsReason(REASON_EFFECT) and c:GetPreviousControler()==tp
 end
 function c12006010.filter(c,e,tp)
-	return c:IsSetCard(0x8fbd) and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
+	return c:IsSetCard(08fbd) and (c:IsAbleToHand() or c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function c12006010.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c12006010.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end

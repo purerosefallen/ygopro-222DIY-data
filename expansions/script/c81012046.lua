@@ -1,7 +1,7 @@
 --Answer·梅木音叶
 function c81012046.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,6,2)
+	aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_WIND),6,3)
 	c:EnableReviveLimit()
 	--pendulum summon
 	aux.EnablePendulumAttribute(c,false)
@@ -17,20 +17,18 @@ function c81012046.initial_effect(c)
 	c:RegisterEffect(e1)
 	--copy effect
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(81012046,1))
-	e3:SetCategory(CATEGORY_REMOVE)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
-	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EVENT_FREE_CHAIN)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetHintTiming(0,TIMING_END_PHASE)
 	e3:SetCountLimit(1,81012946)
 	e3:SetCost(c81012046.cpcost)
-	e3:SetTarget(c81012046.cptg)
-	e3:SetOperation(c81012046.cpop)
+	e3:SetTarget(c81012046.settg)
+	e3:SetOperation(c81012046.setop)
 	c:RegisterEffect(e3)
 	--pendulum
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(81012046,2))
 	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e4:SetProperty(EFFECT_FLAG_DELAY)
 	e4:SetCode(EVENT_DESTROYED)
@@ -74,37 +72,31 @@ function c81012046.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
-function c81012046.cpfilter(c)
-	return c:GetType()==TYPE_SPELL and c:IsAbleToRemove() and c:CheckActivateEffect(false,true,false)~=nil
+function c81012046.filter(c)
+	return c:GetType()==TYPE_SPELL or c:GetType()==TYPE_TRAP
 end
-function c81012046.cptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then
-		local te=e:GetLabelObject()
-		local tg=te:GetTarget()
-		return tg and tg(e,tp,eg,ep,ev,re,r,rp,0,chkc)
+function c81012046.setfilter(c,tp)
+	return (c:GetType()==TYPE_SPELL or c:GetType()==TYPE_TRAP) and c:IsSSetable(true) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+end
+function c81012046.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(1-tp) and chkc:IsLocation(LOCATION_GRAVE) and c81012046.setfilter(chkc,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c81012046.setfilter,tp,0,LOCATION_GRAVE,1,nil,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
+	local g=Duel.SelectTarget(tp,c81012046.setfilter,tp,0,LOCATION_GRAVE,1,1,nil,tp)
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
+end
+function c81012046.setop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) and (tc:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0) then
+		Duel.SSet(tp,tc)
+		Duel.ConfirmCards(1-tp,tc)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
+		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetValue(LOCATION_REMOVED)
+		tc:RegisterEffect(e1,true)
 	end
-	if chk==0 then return Duel.IsExistingTarget(c81012046.cpfilter,tp,LOCATION_GRAVE,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,c81012046.cpfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-	local te,ceg,cep,cev,cre,cr,crp=g:GetFirst():CheckActivateEffect(false,true,true)
-	Duel.ClearTargetCard()
-	g:GetFirst():CreateEffectRelation(e)
-	local tg=te:GetTarget()
-	if tg then tg(e,tp,ceg,cep,cev,cre,cr,crp,1) end
-	te:SetLabelObject(e:GetLabelObject())
-	e:SetLabelObject(te)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,0,0,0)
-end
-function c81012046.cpop(e,tp,eg,ep,ev,re,r,rp)
-	local te=e:GetLabelObject()
-	if not te then return end
-	if not te:GetHandler():IsRelateToEffect(e) then return end
-	e:SetLabelObject(te:GetLabelObject())
-	local op=te:GetOperation()
-	if op then op(e,tp,eg,ep,ev,re,r,rp) end
-	Duel.BreakEffect()
-	Duel.Remove(te:GetHandler(),POS_FACEUP,REASON_EFFECT)
 end
 function c81012046.pencon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

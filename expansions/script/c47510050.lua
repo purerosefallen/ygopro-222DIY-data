@@ -1,6 +1,4 @@
 --蔷薇的星晶兽 玫瑰女皇
-local m=47510050
-local cm=_G["c"..m]
 function c47510050.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)
@@ -48,6 +46,7 @@ function c47510050.initial_effect(c)
     e5:SetTarget(c47510050.ntrtg)
     e5:SetOperation(c47510050.ntrop)
     c:RegisterEffect(e5)
+    c47510050.ss_effect=e5
     --effect
     local e6=Effect.CreateEffect(c)
     e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)

@@ -1,6 +1,4 @@
 --武勇的星晶兽 哪吒
-local m=47510028
-local cm=_G["c"..m]
 function c47510028.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)  
@@ -32,12 +30,12 @@ function c47510028.initial_effect(c)
     e5:SetCategory(CATEGORY_ATKCHANGE)
     e5:SetType(EFFECT_TYPE_IGNITION)
     e5:SetRange(LOCATION_EXTRA)
-    e5:SetCode(EVENT_FREE_CHAIN)
     e5:SetCountLimit(1,47510000)
     e5:SetCost(c47510028.cost)
     e5:SetTarget(c47510028.datg)
     e5:SetOperation(c47510028.daop)
     c:RegisterEffect(e5)
+    c47510028.ss_effect=e5
     --doubleattack
     local e7=Effect.CreateEffect(c)
     e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)

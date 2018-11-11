@@ -1,6 +1,4 @@
 --雷鸣的星晶兽 巴尔
-local m=47510019
-local cm=_G["c"..m]
 function c47510019.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)
@@ -43,6 +41,7 @@ function c47510019.initial_effect(c)
     e6:SetCost(c47510019.cost)
     e6:SetOperation(c47510019.op)
     c:RegisterEffect(e6)
+    c47510019.ss_effect=e6
     --synchro effect
     local e7=Effect.CreateEffect(c)
     e7:SetCategory(CATEGORY_SPECIAL_SUMMON)

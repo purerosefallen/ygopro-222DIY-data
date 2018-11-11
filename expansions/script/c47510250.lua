@@ -1,6 +1,4 @@
 --铃铛天使 叮咚
-local m=47510250
-local cm=_G["c"..m]
 function c47510250.initial_effect(c)
     aux.EnablePendulumAttribute(c)
     --synchro
@@ -46,6 +44,7 @@ function c47510250.initial_effect(c)
     e5:SetCost(c47510250.cost)
     e5:SetOperation(c47510250.ssop)
     c:RegisterEffect(e5)
+    c47510250.ss_effect=e5
     --synchro limit
     local e6=Effect.CreateEffect(c)
     e6:SetType(EFFECT_TYPE_SINGLE)
@@ -114,12 +113,8 @@ end
 function c47510250.ceop(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
     local g=Duel.SelectMatchingCard(tp,c47510250.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-    if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(47510250,0)) then
+    if g:GetCount()>0 then
         local tc=g:GetFirst()
-        if tc then
-            Duel.MoveToField(tc,tp,1-tp,LOCATION_SZONE,POS_FACEUP,true)
-        end
-    else local tc=g:GetFirst()
         if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
         local c=e:GetHandler()
         local e1=Effect.CreateEffect(c)

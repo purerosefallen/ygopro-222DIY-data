@@ -143,7 +143,7 @@ function c47550006.spcon(e,tp,eg,ep,ev,re,r,rp)
     return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0
 end
 function c47550006.spfilter(c,e,tp)
-    return (c:IsLevel(4) or c:IsLevel(7)) and (c:IsRace(RACE_SPELLCASTER) or c:IsRace(RACE_WARRIOR)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsFaceup()
+    return c:IsLevelAbove(4) and (c:IsRace(RACE_SPELLCASTER) or c:IsRace(RACE_WARRIOR)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsFaceup()
 end
 function c47550006.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chkc then return chkc:IsLocation(LOCATION_EXTRA) and chkc:IsControler(tp) and c47550006.spfilter(chkc,e,tp) end

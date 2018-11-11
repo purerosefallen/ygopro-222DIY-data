@@ -1,6 +1,4 @@
 --堕天的星晶兽 奥利维尔
-local m=47510041
-local cm=_G["c"..m]
 function c47510041.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)
@@ -45,6 +43,7 @@ function c47510041.initial_effect(c)
     e5:SetTarget(c47510041.sstg)
     e5:SetOperation(c47510041.ssop)
     c:RegisterEffect(e5)
+    c47510041.ss_effect=e5
     --trapimm
     local e6=Effect.CreateEffect(c)
     e6:SetType(EFFECT_TYPE_SINGLE)

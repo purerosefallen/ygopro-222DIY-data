@@ -1,6 +1,4 @@
 --战神的星晶兽 奥丁
-local m=47510022
-local cm=_G["c"..m]
 function c47510022.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)
@@ -47,6 +45,7 @@ function c47510022.initial_effect(c)
     e5:SetTarget(c47510022.target)
     e5:SetOperation(c47510022.operation)
     c:RegisterEffect(e5)
+    c47510022.ss_effect=e5
     --atk
     local e6=Effect.CreateEffect(c)
     e6:SetType(EFFECT_TYPE_FIELD)

@@ -1,84 +1,49 @@
---RDM-伏龙之冤
---RUM-伏龙之渊
+--伏龙王-闪乱
 function c50218560.initial_effect(c)
-    --Activate
+    --xyz summon
+    aux.AddXyzProcedure(c,nil,7,2)
+    c:EnableReviveLimit()
+    --multi attack
     local e1=Effect.CreateEffect(c)
-    e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-    e1:SetType(EFFECT_TYPE_ACTIVATE)
-    e1:SetCode(EVENT_FREE_CHAIN)
-    e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
-    e1:SetCountLimit(1,50218560+EFFECT_COUNT_CODE_OATH)
-    e1:SetTarget(c50218560.target)
-    e1:SetOperation(c50218560.activate)
+    e1:SetType(EFFECT_TYPE_IGNITION)
+    e1:SetRange(LOCATION_MZONE)
+    e1:SetCountLimit(1)
+    e1:SetCondition(c50218560.atkcon)
+    e1:SetCost(c50218560.atkcost)
+    e1:SetTarget(c50218560.atktg)
+    e1:SetOperation(c50218560.atkop)
     c:RegisterEffect(e1)
-    --material
+    --get effect
     local e2=Effect.CreateEffect(c)
-    e2:SetType(EFFECT_TYPE_QUICK_O)
-    e2:SetCode(EVENT_FREE_CHAIN)
-    e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-    e2:SetRange(LOCATION_GRAVE)
-    e2:SetCondition(aux.exccon)
-    e2:SetCost(aux.bfgcost)
-    e2:SetTarget(c50218560.mattg)
-    e2:SetOperation(c50218560.matop)
+    e2:SetType(EFFECT_TYPE_IGNITION+EFFECT_TYPE_XMATERIAL)
+    e2:SetRange(LOCATION_MZONE)
+    e2:SetCountLimit(1)
+    e2:SetCondition(c50218560.atkcon)
+    e2:SetCost(c50218560.atkcost)
+    e2:SetTarget(c50218560.atktg)
+    e2:SetOperation(c50218560.atkop)
     c:RegisterEffect(e2)
 end
-function c50218560.filter1(c,e,tp)
-    local rk=c:GetRank()
-    return c:IsFaceup() and c:IsType(TYPE_XYZ)
-        and Duel.IsExistingMatchingCard(c50218560.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,c,rk-1)
-        and Duel.GetLocationCountFromEx(tp,tp,c)>0
-        and aux.MustMaterialCheck(c,tp,EFFECT_MUST_BE_XMATERIAL)
+function c50218560.atkcon(e,tp,eg,ep,ev,re,r,rp)
+    return Duel.IsAbleToEnterBP()
 end
-function c50218560.filter2(c,e,tp,mc,rk)
-    return c:IsRank(rk) and c:IsSetCard(0xcb5) and mc:IsCanBeXyzMaterial(c)
-        and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false)
+function c50218560.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
+    if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
+    e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
-function c50218560.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c50218560.filter1(chkc,e,tp) end
-    if chk==0 then return Duel.IsExistingTarget(c50218560.filter1,tp,LOCATION_MZONE,0,1,nil,e,tp) end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-    Duel.SelectTarget(tp,c50218560.filter1,tp,LOCATION_MZONE,0,1,1,nil,e,tp)
-    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+function c50218560.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
+    if chk==0 then return e:GetHandler():GetEffectCount(EFFECT_EXTRA_ATTACK)==0
+        and e:GetHandler():GetEffectCount(EFFECT_EXTRA_ATTACK_MONSTER)==0 end
 end
-function c50218560.activate(e,tp,eg,ep,ev,re,r,rp)
-    local tc=Duel.GetFirstTarget()
-    if Duel.GetLocationCountFromEx(tp,tp,tc)<=0 or not aux.MustMaterialCheck(tc,tp,EFFECT_MUST_BE_XMATERIAL) then return end
-    if tc:IsFacedown() or not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) or tc:IsImmuneToEffect(e) then return end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-    local g=Duel.SelectMatchingCard(tp,c50218560.filter2,tp,LOCATION_EXTRA,0,1,1,nil,e,tp,tc,tc:GetRank()-1)
-    local sc=g:GetFirst()
-    if sc then
-        local mg=tc:GetOverlayGroup()
-        if mg:GetCount()~=0 then
-            Duel.Overlay(sc,mg)
-        end
-        sc:SetMaterial(Group.FromCards(tc))
-        Duel.Overlay(sc,Group.FromCards(tc))
-        Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
-        sc:CompleteProcedure()
-    end
-end
-function c50218560.xyzfilter(c)
-    return c:IsFaceup() and c:IsSetCard(0xcb5) and c:IsType(TYPE_XYZ)
-end
-function c50218560.matfilter(c)
-    return c:IsSetCard(0xcb5) and c:IsType(TYPE_MONSTER)
-end
-function c50218560.mattg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c50218560.xyzfilter(chkc) end
-    if chk==0 then return Duel.IsExistingTarget(c50218560.xyzfilter,tp,LOCATION_MZONE,0,1,nil)
-        and Duel.IsExistingMatchingCard(c50218560.matfilter,tp,LOCATION_HAND,0,1,nil) end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-    Duel.SelectTarget(tp,c50218560.xyzfilter,tp,LOCATION_MZONE,0,1,1,nil)
-end
-function c50218560.matop(e,tp,eg,ep,ev,re,r,rp)
-    local tc=Duel.GetFirstTarget()
-    if tc:IsRelateToEffect(e) and not tc:IsImmuneToEffect(e) then
-        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-        local g=Duel.SelectMatchingCard(tp,c50218560.matfilter,tp,LOCATION_HAND,0,1,1,nil)
-        if g:GetCount()>0 then
-            Duel.Overlay(tc,g)
-        end
+function c50218560.atkop(e,tp,eg,ep,ev,re,r,rp)
+    local c=e:GetHandler()
+    if c:IsRelateToEffect(e) then
+        local e1=Effect.CreateEffect(c)
+        e1:SetType(EFFECT_TYPE_SINGLE)
+        e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+        e1:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
+        e1:SetValue(1)
+        e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+        c:RegisterEffect(e1)
     end
 end

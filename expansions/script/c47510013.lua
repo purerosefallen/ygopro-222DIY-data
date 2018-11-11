@@ -1,6 +1,4 @@
  --幻影的星晶兽 迦楼罗
-local m=47510013
-local cm=_G["c"..m]
 function c47510013.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c) 
@@ -38,6 +36,7 @@ function c47510013.initial_effect(c)
     e5:SetTargetRange(LOCATION_MZONE,0)
     e5:SetOperation(c47510013.ssop)
     c:RegisterEffect(e5)
+    c47510013.ss_effect=e5
     --xyz
     local e6=Effect.CreateEffect(c)
     e6:SetCategory(CATEGORY_SPECIAL_SUMMON)

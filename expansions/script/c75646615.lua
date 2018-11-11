@@ -32,7 +32,7 @@ function c75646615.dircon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,75646600)~=0
 end
 function c75646615.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
+	if chk==0 then return Duel.CheckLPCost(tp,2000) end
 	Duel.PayLPCost(tp,2000)
 end
 function c75646615.filter(c)

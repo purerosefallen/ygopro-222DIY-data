@@ -1,6 +1,4 @@
 --冰皇的星晶兽 玛奇拉=玛利乌斯
-local m=47510035
-local cm=_G["c"..m]
 function c47510035.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)
@@ -41,12 +39,12 @@ function c47510035.initial_effect(c)
     e5:SetCategory(CATEGORY_DISABLE)
     e5:SetType(EFFECT_TYPE_IGNITION)
     e5:SetRange(LOCATION_EXTRA)
-    e5:SetCode(EVENT_FREE_CHAIN)
     e5:SetCountLimit(1,47510000)
     e5:SetCost(c47510035.cost)
     e5:SetTarget(c47510035.distg2)
     e5:SetOperation(c47510035.disop2)
     c:RegisterEffect(e5)
+    c47510035.ss_effect=e5
     --remove
     local e6=Effect.CreateEffect(c)
     e6:SetType(EFFECT_TYPE_FIELD)

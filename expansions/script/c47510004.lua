@@ -1,6 +1,4 @@
 --制裁的星晶兽 托尔
-local m=47510004
-local cm=_G["c"..m]
 function c47510004.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)
@@ -37,12 +35,12 @@ function c47510004.initial_effect(c)
     e5:SetCategory(CATEGORY_DISABLE)
     e5:SetType(EFFECT_TYPE_IGNITION)
     e5:SetRange(LOCATION_EXTRA)
-    e5:SetCode(EVENT_FREE_CHAIN)
     e5:SetCountLimit(1,47510000)
     e5:SetCost(c47510004.cost)
     e5:SetTarget(c47510004.distg)
     e5:SetOperation(c47510004.disop)
     c:RegisterEffect(e5)
+    c47510004.ss_effect=e5
     --summon
     local e6=Effect.CreateEffect(c)
     e6:SetDescription(aux.Stringid(47510001,0))

@@ -45,6 +45,7 @@ function c47510038.initial_effect(c)
     e5:SetCost(c47510038.cost)
     e5:SetOperation(c47510038.ssop)
     c:RegisterEffect(e5)
+    c47510038.ss_effect=e5
     --spsummon
     local e6=Effect.CreateEffect(c)
     e6:SetCategory(CATEGORY_SPECIAL_SUMMON)

@@ -14,6 +14,11 @@ function cm.initial_effect(c)
 	e2:SetDescription(aux.Stringid(77707047,0))
 	e2:SetType(EFFECT_TYPE_ACTIVATE)
 	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
+		Senya.EvilliousCheckList=Senya.EvilliousCheckList or {[0]=0,[1]=0}
+		if chk==0 then return true end
+		Senya.EvilliousCheckList[tp]=Senya.EvilliousCheckList[tp]|0x4
+	end)
 	e2:SetOperation(cm.operation)
 	c:RegisterEffect(e2)
 	--link spell

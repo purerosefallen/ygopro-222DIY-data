@@ -48,7 +48,7 @@ function c75646614.dircon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,75646600)~=0
 end
 function c75646614.filter1(c)
-	return aux.IsCodeListed(c,75646600) and c:IsAbleToGrave()
+	return aux.IsCodeListed(c,75646600) and not c:IsCode(75646614) and c:IsAbleToGrave()
 		and c:IsType(TYPE_SPELL+TYPE_TRAP) 
 end
 function c75646614.tg(e,tp,eg,ep,ev,re,r,rp,chk)

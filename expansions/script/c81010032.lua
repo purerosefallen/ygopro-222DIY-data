@@ -33,7 +33,7 @@ function c81010032.initial_effect(c)
 	c:RegisterEffect(e3)
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(81010032,0))
-	e4:SetCategory(CATEGORY_DAMAGE)
+	e4:SetCategory(CATEGORY_RECOVER)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_CHAIN_SOLVED)
 	e4:SetRange(LOCATION_MZONE)
@@ -78,5 +78,5 @@ function c81010032.dmgcon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and e:GetHandler():GetFlagEffect(1)>0
 end
 function c81010032.dmgop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Damage(1-tp,800,REASON_EFFECT)
+	Duel.Recover(tp,500,REASON_EFFECT)
 end

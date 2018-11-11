@@ -53,7 +53,9 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	Senya.EvilliousCheckList=Senya.EvilliousCheckList or {[0]=0,[1]=0}
 	if chk==0 then return true end
+	Senya.EvilliousCheckList[tp]=Senya.EvilliousCheckList[tp]|0x2
 	--destroy
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

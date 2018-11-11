@@ -38,12 +38,12 @@ function c75646616.thfilter(c)
 	return aux.IsCodeListed(c,75646600) and c:IsAbleToHand()
 end
 function c75646616.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c75646616.thfilter,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c75646616.thfilter,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,e:GetHandler()) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE+LOCATION_DECK)
 end
 function c75646616.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c75646616.thfilter),tp,LOCATION_GRAVE+LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c75646616.thfilter),tp,LOCATION_GRAVE+LOCATION_DECK,0,1,1,e:GetHandler())
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)

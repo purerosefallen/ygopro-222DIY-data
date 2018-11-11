@@ -72,7 +72,7 @@ function c65010101.filter(c)
 end
 function c65010101.op(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,65010103,0,0x4011,1000,2800,8,RACE_FAIRY,ATTRIBUTE_DARK) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,65010103,0,0x4011,1000,2800,8,RACE_FAIRY,ATTRIBUTE_DARK) or not e:GetHandler():IsRelateToEffect(e) then return end
 	local token=Duel.CreateToken(tp,65010103)
 	if Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.IsExistingMatchingCard(c65010101.filter,tp,LOCATION_HAND,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(65010101,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)

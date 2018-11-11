@@ -1,6 +1,4 @@
 --狩猎的星晶兽 格拉尼
-local m=47510016
-local cm=_G["c"..m]
 function c47510016.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c) 
@@ -40,6 +38,7 @@ function c47510016.initial_effect(c)
     e5:SetTarget(c47510016.target)
     e5:SetOperation(c47510016.operation)
     c:RegisterEffect(e5)
+    c47510016.ss_effect=e5
     --destroy
     local e6=Effect.CreateEffect(c)
     e6:SetCategory(CATEGORY_DESTROY)

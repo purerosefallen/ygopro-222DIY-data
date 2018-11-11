@@ -1,6 +1,4 @@
 --爱与战争之神 阿娜特
-local m=47510247
-local cm=_G["c"..m]
 function c47510247.initial_effect(c)
     --revive limit
     aux.EnableReviveLimitPendulumSummonable(c,LOCATION_HAND+LOCATION_EXTRA)
@@ -53,13 +51,13 @@ function c47510247.initial_effect(c)
     e4:SetTarget(c47510247.target)
     e4:SetOperation(c47510247.operation)
     c:RegisterEffect(e4)
+    c47510247.ss_effect=e4
     --atk
     local e5=Effect.CreateEffect(c)
     e5:SetType(EFFECT_TYPE_FIELD)
     e5:SetCode(EFFECT_UPDATE_ATTACK)
     e5:SetRange(LOCATION_MZONE)
     e5:SetTargetRange(LOCATION_MZONE,0)
-    e5:SetCondition(c47510247.atkcon)
     e5:SetTarget(c47510247.bftg)
     e5:SetValue(2000)
     c:RegisterEffect(e5)
@@ -68,7 +66,6 @@ function c47510247.initial_effect(c)
     e6:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
     e6:SetRange(LOCATION_MZONE)
     e6:SetTargetRange(LOCATION_MZONE,0)
-    e6:SetCondition(c47510247.atkcon)
     e6:SetTarget(c47510247.bftg)
     e6:SetValue(1)
     c:RegisterEffect(e6)
@@ -130,12 +127,17 @@ function c47510247.filter(c,e,tp)
     return (c:IsSetCard(0x5da) or c:IsAttribute(ATTRIBUTE_WIND) or c:IsRace(RACE_WARRIOR)) and c:IsFaceup() and c:IsAbleToHand() 
 end
 function c47510247.pptg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(c47510247.filter,tp,LOCATION_EXTRA,0,2,nil,e,tp) end
-    Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_EXTRA)
+    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>-1
+        and Duel.IsExistingMatchingCard(c47510247.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c47510247.ppop(e,tp,eg,ep,ev,re,r,rp)
+    local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+    if ft<=0 then return end
+    if ft>2 then ft=2 end
+    if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-    local g=Duel.SelectMatchingCard(tp,c47510247.filter,tp,LOCATION_EXTRA,0,2,2,nil,e,tp)
+    local g=Duel.SelectMatchingCard(tp,c47510247.filter,tp,LOCATION_EXTRA,0,1,ft,nil,e,tp)
     if g:GetCount()~=0 then 
         Duel.SendtoHand(g,nil,REASON_EFFECT)    
     end
@@ -161,13 +163,13 @@ function c47510247.operation(e,tp,eg,ep,ev,re,r,rp)
         e2:SetRange(LOCATION_SZONE)
         e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
         e2:SetCode(EFFECT_LINK_SPELL_KOISHI)
-        e2:SetValue(LINK_MARKER_TOP+LINK_MARKER_TOP_LEFT)
+        e2:SetValue(LINK_MARKER_TOP+LINK_MARKER_TOP_LEFT+LINK_MARKER_TOP_RIGHT)
         e2:SetReset(RESET_EVENT+RESETS_STANDARD)
         tc:RegisterEffect(e2)
     end
 end
 function c47510247.xfilter(c)
-    return c:IsSummonableCard() and c:IsFaceup()
+    return c:IsSummonableCard()
 end
 function c47510247.xcost(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.IsExistingMatchingCard(c47510247.xfilter,tp,LOCATION_EXTRA,0,1,nil) end
@@ -195,7 +197,4 @@ function c47510247.xop(e,tp,eg,ep,ev,re,r,rp)
         lc:RegisterEffect(e1)
         lc=g:GetNext()
     end
-end
-function c47510247.atkcon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM)
 end

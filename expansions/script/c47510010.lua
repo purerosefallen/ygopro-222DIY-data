@@ -1,6 +1,4 @@
 --祝福的星晶兽 芙蕾雅
-local m=47510010
-local cm=_G["c"..m]
 function c47510010.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)
@@ -41,11 +39,11 @@ function c47510010.initial_effect(c)
     local e5=Effect.CreateEffect(c)
     e5:SetType(EFFECT_TYPE_IGNITION)
     e5:SetRange(LOCATION_EXTRA)
-    e5:SetCode(EVENT_FREE_CHAIN)
     e5:SetCountLimit(1,47510000)
     e5:SetCost(c47510010.cost)
     e5:SetOperation(c47510010.atkop)
     c:RegisterEffect(e5)
+    c47510010.ss_effect=e5
     --return
     local e6=Effect.CreateEffect(c)
     e6:SetDescription(aux.Stringid(47510010,0))
