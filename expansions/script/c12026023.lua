@@ -25,17 +25,18 @@ function c12026023.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
 	e2:SetCondition(c12026023.condition)
+	e2:SetTargetRange(0,LOCATION_ONFIELD)
 	e2:SetTarget(c12026023.disable)
 	e2:SetCode(EFFECT_DISABLE)
 	c:RegisterEffect(e2)
 end
 function c12026023.disable(e,c)
 	local cc=e:GetHandler()
-	return c:IsControler(1) and not c:IsCode(12026023) and cc:GetColumnGroup():IsContains(c) and (c:IsType(TYPE_EFFECT) or bit.band(c:GetOriginalType(),TYPE_EFFECT)==TYPE_EFFECT )
+	return cc:GetColumnGroup():IsContains(c) and not c:IsCode(12026023) and (c:IsType(TYPE_EFFECT) or bit.band(c:GetOriginalType(),TYPE_EFFECT)==TYPE_EFFECT )
 end
 function c12026023.condition(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetCurrentChain()
-	return ct>0
+	return ct>1
 end
 function c12026023.efilter(e,te)
 	return te:GetOwner()~=e:GetOwner()
