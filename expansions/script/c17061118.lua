@@ -71,7 +71,7 @@ end
 function cm.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and Duel.GetTurnPlayer()==tp
 end
-function c89194033.atkop(e,tp,eg,ep,ev,re,r,rp)
+function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsFacedown() or not c:IsRelateToEffect(e) then return end
 	local e1=Effect.CreateEffect(c)

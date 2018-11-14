@@ -53,7 +53,7 @@ function c47530008.disable(e,c)
 end
 function c47530008.cfilter(c,seq2)
     local seq1=aux.MZoneSequence(c:GetSequence())
-    return c:IsFaceup() and c:IsRace(RACE_MACHINE) and seq1==4-seq2 and c:GetSummonLocation==LOCATION_EXTRA
+    return c:IsFaceup() and c:IsRace(RACE_MACHINE) and seq1==4-seq2 and c:GetSummonLocation()==LOCATION_EXTRA
 end
 function c47530008.lcheck(g,lc)
     return g:GetClassCount(Card.GetCode)==g:GetCount()

@@ -83,7 +83,7 @@ function c12008027.spop(e,tp,eg,ep,ev,re,r,rp)
 	   Duel.BreakEffect()
 	   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	   local tc=rg:Select(tp,1,1,nil):GetFirst()
-	   Duel.SendtoHand(tc,nil,REASON_EFFECT)
+	   Duel.SendtoHand(tc,tp,REASON_EFFECT)
 	   Duel.ShuffleDeck(tp)
 	   
 end

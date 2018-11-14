@@ -319,7 +319,7 @@ end
 function c47501010.fop1(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     if Duel.NegateAttack() then
-    c:RegisterFlagEffect(47501010,RESET_EVENT+RESETS_STANDARD,0,1)
+    c:RegisterFlagEffect(47501010,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
     end
 end
 function c47501010.ftg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -329,6 +329,6 @@ end
 function c47501010.fop2(e,tp,eg,ep,ev,re,r,rp,chk)
     local c=e:GetHandler()
     if Duel.NegateEffect(ev) then
-    c:RegisterFlagEffect(47501010,RESET_EVENT+RESETS_STANDARD,0,1)
+    c:RegisterFlagEffect(47501010,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
     end
 end

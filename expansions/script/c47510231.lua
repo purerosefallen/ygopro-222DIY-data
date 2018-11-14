@@ -90,7 +90,7 @@ end
 function c47510231.tfop(e,tp,eg,ep,ev,re,r,rp)
     if Duel.GetLocationCount(tp,LOCATION_SZONE)<1 then return end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-    local g=Duel.SelectMatchingCard(tp,c47510231.tffilter,tp,LOCATION_DECK,0,1,1,nil)
+    local g=Duel.SelectMatchingCard(tp,c47510231.tffilter,tp,LOCATION_EXTRA,0,1,1,nil)
     local tc=g:GetFirst()
     if tc then
         Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)

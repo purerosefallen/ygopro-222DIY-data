@@ -70,7 +70,7 @@ function c47500017.tetg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c47500017.teop(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-    local g=Duel.SelectMatchingCard(tp,c47510252.penfilter,tp,LOCATION_EXTRA,0,1,1,nil)
+    local g=Duel.SelectMatchingCard(tp,c47500017.penfilter,tp,LOCATION_EXTRA,0,1,1,nil)
     local tc=g:GetFirst()
     local code=tc:GetOriginalCode()
     if tc and Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then

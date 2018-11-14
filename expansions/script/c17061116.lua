@@ -34,6 +34,7 @@ function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 		--Damage
 		local e5=Effect.CreateEffect(e:GetHandler())
+		e5:SetDescription(aux.Stringid(m,0))
 		e5:SetCategory(CATEGORY_DAMAGE)
 		e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 		e5:SetCode(EVENT_PHASE+PHASE_END)

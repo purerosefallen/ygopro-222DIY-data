@@ -1,6 +1,4 @@
 --地心用大型钻头机 加拉尔霍恩
-local m=47511919
-local c47511919=_G["c"..m]
 function c47511919.initial_effect(c)
     aux.EnablePendulumAttribute(c)
     --splimit
@@ -31,8 +29,8 @@ function c47511919.initial_effect(c)
     e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
     e3:SetRange(LOCATION_HAND)
     e3:SetCountLimit(1,47510810)
-    e3:SetCondition(c47511919.spcon)
-    e3:SetOperation(c47511919.spop)
+    e3:SetCondition(c47511919.spscon)
+    e3:SetOperation(c47511919.spsop)
     c:RegisterEffect(e3) 
     --reborn
     local e4=Effect.CreateEffect(c)
@@ -67,7 +65,7 @@ function c47511919.spcon1(e,tp,eg,ep,ev,re,r,rp)
     return eg:IsExists(c47511919.cfilter1,1,nil)
 end
 function c47511919.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_GRAVE,0,1,nil)) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+    if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_GRAVE,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
     Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function c47511919.spop1(e,tp,eg,ep,ev,re,r,rp)
@@ -91,7 +89,7 @@ function c47511919.ttfilter(c)
 end
 function c47511919.op(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    if c:IsRelateToEffect(e) and Duel.SendtoDeck(c,nil,2,REASON_EFFECT)~=0 then
+    if c:IsRelateToEffect(e) and Duel.SendtoHand(c,tp,REASON_EFFECT)~=0 then
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
         local g=Duel.SelectMatchingCard(tp,c47511919.ttfilter,tp,LOCATION_DECK,0,1,1,nil)
         if g:GetCount()>0 then
@@ -102,13 +100,13 @@ end
 function c47511919.spcfilter(c)
     return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and not c:IsPublic()
 end
-function c47511919.spcon(e,c)
+function c47511919.spscon(e,c)
     if c==nil then return true end
     local tp=c:GetControler()
     return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
         and Duel.IsExistingMatchingCard(c47511919.spcfilter,tp,LOCATION_HAND,0,1,nil) and Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
 end
-function c47511919.spop(e,tp,eg,ep,ev,re,r,rp,c)
+function c47511919.spsop(e,tp,eg,ep,ev,re,r,rp,c)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
     local g=Duel.SelectMatchingCard(tp,c47511919.spcfilter,tp,LOCATION_HAND,0,1,1,nil)
     Duel.ConfirmCards(1-tp,g)
@@ -125,7 +123,7 @@ function c47511919.filter(c)
 end
 function c47511919.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     local c=e:GetHandler()
-    if chk==0 then return Duel.IsExistingTarget(c47511919.filter,tp,LOCATION_MZONE,0,1,nil) end
+    if chk==0 then return Duel.IsExistingTarget(c47511919.filter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(c47511919.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
     local g=Duel.SelectTarget(tp,c47511919.filter,tp,LOCATION_MZONE,0,1,1,nil)
     Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)

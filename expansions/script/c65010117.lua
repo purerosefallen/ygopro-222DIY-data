@@ -37,7 +37,8 @@ function c65010117.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c65010117.refil,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,e,tp) end
 	local g=Duel.SelectMatchingCard(tp,Card.IsReleasable,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	local tc=g:GetFirst()
-	e:SetLabelObject(tc)
+	local sp=tc:GetControler()
+	e:SetLabel(sp)
 	Duel.Release(tc,REASON_COST)
 end
 function c65010117.spfil(c,e,tp,sp)
@@ -48,8 +49,7 @@ function c65010117.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
 end
 function c65010117.op(e,tp,eg,ep,ev,re,r,rp)
-	local sp=e:GetLabelObject():GetPreviousControler()
-	if Duel.GetLocationCount(sp,LOCATION_MZONE)>0 then return end
+	local sp=e:GetLabel()
 	local g=Duel.SelectMatchingCard(tp,c65010117.spfil,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp,sp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,sp,false,false,POS_FACEUP)

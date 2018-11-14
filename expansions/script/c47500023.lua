@@ -40,6 +40,9 @@ c47500023.card_code_list={47500000}
 function c47500023.lfilter(c)
     return c:IsAttribute(ATTRIBUTE_DARK) and c:IsCode(47500000)
 end
+function c47500023.lcheck(g,lc)
+    return g:IsExists(c47500023.lfilter,1,nil)
+end
 function c47500023.xyzfilter(c)
     return c:IsXyzSummonable(nil) and aux.IsCodeListed(c,47500000)
 end

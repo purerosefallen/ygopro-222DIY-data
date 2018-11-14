@@ -76,7 +76,7 @@ end
 function c47510213.mop(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
     local g=Duel.SelectMatchingCard(tp,c47510213.dtfilter,tp,LOCATION_MZONE+LOCATION_HAND+LOCATION_EXTRA,0,1,1,nil)
-    if Duel.SendtoGrave(g,nil,1,REASON_EFFECT) then
+    if Duel.SendtoGrave(g,nil,2,REASON_EFFECT)~=0 then
         local g1=Duel.GetMatchingGroup(c47510213.mfilter,tp,LOCATION_MZONE,0,nil)
         local tc=g1:GetFirst()
         local c=e:GetHandler()
