@@ -26,7 +26,7 @@ function c81014012.initial_effect(c)
 	--psset
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetCountLimit(1,81014812)
+	e3:SetCountLimit(1,81094012)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetTarget(c81014012.settg)
 	e3:SetOperation(c81014012.setop)

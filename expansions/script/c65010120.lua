@@ -29,6 +29,6 @@ function c65010120.repop(e,tp,eg,ep,ev,re,r,rp)
 		c:CancelToGrave(false)
 	end
 	if not (Duel.IsExistingMatchingCard(c65010120.spfil,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetLocationCount(1-tp,LOCATION_MZONE)>0) then return end
-	local g=Duel.SelectMatchingCard(1-tp,c65010120.spfil,tp,0,LOCATION_HAND+LOCATION_GRAVE,1,nil,e,1-tp)
-	Duel.SpecialSummon(g,0,1-tp,tp,false,false,POS_FACEUP)
+	local g=Duel.SelectMatchingCard(tp,c65010120.spfil,tp,0,LOCATION_HAND+LOCATION_GRAVE,1,nil,e,tp)
+	Duel.SpecialSummon(g,0,tp,1-tp,false,false,POS_FACEUP)
 end

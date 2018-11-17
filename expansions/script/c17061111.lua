@@ -8,7 +8,6 @@ function cm.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(cm.target)
-	e1:SetOperation(cm.activate)
 	c:RegisterEffect(e1)
 	--Damage
 	local e5=Effect.CreateEffect(c)
@@ -40,13 +39,6 @@ function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetOperation(cm.desop)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN,4)
 	c:RegisterEffect(e1)
-end
-function cm.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(Card.IsCanTurnSet,tp,0,LOCATION_MZONE,nil)
-	if g:GetCount()>0 then
-		Duel.ChangePosition(g,POS_FACEDOWN_DEFENSE)
-	end
 end
 function cm.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()==tp

@@ -89,7 +89,7 @@ function c47501005.distg(e,c)
 end
 function c47501005.valcheck(e,c)
     local g=c:GetMaterial()
-    if g:IsExists(Card.IsCode,1,nil,47500000) then
+    if g:IsExists(Card.GetOriginalCodeRule,1,nil,47500000) then
         e:GetLabelObject():SetLabel(1)
     else
         e:GetLabelObject():SetLabel(0)

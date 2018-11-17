@@ -4,7 +4,7 @@ local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFunRep(c,cm.ffilter,2,false)
+	aux.AddFusionProcFunRep(c,cm.ffilter,2,true)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -27,10 +27,9 @@ function cm.initial_effect(c)
 	e3:SetCategory(CATEGORY_DAMAGE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e3:SetCondition(cm.damcon)
 	e3:SetTarget(cm.damtg)
 	e3:SetOperation(cm.damop)
-	c:RegisterEffect(e2)
+	c:RegisterEffect(e3)
 	--atk limit
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD)
@@ -72,20 +71,15 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	c:SetMaterial(g1)
 	Duel.Release(g1,REASON_COST+REASON_FUSION+REASON_MATERIAL)
 end
-function cm.damcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
-end
 function cm.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	local ct=Duel.GetLP(tp)/2
-	Duel.SetTargetPlayer(1-tp)
-	Duel.SetTargetParam(ct)
 	Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,tp,ct)
 end
 function cm.damop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetLP(tp)/2
-	local p,d=Duel.GetChainInfo(CHAININFO_TARGET_PLAYER,0,CHAININFO_TARGET_PARAM)
-	Duel.Damage(p,ct,REASON_EFFECT)
+	Duel.Damage(tp,ct,REASON_EFFECT,true)
+	Duel.RDComplete()
 end
 function cm.atlimit(e,c)
 	return c~=e:GetHandler()

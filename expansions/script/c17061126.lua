@@ -38,5 +38,6 @@ function cm.desop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
 		c:RegisterEffect(e1)
+		end
 	end
 end
