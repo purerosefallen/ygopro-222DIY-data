@@ -50,7 +50,7 @@ function c81011056.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c81011056.spcfilter(c,tp)
-	return c:GetPreviousControler()==tp and c:GetPreviousRaceOnField()==RACE_BEASTWARRIOR
+	return c:GetPreviousControler()==tp and c:GetPreviousRaceOnField()==RACE_BEASTWARRIOR and c:GetPreviousLocation()==LOCATION_ONFIELD
 end
 function c81011056.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(c81011056.spcfilter,1,nil,tp)

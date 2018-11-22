@@ -91,7 +91,7 @@ function c81013011.tgop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c81013011.actop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
-	if re:IsActiveType(TYPE_MONSTER) and re:IsRace(RACE_SPELLCASTER) then
+	if re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsRace(RACE_SPELLCASTER) then
 		Duel.SetChainLimit(c81013011.chainlm)
 	end
 end

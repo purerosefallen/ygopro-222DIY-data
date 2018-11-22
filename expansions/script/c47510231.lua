@@ -1,8 +1,6 @@
 --天才美少女炼金术师
-local m=47510231
-local cm=_G["c"..m]
 function c47510231.initial_effect(c)
-    aux.EnablePendulumAttribute(c) 
+    aux.EnablePendulumAttribute(c,false) 
     --fusion material
     c:EnableReviveLimit()
     aux.AddFusionProcFunRep(c,c47510231.ffilter,2,false)

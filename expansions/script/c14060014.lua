@@ -66,17 +66,14 @@ function cm.efilter(e,re)
 end
 function cm.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return ((c:IsFaceup() and c:IsLocation(LOCATION_EXTRA)) or c:IsLocation(LOCATION_HAND)) and not Duel.IsExistingMatchingCard(Card.IsType,c:GetControler(),LOCATION_GRAVE,0,1,nil,TYPE_MONSTER)
-end
-function cm.tefilter(c,e,tp)
-	return c:IsSetCard(0x1406) and c:IsType(TYPE_MONSTER) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
+	return (c:IsFaceup() or c:IsLocation(LOCATION_HAND)and not Duel.IsExistingMatchingCard(Card.IsType,c:GetControler(),LOCATION_GRAVE,0,1,nil,TYPE_MONSTER)
 end
 function cm.thfilter(c,e,tp)
 	return c:IsCode(14060015) and c:IsAbleToHand()
 end
 function cm.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(cm.tefilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return c:IsAbleToDeck() end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,c,1,tp,LOCATION_HAND+LOCATION_EXTRA)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND)

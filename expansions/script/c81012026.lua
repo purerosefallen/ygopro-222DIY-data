@@ -11,7 +11,7 @@ end
 function c81012026.chainop(e,tp,eg,ep,ev,re,r,rp)
 	local rc=re:GetHandler()
 	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	if re:IsActiveType(TYPE_MONSTER) and loc==LOCATION_MZONE and rc:IsRace(RACE_FAIRY) then
+	if re:IsActiveType(TYPE_MONSTER) and loc==LOCATION_MZONE and rc:GetHandler():IsRace(RACE_FAIRY) then
 		Duel.SetChainLimit(c81012026.chainlm)
 	end
 end

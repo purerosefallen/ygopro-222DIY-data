@@ -20,7 +20,7 @@ function c47512001.lcheck(g)
     return g:IsExists(Card.IsLinkType,1,nil,TYPE_PENDULUM)
 end
 function c47512001.tfilter(c,att,e,tp)
-    return c:IsType(TYPE_PENDULUM) and c:IsAttribute(att) and c:IsAbleToExtra() and (c:IsSetCard(0x5da) or c:IsSetCard(0x5de) or c:IsSetCard(0x5d5))
+    return c:IsType(TYPE_PENDULUM) and c:IsAttribute(att) and c:IsAbleToExtra() and (c:IsSetCard(0x5da) or c:IsSetCard(0x5de) or c:IsSetCard(0x5d0))
 end
 function c47512001.filter(c,e,tp)
     return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and Duel.IsExistingMatchingCard(c47512001.tfilter,tp,LOCATION_DECK,0,1,nil,c:GetAttribute(),e,tp)

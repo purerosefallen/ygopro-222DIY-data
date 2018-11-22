@@ -52,7 +52,7 @@ function c47550008.psplimit(e,c,tp,sumtp,sumpos)
 end
 function c47550008.spcon(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    return c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsPreviousLocation(LOCATION_HAND)
+    return c:IsSummonType(SUMMON_TYPE_PENDULUM)
 end
 function c47550008.spfilter(c,e,tp)
     return c:IsSetCard(0x5d0) and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)

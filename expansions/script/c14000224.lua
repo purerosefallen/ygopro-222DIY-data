@@ -23,7 +23,7 @@ function cm.initial_effect(c)
 	--change level
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(m,3))
-	e3:SetCategory(CATEGORY_TOHAND)
+	e3:SetCategory(CATEGORY_LVCHANGE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_SUMMON_SUCCESS)
 	e3:SetRange(LOCATION_MZONE)

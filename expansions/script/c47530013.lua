@@ -18,7 +18,7 @@ function c47530013.initial_effect(c)
     local e2=Effect.CreateEffect(c)
     e2:SetDescription(aux.Stringid(47530013,1))
     e2:SetCategory(CATEGORY_EQUIP)
-    e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+    e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
     e2:SetCode(EVENT_BATTLE_START)
     e2:SetTarget(c47530013.eqtg)
     e2:SetOperation(c47530013.eqop)
@@ -45,12 +45,14 @@ function c47530013.tgop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     local g=Duel.GetMatchingGroup(c47530013.disfilter,tp,LOCATION_MZONE,LOCATION_MZONE,e:GetHandler())
     local tc=g:GetFirst()
-    if tc and Duel.SendtoGrave(tc,REASON_RULE) then
+    while tc do
+        Duel.SendtoGrave(tc,REASON_RULE)
         local code=tc:GetOriginalCode()
         if c:IsFaceup() and c:GetFlagEffect(code)==0 then
         c:CopyEffect(code,RESET_EVENT+0x1fe0000+EVENT_CHAINING, 1)
         c:RegisterFlagEffect(code,RESET_EVENT+0x1fe0000+EVENT_CHAINING,0,1)  
         end 
+    tc=g:GetNext()
     end
 end
 function c47530013.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -64,8 +66,8 @@ function c47530013.eqop(e,tp,eg,ep,ev,re,r,rp)
     local tc=Duel.GetAttacker()
     if tc==c then tc=Duel.GetAttackTarget() end
     if tc:IsRelateToBattle() and tc:GetAttack()<=c:GetAttack() then
-        if tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsType(TYPE_MONSTER)then
-        if c:IsFaceup() and c:IsRelateToEffect(e) then
+        if tc:IsFaceup() and tc:IsType(TYPE_MONSTER)then
+        if c:IsFaceup() then
             if not Duel.Equip(tp,tc,c,false) then return end
             --Add Equip limit
             local e1=Effect.CreateEffect(c)

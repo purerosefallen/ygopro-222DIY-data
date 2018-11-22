@@ -11,7 +11,7 @@ deck/11.10new_card6.ydk	0
 deck/11.10new_card7.ydk	0
 deck/11.10new_card8.ydk	0
 deck/11.10new_card9.ydk	0
-expansions/222DIY.cdb	9d2055cb67edfdb11b0d386a20b13738
+expansions/222DIY.cdb	62b8035ba3ac3e662e6b68b11aaf5b20
 expansions/lflist.conf	960c76c035342c963956c3429df3f292
 expansions/strings.conf	e26822b325359a8914a31723528c4cef
 expansions/pics/08209710.jpg	ed0e60085631bfa641ffeebd6abbd910
@@ -4944,7 +4944,7 @@ expansions/pics/81013016.jpg	0
 expansions/pics/81013017.jpg	0
 expansions/pics/81013093.jpg	0
 expansions/pics/81013094.jpg	0
-expansions/pics/81013095.jpg	0
+expansions/pics/81013095.jpg	85c6f8d7262902d3b2f46c20f388736d
 expansions/pics/81013096.jpg	0
 expansions/pics/81013097.jpg	0938697c47e520eb204c91009164c8b5
 expansions/pics/81013098.jpg	b63c720d543f4730d8408d2687d4b3ab

@@ -4,7 +4,8 @@ local cm=_G["c"..m]
 function c47510237.initial_effect(c)
     --material
     c:EnableReviveLimit() 
-    aux.AddXyzProcedureLevelFree(c,c47510237.mfilter,c47510237.xyzcheck,2,2)
+    c:EnableReviveLimit()
+    aux.AddXyzProcedure(c,c47510237.mfilter,8,2) 
     aux.EnablePendulumAttribute(c,false)   
     --disable
     local e1=Effect.CreateEffect(c)
@@ -91,9 +92,6 @@ function c47510237.distg(e,c)
 end
 function c47510237.mfilter(c)
     return c:IsLevel(8) and c:IsType(TYPE_PENDULUM)
-end
-function c47510237.xyzcheck(g)
-    return g:GetClassCount(Card.GetAttribute)==g:GetCount()
 end
 function c47510237.atktg(e,c)
     return c:IsType(TYPE_MONSTER)
