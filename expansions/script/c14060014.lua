@@ -66,7 +66,7 @@ function cm.efilter(e,re)
 end
 function cm.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return (c:IsFaceup() or c:IsLocation(LOCATION_HAND)and not Duel.IsExistingMatchingCard(Card.IsType,c:GetControler(),LOCATION_GRAVE,0,1,nil,TYPE_MONSTER)
+	return (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and not Duel.IsExistingMatchingCard(Card.IsType,c:GetControler(),LOCATION_GRAVE,0,1,nil,TYPE_MONSTER)
 end
 function cm.thfilter(c,e,tp)
 	return c:IsCode(14060015) and c:IsAbleToHand()
