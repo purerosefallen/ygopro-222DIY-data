@@ -13,5 +13,5 @@ function c81008022.condition(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and ev>=4000
 end
 function c81008022.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SetLP(tp,8000)
+	Duel.SetLP(tp,4000)
 end

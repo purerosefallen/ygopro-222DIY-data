@@ -51,14 +51,11 @@ function c65030020.edtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c65030020.edop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c65030020.edfil,tp,0,LOCATION_MZONE,nil)
-	if Duel.GetFieldGroup(tp,0,LOCATION_MZONE)==0 then
-		Duel.SetLP(1-tp,Duel.GetLP(1-tp)-1000)
-	end
 	if g:GetCount()>0 then
-		local num=Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)
+		local num=Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 		if num~=0 then
 			Duel.BreakEffect()
-			Duel.SetLP(1-tp,Duel.GetLP(1-tp)-500*num)
+			Duel.SetLP(1-tp,Duel.GetLP(1-tp)-1000*num)
 		end
 	end
 end

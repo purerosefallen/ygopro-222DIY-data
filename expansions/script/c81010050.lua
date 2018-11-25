@@ -8,6 +8,7 @@ function c81010050.initial_effect(c)
 	e0:SetDescription(aux.Stringid(81010050,0))
 	e0:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 	e0:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e0:SetCondition(c81010050.sumcon)
 	e0:SetOperation(c81010050.sumsuc)
 	c:RegisterEffect(e0)
 	--atk/def
@@ -57,7 +58,7 @@ function c81010050.atkcon2(e)
 end
 function c81010050.atkval(e,c)
 	local tp=c:GetControler()
-	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_ONFIELD,LOCATION_ONFIELD)*500
+	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_ONFIELD,0)*500
 end
 function c81010050.defcon(e)
 	return Duel.GetTurnPlayer()~=e:GetHandlerPlayer()

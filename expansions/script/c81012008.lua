@@ -2,7 +2,7 @@
 function c81012008.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x810),4,true)
+	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0x810),3,true)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -74,7 +74,7 @@ end
 function c81012008.fselect(c,tp,mg,sg)
 	sg:AddCard(c)
 	local res=false
-	if sg:GetCount()<4 then
+	if sg:GetCount()<3 then
 		res=mg:IsExists(c81012008.fselect,1,sg,tp,mg,sg)
 	else
 		res=Duel.GetLocationCountFromEx(tp,tp,sg)>0
@@ -92,7 +92,7 @@ end
 function c81012008.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	local mg=Duel.GetMatchingGroup(c81012008.spfilter,tp,LOCATION_MZONE,0,nil)
 	local sg=Group.CreateGroup()
-	while sg:GetCount()<4 do
+	while sg:GetCount()<3 do
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g=mg:FilterSelect(tp,c81012008.fselect,1,1,sg,tp,mg,sg)
 		sg:Merge(g)

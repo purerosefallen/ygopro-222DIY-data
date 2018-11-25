@@ -34,19 +34,19 @@ function c81014006.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c81014006.rpfilter(c,e,tp)
-	return c:IsSetCard(0x813) and (not c:IsForbidden()
+	return c:IsFaceup() and c:IsSetCard(0x813) and (not c:IsForbidden()
 		or (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false))) and not c:IsCode(81014006) 
 end
 function c81014006.rptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c81014006.rpfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c81014006.rpfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_DECK)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,0,tp,LOCATION_EXTRA)
 end
 function c81014006.rpop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.Destroy(c,REASON_EFFECT)>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(81014006,6))
-		local g=Duel.SelectMatchingCard(tp,c81014006.rpfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+		local g=Duel.SelectMatchingCard(tp,c81014006.rpfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
 		local tc=g:GetFirst()
 		local op=0
 		if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false) then

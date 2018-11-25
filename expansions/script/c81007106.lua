@@ -41,7 +41,7 @@ function c81007106.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c81007106.hspfilter(c,tp,sc)
-	return c:IsType(TYPE_LINK) and c:IsLink(4) and c:IsControler(tp) and Duel.GetLocationCountFromEx(tp,tp,sc,c)>0
+	return c:IsType(TYPE_LINK) and c:IsLink(5) and c:IsControler(tp) and Duel.GetLocationCountFromEx(tp,tp,sc,c)>0
 end
 function c81007106.hspcon(e,c)
 	if c==nil then return true end

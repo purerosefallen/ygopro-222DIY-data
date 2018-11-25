@@ -1,4 +1,4 @@
---决战之时
+--mingyun之时
 function c81009026.initial_effect(c)
 	aux.AddRitualProcGreaterCode(c,81008004)
 	--salvage

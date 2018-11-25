@@ -5,6 +5,7 @@ function c81009030.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCondition(c81009030.condition)
+	e1:SetOperation(c81009030.sumsuc)
 	c:RegisterEffect(e1)
 	--disable
 	local e2=Effect.CreateEffect(c)
@@ -14,6 +15,9 @@ function c81009030.initial_effect(c)
 	e2:SetTarget(c81009030.disable)
 	e2:SetCode(EFFECT_DISABLE)
 	c:RegisterEffect(e2)
+end
+function c81009030.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(81009030,1))
 end
 function c81009030.disable(e,c)
 	return c:IsSummonType(SUMMON_TYPE_SPECIAL)
