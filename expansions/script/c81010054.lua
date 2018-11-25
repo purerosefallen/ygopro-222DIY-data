@@ -1,8 +1,16 @@
 --Answer·大石泉·S
 function c81010054.initial_effect(c)
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,3,2)
+	aux.AddXyzProcedure(c,nil,3,2,nil,nil,99)
 	c:EnableReviveLimit()
+	--spsummon bgm
+	local e0=Effect.CreateEffect(c)
+	e0:SetDescription(aux.Stringid(81010054,0))
+	e0:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e0:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e0:SetCondition(c81010054.sumcon)
+	e0:SetOperation(c81010054.sumsuc)
+	c:RegisterEffect(e0)
 	--token
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOKEN)
@@ -14,6 +22,12 @@ function c81010054.initial_effect(c)
 	e1:SetTarget(c81010054.target)
 	e1:SetOperation(c81010054.operation)
 	c:RegisterEffect(e1)
+end
+function c81010054.sumcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
+end
+function c81010054.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(81010054,1))
 end
 function c81010054.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
@@ -40,7 +54,7 @@ function c81010054.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CANNOT_ATTACK)
+		e1:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
 		e1:SetValue(1)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		token:RegisterEffect(e1,true)

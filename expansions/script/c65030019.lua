@@ -38,11 +38,14 @@ function c65030019.accost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function c65030019.aclimit(e,re,tp)
-	return not re:GetHandler():IsImmuneToEffect(e)
+	return not re:GetHandler():IsImmuneToEffect(e) and not (re:IsHasCategory(CATEGORY_SUMMON) or re:IsHasCategory(CATEGORY_SPECIAL_SUMMON))
+end
+function c65030019.actconfil(c)
+	return not c:IsType(TYPE_SPELL)
 end
 function c65030019.actcon(e)
 	local tp=e:GetHandlerPlayer()
-	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)==0 
+	return Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)==0 and Duel.GetMatchingGroupCount(c65030019.actconfil,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)==0 
 end
 function c65030019.ntfil(c)
 	return not c:IsType(TYPE_SPELL)
@@ -62,12 +65,12 @@ function c65030019.edop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,0,LOCATION_EXTRA)
 	local check=0
 	local i=0
-	if num<=0 then return false end
+	if num<=0 or g:GetCount()==0 then return false end
 	while check==0 do
 		local gc=g:RandomSelect(tp,1):GetFirst()
 		g:RemoveCard(gc)
 		Duel.Remove(gc,POS_FACEDOWN,REASON_EFFECT)
 		i=i+1
-		if i==num or not Duel.SelectYesNo(tp,aux.Stringid(65030019,0)) then check=1 end
+		if i==num or not Duel.SelectYesNo(tp,aux.Stringid(65030019,0))  or g:GetCount()==0 then check=1 end
 	end
 end

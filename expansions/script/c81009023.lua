@@ -41,13 +41,13 @@ function c81009023.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_MUSIC,0,aux.Stringid(81009023,3))
 end
 function c81009023.atkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x810)
+	return c:IsFaceup() and c:IsType(TYPE_LINK) and c:IsAttribute(ATTRIBUTE_WIND)
 end
 function c81009023.atkcon(e)
 	return Duel.IsExistingMatchingCard(c81009023.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,3,nil)
 end
 function c81009023.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0x810) and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsFaceup() and c:IsType(TYPE_TUNER) and c:IsAbleToDeckAsCost()
 end
 function c81009023.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c81009023.cfilter,tp,LOCATION_MZONE,0,1,nil) end
@@ -68,20 +68,20 @@ function c81009023.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
 	local ct=Duel.GetFieldGroupCount(1-tp,LOCATION_MZONE,0)
 	if ft<ct then return end
-	if not Duel.IsPlayerCanSpecialSummonMonster(tp,81009024,0,0x4011,800,800,3,RACE_ROCK,ATTRIBUTE_WATER) then return end
+	if not Duel.IsPlayerCanSpecialSummonMonster(tp,81009024,0,0x4011,800,800,3,RACE_ROCK,ATTRIBUTE_WIND) then return end
 	for i=1,ct do
 		local token=Duel.CreateToken(tp,81009024)
 		Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CANNOT_ATTACK_ANNOUNCE)
+		e1:SetCode(EFFECT_CANNOT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		token:RegisterEffect(e1,true)
 	end
 	Duel.SpecialSummonComplete()
 end
 function c81009023.sumfilter(c)
-	return c:IsSetCard(0x810) and c:IsSummonable(true,nil)
+	return c:IsSummonable(true,nil) and not c:IsType(TYPE_TUNER)
 end
 function c81009023.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c81009023.sumfilter,tp,LOCATION_HAND,0,1,nil) end
@@ -104,5 +104,5 @@ function c81009023.sumop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function c81009023.splimit(e,c)
-	return not c:IsSetCard(0x810) and c:IsLocation(LOCATION_EXTRA)
+	return not c:IsAttribute(ATTRIBUTE_WIND) and c:IsLocation(LOCATION_EXTRA)
 end

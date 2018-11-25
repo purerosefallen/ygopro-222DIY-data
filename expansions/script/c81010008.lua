@@ -1,36 +1,37 @@
 --赤城米莉亚
 function c81010008.initial_effect(c)
-    --link summon
-    c:EnableReviveLimit()
-    aux.AddLinkProcedure(c,aux.NOT(aux.FilterBoolFunction(Card.IsLinkType,TYPE_TOKEN)),1,1) 
-    --atkup
-    local e1=Effect.CreateEffect(c)
-    e1:SetDescription(aux.Stringid(81010008,0))
-    e1:SetCategory(CATEGORY_ATKCHANGE)
-    e1:SetType(EFFECT_TYPE_IGNITION)
-    e1:SetRange(LOCATION_MZONE)
-    e1:SetCountLimit(1,81010008)
-    e1:SetCost(c81010008.cost)
-    e1:SetOperation(c81010008.operation)
-    c:RegisterEffect(e1)
+	--link summon
+	aux.AddLinkProcedure(c,c81010008.mfilter,1,1)
+	c:EnableReviveLimit()
+	--special summon
+	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetRange(LOCATION_GRAVE)
+	e1:SetCountLimit(1,81010008,EFFECT_COUNT_CODE_DUEL)
+	e1:SetCondition(c81010008.spcon)
+	e1:SetTarget(c81010008.sptg)
+	e1:SetOperation(c81010008.spop)
+	c:RegisterEffect(e1)
+end
+function c81010008.mfilter(c)
+	return c:IsLinkType(TYPE_LINK) and c:IsLinkAttribute(ATTRIBUTE_WIND)
 end
 function c81010008.cfilter(c)
-    return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return c:IsFacedown() or not (c:IsType(TYPE_LINK) and c:IsAttribute(ATTRIBUTE_WIND) and c:IsLinkAbove(4))
 end
-function c81010008.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(c81010008.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-    local g=Duel.SelectMatchingCard(tp,c81010008.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-    Duel.Remove(g,POS_FACEUP,REASON_COST)
+function c81010008.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0
+		and not Duel.IsExistingMatchingCard(c81010008.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
-function c81010008.operation(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
-    if c:IsFaceup() and c:IsRelateToEffect(e) then
-        local e1=Effect.CreateEffect(c)
-        e1:SetType(EFFECT_TYPE_SINGLE)
-        e1:SetCode(EFFECT_UPDATE_ATTACK)
-        e1:SetValue(2500)
-        e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
-        c:RegisterEffect(e1)
-    end
+function c81010008.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+end
+function c81010008.spop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if c:IsRelateToEffect(e) then
+		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	end
 end

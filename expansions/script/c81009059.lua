@@ -29,6 +29,7 @@ function c81009059.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e4:SetCode(EVENT_TO_GRAVE)
 	e4:SetCountLimit(1,81009059)
+	e4:SetCondition(c81009059.tdcon)
 	e4:SetTarget(c81009059.thtg)
 	e4:SetOperation(c81009059.thop)
 	c:RegisterEffect(e4)
@@ -45,6 +46,10 @@ function c81009059.operation(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Equip(tp,e:GetHandler(),tc)
 	end
+end
+function c81009059.tdcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c81009059.thfilter(c)
 	return c:IsType(TYPE_EQUIP) and not c:IsCode(81009059) and c:IsAbleToHand()

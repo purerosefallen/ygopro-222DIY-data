@@ -64,6 +64,12 @@ function c81014016.spop(e,tp,eg,ep,ev,re,r,rp)
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
+function c81014016.cfilter(c,tp)
+	return c:IsFaceup() and c:GetSummonPlayer()==tp and c:GetSummonType()==SUMMON_TYPE_PENDULUM
+end
+function c81014016.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c81014016.cfilter,1,nil,1-tp)
+end
 function c81014016.ffilter(c)
 	return c:IsSetCard(0x813) and c:IsType(TYPE_PENDULUM) and c:IsType(TYPE_MONSTER)
 end
@@ -73,7 +79,7 @@ function c81014016.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(g,REASON_COST)
 end
 function c81014016.filter(c,tp)
-	return c:GetSummonPlayer()==1-tp and c:IsControlerCanBeChanged()
+	return c:GetSummonPlayer()==1-tp and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsControlerCanBeChanged()
 end
 function c81014016.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=eg:Filter(c81014016.filter,nil,tp)

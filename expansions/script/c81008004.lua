@@ -1,6 +1,18 @@
 --Answer·田中琴叶
 function c81008004.initial_effect(c)
+	--pendulum summon
+	aux.EnablePendulumAttribute(c)
 	c:EnableReviveLimit()
+	--halve damage
+	local e0=Effect.CreateEffect(c)
+	e0:SetType(EFFECT_TYPE_FIELD)
+	e0:SetRange(LOCATION_PZONE)
+	e0:SetCode(EFFECT_CHANGE_DAMAGE)
+	e0:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e0:SetTargetRange(1,0)
+	e0:SetCondition(c81008004.nondition)
+	e0:SetValue(c81008004.val)
+	c:RegisterEffect(e0)
 	--equip
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(81008004,0))
@@ -25,17 +37,40 @@ function c81008004.initial_effect(c)
 	e2:SetTarget(c81008004.sptg)
 	e2:SetOperation(c81008004.spop)
 	c:RegisterEffect(e2)
-	--Destroy replace
+	--destroy replace
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(81008004,2))
 	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCode(EFFECT_DESTROY_REPLACE)
-	e3:SetTarget(c81008004.desreptg)
-	e3:SetOperation(c81008004.desrepop)
+	e3:SetTarget(c81008004.reptg)
+	e3:SetOperation(c81008004.repop)
 	c:RegisterEffect(e3)
+	--spsummon bgm
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e4:SetCondition(c81008004.sumcon)
+	e4:SetOperation(c81008004.sumsuc)
+	c:RegisterEffect(e4)
 end
+function c81008004.sumcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
+end
+function c81008004.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(81008004,1))
+end
+function c81008004.cfilter(c)
+	return c:IsFaceup() and c:IsCode(81000016)
+end
+function c81008004.nondition(e)
+	return Duel.IsExistingMatchingCard(c81008004.cfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil)
+end
+function c81008004.val(e,re,dam,r,rp,rc)
+	return math.ceil(dam/2)
+end
+
 function c81008004.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
 end
@@ -116,24 +151,24 @@ function c81008004.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonComplete()
 	end
 end
-function c81008004.repfilter(c)
-	return c:IsType(TYPE_SPELL) and c:IsLocation(LOCATION_SZONE) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
+function c81008004.repfilter(c,e)
+	return c:IsFaceup() and c:IsType(TYPE_EQUIP) and c:IsType(TYPE_SPELL)
+		and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED)
 end
-function c81008004.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c81008004.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then
-		local g=c:GetEquipGroup()
-		return not c:IsReason(REASON_REPLACE) and g:IsExists(c81008004.repfilter,1,nil)
-	end
+	if chk==0 then return c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
+		and Duel.IsExistingMatchingCard(c81008004.repfilter,tp,LOCATION_ONFIELD,0,1,c,e) end
 	if Duel.SelectEffectYesNo(tp,c,96) then
-		local g=c:GetEquipGroup()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local sg=g:FilterSelect(tp,c81008004.repfilter,1,1,nil)
-		Duel.SetTargetCard(sg)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESREPLACE)
+		local g=Duel.SelectMatchingCard(tp,c81008004.repfilter,tp,LOCATION_ONFIELD,0,1,1,c,e)
+		Duel.SetTargetCard(g)
+		g:GetFirst():SetStatus(STATUS_DESTROY_CONFIRMED,true)
 		return true
 	else return false end
 end
-function c81008004.desrepop(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	Duel.SendtoGrave(tg,REASON_EFFECT+REASON_REPLACE)
+function c81008004.repop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	g:GetFirst():SetStatus(STATUS_DESTROY_CONFIRMED,false)
+	Duel.Destroy(g,REASON_EFFECT+REASON_REPLACE)
 end
