@@ -43,7 +43,7 @@ function c65031014.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c65031014.chcon(e,tp,eg,ep,ev,re,r,rp)
-	return not re:GetHandler():IsCode(65031014) and e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1
+	return not re:GetHandler():IsCode(65031014) and e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1 and re:GetHandlerPlayer()~=tp 
 end
 function c65031014.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -82,7 +82,7 @@ function c65031014.spop(e,tp,eg,ep,ev,re,r,rp)
 			if g:GetCount()>0 then
 				if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 then
 					local tc=g:GetFirst()
-					if Duel.Damage(tp,500,REASON_EFFECT)~=0 then
+					if Duel.Damage(1-tp,500,REASON_EFFECT)~=0 then
 						local e1=Effect.CreateEffect(c)
 						e1:SetType(EFFECT_TYPE_SINGLE)
 						e1:SetCode(EFFECT_DISABLE)

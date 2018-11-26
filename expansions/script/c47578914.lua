@@ -16,8 +16,7 @@ function c47578914.initial_effect(c)
     --salvage
     local e2=Effect.CreateEffect(c)
     e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-    e2:SetType(EFFECT_TYPE_ACTIVATE)
-    e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+    e2:SetType(EFFECT_TYPE_IGNITION)
     e2:SetRange(LOCATION_GRAVE)
     e2:SetCost(c47578914.thcost)
     e2:SetCondition(aux.exccon)
@@ -68,18 +67,18 @@ function c47578914.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
     g:AddCard(e:GetHandler())
     Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
-function c47578914.filter(c,e,tp)
+function c47578914.ssfilter(c,e,tp)
     return c:IsSetCard(0x5de) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c47578914.target(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-        and Duel.IsExistingMatchingCard(c47578914.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+        and Duel.IsExistingMatchingCard(c47578914.ssfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c47578914.activate(e,tp,eg,ep,ev,re,r,rp)
     if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-    local g=Duel.SelectMatchingCard(tp,c47578914.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+    local g=Duel.SelectMatchingCard(tp,c47578914.ssfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
     if g:GetCount()>0 then
         Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
     end

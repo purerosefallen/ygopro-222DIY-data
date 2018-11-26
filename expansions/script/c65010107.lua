@@ -13,7 +13,7 @@ function c65010107.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetProperty(EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_SET_AVAILABLE)
 	e1:SetCondition(c65010107.con)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,TYPE_DUAL))
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x9da0))
 	c:RegisterEffect(e1)
 	--negate
 	local e2=Effect.CreateEffect(c)
@@ -77,7 +77,7 @@ end
 function c65010107.disop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
-		Duel.Destroy(eg,REASON_EFFECT)
+		Duel.Remove(re:GetHandler(),POS_FACEUP,REASON_EFFECT)
 	end
 end
 function c65010107.con(e,c)

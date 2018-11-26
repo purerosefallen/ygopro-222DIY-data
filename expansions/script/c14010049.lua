@@ -30,7 +30,7 @@ function cm.ffilter(c,fc,sub,mg,sg)
 end
 function cm.filter(c,tp)
 	return not c:IsType(TYPE_TOKEN)
-		and (c:IsControler(tp) or c:IsAbleToChangeControler())
+		and (c:IsControler(tp) or c:IsAbleToChangeControler()) and Duel.GetLocationCountFromEx(tp,tp,c)>0
 end
 function cm.spcost(e,c,tp)
 	return Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler())

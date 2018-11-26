@@ -45,7 +45,7 @@ function c81015008.condition(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(c81015008.cfilter,tp,LOCATION_SZONE,0,1,nil)
 end
 function c81015008.atlimit(e,c)
-	return c:IsFaceup() and c:IsSetCard(0xab) and c~=e:GetHandler()
+	return c:IsFaceup() and c:IsSetCard(0x814) and c~=e:GetHandler()
 end
 function c81015008.desfilter(c)
 	return c:IsFacedown() or c:IsFaceup()

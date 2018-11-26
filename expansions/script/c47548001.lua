@@ -92,29 +92,25 @@ function c47548001.olcost(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
     e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
-function c47548001.olfilter(c,tp)
-    return not c:IsType(TYPE_TOKEN) and (c:IsControler(tp) or c:IsAbleToChangeControler())
-end
-function c47548001.oltg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    if chk==0 then return Duel.IsExistingMatchingCard(c47548001.olfilter,tp,0,LOCATION_MZONE,1,nil) end
-end
 function c47548001.oltg(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_SINGLE)
-    e1:SetCode(EFFECT_EXTRA_ATTACK)
-    e1:SetValue(1)
-    e1:SetReset(RESET_PHASE+PHASE_END)
-    c:RegisterEffect(e1)  
-    local e2=Effect.CreateEffect(c)
-    e2:SetType(EFFECT_TYPE_SINGLE)
-    e2:SetCode(EFFECT_IMMUNE_EFFECT)
-    e2:SetValue(c47548001.efilter)
-    e2:SetReset(RESET_PHASE+PHASE_END)
-    c:RegisterEffect(e2)      
+    if c:IsRelateToEffect(e) then
+        local e1=Effect.CreateEffect(e:GetHandler())
+        e1:SetType(EFFECT_TYPE_SINGLE)
+        e1:SetCode(EFFECT_IMMUNE_EFFECT)
+        e1:SetValue(c47548001.efilter)
+        e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+        c:RegisterEffect(e1)
+        local e2=Effect.CreateEffect(e:GetHandler())
+        e2:SetType(EFFECT_TYPE_SINGLE)
+        e2:SetCode(EFFECT_EXTRA_ATTACK)
+        e2:SetValue(1)
+        e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+        c:RegisterEffect(e2)
+    end     
 end
 function c47548001.efilter(e,re)
-    return re:GetOwner()~=e:GetOwner()
+    return e:GetOwnerPlayer()~=re:GetOwnerPlayer()
 end
 function c47548001.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
     local c=e:GetHandler()

@@ -13,7 +13,7 @@ function c47510022.initial_effect(c)
     c:RegisterEffect(e1) 
     --tohand
     local e2=Effect.CreateEffect(c)
-    e2:SetCategory(CATEGORY_TOHAND+CATEGORY_DESTROY)
+    e2:SetCategory(CATEGORY_TOHAND+CATEGORY_DESTROY+CATEGORY_SEARCH)
     e2:SetType(EFFECT_TYPE_IGNITION)
     e2:SetCode(EVENT_FREE_CHAIN)
     e2:SetRange(LOCATION_PZONE)

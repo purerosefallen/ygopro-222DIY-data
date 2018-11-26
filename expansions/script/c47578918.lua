@@ -33,7 +33,7 @@ function c47578918.initial_effect(c)
     c:RegisterEffect(e3)
 end
 function c47578918.mfilter(c)
-    return c:IsAttackAbove(2000)
+    return c:GetTextAttack()>=2000
 end
 function c47578918.indcon(e)
     return e:GetHandler():GetOverlayCount()>0

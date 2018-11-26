@@ -7,7 +7,8 @@ function c47598773.initial_effect(c)
     --material
     local e1=Effect.CreateEffect(c)
     e1:SetDescription(aux.Stringid(47598773,0))
-    e1:SetType(EFFECT_TYPE_IGNITION)
+    e1:SetType(EFFECT_TYPE_QUICK_O)
+    e1:SetCode(EVENT_FREE_CHAIN)
     e1:SetRange(LOCATION_MZONE)
     e1:SetCountLimit(1)
     e1:SetTarget(c47598773.mttg)
@@ -99,8 +100,8 @@ function c47598773.penop(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 function c47598773.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
-    e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
+    if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,2,REASON_COST) end
+    e:GetHandler():RemoveOverlayCard(tp,2,2,REASON_COST)
 end
 function c47598773.operation(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
@@ -113,7 +114,7 @@ function c47598773.operation(e,tp,eg,ep,ev,re,r,rp)
         c:RegisterEffect(e1)
     end
 end
-function c47598773.efilter(e,re)
+function c47598773.efilter(e,te)
     return te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
 function c47598773.spcon(e,tp,eg,ep,ev,re,r,rp)

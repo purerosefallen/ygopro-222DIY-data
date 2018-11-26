@@ -3,7 +3,7 @@ local m=47510084
 local cm=_G["c"..m]
 function c47510084.initial_effect(c)
     c:EnableReviveLimit()
-    aux.AddFusionProcMix(c,false,true,c47510084.fusfilter1,c47510084.fusfilter2,c47510084.fusfilter3,c47510084.fusfilter4,c47510084.fusfilter5,c47510084.fusfilter6)
+    aux.AddFusionProcMix(c,false,true,c47510084.fusfilter1,c47510084.fusfilter2,c47510084.fusfilter3,c47510084.fusfilter4)
     aux.EnablePendulumAttribute(c,false) 
     --spsummon condition
     local e1=Effect.CreateEffect(c)
@@ -122,12 +122,6 @@ function c47510084.fusfilter3(c)
 end
 function c47510084.fusfilter4(c)
     return c:IsAttribute(ATTRIBUTE_WATER) and c:IsFusionType(TYPE_LINK)
-end
-function c47510084.fusfilter5(c)
-    return c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsFusionType(TYPE_NORMAL)
-end
-function c47510084.fusfilter6(c)
-    return c:IsAttribute(ATTRIBUTE_DARK) and c:IsFusionType(TYPE_PENDULUM)
 end
 function c47510084.etarget(e,c)
     return c:IsType(TYPE_FUSION) or c:IsType(TYPE_SYNCHRO) or c:IsType(TYPE_XYZ) or c:IsType(TYPE_LINK) or c:IsType(TYPE_LINK)

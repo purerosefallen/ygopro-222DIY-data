@@ -1,4 +1,4 @@
-﻿ygopro.exe	e2c044e6015c9b81bc4c22f6f0c7af38
+ygopro.exe	e2c044e6015c9b81bc4c22f6f0c7af38
 deck/11.24new_card1.ydk	3dbd40b79e1559d0e1da5e16b7da392e
 deck/11.24new_card2.ydk	faaaf1e22996ba912ca18d42677ef987
 deck/11.24new_card3.ydk	641c7ea2bc51db8a8e9023c2c2814620
@@ -8,7 +8,7 @@ deck/11.24new_card6.ydk	66463faa323b7b995cbcaab896eb7382
 deck/11.24new_card7.ydk	8246bb2f9680702915da3553154ca0b4
 deck/11.24new_card8.ydk	61892c47a6972929f4805574522fb072
 deck/11.24new_card9.ydk	51b9ebdaf8d85740c8ba4b92ec657ba7
-expansions/222DIY.cdb	6678a783b79492e6f1fd461348205c49
+expansions/222DIY.cdb	8c913d9dd4ad2ce66171ddade396f1f1
 expansions/lflist.conf	9aa7fbbe2ee956bc3308dfa8df0b282d
 expansions/strings.conf	f9842a3b50097765aefda7d428927698
 expansions/pics/08209710.jpg	ed0e60085631bfa641ffeebd6abbd910
@@ -11016,4 +11016,4 @@ update/update-push.bat	49e0e022872a85c5350b8ee445ecd4d8
 update/update-push.sh	ee0ce539e77c8cec8965cb6d6a2b3149
 update/update-server.sh	1e36cb099427f8fda3cd52756b07398d
 update/update-without-sound.bat	22d7b973d79ef9311213aeff61d93d7c
-update/version.txt	6581dffa541ea50ce62f1bc5e6b0d79c
+update/version.txt	ce1f9133eed31e40d54c9f0b2b033dc5
