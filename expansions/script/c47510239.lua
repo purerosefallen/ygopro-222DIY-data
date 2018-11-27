@@ -53,11 +53,11 @@ end
 function c47510239.otcon(e,c,minc)
     if c==nil then return true end
     local tp=c:GetControler()
-    return c:GetLevel()>4 and minc<=1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c47510239.otfilter,tp,LOCATION_PZONE+LOCATION_HAND,0,1,c,tp)
+    return c:GetLevel()>4 and minc<=1 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c47510239.otfilter,tp,LOCATION_PZONE,0,1,c,tp)
 end
 function c47510239.otop(e,tp,eg,ep,ev,re,r,rp,c)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-    local sg=Duel.SelectMatchingCard(tp,c47510239.otfilter,tp,LOCATION_PZONE+LOCATION_HAND,0,1,1,c,tp)
+    local sg=Duel.SelectMatchingCard(tp,c47510239.otfilter,tp,LOCATION_PZONE,0,1,1,c,tp)
     c:SetMaterial(sg)
     Duel.Release(sg,REASON_SUMMON+REASON_MATERIAL)
 end

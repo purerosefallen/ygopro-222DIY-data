@@ -88,10 +88,10 @@ function c75646413.op(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(tg:Filter(Card.IsLocation,nil,LOCATION_REMOVED),REASON_EFFECT+REASON_RETURN)
 	end
 	local g2=Duel.GetOperatedGroup()
-	g1:Merge(g2)
 	if g1:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
-	local ct=g1:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA+LOCATION_GRAVE)
-	if ct==3 and e:GetLabel()==1 and Duel.IsPlayerCanDraw(tp,2) and Duel.SelectYesNo(tp,aux.Stringid(75646413,0)) then
+	local ct1=g1:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+	local ct2=g2:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
+	if ct1+ct2==3 and e:GetLabel()==1 and Duel.IsPlayerCanDraw(tp,2) and Duel.SelectYesNo(tp,aux.Stringid(75646413,0)) then
 		Duel.BreakEffect()
 		Duel.Draw(tp,2,REASON_EFFECT)
 	end
