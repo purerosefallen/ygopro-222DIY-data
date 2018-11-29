@@ -67,7 +67,6 @@ function c10131017.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c10131017.operation(e,tp,eg,ep,ev,re,r,rp)
 	local zone=e:GetHandler():GetLinkedZone()
-	if zone<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
 	local tc=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c10131017.filter),tp,LOCATION_GRAVE+LOCATION_EXTRA,0,1,1,nil,e,tp,zone):GetFirst()
 	if not tc then return end

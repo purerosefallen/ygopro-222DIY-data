@@ -102,8 +102,8 @@ function c47510239.chfilter(c)
     return c:IsRace(RACE_FAIRY) and c:IsLevelAbove(7)
 end
 function c47510239.chcost(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-    Duel.DiscardHand(tp,c47510239.chfilter,1,1,REASON_COST+REASON_DISCARD)
+    if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND+LOCATION_EXTRA,0,1,nil) end
+    Duel.SendtoGrave(tp,c47510239.chfilter,1,1,REASON_COST+REASON_DISCARD)
 end
 function c47510239.changetg(e,tp,eg,ep,ev,re,r,rp,chk)
     local c=e:GetHandler()

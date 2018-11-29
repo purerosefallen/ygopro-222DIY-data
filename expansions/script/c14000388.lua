@@ -108,7 +108,7 @@ function cm.op(e,tp,eg,ep,ev,re,r,rp)
 			e4:SetCode(EFFECT_ADD_TYPE)
 			e4:SetValue(TYPE_EFFECT)
 			e4:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e5,true)
+			tc:RegisterEffect(e4,true)
 		end
 		Duel.SpecialSummonComplete()
 	end
