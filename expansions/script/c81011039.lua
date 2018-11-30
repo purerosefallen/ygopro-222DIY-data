@@ -26,8 +26,8 @@ function c81011039.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,81011039)
-	e2:SetTarget(c81011039.target)
-	e2:SetOperation(c81011039.activate)
+	e2:SetTarget(c81011039.drtg)
+	e2:SetOperation(c81011039.drop)
 	c:RegisterEffect(e2)
 end
 function c81011039.sumcon(e,tp,eg,ep,ev,re,r,rp)
@@ -39,26 +39,26 @@ end
 function c81011039.atkval(e,c)
 	return c:GetLinkedGroupCount()*700
 end
-function c81011039.filter(c)
-	return not c:IsCode(81011039) and c:IsAbleToDeck()
+function c81011039.tdfilter(c)
+	return c:IsAbleToDeck() and not c:IsCode(81011039)
 end
-function c81011039.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c81011039.filter(chkc) end
+function c81011039.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c81011039.tdfilter(chkc) end
 	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
-		and Duel.IsExistingTarget(c81011039.filter,tp,LOCATION_GRAVE,0,8,nil) end
+		and Duel.IsExistingTarget(c81011039.tdfilter,tp,LOCATION_GRAVE,0,8,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,c81011039.filter,tp,LOCATION_GRAVE,0,8,8,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,8,0,0)
+	local g=Duel.SelectTarget(tp,c81011039.tdfilter,tp,LOCATION_GRAVE,0,8,8,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
-function c81011039.activate(e,tp,eg,ep,ev,re,r,rp)
-	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	if tg:FilterCount(Card.IsRelateToEffect,nil,e)~=8 then return end
+function c81011039.drop(e,tp,eg,ep,ev,re,r,rp)
+	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	if tg:GetCount()<=0 then return end
 	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
 	local g=Duel.GetOperatedGroup()
 	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
 	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
-	if ct==8 then
+	if ct>0 then
 		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end

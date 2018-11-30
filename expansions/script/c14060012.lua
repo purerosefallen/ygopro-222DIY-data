@@ -111,13 +111,13 @@ end
 function cm.disable(e,c)
 	local atk=e:GetHandler():GetBaseAttack()
 	local atk1=c:GetBaseAttack()
-	return (c:IsType(TYPE_EFFECT) or bit.band(c:GetOriginalType(),TYPE_EFFECT)==TYPE_EFFECT) and atk1<=atk and not (c:IsFacedown() and c:IsLocation(LOCATION_EXTRA))
+	return (c:IsType(TYPE_EFFECT) or bit.band(c:GetOriginalType(),TYPE_EFFECT)==TYPE_EFFECT) and c:IsType(TYPE_MONSTER) and atk1<=atk and (atk1>=0 or c:IsLocation(LOCATION_MZONE)) and not (c:IsFacedown() and c:IsLocation(LOCATION_EXTRA))
 end
 function cm.discon(e,tp,eg,ep,ev,re,r,rp)
 	local atk=e:GetHandler():GetBaseAttack()
 	local atk1=re:GetHandler():GetBaseAttack()
 	return e:GetHandler():IsFaceup()
-		and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsControler(1-tp) and atk1<=atk
+		and re:IsActiveType(TYPE_MONSTER) and re:GetHandler():IsControler(1-tp) and atk1<=atk and (atk1>=0 or c:IsLocation(LOCATION_MZONE))
 end
 function cm.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)

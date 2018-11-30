@@ -101,7 +101,6 @@ function c47500107.operation(e,tp,eg,ep,ev,re,r,rp)
         e2:SetReset(RESET_PHASE+PHASE_MAIN1+RESET_SELF_TURN)
         Duel.RegisterEffect(e2,tp)
         c:RegisterFlagEffect(47501107,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,2)
-        Duel.RegisterEffect(e1,tp)
     end
 end
 function c47500107.regcon(e,tp,eg,ep,ev,re,r,rp)
@@ -152,7 +151,7 @@ end
 function c47500107.disop2(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     local rc=re:GetHandler()
-    if Duel.NegateEffect(ev) and re:GetHandler():IsRelateToEffect(re) then
+    if Duel.NegateEffect(ev) then
         Duel.SendtoHand(rc,tp,REASON_EFFECT)
         c:RegisterFlagEffect(47511107,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
     end

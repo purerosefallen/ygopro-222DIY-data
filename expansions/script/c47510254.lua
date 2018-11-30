@@ -112,8 +112,7 @@ end
 function c47510254.discon2(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     if e:GetHandler():GetFlagEffect(47510255)~=0 then return end
-    if not rp==1-tp then return end
-    if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or not Duel.IsChainNegatable(ev) then return false end
+    if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or not Duel.IsChainNegatable(ev) or not rp==1-tp then return false end
     if c47510254.nfilter(re:GetHandler()) then return true end
     local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
     if g and g:IsExists(c47510254.nfilter,1,nil) then return true end

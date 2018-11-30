@@ -26,7 +26,7 @@ end
 function c81009011.baop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local d=c:GetBattleTarget()
-	if d and c:IsFaceup() and not c:IsStatus(STATUS_DESTROY_CONFIRMED) and d:IsStatus(STATUS_BATTLE_DESTROYED) then
+	if d and c:IsFaceup() and not c:IsStatus(STATUS_DESTROY_CONFIRMED) and d:IsStatus(STATUS_BATTLE_DESTROYED) and not d:IsType(TYPE_TOKEN) then
 		local e1=Effect.CreateEffect(c)
 		e1:SetCode(EFFECT_SEND_REPLACE)
 		e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)

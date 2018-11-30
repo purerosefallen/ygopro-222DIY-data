@@ -89,10 +89,12 @@ function c47598772.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c47598772.tfop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    local g=Duel.GetMatchingGroup(c47598772.ppfilter,tp,LOCATION_DECK,0,nil)
-    if g:GetCount()>0 then
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
+    local g=Duel.SelectMatchingCard(tp,c47598772.ppfilter,tp,LOCATION_DECK,0,1,1,nil)
+    local tc=g:GetFirst()
+    if tc then
        Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-   end
+    end
 end
 function c47598772.actop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
