@@ -192,7 +192,7 @@ function c1007002.tgactivate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.SendtoGrave(tc,REASON_EFFECT)
-		Duel.SetLP(tp,Duel.GetLP(tp)-500)
+		Duel.SetLP(1-tp,Duel.GetLP(tp)-500)
 	end
 end
 function c1007002.cost3(e,tp,eg,ep,ev,re,r,rp,chk)
