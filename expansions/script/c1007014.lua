@@ -94,6 +94,6 @@ function c1007014.reop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c1007014.refilter,tp,0,LOCATION_MZONE,1,1,nil)
 	if g:GetCount()>0 and g:GetFirst():IsFaceup() and g:GetFirst():GetAttack()>0 then
 	   Duel.SendtoGrave(g,REASON_EFFECT)
-	   Duel.Recover(g,g:GetFirst():GetAttack(),REASON_EFFECT)
+	   Duel.Recover(tp,g:GetFirst():GetAttack(),REASON_EFFECT)
 	end
 end
