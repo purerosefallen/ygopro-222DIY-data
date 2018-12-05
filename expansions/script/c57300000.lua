@@ -187,55 +187,17 @@ return function(g,xyzc)
 	return Duel.GetLocationCountFromEx(tp,tp,g,xyzc)>0 
 end
 end
-function cm.CheckGroupRecursive(c,sg,g,f,min,max,ext_params)
-	sg:AddCard(c)
-	local res=(#sg>=min and #sg<=max and f(sg,table.unpack(ext_params)))
-		or (#sg<max and g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params))
-	sg:RemoveCard(c)
-	return res
-end
 function cm.CheckGroup(g,f,cg,min,max,...)
-	local min=min or 1
-	local max=max or #g
-	if min>max then return false end
-	local ext_params={...}
-	local sg=Group.CreateGroup()
-	if cg then sg:Merge(cg) end
-	if #sg>=min and #sg<=max and f(sg,...) then return true end
-	return g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params)
+	if cg then Duel.SetSelectedCard(cg) end
+	return g:CheckSubGroup(g,f,min,max,...)
 end
 function cm.SelectGroupNew(tp,desc,cancelable,g,f,cg,min,max,...)
 	local min=min or 1
 	local max=max or #g
 	local ext_params={...}
-	local sg=Group.CreateGroup()
-	local cg=cg or Group.CreateGroup()
-	sg:Merge(cg)
-	local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
-	while #sg<max and #ag>0 do
-		local seg=sg:Clone()
-		seg:Sub(cg)
-		local finish=(#sg>=min and #sg<=max and f(sg,...))
-		local cancel=cancelable and not finish
-		local dmin=#sg
-		local dmax=math.min(max,#g)
-		local tc=nil
-		repeat
-			Duel.Hint(HINT_SELECTMSG,tp,desc)
-			tc=ag:SelectUnselect(sg,tp,finish,cancel,dmin,dmax)
-		until not tc or ag:IsContains(tc) or seg:IsContains(tc)
-		if not tc then
-			if not finish then return end
-			break
-		end
-		if sg:IsContains(tc) then
-			sg:RemoveCard(tc)
-		else
-			sg:AddCard(tc)
-		end
-		ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)
-	end
-	return sg
+	if cg then Duel.SetSelectedCard(cg) end
+	Duel.Hint(tp,HINT_SELECTMSG,desc)
+	return g:SelectSubGroup(tp,f,cancelable,min,max,...)
 end
 function cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
 	return cm.SelectGroupNew(tp,desc,false,g,f,cg,min,max,...)
