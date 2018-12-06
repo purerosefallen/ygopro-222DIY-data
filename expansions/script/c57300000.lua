@@ -189,7 +189,7 @@ end
 end
 function cm.CheckGroup(g,f,cg,min,max,...)
 	if cg then Duel.SetSelectedCard(cg) end
-	return g:CheckSubGroup(g,f,min,max,...)
+	return g:CheckSubGroup(f,min,max,...)
 end
 function cm.SelectGroupNew(tp,desc,cancelable,g,f,cg,min,max,...)
 	local min=min or 1
