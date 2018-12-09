@@ -12,7 +12,6 @@ function c47598772.initial_effect(c)
     e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
     e1:SetCountLimit(1,47598772)
     e1:SetRange(LOCATION_PZONE)
-    e1:SetCondition(c47598772.descon)
     e1:SetTarget(c47598772.destg)
     e1:SetOperation(c47598772.desop)
     c:RegisterEffect(e1) 
@@ -48,9 +47,6 @@ function c47598772.initial_effect(c)
 end
 function c47598772.synfilter(c)
     return c:IsType(TYPE_PENDULUM)
-end
-function c47598772.descon(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.GetAttacker():GetControler()~=tp
 end
 function c47598772.desfilter1(c,tp)
     return c:IsFaceup() and c:IsSetCard(0x5d0)

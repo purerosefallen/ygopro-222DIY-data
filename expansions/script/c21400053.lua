@@ -55,13 +55,13 @@ function c21400053.multiattf(c,tp)
 	if not c:IsType(TYPE_MONSTER) then return false end
 	local minn,maxn=c:GetTributeRequirement()
 	if maxn<=0 or not c:IsAbleToHand() then return false end
-	--local lcfl=		
+	--local lcfl=	   
 	local num=0
 	--local nolv=0
 	local lolv=c:GetLevel()
 	--while num<lolv do
-	--	nolv=nolv+3
-	--	num=num+1
+	--  nolv=nolv+3
+	--  num=num+1
 	--end
 	num=(lolv+2)/3
 	local g=Duel.GetMatchingGroup(Card.IsSetCard,tp,LOCATION_DECK,0,nil,0xc21)
@@ -70,12 +70,12 @@ function c21400053.multiattf(c,tp)
 	g=g:Filter(Card.IsAbleToGrave,nil)
 	local attcnt=g:GetClassCount(Card.GetAttribute)
 	if Duel.IsExistingMatchingCard(Card.IsSummonType,tp,LOCATION_MZONE,0,1,nil,SUMMON_TYPE_ADVANCE) then --exist advanced moster
-		Debug.Message("there is advanced!")
+		--Debug.Message("there is advanced!")
 		if attcnt>=num then return true end
 	else
-		Debug.Message("there NOO advanced!")
+		--Debug.Message("there NOO advanced!")
 		if g:FilterCount(Card.IsAttribute,nil,c:GetAttribute())<=0 then return false end
-		Debug.Message("same attribute do exist")
+		--Debug.Message("same attribute do exist")
 		if attcnt+1>=num then return true end
 	end
 	return false
@@ -137,6 +137,7 @@ function c21400053.activate(e,tp,eg,ep,ev,re,r,rp)
 
 
 end
+
 
 
 

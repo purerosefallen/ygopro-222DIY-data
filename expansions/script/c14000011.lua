@@ -29,7 +29,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function cm.filter(c)
-	return c:IsSetCard(0x1404) and c:IsAbleToHand()
+	return c:IsSetCard(0x1404) and c:IsAbleToHand() and not c:IsCode(m)
 end
 function cm.tdfilter(c)
 	return c:IsAbleToDeck()

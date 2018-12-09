@@ -8,7 +8,7 @@ function c47510025.initial_effect(c)
     e2:SetType(EFFECT_TYPE_IGNITION)
     e2:SetCode(EVENT_FREE_CHAIN)
     e2:SetRange(LOCATION_PZONE)
-    e2:SetCountLimit(1,47510025)
+    e2:SetCountLimit(1,47510025+EFFECT_COUNT_CODE_DUEL)
     e2:SetTarget(c47510025.tktg)
     e2:SetOperation(c47510025.tkop)
     c:RegisterEffect(e2) 
@@ -51,7 +51,6 @@ function c47510025.initial_effect(c)
     e7:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
     e7:SetRange(LOCATION_MZONE)
     e7:SetCode(EVENT_BATTLE_DAMAGE)
-    e7:SetCountLimit(1,47510027)
     e7:SetCondition(c47510025.reccon)
     e7:SetTarget(c47510025.rectg)
     e7:SetOperation(c47510025.recop)
@@ -63,7 +62,6 @@ function c47510025.initial_effect(c)
     e8:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
     e8:SetRange(LOCATION_MZONE)
     e8:SetCode(EVENT_BATTLE_DAMAGE)
-    e8:SetCountLimit(1,47510027)
     e8:SetCondition(c47510025.descon2)
     e8:SetTarget(c47510025.destg2)
     e8:SetOperation(c47510025.desop2)
@@ -78,7 +76,7 @@ function c47510025.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c47510025.tkop(e,tp,eg,ep,ev,re,r,rp)
     local atk=2000
-    if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
+    if Duel.GetLocationCount(tp,LOCATION_MZONE)<=2
         or not Duel.IsPlayerCanSpecialSummonMonster(tp,47511001,0,0x5da,atk,atk,1,RACE_AQUA,ATTRIBUTE_WATER,POS_FACEUP_DEFENSE) then return end
     local token=Duel.CreateToken(tp,47511001)
     if Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP_DEFENSE) then
@@ -93,7 +91,20 @@ function c47510025.tkop(e,tp,eg,ep,ev,re,r,rp)
         e2:SetCode(EFFECT_UNRELEASABLE_NONSUM)
         token:RegisterEffect(e2)
     end
-    Duel.SpecialSummonComplete()
+    if Duel.SpecialSummonComplete()~=0 and c:IsRelateToEffect(e) then
+        Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+    end
+    local e1=Effect.CreateEffect(e:GetHandler())
+    e1:SetType(EFFECT_TYPE_FIELD)
+    e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+    e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+    e1:SetTargetRange(1,0)
+    e1:SetTarget(c47510025.splimit)
+    e1:SetReset(RESET_PHASE+PHASE_END)
+    Duel.RegisterEffect(e1,tp)
+end
+function c47510025.splimit(e,c)
+    return not c:IsSetCard(0x5da) or c:IsType(TYPE_PENDULUM)
 end
 function c47510025.destg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,LOCATION_ONFIELD+LOCATION_HAND,0,1,nil) end

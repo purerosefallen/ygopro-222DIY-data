@@ -19,10 +19,12 @@ function c47510075.initial_effect(c)
     --negate
     local e3=Effect.CreateEffect(c)
     e3:SetCategory(CATEGORY_DISABLE)
-    e3:SetType(EFFECT_TYPE_IGNITION)
+    e3:SetType(EFFECT_TYPE_QUICK_O)
+    e3:SetCode(EVENT_FREE_CHAIN)
     e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
     e3:SetRange(LOCATION_MZONE)
     e3:SetCountLimit(1,47510075)
+    e3:SetCondition(c47510075.condition)
     e3:SetTarget(c47510075.target)
     e3:SetOperation(c47510075.operation)
     c:RegisterEffect(e3)
@@ -40,6 +42,9 @@ function c47510075.initial_effect(c)
     e5:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
     e5:SetTarget(c47510075.intg2)
     c:RegisterEffect(e5)
+end
+function c47510075.condition(e,tp,eg,ep,ev,re,r,rp)
+    return Duel.GetTurnPlayer()==tp
 end
 function c47510075.lcheck(g)
     return g:IsExists(Card.IsLinkSetCard,1,nil,0x5da) or g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_WIND)

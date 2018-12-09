@@ -14,7 +14,7 @@ function c65060006.initial_effect(c)
 	c:RegisterEffect(e2)
 	--linked
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_TODECK)
+	e3:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BE_MATERIAL)
 	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
@@ -36,8 +36,8 @@ function c65060006.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,tp,LOCATION_ONFIELD)
 end
 
-function c65060006.tgfil(c,e,tp)
-	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+function c65060006.tgspfil(c,e,tp)
+	return c:IsSetCard(0x6da3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 
 function c65060006.tgop(e,tp,eg,ep,ev,re,r,rp)
@@ -47,11 +47,17 @@ function c65060006.tgop(e,tp,eg,ep,ev,re,r,rp)
 		local mp=tc:GetOwner()
 		local g=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_ONFIELD+LOCATION_GRAVE,LOCATION_ONFIELD+LOCATION_GRAVE,nil,code)
 		if g:GetCount()>0 then
-			if Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 and Duel.SelectYesNo(mp,aux.Stringid(65060006,0)) then
-				local mg=Duel.SelectMatchingCard(mp,c65060006.tgfil,mp,LOCATION_HAND,0,1,1,nil,e,mp)
-				if mg:GetCount()>0 then
-					Duel.SpecialSummon(mg,0,mp,mp,false,false,POS_FACEUP)
+			if Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then 
+				if sp==tp and Duel.IsExistingMatchingCard(c65060006.tgspfil,sp,LOCATION_HAND,0,1,nil,e,tp) and Duel.SelectYesNo(sp,aux.Stringid(65060006,0)) then
+					Duel.BreakEffect()
+					local sg=Duel.SelectMatchingCard(sp,c65060006.tgspfil,sp,LOCATION_HAND,0,1,1,nil,e,tp)
+					Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+				elseif sp~=tp and Duel.IsExistingMatchingCard(Card.IsCanBeSpecialSummoned,sp,LOCATION_HAND,0,1,nil,e,0,sp,false,false) and Duel.SelectYesNo(sp,aux.Stringid(65060006,0)) then
+					 Duel.BreakEffect()
+					local sg=Duel.SelectMatchingCard(sp,Card.IsCanBeSpecialSummoned,sp,LOCATION_HAND,0,1,1,nil,e,0,sp,false,false)
+					Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 				end
+			end
 			end
 		end
 	end
@@ -62,7 +68,7 @@ function c65060006.spfil(c,e,tp)
 end
 
 function c65060006.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c65060006.spfil,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
 end
 
@@ -88,3 +94,4 @@ end
 function c65060006.splimit(e,c)
 	return not c:IsSetCard(0x6da3)
 end
+

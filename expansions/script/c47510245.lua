@@ -1,6 +1,4 @@
 --时空干涉者 瓦修隆
-local m=47510245
-local cm=_G["c"..m]
 function c47510245.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)  
@@ -69,17 +67,19 @@ function c47510245.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c47510245.lvop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
     local g=Duel.SelectMatchingCard(tp,c47510245.lvfilter,tp,LOCATION_DECK,0,1,1,nil)
     local tc=g:GetFirst()
-    if tc and Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_REMOVED) then
-        local lv=tc:GetLevel()
+    if tc and Duel.SendtoGrave(tc,REASON_EFFECT)~=0 then
+        local code=tc:GetOriginalCode()
+        local cid=c:CopyEffect(code,RESET_PHASE+PHASE_END,1)
         local e1=Effect.CreateEffect(c)
-        e1:SetType(EFFECT_TYPE_SINGLE)
-        e1:SetCode(EFFECT_CHANGE_LEVEL)
-        e1:SetValue(lv)
-        e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END)
-        c:RegisterEffect(e1)
+        e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+        e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+        e1:SetTarget(c47510245.cptg)
+        e1:SetReset(RESET_PHASE+PHASE_END)
+        e1:SetLabel(cid)
+        Duel.RegisterEffect(e1,tp)
     end
 end
 function c47510245.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -134,4 +134,7 @@ function c47510245.xop(e,tp,eg,ep,ev,re,r,rp)
         Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
         sc:CompleteProcedure()
     end
+end
+function c47510245.cptg(e,c)
+    return c:IsCode(47510245)
 end

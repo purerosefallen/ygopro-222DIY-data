@@ -141,3 +141,4 @@ function c40006879.negop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(eg,REASON_EFFECT)
 	end
 end
+

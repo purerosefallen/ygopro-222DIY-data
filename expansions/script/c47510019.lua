@@ -42,17 +42,17 @@ function c47510019.initial_effect(c)
     e6:SetOperation(c47510019.op)
     c:RegisterEffect(e6)
     c47510019.ss_effect=e6
-    --synchro effect
+    --synchro level
     local e7=Effect.CreateEffect(c)
-    e7:SetCategory(CATEGORY_SPECIAL_SUMMON)
-    e7:SetType(EFFECT_TYPE_QUICK_O)
-    e7:SetCode(EVENT_FREE_CHAIN)
-    e7:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
+    e7:SetType(EFFECT_TYPE_SINGLE)
     e7:SetRange(LOCATION_MZONE)
-    e7:SetCondition(c47510019.sccon)
-    e7:SetTarget(c47510019.sctarg)
-    e7:SetOperation(c47510019.scop)
-    c:RegisterEffect(e7)
+    e7:SetCode(EFFECT_SYNCHRO_LEVEL)
+    e7:SetValue(c47510019.slevel)
+    c:RegisterEffect(e7) 
+end
+function c47510019.slevel(e,c)
+    local lv=e:GetHandler():GetLevel()
+    return 1*65536+lv
 end
 function c47510019.pefilter(c)
     return c:IsRace(RACE_ROCK) or c:IsSetCard(0x5da) or c:IsAttribute(ATTRIBUTE_EARTH)
@@ -61,7 +61,7 @@ function c47510019.psplimit(e,c,tp,sumtp,sumpos)
     return not c47510019.pefilter(c) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function c47510019.filter(c)
-    return c:IsAbleToGrave() and c:IsSetCard(0x5da)
+    return c:IsAbleToGrave() and (c:IsSetCard(0x5d0) or c:IsSetCard(0x5da) or c:IsSetCard(0x5de) or c:IsSetCard(0x5d3) or aux.IsCodeListed(c,47500000) or c:IsSetCard(0x813))
 end
 function c47510019.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_DECK) and c47510019.filter(chkc) end
@@ -103,36 +103,18 @@ function c47510019.filter1(c)
     return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_EARTH) or c:IsSetCard(0x5da)
 end
 function c47510019.op(e,tp,eg,ep,ev,re,r,rp)
-    local e1=Effect.CreateEffect(e:GetHandler())
-    e1:SetType(EFFECT_TYPE_FIELD)
-    e1:SetCode(EFFECT_CANNOT_DISABLE)
-    e1:SetTargetRange(LOCATION_MZONE,0)
-    e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x5da))
-    e1:SetValue(1)
-    e1:SetReset(RESET_PHASE+PHASE_END)
+    local e1=Effect.CreateEffect(c)
+    e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+    e1:SetCode(EVENT_CHAINING)
+    e1:SetRange(LOCATION_MZONE)
+    e1:SetOperation(c47510019.chainop)
     Duel.RegisterEffect(e1,tp)
-    local e2=e1:Clone()
-    e2:SetCode(EFFECT_CANNOT_DISEFFECT)
-    Duel.RegisterEffect(e2,tp)
 end
-function c47510019.sccon(e,tp,eg,ep,ev,re,r,rp)
-    return Duel.GetTurnPlayer()~=tp
-        and (Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2)
-end
-function c47510019.sctarg(e,tp,eg,ep,ev,re,r,rp,chk)
-    local c=e:GetHandler()
-    if chk==0 then return c:GetFlagEffect(47510019)==0
-        and Duel.IsExistingMatchingCard(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,1,nil,c) end
-    c:RegisterFlagEffect(47510019,RESET_CHAIN,0,1)
-    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
-end
-function c47510019.scop(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
-    if c:GetControler()~=tp or not c:IsRelateToEffect(e) then return end
-    local g=Duel.GetMatchingGroup(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,nil,c)
-    if g:GetCount()>0 then
-        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-        local sg=g:Select(tp,1,1,nil)
-        Duel.SynchroSummon(tp,sg:GetFirst(),c)
+function c47510019.chainop(e,tp,eg,ep,ev,re,r,rp)
+    if re:GetHandler():IsType(TYPE_PENDULUM) and ep==tp then
+        Duel.SetChainLimit(c47510019.chainlm)
     end
+end
+function c47510019.chainlm(e,rp,tp)
+    return tp==rp
 end

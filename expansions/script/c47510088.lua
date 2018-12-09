@@ -55,7 +55,7 @@ function c47510088.activate(e,tp,eg,ep,ev,re,r,rp)
     Duel.RegisterEffect(e1,tp)
 end
 function c47510088.splimit(e,c)
-    return not c:IsSetCard(0x5da)
+    return not c:IsSetCard(0x5da) or c:IsType(TYPE_PENDULUM)
 end
 function c47510088.cost(e,tp,eg,ep,ev,re,r,rp,chk)
     e:SetLabel(100)

@@ -5,7 +5,7 @@ cm.dfc_front_side=m
 cm.dfc_back_side=m+2
 function c47510090.initial_effect(c)
     --link summon
-    aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_MONSTER),1,1,c47510090.lcheck)
+    aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_PENDULUM),1,1)
     c:EnableReviveLimit() 
     --to hand
     local e1=Effect.CreateEffect(c)
@@ -27,9 +27,6 @@ function c47510090.initial_effect(c)
     e4:SetCondition(c47510090.negcon)
     e4:SetOperation(c47510090.negop)
     c:RegisterEffect(e4) 
-end
-function c47510090.lcheck(g)
-    return g:IsExists(Card.IsLinkSetCard,1,nil,0x5da)
 end
 function c47510090.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
