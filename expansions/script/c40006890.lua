@@ -6,6 +6,7 @@ function c40006890.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e1:SetCode(EVENT_CHAINING)
+	e1:SetCost(c40006890.acost)
 	e1:SetCondition(c40006890.condition)
 	e1:SetTarget(c40006890.target)
 	e1:SetOperation(c40006890.activate)
@@ -28,6 +29,15 @@ function c40006890.initial_effect(c)
 	e3:SetOperation(c40006890.spop)
 	c:RegisterEffect(e3)
 end
+function c40006890.acost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeckAsCost,tp,LOCATION_HAND,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToDeckAsCost,tp,LOCATION_HAND,0,1,1,nil)
+	if g:GetFirst():IsLocation(LOCATION_HAND) then
+		Duel.ConfirmCards(1-tp,g)
+	end
+	Duel.SendtoDeck(g,tp,2,REASON_COST)
+end
 function c40006890.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xdf1d)
 end
@@ -48,9 +58,11 @@ function c40006890.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c40006890.filter1(c)
-	return c:IsSetCard(0xdf1d) and c:IsType(TYPE_LINK) end
+	return c:IsSetCard(0xdf1d) and c:IsType(TYPE_LINK) and c:IsFaceup()
+end
 function c40006890.handcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c40006890.filter1,tp,LOCATION_MZONE,0,1,nil) end
+	return Duel.IsExistingMatchingCard(c40006890.filter1,e:GetHandlerPlayer(),LOCATION_MZONE,0,1,nil) 
+end
 function c40006890.spfilter(c,e,tp)
 	return c:IsSetCard(0xdf1d) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

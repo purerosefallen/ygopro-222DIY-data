@@ -2,103 +2,72 @@
 function c11200097.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsAttribute,ATTRIBUTE_DARK),2,true)  
-	--spsummon condition
+	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsFusionAttribute,ATTRIBUTE_DARK),2,false) 
+	--tg
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(11200097,0))
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetRange(LOCATION_GRAVE)
-	e1:SetCondition(c11200097.spcon)
-	e1:SetOperation(c11200097.spop)
+	e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_ATKCHANGE)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetCountLimit(1,11200097)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCost(c11200097.tgcost)
+	e1:SetTarget(c11200097.tgtg)
+	e1:SetOperation(c11200097.tgop)
 	c:RegisterEffect(e1)
-	--to grave
+	--Destroy replace
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(11200097,1))
-	e2:SetCategory(CATEGORY_DECKDES+CATEGORY_ATKCHANGE)
-	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,11200097)
-	e2:SetCost(c11200097.atcost)
-	e2:SetTarget(c11200097.attg)
-	e2:SetOperation(c11200097.atop)
+	e2:SetCountLimit(1,11200197)
+	e2:SetCode(EFFECT_DESTROY_REPLACE)
+	e2:SetTarget(c11200097.desreptg)
+	e2:SetOperation(c11200097.desrepop)
 	c:RegisterEffect(e2)
-	--destroy replace
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCode(EFFECT_DESTROY_REPLACE)
-	e3:SetTarget(c11200097.desreptg)
-	e3:SetOperation(c11200097.desrepop)
-	c:RegisterEffect(e3)
-end
-function c11200097.spfilter(c)
-	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
-end
-function c11200097.spcon(e,c)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	return Duel.GetLocationCount(tp,LOCATION_MZONE)>-2
-		and Duel.IsExistingMatchingCard(c11200097.spfilter,tp,LOCATION_GRAVE,0,2,e:GetHandler())
-end
-function c11200097.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c11200097.spfilter,tp,LOCATION_GRAVE,0,2,2,e:GetHandler())
-	Duel.Remove(g,POS_FACEUP,REASON_COST)
-end
-function c11200097.atcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
-end
-function c11200097.attg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,7) end
-	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(7)
-	Duel.SetOperationInfo(0,CATEGORY_DECKDES,nil,0,tp,7)
-end
-function c11200097.atfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsLocation(LOCATION_GRAVE)
-end
-function c11200097.atop(e,tp,eg,ep,ev,re,r,rp)
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.DiscardDeck(p,d,REASON_EFFECT)
-	local g=Duel.GetOperatedGroup()
-	local ct=g:FilterCount(c11200097.atfilter,nil)
-	if ct==0 then return end
-	local c=e:GetHandler()
-	if c:IsFaceup() and c:IsRelateToEffect(e) then
-		Duel.BreakEffect()
-		local e1=Effect.CreateEffect(c)
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_UPDATE_ATTACK)
-		e1:SetValue(ct*700)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e1)
-	end
-end
-function c11200097.repfilter(c,ec)
-	return c:IsCode(11200096) and c:CheckEquipTarget(ec)
 end
 function c11200097.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return not c:IsReason(REASON_REPLACE) and c:IsOnField() and c:IsFaceup()
-		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and Duel.GetFlagEffect(tp,11200097)==0
-			and Duel.IsExistingMatchingCard(c11200097.repfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c) end
-	if Duel.SelectYesNo(tp,aux.Stringid(11200097,2)) then
+	if chk==0 then
+		return not c:IsReason(REASON_REPLACE) and Duel.IsExistingMatchingCard(Card.IsCode,tp,0x13,0,1,nil,11200096) and Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+	end
+	if Duel.SelectEffectYesNo(tp,c,96) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-		local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c11200097.repfilter),tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,c)
-		e:SetLabelObject(g:GetFirst())
+		local sg=Duel.SelectMatchingCard(tp,Card.IsCode,tp,0x13,0,1,1,nil,11200096)
+		Duel.SetTargetCard(sg)
 		return true
 	else return false end
 end
 function c11200097.desrepop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	Duel.Equip(tp,tc,e:GetHandler())
-	Duel.RegisterFlagEffect(tp,11200097,nil,0,0)
+	local c=e:GetHandler()
+	local tc=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):GetFirst()
+	Duel.Equip(tp,tc,c)
 end
-
-
-
-
+function c11200097.tgcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
+end
+function c11200097.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>4 end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_GRAVE)
+end
+function c11200097.tgop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)==0 then return end
+	Duel.ConfirmDecktop(tp,5)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	local g=Duel.GetDecktopGroup(tp,5):Filter(Card.IsAbleToGrave,nil)
+	if #g>0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+		local tc=g:Select(tp,1,1,nil):GetFirst()
+		Duel.SendtoGrave(tc,REASON_EFFECT)
+		if tc:IsAttribute(ATTRIBUTE_DARK) and tc:GetAttack()>0 and c:IsRelateToEffect(e) and c:IsFaceup() then
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,2)
+			e1:SetValue(tc:GetAttack())
+			c:RegisterEffect(e1)   
+		end
+	end
+	Duel.ShuffleDeck(tp)
+end

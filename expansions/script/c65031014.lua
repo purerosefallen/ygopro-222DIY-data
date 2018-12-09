@@ -43,7 +43,7 @@ function c65031014.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c65031014.chcon(e,tp,eg,ep,ev,re,r,rp)
-	return not re:GetHandler():IsCode(65031014) and e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1 and re:GetHandlerPlayer()~=tp 
+	return not re:GetHandler():IsCode(65031014) and e:GetHandler():GetSummonType()==SUMMON_TYPE_SPECIAL+1 and re:GetHandlerPlayer()==tp 
 end
 function c65031014.chtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

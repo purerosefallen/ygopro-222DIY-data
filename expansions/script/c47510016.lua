@@ -46,7 +46,7 @@ function c47510016.initial_effect(c)
     e6:SetRange(LOCATION_MZONE)
     e6:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_NO_TURN_RESET)
     e6:SetCode(EVENT_FREE_CHAIN)
-    e6:SetCountLimit(1,47510017)
+    e6:SetCountLimit(1,47510018)
     e6:SetCost(c47510016.descost)
     e6:SetTarget(c47510016.destg)
     e6:SetOperation(c47510016.desop)
@@ -59,13 +59,13 @@ function c47510016.psplimit(e,c,tp,sumtp,sumpos)
     return not c47510016.pefilter(c) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function c47510016.tfcfilter(c,tp)
-    return (c:IsPreviousSetCard(0x5da) or c:IsAttribute(ATTRIBUTE_WATER)) and c:IsType(TYPE_MONSTER)and c:GetPreviousControler()==tp
+    return c:IsType(TYPE_PENDULUM) and c:GetPreviousControler()==tp
 end
 function c47510016.tfcon(e,tp,eg,ep,ev,re,r,rp)
     return eg:IsExists(c47510016.tfcfilter,1,e:GetHandler(),tp)
 end
 function c47510016.spfilter(c,e,tp)
-    return c:IsType(TYPE_MONSTER) and (c:IsSetCard(0x5da) or c:IsAttribute(ATTRIBUTE_WATER)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+    return c:IsType(TYPE_MONSTER) and c:IsType(TYPE_PENDULUM) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c47510016.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -95,8 +95,8 @@ function c47510016.thop(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_CARD,0,e:GetHandler():GetOriginalCode())
     Duel.RegisterFlagEffect(tp,m,RESET_PHASE+PHASE_END,0,1)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-    local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,1,nil)
-    if g:GetCount()>0 then
+    local g=Duel.SelectMatchingCard(tp,cm.f,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+    if #g>0 then
         Duel.SendtoHand(g,nil,REASON_EFFECT)
     end
 end
@@ -136,7 +136,7 @@ function c47510016.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and chkc:IsType(TYPE_SPELL+TYPE_TRAP) end
     if chk==0 then return Duel.IsExistingTarget(Card.IsType,tp,0,LOCATION_ONFIELD,1,nil,TYPE_SPELL+TYPE_TRAP) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-    local g=Duel.SelectTarget(tp,Card.IsType,tp,0,LOCATION_ONFIELD,1,1,nil,TYPE_SPELL+TYPE_TRAP)
+    local g=Duel.SelectTarget(tp,Card.IsType,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil,TYPE_SPELL+TYPE_TRAP)
     Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c47510016.desop(e,tp,eg,ep,ev,re,r,rp)

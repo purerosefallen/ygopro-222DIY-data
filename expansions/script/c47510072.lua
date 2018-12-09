@@ -1,6 +1,4 @@
 --红莲的星晶兽 阿格尼斯
-local m=47510072
-local cm=_G["c"..m]
 function c47510072.initial_effect(c)
     --link summon
     aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),2,3,c47510072.lcheck)
@@ -38,7 +36,7 @@ function c47510072.lcheck(g)
     return g:IsExists(Card.IsLinkSetCard,1,nil,0x5da) or g:IsExists(Card.IsAttribute,1,nil,ATTRIBUTE_FIRE)
 end
 function c47510072.intg(e,c)
-    return c:GetAttribute()~=ATTRIBUTE_FIRE
+    return c:IsType(TYPE_PENDULUM)
 end
 function c47510072.afilter(c)
     return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_FIRE)

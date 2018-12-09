@@ -70,7 +70,7 @@ function c13254114.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 			tc=sg:GetFirst()
 			i=1
 		end
-		if tc:IsAttribute(ATTRIBUTE_WIND) then ft=ft-1 end
+		if tc and tc:IsAttribute(ATTRIBUTE_WIND) then ft=ft-1 end
 		tc=sg:GetNext()
 	until tc
 	local cg=sg:Clone()--selected maru

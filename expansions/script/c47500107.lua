@@ -83,12 +83,14 @@ function c47500107.operation(e,tp,eg,ep,ev,re,r,rp)
         Duel.SkipPhase(tp,PHASE_BATTLE,RESET_PHASE+PHASE_END,1)
         Duel.SkipPhase(tp,PHASE_MAIN2,RESET_PHASE+PHASE_END,1)
         Duel.SkipPhase(tp,PHASE_END,RESET_PHASE+PHASE_END,1)
-        local e1=Effect.CreateEffect(c)
+        local e1=Effect.CreateEffect(e:GetHandler())
         e1:SetType(EFFECT_TYPE_FIELD)
         e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
         e1:SetCode(EFFECT_SKIP_TURN)
         e1:SetTargetRange(0,1)
         e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+        Duel.RegisterEffect(e1,tp)
+        c:RegisterFlagEffect(47501107,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,2)
         Duel.RegisterEffect(e1,tp)
         Duel.SkipPhase(tp,PHASE_DRAW,RESET_PHASE+PHASE_END,2)
         Duel.SkipPhase(tp,PHASE_STANDBY,RESET_PHASE+PHASE_END,2)
@@ -100,7 +102,6 @@ function c47500107.operation(e,tp,eg,ep,ev,re,r,rp)
         e2:SetTargetRange(1,0)
         e2:SetReset(RESET_PHASE+PHASE_MAIN1+RESET_SELF_TURN)
         Duel.RegisterEffect(e2,tp)
-        c:RegisterFlagEffect(47501107,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,2)
     end
 end
 function c47500107.regcon(e,tp,eg,ep,ev,re,r,rp)
@@ -151,7 +152,7 @@ end
 function c47500107.disop2(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     local rc=re:GetHandler()
-    if Duel.NegateEffect(ev) then
+    if Duel.NegateEffect(ev) and re:GetHandler():IsRelateToEffect(re) then
         Duel.SendtoHand(rc,tp,REASON_EFFECT)
         c:RegisterFlagEffect(47511107,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE,0,1)
     end

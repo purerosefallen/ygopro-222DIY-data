@@ -29,7 +29,7 @@ function c40006887.initial_effect(c)
 	--negate
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(40006887,2))
-	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_REMOVE)
+	e3:SetCategory(CATEGORY_NEGATE)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e3:SetCode(EVENT_CHAINING)
@@ -171,7 +171,9 @@ function c40006887.cefilter1(c)
 	return c:IsType(TYPE_LINK)
 end
 function c40006887.econ1(e)
-	return e:GetHandler():IsExtraLinkState()
+	local c=e:GetHandler()
+	local eg=c:GetEquipGroup()
+	return e:GetHandler():IsExtraLinkState() and #eg>0
 end
 function c40006887.elimit(e,re,tp)
 	return re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)

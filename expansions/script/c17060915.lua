@@ -47,7 +47,7 @@ function iCount(name,tp,m,id)
         or {(bit.band(iCount("get",tp,m,id),math.pow(2,id-1))==0 and {true} or {false})[1]})[1]
 end
 function cm.tgfilter(c)
-	return c:IsType(TYPE_PENDULUM) and (c:IsFaceup() or not c:IsLocation(LOCATION_EXTRA)) and c:IsAbleToHand()
+	return c:IsType(TYPE_PENDULUM) and (c:IsFaceup() or not c:IsLocation(LOCATION_EXTRA)) and c:IsAbleToGrave()
 end
 function cm.thfilter(c)
 	return c:IsType(TYPE_PENDULUM) and cm.IsMa_Elf(c) and c:IsAbleToHand() and not c:IsCode(17060915)

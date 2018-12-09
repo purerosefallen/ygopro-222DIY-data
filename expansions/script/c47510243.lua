@@ -45,6 +45,7 @@ function c47510243.initial_effect(c)
     e5:SetCost(c47510243.cost)
     e5:SetOperation(c47510243.ssop)
     c:RegisterEffect(e5)
+    c47510243.ss_effect=e5
 end
 function c47510243.pefilter(c)
     return c:IsRace(RACE_ZOMBIE) or c:IsSetCard(0x5da) or c:IsAttribute(ATTRIBUTE_DARK)
@@ -75,7 +76,7 @@ end
 function c47510243.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and c47510243.spfilter(chkc,e,tp) end
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-        and Duel.IsExistingTarget(c47510243.spfilter,tp,0,LOCATION_GRAVE,1,nil,e,tp) end
+        and Duel.IsExistingTarget(c47510243.spfilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil,e,tp) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
     local g=Duel.SelectTarget(tp,c47510243.spfilter,tp,0,LOCATION_GRAVE,1,1,nil,e,tp)
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
@@ -90,12 +91,12 @@ function c47510243.thfilter(c)
     return c:IsRace(RACE_ZOMBIE) and c:IsAbleToHand() and c:IsFaceup()
 end
 function c47510243.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(c47510243.thfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,nil) end
+    if chk==0 then return Duel.IsExistingMatchingCard(c47510243.thfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,nil) end
     Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function c47510243.thop2(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-    local g=Duel.SelectMatchingCard(tp,c47510243.thfilter,tp,0,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil)
+    local g=Duel.SelectMatchingCard(tp,c47510243.thfilter,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,1,nil)
     if g:GetCount()>0 then
         Duel.SendtoHand(g,tp,REASON_EFFECT)
     end

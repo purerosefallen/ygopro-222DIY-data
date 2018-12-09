@@ -21,7 +21,6 @@ function c65011001.initial_effect(c)
 	e2:SetTarget(c65011001.distg)
 	e2:SetOperation(c65011001.disop)
 	c:RegisterEffect(e2)
-	Duel.AddCustomActivityCounter(65090001,ACTIVITY_SPSUMMON,c65090001.counterfilter)
 end
 function c65090001.counterfilter(c)
 	return not (c:IsLevelBelow(6) and c:IsType(TYPE_FUSION))
@@ -46,19 +45,8 @@ function c65011001.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c65011001.discost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() and Duel.GetCustomActivityCount(65090001,tp,ACTIVITY_SPSUMMON)==0 end
+	if chk==0 then return e:GetHandler():IsDiscardable()  end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
-	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	e1:SetTargetRange(1,0)
-	e1:SetTarget(c65090001.splimit)
-	Duel.RegisterEffect(e1,tp)
-end
-function c65090001.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsLevelBelow(6) and c:IsType(TYPE_FUSION)
 end
 function c65011001.disfilter(c)
 	return c:IsSetCard(0x46) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
@@ -74,4 +62,16 @@ function c65011001.disop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTargetRange(1,0)
+	e1:SetTarget(c65011001.splimit)
+	Duel.RegisterEffect(e1,tp)
+end
+function c65011001.splimit(e,c,sump,sumtype,sumpos,targetp,se)
+	local sc=se:GetHandler()
+	return not sc:IsSetCard(0xda2) or not (sc:IsSetCard(0x46) and sc:IsType(TYPE_SPELL))
 end

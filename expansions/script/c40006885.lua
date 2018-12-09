@@ -78,7 +78,7 @@ function c40006885.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		local sg=g:Select(tp,1,1,nil)
 		tg:Merge(sg)
 		g:Remove(Card.IsCode,nil,sg:GetFirst():GetCode())
-	until tg:GetCount()==2 or g:GetCount()==0 or not Duel.SelectYesNo(tp,aux.Stringid(40006885,0))
+	until tg:GetCount()==2 or g:GetCount()==0 or not Duel.SelectYesNo(tp,aux.Stringid(40006885,2))
 	Duel.SetTargetCard(tg)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,tg,tg:GetCount(),0,0)
 end

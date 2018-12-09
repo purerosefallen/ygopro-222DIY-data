@@ -1,9 +1,7 @@
 --魅惑的星晶兽 萨提洛斯
-local m=47510129
-local cm=_G["c"..m]
 function c47510129.initial_effect(c)
     --link summon
-    aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_MONSTER),2,2,c47510129.lcheck)
+    aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_PENDULUM),2,2)
     c:EnableReviveLimit()  
     --to extra
     local e1=Effect.CreateEffect(c)
@@ -38,9 +36,6 @@ function c47510129.initial_effect(c)
     e3:SetTarget(c47510129.tetg)
     e3:SetOperation(c47510129.teop)
     c:RegisterEffect(e3)
-end
-function c47510129.lcheck(g)
-    return g:IsExists(Card.IsLinkType,1,nil,TYPE_PENDULUM)
 end
 function c47510129.thcon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
@@ -79,7 +74,7 @@ function c47510129.psop(e,tp,eg,ep,ev,re,r,rp)
     local tc=g:GetFirst()
     local atk=tc:GetLeftScale()
     if g:GetCount()>0 and Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
-       local dg=Duel.GetMatchingGroup(nil,tp,LOCATION_PZONE,0,nil)
+       local dg=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,0,nil)
        Duel.BreakEffect()
        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
        local sg=dg:Select(tp,1,1,nil)

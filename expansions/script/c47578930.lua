@@ -1,6 +1,3 @@
---天司圣域—迦南
-local m=47578930
-local cm=_G["c"..m]
 function c47578930.initial_effect(c)
         --activate
     local e1=Effect.CreateEffect(c)
@@ -67,5 +64,5 @@ function c47578930.spop(e,tp,eg,ep,ev,re,r,rp)
     Duel.RegisterEffect(e1,tp)
 end
 function c47578930.splimit(e,c)
-    return not c:IsRace(RACE_FAIRY) and c:IsLocation(LOCATION_EXTRA)
+    return not c:IsRace(RACE_FAIRY)
 end
