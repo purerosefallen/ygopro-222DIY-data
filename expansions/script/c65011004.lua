@@ -55,7 +55,7 @@ end
 function c65011004.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local chkf=tp
-		local mg1=Duel.GetFusionMaterial(tp)
+		local mg1=Duel.GetFusionMaterial(tp):Filter(aux.TRUE,e:GetHandler())
 		local res=Duel.IsExistingMatchingCard(c65011004.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)
 		if not res then
 			local ce=Duel.GetChainMaterial(tp)

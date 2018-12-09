@@ -46,7 +46,7 @@ function cm.scost(e,tp,eg,ep,ev,re,r,rp,chk)
 	else
 		loc=LOCATION_ONFIELD
 	end
-	if chk==0 then return Duel.IsExistingTarget(cm.cfilter,tp,loc,0,2,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(cm.cfilter,tp,loc,0,2,nil) end
 	local g=Duel.SelectMatchingCard(tp,cm.cfilter,tp,loc,0,1,1,nil)
 	local g1=Duel.SelectMatchingCard(tp,cm.cfilter,tp,LOCATION_HAND+LOCATION_ONFIELD,0,1,1,g)
 	g:Merge(g1)

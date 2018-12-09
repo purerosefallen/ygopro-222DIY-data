@@ -13,11 +13,11 @@ function c47510032.initial_effect(c)
     c:RegisterEffect(e1) 
     --negate
     local e2=Effect.CreateEffect(c)
-    e2:SetCategory(CATEGORY_DISABLE)
+    e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
     e2:SetType(EFFECT_TYPE_QUICK_O)
     e2:SetCode(EVENT_CHAINING)
     e2:SetRange(LOCATION_PZONE)
-    e2:SetCountLimit(1,47510033)
+    e2:SetCountLimit(1,47510033+EFFECT_COUNT_CODE_DUEL)
     e2:SetCondition(c47510032.discon)
     e2:SetTarget(c47510032.distg)
     e2:SetOperation(c47510032.disop)
@@ -66,10 +66,8 @@ function c47510032.tfilter(c,tp)
     return c:IsOnField() and c:IsControler(tp)
 end
 function c47510032.discon(e,tp,eg,ep,ev,re,r,rp)
-    if rp==tp or e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-    if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
-    local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-    return tg and tg:IsExists(c47510032.tfilter,1,nil,tp) and Duel.IsChainNegatable(ev)
+    if rp==tp then return false end
+    return Duel.IsChainNegatable(ev)
 end
 function c47510032.distg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return true end
@@ -77,10 +75,10 @@ function c47510032.distg(e,tp,eg,ep,ev,re,r,rp,chk)
     Duel.SetOperationInfo(0,CATEGORY_DESTROY,e:GetHandler(),1,0,0)
 end
 function c47510032.disop(e,tp,eg,ep,ev,re,r,rp,chk)
-        if Duel.NegateEffect(ev) then
-            Duel.BreakEffect()
-            Duel.Destroy(e:GetHandler(),REASON_EFFECT)
-        end
+    if Duel.NegateEffect(ev) then
+        Duel.BreakEffect()
+        Duel.Destroy(e:GetHandler(),REASON_EFFECT)
+    end
 end
 function c47510032.filter(c)
     return c:IsFaceup() and c:IsType(TYPE_MONSTER)
@@ -106,6 +104,14 @@ function c47510032.disop2(e,tp,eg,ep,ev,re,r,rp)
         e1:SetReset(RESET_EVENT+RESETS_STANDARD)
         e1:SetCondition(c47510032.rcon)
         tc:RegisterEffect(e1)
+        local e2=Effect.CreateEffect(c)
+        e2:SetType(EFFECT_TYPE_SINGLE)
+        e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_OWNER_RELATE+EFFECT_FLAG_CANNOT_DISABLE)
+        e2:SetRange(LOCATION_MZONE)
+        e2:SetCode(EFFECT_CANNOT_ATTACK)
+        e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+        e2:SetCondition(c47510032.rcon)
+        tc:RegisterEffect(e2)
     end
 end
 function c47510032.rcon(e)

@@ -14,7 +14,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e1)	
 end
 function cm.tfilter(c,att,e,tp)
-	return c:IsSetCard(0xc90) and not c:IsAttribute(att) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xc90) and not c:IsAttribute(att) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsLevel(3)
 end
 function cm.filter(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(0xc90)

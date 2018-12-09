@@ -24,6 +24,7 @@ function cm.initial_effect(c)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetCountLimit(1,m+1)
 	e2:SetCondition(cm.discon)
 	e2:SetCost(cm.discost)
 	e2:SetTarget(cm.distg)
@@ -74,7 +75,7 @@ function cm.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 		lgc=lg:GetNext()
 	end
 	local req=eq:Filter(cm.disfilter,nil)
-	if chk==0 then return eq:GetCount()>0 end
+	if chk==0 then return req:GetCount()>0 end
 	local g=req:Select(tp,1,1,nil)
 	Duel.Release(g,REASON_COST)
 end

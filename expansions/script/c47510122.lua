@@ -1,12 +1,10 @@
 --暗夜的星晶兽 纳哈特
-local m=47510122
-local cm=_G["c"..m]
 function c47510122.initial_effect(c)
     aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),2,99,c47510122.lcheck)
     c:EnableReviveLimit() 
     local e1=Effect.CreateEffect(c)
     e1:SetDescription(aux.Stringid(47510122,0))
-    e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+    e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_TOGRAVE)
     e1:SetType(EFFECT_TYPE_IGNITION)
     e1:SetRange(LOCATION_MZONE)
     e1:SetCountLimit(1,47510122)
@@ -40,14 +38,14 @@ function c47510122.lcheck(g)
     return g:IsExists(Card.IsLinkType,1,nil,TYPE_FLIP)
 end
 function c47510122.tgfilter(c)
-    return c:IsAttribute(ATTRIBUTE_DARK) and (c:IsRace(RACE_SPELLCASTER) or c:IsRace(RACE_FIEND)) and c:IsAbleToGrave()
+    return c:IsType(TYPE_FLIP) and c:IsAbleToGrave()
 end
 function c47510122.filter(c,tp)
     return c:IsType(TYPE_FLIP) and c:IsAbleToGrave()
         and Duel.IsExistingMatchingCard(c47510122.thfilter,tp,LOCATION_DECK,0,1,c)
 end
 function c47510122.spfilter(c,e,tp)
-    return c:IsType(TYPE_FLIP) and c:IsAttribute(ATTRIBUTE_DARK) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
+    return c:IsType(TYPE_FLIP) and (c:IsRace(RACE_FIEND) or c:IsRace(RACE_SPELLCASTER)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function c47510122.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -69,15 +67,6 @@ function c47510122.spop(e,tp,eg,ep,ev,re,r,rp)
             Duel.SendtoGrave(g1,REASON_EFFECT)
         end
     end
-    local c=e:GetHandler()
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_FIELD)
-    e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-    e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-    e1:SetTargetRange(1,0)
-    e1:SetTarget(c47510122.splimit)
-    e1:SetReset(RESET_PHASE+PHASE_END)
-    Duel.RegisterEffect(e1,tp)
 end
 function c47510122.splimit(e,c)
     return not c:IsAttribute(ATTRIBUTE_DARK)
@@ -96,12 +85,7 @@ function c47510122.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c47510122.poop(e,tp,eg,ep,ev,re,r,rp)
     local lg=e:GetHandler():GetLinkedGroup():Filter(Card.IsFacedown,nil)
-    if Duel.ChangePosition(lg,POS_FACEUP_ATTACK) then
-        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-        local g=Duel.SelectMatchingCard(tp,c47510122.tgfilter,tp,LOCATION_HAND,0,1,1,nil)
-        Duel.BreakEffect()
-        Duel.SendtoGrave(g,REASON_EFFECT)
-    end   
+    Duel.ChangePosition(lg,POS_FACEUP_ATTACK) 
 end
 function c47510122.indfilter(c)
     return (c:IsFacedown() or c:IsType(TYPE_FLIP)) and c:IsType(TYPE_MONSTER)

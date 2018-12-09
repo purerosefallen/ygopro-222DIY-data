@@ -1,6 +1,3 @@
---天司的创造者 路西法
-local m=47578901
-local cm=_G["c"..m]
 function c47578901.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)
@@ -9,8 +6,7 @@ function c47578901.initial_effect(c)
     e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
     e2:SetType(EFFECT_TYPE_IGNITION)
     e2:SetRange(LOCATION_PZONE)
-    e2:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
-    e2:SetCountLimit(1,47578901)
+    e2:SetCountLimit(1,47578901+EFFECT_COUNT_CODE_DUEL)
     e2:SetTarget(c47578901.thtg)
     e2:SetOperation(c47578901.thop)
     c:RegisterEffect(e2)
@@ -36,7 +32,7 @@ function c47578901.initial_effect(c)
     c:RegisterEffect(e5)
 end
 function c47578901.filter(c)
-    return c:IsCode(47578901) 
+    return c:IsSetCard(0x5de)
 end
 function c47578901.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -71,9 +67,5 @@ function c47578901.sumop(e,tp,eg,ep,ev,re,r,rp)
         if g:GetCount()>0 then
             Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
         end
-    end
-    if c:IsRelateToEffect(e) and c:IsPosition(POS_FACEUP_ATTACK) then
-        Duel.BreakEffect()
-        Duel.ChangePosition(c,POS_FACEUP_DEFENSE)
     end
 end

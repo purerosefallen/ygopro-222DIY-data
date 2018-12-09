@@ -8,6 +8,7 @@ function c13257332.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e1:SetRange(LOCATION_EXTRA)
 	e1:SetCondition(aux.LinkCondition(c13257332.matfilter,1,1))
+	e1:SetTarget(aux.LinkTarget(c13257332.matfilter,1,1))
 	e1:SetOperation(c13257332.LinkOperation(c13257332.matfilter,1,1))
 	e1:SetValue(SUMMON_TYPE_LINK)
 	c:RegisterEffect(e1)
@@ -41,30 +42,19 @@ function c13257332.initial_effect(c)
 	
 end
 function c13257332.LinkOperation(f,minc,maxc)
-	return  function(e,tp,eg,ep,ev,re,r,rp,c)
-				local mg=Duel.GetMatchingGroup(aux.LConditionFilter,tp,LOCATION_MZONE,0,nil,f,c)
-				local sg=Group.CreateGroup()
-				for i=0,maxc-1 do
-					local cg=mg:Filter(aux.LCheckRecursive,sg,tp,sg,mg,c,i,minc,maxc)
-					if cg:GetCount()==0 then break end
-					local minct=1
-					if aux.LCheckGoal(tp,sg,c,minc,i) then
-						if not Duel.SelectYesNo(tp,210) then break end
-						minct=0
-					end
-					local g=cg:Select(tp,minct,1,nil)
-					if g:GetCount()==0 then break end
-					sg:Merge(g)
-				end
-				c:SetMaterial(sg)
-				local tc=sg:GetFirst()
+	return  function(e,tp,eg,ep,ev,re,r,rp,c,smat,mg)
+				local g=e:GetLabelObject()
+				c:SetMaterial(g)
+				local tc=g:GetFirst()
 				local eg=Group.CreateGroup()
 				while tc do
 					eg:Merge(tc:GetEquipGroup())
-					tc=sg:GetNext()
+					tc=g:GetNext()
 				end
 				eg:KeepAlive()
-				Duel.SendtoGrave(sg,REASON_MATERIAL+REASON_LINK)
+				Duel.SendtoGrave(g,REASON_MATERIAL+REASON_LINK)
+				g:DeleteGroup()
+
 				local e12=Effect.CreateEffect(c)
 				e12:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
 				e12:SetCode(EVENT_SPSUMMON_SUCCESS)

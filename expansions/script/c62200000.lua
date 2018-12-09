@@ -61,3 +61,7 @@ end
 function baka.check_set_PregnantSwordHime(c)
     return baka.check_set(c,"PregnantSwordHime")--孕 剑 姬
 end
+--
+function baka.check_set_BugOfBug(c)
+    return baka.check_set(c,"BugOfBug")--残 思 乐 源
+end
