@@ -1,4 +1,5 @@
 --不怀好意的赠礼
+c81009041.card_code_list={81010019}
 function c81009041.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

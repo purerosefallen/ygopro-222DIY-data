@@ -1,4 +1,5 @@
 --对未来的仰望
+c81009028.card_code_list={81010019}
 function c81009028.initial_effect(c)
 	c:EnableCounterPermit(0x81f)
 	--Activate

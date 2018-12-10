@@ -1,4 +1,5 @@
 --CAnswer·北条加莲
+c81000501.card_code_list={81010019}
 function c81000501.initial_effect(c)
 	c:EnableReviveLimit()
 	--code

@@ -1,4 +1,5 @@
 --北条病栋
+c81009006.card_code_list={81010019}
 function c81009006.initial_effect(c)
 	c:EnableReviveLimit()
 	--code

@@ -1,4 +1,5 @@
 --彼此间的婚约
+c81009010.card_code_list={81010019}
 function c81009010.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

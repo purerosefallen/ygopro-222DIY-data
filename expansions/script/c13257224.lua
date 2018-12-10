@@ -1,7 +1,7 @@
 --宇宙战争兵器 量产炮 自瞄镭射
 function c13257224.initial_effect(c)
 	c:EnableCounterPermit(0x354,LOCATION_SZONE)
-	c:SetCounterLimit(0x354,10)
+	c:SetCounterLimit(0x354,5)
 	c:EnableReviveLimit()
 	--equip limit
 	local e11=Effect.CreateEffect(c)
@@ -85,7 +85,7 @@ function c13257224.efilter(e,re)
 end
 function c13257224.acop(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()
-	if ec and e:GetHandler():GetFlagEffect(1)>0 then
+	if ec and e:GetHandler():GetFlagEffect(1)>0 and re:GetHandlerPlayer()~=tp then
 		local ct=ec:GetFlagEffectLabel(13257200)
 		if ct==nil then ct=0 end
 		if ct>0 then
@@ -95,8 +95,8 @@ function c13257224.acop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257224.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x354,10,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x354,10,REASON_COST)
+	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x354,5,REASON_COST) end
+	e:GetHandler():RemoveCounter(tp,0x354,5,REASON_COST)
 end
 function c13257224.codisable(e,tp,eg,ep,ev,re,r,rp)
 	local ec=e:GetHandler():GetEquipTarget()

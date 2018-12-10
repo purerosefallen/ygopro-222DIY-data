@@ -1,6 +1,7 @@
 --Answer·神谷奈绪·Primus
 c81010067.dfc_front_side=81010066
 c81010067.dfc_back_side=81010067
+c81010067.card_code_list={81010019}
 function c81010067.initial_effect(c)
 	c:EnableReviveLimit()
 	--code

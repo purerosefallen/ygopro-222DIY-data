@@ -1,4 +1,5 @@
 --梦想与奇迹开始的地方
+c81000006.card_code_list={81010019}
 function c81000006.initial_effect(c)
 	c:EnableReviveLimit()
 	--spsummon bgm

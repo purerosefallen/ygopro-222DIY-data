@@ -1,4 +1,5 @@
 --圣诞之约
+c81009049.card_code_list={81010019}
 function c81009049.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -1,4 +1,5 @@
 --Answer·北条厨房
+c81009032.card_code_list={81010019}
 function c81009032.initial_effect(c)
 	c:EnableReviveLimit()
 	--code

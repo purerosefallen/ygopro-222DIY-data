@@ -1,4 +1,5 @@
 --Answer·新田美波
+c81010010.card_code_list={81010019}
 function c81010010.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()

@@ -1,4 +1,5 @@
 --Answer·北条加莲·Dream
+c81007223.card_code_list={81010019}
 function c81007223.initial_effect(c)
 	c:EnableReviveLimit()
 	--code

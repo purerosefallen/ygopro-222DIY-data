@@ -1,6 +1,7 @@
 --Answer·北条加莲·Triad
 c81010062.dfc_front_side=81010062
 c81010062.dfc_back_side=81010063
+c81010062.card_code_list={81010019}
 function c81010062.initial_effect(c)
 	c:EnableReviveLimit()
 	--code

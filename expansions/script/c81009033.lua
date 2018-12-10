@@ -1,4 +1,5 @@
 --Answer·渋谷巧克力
+c81009033.card_code_list={81010019}
 function c81009033.initial_effect(c)
 	c:EnableReviveLimit()
 	--code

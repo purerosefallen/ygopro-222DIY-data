@@ -50,12 +50,12 @@ function c47500001.thfilter(c)
     return c:IsAbleToHand()
 end
 function c47500001.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(c47500001.thfilter,tp,LOCATION_ONFIELD,0,1,nil) end
+    if chk==0 then return Duel.IsExistingMatchingCard(c47500001.thfilter,tp,LOCATION_MZONE,0,1,nil) end
     Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_MZONE)
 end
 function c47500001.thop(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-    local g=Duel.SelectMatchingCard(tp,c47500001.thfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
+    local g=Duel.SelectMatchingCard(tp,c47500001.thfilter,tp,LOCATION_MZONE,0,1,1,nil)
     if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT) then
         Duel.Recover(tp,1000,REASON_EFFECT)    
     end

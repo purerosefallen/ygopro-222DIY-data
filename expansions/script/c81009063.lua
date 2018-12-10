@@ -1,4 +1,5 @@
 --不经意间的对视
+c81009063.card_code_list={81010019}
 function c81009063.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

@@ -82,7 +82,7 @@ function c21520085.adop(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-			local sg=g:Select(tp,1,c::GetMaterialCount(),nil)
+			local sg=g:Select(tp,1,c:GetMaterialCount(),nil)
 			Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
 		end
 	end

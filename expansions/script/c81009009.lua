@@ -1,4 +1,5 @@
 --神谷大眉毛
+c81009009.card_code_list={81010019}
 function c81009009.initial_effect(c)
 	c:EnableReviveLimit()
 	--code

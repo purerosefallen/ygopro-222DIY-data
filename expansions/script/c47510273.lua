@@ -47,6 +47,7 @@ function c47510273.initial_effect(c)
     e5:SetRange(LOCATION_PZONE)
     e5:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
     e5:SetCode(EFFECT_LINK_SPELL_KOISHI)
+    e5:SetTargetRange(LOCATION_PZONE,0)
     e5:SetValue(LINK_MARKER_TOP+LINK_MARKER_TOP_LEFT+LINK_MARKER_TOP_RIGHT)
     c:RegisterEffect(e5) 
     --copy effect

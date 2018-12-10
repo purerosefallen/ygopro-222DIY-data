@@ -1,4 +1,5 @@
 --Triad Primus
+c81012058.card_code_list={81010019}
 function c81012058.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

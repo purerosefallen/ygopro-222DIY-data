@@ -1,4 +1,5 @@
 --莫名其妙的脸红
+c81010908.card_code_list={81010019}
 function c81010908.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

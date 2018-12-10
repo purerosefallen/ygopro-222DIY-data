@@ -1,4 +1,5 @@
 --Answer·渋谷凛·1stLIVE
+c81007202.card_code_list={81010019}
 function c81007202.initial_effect(c)
 	c:EnableReviveLimit()
 	--code

@@ -1,4 +1,5 @@
 --Answer·神谷奈绪·S
+c81010036.card_code_list={81010019}
 function c81010036.initial_effect(c)
 	c:EnableReviveLimit()
 	--spsummon bgm

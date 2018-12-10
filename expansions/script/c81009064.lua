@@ -1,4 +1,5 @@
 --Answer·渋谷武士
+c81009064.card_code_list={81010019}
 function c81009064.initial_effect(c)
 	c:EnableReviveLimit()
 	--code

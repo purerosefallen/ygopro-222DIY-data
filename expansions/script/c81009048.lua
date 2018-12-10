@@ -1,4 +1,5 @@
 --通往末路的末路
+c81009048.card_code_list={81010019}
 function c81009048.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)

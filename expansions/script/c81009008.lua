@@ -1,4 +1,5 @@
 --渋谷汪
+c81009008.card_code_list={81010019}
 function c81009008.initial_effect(c)
 	c:EnableReviveLimit()
 	--code

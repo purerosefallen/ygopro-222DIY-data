@@ -1,4 +1,5 @@
 --看戏模式
+c81009039.card_code_list={81010019}
 function c81009039.initial_effect(c)
 	c:EnableCounterPermit(0x81e)
 	--Activate

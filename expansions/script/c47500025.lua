@@ -29,16 +29,5 @@ function c47500025.activate(e,tp,eg,ep,ev,re,r,rp)
     local g=Duel.SelectMatchingCard(tp,c47500025.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
     if g:GetCount()>0 then
         Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
-        local e1=Effect.CreateEffect(c)
-        e1:SetType(EFFECT_TYPE_FIELD)
-        e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-        e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-        e1:SetTargetRange(1,0)
-        e1:SetTarget(c47500025.splimit)
-        e1:SetReset(RESET_PHASE+PHASE_END)
-        Duel.RegisterEffect(e1,tp)
     end
-end
-function c47500025.splimit(e,c)
-    return c:IsSetCard(0x5d0) or c:IsSetCard(0x5da) or c:IsSetCard(0x5de) or c:IsSetCard(0x5d3) or aux.IsCodeListed(c,47500000) or c:IsSetCard(0x813)
 end
