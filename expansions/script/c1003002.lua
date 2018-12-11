@@ -25,7 +25,7 @@ function c1003002.initial_effect(c)
     e5:SetDescription(aux.Stringid(1003002,1))
     e5:SetCategory(CATEGORY_DAMAGE)
     e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-    e5:SetCode(EVENT_CUSTOM+77631175)
+    e5:SetCode(EVENT_CUSTOM+1003002)
     e5:SetTarget(c1003002.target5)
     e5:SetOperation(c1003002.operation5)
     c:RegisterEffect(e5)
@@ -66,7 +66,7 @@ function c1003002.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
     if Duel.SelectEffectYesNo(tp,e:GetHandler(),96) then
         local c=e:GetHandler()
         c:RemoveOverlayCard(tp,1,1,REASON_EFFECT)
-        Duel.RaiseSingleEvent(c,EVENT_CUSTOM+77631175,e,0,0,0,0)
+        Duel.RaiseSingleEvent(c,EVENT_CUSTOM+1003002,e,0,0,0,0)
         return true
     else return false end
 end
