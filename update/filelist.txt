@@ -9,7 +9,7 @@ deck/12.09new_card7.ydk	425adf625afedcff457bbf5a0a09b6dc
 deck/12.09new_card8.ydk	e936f7bbb1bb888a42adf0360d063b57
 deck/12.09new_card9.ydk	dcabaab2c9148f7aeabba7993e214134
 expansions/222DIY.cdb	8c832f437ead71efcab6f1d0918d438a
-expansions/lflist.conf	b937a434c1ed5c627d2666c5bd4ba66d
+expansions/lflist.conf	f34ca0d1eda4960f9326a15af93e82e4
 expansions/strings.conf	f3edf6e5051dc22d25f6d514ee3122e9
 expansions/pics/08209710.jpg	ed0e60085631bfa641ffeebd6abbd910
 expansions/pics/1000400.jpg	7b02a7099b7cd3d79f72c977d00cface
@@ -11606,10 +11606,10 @@ sound/custom/攻击.wav	94506ccac1227331d68f6bf13c098f23
 sound/custom/灵摆.wav	32bc7ff32036c6aa60c0d3849ac86117
 sound/custom/离场.wav	b84ae1ea50b97dca2478cbd94d80f993
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	b5b6cb403fe96e611a42d0de11cdac05
+update/filelist.txt	0ea3980594dd97a7ab9bf0745ee2a662
 update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
 update/update-push.bat	686b01a51bba916202d61d951cd7fe3e
 update/update-push.sh	ee0ce539e77c8cec8965cb6d6a2b3149
 update/update-server.sh	1e36cb099427f8fda3cd52756b07398d
 update/update-without-sound.bat	1c2cfda2a0501642c8bceae026a73d5b
-update/version.txt	fd0143273aac3fc46941f9f4df5d3d2d
+update/version.txt	755d8b8c5a22318f3c52df847af3fa5c
