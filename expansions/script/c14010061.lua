@@ -1,8 +1,6 @@
 --眠之主
 local m=14010061
 local cm=_G["c"..m]
-cm.dfc_front_side=14010060
-cm.dfc_back_side=14010061
 function cm.initial_effect(c)
 	--back
 	local e0=Effect.CreateEffect(c)
@@ -27,7 +25,7 @@ function cm.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e2:SetTargetRange(0,1)
-	e2:SetCondition(cm.actcon)
+	--e2:SetCondition(cm.actcon)
 	e2:SetValue(cm.aclimit)
 	c:RegisterEffect(e2)
 	--draw
@@ -62,7 +60,7 @@ function cm.drcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=e:GetHandler():GetControler()
 end
 function cm.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsPlayerCanDraw(1-tp,1) and e:GetHandler():IsCode(14010061) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsPlayerCanDraw(1-tp,1) end
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,PLAYER_ALL,1)
 end
 function cm.drop(e,tp,eg,ep,ev,re,r,rp)

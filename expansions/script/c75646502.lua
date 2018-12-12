@@ -50,6 +50,6 @@ function c75646502.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummonComplete()
 	end
 end
-function c3679218.condition(e,tp,eg,ep,ev,re,r,rp)
+function 75646502.condition(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsType(TYPE_LINK) and Duel.IsExistingMatchingCard(Card.IsType(),tp,LOCATION_MZONE,0,1,nil,TYPE_TOKEN)
 end

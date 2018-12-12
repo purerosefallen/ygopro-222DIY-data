@@ -31,8 +31,8 @@ function c47578901.initial_effect(c)
     e5:SetCode(EVENT_SPSUMMON_SUCCESS)
     c:RegisterEffect(e5)
 end
-function c47578901.filter(c)
-    return c:IsSetCard(0x5de)
+function c47578901.filter(c,e,tp)
+    return c:IsSetCard(0x5de) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c47578901.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

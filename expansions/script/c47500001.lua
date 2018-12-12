@@ -61,7 +61,7 @@ function c47500001.thop(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 function c47500001.spfilter(c,e,tp)
-    return (aux.IsCodeListed(c,47500000) or c:IsCode(47500000)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+    return (aux.IsCodeListed(c,47500000) or c:IsCode(47500000)) and not c:IsCode(47500001) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c47500001.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chkc then return chkc:IsLocation(e:GetLabel()) and chkc:IsControler(tp) and chkc:IsFaceup() end

@@ -85,6 +85,7 @@ function c75646154.op(e,tp,eg,ep,ev,re,r,rp)
 		local sc=g:GetFirst()
 		while sc do
 			local e1=Effect.CreateEffect(c)
+			e1:SetDescription(aux.Stringid(75646154,0))
 			e1:SetCategory(CATEGORY_DEFCHANGE)
 			e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 			e1:SetCode(EVENT_PHASE+PHASE_END)
