@@ -1,7 +1,4 @@
 Millux={}
-os=require('os')
-table=require('table')
-io=require('io')
 function Millux.rabat_return(c,code,num)
 	--return
 	local e1=Effect.CreateEffect(c)
