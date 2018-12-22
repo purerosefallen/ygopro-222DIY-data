@@ -92,7 +92,7 @@ function c47510273.spcon(e,c)
     local rg=Duel.GetReleaseGroup(tp):Filter(c47510273.rfilter,nil,tp)
     local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
     local ct=-ft+1
-    return ft>-2 and rg:GetCount()>1 and (ft>0 or rg:IsExists(c47510273.mzfilter,ct,nil,tp))
+    return ft>-1 and rg:GetCount()>1 and (ft>0 or rg:IsExists(c47510273.mzfilter,ct,nil,tp))
 end
 function c47510273.spop(e,tp,eg,ep,ev,re,r,rp,c)
     local rg=Duel.GetReleaseGroup(tp):Filter(c47510273.rfilter,nil,tp)
@@ -100,10 +100,10 @@ function c47510273.spop(e,tp,eg,ep,ev,re,r,rp,c)
     local g=nil
     if ft>0 then
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-        g=rg:Select(tp,3,3,nil)
+        g=rg:Select(tp,2,2,nil)
     elseif ft==0 then
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-        g=rg:FilterSelect(tp,c47510273.mzfilter,3,3,nil,tp)
+        g=rg:FilterSelect(tp,c47510273.mzfilter,2,2,nil,tp)
     end
     Duel.Release(g,REASON_COST)
 end

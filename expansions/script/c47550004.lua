@@ -139,9 +139,8 @@ function c47550004.ntcon(e,c,minc)
         and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function c47550004.actcon(e,tp,eg,ep,ev,re,r,rp)
-    local tc=Duel.GetAttacker()
-    if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
-    return tc and tc:IsControler(tp)
+    local c=e:GetHandler()
+    return (Duel.GetAttacker()==c and c:GetBattleTarget()) or Duel.GetAttackTarget()==c
 end
 function c47550004.disop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()

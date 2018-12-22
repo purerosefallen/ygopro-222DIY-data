@@ -61,11 +61,11 @@ end
 function c47500017.tefilter(c,code)
     return aux.IsCodeListed(c,47500000) and c:IsAbleToHand() and c:GetOriginalCode()~=code and c:IsType(TYPE_PENDULUM)
 end
-function c47510001.penfilter(c)
+function c47500017.penfilter(c)
     return aux.IsCodeListed(c,47500000) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 end
 function c47500017.tetg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(c47500017.tefilter,tp,LOCATION_DECK,0,1,nil) and Duel.IsExistingMatchingCard(c47510001.penfilter,tp,LOCATION_EXTRA,0,1,nil) end
+    if chk==0 then return Duel.IsExistingMatchingCard(c47500017.tefilter,tp,LOCATION_DECK,0,1,nil) and Duel.IsExistingMatchingCard(c47500017.penfilter,tp,LOCATION_EXTRA,0,1,nil) end
     Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c47500017.teop(e,tp,eg,ep,ev,re,r,rp)
