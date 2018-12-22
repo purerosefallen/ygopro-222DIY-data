@@ -61,9 +61,6 @@ function cm.retop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoExtraP(c,tp,REASON_EFFECT)
 	end
 end
-function cm.efilter(e,re)
-	return re:GetOwner()~=e:GetOwner()
-end
 function cm.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and not Duel.IsExistingMatchingCard(Card.IsType,c:GetControler(),LOCATION_GRAVE,0,1,nil,TYPE_MONSTER)
@@ -81,18 +78,15 @@ end
 function cm.tdop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		if Duel.SendtoDeck(c,nil,2,REASON_EFFECT) and Duel.IsExistingMatchingCard(cm.thfilter,tp,LOCATION_DECK,0,1,nil,e,tp) then
-			local tc=Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_HAND,0,1,nil)
-			if tc and Duel.SelectYesNo(tp,aux.Stringid(m,2)) then
-				Duel.BreakEffect()
-				g1=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_HAND,0,1,1,nil,e,tp)
-				Duel.SendtoGrave(g1,nil,REASON_EFFECT)
-				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-				local g2=Duel.SelectMatchingCard(tp,cm.thfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-				if g2:GetCount()>0 then
-					Duel.SendtoHand(g2,nil,REASON_EFFECT)
-					Duel.ConfirmCards(1-tp,g2)
-				end
+		if Duel.SendtoDeck(c,nil,2,REASON_EFFECT)~=0 and Duel.IsExistingMatchingCard(cm.thfilter,tp,LOCATION_DECK,0,1,nil) and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_HAND,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(m,2))then
+			Duel.BreakEffect()
+			g1=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_HAND,0,1,1,nil)
+			if Duel.SendtoGrave(g1,nil,REASON_EFFECT)==0 then return end
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+			local g2=Duel.SelectMatchingCard(tp,cm.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+			if g2:GetCount()>0 then
+				Duel.SendtoHand(g2,nil,REASON_EFFECT)
+				Duel.ConfirmCards(1-tp,g2)
 			end
 		end
 	end

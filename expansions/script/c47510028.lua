@@ -81,6 +81,7 @@ function c47510028.pop(e,tp,eg,ep,ev,re,r,rp)
         e1:SetValue(2700)
         e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_DAMAGE_CAL)
         a:RegisterEffect(e1)
+        end
     end
 end
 function c47510028.atkop(e,tp,eg,ep,ev,re,r,rp)

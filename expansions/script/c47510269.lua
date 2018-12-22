@@ -87,23 +87,18 @@ end
 function c47510269.spcon(e,c)
     if c==nil then return true end
     local tp=c:GetControler()
-    local rg=Duel.GetReleaseGroup(tp):Filter(c47510269.rfilter,nil,tp)
-    local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-    local ct=-ft+1
-    return ft>-2 and rg:GetCount()>1 and (ft>0 or rg:IsExists(c47510269.mzfilter,ct,nil,tp))
+    local g=Duel.GetMatchingGroup(c47510269.rfilter,tp,LOCATION_ONFIELD,0,nil)
+    return g:IsExists(c47510269.rfilter,3,nil,tp,g) and c:IsFacedown()
 end
 function c47510269.spop(e,tp,eg,ep,ev,re,r,rp,c)
-    local rg=Duel.GetReleaseGroup(tp):Filter(c47510269.rfilter,nil,tp)
-    local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
-    local g=nil
-    if ft>0 then
-        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-        g=rg:Select(tp,3,3,nil)
-    elseif ft==0 then
-        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-        g=rg:FilterSelect(tp,c47510269.mzfilter,3,3,nil,tp)
+    local g=Duel.GetMatchingGroup(c47510269.rfilter,tp,LOCATION_ONFIELD,0,nil)
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+    local g1=g:FilterSelect(tp,c47510269.rfilter,3,3,nil,tp,g)
+    local cg=g1:Filter(Card.IsFacedown,nil)
+    if cg:GetCount()>0 then
+        Duel.ConfirmCards(1-tp,cg)
     end
-    Duel.Release(g,REASON_COST)
+    Duel.Release(g1,REASON_COST)
 end
 function c47510269.regop(e,tp,eg,ep,ev,re,r,rp)
     local e1=Effect.CreateEffect(e:GetHandler())
@@ -125,7 +120,7 @@ function c47510269.tffilter(c)
     return not c:IsForbidden() and c:IsType(TYPE_PENDULUM)
 end
 function c47510269.tftg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(c47510269.tffilter,tp,LOCATION_DECK,0,1,nil) end
+    if chk==0 then return Duel.IsExistingMatchingCard(c47510269.tffilter,tp,LOCATION_DECK,0,1,nil) and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) end
 end
 function c47510269.tfop(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
@@ -217,30 +212,23 @@ function c47510269.desop(e,tp,eg,ep,ev,re,r,rp)
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
         local g=Duel.SelectMatchingCard(tp,c47510269.thfilter,tp,LOCATION_EXTRA,0,1,1,nil)
         if g:GetCount()>0 then
+            if Duel.SendtoHand(g,tp,REASON_EFFECT)~=0 and Duel.ConfirmCards(1-tp,g) then
             Duel.BreakEffect()
-            Duel.SendtoHand(g,tp,REASON_EFFECT)
-            Duel.ConfirmCards(1-tp,g)
-        end
-        local g1=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_PZONE,nil)
-        local tc=g1:GetFirst()
-        local c=e:GetHandler()
-        while tc do
-            local e1=Effect.CreateEffect(e:GetHandler())
-            e1:SetCode(EFFECT_CHANGE_TYPE)
-            e1:SetType(EFFECT_TYPE_SINGLE)
-            e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-            e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
-            e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
-            tc:RegisterEffect(e1)
-            local e2=Effect.CreateEffect(e:GetHandler())
-            e2:SetType(EFFECT_TYPE_SINGLE)
-            e2:SetRange(LOCATION_SZONE)
-            e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
-            e2:SetCode(EFFECT_LINK_SPELL_KOISHI)
-            e2:SetValue(LINK_MARKER_TOP+LINK_MARKER_TOP_LEFT+LINK_MARKER_TOP_RIGHT)
-            e2:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
-            tc:RegisterEffect(e2)
-            tc=g:GetNext()
+            local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_PZONE,0,nil,TYPE_PENDULUM)
+            local tc=g:GetFirst()
+            local c=e:GetHandler()
+            while tc do
+                local e2=Effect.CreateEffect(c)
+                e2:SetType(EFFECT_TYPE_SINGLE)
+                e2:SetRange(LOCATION_SZONE)
+                e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
+                e2:SetCode(EFFECT_LINK_SPELL_KOISHI)
+                e2:SetValue(LINK_MARKER_TOP+LINK_MARKER_TOP_LEFT+LINK_MARKER_TOP_RIGHT)
+                e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+                tc:RegisterEffect(e2)    
+                tc=g:GetNext()
+            end 
+            end
         end
     end
 end
