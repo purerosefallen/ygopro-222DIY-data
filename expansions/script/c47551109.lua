@@ -58,6 +58,10 @@ function c47551109.initial_effect(c)
     c:RegisterEffect(e6)
 end
 c47551109.pendulum_level=8
+function c47551109.IsGran(c)
+    local m=_G["c"..c:GetCode()]
+    return m and m.is_named_with_Ma_Elf 
+end
 function c47551109.mfilter(c,xyzc)
     return c:IsType(TYPE_PENDULUM)
 end
@@ -74,7 +78,7 @@ function c47551109.tpencon(e,tp,eg,ep,ev,re,r,rp)
     return Duel.IsExistingMatchingCard(c47551109.tcfilter,tp,LOCATION_PZONE,0,1,e:GetHandler())
 end
 function c47551109.tpenfilter(c)
-    return c:IsType(TYPE_PENDULUM) and (c:IsSetCard(0x5d0) or c:IsSetCard(0x5da) or c:IsSetCard(0x5de) or c:IsSetCard(0x5d3) or aux.IsCodeListed(c,47500000) or c:IsSetCard(0x813))
+    return c:IsType(TYPE_PENDULUM) and (c:IsSetCard(0x5d0) or c:IsSetCard(0x5da) or c:IsSetCard(0x5de) or c:IsSetCard(0x5d3) or aux.IsCodeListed(c,47500000) or c:IsSetCard(0x813) or c47551109.IsGran(c))
 end
 function c47551109.tpentg(e,tp,eg,ep,ev,re,r,rp,chk)
     local sc=Duel.GetFirstMatchingCard(nil,tp,LOCATION_PZONE,0,e:GetHandler())

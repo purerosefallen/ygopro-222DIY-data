@@ -50,6 +50,10 @@ function c47510019.initial_effect(c)
     e7:SetValue(c47510019.slevel)
     c:RegisterEffect(e7) 
 end
+function c47510019.IsGran(c)
+    local m=_G["c"..c:GetCode()]
+    return m and m.is_named_with_Ma_Elf 
+end
 function c47510019.slevel(e,c)
     local lv=e:GetHandler():GetLevel()
     return 1*65536+lv
@@ -61,7 +65,7 @@ function c47510019.psplimit(e,c,tp,sumtp,sumpos)
     return not c47510019.pefilter(c) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
 function c47510019.filter(c)
-    return c:IsAbleToGrave() and (c:IsSetCard(0x5d0) or c:IsSetCard(0x5da) or c:IsSetCard(0x5de) or c:IsSetCard(0x5d3) or aux.IsCodeListed(c,47500000) or c:IsSetCard(0x813))
+    return c:IsAbleToGrave() and (c:IsSetCard(0x5d0) or c:IsSetCard(0x5da) or c:IsSetCard(0x5de) or c:IsSetCard(0x5d3) or aux.IsCodeListed(c,47500000) or c:IsSetCard(0x813) or c47510019.IsGran(c))
 end
 function c47510019.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_DECK) and c47510019.filter(chkc) end
