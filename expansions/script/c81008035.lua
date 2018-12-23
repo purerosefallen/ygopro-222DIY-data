@@ -6,8 +6,8 @@ function c81008035.initial_effect(c)
 	e0:SetType(EFFECT_TYPE_ACTIVATE)
 	e0:SetCode(EVENT_FREE_CHAIN)
 	e0:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e0:SetTarget(c81008032.target)
-	e0:SetOperation(c81008032.operation)
+	e0:SetTarget(c81008035.target)
+	e0:SetOperation(c81008035.operation)
 	c:RegisterEffect(e0)
 	--Atk,race
 	local e1=Effect.CreateEffect(c)
@@ -36,25 +36,25 @@ function c81008035.initial_effect(c)
 	local e5=Effect.CreateEffect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e5:SetCode(EVENT_LEAVE_FIELD)
-	e5:SetCountLimit(1,81008032)
-	e5:SetCondition(c81008032.atkcon)
-	e5:SetOperation(c81008032.atkop)
+	e5:SetCountLimit(1,81008035)
+	e5:SetCondition(c81008035.atkcon)
+	e5:SetOperation(c81008035.atkop)
 	c:RegisterEffect(e5)
 end
-function c81008032.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function c81008035.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
 	Duel.SelectTarget(tp,Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_EQUIP,e:GetHandler(),1,0,0)
 end
-function c81008032.operation(e,tp,eg,ep,ev,re,r,rp)
+function c81008035.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if e:GetHandler():IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		Duel.Equip(tp,e:GetHandler(),tc)
 	end
 end
-function c81008032.atkcon(e,tp,eg,ep,ev,re,r,rp)
+function c81008035.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetFirstCardTarget()
 	if tc and tc:IsLocation(LOCATION_MZONE) and tc:IsFaceup() then
@@ -63,7 +63,7 @@ function c81008032.atkcon(e,tp,eg,ep,ev,re,r,rp)
 		return true
 	else return false end
 end
-function c81008032.atkop(e,tp,eg,ep,ev,re,r,rp)
+function c81008035.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=e:GetLabelObject()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
