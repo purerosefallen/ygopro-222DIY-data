@@ -112,7 +112,7 @@ function c21400046.dfilter(c)
 	return c:IsSetCard(0xc20) and c:IsAbleToHand()
 end
 function c21400046.dwfilter(c)
-	return ( c:IsType(TYPE_SYNCHRO) or c:IsType(TYPE_PENDULUM) ) and c:IsAbleToRemove()
+	return c:IsType(TYPE_SYNCHRO) and c:GetLevel()<=6 and c:IsAbleToRemove()
 end
 function c21400046.dtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c21400046.dfilter,tp,LOCATION_DECK,0,1,nil) and Duel.IsExistingMatchingCard(c21400046.dwfilter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,nil) end
@@ -131,6 +131,7 @@ function c21400046.dop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
 	end
 end
+
 
 
 

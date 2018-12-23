@@ -36,13 +36,14 @@ function c21400040.initial_effect(c)
 	e2:SetOperation(c21400040.op)
 	c:RegisterEffect(e2)
 	
-	--Search
+	--to grave
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(21400040,2))
 	e3:SetCategory(CATEGORY_TOGRAVE)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_RELEASE)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e3:SetCost(c21400040.thcost)
 	e3:SetTarget(c21400040.thtg)
 	e3:SetOperation(c21400040.thop)
 	c:RegisterEffect(e3)
@@ -57,7 +58,7 @@ end
 function c21400040.tetg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_ONFIELD) and chkc:IsControler(tp) and c21400040.tefilter(chkc) end
 
-	if chk==0 then return Duel.IsExistingTarget(c21400040.tefilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0  and Duel.IsPlayerCanSpecialSummonMonster(tp,2149999,0xc21,0x4011,0,0,3,RACE_WYRM,ATTRIBUTE_WATER) end
+	if chk==0 then return Duel.IsExistingTarget(c21400040.tefilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0  and Duel.IsPlayerCanSpecialSummonMonster(tp,21499999,0xc21,0x4011,0,0,3,RACE_WYRM,ATTRIBUTE_WATER) end
 --  Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(21400040,1))
 
 	local g=Duel.SelectTarget(tp,c21400040.tefilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,99,nil)
@@ -85,13 +86,13 @@ function c21400040.teop(e,tp,eg,ep,ev,re,r,rp)
 	
 
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	if not Duel.IsPlayerCanSpecialSummonMonster(tp,2149999,0xc21,0x4011,0,0,3,RACE_WYRM,ATTRIBUTE_WATER) then return end
+	if not Duel.IsPlayerCanSpecialSummonMonster(tp,21499999,0xc21,0x4011,0,0,3,RACE_WYRM,ATTRIBUTE_WATER) then return end
 
 	local atkn=g:Filter(c21400040.atkfl,nil):GetSum(Card.GetAttack)
 	local defn=g:Filter(c21400040.deffl,nil):GetSum(Card.GetDefense)
 
 
-	local token=Duel.CreateToken(tp,2149999)
+	local token=Duel.CreateToken(tp,21499999)
 	if Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -151,6 +152,24 @@ function c21400040.op(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
+function c21400040.counterfilter(c)
+	return c:GetSummonLocation()~=LOCATION_DECK or c:GetSummonLocation()~= LOCATION_GRAVE
+end
+
+function c21400040.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetCustomActivityCount(c21400040,tp,ACTIVITY_SPSUMMON)==0 end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTargetRange(1,0)
+	e1:SetTarget(c21400040.splimit)
+	Duel.RegisterEffect(e1,tp)
+end
+function c21400040.splimit(e,c,sump,sumtype,sumpos,targetp,se)
+	return c:IsLocation(LOCATION_DECK) or c:IsLocation(LOCATION_GRAVE) 
+end
 
 function c21400040.thfilter(c)
 	return c:IsAbleToGrave()

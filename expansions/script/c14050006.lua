@@ -86,6 +86,7 @@ function cm.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function cm.spop1(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 then return end
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)>0 then
 		local e1=Effect.CreateEffect(c)

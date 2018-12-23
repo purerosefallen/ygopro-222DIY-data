@@ -46,6 +46,7 @@ function c21400043.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_RELEASE)
 	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e3:SetCost(c21400043.thcost)
 	e3:SetTarget(c21400043.thtg)
 	e3:SetOperation(c21400043.thop)
 	c:RegisterEffect(e3)
@@ -60,7 +61,7 @@ end
 function c21400043.tetg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_ONFIELD) and chkc:IsControler(tp) and c21400043.tefilter(chkc) end
 
-	if chk==0 then return Duel.IsExistingTarget(c21400043.tefilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0  and Duel.IsPlayerCanSpecialSummonMonster(tp,2149999,0xc21,0x4011,0,0,3,RACE_WYRM,ATTRIBUTE_WATER) end
+	if chk==0 then return Duel.IsExistingTarget(c21400043.tefilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0  and Duel.IsPlayerCanSpecialSummonMonster(tp,21499999,0xc21,0x4011,0,0,3,RACE_WYRM,ATTRIBUTE_WATER) end
 --  Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(21400043,1))
 
 	local g=Duel.SelectTarget(tp,c21400043.tefilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,99,nil)
@@ -88,13 +89,13 @@ function c21400043.teop(e,tp,eg,ep,ev,re,r,rp)
 
 
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	if not Duel.IsPlayerCanSpecialSummonMonster(tp,2149999,0xc21,0x4011,0,0,3,RACE_WYRM,ATTRIBUTE_WATER) then return end
+	if not Duel.IsPlayerCanSpecialSummonMonster(tp,21499999,0xc21,0x4011,0,0,3,RACE_WYRM,ATTRIBUTE_WATER) then return end
 
 	local atkn=g:Filter(c21400043.atkfl,nil):GetSum(Card.GetAttack)
 	local defn=g:Filter(c21400043.deffl,nil):GetSum(Card.GetDefense)
 
 
-	local token=Duel.CreateToken(tp,2149999)
+	local token=Duel.CreateToken(tp,21499999)
 	if Duel.SpecialSummonStep(token,0,tp,tp,false,false,POS_FACEUP) then
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -180,7 +181,7 @@ function cm.op(e,tp,eg,ep,ev,re,r,rp)
 		   Duel.ReleaseRitualMaterial(mat)
 		   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		   tc=rg:Select(tp,1,1,nil):GetFirst()
-		   if cm.rfilter(tc,mc,true) and (not cm.rfilter2(tc,sg,mc:GetLevel()) or Duel.SelectYesNo(tp,aux.Stringid(m,3))) then tf=true end
+		   if cm.rfilter(tc,mc,true) and (not cm.rfilter2(tc,sg,mc:GetLevel()) or ( mc:GetLevel()~=mc:GetRitualLevel(tc) and Duel.SelectYesNo(tp,aux.Stringid(m,3)))) then tf=true end
 		else
 		   if Duel.IsPlayerAffectedByEffect(tp,59822133) then break end
 		   local sg2=rg:Filter(cm.rfilter2,nil,sg,mc:GetLevel()) 
@@ -206,6 +207,24 @@ end
 
 ----------------------------------------------------------------------------------
 
+function c21400043.counterfilter(c)
+	return c:GetSummonLocation()~=LOCATION_DECK or c:GetSummonLocation()~= LOCATION_GRAVE
+end
+
+function c21400043.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetCustomActivityCount(c21400043,tp,ACTIVITY_SPSUMMON)==0 end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTargetRange(1,0)
+	e1:SetTarget(c21400043.splimit)
+	Duel.RegisterEffect(e1,tp)
+end
+function c21400043.splimit(e,c,sump,sumtype,sumpos,targetp,se)
+	return c:IsLocation(LOCATION_DECK) or c:IsLocation(LOCATION_GRAVE)
+end
 
 function c21400043.thfilter(c)
 	return c:IsAbleToGrave()

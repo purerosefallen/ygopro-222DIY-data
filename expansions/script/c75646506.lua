@@ -1,0 +1,30 @@
+--糖果魔女 璐璐
+function c75646506.initial_effect(c)
+	--link summon
+	c:EnableReviveLimit()
+	aux.AddLinkProcedure(c,c75646506.matfilter,1,1)
+	--
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e1:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_TOKEN))
+	e1:SetValue(1)
+	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_CANNOT_BE_FUSION_MATERIAL)
+	c:RegisterEffect(e2)
+	local e3=e2:Clone()
+	e3:SetCode(EFFECT_UNRELEASABLE_SUM)
+	c:RegisterEffect(e3)
+	local e4=e3:Clone()
+	e4:SetCode(EFFECT_UNRELEASABLE_NONSUM)
+	c:RegisterEffect(e4)
+	local e5=e4:Clone()
+	e5:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
+	c:RegisterEffect(e5)
+end
+function c75646506.matfilter(c)
+	return c:IsType(TYPE_TOKEN) 
+end

@@ -1,9 +1,8 @@
---FW·Kotoka
+--F·Kotoka
 function c81000027.initial_effect(c)
-	c:SetUniqueOnField(1,0,81000027)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcCode2(c,81000021,81000019,true,true)
+	aux.AddFusionProcCodeFun(c,81000021,aux.FilterBoolFunction(c81000021.ffilter),2,true,false)
 	--spsummon bgm
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
@@ -24,8 +23,8 @@ function c81000027.initial_effect(c)
 	e2:SetCode(EFFECT_SPSUMMON_PROC)
 	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e2:SetRange(LOCATION_EXTRA)
-	e2:SetCondition(c81000027.spcon)
-	e2:SetOperation(c81000027.spop)
+	e2:SetCondition(c81000027.sprcon)
+	e2:SetOperation(c81000027.sprop)
 	c:RegisterEffect(e2)
 	--extra attack
 	local e3=Effect.CreateEffect(c)
@@ -45,14 +44,15 @@ function c81000027.initial_effect(c)
 	e4:SetTarget(c81000027.desreptg)
 	e4:SetOperation(c81000027.desrepop)
 	c:RegisterEffect(e4)
-	if not c81000027.global_flag then
-		c81000027.global_flag=true
-		local ge1=Effect.CreateEffect(c)
-		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		ge1:SetCode(EVENT_SPSUMMON_SUCCESS)
-		ge1:SetOperation(c81000027.regop)
-		Duel.RegisterEffect(ge1,0)
-	end
+	--
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_FIELD)
+	e5:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+	e5:SetTarget(c81000027.efilter)
+	e5:SetValue(1)
+	c:RegisterEffect(e5)
 end
 function c81000027.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_EXTRA)
@@ -60,57 +60,51 @@ end
 function c81000027.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_MUSIC,0,aux.Stringid(81000027,1))
 end
-function c81000027.regop(e,tp,eg,ep,ev,re,r,rp)
-	for tc in aux.Next(eg) do
-		if tc:IsCode(81000019) then
-			Duel.RegisterFlagEffect(tc:GetSummonPlayer(),81000027,0,0,0)
-		elseif tc:IsCode(81000021) then
-			Duel.RegisterFlagEffect(tc:GetSummonPlayer(),81000927,0,0,0)
-		end
-	end
+function c81000027.ffilter(c)
+	return c:IsType(TYPE_PENDULUM) and c:IsType(TYPE_RITUAL)
 end
 function c81000027.splimit(e,se,sp,st)
 	return e:GetHandler():GetLocation()~=LOCATION_EXTRA
 end
 function c81000027.cfilter(c)
-	return (c:IsFaceup() or c:IsLocation(LOCATION_HAND)) and c:IsFusionCode(81000019,81000021) and c:IsAbleToRemoveAsCost()
+	return (c:IsFusionCode(81000021) or (c:IsFusionType(TYPE_PENDULUM) and c:IsFusionType(TYPE_RITUAL)) and c:IsType(TYPE_MONSTER))
+		and c:IsCanBeFusionMaterial() and c:IsAbleToRemoveAsCost()
 end
-function c81000027.fcheck(c,sg,g,code,...)
-	if not c:IsFusionCode(code) then return false end
-	if ... then
-		g:AddCard(c)
-		local res=sg:IsExists(c81000027.fcheck,1,g,sg,g,...)
-		g:RemoveCard(c)
-		return res
-	else return true end
+function c81000027.fcheck(c,sg)
+	return c:IsFusionCode(81000021) and sg:IsExists(c81000027.fcheck2,2,c)
 end
-function c81000027.fselect(c,tp,mg,sg,...)
+function c81000027.fcheck2(c)
+	return c:IsType(TYPE_PENDULUM) and c:IsType(TYPE_RITUAL)
+end
+function c81000027.fselect(c,tp,mg,sg)
 	sg:AddCard(c)
 	local res=false
-	if sg:GetCount()<2 then
-		res=mg:IsExists(c81000027.fselect,1,sg,tp,mg,sg,...)
+	if sg:GetCount()<3 then
+		res=mg:IsExists(c81000027.fselect,1,sg,tp,mg,sg)
 	elseif Duel.GetLocationCountFromEx(tp,tp,sg)>0 then
-		local g=Group.CreateGroup()
-		res=sg:IsExists(c81000027.fcheck,1,nil,sg,g,...)
+		res=sg:IsExists(c81000027.fcheck,1,nil,sg)
 	end
 	sg:RemoveCard(c)
 	return res
 end
-function c81000027.spcon(e,c)
-	if c==nil then return true end
+function c81000027.sprcon(e,c)
+	if c==nil then return true end 
 	local tp=c:GetControler()
-	local mg=Duel.GetMatchingGroup(c81000027.cfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,nil)
+	local mg=Duel.GetMatchingGroup(c81000027.cfilter,tp,LOCATION_ONFIELD,0,nil)
 	local sg=Group.CreateGroup()
-	return Duel.GetFlagEffect(tp,81000027)>0 and Duel.GetFlagEffect(tp,81000927)>0
-		and mg:IsExists(c81000027.fselect,1,nil,tp,mg,sg,81000019,81000021)
+	return mg:IsExists(c81000027.fselect,1,nil,tp,mg,sg)
 end
-function c81000027.spop(e,tp,eg,ep,ev,re,r,rp,c)
-	local mg=Duel.GetMatchingGroup(c81000027.cfilter,tp,LOCATION_ONFIELD+LOCATION_HAND,0,nil)
+function c81000027.sprop(e,tp,eg,ep,ev,re,r,rp,c)
+	local mg=Duel.GetMatchingGroup(c81000027.cfilter,tp,LOCATION_ONFIELD,0,nil)
 	local sg=Group.CreateGroup()
-	while sg:GetCount()<2 do
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local g=mg:FilterSelect(tp,c81000027.fselect,1,1,sg,tp,mg,sg,81000019,81000021)
+	while sg:GetCount()<3 do
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+		local g=mg:FilterSelect(tp,c81000027.fselect,1,1,sg,tp,mg,sg)
 		sg:Merge(g)
+	end
+	local cg=sg:Filter(Card.IsFacedown,nil)
+	if cg:GetCount()>0 then
+		Duel.ConfirmCards(1-tp,cg)
 	end
 	Duel.Remove(sg,POS_FACEUP,REASON_COST)
 end
@@ -151,4 +145,7 @@ function c81000027.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c81000027.desrepfilter),tp,LOCATION_REMOVED,0,1,1,nil)
 	Duel.SendtoDeck(g,nil,2,REASON_EFFECT+REASON_REPLACE)
+end
+function c81000027.efilter(e,c)
+	return c:IsType(TYPE_PENDULUM) and c:IsType(TYPE_RITUAL)
 end

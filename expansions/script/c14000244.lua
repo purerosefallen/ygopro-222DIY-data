@@ -65,7 +65,7 @@ function cm.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local g1=Duel.SelectMatchingCard(1-tp,Card.IsAbleToGrave,1-tp,LOCATION_EXTRA,0,1,1,nil,e,1-tp)
 	g:Merge(g1)
 	if g:GetCount()<=0 then return end
-	if Duel.SendtoGrave(g,REASON_EFFECT)~=0 then
+	if Duel.SendtoGrave(g,REASON_EFFECT)~=0 and c:IsFaceup() and c:IsRelateToEffect(e) then
 		Duel.BreakEffect()
 		local tc=g:GetFirst()
 		while tc do
