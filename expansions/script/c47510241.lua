@@ -45,10 +45,10 @@ function c47510241.changeop(e,tp,eg,ep,ev,re,r,rp,chk)
     c:SetEntityCode(tcode,true)
     c:ReplaceEffect(tcode,0,0)
 end
-function c47510231.crcon(e,tp,eg,ep,ev,re,r,rp)
+function c47510241.crcon(e,tp,eg,ep,ev,re,r,rp)
     return Duel.GetCurrentPhase()==PHASE_MAIN1
 end
-function c47510231.crop(e,tp,eg,ep,ev,re,r,rp)
+function c47510241.crop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,LOCATION_MZONE,aux.ExceptThisCard(e))
     local tc=g:GetFirst()
