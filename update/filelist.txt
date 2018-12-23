@@ -1,13 +1,4 @@
 ﻿ygopro.exe	9dc9dbaa3229030ebc08b21fbe890c6b
-deck/12.09new_card1.ydk	8e7784866c4e1210f4f06049c828c5cf
-deck/12.09new_card2.ydk	52c9e83ba7ad400bc7c08b0fedbbac61
-deck/12.09new_card3.ydk	55e45952f1b27300f1b1d66d00ffe927
-deck/12.09new_card4.ydk	cdf1efed3172fe8bb1302aefb410bba2
-deck/12.09new_card5.ydk	af89ff26d158e7952b7d9a2c5263944d
-deck/12.09new_card6.ydk	6226c4d4a847f17dad9e3a17f1fee89f
-deck/12.09new_card7.ydk	425adf625afedcff457bbf5a0a09b6dc
-deck/12.09new_card8.ydk	e936f7bbb1bb888a42adf0360d063b57
-deck/12.09new_card9.ydk	dcabaab2c9148f7aeabba7993e214134
 deck/12.23new_card1.ydk	06d6d28f0ccbbbebae664c4a7f083374
 deck/12.23new_card2.ydk	bcbeb417829232fd69b92c0f918e5280
 deck/12.23new_card3.ydk	18c563cc4b8175149b49223b219bbe49
@@ -7353,8 +7344,8 @@ expansions/script/c14000228.lua	c765883675236dd2885d6d9e07860517
 expansions/script/c14000240.lua	31314343fe47d406c41da3cc1b4fe443
 expansions/script/c14000241.lua	d5794985fe7bd41f0d1190e0dc74ae2c
 expansions/script/c14000242.lua	331e750642874172828b594c7e175e6c
-expansions/script/c14000243.lua	a07ec2d17206bccf81adab12da13e1af
-expansions/script/c14000244.lua	fb4baed21de20148fb1bf90d30bebc24
+expansions/script/c14000243.lua	e7b2da9a214bada0c001a64291d49f23
+expansions/script/c14000244.lua	1262f682dff0ba852ed76307b7f0436f
 expansions/script/c14000245.lua	bffd795137064650c100ecd442c46aab
 expansions/script/c14000246.lua	e6d244b56f15492b8a5c22eaa8a4857f
 expansions/script/c14000247.lua	88e146de6866eacb5460360c6aea2295
@@ -11796,10 +11787,10 @@ sound/custom/攻击.wav	94506ccac1227331d68f6bf13c098f23
 sound/custom/灵摆.wav	32bc7ff32036c6aa60c0d3849ac86117
 sound/custom/离场.wav	b84ae1ea50b97dca2478cbd94d80f993
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	19754af82e7f56e0695c0c501e611a3a
+update/filelist.txt	b5cd9276b019027e8fc840c1d4755ca6
 update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
 update/update-push.bat	686b01a51bba916202d61d951cd7fe3e
 update/update-push.sh	ee0ce539e77c8cec8965cb6d6a2b3149
 update/update-server.sh	1e36cb099427f8fda3cd52756b07398d
 update/update-without-sound.bat	1c2cfda2a0501642c8bceae026a73d5b
-update/version.txt	6e5e48b54f684c123c53b202bf3308fa
+update/version.txt	46d6bb4adfb0976e5d734223a71dfe02
