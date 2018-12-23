@@ -1,4 +1,4 @@
-local m=77707014
+local m=77707026
 local cm=_G["c"..m]
 xpcall(function() require("expansions/script/c37564765") end,function() require("script/c37564765") end)
 function cm.initial_effect(c)
