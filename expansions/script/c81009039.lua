@@ -1,7 +1,7 @@
 --看戏模式
 c81009039.card_code_list={81010019}
 function c81009039.initial_effect(c)
-	c:EnableCounterPermit(0x81e)
+	c:EnableCounterPermit(0x81f)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -34,12 +34,12 @@ function c81009039.acop(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_PLAYER)
 	local c=e:GetHandler()
 	if re:IsActiveType(TYPE_MONSTER+TYPE_SPELL+TYPE_TRAP) and p~=tp and c:GetFlagEffect(1)>0 then
-		c:AddCounter(0x81e,1)
+		c:AddCounter(0x81f,1)
 	end
 end
 function c81009039.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x81e,10,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x81e,10,REASON_COST)
+	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x81f,10,REASON_COST) end
+	e:GetHandler():RemoveCounter(tp,0x81f,10,REASON_COST)
 end
 function c81009039.filter(c)
 	return c:IsFaceup() and c:IsCode(81010019)

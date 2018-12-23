@@ -73,7 +73,7 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 		   Duel.ReleaseRitualMaterial(mat)
 		   Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		   tc=rg:Select(tp,1,1,nil):GetFirst()
-		   if cm.rfilter(tc,mc,true) and (not cm.rfilter2(tc,sg,mc:GetLevel()) or Duel.SelectYesNo(tp,aux.Stringid(m,0))) then tf=true end
+		   if cm.rfilter(tc,mc,true) and (not cm.rfilter2(tc,sg,mc:GetLevel()) or ( mc:GetLevel()~=mc:GetRitualLevel(tc) and Duel.SelectYesNo(tp,aux.Stringid(m,3)))) then tf=true end
 		else
 		   if Duel.IsPlayerAffectedByEffect(tp,59822133) then break end
 		   local sg2=rg:Filter(cm.rfilter2,nil,sg,mc:GetLevel()) 
