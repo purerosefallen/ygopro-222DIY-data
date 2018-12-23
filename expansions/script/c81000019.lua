@@ -2,14 +2,14 @@
 function c81000019.initial_effect(c)
 	aux.EnablePendulumAttribute(c)
 	c:EnableReviveLimit()
-	--splimit
+	--indes
 	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_FIELD)
+	e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e0:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e0:SetRange(LOCATION_PZONE)
-	e0:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e0:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
-	e0:SetTargetRange(1,1)
-	e0:SetTarget(c81000019.splimit)
+	e0:SetCondition(c81000019.indcon)
+	e0:SetTarget(c81000019.indtg)
+	e0:SetOperation(c81000019.indop)
 	c:RegisterEffect(e0)
 	--change position
 	local e1=Effect.CreateEffect(c)
@@ -56,8 +56,34 @@ end
 function c81000019.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_MUSIC,0,aux.Stringid(81000019,1))
 end
-function c81000019.splimit(e,c,sump,sumtype,sumpos,targetp)
-	return bit.band(sumtype,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
+function c81000019.cfilter(c,e,tp)
+	return c:IsType(TYPE_PENDULUM) and c:GetSummonPlayer()==tp and c:IsSummonType(SUMMON_TYPE_RITUAL)
+		and (not e or c:IsRelateToEffect(e))
+end
+function c81000019.indcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c81000019.cfilter,1,nil,nil,tp)
+end
+function c81000019.indtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetTargetCard(eg)
+end
+function c81000019.indop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) then return end
+	local g=eg:Filter(c81000019.cfilter,nil,e,tp)
+	local tc=g:GetFirst()
+	while tc do
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+		e1:SetValue(1)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		tc:RegisterEffect(e1)
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+		tc:RegisterEffect(e2)
+		tc=g:GetNext()
+	end
 end
 function c81000019.posfilter(c)
 	return c:IsDefensePos() or c:IsFacedown()

@@ -92,8 +92,8 @@ function c21400049.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 end
 
-function c21400049.splimit(e,c,sump,sumtype,sumpos,targetp)
-	return c:IsLocation(LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED)
+function c21400049.splimit(e,c,sump,sumtype,sumpos,targetp,atb)
+	return c:IsLocation(LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED) and c:IsAttribute(atb)
 end
 
 function c21400049.op(e,tp,eg,ep,ev,re,r,rp)
@@ -107,7 +107,7 @@ function c21400049.op(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
 	e1:SetTargetRange(1,1)
-	e1:SetTarget(c21400049.splimit)
+	e1:SetTarget(c21400049.splimit,atb)
 	Duel.RegisterEffect(e1,tp)
 end
 
@@ -115,7 +115,7 @@ function c21400049.dfilter(c)
 	return c:IsSetCard(0xc20) and c:IsAbleToHand()
 end
 function c21400049.dwfilter(c)
-	return ( c:IsType(TYPE_SYNCHRO) or c:IsType(TYPE_PENDULUM) ) and c:IsAbleToRemove()
+	return c:IsType(TYPE_SYNCHRO) and c:GetLevel()<=6 and c:IsAbleToRemove()
 end
 function c21400049.dtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c21400049.dfilter,tp,LOCATION_DECK,0,1,nil) and Duel.IsExistingMatchingCard(c21400049.dwfilter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,nil) end
@@ -134,6 +134,7 @@ function c21400049.dop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
 	end
 end
+
 
 
 

@@ -1,0 +1,82 @@
+--救世主的沉眠之夜
+function c75646515.initial_effect(c)
+	--Activate
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetTarget(c75646515.target)
+	e1:SetOperation(c75646515.activate)
+	c:RegisterEffect(e1)
+end
+function c75646515.target(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,TYPE_LINK) end
+end
+function c75646515.activate(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
+	local g=Duel.SelectMatchingCard(tp,Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,TYPE_LINK)
+	local tc=g:GetFirst()
+	if tc:GetFlagEffect(tp,75646515)~=0 then return end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetDescription(aux.Stringid(75646515,1))
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e1:SetCode(EVENT_PHASE+PHASE_END)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCountLimit(1)
+	e1:SetOperation(c75646515.op)   
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)	
+	tc:RegisterEffect(e1,true)
+	if not tc:IsType(TYPE_EFFECT) then
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetCode(EFFECT_ADD_TYPE)
+		e2:SetValue(TYPE_EFFECT)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tc:RegisterEffect(e2,true)
+	end
+	e:SetLabelObject(e1)
+	tc:RegisterFlagEffect(75646515,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(75646515,0))
+end
+function c75646515.op(e,tp,eg,ep,ev,re,r,rp)
+	local lg=e:GetHandler():GetMutualLinkedGroup()
+	local tc=lg:GetFirst()
+	while tc do
+		if tc:GetFlagEffect(tp,75646515)~=0 then return end
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetDescription(aux.Stringid(75646515,1))
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+		e1:SetCode(EVENT_PHASE+PHASE_END)
+		e1:SetRange(LOCATION_MZONE)
+		e1:SetCountLimit(1)
+		e1:SetOperation(c75646515.op)   
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)	
+		tc:RegisterEffect(e1,true)
+		if not tc:IsType(TYPE_EFFECT) then
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetCode(EFFECT_ADD_TYPE)
+			e2:SetValue(TYPE_EFFECT)
+			e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+			tc:RegisterEffect(e2,true)
+		end
+		tc:RegisterFlagEffect(75646515,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(75646515,0))
+		tc=lg:GetNext()
+	end
+	local c=e:GetHandler()
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_CANNOT_TRIGGER)
+	e2:SetReset(RESET_EVENT+RESETS_STANDARD)
+	c:RegisterEffect(e2)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_SET_ATTACK_FINAL)
+	e3:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e3:SetValue(0)
+	c:RegisterEffect(e3)
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+	e4:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e4:SetValue(1)
+	c:RegisterEffect(e4)
+end

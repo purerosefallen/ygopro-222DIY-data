@@ -43,14 +43,20 @@ function c21400044.initial_effect(c)
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_SINGLE)
 	e3:SetCode(EVENT_RELEASE)
-	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_CARD_TARGET)
 	e3:SetTarget(c21400044.jftg)
 	e3:SetOperation(c21400044.jfop)
 	c:RegisterEffect(e3)
 	local e4=e3:Clone()
 	e4:SetCode(EVENT_DESTROYED)
+	e4:SetCondition(c21400044.dtcon)
 	c:RegisterEffect(e4)
 
+end
+
+function c21400044.dtcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return rp==1-tp and c:GetPreviousControler()==tp
 end
 
 function c21400044.mat_filter(c)
@@ -58,7 +64,7 @@ function c21400044.mat_filter(c)
 end
 
 function c21400044.jffl(c)
-	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
+	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsType(TYPE_PENDULUM) and c:IsRace(RACE_WYRM) and not c:IsForbidden()
 end
 function c21400044.jflmt(e,ep,tp)
 	return tp==ep 
@@ -77,7 +83,7 @@ function c21400044.jfop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		local cntrn=Duel.Destroy(tc,nil,REASON_EFFECT)
 		if cntrn<=0 then return end
-		if(Duel.IsExistingTarget(c21400044.jffl,tp,LOCATION_EXTRA+LOCATION_HAND,0,1,nil) and ( Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1) ) and Duel.SelectYesNo(tp,aux.Stringid(21400044,3))) then
+		if(Duel.IsExistingTarget(c21400044.jffl,tp,LOCATION_EXTRA+LOCATION_HAND,0,1,nil) and ( Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(pp,LOCATION_PZONE,1) ) and Duel.SelectYesNo(pp,aux.Stringid(21400044,3))) then
 			local sg=Duel.SelectMatchingCard(tp,c21400044.jffl,tp,LOCATION_EXTRA+LOCATION_HAND,0,1,1,nil)
 			local sc=sg:GetFirst()
 			if sc then Duel.MoveToField(sc,tp,pp,LOCATION_SZONE,POS_FACEUP,true) end
@@ -135,7 +141,7 @@ function c21400044.scop(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetType(EFFECT_TYPE_SINGLE)
 		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 		e3:SetCode(EFFECT_HAND_SYNCHRO)
-		--e3:SetTargetRange(0,1)
+		e3:SetTargetRange(0,1)
 		e:GetHandler():RegisterEffect(e3,true)
 		local mg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
 		local g=Duel.GetMatchingGroup(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,nil,nil,mg)
@@ -147,5 +153,6 @@ function c21400044.scop(e,tp,eg,ep,ev,re,r,rp)
 		Effect.Reset(e3)
 	end
 end
+
 
 
