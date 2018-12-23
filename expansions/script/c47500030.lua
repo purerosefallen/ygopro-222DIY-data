@@ -32,7 +32,7 @@ function c47500030.initial_effect(c)
 end
 c47500030.card_code_list={47500000}
 function c47500030.costfilter(c)
-    return aux.IsCodeListed(c,47500000) and c:IsReleasable()
+    return aux.IsCodeListed(c,47500000) and c:IsReleasable() and c:IsType(TYPE_PENDULUM)
 end
 function c47500030.thfilter(c)
     return aux.IsCodeListed(c,47500000) and (c:IsType(TYPE_TRAP) or c:IsType(TYPE_SPELL))

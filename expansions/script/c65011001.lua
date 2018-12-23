@@ -22,7 +22,7 @@ function c65011001.initial_effect(c)
 	e2:SetOperation(c65011001.disop)
 	c:RegisterEffect(e2)
 end
-function c65090001.counterfilter(c)
+function c65011001.counterfilter(c)
 	return not (c:IsLevelBelow(6) and c:IsType(TYPE_FUSION))
 end
 function c65011001.thcon(e,tp,eg,ep,ev,re,r,rp)

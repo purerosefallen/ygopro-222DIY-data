@@ -43,6 +43,7 @@ function cm.atcost(e,c,tp)
 	return Duel.GetLP(tp)>1
 end
 function cm.atop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_CARD,0,m)
 	local ct=math.floor(Duel.GetLP(tp)/2)
 	Duel.PayLPCost(tp,ct)
 	local e1=Effect.CreateEffect(e:GetHandler())
