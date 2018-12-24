@@ -61,17 +61,20 @@ end
 function c47511919.cfilter1(c)
     return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_MACHINE) and (c:GetPreviousLocation()==LOCATION_GRAVE or c:GetPreviousLocation()==LOCATION_HAND)
 end
+function c47511919.stfilter(c)
+    return c:IsRace(RACE_MACHINE) and c:IsAttribute(ATTRIBUTE_EARTH) and c:IsAbleToHand() and c:IsLevel(10)
+end
 function c47511919.spcon1(e,tp,eg,ep,ev,re,r,rp)
     return eg:IsExists(c47511919.cfilter1,1,nil)
 end
 function c47511919.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_GRAVE,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
+    if chk==0 then return Duel.IsExistingMatchingCard(c47511919.stfilter,tp,LOCATION_GRAVE,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
     Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE)
 end
 function c47511919.spop1(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-    local g=Duel.SelectMatchingCard(tp,c47511919.ttfilter,tp,LOCATION_GRAVE,0,1,1,c)
+    local g=Duel.SelectMatchingCard(tp,c47511919.stfilter,tp,LOCATION_GRAVE,0,1,1,c)
     if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
         Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)    
     end
