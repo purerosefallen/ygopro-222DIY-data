@@ -15,8 +15,8 @@ function c47578915.initial_effect(c)
     --salvage
     local e2=Effect.CreateEffect(c)
     e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-    e2:SetType(EFFECT_TYPE_ACTIVATE)
-    e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+    e2:SetType(EFFECT_TYPE_QUICK_O)
+    e2:SetCode(EVENT_FREE_CHAIN)
     e2:SetRange(LOCATION_GRAVE)
     e2:SetCountLimit(1,47578915)
     e2:SetCost(c47578915.thcost)
@@ -69,7 +69,7 @@ end
 function c47578915.activate(e,tp,eg,ep,ev,re,r,rp)
     if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-    local g=Duel.SelectMatchingCard(tp,c47578915.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+    local g=Duel.SelectMa   tchingCard(tp,c47578915.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
     if g:GetCount()>0 then
         Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
     end
