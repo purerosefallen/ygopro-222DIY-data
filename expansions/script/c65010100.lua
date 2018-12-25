@@ -69,9 +69,8 @@ function c65010100.addcount(e,tp,eg,ep,ev,re,r,rp)
 	local tc=eg:GetFirst()
 	while tc do
 		local pl=tc:GetPreviousLocation()
-		local mp=tc:GetPreviousControler()
-		if pl==LOCATION_MZONE and mp==tp then
-			local p=tc:GetReasonPlayer()
+		if pl==LOCATION_MZONE then
+			local p=tc:GetPreviousControler()
 			c65010100[p]=c65010100[p]+1
 		end
 		tc=eg:GetNext()

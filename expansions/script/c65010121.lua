@@ -32,8 +32,10 @@ function c65010121.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c65010121.activate(e,tp,eg,ep,ev,re,r,rp)
 	local ty=re:GetActiveType()
-	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
-		Duel.Destroy(eg,REASON_EFFECT)
+	if Duel.NegateActivation(ev) then
+		if re:GetHandler():IsRelateToEffect(re) then
+			Duel.Destroy(eg,REASON_EFFECT)
+		end
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD)
 			e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)

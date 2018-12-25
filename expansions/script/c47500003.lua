@@ -81,7 +81,7 @@ function c47500003.eqlimit(e,c)
     return e:GetOwner()==c
 end
 function c47500003.thfilter(c)
-    return c:IsFaceup() and c:IsType(TYPE_MONSTER)
+    return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSummonType(TYPE_SPSUMMON)
 end
 function c47500003.sumop(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
