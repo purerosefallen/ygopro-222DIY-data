@@ -66,18 +66,19 @@ function cm.tgop(e,tp,eg,ep,ev,re,r,rp)
 		if Duel.SendtoGrave(g,REASON_EFFECT)==0 then return end
 		local g=Duel.GetMatchingGroup(cm.sfilter,tp,LOCATION_GRAVE,0,c,e,tp)
 		local mg=g:Filter(cm.ffilter,nil,e)
-		if mg:GetCount()~=0 or Duel.GetLocationCountFromEx(tp,tp,c)<=0 then return end
 		mg:AddCard(c)
+		if mg:GetCount()<2 or Duel.GetLocationCountFromEx(tp,tp,c)<=0 then return end
 		local sg=Duel.GetMatchingGroup(cm.ffilter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg,c)
 		if sg:GetCount()>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.SelectYesNo(tp,aux.Stringid(m,1)) then
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local mg=mg:Select(tp,1,1,nil)
-			local tc=mg:GetFirst()
+			local mat=mg:FilterSelect(tp,cm.ffilter3,1,1,c,e,tp,c)
+			local tc=mat:GetFirst()
 			if tc then
 				if Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)~=0 and c:IsRelateToEffect(e) then
 					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 					local fc=sg:Select(tp,1,1,nil):GetFirst()
+					mat:AddCard(c)
 					fc:SetMaterial(mg)
 					Duel.SendtoGrave(mg,REASON_MATERIAL+REASON_FUSION+REASON_EFFECT)
 					Duel.BreakEffect()
@@ -93,4 +94,8 @@ function cm.ffilter(c,e)
 end
 function cm.ffilter2(c,e,tp,mg,gc)
 	return cm.Grava(c) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(mg,gc)
+end
+function cm.ffilter3(c,e,tp,gc)
+	local mg=Group.FromCards(c,gc)
+	return Duel.IsExistingMatchingCard(cm.ffilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg,gc)
 end

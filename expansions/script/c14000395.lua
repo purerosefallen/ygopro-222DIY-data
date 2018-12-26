@@ -2,7 +2,7 @@
 local m=14000395
 local cm=_G["c"..m]
 cm.named_with_Gravalond=1
-function c14000395.initial_effect(c)
+function cm.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(m,0))
@@ -18,7 +18,7 @@ function cm.filter(c)
 end
 function cm.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and cm.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(cm.filter,tp,LOCATION_MZONE,0,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(cm.filter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,cm.filter,tp,LOCATION_MZONE,0,1,1,nil)
 end
@@ -27,7 +27,7 @@ function cm.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and tc:IsFaceup() then
 		local ct=Duel.GetMatchingGroupCount(cm.filter,tp,LOCATION_GRAVE,0,nil)
-		if ct<=2 then
+		if ct<=2 or not Duel.SelectYesNo(tp,aux.Stringid(m,4)) then
 			while ct>0 do
 				Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_OPTION)
 				sel=Duel.SelectOption(tp,aux.Stringid(m,1),aux.Stringid(m,2),aux.Stringid(m,3))+1
@@ -68,6 +68,7 @@ function cm.op(e,tp,eg,ep,ev,re,r,rp)
 					tc:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(m,3))
 				end
 				ct=ct-1
+				if ct>0 and not Duel.SelectYesNo(tp,aux.Stringid(m,5)) then ct=0 end
 			end
 		else
 			local e1=Effect.CreateEffect(c)
@@ -109,7 +110,7 @@ function cm.op(e,tp,eg,ep,ev,re,r,rp)
 			e4:SetCode(EFFECT_ADD_TYPE)
 			e4:SetValue(TYPE_EFFECT)
 			e4:SetReset(RESET_EVENT+RESETS_STANDARD)
-			tc:RegisterEffect(e5,true)
+			tc:RegisterEffect(e4,true)
 		end
 	end
 	if c:IsRelateToEffect(e) and e:IsHasType(EFFECT_TYPE_ACTIVATE) then

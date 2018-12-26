@@ -97,7 +97,7 @@ function c47501008.operation(e,tp,eg,ep,ev,re,r,rp)
     local g=Duel.SelectMatchingCard(tp,Card.IsControlerCanBeChanged,tp,0,LOCATION_MZONE,1,1,nil)
     local tc=g:GetFirst()
     local c=e:GetHandler()
-    if tc:IsRelateToEffect(e) and Duel.GetControl(tc,tp,PHASE_END,1)~=0 then
+    if Duel.GetControl(tc,tp,PHASE_END,1)~=0 then
         Duel.NegateRelatedChain(tc,RESET_TURN_SET)
         local e2=Effect.CreateEffect(c)
         e2:SetType(EFFECT_TYPE_SINGLE)

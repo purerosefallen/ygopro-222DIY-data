@@ -2,6 +2,7 @@
 c81000002.dfc_front_side=81000001
 c81000002.dfc_back_side=81000002
 function c81000002.initial_effect(c)
+	Senya.DFCBackSideCommonEffect(c)
 	c:EnableReviveLimit()
 	--redirect
 	local e1=Effect.CreateEffect(c)
@@ -55,6 +56,15 @@ function c81000002.initial_effect(c)
 	e4:SetTarget(c81000002.distg)
 	e4:SetOperation(c81000002.disop)
 	c:RegisterEffect(e4)
+	--back
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e5:SetCode(EVENT_ADJUST)
+	e5:SetRange(LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_HAND+LOCATION_EXTRA)
+	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_SET_AVAILABLE)
+	e5:SetCondition(c81000002.backon)
+	e5:SetOperation(c81000002.backop)
+	c:RegisterEffect(e5)
 end
 function c81000002.backon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -104,4 +114,16 @@ function c81000002.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c81000002.recon(e)
 	return e:GetHandler():IsFaceup()
+end
+function c81000002.backon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c.dfc_front_side and c:GetOriginalCode()==c.dfc_back_side
+end
+function c81000002.backop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tcode=c.dfc_front_side
+	c:SetEntityCode(tcode)
+	Duel.ConfirmCards(tp,Group.FromCards(c))
+	Duel.ConfirmCards(1-tp,Group.FromCards(c))
+	c:ReplaceEffect(tcode,0,0)
 end

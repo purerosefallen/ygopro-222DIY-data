@@ -36,6 +36,15 @@ function c81010067.initial_effect(c)
 	e2:SetTarget(c81010067.thtg)
 	e2:SetOperation(c81010067.thop)
 	c:RegisterEffect(e2)
+	--back
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_ADJUST)
+	e3:SetRange(LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_HAND+LOCATION_EXTRA)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_SET_AVAILABLE)
+	e3:SetCondition(c81010067.backon)
+	e3:SetOperation(c81010067.backop)
+	c:RegisterEffect(e3)
 end
 function c81010067.condition(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
@@ -86,4 +95,16 @@ function c81010067.thop(e,tp,eg,ep,ev,re,r,rp)
 		local lp=Duel.GetLP(tp)
 		Duel.SetLP(tp,lp-lv/2)
 	end
+end
+function c81010067.backon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c.dfc_front_side and c:GetOriginalCode()==c.dfc_back_side
+end
+function c81010067.backop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tcode=c.dfc_front_side
+	c:SetEntityCode(tcode)
+	Duel.ConfirmCards(tp,Group.FromCards(c))
+	Duel.ConfirmCards(1-tp,Group.FromCards(c))
+	c:ReplaceEffect(tcode,0,0)
 end

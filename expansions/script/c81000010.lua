@@ -38,6 +38,15 @@ function c81000010.initial_effect(c)
 	e4:SetTarget(c81000010.sptg)
 	e4:SetOperation(c81000010.spop)
 	c:RegisterEffect(e4)
+	--back
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e5:SetCode(EVENT_ADJUST)
+	e5:SetRange(LOCATION_DECK+LOCATION_REMOVED+LOCATION_HAND+LOCATION_EXTRA)
+	e5:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_SET_AVAILABLE)
+	e5:SetCondition(c81000010.backon)
+	e5:SetOperation(c81000010.backop)
+	c:RegisterEffect(e5)
 end
 function c81000010.mfilter(c)
 	return c:IsLinkRace(RACE_FIEND) and not c:IsLinkType(TYPE_TOKEN)
@@ -78,6 +87,22 @@ function c81000010.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,c81000010.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
-		Duel.ConfirmCards(1-tp,tc)
+		Duel.ConfirmCards(1-tp,g)
 	end
+	local c=e:GetHandler()
+	local tcode=c.dfc_front_side
+	c:SetEntityCode(tcode)
+	c:ReplaceEffect(tcode,0,0)
+end
+function c81000010.backon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c.dfc_front_side and c:GetOriginalCode()==c.dfc_back_side
+end
+function c81000010.backop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tcode=c.dfc_front_side
+	c:SetEntityCode(tcode)
+	Duel.ConfirmCards(tp,Group.FromCards(c))
+	Duel.ConfirmCards(1-tp,Group.FromCards(c))
+	c:ReplaceEffect(tcode,0,0)
 end

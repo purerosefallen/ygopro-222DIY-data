@@ -39,7 +39,7 @@ function c4212310.initial_effect(c)
     e3:SetRange(LOCATION_MZONE)
     e3:SetCode(EVENT_CHAINING)
     e3:SetCountLimit(1,4212310)
-    e3:SetCondition(c4212310.condition)
+    e3:SetCondition(c4212310.condition2)
     e3:SetCost(c4212310.cost)
     e3:SetOperation(c4212310.operation)
     c:RegisterEffect(e3)
@@ -78,6 +78,9 @@ function c4212310.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c4212310.condition(e,tp,eg,ep,ev,re,r,rp)
     return Duel.GetTurnPlayer()~=tp and not Duel.CheckEvent(EVENT_CHAINING)
+end
+function c4212310.condition2(e,tp,eg,ep,ev,re,r,rp)
+    return Duel.GetTurnPlayer()~=tp
 end
 function c4212310.filter1(c)
     return c:IsType(TYPE_SPELL) and c:IsType(TYPE_CONTINUOUS) and c:CheckActivateEffect(false,true,false)~=nil

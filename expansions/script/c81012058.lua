@@ -57,6 +57,7 @@ function c81012058.activate(e,tp,eg,ep,ev,re,r,rp)
 		local mat=mg:SelectWithSumEqual(tp,Card.GetRitualLevel,tc:GetLevel(),1,99,tc)
 		tc:SetMaterial(mat)
 		Duel.ReleaseRitualMaterial(mat)
+		Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
 		tc:CompleteProcedure()
 	end
 end
