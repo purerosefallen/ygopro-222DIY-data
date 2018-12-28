@@ -98,7 +98,7 @@ function c65010095.op(e,tp,eg,ep,ev,re,r,rp)
 		e5:SetRange(LOCATION_MZONE)
 		e5:SetValue(2800)
 		e5:SetReset(RESET_EVENT+RESETS_STANDARD)
-		c:RegisterEffect(e5)
+		tc:RegisterEffect(e5)
 		--change code
 		local e3=Effect.CreateEffect(c)
 		e3:SetType(EFFECT_TYPE_SINGLE)

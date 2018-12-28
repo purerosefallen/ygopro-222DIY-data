@@ -37,14 +37,13 @@ function c65010105.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCode(EVENT_SUMMON_SUCCESS)
-	e4:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
-	e4:SetCondition(c65010105.con1)
+	e4:SetCountLimit(1)
+	e4:SetCondition(c65010105.thcon)
 	e4:SetTarget(c65010105.thtg)
 	e4:SetOperation(c65010105.thop)
 	c:RegisterEffect(e4)
 	local e5=Effect.CreateEffect(c)
 	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e5:SetCondition(c65010105.con2)
 	c:RegisterEffect(e5)
 	--damage
 	local e6=Effect.CreateEffect(c)
@@ -77,10 +76,7 @@ end
 function c65010105.con(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE) 
 end
-function c65010105.con1(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE) and not eg:GetFirst()==e:GetHandler()
-end
-function c65010105.con2(e,tp,eg,ep,ev,re,r,rp)
+function c65010105.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE) and not eg:IsContains(e:GetHandler())
 end
 function c65010105.thfil(c)

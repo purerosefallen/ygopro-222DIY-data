@@ -33,7 +33,7 @@ function cm.filter(c)
 end
 function cm.sscon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return tp==Duel.GetTurnPlayer() and Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_GRAVE,0,1,nil) and (c:IsLocation(LOCATION_GRAVE) or Duel.IsPlayerAffectedByEffect(tp,14000386))
+	return Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_GRAVE,0,1,nil) and (c:IsLocation(LOCATION_GRAVE) or Duel.IsPlayerAffectedByEffect(tp,14000386))
 end
 function cm.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
