@@ -6,7 +6,7 @@ deck/12.23new_card4.ydk	4ad466119023f918322ac1e93abd6a71
 deck/12.23new_card5.ydk	eb785c104c23b16a84412fbab0da8ba2
 deck/12.23new_card6.ydk	14402689c7dc063e450ea34912766837
 expansions/222DIY.cdb	681d356dc6fac295f43a7ef69bb57b46
-expansions/lflist.conf	0b75b275b1b4970895157c3a0e73fd09
+expansions/lflist.conf	c6e5bc576a887f18462ca5c320c157b0
 expansions/strings.conf	0c9b2b2c59f54b92cbf9287fc55017dd
 expansions/pics/08209710.jpg	ed0e60085631bfa641ffeebd6abbd910
 expansions/pics/1000360.jpg	d1aa6f44fcd413402141a6bf4b886c2a
@@ -4972,7 +4972,7 @@ expansions/pics/77709007.jpg	7522c7bb3540d8fef397d4055590db4d
 expansions/pics/77709008.jpg	db17c2cbc3cb6e6f7dccc32e0772c950
 expansions/pics/77777765.png	4b887e896e550b8f7c153a4cf11babf6
 expansions/pics/77777777.jpg	3e6d896f7a31ca1d5cbdf467ade437bd
-expansions/pics/81000000.jpg	e6877baae100a60d8c03936da4b1258e
+expansions/pics/81000000.jpg	78db8a33dad982fa8bc383670d18e968
 expansions/pics/81000001.jpg	8b1359faa9e2f2c688ce8955c990a603
 expansions/pics/81000002.jpg	30a8cb99bf82914a5e208e551f226580
 expansions/pics/81000003.jpg	4ffcb24e97d32b19e2c2d24a99e24c19
@@ -5024,7 +5024,7 @@ expansions/pics/81000048.jpg	9fc7bdc2063eb4d8140d75a57b65c230
 expansions/pics/81000050.jpg	c84c6e27ff91dd290005684ec2c4d632
 expansions/pics/81000051.jpg	8f3a361299630f0808c1d270690709e6
 expansions/pics/81000052.jpg	6ff7b030cd153b1e3653c6b2828c8f64
-expansions/pics/81000053.jpg	a675733568fcb0dcd4af473167e6de7f
+expansions/pics/81000053.jpg	8abd47b39444014b3f65e0d2abd1cd80
 expansions/pics/81000054.jpg	f85beb6b5a9b8cdce8bcac277465dd84
 expansions/pics/81000055.jpg	237ecef747e6ad2384605d5e4d5852e5
 expansions/pics/81000056.jpg	0f14becb93f585c936169fab13a5a659
@@ -5348,7 +5348,7 @@ expansions/pics/81010905.jpg	cc22d9d58d8f6238a8851244f06d0a32
 expansions/pics/81010906.jpg	61ebd9423dbfe1cddb5121f9f1b2939d
 expansions/pics/81010907.jpg	7fc07208c9fc3e6b984dc4d06995d637
 expansions/pics/81010908.jpg	eddfb329d75b2ab5285f7654c55bce65
-expansions/pics/81010909.jpg	c6b26fb38d65c33c7665f3a634da08f5
+expansions/pics/81010909.jpg	15d220e076a30517efe4803cee4cc70f
 expansions/pics/81010910.jpg	6816580dc50f679d3104d18bcb40f58f
 expansions/pics/81010911.jpg	ffa5de9e73d13807e70f02554e1f2ce1
 expansions/pics/81010912.jpg	cf9fab0a33eec4922b6f51931485bb41
@@ -11788,10 +11788,10 @@ sound/custom/攻击.wav	94506ccac1227331d68f6bf13c098f23
 sound/custom/灵摆.wav	32bc7ff32036c6aa60c0d3849ac86117
 sound/custom/离场.wav	b84ae1ea50b97dca2478cbd94d80f993
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	1d29513e7f27225683497ae379cfa289
+update/filelist.txt	426a16281714feea0df85b0b711b01fd
 update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
 update/update-push.bat	686b01a51bba916202d61d951cd7fe3e
 update/update-push.sh	d018a223f65feef3467b22e252468f53
 update/update-server.sh	6f1cdc3e06ec58b37b14b5d9d167263c
 update/update-without-sound.bat	1c2cfda2a0501642c8bceae026a73d5b
-update/version.txt	d18eb4dde772158c84206af8bad59547
+update/version.txt	4961a7860647b928081ab132c09e78e0
