@@ -43,7 +43,9 @@ function c65010100.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_TRIGGER_O+EFFECT_TYPE_FIELD)
 	e4:SetCode(EVENT_PHASE+PHASE_END)
 	e4:SetRange(LOCATION_MZONE)
+	e4:SetCountLimit(1)
 	e4:SetHintTiming(TIMING_END_PHASE)
+	e4:SetCondition(c65010100.condition)
 	e4:SetOperation(c65010100.activate)
 	c:RegisterEffect(e4)
 	if c65010100.counter==nil then
@@ -76,6 +78,9 @@ function c65010100.addcount(e,tp,eg,ep,ev,re,r,rp)
 		end
 		tc=eg:GetNext()
 	end
+end
+function c65010100.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==tp
 end
 function c65010100.activate(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

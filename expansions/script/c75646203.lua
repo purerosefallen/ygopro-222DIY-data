@@ -10,7 +10,7 @@ function c75646203.initial_effect(c)
 	e1:SetOperation(c75646203.activate)
 	c:RegisterEffect(e1)
 	--tohand
-	local e3=Effect.CreateEffect(c)	
+	local e3=Effect.CreateEffect(c) 
 	e3:SetDescription(aux.Stringid(75646203,1))
 	e3:SetCategory(CATEGORY_TOHAND)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
@@ -25,7 +25,8 @@ function c75646203.initial_effect(c)
 
 end
 function c75646203.filter(c,e,tp)
-	return c:IsType(TYPE_EQUIP) and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetCode(),0,0x21,1000,1000,4,RACE_PSYCHO,ATTRIBUTE_LIGHT)
+	return c:IsSetCard(0x32c0) and c:IsType(TYPE_EQUIP) 
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetCode(),0,0x21,1000,1000,4,RACE_WARRIOR,ATTRIBUTE_LIGHT)
 end
 function c75646203.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_SZONE) and chkc:IsControler(tp) and c75646203.filter(chkc,e,tp) end
@@ -39,7 +40,7 @@ function c75646203.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetFirstTarget()
 	if not tg:IsRelateToEffect(e) then return end
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		or not Duel.IsPlayerCanSpecialSummonMonster(tp,tg:GetCode(),0,0x21,1000,1000,4,RACE_PSYCHO,ATTRIBUTE_LIGHT) then return end
+		or not Duel.IsPlayerCanSpecialSummonMonster(tp,tg:GetCode(),0,0x21,1000,1000,4,RACE_WARRIOR,ATTRIBUTE_LIGHT) then return end
 	tg:AddMonsterAttribute(TYPE_EFFECT)
 	Duel.SpecialSummonStep(tg,0,tp,tp,true,false,POS_FACEUP)
 	local e1=Effect.CreateEffect(tg)
