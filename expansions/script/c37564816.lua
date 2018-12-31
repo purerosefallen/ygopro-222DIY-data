@@ -47,6 +47,7 @@ function cm.filter2(c,e,tp,m,f,chkf,l)
 end
 function cm.ReplaceLocationCount(f,ec)
 	return function(tp,p,g,fc)
+		local g=g or Group.CreateGroup()
 		if g:IsContains(ec) then return f(tp,p,g,fc) end
 		g:AddCard(ec)
 		local res=f(tp,p,g,fc)
