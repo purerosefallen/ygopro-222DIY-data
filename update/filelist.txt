@@ -5829,7 +5829,7 @@ expansions/script/c1000367.lua	941a524611b13acec7b5276ca9815d92
 expansions/script/c1000368.lua	6168f103eb51fdf264e7bb7ef50b25d9
 expansions/script/c1000369.lua	116aa6f1febab1609d90c0a47a6d7ea7
 expansions/script/c1000370.lua	fdb199b5d93d11a2a0351ef940df6f6e
-expansions/script/c1000371.lua	fb90c17c1a49865278ff8df20f3f2247
+expansions/script/c1000371.lua	e20078a8757971ca09b7b424b5c90753
 expansions/script/c1000372.lua	31f4b3bc0921050b1d95d6b81ba770f9
 expansions/script/c1000373.lua	6eec4b192fc1ae145ff417553730414b
 expansions/script/c1000374.lua	0ef29771737ff5feddd2c87d5ee4c0e9
@@ -11788,10 +11788,10 @@ sound/custom/攻击.wav	94506ccac1227331d68f6bf13c098f23
 sound/custom/灵摆.wav	32bc7ff32036c6aa60c0d3849ac86117
 sound/custom/离场.wav	b84ae1ea50b97dca2478cbd94d80f993
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
-update/filelist.txt	736a5689366945d6d8ab71b36c3ef62f
+update/filelist.txt	ffc81fb7ab70581d23aa0a51ce830927
 update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
 update/update-push.bat	686b01a51bba916202d61d951cd7fe3e
 update/update-push.sh	d018a223f65feef3467b22e252468f53
 update/update-server.sh	6f1cdc3e06ec58b37b14b5d9d167263c
 update/update-without-sound.bat	1c2cfda2a0501642c8bceae026a73d5b
-update/version.txt	358fcc99a51461133b2058a2ce786660
+update/version.txt	7959779c83e76ac4e6ce0567b679c735
