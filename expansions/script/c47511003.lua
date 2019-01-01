@@ -74,8 +74,8 @@ end
 function c47511003.operation(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     local g=Duel.SelectMatchingCard(tp,c47511003.filter,tp,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_EXTRA,LOCATION_MZONE+LOCATION_GRAVE+LOCATION_EXTRA,1,1,nil)
-    local tc=Duel.GetFirstTarget()
-    if tc and c:IsRelateToEffect(e) and c:IsFaceup() and tc:IsFaceup() and tc:IsRelateToEffect(e) then
+    local tc=g:GetFirst()
+    if tc then
         local f=Card.RegisterEffect
         Card.RegisterEffect=function(tc,e,forced)
             if e:IsHasType(EFFECT_TYPE_IGNITION) then

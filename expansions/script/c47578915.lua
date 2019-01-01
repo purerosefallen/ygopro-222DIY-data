@@ -1,6 +1,4 @@
 --天司的裁决
-local m=47578915
-local cm=_G["c"..m]
 function c47578915.initial_effect(c)
     --atkup
     local e3=Effect.CreateEffect(c)
@@ -48,7 +46,7 @@ function c47578915.desop(e,tp,eg,ep,ev,re,r,rp)
     Duel.Destroy(g,REASON_EFFECT)
 end
 function c47578915.cfilter(c)
-    return c:IsSetCard(0x5de) and c:IsAbleToRemoveAsCost()
+    return c:IsSetCard(0x5de) and c:IsAbleToRemoveAsCost() and not c:IsCode(47578915)
 end
 function c47578915.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
