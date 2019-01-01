@@ -7,7 +7,7 @@ function cm.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
-		return Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD+LOCATION_HAND)-Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD+LOCATION_HAND)>7
+		return Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD+LOCATION_HAND)-Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD+LOCATION_HAND,0)>7
 	end)
 	e1:SetTarget(cm.target)
 	e1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
