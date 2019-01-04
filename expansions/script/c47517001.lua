@@ -7,6 +7,7 @@ function c47517001.initial_effect(c)
     c:EnableReviveLimit()   
     --spssummon
     local e1=Effect.CreateEffect(c)
+    e1:SetCategory(CATEGORY_TOGRAVE+CATEGORY_ATKCHANGE)
     e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
     e1:SetCode(EVENT_SPSUMMON_SUCCESS)
     e1:SetCountLimit(1,47517001)

@@ -65,7 +65,7 @@ function cm.cfilter(c,tp)
 	return c:IsRace(RACE_PLANT) and c:IsControler(tp)
 end
 function cm.dscon(e)
-	return e:GetHandler():IsLevelAbove(5)
+	return e:GetHandler():IsLevelAbove(6)
 end
 function cm.bmcon(e,tp,eg,ep,ev,re,r,rp)
 	return (e:GetHandler():IsLocation(LOCATION_GRAVE) or e:GetHandler():IsLocation(LOCATION_REMOVED)) and (r==REASON_FUSION or e:GetHandler():IsReason(REASON_FUSION)) and e:GetHandler():GetPreviousLevelOnField()>=6 and bit.band(TYPE_EFFECT,e:GetHandler():GetPreviousTypeOnField())~=0

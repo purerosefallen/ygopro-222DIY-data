@@ -48,6 +48,7 @@ function c47510044.initial_effect(c)
     e5:SetCost(c47510044.cost)
     e5:SetOperation(c47510044.atkop)
     c:RegisterEffect(e5)
+    c47510044.ss_effect=e5
     --darkforce
     local e6=Effect.CreateEffect(c)
     e6:SetDescription(aux.Stringid(47510044,0))

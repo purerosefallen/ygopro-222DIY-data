@@ -44,6 +44,7 @@ function c47510245.initial_effect(c)
     e4:SetTarget(c47510245.target)
     e4:SetOperation(c47510245.operation)
     c:RegisterEffect(e4)
+    c47510245.ss_effect=e5
     --xyz lv8 
     e6=Effect.CreateEffect(c)
     e6:SetType(EFFECT_TYPE_SINGLE)

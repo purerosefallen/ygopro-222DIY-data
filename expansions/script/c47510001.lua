@@ -23,7 +23,7 @@ function c47510001.initial_effect(c)
     c:RegisterEffect(e2)
     --serch
     local e3=Effect.CreateEffect(c)
-    e3:SetCategory(CATEGORY_TOHAND)
+    e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
     e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
     e3:SetCode(EVENT_SUMMON_SUCCESS)
     e3:SetProperty(EFFECT_FLAG_DELAY)
