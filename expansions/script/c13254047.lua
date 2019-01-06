@@ -62,6 +62,7 @@ function c13254047.regop(e,tp,eg,ep,ev,re,r,rp)
 		e5:SetCost(c13254047.spcost)
 		e5:SetTarget(c13254047.sptg)
 		e5:SetOperation(c13254047.spop)
+		e5:SetHintTiming(0,0x1e0)
 		e5:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e5)
 end

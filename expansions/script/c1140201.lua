@@ -70,7 +70,7 @@ end
 function c1140201.cost1_1(e,te_or_c,tp)
 	local ct1=Duel.GetFlagEffect(tp,1140201)
 	local ct2=Duel.GetFlagEffect(tp,79323590)
-	local clp=ct1*100+Duel.GetFlagEffect(tp,1140202)*20+ct2*500
+	local clp=ct1*150+Duel.GetFlagEffect(tp,1140202)*15+ct2*500
 	return Duel.CheckLPCost(tp,clp)
 end
 --
@@ -78,7 +78,7 @@ function c1140201.op1_1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_CARD,0,1140201)
 	local e1_2=e:GetLabelObject()
 	local pt=e1_2:GetLabel()
-	Duel.PayLPCost(tp,e:GetLabel()*20+100)
+	Duel.PayLPCost(tp,e:GetLabel()*15+150)
 	if pt~=Duel.GetTurnCount() then
 		Duel.RegisterFlagEffect(tp,1140202,RESET_PHASE+PHASE_END,0,1)
 	else

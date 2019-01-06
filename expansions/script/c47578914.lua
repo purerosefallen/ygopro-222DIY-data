@@ -8,8 +8,7 @@ function c47578914.initial_effect(c)
     e1:SetType(EFFECT_TYPE_ACTIVATE)
     e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
     e1:SetCode(EVENT_DESTROYED)
-    e1:SetCondition(c47578914.spcon1)
-    e1:SetCost(c47578914.spcost)
+    e1:SetCondition(c47578914.spcon)
     e1:SetTarget(c47578914.sptg)
     e1:SetOperation(c47578914.spop)
     c:RegisterEffect(e1)
@@ -24,18 +23,14 @@ function c47578914.initial_effect(c)
     e2:SetOperation(c47578914.activate)
 end
 function c47578914.cfilter(c,tp)
-    return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE) and c:IsPreviousPosition(POS_FACEUP)
-        and bit.band(c:GetPreviousRaceOnField(),RACE_FAIRY)~=0
+    return c:IsPreviousPosition(POS_FACEUP) and c:GetPreviousControler()==tp and bit.band(c:GetPreviousRaceOnField(),RACE_FAIRY)~=0
+        and rp==1-tp and c:IsReason(REASON_EFFECT)
 end
-function c47578914.spcon1(e,tp,eg,ep,ev,re,r,rp)
-    return rp==1-tp and eg:IsExists(c47578914.cfilter,1,e:GetHandler(),tp)
-end
-function c47578914.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return true end
-    Duel.PayLPCost(tp,math.floor(Duel.GetLP(tp)/2))
+function c47578914.spcon(e,tp,eg,ep,ev,re,r,rp)
+    return eg:IsExists(c47578914.cfilter,1,e:GetHandler(),tp)
 end
 function c47578914.spfilter(c,e,tp)
-    return c:IsSetCard(0x5de) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsType(TYPE_LINK)
+    return c:IsSetCard(0x5de) and c:IsCanBeSpecialSummoned(e,0,tp,false,true) and not c:IsType(TYPE_LINK)
 end 
 function c47578914.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -46,14 +41,8 @@ function c47578914.spop(e,tp,eg,ep,ev,re,r,rp)
     if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
     local g=Duel.SelectMatchingCard(tp,c47578914.spfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
-    if g:GetCount()>0 and Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 then
-       local e1=Effect.CreateEffect(e:GetHandler())
-       e1:SetType(EFFECT_TYPE_SINGLE)
-       e1:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-       e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE+EFFECT_INDESTRUCTABLE_EFFECT)
-       e1:SetValue(1)
-       e1:SetReset(RESET_PHASE+PHASE_END)
-       g:GetFirst():RegisterEffect(e1)
+    if g:GetCount()>0 then
+        Duel.SpecialSummon(g,0,tp,tp,false,true,POS_FACEUP)
     end
 end
 function c47578914.cfilter(c)
@@ -68,7 +57,7 @@ function c47578914.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
     Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c47578914.ssfilter(c,e,tp)
-    return c:IsSetCard(0x5de) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+    return c:IsType(TYPE_PENDULUM) and c:IsRace(RACE_FAIRY) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c47578914.target(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

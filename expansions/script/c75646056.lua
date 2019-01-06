@@ -22,6 +22,7 @@ function c75646056.initial_effect(c)
 	e3:SetCost(c75646056.atkcost)
 	e3:SetOperation(c75646056.atkop)
 	c:RegisterEffect(e3)
+	c75646056.xyz_effect=e3
 	--act limit
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

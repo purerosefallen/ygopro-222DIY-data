@@ -52,6 +52,9 @@ function c13254125.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13254125.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToDeckAsCost() end
+	local g=Group.CreateGroup()
+	g:AddCard(e:GetHandler())
+	Duel.HintSelection(g)
 	Duel.SendtoDeck(e:GetHandler(),tp,2,REASON_COST)
 end
 function c13254125.spfilter1(c,e,tp)

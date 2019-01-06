@@ -96,7 +96,7 @@ function c13255217.rmfilter(c)
 end
 function c13255217.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c13255217.rmfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
-	Duel.SelectOption(tp,aux.Stringid(13255217,2))
+	Duel.Hint(HINT_MESSAGE,1,aux.Stringid(13255217,2))
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 end
 function c13255217.rmop(e,tp,eg,ep,ev,re,r,rp)
@@ -113,7 +113,7 @@ end
 function c13255217.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c13255217.spfilter,tp,LOCATION_REMOVED,0,1,nil,e,tp) end
-	Duel.SelectOption(tp,aux.Stringid(13255217,3))
+	Duel.Hint(HINT_MESSAGE,1,aux.Stringid(13255217,3))
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_REMOVED)
 end
 function c13255217.spop(e,tp,eg,ep,ev,re,r,rp)
@@ -126,7 +126,7 @@ function c13255217.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13255217.rmtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
-	Duel.SelectOption(tp,aux.Stringid(13255217,4))
+	Duel.Hint(HINT_MESSAGE,1,aux.Stringid(13255217,4))
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,LOCATION_MZONE,0,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end

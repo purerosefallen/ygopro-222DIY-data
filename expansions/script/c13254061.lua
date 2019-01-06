@@ -24,6 +24,7 @@ function c13254061.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_REMOVE)
 	e3:SetCountLimit(1,23254061)
+	e3:SetCost(c13254061.recost)
 	e3:SetTarget(c13254061.retg)
 	e3:SetOperation(c13254061.reop)
 	c:RegisterEffect(e3)
@@ -42,6 +43,19 @@ function c13254061.operation(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
+end
+function c13254061.recost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetActivityCount(tp,ACTIVITY_NORMALSUMMON)==0 end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
+	e1:SetCode(EFFECT_CANNOT_SUMMON)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTargetRange(1,0)
+	Duel.RegisterEffect(e1,tp)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_CANNOT_MSET)
+	Duel.RegisterEffect(e2,tp)
 end
 function c13254061.refilter(c)
 	return c:IsAbleToRemove() and c:IsFaceup()

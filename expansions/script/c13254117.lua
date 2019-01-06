@@ -85,7 +85,7 @@ function c13254117.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	local lg=e:GetHandler():GetLinkedGroup()
 	local ct=lg:FilterCount(c13254117.filter,nil)
-	if chk==0 then return c:GetFlagEffect(13254117)<ct end
+	if chk==0 then return c:GetFlagEffect(13254117)<(ct*2) end
 	c:RegisterFlagEffect(13254117,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
 end
 function c13254117.destg(e,tp,eg,ep,ev,re,r,rp,chk)

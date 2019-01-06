@@ -43,7 +43,6 @@ function c13254079.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c13254079.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	e:GetHandler():RegisterFlagEffect(13254079,RESET_EVENT+0x1ec0000+RESET_PHASE+PHASE_END,0,1)
 	local g=Duel.GetMatchingGroup(c13254079.tgfilter,tp,LOCATION_DECK,0,nil)
 	if g:GetCount()>=1 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
@@ -54,9 +53,6 @@ function c13254079.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Damage(1-tp,ct*500,REASON_EFFECT)
 		end
 	end
-end
-function c13254079.descon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(13254079)==0
 end
 function c13254079.filter1(c)
 	return c:IsCode(13254034) and c:IsAbleToDeck()

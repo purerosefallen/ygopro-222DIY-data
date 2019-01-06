@@ -57,7 +57,7 @@ function c13254108.operation(e,tp,eg,ep,ev,re,r,rp)
 		local cc=Duel.GetChainInfo(0,CHAININFO_CHAIN_COUNT)-1
 		for i=1,cc do
 			local te=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_EFFECT)
-			if te:GetOwnerPlayer()==1-tp then
+			if te:GetOwnerPlayer()~=tp then
 				Duel.NegateActivation(i)
 			end
 		end
@@ -84,7 +84,7 @@ function c13254108.activate2(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	for i=1,ev do
 		local te=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_EFFECT)
-		if te:GetOwnerPlayer()==1-tp then
+		if te:GetOwnerPlayer()~=tp then
 			Duel.NegateActivation(i)
 		end
 	end

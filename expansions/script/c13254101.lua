@@ -85,7 +85,7 @@ function c13254101.drop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13254101.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return rp==1-tp and c:IsReason(REASON_EFFECT)
+	return rp~=tp and c:IsReason(REASON_EFFECT)
 end
 function c13254101.spfilter(c,e,tp)
 	return c:IsCode(13254056) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)

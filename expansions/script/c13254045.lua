@@ -10,6 +10,7 @@ function c13254045.initial_effect(c)
 	e1:SetOperation(c13254045.activate)
 	c:RegisterEffect(e1)
 end
+--[[
 function c13254045.filter(c,e,tp)
 	return c:IsSetCard(0x3356) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
@@ -76,4 +77,84 @@ function c13254045.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-
+--]]
+function c13254045.filter1(c)
+	return c:IsFaceup() and c:IsSetCard(0x356)
+end
+function c13254045.filter2(c)
+	return c:IsFacedown()
+end
+function c13254045.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local t1=Duel.IsExistingTarget(c13254045.filter1,tp,LOCATION_MZONE,0,1,nil)
+	local t2=Duel.IsExistingTarget(c13254045.filter2,tp,LOCATION_MZONE,0,1,nil)
+	local op=2
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) end
+	if chk==0 then  
+		e:SetLabel(0)
+		return t1 or t2
+	end
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(13254045,2))
+	if t1 and t2 then
+		op=Duel.SelectOption(tp,aux.Stringid(13254045,1),aux.Stringid(13254045,0))
+	elseif t1 then
+		op=Duel.SelectOption(tp,aux.Stringid(13254045,1))
+	elseif t2 then
+		op=Duel.SelectOption(tp,aux.Stringid(13254045,0))+1
+	end
+	e:SetLabel(op)
+	if op==0 then
+		e:SetLabel(0)
+		e:SetCategory(CATEGORY_ATKCHANGE)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+		local g=Duel.SelectTarget(tp,c13254045.filter1,tp,LOCATION_MZONE,0,1,1,nil)
+	elseif op==1 then
+		e:SetLabel(1)
+		e:SetCategory(CATEGORY_POSITION)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEDOWN)
+		local g=Duel.SelectTarget(tp,c13254045.filter2,tp,LOCATION_MZONE,0,1,1,nil)
+		Duel.SetOperationInfo(0,CATEGORY_POSITION,g,1,0,0)
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+	end
+end
+function c13254045.activate(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	local c=e:GetHandler()
+	if not tc then return end
+	if e:GetLabel()==0 and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetValue(2000)
+		tc:RegisterEffect(e1)
+		tc:RegisterFlagEffect(13254045,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1,fid)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
+		e2:SetCode(EVENT_PHASE+PHASE_END)
+		e2:SetReset(RESET_PHASE+PHASE_END)
+		e2:SetCountLimit(1)
+		e2:SetLabel(fid)
+		e2:SetLabelObject(tc)
+		e2:SetCondition(c13254045.descon)
+		e2:SetOperation(c13254045.desop)
+		Duel.RegisterEffect(e2,tp)
+	elseif e:GetLabel()==1 and tc:IsRelateToEffect(e) and tc:IsLocation(LOCATION_MZONE) and tc:IsFacedown() then
+		Duel.ChangePosition(tc,POS_FACEUP_ATTACK)
+		if tc:IsSetCard(0x356) then
+			Duel.Damage(1-tp,2000,REASON_EFFECT)
+			Duel.Draw(tp,1,REASON_EFFECT)
+		end
+	end
+end
+function c13254045.descon(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	if not (tc:GetFlagEffectLabel(13254045)==e:GetLabel() and tc:IsCanTurnSet()) then
+		e:Reset()
+		return false
+	else return true end
+end
+function c13254045.desop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=e:GetLabelObject()
+	Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
+end

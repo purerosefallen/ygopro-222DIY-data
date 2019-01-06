@@ -108,7 +108,7 @@ function c13254110.condition2(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13254110.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(1-tp,LOCATION_MZONE) or Duel.GetLocationCount(1-tp,LOCATION_SZONE) end
-	local seq=Duel.SelectDisableField(tp,1,0,LOCATION_ONFIELD,0)
+	local seq=Duel.SelectDisableField(tp,2,0,LOCATION_ONFIELD,0)
 	e:SetLabel(seq)
 end
 function c13254110.activate2(e,tp,eg,ep,ev,re,r,rp)

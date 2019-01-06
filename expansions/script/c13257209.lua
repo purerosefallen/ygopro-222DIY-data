@@ -1,93 +1,82 @@
---宇宙惑星要塞 泽洛斯
+--防护罩复原（D）
 function c13257209.initial_effect(c)
-	--Activate
+	--counter
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetDescription(aux.Stringid(13257209,0))
+	e1:SetCategory(CATEGORY_COUNTER)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetOperation(c13257209.thop)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e1:SetTarget(c13257209.target)
+	e1:SetOperation(c13257209.operation)
 	c:RegisterEffect(e1)
+	--
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(13257209,1))
-	e2:SetCategory(CATEGORY_SUMMON)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetRange(LOCATION_SZONE)
-	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetHintTiming(0,0x1c0+TIMING_MAIN_END+TIMING_BATTLE_START+TIMING_BATTLE_END)
-	e2:SetCountLimit(1)
-	e2:SetCondition(c13257209.condition)
-	e2:SetTarget(c13257209.target)
-	e2:SetOperation(c13257209.activate)
+	e2:SetCategory(CATEGORY_TOHAND)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_PREDRAW)
+	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCondition(c13257209.thcon)
+	e2:SetTarget(c13257209.thtg)
+	e2:SetOperation(c13257209.thop)
 	c:RegisterEffect(e2)
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(13257209,2))
-	e3:SetCategory(CATEGORY_DRAW)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e3:SetRange(LOCATION_FZONE)
-	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_DELAY)
-	e3:SetCode(EVENT_LEAVE_FIELD)
-	e3:SetCondition(c13257209.drcon)
-	e3:SetTarget(c13257209.drtg)
-	e3:SetOperation(c13257209.drop)
-	c:RegisterEffect(e3)
 	
 end
-function c13257209.thfilter(c)
-	return (c:IsCode(13257207) or c:IsCode(13257213)) and c:IsAbleToHand()
+function c13257209.filter(c)
+	return c:IsSetCard(0x15) and c:IsType(TYPE_MONSTER) and c:IsFaceup() and c:IsCanAddCounter(0x1f,3)
+end
+function c13257209.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsControler(tp) and chkc:IsOnField() and c13257209.filter(chkc) end 
+	if chk==0 then return Duel.IsExistingTarget(c13257209.filter,tp,LOCATION_MZONE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
+	local g=Duel.SelectTarget(tp,c13257209.filter,tp,LOCATION_MZONE,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_COUNTER,g,1,0x1f,1)
+	local tc=g:GetFirst()
+	local e1=Effect.CreateEffect(tc)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCode(EFFECT_IMMUNE_EFFECT)
+	e1:SetValue(c13257209.efilter)
+	e1:SetReset(RESET_EVENT+0x1fe0000+RESET_CHAIN)
+	tc:RegisterEffect(e1)
+end
+function c13257209.efilter(e,re)
+	return e:GetOwnerPlayer()~=re:GetOwnerPlayer()
+end
+function c13257209.operation(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
+		tc:AddCounter(0x1f,3)
+	end
+end
+function c13257209.thcon(e,tp,eg,ep,ev,re,r,rp)
+	return tp==Duel.GetTurnPlayer() and Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>0
+		and Duel.GetDrawCount(tp)>0
+end
+function c13257209.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsAbleToHand() end
+	local dt=Duel.GetDrawCount(tp)
+	if dt~=0 then
+		_replace_count=0
+		_replace_max=dt
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetCode(EFFECT_DRAW_COUNT)
+		e1:SetTargetRange(1,0)
+		e1:SetReset(RESET_PHASE+PHASE_DRAW)
+		e1:SetValue(0)
+		Duel.RegisterEffect(e1,tp)
+	end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
 end
 function c13257209.thop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	Duel.Hint(11,0,aux.Stringid(13257209,4))
-	local g=Duel.GetMatchingGroup(c13257209.thfilter,tp,LOCATION_DECK,0,nil)
-	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(13257209,0)) then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local sg=g:Select(tp,1,1,nil)
-		Duel.SendtoHand(sg,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,sg)
+	local c=e:GetHandler()
+	_replace_count=_replace_count+1
+	if _replace_count<=_replace_max and c:IsRelateToEffect(e) then
+		Duel.SendtoHand(c,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,c)
 	end
-end
-function c13257209.condition(e,tp,eg,ep,ev,re,r,rp)
-	local tn=Duel.GetTurnPlayer()
-	local ph=Duel.GetCurrentPhase()
-	return tn==1-tp and (ph==PHASE_MAIN1 or ph==PHASE_MAIN2 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE))
-end
-function c13257209.filter(c)
-	return (c:IsRace(RACE_MACHINE) or c:IsRace(RACE_FIEND)) and c:IsSummonable(true,nil,1) or c:IsMSetable(true,nil,1)
-end
-function c13257209.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c13257209.filter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,0,0)
-end
-function c13257209.activate(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SUMMON)
-	local g=Duel.SelectMatchingCard(tp,c13257209.filter,tp,LOCATION_HAND,0,1,1,nil)
-	local tc=g:GetFirst()
-	if tc then
-		local s1=tc:IsSummonable(true,nil,1)
-		local s2=tc:IsMSetable(true,nil,1)
-		if (s1 and s2 and Duel.SelectPosition(tp,tc,POS_FACEUP_ATTACK+POS_FACEDOWN_DEFENSE)==POS_FACEUP_ATTACK) or not s2 then
-			Duel.Summon(tp,tc,true,nil,1)
-		else
-			Duel.MSet(tp,tc,true,nil,1)
-		end
-	end
-end
-function c13257209.cfilter(c,tp)
-	return c:GetPreviousControler()==tp and c:IsSetCard(0x353) and (c:GetReasonPlayer()==1-tp and c:IsReason(REASON_EFFECT))
-		and c:IsPreviousLocation(LOCATION_MZONE)
-end
-function c13257209.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c13257209.cfilter,1,nil,tp)
-end
-function c13257209.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
-	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(1)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
-end
-function c13257209.drop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Draw(p,d,REASON_EFFECT)
 end

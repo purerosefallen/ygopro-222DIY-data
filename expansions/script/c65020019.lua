@@ -35,13 +35,12 @@ function c65020019.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local op=0
 	if b2 then op=1 end
 	e:SetLabel(op)
-	if chk==0 then return (Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,65020025) or Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_FZONE,0,1,nil,65020025)) and ft>0 and ((b1 and Duel.GetFlagEffect(tp,65020019)==0 and Duel.IsExistingMatchingCard(c65020019.spfil,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil,e,tp) and Duel.IsExistingMatchingCard(c65020019.setfil,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil)) or (b2 and Duel.IsExistingMatchingCard(c65020019.spfil2,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp))) end
+	if chk==0 then return (Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,65020025) or Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_FZONE,0,1,nil,65020025)) and ft>0 and ((b1 and Duel.GetFlagEffect(tp,65020019)==0 and Duel.IsExistingMatchingCard(c65020019.spfil,tp,LOCATION_DECK,0,1,nil,e,tp) and Duel.IsExistingMatchingCard(c65020019.setfil,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil)) or (b2 and Duel.IsExistingMatchingCard(c65020019.spfil2,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp))) end
 	if b1 then
-		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK)
+		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 	elseif b2 then
 		e:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DRAW)
 		Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
-		Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 	end
 end
 function c65020019.stfil(c)
@@ -52,7 +51,7 @@ function c65020019.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if op==0 then
 		if ft>0 then
-		local g1=Duel.SelectMatchingCard(tp,c65020019.spfil,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
+		local g1=Duel.SelectMatchingCard(tp,c65020019.spfil,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 		if g1:GetCount()>0 then
 			if Duel.SpecialSummon(g1,0,tp,tp,false,false,POS_FACEUP)~=0 then
 				local g2=Duel.SelectMatchingCard(tp,c65020019.setfil,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)

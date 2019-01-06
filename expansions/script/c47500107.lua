@@ -127,13 +127,13 @@ function c47500107.regop(e,tp,eg,ep,ev,re,r,rp)
     e4:SetReset(RESET_PHASE+PHASE_BATTLE+RESET_SELF_TURN,2)
     c:RegisterEffect(e4)
 end
-function c47500107.nfilter(c)
-    return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsCode(47500107)
+function c47500107.nfilter(e,c)
+    return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c==e:GetHandler()
 end
 function c47500107.discon2(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     if e:GetHandler():GetFlagEffect(47511107)~=0 then return end
-    if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or not Duel.IsChainNegatable(ev) or rp~=1-tp then return false end
+    if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) or not Duel.IsChainNegatable(ev) or rp==tp then return false end
     if c47500107.nfilter(re:GetHandler()) then return true end
     local g=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
     if g and g:IsExists(c47500107.nfilter,1,nil) then return true end

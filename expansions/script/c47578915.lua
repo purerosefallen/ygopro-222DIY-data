@@ -17,8 +17,7 @@ function c47578915.initial_effect(c)
     e2:SetCode(EVENT_FREE_CHAIN)
     e2:SetRange(LOCATION_GRAVE)
     e2:SetCountLimit(1,47578915)
-    e2:SetCost(c47578915.thcost)
-    e2:SetCondition(aux.exccon)
+    e2:SetCost(aux.bfgcost)
     e2:SetTarget(c47578915.target)
     e2:SetOperation(c47578915.activate)
     c:RegisterEffect(e2)
@@ -45,29 +44,18 @@ function c47578915.desop(e,tp,eg,ep,ev,re,r,rp)
     local g=Duel.GetMatchingGroup(c47578915.filter,0,LOCATION_MZONE,LOCATION_MZONE,nil,e:GetLabel())
     Duel.Destroy(g,REASON_EFFECT)
 end
-function c47578915.cfilter(c)
-    return c:IsSetCard(0x5de) and c:IsAbleToRemoveAsCost() and not c:IsCode(47578915)
-end
-function c47578915.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
-        and Duel.IsExistingMatchingCard(c47578915.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-    local g=Duel.SelectMatchingCard(tp,c47578915.cfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-    g:AddCard(e:GetHandler())
-    Duel.Remove(g,POS_FACEUP,REASON_COST)
-end
 function c47578915.spfilter(c,e,tp)
-    return c:IsSetCard(0x5de) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+    return c:IsSetCard(0x5de) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c47578915.target(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-        and Duel.IsExistingMatchingCard(c47578915.spfilter,tp,LOCATION_HAND,0,1,nil,e,tp) end
-    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND)
+        and Duel.IsExistingMatchingCard(c47578915.spfilter,tp,LOCATION_HAND+LOCATION_EXTRA,0,1,nil,e,tp) end
+    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_EXTRA)
 end
 function c47578915.activate(e,tp,eg,ep,ev,re,r,rp)
     if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-    local g=Duel.SelectMa   tchingCard(tp,c47578915.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+    local g=Duel.SelectMatchingCard(tp,c47578915.spfilter,tp,LOCATION_HAND+LOCATION_EXTRA,0,1,1,nil,e,tp)
     if g:GetCount()>0 then
         Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
     end
