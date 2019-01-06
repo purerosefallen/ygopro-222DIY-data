@@ -8,11 +8,11 @@ function c13254078.initial_effect(c)
 	e1:SetOperation(c13254078.pcop)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_DESTROY+CATEGORY_TOGRAVE)
+	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetCountLimit(1,13254078)
+	e2:SetCost(c13254078.cost)
 	e2:SetTarget(c13254078.target2)
 	e2:SetOperation(c13254078.activate2)
 	c:RegisterEffect(e2)
@@ -41,23 +41,21 @@ function c13254078.pcop(e,tp,eg,ep,ev,re,r,rp)
 		pc=g:GetNext()
 	end
 end
+function c13254078.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsReleasable,tp,LOCATION_ONFIELD,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+	local g=Duel.SelectMatchingCard(tp,Card.IsReleasable,tp,LOCATION_ONFIELD,0,1,1,nil)
+	Duel.Release(g,REASON_COST)
+end
 function c13254078.tgfilter2(c)
 	return c:IsCode(13254062) and c:IsAbleToGrave()
 end
-function c13254078.desfilter(c)
-	return c:IsFaceup() and c:IsDestructable()
-end
 function c13254078.target2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chkc then return chkc:IsOnField() and chkc~=e:GetHandler() end
-	if chk==0 then return Duel.IsExistingTarget(c13254078.desfilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,e:GetHandler()) and Duel.IsExistingMatchingCard(c13254078.tgfilter2,tp,LOCATION_EXTRA,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,c13254078.desfilter,tp,LOCATION_SZONE,LOCATION_SZONE,1,1,e:GetHandler())
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+	if chk==0 then return Duel.IsExistingMatchingCard(c13254078.tgfilter2,tp,LOCATION_EXTRA,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_EXTRA)
 end
 function c13254078.activate2(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if e:GetHandler():IsRelateToEffect(e) and tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
-		Duel.BreakEffect()
+	if e:GetHandler():IsRelateToEffect(e) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,c13254078.tgfilter2,tp,LOCATION_EXTRA,0,1,1,nil)
 		if g:GetCount()>0 then

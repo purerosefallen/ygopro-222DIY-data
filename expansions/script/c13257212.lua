@@ -1,81 +1,92 @@
---宇宙战争机器 巨核Mk-4
+--野望之高弗（D）
 function c13257212.initial_effect(c)
+	--special summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_DAMAGE)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(c13257212.ctcon)
-	e1:SetOperation(c13257212.ctop)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_SPSUMMON_PROC)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e1:SetRange(LOCATION_HAND)
+	e1:SetCondition(c13257212.spcon)
 	c:RegisterEffect(e1)
-	--cannot remove
+	--destroy
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_CANNOT_REMOVE)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetDescription(aux.Stringid(13257212,0))
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetCategory(CATEGORY_DESTROY)
+	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetTarget(c13257212.rmlimit)
-	e2:SetTargetRange(1,1)
+	e2:SetCountLimit(1)
+	e2:SetTarget(c13257212.destg)
+	e2:SetOperation(c13257212.desop)
 	c:RegisterEffect(e2)
-	--deck equip
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(13257212,1))
-	e4:SetCategory(CATEGORY_EQUIP)
-	e4:SetType(EFFECT_TYPE_IGNITION)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetTarget(c13257212.eqtg)
-	e4:SetOperation(c13257212.eqop)
-	c:RegisterEffect(e4)
-	local e12=Effect.CreateEffect(c)
-	e12:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e12:SetCode(EVENT_SUMMON_SUCCESS)
-	e12:SetOperation(c13257212.bgmop)
-	c:RegisterEffect(e12)
-	c:RegisterFlagEffect(13257200,0,0,0,4)
-	eflist={"deck_equip",e4}
-	c13257212[c]=eflist
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(13257212,2))
+	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetRange(LOCATION_GRAVE)
+	e3:SetCountLimit(1,13257212)
+	e3:SetCondition(aux.exccon)
+	e3:SetCost(c13257212.thcost)
+	e3:SetTarget(c13257212.thtg)
+	e3:SetOperation(c13257212.thop)
+	c:RegisterEffect(e3)
 	
 end
-function c13257212.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp
+function c13257212.spcon(e,c)
+	if c==nil then return true end
+	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_HAND,0)==1
+		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
-function c13257212.rmfilter(c)
-	return c:IsAbleToRemove() and c:IsStatus(STATUS_BATTLE_DESTROYED)
-end
-function c13257212.ctop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:GetFlagEffect(13257212)==0 then 
-		c:RegisterFlagEffect(13257212,RESET_EVENT+0x1ff0000+RESET_PHASE+PHASE_END,0,1,ev)
-	else
-		local label=c:GetFlagEffectLabel(13257212)
-		c:SetFlagEffectLabel(13257212,label+ev)
-	end
-	if c:GetFlagEffectLabel(13257212)>=2000 and Duel.IsExistingMatchingCard(c13257212.rmfilter,tp,0,LOCATION_ONFIELD+LOCATION_HAND,1,nil) then
-		c:SetFlagEffectLabel(13257212,0)
-		local sg=Duel.SelectMatchingCard(1-tp,c13257212.rmfilter,tp,0,LOCATION_ONFIELD+LOCATION_HAND,1,1,nil)
-		Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
+function c13257212.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) end
+	if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,2,nil)
+	if Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0
+		and not Duel.IsExistingMatchingCard(Card.IsType,tp,0,LOCATION_HAND,1,nil,TYPE_MONSTER) then
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 	end
 end
-function c13257212.rmlimit(e,c,p)
-	return c:IsLocation(LOCATION_DECK) or c:IsLocation(LOCATION_GRAVE)
+function c13257212.cfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()
 end
-function c13257212.eqfilter(c,ec)
-	return c:IsSetCard(0x354) and c:IsType(TYPE_MONSTER) and c:CheckEquipTarget(ec)
-end
-function c13257212.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(c13257212.eqfilter,tp,LOCATION_EXTRA,0,1,nil,e:GetHandler()) end
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_EXTRA)
-end
-function c13257212.eqop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or c:IsFacedown() or not c:IsRelateToEffect(e) then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectMatchingCard(tp,c13257212.eqfilter,tp,LOCATION_EXTRA,0,1,1,nil,c)
-	local tc=g:GetFirst()
-	if tc then
-		Duel.Equip(tp,tc,c)
+function c13257212.desop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.IsChainDisablable(0) then
+		local sel=1
+		local cg=Duel.GetMatchingGroup(c13257212.cfilter,tp,0,LOCATION_HAND,nil)
+		Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(13257212,1))
+		if cg:GetCount()>0 then
+			sel=Duel.SelectOption(1-tp,1213,1214)
+		else
+			sel=Duel.SelectOption(1-tp,1214)+1
+		end
+		if sel==0 then
+			Duel.Hint(HINT_SELECTMSG,1-tp,HINTMSG_DISCARD)
+			local sg=cg:Select(1-tp,1,1,nil)
+			Duel.SendtoGrave(sg,REASON_EFFECT+REASON_DISCARD)
+			Duel.NegateEffect(0)
+			return
+		end
 	end
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	Duel.Destroy(g,REASON_EFFECT)
 end
-function c13257212.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(13257212,4))
+function c13257212.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
+end
+function c13257212.thfilter(c)
+	return c:IsSetCard(0x15) and c:IsAbleToHand()
+end
+function c13257212.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c13257212.thfilter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+end
+function c13257212.thop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectMatchingCard(tp,c13257212.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+	if g:GetCount()>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
+	end
 end

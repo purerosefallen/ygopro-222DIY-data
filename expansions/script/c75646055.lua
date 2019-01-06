@@ -23,6 +23,7 @@ function c75646055.initial_effect(c)
 	e2:SetTarget(c75646055.target)
 	e2:SetOperation(c75646055.operation)
 	c:RegisterEffect(e2)
+	c75646055.xyz_effect=e2
 	--act limit
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -37,21 +38,18 @@ function c75646055.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_XYZ
 end
 function c75646055.eqfilter(c,tc)
-	return c:IsFaceup() and c:IsType(TYPE_EQUIP) and c:IsSetCard(0x2c0) and c:CheckEquipTarget(tc)
+	return c:IsFaceup() and c:IsType(TYPE_EQUIP) and c:IsSetCard(0x2c0)  and c:CheckEquipTarget(tc) and c:GetEquipTarget()~=tc
 end
 function c75646055.eqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return true end
+	if chk==0 then return Duel.IsExistingMatchingCard(c75646055.eqfilter,tp,LOCATION_SZONE,0,1,nil,e:GetHandler()) end
 end
 function c75646055.eqop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler()
 	if tc:IsFacedown() or not tc:IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(c75646055.eqfilter,tp,LOCATION_SZONE,0,nil,tc)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+	local g=Duel.SelectMatchingCard(tp,c75646055.eqfilter,tp,LOCATION_SZONE,0,1,1,nil,tc)
 	local eq=g:GetFirst()
-	while eq do
-		Duel.Equip(tp,eq,tc,true,true)
-		eq=g:GetNext()
-	end
-	Duel.EquipComplete()
+	Duel.Equip(tp,eq,tc,true,true)
 end
 function c75646055.cfilter(c)
 	return c:IsSetCard(0x2c0) and c:IsType(TYPE_EQUIP) and c:IsAbleToGraveAsCost()

@@ -26,6 +26,7 @@ function c75646050.initial_effect(c)
 	e2:SetTarget(c75646050.tg)
 	e2:SetOperation(c75646050.op)
 	c:RegisterEffect(e2)
+	c75646050.xyz_effect=e2
 	--act limit
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)

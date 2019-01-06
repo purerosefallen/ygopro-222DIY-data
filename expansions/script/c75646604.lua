@@ -11,15 +11,6 @@ function c75646604.initial_effect(c)
 	e1:SetTarget(c75646604.target)
 	e1:SetOperation(c75646604.operation)
 	c:RegisterEffect(e1)
-	--indes
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
-	e2:SetCountLimit(1)
-	e2:SetValue(c75646604.valcon)
-	c:RegisterEffect(e2)
 	--tohand
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(75646604,0))
@@ -31,6 +22,16 @@ function c75646604.initial_effect(c)
 	e3:SetTarget(c75646604.target1)
 	e3:SetOperation(c75646604.operation1)
 	c:RegisterEffect(e3)
+	c75646604.key_effect=e3
+	--act limit
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e4:SetCode(EVENT_CHAINING)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCondition(c75646604.chaincon)
+	e4:SetOperation(c75646604.chainop)
+	c:RegisterEffect(e4)
 end
 c75646604.card_code_list={75646600}
 function c75646604.condition1(e,tp,eg,ep,ev,re,r,rp)
@@ -57,21 +58,29 @@ function c75646604.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
 end
-function c75646604.valcon(e,re,r,rp)
-	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0
-end
 function c75646604.filter(c)
 	return aux.IsCodeListed(c,75646600) and c:IsType(TYPE_EQUIP) and c:IsAbleToHand()
 end
 function c75646604.target1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c75646604.filter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	if chk==0 then return Duel.IsExistingMatchingCard(c75646604.filter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 end
 function c75646604.operation1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c75646604.filter,tp,LOCATION_DECK,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c75646604.filter),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
+	end
+end
+function c75646604.chaincon(e)
+	local ph=Duel.GetCurrentPhase()
+	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
+end
+function c75646604.chainop(e,tp,eg,ep,ev,re,r,rp)
+	local es=re:GetHandler()
+	if es:IsSetCard(0x2c0) and es:IsType(TYPE_EQUIP) 
+		and es:GetEquipTarget()==e:GetHandler() and re:IsActiveType(TYPE_SPELL) and ep==tp then
+		Duel.SetChainLimit(aux.FALSE)
 	end
 end

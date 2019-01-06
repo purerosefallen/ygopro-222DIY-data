@@ -29,9 +29,8 @@ function c65020021.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local op=0
 	if b2 then op=1 end
 	e:SetLabel(op)
-	if chk==0 then return (Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,65020025) or Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_FZONE,0,1,nil,65020025)) and ((b1 and Duel.GetFlagEffect(tp,65020021)==0 and Duel.GetMatchingGroupCount(Card.IsAbleToRemove,tp,0,LOCATION_HAND,nil)>0 and Duel.GetMatchingGroupCount(Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,nil)>0 and Duel.IsExistingMatchingCard(c65020021.setfil,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil)) or (b2 and Duel.GetMatchingGroupCount(Card.IsAbleToRemove,tp,0,LOCATION_HAND+LOCATION_GRAVE,nil)>0)) end
+	if chk==0 then return (Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,65020025) or Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_FZONE,0,1,nil,65020025)) and ((b1 and Duel.GetFlagEffect(tp,65020021)==0 and Duel.GetMatchingGroupCount(Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,nil)>0 and Duel.IsExistingMatchingCard(c65020021.setfil,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil)) or (b2 and Duel.GetMatchingGroupCount(Card.IsAbleToRemove,tp,0,LOCATION_HAND+LOCATION_GRAVE,nil)>0)) end
 	if b1 then
-		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_HAND)
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_GRAVE)
 	elseif b2 then
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_HAND+LOCATION_GRAVE)
@@ -43,10 +42,8 @@ end
 function c65020021.spop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()
 	if op==0 then
-		local g1=Duel.SelectMatchingCard(1-tp,Card.IsAbleToRemove,tp,0,LOCATION_HAND,1,1,nil)
-		local g3=Duel.SelectMatchingCard(1-tp,Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,1,nil)
-		if g1:GetCount()>0 and g3:GetCount()>0 then
-			g1:Merge(g3)
+		local g1=Duel.SelectMatchingCard(1-tp,Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,1,nil)
+		if g1:GetCount()>0 then
 			Duel.HintSelection(g1)
 			if Duel.Remove(g1,POS_FACEUP,REASON_EFFECT)~=0 then
 				local g2=Duel.SelectMatchingCard(tp,c65020021.setfil,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)

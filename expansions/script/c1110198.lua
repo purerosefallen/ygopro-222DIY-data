@@ -44,10 +44,10 @@ end
 function muxu.check_set_Soul(c)  --灵曲
 	return muxu.check_set(c,"Soul")
 end
-function muxu.check_set_Border(c)	  --交界
+function muxu.check_set_Border(c)	--交界
 	return muxu.check_set(c,"Border")
 end
-function muxu.check_set_Legend(c)	  --秘谈
+function muxu.check_set_Legend(c)	--秘谈
 	return muxu.check_set(c,"Legend")
 end
 function muxu.check_set_Urban(c)			 --灵都
@@ -67,6 +67,9 @@ function muxu.check_set_Medicine(c) --梅蒂欣
 end
 function muxu.check_set_Poison(c)   --毒符
 	return muxu.check_set(c,"Poison")
+end
+function muxu.check_set_Materdim(c)
+	return muxu.check_set(c,"Materdim")
 end
 --
 function muxu.check_set_Tatara(c)   --小伞
@@ -96,6 +99,10 @@ function muxu.check_link_set_Tatara(c)
 		end
 	end
 	return false
+end
+--
+function muxu.check_set_Umbrella(c)   --伞符
+	return muxu.check_set(c,"Umbrella")
 end
 --
 function muxu.check_link_set_Urban(c)

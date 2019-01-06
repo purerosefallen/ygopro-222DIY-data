@@ -1,83 +1,81 @@
---宇宙战争机器 晶核
+--巨大战舰 泡核（D）
 function c13257214.initial_effect(c)
+	--special summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(13257214,0))
-	e1:SetCategory(CATEGORY_POSITION+CATEGORY_SEARCH+CATEGORY_TOHAND)
-	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1)
-	e1:SetTarget(c13257214.postg)
-	e1:SetOperation(c13257214.posop)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_SPSUMMON_PROC)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SPSUM_PARAM)
+	e1:SetRange(LOCATION_HAND)
+	e1:SetTargetRange(POS_FACEUP_DEFENSE,1)
+	e1:SetCondition(c13257214.spcon)
+	e1:SetOperation(c13257214.spop)
 	c:RegisterEffect(e1)
-	--immune
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_CANNOT_BE_BATTLE_TARGET)
-	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_PHASE+PHASE_END)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(c13257214.tgcon)
-	e2:SetValue(aux.imval1)
+	e2:SetCountLimit(1)
+	e2:SetCondition(c13257214.retcon)
+	e2:SetOperation(c13257214.retop)
 	c:RegisterEffect(e2)
-	--deck equip
+	--spsummon cost
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(13257214,2))
-	e3:SetCategory(CATEGORY_EQUIP)
-	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetTarget(c13257214.eqtg)
-	e3:SetOperation(c13257214.eqop)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_SPSUMMON_COST)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e3:SetCost(c13257214.spcost)
+	e3:SetOperation(c13257214.spcop)
 	c:RegisterEffect(e3)
-	local e12=Effect.CreateEffect(c)
-	e12:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e12:SetCode(EVENT_SUMMON_SUCCESS)
-	e12:SetOperation(c13257214.bgmop)
-	c:RegisterEffect(e12)
-	c:RegisterFlagEffect(13257200,0,0,0,1)
-	eflist={"deck_equip",e3}
-	c13257214[c]=eflist
 	
 end
-function c13257214.thfilter(c)
-	return c:IsSetCard(0x353) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+function c13257214.spfilter(c,ft)
+	return c:IsAbleToGraveAsCost() and (ft>0 or c:GetSequence()<5)
 end
-function c13257214.postg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c13257214.thfilter,tp,LOCATION_DECK,0,1,nil) end
-	e:GetHandler():RegisterFlagEffect(13257214,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END+RESET_OPPO_TURN,0,1)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+function c13257214.spcon(e,c)
+	if c==nil then return true end
+	local tp=c:GetControler()
+	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
+	return ft>-1 and Duel.IsExistingMatchingCard(c13257214.spfilter,tp,0,LOCATION_MZONE,1,nil,ft)
 end
-function c13257214.posop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local sg=Duel.SelectMatchingCard(tp,c13257214.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if sg:GetCount()>0 then
-		local ct=Duel.SendtoHand(sg,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,sg)
-		local g=Duel.GetMatchingGroup(Card.IsAttackPos,tp,0,LOCATION_MZONE,nil)
-		if ct>0 and g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(13257214,1)) then
-			Duel.ChangePosition(g,POS_FACEUP_DEFENSE)
-		end
-	end
+function c13257214.spop(e,tp,eg,ep,ev,re,r,rp,c)
+	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,c13257214.spfilter,tp,0,LOCATION_MZONE,1,1,nil,ft)
+	Duel.SendtoGrave(g,REASON_COST)
 end
-function c13257214.tgcon(e)
-	return e:GetHandler():GetFlagEffect(13257214)==0
+function c13257214.spcost(e,c,tp)
+	return Duel.GetActivityCount(tp,ACTIVITY_NORMALSUMMON)==0
 end
-function c13257214.eqfilter(c,ec)
-	return c:IsSetCard(0x354) and c:IsType(TYPE_MONSTER) and c:CheckEquipTarget(ec)
-end
-function c13257214.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
-		and Duel.IsExistingMatchingCard(c13257214.eqfilter,tp,LOCATION_EXTRA,0,1,nil,e:GetHandler()) end
-	Duel.SetOperationInfo(0,CATEGORY_EQUIP,nil,1,tp,LOCATION_EXTRA)
-end
-function c13257214.eqop(e,tp,eg,ep,ev,re,r,rp)
+function c13257214.spcop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 or c:IsFacedown() or not c:IsRelateToEffect(e) then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
-	local g=Duel.SelectMatchingCard(tp,c13257214.eqfilter,tp,LOCATION_EXTRA,0,1,1,nil,c)
-	local tc=g:GetFirst()
-	if tc then
-		Duel.Equip(tp,tc,c)
-	end
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CANNOT_SUMMON)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetTargetRange(1,0)
+	e1:SetTarget(c13257214.splimit)
+	Duel.RegisterEffect(e1,tp)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_CANNOT_MSET)
+	Duel.RegisterEffect(e2,tp)
+	local e3=e1:Clone()
+	e3:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	Duel.RegisterEffect(e3,tp)
 end
-function c13257214.bgmop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(13257214,4))
+function c13257214.splimit(e,c)
+	return not c:IsSetCard(0x15)
+end
+function c13257214.retcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetControler()~=e:GetHandler():GetOwner()
+end
+function c13257214.retop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetOwner()
+	c:ResetEffect(EFFECT_SET_CONTROL,RESET_CODE)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_SET_CONTROL)
+	e1:SetValue(c:GetOwner())
+	e1:SetReset(RESET_EVENT+0xec0000)
+	c:RegisterEffect(e1)
 end

@@ -30,7 +30,7 @@ function c13255232.initial_effect(c)
 	c:RegisterEffect(e3)
 	--equip
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(13255222,2))
+	e4:SetDescription(aux.Stringid(13255232,2))
 	e4:SetCategory(CATEGORY_EQUIP)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetCountLimit(1,23255232)
@@ -78,7 +78,7 @@ end
 function c13255232.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-	return Duel.IsChainNegatable(ev) and ep==1-tp and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==1
+	return Duel.IsChainNegatable(ev) and ep~=tp and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==1
 end
 function c13255232.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

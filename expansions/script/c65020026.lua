@@ -9,14 +9,21 @@ function c65020026.initial_effect(c)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_SEARCH+CATEGORY_TOHAND+CATEGORY_DESTROY)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_HAND)
 	e2:SetCountLimit(1,65020026)
 	e2:SetTarget(c65020026.tg)
 	e2:SetOperation(c65020026.op)
 	c:RegisterEffect(e2)
+	local e3=Effect.CreateEffect(c)
+	e3:SetProperty(EFFECT_TYPE_QUICK_O)
+	e3:SetCode(EVENT_CHAINING)
+	e3:SetCondition(c65020026.ccon)
+	c:RegisterEffect(e3)
+end
+function c65020026.ccon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()~=tp and ep~=tp
 end
 
 function c65020026.tg(e,tp,eg,ep,ev,re,r,rp,chk)

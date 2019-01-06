@@ -2,7 +2,7 @@
 function c1000371.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcFunRep(c,aux.FilterBoolFunction(Card.IsFusionSetCard,0xc200),2,true)
+	aux.AddFusionProcFunRep(c,c1000371.ffilter,2,true)
 	--draw
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(1000371,0))
@@ -38,8 +38,8 @@ function c1000371.initial_effect(c)
 	e2:SetOperation(c1000371.operation)
 	c:RegisterEffect(e2) 
 end
-function c1000371.splimit(e,se,sp,st)
-	return bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
+function c1000371.ffilter(c,fc,sub,mg,sg)
+	return c:IsFusionSetCard(0xc200)
 end
 function c1000371.con(e,tp,eg,ep,ev,re,r,rp,chk)
 	return e:GetHandler():GetSummonType()==SUMMON_TYPE_FUSION

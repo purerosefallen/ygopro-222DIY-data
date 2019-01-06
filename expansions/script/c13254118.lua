@@ -38,7 +38,7 @@ function c13254118.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local chkf=Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and PLAYER_NONE or tp
 		local mg1=Duel.GetFusionMaterial(tp):Filter(c13254118.filter1,nil,e)
-		local mg2=Duel.GetMatchingGroup(c13254118.filter3,tp,0,LOCATION_MZONE,nil,e)
+		local mg2=Duel.GetMatchingGroup(c13254118.filter3,tp,0,LOCATION_MZONE,nil)
 		mg1:Merge(mg2)
 		local res=Duel.IsExistingMatchingCard(c13254118.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)
 		if not res then

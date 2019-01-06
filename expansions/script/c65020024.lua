@@ -6,14 +6,11 @@ function c65020024.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,65020024+EFFECT_COUNT_CODE_OATH)
 	e1:SetHintTiming(0,0xc)
 	e1:SetTarget(c65020024.target)
 	e1:SetOperation(c65020024.activate)
 	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetDescription(aux.Stringid(65020024,2))
-	e2:SetOperation(c65020024.ac2)
-	c:RegisterEffect(e2)
 	--reward
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
@@ -29,7 +26,7 @@ function c65020024.initial_effect(c)
 end
 function c65020024.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN) and c:GetReasonPlayer()~=tp
+	return c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsPreviousPosition(POS_FACEDOWN) 
 end
 function c65020024.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
@@ -39,7 +36,6 @@ function c65020024.drop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(1-tp,Card.IsAbleToHand,1-tp,LOCATION_DECK,0,1,1,nil)
 	if g:GetCount()>0 then
 		Duel.SendtoHand(g,1-tp,REASON_EFFECT)
-		Duel.ConfirmCards(tp,g)
 	end
 end
 function c65020024.filter(c)
@@ -65,25 +61,6 @@ function c65020024.activate(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_DIRECT_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e1)
-		tc:RegisterFlagEffect(0,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(65020024,1))
-		local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,e:GetHandler())
-		Duel.HintSelection(g)
-		local gc=g:GetFirst()
-		gc:AddCounter(0x11da,1)
-	end
-	if c:IsRelateToEffect(e) and c:IsCanTurnSet() then
-		Duel.BreakEffect()
-		c:CancelToGrave()
-		Duel.ChangePosition(c,POS_FACEDOWN)
-		Duel.RaiseEvent(c,EVENT_SSET,e,REASON_EFFECT,tp,tp,0)
-		local ng=Duel.GetMatchingGroup(c65020024.setfil,tp,LOCATION_SZONE,0,1,nil)
-		Duel.ShuffleSetCard(ng)
-	end
-end
-function c65020024.ac2(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	local c=e:GetHandler()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) then
 		--actlimit
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD)
@@ -95,7 +72,7 @@ function c65020024.ac2(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCondition(c65020024.actcon)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e2)
-		tc:RegisterFlagEffect(0,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(65020024,3))
+		tc:RegisterFlagEffect(0,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(65020024,0))
 		local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,e:GetHandler())
 		Duel.HintSelection(g)
 		local gc=g:GetFirst()

@@ -1,101 +1,81 @@
---前线阵地 火山惑星
+--巨大战舰 彩核（D）
 function c13257217.initial_effect(c)
-	--Activate
+	c:EnableCounterPermit(0x1f)
+	--Destroy replace
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetOperation(c13257217.operation)
+	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_DESTROY_REPLACE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetTarget(c13257217.desreptg)
+	e1:SetOperation(c13257217.desrepop)
 	c:RegisterEffect(e1)
-	--battle indestructable
+	--counter
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
-	e2:SetRange(LOCATION_FZONE)
-	e2:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
-	e2:SetTarget(c13257217.etarget)
-	e2:SetValue(1)
+	e2:SetCategory(CATEGORY_COUNTER)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e2:SetCode(EVENT_SUMMON_SUCCESS)
+	e2:SetOperation(c13257215.ctop)
 	c:RegisterEffect(e2)
-	--roll and destroy
-	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(13257217,0))
-	e3:SetCategory(CATEGORY_DESTROY)
-	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
-	e3:SetRange(LOCATION_FZONE)
-	e3:SetCode(EVENT_PHASE+PHASE_END)
-	e3:SetCountLimit(1)
-	e3:SetOperation(c13257217.rdop)
+	local e3=e2:Clone()
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	c:RegisterEffect(e3)
+	--remove
 	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(13257217,1))
+	e4:SetDescription(aux.Stringid(13257203,1))
+	e4:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_POSITION)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
-	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetCode(EVENT_FREE_CHAIN)
-	e4:SetRange(LOCATION_FZONE)
-	e4:SetHintTiming(0,TIMING_END_PHASE)
-	e4:SetCondition(c13257217.spcon)
-	e4:SetCost(c13257217.spcost)
-	e4:SetTarget(c13257217.sptg)
-	e4:SetOperation(c13257217.spop)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetProperty(EFFECT_FLAG_CANNOT_NEGATE+EFFECT_FLAG_CANNOT_DISABLE)
+	e4:SetCountLimit(1)
+	e4:SetHintTiming(0,0x1e0)
+	e4:SetCondition(c13257217.poscon)
+	e4:SetCost(c13257217.poscost)
+	e4:SetTarget(c13257217.postg)
+	e4:SetOperation(c13257217.posop)
 	c:RegisterEffect(e4)
 	
 end
-function c13257217.operation(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(11,0,aux.Stringid(13257217,4))
+function c13257202.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsReason(REASON_EFFECT+REASON_BATTLE)
+		and e:GetHandler():GetCounter(0x1f)>0 end
+	return true
 end
-function c13257217.etarget(e,c)
-	return c:IsType(TYPE_SPELL) and c:IsType(TYPE_FIELD) and c:IsFaceup()
+function c13257202.desrepop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():RemoveCounter(ep,0x1f,1,REASON_EFFECT)
 end
-function c13257217.rdop(e,tp,eg,ep,ev,re,r,rp)
-	local sg=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
-	if not e:GetHandler():IsRelateToEffect(e) or sg:GetCount()==0 then return end
-	local g=Group.CreateGroup()
-	if Duel.SelectYesNo(tp,aux.Stringid(13257217,2)) then
-		local tc=sg:GetFirst()
-		while tc do
-			local dg=Group.CreateGroup()
-			dg:AddCard(tc)
-			Duel.HintSelection(dg)
-			local d1=Duel.TossDice(tp,1)
-			if d1<=3 then
-				g:AddCard(tc)
-			end
-			tc=sg:GetNext()
-		end
-	else
-		while sg:GetCount()>0 do
-			local dg=sg:Select(tp,1,1,nil)
-			Duel.HintSelection(dg)
-			sg:Sub(dg)
-			local d1=Duel.TossDice(tp,1)
-			if d1<=3 then
-				g:Merge(dg)
-			end
-		end
-	end
+function c13257202.ctop(e,tp,eg,ep,ev,re,r,rp)
+	e:GetHandler():AddCounter(0x1f,3)
+end
+function c13257202.poscon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()
+end
+function c13257202.poscost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x1f,1,REASON_COST) end
+	e:GetHandler():RemoveCounter(tp,0x1f,1,REASON_COST)
+end
+function c13257202.postg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,g:GetCount(),0,0)
+end
+function c13257202.posop(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
 	if g:GetCount()>0 then
-		Duel.Destroy(g,REASON_EFFECT)
-	end
-end
-function c13257217.spfilter(c,e,tp)
-	return c:IsCode(13257201) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-end
-function c13257217.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 and Duel.GetTurnPlayer()==1-tp
-end
-function c13257217.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,13257217)==0 end
-	Duel.RegisterFlagEffect(tp,13257217,RESET_CHAIN,0,1)
-end
-function c13257217.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c13257217.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
-end
-function c13257217.spop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c13257217.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	if Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)~=0 then
-		Duel.Hint(11,0,aux.Stringid(13257201,4))
+		Duel.ChangePosition(sg,POS_FACEUP_DEFENSE,0,POS_FACEUP_ATTACK,0)
+		local sc=sg:GetFirst()
+		while sc do
+			local e1=Effect.CreateEffect(e:GetHandler())
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetCode(EFFECT_UPDATE_ATTACK)
+			e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+			e1:SetValue(-700)
+			sc:RegisterEffect(e1)
+			local e2=e1:Clone()
+			e2:SetCode(EFFECT_UPDATE_DEFENSE)
+			sc:RegisterEffect(e2)
+			sc=g:GetNext()
+		end
 	end
 end

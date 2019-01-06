@@ -16,14 +16,14 @@ function c13254040.initial_effect(c)
 	e2:SetOperation(c13254040.activate)
 	c:RegisterEffect(e2)
 	--destroy replace
-	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e3:SetCode(EFFECT_DESTROY_REPLACE)
-	e3:SetRange(LOCATION_FZONE)
-	e3:SetTarget(c13254040.reptg)
-	e3:SetOperation(c13254040.repop)
-	c:RegisterEffect(e3)
+	--local e3=Effect.CreateEffect(c)
+	--e3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
+	--e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	--e3:SetCode(EFFECT_DESTROY_REPLACE)
+	--e3:SetRange(LOCATION_FZONE)
+	--e3:SetTarget(c13254040.reptg)
+	--e3:SetOperation(c13254040.repop)
+	--c:RegisterEffect(e3)
 end
 function c13254040.cfilter(c)
 	return c:IsSetCard(0x3356) and c:IsDiscardable()
@@ -60,18 +60,17 @@ function c13254040.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local tc=Duel.GetOperatedGroup():GetFirst()
 	local code=tc:GetCode()
-	if code<13254031 and code>13254034 then return end
+	if code<13254031 and code>13254036 then return end
 	Duel.ShuffleHand(tp)
 	Duel.BreakEffect()
 	local g=Group.CreateGroup()
 	if code==13254031 then
-		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(13254040,0))
-		g=Duel.SelectMatchingCard(tp,c13254040.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+		g=Duel.SelectMatchingCard(tp,c13254040.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 		local tc=g:GetFirst()
 		if tc then
-			Duel.ShuffleDeck(tp)
-			Duel.MoveSequence(tc,0)
-			Duel.ConfirmDecktop(tp,1)
+			Duel.SendtoHand()
+			Duel.ConfirmCards(1-tp,tc)
 		end
 	elseif code==13254032 then
 		Duel.Draw(tp,1,REASON_EFFECT)
@@ -88,6 +87,22 @@ function c13254040.activate(e,tp,eg,ep,ev,re,r,rp)
 			sg=g:Select(tp,1,1,nil)
 			Duel.SendtoGrave(sg,REASON_EFFECT)
 		end
+	elseif code==13254035 then
+		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
+		if g:GetCount()>=1 then
+			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(13254040,0))
+			sg=g:Select(tp,1,1,nil)
+			local tc=sg:GetFirst()
+			local e2=Effect.CreateEffect(e:GetHandler())
+			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetCode(EFFECT_CANNOT_TRIGGER)
+			e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+			e2:SetRange(LOCATION_ONFIELD)
+			e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
+			tc:RegisterEffect(e2)
+		end
+	elseif code==13254036 then
+		Duel.Recover(tp,2000,REASON_EFFECT)
 	end
 end
 function c13254040.repfilter(c)

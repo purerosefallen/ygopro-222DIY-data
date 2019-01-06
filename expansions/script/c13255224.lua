@@ -1,12 +1,13 @@
 --异界恶魔蝠 阿比
 function c13255224.initial_effect(c)
+	c:EnableUnsummonable()
 	--spsummon condition
-	local e0=Effect.CreateEffect(c)
-	e0:SetType(EFFECT_TYPE_SINGLE)
-	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e0:SetValue(c13255224.splimit)
-	c:RegisterEffect(e0)
+	--local e0=Effect.CreateEffect(c)
+	--e0:SetType(EFFECT_TYPE_SINGLE)
+	--e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	--e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	--e0:SetValue(c13255224.splimit)
+	--c:RegisterEffect(e0)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -16,18 +17,25 @@ function c13255224.initial_effect(c)
 	e1:SetCondition(c13255224.spcon)
 	e1:SetOperation(c13255224.spop)
 	c:RegisterEffect(e1)
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(13255224,2))
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_HAND)
+	e2:SetCost(c13255224.cost)
+	e2:SetOperation(c13255224.operation)
+	c:RegisterEffect(e2)
+	--negate
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(13255224,0))
-	e3:SetCategory(CATEGORY_DESTROY)
+	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
-	e3:SetCode(EVENT_FREE_CHAIN)
+	e3:SetCode(EVENT_CHAINING)
+	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e3:SetHintTiming(0,0x1c0)
-	e3:SetCost(c13255224.descost)
-	e3:SetCondition(c13255224.descon)
-	e3:SetTarget(c13255224.destg)
-	e3:SetOperation(c13255224.desop)
+	e3:SetCountLimit(1)
+	e3:SetCondition(c13255224.discon)
+	e3:SetTarget(c13255224.distg)
+	e3:SetOperation(c13255224.disop)
 	c:RegisterEffect(e3)
 	--destroy replace
 	local e4=Effect.CreateEffect(c)
@@ -39,18 +47,6 @@ function c13255224.initial_effect(c)
 	e4:SetTarget(c13255224.reptg)
 	e4:SetOperation(c13255224.repop)
 	c:RegisterEffect(e4)
-	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(13255224,2))
-	e5:SetCategory(CATEGORY_TOHAND)
-	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e5:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
-	e5:SetCode(EVENT_REMOVE)
-	e5:SetCountLimit(1,13255224)
-	e5:SetCost(c13255224.thcost)
-	e5:SetCondition(c13255224.thcon)
-	e5:SetTarget(c13255224.thtg)
-	e5:SetOperation(c13255224.thop)
-	c:RegisterEffect(e5)
 	
 end
 function c13255224.splimit(e,se,sp,st)
@@ -70,51 +66,21 @@ function c13255224.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.SelectMatchingCard(tp,c13255224.spfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SendtoDeck(g,nil,2,REASON_COST)
 end
-function c13255224.descost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c13255224.discon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ct=Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD+LOCATION_HAND,0)
-	local d=math.floor((13-ct)/4)
-	if chk==0 then return c:GetFlagEffect(13255224)<d end
-	c:RegisterFlagEffect(13255224,RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END,0,1)
+	if c:IsStatus(STATUS_BATTLE_DESTROYED) then return false end
+	return Duel.IsChainNegatable(ev) and ep~=tp and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==1
 end
-function c13255224.descon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
+function c13255224.distg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
+	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
+	end
 end
-function c13255224.desfilter(c)
-	return c:IsFaceup()
-end
-function c13255224.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(1-tp) and chkc:IsOnField() and c13255224.desfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c13255224.desfilter,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-	local g=Duel.SelectTarget(tp,c13255224.desfilter,tp,0,LOCATION_ONFIELD,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-end
-function c13255224.desop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) and not tc:IsDisabled() then
-		Duel.NegateRelatedChain(tc,RESET_TURN_SET)
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DISABLE)
-		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
-		tc:RegisterEffect(e1)
-		local e2=e1:Clone()
-		e2:SetCode(EFFECT_DISABLE_EFFECT)
-		e2:SetValue(RESET_TURN_SET)
-		tc:RegisterEffect(e2)
-		if tc:IsType(TYPE_TRAPMONSTER) then
-			local e3=Effect.CreateEffect(e:GetHandler())
-			e3:SetType(EFFECT_TYPE_SINGLE)
-			e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e3:SetCode(EFFECT_DISABLE_TRAPMONSTER)
-			e3:SetReset(RESET_EVENT+0x1fe0000)
-			tc:RegisterEffect(e3)
-		end
-		Duel.AdjustInstantly()
-		Duel.Destroy(tc,REASON_EFFECT)
+function c13255224.disop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
+		Duel.SendtoDeck(eg,nil,2,REASON_EFFECT)
 	end
 end
 function c13255224.repval(e,c)
@@ -138,27 +104,35 @@ end
 function c13255224.repop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	Duel.SendtoGrave(tc,REASON_EFFECT)
-	if tc:IsCode(13255219) then
-		local dg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-		if dg:GetCount()>0 then
-			Duel.Destroy(dg,REASON_EFFECT)
-		end
+	Duel.BreakEffect()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_MZONE,1,1,nil)
+	if g:GetCount()>0 then
+		Duel.Destroy(g,REASON_EFFECT)
 	end
+	--if tc:IsCode(13255219) then
+	--	local dg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	--	if dg:GetCount()>0 then
+	--		Duel.Destroy(dg,REASON_EFFECT)
+	--	end
+	--end
 end
-function c13255224.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+
+function c13255224.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
 end
-function c13255224.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_DECK)
+function c13255224.operation(e,tp,eg,ep,ev,re,r,rp)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
+	e1:SetTargetRange(1,0)
+	e1:SetTarget(c13255224.splimit)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
 end
-function c13255224.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToHand() end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,e:GetHandler(),1,0,0)
-end
-function c13255224.thop(e,tp,eg,ep,ev,re,r,rp)
-	if e:GetHandler():IsRelateToEffect(e) then
-		Duel.SendtoHand(e:GetHandler(),nil,REASON_EFFECT)
-	end
+function c13255224.splimit(e,c,sump,sumtype,sumpos,targetp,se)
+	return c:IsLocation(LOCATION_EXTRA)
 end
 

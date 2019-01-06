@@ -30,7 +30,7 @@ function c65020022.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if b2 then op=1 end
 	e:SetLabel(op)
 	if chk==0 then return (Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,65020025) or Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_FZONE,0,1,nil,65020025)) and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_EXTRA,1,nil) and ((b1 and Duel.GetFlagEffect(tp,65020022)==0 and Duel.IsExistingMatchingCard(c65020022.setfil,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil)) or b2) end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_ONFIELD)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,1-tp,LOCATION_EXTRA)
 end
 function c65020022.stfil(c)
 	return c:IsFacedown() and not c:IsLocation(LOCATION_FZONE)
@@ -41,7 +41,7 @@ function c65020022.spop(e,tp,eg,ep,ev,re,r,rp)
 		local g1=Duel.SelectMatchingCard(1-tp,Card.IsAbleToRemove,tp,0,LOCATION_EXTRA,1,1,nil)
 		if g1:GetCount()>0 then
 			Duel.HintSelection(g1)
-			if Duel.Remove(g1,POS_FACEDOWN,REASON_EFFECT)~=0 then
+			if Duel.Remove(g1,POS_FACEUP,REASON_EFFECT)~=0 then
 				local g2=Duel.SelectMatchingCard(tp,c65020022.setfil,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil)
 				if g2:GetCount()>0 then
 					Duel.SSet(tp,g2)

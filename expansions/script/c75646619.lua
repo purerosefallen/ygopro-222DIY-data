@@ -22,6 +22,7 @@ function c75646619.initial_effect(c)
 	e2:SetTarget(c75646619.target)
 	e2:SetOperation(c75646619.activate)
 	c:RegisterEffect(e2)
+	c75646619.key_effect=e2
 end
 c75646619.card_code_list={75646600}
 function c75646619.operation(e,tp,eg,ep,ev,re,r,rp)

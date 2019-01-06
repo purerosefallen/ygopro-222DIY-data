@@ -64,7 +64,7 @@ function c13254088.initial_effect(c)
 end
 function c13254088.ffilter1(c,fc,sg,tp)
 	local g=sg:Filter(c13254088.ffilter2,c,fc,tp)
-	return c:IsType(TYPE_EFFECT) and c:IsCanBeFusionMaterial(fc) and g:CheckWithSumGreater(Card.GetOriginalLevel,4)
+	return c:IsType(TYPE_EFFECT) and c:IsCanBeFusionMaterial(fc) and g:CheckWithSumGreater(Card.GetOriginalLevel,3)
 end
 function c13254088.ffilter2(c,fc,tp)
 	return c:IsRace(RACE_FAIRY) and c:IsLevelBelow(1) and c:IsCanBeFusionMaterial(fc) and c:GetOriginalLevel()>=1 and c:IsControler(tp)

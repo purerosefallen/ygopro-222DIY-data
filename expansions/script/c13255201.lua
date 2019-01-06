@@ -67,7 +67,7 @@ function c13255201.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13255201.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()==1-tp and ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
+	return Duel.GetTurnPlayer()~=tp and ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function c13255201.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_DECK,0,1,nil,TYPE_EQUIP) end

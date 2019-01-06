@@ -1,60 +1,67 @@
---巨舰护罩充能
+--巨大战舰 强袭核心（D）
 function c13257207.initial_effect(c)
-	c:SetUniqueOnField(1,0,13257207)
-	--Activate
+	--special summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_SPSUMMON_PROC)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e1:SetRange(LOCATION_HAND)
+	e1:SetCondition(c13257207.spcon)
 	c:RegisterEffect(e1)
-	--counter
+	--destroy
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(13257207,0))
-	e2:SetCategory(CATEGORY_COUNTER)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetRange(LOCATION_SZONE)
-	e2:SetCondition(c13257207.ctcon)
-	e2:SetOperation(c13257207.ctop)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
+	e2:SetCode(EVENT_DESTROYED)
+	e2:SetTarget(c13257207.sptg)
+	e2:SetOperation(c13257207.spop)
 	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	--tohand
+	local e3=Effect.CreateEffect(c)
+	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e3:SetCode(EVENT_RELEASE)
+	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e3:SetTarget(c13257207.thtg)
+	e3:SetOperation(c13257207.thop)
 	c:RegisterEffect(e3)
 	
 end
-function c13257207.ctfilter(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x353) and c:IsControler(tp)
+function c13257207.spcon(e,c)
+	if c==nil then return true end
+	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
+		and Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)>0
+		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
-function c13257207.ctcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c13257207.ctfilter,1,nil,tp)
+function c13257207.spfilter(c,e,tp)
+	return c:IsCode(100000085) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c13257207.ctop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(c13257207.ctfilter,nil,tp)
-	local tc=g:GetFirst()
-	while tc do
-		if not tc:IsCanAddCounter(0x353,1) then
-			tc:EnableCounterPermit(0x353)
-		end
-		tc:AddCounter(0x353,2)
-		--Destroy replace
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_DESTROY_REPLACE)
-		e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-		e1:SetRange(LOCATION_MZONE)
-		e1:SetTarget(c13257207.desreptg)
-		e1:SetOperation(c13257207.desrepop)
-		e1:SetReset(RESET_EVENT+0x1fe0000)
-		tc:RegisterEffect(e1)
-		tc=g:GetNext()
+function c13257207.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Duel.IsExistingMatchingCard(c13257207.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+end
+function c13257207.spop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local g=Duel.SelectMatchingCard(tp,c13257207.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+	if g:GetCount()>0 then
+		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
-function c13257207.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReason(REASON_EFFECT+REASON_BATTLE)
-		and e:GetHandler():GetCounter(0x353)>0 end
-	return true
+function c13257207.thfilter(c)
+	return c:IsSetCard(0x15) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand() and not c:IsCode(100000085)
 end
-function c13257207.desrepop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	c:RemoveCounter(ep,0x353,1,REASON_EFFECT)
-	Duel.RaiseEvent(c,EVENT_REMOVE_COUNTER+0x353,e,REASON_EFFECT+REASON_REPLACE,tp,tp,1)
+function c13257207.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c13257207.thfilter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+end
+function c13257207.thop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectMatchingCard(tp,c13257207.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+	if g:GetCount()>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
+	end
 end
