@@ -2,11 +2,11 @@
 update/update-push.bat	686b01a51bba916202d61d951cd7fe3e
 update/update-server.sh	6f1cdc3e06ec58b37b14b5d9d167263c
 update/update-without-sound.bat	1c2cfda2a0501642c8bceae026a73d5b
-update/version.txt	6d5e5157c7c0691d5e40cb444d7740f0
+update/version.txt	a3e8407dbe085d7effa749ae1e78fa21
 update/update-push.sh	d018a223f65feef3467b22e252468f53
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
 update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
-update/filelist.txt	fd83d516f83a9988dbf9f098427363c1
+update/filelist.txt	d5496fb160979a46a81a0203dcfe2d3f
 deck/20190106_new_card6.ydk	c570cd585c5d08e40a60da35f4df22f8
 deck/20190106_new_card8.ydk	934f7779f87f10fade5864c149c227da
 deck/20190106_new_card5.ydk	efc825253f63d7025fb139975badcdc2
@@ -234,6 +234,7 @@ sound/BGM/custom/Kotoka-1002.mp3	fdae76192afbc76a04750c34930413a2
 sound/BGM/custom/Hitomi Another.mp3	4a591895b838d0c46d7b5e226fbe7d80
 sound/BGM/custom/CLICK.mp3	15eb752986698a681070b14ecd8e00ce
 sound/BGM/custom/GR3CrystalWorld.mp3	a90a1133771a0e21cde3ff7931233043
+sound/BGM/custom/ayane_2018.mp3	d9fec64b470958f953027f5b882881d2
 sound/BGM/custom/Glass.mp3	61e8b775ebc559071e54cb3d7a2fdc6e
 sound/BGM/custom/Kotoka-Suffering.mp3	e45a2ee41a0d1f696f4f65bae96cd118
 sound/BGM/custom/NanahiraLapis.mp3	955034240f9094a8eb4998477340ce92
