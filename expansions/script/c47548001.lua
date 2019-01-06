@@ -37,8 +37,8 @@ function c47548001.initial_effect(c)
     e4:SetType(EFFECT_TYPE_IGNITION)
     e4:SetRange(LOCATION_MZONE)
     e4:SetCountLimit(1)
-    e4:SetCost(c47548001.olcost)
-    e4:SetOperation(c47548001.olop)
+    e4:SetCost(c47548001.dacost)
+    e4:SetOperation(c47548001.daop)
     c:RegisterEffect(e4)
     --spsummon
     local e5=Effect.CreateEffect(c)
@@ -88,11 +88,11 @@ end
 function c47548001.indcon(e)
     return e:GetHandler():GetOverlayCount()>0
 end
-function c47548001.olcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c47548001.dacost(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
     e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
-function c47548001.oltg(e,tp,eg,ep,ev,re,r,rp)
+function c47548001.daop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     if c:IsRelateToEffect(e) then
         local e1=Effect.CreateEffect(e:GetHandler())

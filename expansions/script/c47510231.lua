@@ -121,14 +121,14 @@ function c47510231.thfilter(c)
     return c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 end
 function c47510231.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    if chk==0 then return Duel.IsExistingTarget(c47510231.thfilter,tp,LOCATION_MZONE+LOCATION_PZONE,LOCATION_MZONE+LOCATION_PZONE,2,nil) end
+    if chk==0 then return Duel.IsExistingTarget(c47510231.thfilter,tp,LOCATION_MZONE+LOCATION_PZONE,0,2,nil) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-    local g=Duel.SelectTarget(tp,c47510231.thfilter,tp,LOCATION_MZONE+LOCATION_PZONE,LOCATION_MZONE+LOCATION_PZONE,2,2,nil)
+    local g=Duel.SelectTarget(tp,c47510231.thfilter,tp,LOCATION_MZONE+LOCATION_PZONE,0,2,2,nil)
     Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,2,0,0)
 end
 function c47510231.thop(e,tp,eg,ep,ev,re,r,rp)
     local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-    if Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 and Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(47510231,0)) then
+    if Duel.SendtoDeck(g,nil,2,REASON_EFFECT)~=0 and Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(47510231,0)) then
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
         local g1=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,1,nil)
         if g1:GetCount()>0 then

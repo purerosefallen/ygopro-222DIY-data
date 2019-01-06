@@ -43,6 +43,7 @@ function cm.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_QUICK_O)
 	e4:SetCode(EVENT_BE_BATTLE_TARGET)
 	e4:SetRange(LOCATION_MZONE)
+	e4:SetCondition(cm.descon1)
 	e4:SetOperation(cm.desop)
 	c:RegisterEffect(e4)
 	local e5=e4:Clone()
@@ -64,6 +65,9 @@ function cm.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.tgfilter(c,tp)
 	return c:IsLocation(LOCATION_MZONE) and c:IsControler(tp)
+end
+function cm.descon1(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(cm.tgfilter,1,nil,tp)
 end
 function cm.descon2(e,tp,eg,ep,ev,re,r,rp)
 	return rp==1-tp and eg:IsContains(e:GetHandler())
