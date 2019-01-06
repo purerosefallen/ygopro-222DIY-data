@@ -19,7 +19,7 @@ function c47530100.initial_effect(c)
     local e2=Effect.CreateEffect(c)
     e2:SetDescription(aux.Stringid(47530100,1))
     e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-    e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+    e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
     e2:SetCode(EVENT_SPSUMMON_SUCCESS)
     e2:SetRange(LOCATION_MZONE)
     e2:SetCost(c47530100.spcost)
@@ -34,8 +34,8 @@ end
 function c47530100.hspcon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
-function c47530100.hspfilter(c,e,tp)
-    return c:IsLevelBelow(7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
+function c47530100.hspfilter(c,e,tp,zone)
+    return c:IsLevelBelow(7) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP,tp,zone)
 end
 function c47530100.hsptg(e,tp,eg,ep,ev,re,r,rp,chk)
     local zone=bit.band(e:GetHandler():GetLinkedZone(tp),0x1f)
@@ -49,7 +49,7 @@ function c47530100.hspop(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
     local g=Duel.SelectMatchingCard(tp,c47530100.hspfilter,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp,zone)
     local tc=g:GetFirst()
-    if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP) then
+    if tc and Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP,zone) then
         local e1=Effect.CreateEffect(e:GetHandler())
         e1:SetType(EFFECT_TYPE_SINGLE)
         e1:SetCode(EFFECT_CANNOT_TRIGGER)
