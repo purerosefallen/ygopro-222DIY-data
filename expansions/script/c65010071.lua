@@ -68,7 +68,7 @@ function c65010071.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.MoveSequence(tc,nseq)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c65010071.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) then
 		Duel.BreakEffect()
-		local g=Duel.SelectMatchingCard(tp,c65010071.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,)
+		local g=Duel.SelectMatchingCard(tp,c65010071.spfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
 		local gc=g:GetFirst()
 		Duel.SpecialSummonStep(gc,0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(c)
