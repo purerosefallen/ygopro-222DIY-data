@@ -60,18 +60,18 @@ function c47530093.atkval(e,c)
 end
 function c47530093.incon1(e,c)
     local c=e:GetHandler()
-    return Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil,RACE_MACHINE)>2
+    return Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil,RACE_MACHINE)>=2
 end
 function c47530093.incon3(e,c)
     local c=e:GetHandler()
-    return Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil,RACE_MACHINE)>4
+    return Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil,RACE_MACHINE)>=4
 end
 function c47530093.incon4(e,c)
     local c=e:GetHandler()
-    return Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil,RACE_MACHINE)>8
+    return Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil,RACE_MACHINE)>=8
 end
 function c47530093.discon(e,tp,eg,ep,ev,re,r,rp)
-    return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev) and Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil,RACE_MACHINE)>3
+    return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and rp==1-tp and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev) and Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil,RACE_MACHINE)>=3
 end
 function c47530093.distg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return true end

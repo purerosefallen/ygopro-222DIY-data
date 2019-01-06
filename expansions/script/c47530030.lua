@@ -50,11 +50,11 @@ function c47530030.val(e,c)
 end
 function c47530030.incon1(e,c)
     local c=e:GetHandler()
-    return Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil,RACE_MACHINE)>2
+    return Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil,RACE_MACHINE)>=2
 end
 function c47530030.incon2(e,c)
     local c=e:GetHandler()
-    return Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil,RACE_MACHINE)>3
+    return Duel.GetMatchingGroupCount(Card.IsRace,c:GetControler(),LOCATION_MZONE,LOCATION_MZONE,nil,RACE_MACHINE)>=3
 end
 function c47530030.incon4(e,c)
     local c=e:GetHandler()
@@ -117,7 +117,7 @@ function c47530030.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c47530030.incon3(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
-    return Duel.GetMatchingGroupCount(Card.IsRace,tp,LOCATION_MZONE,LOCATION_MZONE,nil,RACE_MACHINE)>4 and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and rp==1-tp
+    return Duel.GetMatchingGroupCount(Card.IsRace,tp,LOCATION_MZONE,LOCATION_MZONE,nil,RACE_MACHINE)>=4 and not c:IsStatus(STATUS_BATTLE_DESTROYED) and Duel.IsChainNegatable(ev) and rp==1-tp
 end
 function c47530030.cfilter(c,g)
     return g:IsContains(c) and not c:IsStatus(STATUS_BATTLE_DESTROYED)

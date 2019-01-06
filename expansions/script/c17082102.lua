@@ -28,7 +28,6 @@ function cm.initial_effect(c)
 	e1:SetCategory(CATEGORY_CONTROL)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetHintTiming(TIMING_DAMAGE_STEP+TIMING_END_PHASE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
@@ -97,11 +96,19 @@ function cm.chlimit(e,ep,tp)
 end
 function cm.setop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.Destroy(tc,REASON_EFFECT)
-		Duel.BreakEffect()
-		Duel.SSet(tp,tc)
-		Duel.ConfirmCards(1-tp,tc)
+	if Duel.Destroy(tc,REASON_EFFECT)~=0 then
+		if tc:IsType(TYPE_MONSTER) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+			and (not tc:IsLocation(LOCATION_EXTRA) or Duel.GetLocationCountFromEx(tp)>0)
+			and tc:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE) then
+			Duel.BreakEffect()
+			Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEDOWN_DEFENSE)
+			Duel.ConfirmCards(1-tp,tc)
+		elseif (tc:IsType(TYPE_FIELD) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0)
+			and tc:IsSSetable() then
+			Duel.BreakEffect()
+			Duel.SSet(tp,tc)
+			Duel.ConfirmCards(1-tp,tc)
+		end
 	end
 end
 function cm.ovfilter(c)
