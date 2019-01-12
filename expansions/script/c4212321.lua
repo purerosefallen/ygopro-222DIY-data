@@ -52,7 +52,7 @@ Duel.RegisterFlagEffect(tp,m,RESET_PHASE+PHASE_END,0,1)
             if not (ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL) then return false end
             local a=Duel.GetAttacker()
             local d=Duel.GetAttackTarget()
-            return a==e:GetHandler() and d~=nil and Duel.GetMatchingGroupCount(c4212321.mfilter,tp,LOCATION_SZONE,0,nil)>=3  end)
+            return (a~=nil and d~=nil) and Duel.GetMatchingGroupCount(c4212321.mfilter,tp,LOCATION_SZONE,0,nil)>=3  end)
         .e("SetValue",c:GetAttack()*2)
     .Return())
 end

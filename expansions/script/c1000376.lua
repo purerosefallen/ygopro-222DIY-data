@@ -45,10 +45,18 @@ end
 function c1000376.cfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xc200) and c:IsAbleToDeckAsCost()
 end
+function c1000376.code(c)
+    return c:IsFacedown() and c:IsType(TYPE_MONSTER) and c:IsCode(1000376)
+end
 function c1000376.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c1000376.cfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,2,nil) end
-	local g=Duel.SelectMatchingCard(tp,c1000376.cfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,2,2,nil)
-	Duel.SendtoDeck(g,nil,2,REASON_COST)
+    if chk==0 then return Duel.IsExistingMatchingCard(c1000376.cfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,2,nil) and Duel.IsExistingMatchingCard(c1000376.code,tp,LOCATION_EXTRA,0,1,nil) end
+    local c=e:GetHandler()
+    Duel.ConfirmCards(tp,c)
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
+    local g=Duel.SelectMatchingCard(tp,c1000376.cfilter,tp,LOCATION_GRAVE+LOCATION_HAND,0,2,2,nil)
+    local g1=Duel.SelectMatchingCard(1-tp,c1000376.code,1-tp,LOCATION_EXTRA,0,1,1,nil)
+    local g2=Duel.SelectMatchingCard(tp,c1000376.code,tp,LOCATION_EXTRA,0,1,1,nil)
+    Duel.SendtoDeck(g,nil,2,REASON_COST)
 end
 function c1000376.con1(e,tp,eg,ep,ev,re,r,rp)
 	local at=Duel.GetAttacker()
