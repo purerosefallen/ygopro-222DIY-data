@@ -50,6 +50,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 cm.is_named_with_domovo_i=1
+cm.is_named_with_Ma_Elf=1
 function cm.IsDomovo_i(c)
 	local m=_G["c"..c:GetCode()]
 	return m and m.is_named_with_domovo_i

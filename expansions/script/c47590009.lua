@@ -96,6 +96,8 @@ function c47590009.actlimit(e,re,tp)
     return not re:GetHandler():IsImmuneToEffect(e)
 end
 function c47590009.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
+    local c=e:GetHandler()
+    if not c:IsType(TYPE_XYZ) then return false end 
     local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,0,LOCATION_ONFIELD,1,1,nil)
     local tc=g:GetFirst()
     if tc then

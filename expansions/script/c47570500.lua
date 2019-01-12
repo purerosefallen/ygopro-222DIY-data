@@ -97,7 +97,7 @@ function c47570500.tfop(e,tp,eg,ep,ev,re,r,rp)
             local sg=g1:Select(tp,1,2,nil)
             for tc in aux.Next(sg) do
             Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-            tc:RegisterFlagEffect(47510254,RESET_EVENT+0x7e0000+RESET_PHASE+PHASE_END,0,1)
+            tc:RegisterFlagEffect(47570500,RESET_EVENT+0x7e0000+RESET_PHASE+PHASE_END,0,1)
             end
         end
     end

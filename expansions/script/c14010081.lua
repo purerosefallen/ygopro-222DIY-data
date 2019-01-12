@@ -28,6 +28,7 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetCondition(cm.drcon)
 	e1:SetTarget(cm.drtg)
 	e1:SetOperation(cm.drop)
+	e1:SetLabel(Duel.GetTurnCount())
 	if Duel.GetTurnPlayer()==tp then
 		e1:SetReset(RESET_PHASE+PHASE_END+RESET_SELF_TURN,2)
 	else
@@ -36,9 +37,10 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function cm.drcon(e,tp,eg,ep,ev,re,r,rp)
+	local ct=e:GetLabel()
 	local t=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND+LOCATION_ONFIELD)
 	local s=Duel.GetFieldGroupCount(tp,LOCATION_HAND+LOCATION_ONFIELD,0)
-	return t>s and Duel.GetTurnPlayer()==tp
+	return t>s and Duel.GetTurnPlayer()==tp and Duel.GetTurnCount()~=ct
 end
 function cm.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local t=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND+LOCATION_ONFIELD)
