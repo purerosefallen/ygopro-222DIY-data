@@ -155,7 +155,7 @@ function cm.matfilter1(c,syncard,tp)
 	return c:IsSynchroType(TYPE_TUNER) and c:IsCanBeSynchroMaterial(syncard)
 end
 function cm.matfilter2(c,syncard)
-	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsNotTuner() and c:IsCanBeSynchroMaterial(syncard)
+	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsNotTuner(nil)() and c:IsCanBeSynchroMaterial(syncard)
 end
 function cm.val(c,syncard)
 	if c:IsSynchroType(TYPE_XYZ) then

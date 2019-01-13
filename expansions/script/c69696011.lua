@@ -53,7 +53,7 @@ function cm.cfilter1(c,tp)
 		and Duel.IsExistingMatchingCard(cm.cfilter2,tp,LOCATION_GRAVE,0,1,c,c:GetLevel())
 end
 function cm.cfilter2(c,lv)
-	return c:IsFaceup() and c:IsNotTuner() and c:IsLevel(6-lv) and c:IsAbleToRemoveAsCost()
+	return c:IsFaceup() and c:IsNotTuner(nil)() and c:IsLevel(6-lv) and c:IsAbleToRemoveAsCost()
 end
 function cm.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.cfilter1,tp,LOCATION_GRAVE,0,1,e:GetHandler(),tp) end

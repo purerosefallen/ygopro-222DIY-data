@@ -78,7 +78,7 @@ function c33700917.initial_effect(c)
 	c:RegisterEffect(e42)
 end
 function c33700917.synfilter(c,sync)
-	return c:IsNotTuner(sync) and not c:IsAttribute(ATTRIBUTE_LIGHT)
+	return c:IsNotTuner(nil)(sync) and not c:IsAttribute(ATTRIBUTE_LIGHT)
 end 
 function c33700917.spcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

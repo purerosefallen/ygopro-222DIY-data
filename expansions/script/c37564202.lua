@@ -22,7 +22,7 @@ function cm.filter1(c)
 	return c:IsType(TYPE_TUNER) and c:IsFaceup() and c:IsAbleToRemove()
 end
 function cm.filter2(c)
-	return c:IsNotTuner() and c:IsFaceup() and c:IsAbleToRemove()
+	return c:IsNotTuner(nil)() and c:IsFaceup() and c:IsAbleToRemove()
 end
 function cm.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

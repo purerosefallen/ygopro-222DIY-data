@@ -24,7 +24,7 @@ function c5012969.initial_effect(c)
     c:RegisterEffect(e2)
 end
 function c5012969.synfilter2(c)
-    return c5012969.synfilter(c) and c:IsNotTuner()
+    return c5012969.synfilter(c) and c:IsNotTuner(nil)()
 end
 function c5012969.synfilter(c)
     return c:GetLevel()==6 and c:IsAttribute(ATTRIBUTE_FIRE) and c:IsType(TYPE_SYNCHRO)

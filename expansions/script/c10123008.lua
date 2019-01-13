@@ -19,7 +19,7 @@ function c10123008.filter1(c,e,tp)
 	return c:IsAbleToDeckAsCost() and Duel.IsExistingMatchingCard(c10123008.filter2,tp,LOCATION_GRAVE,0,1,c,c:GetLevel(),e,tp,c) and c:IsType(TYPE_TUNER) and c:IsSetCard(0x5334)
 end
 function c10123008.filter2(c,lv,e,tp,rc)
-	return c:IsAbleToDeckAsCost() and Duel.IsExistingMatchingCard(c10123008.filter3,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,c,c:GetLevel()+lv,e,tp,rc) and c:IsNotTuner() and c:IsRace(RACE_SPELLCASTER)
+	return c:IsAbleToDeckAsCost() and Duel.IsExistingMatchingCard(c10123008.filter3,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,c,c:GetLevel()+lv,e,tp,rc) and c:IsNotTuner(nil)() and c:IsRace(RACE_SPELLCASTER)
 end
 function c10123008.filter3(c,lv,e,tp,rc)
 	return c:IsType(TYPE_SYNCHRO) and c:GetLevel()==lv and c:IsLevelBelow(8) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_SYNCHRO,tp,false,true) and c~=rc and c:IsRace(RACE_SPELLCASTER)

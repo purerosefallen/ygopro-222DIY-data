@@ -53,7 +53,7 @@ function c23330012.matfilter1(c,syncard)
 	return c:IsType(TYPE_TUNER) and (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsCanBeSynchroMaterial(syncard)
 end
 function c23330012.matfilter2(c,syncard)
-	return c:IsNotTuner() and c:IsFaceup() and c:IsCanBeSynchroMaterial(syncard)
+	return c:IsNotTuner(nil)() and c:IsFaceup() and c:IsCanBeSynchroMaterial(syncard)
 end
 function c23330012.synfilter1(c,syncard,lv,g1,g2,g3)
 	local f1=c.tuner_filter

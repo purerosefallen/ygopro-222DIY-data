@@ -74,11 +74,11 @@ function c17082101.initial_effect(c)
 	c:RegisterEffect(e7)
 end
 function c17082101.matfilter1(c,syncard)
-	return c:IsType(TYPE_PENDULUM) and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsNotTuner() and c:IsFaceup() and c:IsCanBeSynchroMaterial(syncard)
+	return c:IsType(TYPE_PENDULUM) and c:IsSummonType(SUMMON_TYPE_PENDULUM) and c:IsNotTuner(nil)() and c:IsFaceup() and c:IsCanBeSynchroMaterial(syncard)
 		and Duel.IsExistingMatchingCard(c17082101.matfilter2,0,LOCATION_MZONE,LOCATION_MZONE,1,c,syncard)
 end
 function c17082101.matfilter2(c,syncard)
-	return c:IsNotTuner() and c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsCanBeSynchroMaterial(syncard)
+	return c:IsNotTuner(nil)() and c:IsFaceup() and c:IsType(TYPE_SYNCHRO) and c:IsCanBeSynchroMaterial(syncard)
 end
 function c17082101.synfilter(c,syncard,lv,g2,minc)
 	local tlv=c:GetSynchroLevel(syncard)

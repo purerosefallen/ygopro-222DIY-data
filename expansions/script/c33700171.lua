@@ -44,7 +44,7 @@ function c33700171.synfilter1(c,syncard,lv,g)
 	return c:IsType(TYPE_TUNER) and  g:IsExists(c33700171.synfilter2,1,c,syncard,lv,g,c)
 end
 function c33700171.lvfilter(c,lv,g)
-	return c:IsNotTuner(nil) and c:GetLevel()<lv and c:IsType(TYPE_MONSTER)
+	return c:IsNotTuner(nil)(nil) and c:GetLevel()<lv and c:IsType(TYPE_MONSTER)
 	and c:IsCanBeSynchroMaterial(g)
 end
 function c33700171.synfilter2(c,syncard,lv,g,mc)
@@ -85,7 +85,7 @@ end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SMATERIAL)
 	local t2=mg:FilterSelect(tp,c33700171.synfilter2,1,1,m1,c,lv,mg,m1)
 	g:Merge(t2)
-	local mg2=mg:Filter(Card.IsNotTuner,nil)
+	local mg2=mg:Filter(Card.IsNotTuner(nil),nil)
 	Duel.SetSelectedCard(g)
 	c:SetMaterial(g)
 	Duel.SendtoGrave(g,REASON_MATERIAL+REASON_SYNCHRO)
