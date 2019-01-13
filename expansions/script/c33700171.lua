@@ -44,7 +44,7 @@ function c33700171.synfilter1(c,syncard,lv,g)
 	return c:IsType(TYPE_TUNER) and  g:IsExists(c33700171.synfilter2,1,c,syncard,lv,g,c)
 end
 function c33700171.lvfilter(c,lv,g)
-	return c:IsNotTuner() and c:GetLevel()<lv and c:IsType(TYPE_MONSTER)
+	return c:IsNotTuner(nil) and c:GetLevel()<lv and c:IsType(TYPE_MONSTER)
 	and c:IsCanBeSynchroMaterial(g)
 end
 function c33700171.synfilter2(c,syncard,lv,g,mc)
