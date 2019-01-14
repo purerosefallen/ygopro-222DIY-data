@@ -28,7 +28,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function cm.cfilter(c)
-	return c:IsType(TYPE_PENDULUM)
+	return c:IsFaceup() and c:IsType(TYPE_PENDULUM)
 end
 function cm.atkval(e,c)
 	local g=e:GetHandler():GetLinkedGroup():Filter(cm.cfilter,nil)

@@ -32,7 +32,6 @@ function c47517001.initial_effect(c)
     e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
     e3:SetCode(EVENT_DESTROYED)
     e3:SetProperty(EFFECT_FLAG_DELAY)
-    e3:SetCountLimit(1,47578911)
     e3:SetCondition(c47517001.spcon2)
     e3:SetTarget(c47517001.sptg2)
     e3:SetOperation(c47517001.spop2)
@@ -90,7 +89,7 @@ function c47517001.desop(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 function c47517001.spcon2(e,tp,eg,ep,ev,re,r,rp)
-    return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0 and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
+    return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0
 end
 function c47517001.spfilter(c,e,tp)
     return c:IsRace(RACE_FAIRY) and c:IsLevelAbove(7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

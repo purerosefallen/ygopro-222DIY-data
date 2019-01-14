@@ -49,21 +49,33 @@ function cm.spfilter2(c,tp,mc)
     return Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(c,mc))>0
 end
 function cm.fpcon(e,c)
-    if c==nil then return true end
-    local tp=c:GetControler()
-    local g=Duel.GetReleaseGroup(tp):Filter(cm.spfilter,nil,c)
-    return g:IsExists(cm.spfilter1,1,nil,tp,g)
+	if c==nil then return true end
+	local tp=c:GetControler()
+	local mg=Duel.GetMatchingGroup(cm.spfilter,tp,LOCATION_MZONE,0,nil,c)
+	local sg=Group.CreateGroup()
+	return mg:IsExists(cm.fselect,1,nil,tp,mg,sg)
+end
+function cm.fselect(c,tp,mg,sg)
+	sg:AddCard(c)
+	local res=false
+	if sg:GetCount()<3 then
+		res=mg:IsExists(cm.fselect,1,sg,tp,mg,sg)
+	elseif Duel.GetLocationCountFromEx(tp,tp,sg)>0 then
+		res=Duel.GetLocationCountFromEx(tp,tp,sg)>0
+	end
+	sg:RemoveCard(c)
+	return res
 end
 function cm.fpop(e,tp,eg,ep,ev,re,r,rp,c)
-    local g=Duel.GetReleaseGroup(tp):Filter(cm.spfilter,nil,c)
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-    local g1=g:FilterSelect(tp,cm.spfilter1,1,1,nil,tp,g)
-    local mc=g1:GetFirst()
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
-    local g2=g:FilterSelect(tp,cm.spfilter2,2,2,mc,tp,mc)
-    g1:Merge(g2)
-    c:SetMaterial(g1)
-    Duel.Release(g1,REASON_COST+REASON_FUSION+REASON_MATERIAL)
+	local mg=Duel.GetMatchingGroup(cm.spfilter,tp,LOCATION_MZONE,0,nil,c)
+	local sg=Group.CreateGroup()
+	while sg:GetCount()<3 do
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RELEASE)
+		local g=mg:FilterSelect(tp,cm.fselect,1,1,sg,tp,mg,sg)
+		sg:Merge(g)
+	end
+	c:SetMaterial(sg)
+	Duel.Release(sg,REASON_COST+REASON_FUSION+REASON_MATERIAL)
 end
 function cm.immcon(e)
     return Duel.GetAttacker()==e:GetHandler() 

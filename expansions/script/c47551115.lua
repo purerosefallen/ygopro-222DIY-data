@@ -109,7 +109,7 @@ function c47551115.drop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c47551115.target(e,c)
     local te,g=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TARGET_CARDS)
-    return not te or not te:IsHasProperty(EFFECT_FLAG_CARD_TARGET) or not g or not g:IsContains(c) and c~=e:GetHandler()
+    return (not te or not te:IsHasProperty(EFFECT_FLAG_CARD_TARGET) or not g or not g:IsContains(c)) and c~=e:GetHandler()
 end
 function c47551115.bftg(e,c)
     return c~=e:GetHandler()

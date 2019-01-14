@@ -2,7 +2,6 @@
 c81000002.dfc_front_side=81000001
 c81000002.dfc_back_side=81000002
 function c81000002.initial_effect(c)
-	Senya.DFCBackSideCommonEffect(c)
 	c:EnableReviveLimit()
 	--redirect
 	local e1=Effect.CreateEffect(c)

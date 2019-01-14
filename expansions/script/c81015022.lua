@@ -42,5 +42,5 @@ function c81015022.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function c81015022.aclimit(e,re,tp)
-	return re:GetActivateLocation()==LOCATION_SZONE and re:GetSequence<5
+	return re:GetActivateLocation()==LOCATION_SZONE and re:GetSequence()<5
 end
