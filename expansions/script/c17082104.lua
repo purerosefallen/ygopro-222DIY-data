@@ -19,7 +19,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e0)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(m,0))
+	e1:SetDescription(aux.Stringid(m,1))
 	e1:SetCategory(CATEGORY_POSITION+CATEGORY_CONTROL)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)

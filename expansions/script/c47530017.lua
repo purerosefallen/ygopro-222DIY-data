@@ -77,7 +77,7 @@ end
 function c47530017.olop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-    local g=Duel.SelectMatchingCard(tp,c47530017.olfilter,tp,LOCATION_MZONE,0,1,1,nil)
+    local g=Duel.SelectMatchingCard(tp,c47530017.olfilter,tp,0,LOCATION_MZONE,1,1,nil)
     if g:GetCount()>0 and c:IsRelateToEffect(e) then
         local og=g:GetOverlayGroup()
         if og:GetCount()>0 then

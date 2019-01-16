@@ -204,6 +204,7 @@ end
 function cm.synop(e,tp,eg,ep,ev,re,r,rp,c,tuner,mg)
 	local g=e:GetLabelObject()
 	c:SetMaterial(g)
+	Duel.ConfirmCards(1-tp,e:GetHandler())
 	local wlp=e:GetHandler()
 	local tcode=wlp.dfc_back_side
 	wlp:SetEntityCode(tcode,true)
@@ -211,6 +212,7 @@ function cm.synop(e,tp,eg,ep,ev,re,r,rp,c,tuner,mg)
 	Duel.ShuffleExtra(tp)
 	Duel.SendtoGrave(g,REASON_MATERIAL+REASON_SYNCHRO)
 	g:DeleteGroup()
+	e:GetHandler():RegisterFlagEffect(0,RESET_EVENT+RESET_LEAVE,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(m,4))
 end
 function cm.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) and e:GetLabel()==1
@@ -280,11 +282,11 @@ function cm.syctg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,tp,LOCATION_EXTRA)
 end
 function cm.sycop1(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.SelectYesNo(tp,aux.Stringid(m,4)) then
+	if Duel.SelectYesNo(tp,aux.Stringid(m,5)) then
 		Duel.SynchroSummon(tp,e:GetHandler(),nil)
 		--extra attack
 		local e4=Effect.CreateEffect(e:GetHandler())
-		e4:SetDescription(aux.Stringid(m,5))
+		e4:SetDescription(aux.Stringid(m,6))
 		e4:SetProperty(EFFECT_FLAG_CLIENT_HINT)
 		e4:SetType(EFFECT_TYPE_SINGLE)
 		e4:SetCode(EFFECT_EXTRA_ATTACK)

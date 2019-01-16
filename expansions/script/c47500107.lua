@@ -128,6 +128,7 @@ function c47500107.regop(e,tp,eg,ep,ev,re,r,rp)
     c:RegisterEffect(e4)
 end
 function c47500107.nfilter(e,c)
+    local c=e:GetHandler()
     return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c==e:GetHandler()
 end
 function c47500107.discon2(e,tp,eg,ep,ev,re,r,rp)
