@@ -47,7 +47,7 @@ end
 c47579901.pendulum_level=8
 function c47579901.synlimit(e,c)
     if not c then return false end
-    return not c:IsAttribute(ATTRIBUTE_DARK) or c:IsAttribute(ATTRIBUTE_LIGHT)
+    return not (c:IsAttribute(ATTRIBUTE_DARK) or c:IsAttribute(ATTRIBUTE_LIGHT))
 end
 function c47579901.xsfilter(c)
     return c:IsFaceup() and c:IsType(TYPE_XYZ)

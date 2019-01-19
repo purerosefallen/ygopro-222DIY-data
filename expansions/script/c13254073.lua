@@ -203,7 +203,7 @@ function c13254073.hdop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,1-tp,aux.Stringid(13254073,9))
 		Duel.ConfirmCards(tp,g)
-		local sg=hg:Select(tp,1,1,nil)
+		local sg=g:Select(tp,1,1,nil)
 		Duel.SendtoHand(sg,tp,REASON_EFFECT)
 		Duel.ShuffleHand(1-tp)
 	end
