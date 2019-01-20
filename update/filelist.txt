@@ -444,7 +444,7 @@ sound/BGM/advantage/1.00adv.mp3	99c7a36c726926e19f76f4113e042f96
 sound/BGM/advantage/1.986adv.mp3	b918e66d696f2f2dd82df5f8e01e6d7e
 sound/BGM/advantage/Monosugoikuruttoru Furantyanga Monosugoi Uta.mp3	6b69e22257e027b8d3e1c0b17ec36786
 sound/BGM/advantage/1.962adv.mp3	6cff2bf4929eaae90785bfbd7f97b6fc
-expansions/lflist.conf	6ce7a0bcf9542d5b5d9f4968f8e9c23b
+expansions/lflist.conf	c68d4a07aea5df3f22bc8213e47f32d1
 expansions/222DIY.cdb	8bcdc11ab3044ac96b8fa97e989da4a2
 expansions/strings.conf	0251f503beae60b92abfd40817e7d0f6
 expansions/script/c10904011.lua	4c27dfcd69ed23dbc450cfc28a708a0e
