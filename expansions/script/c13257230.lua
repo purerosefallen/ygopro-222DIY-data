@@ -43,8 +43,9 @@ function c13257230.filter(c)
 end
 function c13257230.spcon(e,c)
 	if c==nil then return true end
+	local hg=Duel.GetMatchingGroup(c13257230.filter,tp,LOCATION_HAND,0,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0
-		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0 and hg:GetCount()>=3
 end
 function c13257230.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

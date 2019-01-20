@@ -133,7 +133,7 @@ function c13257318.eqop1(e,tp,eg,ep,ev,re,r,rp)
 			if not Duel.Equip(tp,tc,c,false) then return end
 			--Add Equip limit
 			tc:RegisterFlagEffect(13257318,RESET_EVENT+0x1fe0000,0,0)
-			e:GetLabelObject:SetLabelObject(tc)
+			e:GetLabelObject():SetLabelObject(tc)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)
 			e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
