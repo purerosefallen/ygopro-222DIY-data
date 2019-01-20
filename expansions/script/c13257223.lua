@@ -67,7 +67,7 @@ function c13257223.efilter(e,re)
 	return e:GetHandlerPlayer()~=re:GetOwnerPlayer()
 end
 function c13257223.codisable(e,tp,eg,ep,ev,re,r,rp)
-	return ep==1-tp
+	return ep~=tp
 		and not e:GetHandler():IsStatus(STATUS_CHAINING)
 end
 function c13257223.tgdisable(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -86,7 +86,7 @@ function c13257223.opdisable(e,tp,eg,ep,ev,re,r,rp)
 	if cl==nil then
 		cl=0
 	end
-	local d=Duel.TossDice(tp,1)
+	local d=Duel.TossDice(tp,1)+1
 	if cl<d and Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 		Duel.Damage(1-tp,cl*cl*40,REASON_EFFECT)

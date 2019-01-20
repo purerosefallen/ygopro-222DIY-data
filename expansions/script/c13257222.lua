@@ -6,7 +6,7 @@ function c13257222.initial_effect(c)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e0:SetCode(EFFECT_ADD_EXTRA_TRIBUTE)
 	e0:SetTargetRange(LOCATION_HAND,0)
-	e0:SetTarget(aux.TargetBoolFunction(c13257222.limit)
+	e0:SetTarget(aux.TargetBoolFunction(c13257222.limit))
 	e0:SetValue(POS_FACEUP_ATTACK)
 	c:RegisterEffect(e0)
 	--double tribute

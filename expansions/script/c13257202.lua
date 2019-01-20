@@ -1,67 +1,71 @@
---巨大战舰 晶核（D）
+--宇宙战争兵器 外壳 覆甲镭射
 function c13257202.initial_effect(c)
-	c:EnableCounterPermit(0x1f)
-	--Destroy replace
+	c:EnableReviveLimit()
+	--equip limit
+	local e11=Effect.CreateEffect(c)
+	e11:SetType(EFFECT_TYPE_SINGLE)
+	e11:SetCode(EFFECT_EQUIP_LIMIT)
+	e11:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e11:SetValue(c13257202.eqlimit)
+	c:RegisterEffect(e11)
+	--immune
+	local e12=Effect.CreateEffect(c)
+	e12:SetType(EFFECT_TYPE_SINGLE)
+	e12:SetCode(EFFECT_IMMUNE_EFFECT)
+	e12:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e12:SetRange(LOCATION_SZONE)
+	e12:SetCondition(c13257202.econ)
+	e12:SetValue(c13257202.efilter)
+	c:RegisterEffect(e12)
+	--atk up
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_SINGLE)
-	e1:SetCode(EFFECT_DESTROY_REPLACE)
-	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetTarget(c13257202.desreptg)
-	e1:SetOperation(c13257202.desrepop)
+	e1:SetType(EFFECT_TYPE_EQUIP)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetValue(c13257202.value)
 	c:RegisterEffect(e1)
-	--counter
-	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_COUNTER)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e2:SetCode(EVENT_SUMMON_SUCCESS)
-	e2:SetOperation(c13257202.ctop)
-	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
+	--actlimit
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e3:SetCode(EFFECT_CANNOT_ACTIVATE)
+	e3:SetRange(LOCATION_SZONE)
+	e3:SetTargetRange(0,1)
+	e3:SetValue(c13257202.aclimit)
+	e3:SetCondition(c13257202.actcon)
 	c:RegisterEffect(e3)
-	--Activate
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(13257202,1))
-	e4:SetCategory(CATEGORY_POSITION+CATEGORY_SEARCH+CATEGORY_TOHAND)
-	e4:SetType(EFFECT_TYPE_IGNITION)
-	e4:SetRange(LOCATION_MZONE)
-	e4:SetCountLimit(1)
-	e4:SetTarget(c13257202.postg)
-	e4:SetOperation(c13257202.posop)
-	c:RegisterEffect(e4)
+	c:RegisterFlagEffect(13257201,0,0,0,1)
 	
 end
-function c13257202.desreptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsReason(REASON_EFFECT+REASON_BATTLE)
-		and e:GetHandler():GetCounter(0x1f)>0 end
-	return true
-end
-function c13257202.desrepop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RemoveCounter(ep,0x1f,1,REASON_EFFECT)
-end
-function c13257202.ctop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x1f,3)
-end
-function c13257202.thfilter(c)
-	return c:IsSetCard(0x15) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
-end
-function c13257202.postg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAttackPos,tp,0,LOCATION_MZONE,1,nil) and Duel.IsExistingMatchingCard(c13257202.thfilter,tp,LOCATION_DECK,0,1,nil) end
-	local g=Duel.GetMatchingGroup(Card.IsAttackPos,tp,0,LOCATION_MZONE,nil)
-	Duel.SetOperationInfo(0,CATEGORY_POSITION,g,g:GetCount(),0,0)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-end
-function c13257202.posop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsAttackPos,tp,0,LOCATION_MZONE,nil)
-	if g:GetCount()>0 then
-		Duel.ChangePosition(g,POS_FACEUP_DEFENSE)
-		Duel.BreakEffect()
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-		local sg=Duel.SelectMatchingCard(tp,c13257202.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-		if sg:GetCount()>0 then
-			Duel.SendtoHand(sg,nil,REASON_EFFECT)
-			Duel.ConfirmCards(1-tp,sg)
-		end
+function c13257202.eqlimit(e,c)
+	local eg=c:GetEquipGroup()
+	local lv=c:GetOriginalLevel()
+	if lv==nil then lv=0 end
+	if not eg:IsContains(e:GetHandler()) then
+		eg:AddCard(e:GetHandler())
 	end
+	local cl=c:GetFlagEffectLabel(13257200)
+	if cl==nil then
+		cl=0
+	end
+	local er=e:GetHandler():GetFlagEffectLabel(13257201)
+	if er==nil then
+		er=0
+	end
+	return not (er>cl) and not (eg:Filter(Card.IsSetCard,nil,0x354):GetSum(Card.GetLevel)>lv) and not c:GetEquipGroup():IsExists(Card.IsCode,1,e:GetHandler(),e:GetHandler():GetCode())
+end
+function c13257202.econ(e)
+	return e:GetHandler():GetEquipTarget()
+end
+function c13257202.efilter(e,re)
+	return e:GetHandlerPlayer()~=re:GetOwnerPlayer()
+end
+function c13257202.value(e,c)
+	return c:GetLevel()*200
+end
+function c13257202.aclimit(e,re,tp)
+	return not re:GetHandler():IsImmuneToEffect(e)
+end
+function c13257202.actcon(e)
+	local tc=e:GetHandler():GetEquipTarget()
+	return Duel.GetAttacker()==tc or Duel.GetAttackTarget()==tc
 end
