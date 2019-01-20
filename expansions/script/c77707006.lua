@@ -10,11 +10,12 @@ function cm.initial_effect(c)
 	end
 	local function add_count_check(e,tp)
 		local c=e:GetHandler()
-		if Duel.GetTurnPlayer()~=tp and (c:IsLocation(LOCATION_HAND) or c:IsStatus(STATUS_ACT_FROM_HAND)) then return 1 else return 0 end
+		if Duel.GetTurnPlayer()==tp and (c:IsLocation(LOCATION_HAND) or c:IsStatus(STATUS_ACT_FROM_HAND)) then return 1 else return 0 end
 	end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,m)
 	e1:SetTarget(Senya.multi_choice_target(m,
 		function(e,tp,eg,ep,ev,re,r,rp,chk)
 			local count=1
@@ -56,7 +57,7 @@ function cm.initial_effect(c)
 		end,
 		function(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-			local g=Duel.SelectMatchingCard(tp,f2,tp,LOCATION_DECK,0,2,2,nil)
+			local g=Duel.SelectMatchingCard(tp,f2,tp,LOCATION_DECK,0,1,1,nil)
 			if g:GetCount()>0 then
 				Duel.SendtoHand(g,nil,REASON_EFFECT)
 				Duel.ConfirmCards(1-tp,g)
