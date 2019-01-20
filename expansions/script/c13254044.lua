@@ -25,17 +25,25 @@ function c13254044.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1,13254044)
 	e3:SetTarget(c13254044.target)
 	e3:SetOperation(c13254044.operation)
 	c:RegisterEffect(e3)
-	--change damage
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e4:SetCondition(c13254044.regcon)
-	e4:SetOperation(c13254044.regop)
+	e4:SetDescription(aux.Stringid(13254044,1))
+	e4:SetCategory(CATEGORY_REMOVE+CATEGORY_TODECK)
+	e4:SetType(EFFECT_TYPE_IGNITION)
+	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetTarget(c13254044.target1)
+	e4:SetOperation(c13254044.operation1)
 	c:RegisterEffect(e4)
+	--change damage
+	local e5=Effect.CreateEffect(c)
+	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e5:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e5:SetCondition(c13254044.regcon)
+	e5:SetOperation(c13254044.regop)
+	c:RegisterEffect(e5)
 end
 function c13254044.ffilter(c)
 	return c:IsRace(RACE_FAIRY) and c:IsLevelBelow(1)
@@ -116,6 +124,31 @@ function c13254044.operation(e,tp,eg,ep,ev,re,r,rp)
 		sg1:Merge(sg3)
 		Duel.HintSelection(sg1)
 		Duel.Remove(sg1,POS_FACEUP,REASON_EFFECT)
+	end
+end
+
+function c13254044.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c13254044.filter1(chkc) and c13254044.filter2(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c13254044.filter1,tp,LOCATION_GRAVE,0,1,nil) and Duel.IsExistingTarget(c13254044.filter2,tp,LOCATION_GRAVE,0,1,nil) and Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,2,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g1=Duel.SelectTarget(tp,c13254044.filter1,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g2=Duel.SelectTarget(tp,c13254044.filter2,tp,LOCATION_GRAVE,0,1,1,nil)
+	g1:Merge(g2)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g1,2,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,2,0,LOCATION_ONFIELD)
+end
+function c13254044.operation1(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
+	if Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)~=2 then return end
+	Duel.BreakEffect()
+	local g2=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,nil)
+	if g2:GetCount()>=2 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+		local sg2=g2:Select(tp,2,2,nil)
+		Duel.HintSelection(sg2)
+		Duel.Remove(sg2,POS_FACEUP,REASON_EFFECT)
 	end
 end
 function c13254044.regcon(e,tp,eg,ep,ev,re,r,rp)

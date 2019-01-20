@@ -27,9 +27,9 @@ function c47578916.initial_effect(c)
     c:RegisterEffect(e3)
 end
 function c47578916.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(c47578916.cfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,3,nil) end
+    if chk==0 then return Duel.IsExistingMatchingCard(c47578916.cfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_EXTRA,0,3,nil) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-    local g=Duel.SelectMatchingCard(tp,c47578916.cfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,3,3,nil)
+    local g=Duel.SelectMatchingCard(tp,c47578916.cfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_EXTRA,0,3,3,nil)
     Duel.SendtoDeck(g,nil,3,REASON_COST)
 end
 function c47578916.cfilter(c)

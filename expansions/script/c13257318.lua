@@ -7,19 +7,32 @@ function c13257318.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_PRE_DAMAGE_CALCULATE)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetCondition(c13257318.eqcon)
 	e1:SetTarget(c13257318.eqtg)
 	e1:SetOperation(c13257318.eqop)
 	c:RegisterEffect(e1)
-	--atk/def
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetDescription(aux.Stringid(13257318,4))
+	e2:SetCategory(CATEGORY_EQUIP)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_DESTROYED)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetCondition(c13257318.adcon)
-	e2:SetValue(c13257318.atkval)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e2:SetLabelObject(e1)
+	e2:SetCondition(c13257318.eqcon1)
+	e2:SetTarget(c13257318.eqtg1)
+	e2:SetOperation(c13257318.eqop1)
 	c:RegisterEffect(e2)
+	--atk/def
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCode(EFFECT_UPDATE_ATTACK)
+	e3:SetCondition(c13257318.adcon)
+	e3:SetValue(c13257318.atkval)
+	e3:SetLabelObject(e1)
+	c:RegisterEffect(e3)
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
 	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
@@ -50,6 +63,16 @@ function c13257318.initial_effect(c)
 	eflist={"power_capsule",e4}
 	c13257318[c]=eflist
 	
+end
+function c13257318.eqcon(e,tp,eg,ep,ev,re,r,rp)
+	return c13257318.can_equip_monster(e:GetHandler())
+end
+function c13257318.filter(c)
+	return c:GetFlagEffect(13257318)~=0
+end
+function c13257318.can_equip_monster(c)
+	local g=c:GetEquipGroup():Filter(c13257318.filter,nil)
+	return g:GetCount()==0
 end
 function c13257318.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
@@ -83,6 +106,50 @@ function c13257318.eqop(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetValue(c13257318.repval)
 			tc:RegisterEffect(e2)
 		else Duel.SendtoGrave(tc,REASON_EFFECT) end
+	end
+end
+function c13257318.eqfilter1(c,tp)
+	return c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
+end
+function c13257318.eqfilter2(c,e)
+	return c:IsRelateToEffect(e)
+end
+function c13257318.eqcon1(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c13257318.eqfilter1,1,nil,1-tp) and c13257318.can_equip_monster(e:GetHandler())
+end
+function c13257318.eqtg1(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c and Duel.GetAttacker()==c and tc:IsAbleToChangeControler() and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
+	Duel.SetTargetCard(eg)
+	Duel.SetOperationInfo(0,CATEGORY_EQUIP,eg,1,0,0)
+end
+function c13257318.eqop1(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local g=eg:Filter(c13257318.eqfilter2,nil,e)
+	if g:GetCount()>0 and tc:IsType(TYPE_MONSTER) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
+		local tc=g:Select(tp,1,1,nil):GetFirst()
+		if c:IsFaceup() and c:IsRelateToEffect(e) then
+			if not Duel.Equip(tp,tc,c,false) then return end
+			--Add Equip limit
+			tc:RegisterFlagEffect(13257318,RESET_EVENT+0x1fe0000,0,0)
+			e:GetLabelObject:SetLabelObject(tc)
+			local e1=Effect.CreateEffect(c)
+			e1:SetType(EFFECT_TYPE_SINGLE)
+			e1:SetProperty(EFFECT_FLAG_OWNER_RELATE)
+			e1:SetCode(EFFECT_EQUIP_LIMIT)
+			e1:SetReset(RESET_EVENT+0x1fe0000)
+			e1:SetValue(c13257318.eqlimit)
+			tc:RegisterEffect(e1)
+			--substitute
+			local e2=Effect.CreateEffect(c)
+			e2:SetType(EFFECT_TYPE_EQUIP)
+			e2:SetCode(EFFECT_DESTROY_SUBSTITUTE)
+			e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+			e2:SetReset(RESET_EVENT+0x1fe0000)
+			e2:SetValue(c13257318.repval)
+			tc:RegisterEffect(e2)
+		end
 	end
 end
 function c13257318.eqlimit(e,c)

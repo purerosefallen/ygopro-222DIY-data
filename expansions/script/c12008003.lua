@@ -10,6 +10,13 @@ function c12008003.initial_effect(c)
 	e1:SetTarget(c12008003.target)
 	e1:SetOperation(c12008003.operation)
 	c:RegisterEffect(e1) 
+	local e4=e1:Clone()
+	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetCode(EVENT_FREE_CHAIN)
+	e4:SetRange(LOCATION_HAND)
+	e4:SetHintTiming(TIMINGS_CHECK_MONSTER)
+	e4:SetCondition(c12008003.tdcon2)
+	c:RegisterEffect(e4)
 	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(12008003,1))
@@ -20,6 +27,9 @@ function c12008003.initial_effect(c)
 	e2:SetTarget(c12008003.sptg)
 	e2:SetOperation(c12008003.spop)
 	c:RegisterEffect(e2)
+end
+function c12008003.tdcon2(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetFlagEffect(tp,12008029)>0
 end
 function c12008003.cfilter(c)
 	return c:IsFacedown() or not c:IsSetCard(0x1fb3)

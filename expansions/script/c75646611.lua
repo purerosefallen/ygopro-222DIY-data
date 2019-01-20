@@ -24,7 +24,9 @@ function c75646611.initial_effect(c)
 	e3:SetTarget(c75646611.tg)
 	e3:SetOperation(c75646611.activate)
 	c:RegisterEffect(e3)
+	c75646611.key_effect=e3
 end
+c75646611.card_code_list={75646600}
 function c75646611.dircon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(tp,75646600)~=0
 end

@@ -1,6 +1,4 @@
 --天司长的化身 路西欧
-local m=47578922
-local cm=_G["c"..m]
 function c47578922.initial_effect(c)
     --pendulum summon
     aux.EnablePendulumAttribute(c)
@@ -16,11 +14,10 @@ function c47578922.initial_effect(c)
     --spsummon
     local e2=Effect.CreateEffect(c)
     e2:SetCategory(CATEGORY_TOHAND)
-    e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+    e2:SetType(EFFECT_TYPE_IGNITION)
     e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-    e2:SetCode(EVENT_DESTROYED)
+    e2:SetRange(LOCATION_PZONE)
     e2:SetCountLimit(1,47578922)
-    e2:SetCondition(c47578922.thcon)
     e2:SetTarget(c47578922.thtg)
     e2:SetOperation(c47578922.thop)
     c:RegisterEffect(e2)
@@ -28,15 +25,13 @@ function c47578922.initial_effect(c)
     local e3=Effect.CreateEffect(c)
     e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
     e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-    e3:SetCode(EVENT_SUMMON_SUCCESS)
+    e3:SetCode(EVENT_DESTROYED)
     e3:SetProperty(EFFECT_FLAG_DELAY)
     e3:SetCountLimit(1,47578923)
+    e3:SetCondition(c47578922.thcon)
     e3:SetTarget(c47578922.thtg2)
     e3:SetOperation(c47578922.thop2)
     c:RegisterEffect(e3)
-    local e4=e3:Clone()
-    e4:SetCode(EVENT_SPSUMMON_SUCCESS)
-    c:RegisterEffect(e4)
     --boost
     local e5=Effect.CreateEffect(c)
     e5:SetType(EFFECT_TYPE_FIELD)
@@ -71,10 +66,6 @@ end
 function c47578922.psplimit(e,c,tp,sumtp,sumpos)
     return not c:IsRace(RACE_FAIRY) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
-function c47578922.thcon(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
-    return c:IsPreviousLocation(LOCATION_PZONE) and c:IsFaceup()
-end
 function c47578922.filter(c)
     return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsRace(RACE_FAIRY) and c:IsAbleToHand()
 end
@@ -88,12 +79,16 @@ end
 function c47578922.thop(e,tp,eg,ep,ev,re,r,rp)
     local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
     local sg=g:Filter(Card.IsRelateToEffect,nil,e)
+    local c=e:GetHandler()
     if sg:GetCount()>0 then
         Duel.SendtoHand(sg,nil,REASON_EFFECT)
     end
 end
+function c47578922.thcon(e,tp,eg,ep,ev,re,r,rp)
+    return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0
+end
 function c47578922.thfilter(c)
-    return c:IsSetCard(0x5de) and c:IsAbleToHand()
+    return c:IsSetCard(0x5de) and c:IsLevelAbove(7) and c:IsAbleToHand()
 end
 function c47578922.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.IsExistingMatchingCard(c47578922.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -117,11 +112,13 @@ function c47578922.damcon(e)
 end
 function c47578922.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return true end
+    local c=e:GetHandler()
+    local atk=c:GetAttack()/2
     Duel.SetTargetPlayer(1-tp)
-    Duel.SetTargetParam(1250)
+    Duel.SetTargetParam(atk)
     Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,dam)
 end
 function c47578922.damop(e,tp,eg,ep,ev,re,r,rp)
     local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-    Duel.Damage(p,1250,REASON_EFFECT)
+    Duel.Damage(p,d,REASON_EFFECT)
 end

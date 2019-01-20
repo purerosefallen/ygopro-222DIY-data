@@ -26,10 +26,19 @@ function c13254049.initial_effect(c)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetCountLimit(1,13254049)
 	e3:SetTarget(c13254049.target)
 	e3:SetOperation(c13254049.operation)
 	c:RegisterEffect(e3)
+	--Charge
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(13254049,1))
+	e4:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
+	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e4:SetType(EFFECT_TYPE_IGNITION)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetTarget(c13254049.target1)
+	e4:SetOperation(c13254049.operation1)
+	c:RegisterEffect(e4)
 end
 function c13254049.ffilter(c)
 	return c:IsRace(RACE_FAIRY) and c:IsLevelBelow(1)
@@ -110,4 +119,22 @@ function c13254049.operation(e,tp,eg,ep,ev,re,r,rp)
 	if ct==5 then
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
+end
+
+function c13254049.target1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c13254049.filter1(chkc) and c13254049.filter2(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c13254049.filter1,tp,LOCATION_GRAVE,0,1,nil) and Duel.IsExistingTarget(c13254049.filter2,tp,LOCATION_GRAVE,0,1,nil) and Duel.IsPlayerCanDraw(tp,1) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g1=Duel.SelectTarget(tp,c13254049.filter1,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g2=Duel.SelectTarget(tp,c13254049.filter2,tp,LOCATION_GRAVE,0,1,1,nil)
+	g1:Merge(g2)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g1,2,0,0)
+end
+function c13254049.operation1(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
+	if Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)~=2 then return end
+	Duel.BreakEffect()
+	Duel.Draw(tp,1,REASON_EFFECT)
 end

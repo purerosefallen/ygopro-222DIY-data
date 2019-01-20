@@ -42,6 +42,7 @@ function c75646607.initial_effect(c)
 	e5:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x2c5))
 	e5:SetValue(aux.indoval)
 	c:RegisterEffect(e5)
+	c75646607.key_effect=e3
 end
 c75646607.card_code_list={75646600}
 function c75646607.dircon(e,tp,eg,ep,ev,re,r,rp)

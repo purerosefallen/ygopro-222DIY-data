@@ -26,6 +26,7 @@ function c75646615.initial_effect(c)
 	e3:SetTarget(c75646615.tg)
 	e3:SetOperation(c75646615.activate)
 	c:RegisterEffect(e3)
+	c75646615.key_effect=e3
 end
 c75646615.card_code_list={75646600}
 function c75646615.dircon(e,tp,eg,ep,ev,re,r,rp)

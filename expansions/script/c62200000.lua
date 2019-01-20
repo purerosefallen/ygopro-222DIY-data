@@ -65,3 +65,7 @@ end
 function baka.check_set_BugOfBug(c)
     return baka.check_set(c,"BugOfBug")--残 思 乐 源
 end
+--
+function baka.check_set_AnoKare(c)
+    return baka.check_set(c,"AnoKare")--残 思 乐 源
+end

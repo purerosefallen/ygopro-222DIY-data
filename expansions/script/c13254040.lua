@@ -37,6 +37,9 @@ end
 function c13254040.thfilter(c)
 	return c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER)
 end
+function c13254040.spfilter(c,e,tp)
+	return c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
 function c13254040.tgfilter(c)
 	return c:IsSetCard(0x3356) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end
@@ -65,12 +68,17 @@ function c13254040.activate(e,tp,eg,ep,ev,re,r,rp)
 	Duel.BreakEffect()
 	local g=Group.CreateGroup()
 	if code==13254031 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-		g=Duel.SelectMatchingCard(tp,c13254040.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-		local tc=g:GetFirst()
-		if tc then
-			Duel.SendtoHand()
-			Duel.ConfirmCards(1-tp,tc)
+		--Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+		--g=Duel.SelectMatchingCard(tp,c13254040.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+		--local tc=g:GetFirst()
+		--if tc then
+		--	Duel.SendtoHand()
+		--	Duel.ConfirmCards(1-tp,tc)
+		--end
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local g=Duel.SelectMatchingCard(tp,c13254040.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+		if g:GetCount()>0 then
+			Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 		end
 	elseif code==13254032 then
 		Duel.Draw(tp,1,REASON_EFFECT)

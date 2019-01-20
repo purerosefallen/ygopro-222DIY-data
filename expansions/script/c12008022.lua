@@ -13,6 +13,12 @@ function c12008022.initial_effect(c)
 	e1:SetTarget(c12008022.sptg)
 	e1:SetOperation(c12008022.spop)
 	c:RegisterEffect(e1)
+	local e4=e1:Clone()
+	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetCode(EVENT_FREE_CHAIN)
+	e4:SetHintTiming(TIMINGS_CHECK_MONSTER)
+	e4:SetCondition(c12008022.tdcon2)
+	c:RegisterEffect(e4)  
 
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(12008022,1))
@@ -27,6 +33,9 @@ function c12008022.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetCode(EVENT_TO_GRAVE)
 	c:RegisterEffect(e3) 
+end
+function c12008022.tdcon2(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetFlagEffect(tp,12008029)>0
 end
 function c12008022.spcon(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.GetLP(tp)~=Duel.GetLP(1-tp)

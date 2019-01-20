@@ -13,24 +13,13 @@ function c47514966.initial_effect(c)
     e1:SetTarget(c47514966.pctg)
     e1:SetOperation(c47514966.pcop)
     c:RegisterEffect(e1) 
-    --spssummon
-    local e2=Effect.CreateEffect(c)
-    e2:SetDescription(aux.Stringid(47514966,0))
-    e2:SetCategory(CATEGORY_TOGRAVE+CATEGORY_ATKCHANGE)
-    e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-    e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-    e2:SetCountLimit(1,47514966)
-    e2:SetCondition(c47514966.tgcon)
-    e2:SetTarget(c47514966.tgtg)
-    e2:SetOperation(c47514966.tgop)
-    c:RegisterEffect(e2)
     --change effect
     local e3=Effect.CreateEffect(c)
     e3:SetDescription(aux.Stringid(47514966,1))
     e3:SetType(EFFECT_TYPE_QUICK_O)
     e3:SetCode(EVENT_CHAINING)
     e3:SetRange(LOCATION_MZONE)
-    e3:SetCountLimit(1)
+    e3:SetCountLimit(1,47514966)
     e3:SetCondition(c47514966.chcon)
     e3:SetOperation(c47514966.chop)
     c:RegisterEffect(e3)
@@ -71,33 +60,6 @@ function c47514966.pcop(e,tp,eg,ep,ev,re,r,rp)
     local g=Duel.SelectMatchingCard(tp,c47514966.pcfilter,tp,LOCATION_EXTRA,0,1,1,nil)
     if g:GetCount()>0 then
         Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-    end
-end
-function c47514966.tgfilter(c,e,tp,dam)
-    return c:IsSetCard(0x5de) and c:IsAbleToGrave()
-end
-function c47514966.tgcon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO)
-end
-function c47514966.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-        and Duel.IsExistingMatchingCard(c47514966.tgfilter,tp,LOCATION_DECK,0,1,nil,e,tp,ev) end
-    Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
-end
-function c47514966.tgop(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-    local g=Duel.SelectMatchingCard(tp,c47514966.tgfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp,ev)
-    local tc=g:GetFirst()
-    local atk=tc:GetTextAttack()
-    if tc then
-        Duel.SendtoGrave(tc,nil,REASON_EFFECT)
-        local e1=Effect.CreateEffect(c)
-        e1:SetType(EFFECT_TYPE_SINGLE)
-        e1:SetCode(EFFECT_UPDATE_ATTACK)
-        e1:SetValue(atk)
-        e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-        c:RegisterEffect(e1)
     end
 end
 function c47514966.chcon(e,tp,eg,ep,ev,re,r,rp)

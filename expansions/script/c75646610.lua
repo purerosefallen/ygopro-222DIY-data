@@ -23,6 +23,7 @@ function c75646610.initial_effect(c)
 	e2:SetTarget(c75646610.tg)
 	e2:SetOperation(c75646610.activate)
 	c:RegisterEffect(e2)
+	c75646610.key_effect=e2
 end
 c75646610.card_code_list={75646600}
 function c75646610.costfilter(c)

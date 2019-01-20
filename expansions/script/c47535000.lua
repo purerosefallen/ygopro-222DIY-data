@@ -52,13 +52,11 @@ function c47535000.initial_effect(c)
     --disable
     local e6=Effect.CreateEffect(c)
     e6:SetType(EFFECT_TYPE_FIELD)
-    e6:SetCode(EFFECT_DISABLE)
-    e6:SetRange(LOCATION_MZONE)
+    e6:SetRange(LOCATION_SZONE)
+    e6:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
     e6:SetCondition(c47535000.discon)
+    e6:SetCode(EFFECT_DISABLE)
     c:RegisterEffect(e6)
-    local e7=e6:Clone()
-    e7:SetCode(EFFECT_DISABLE_EFFECT)
-    c:RegisterEffect(e7)
     --destroy
     local e8=Effect.CreateEffect(c)
     e8:SetDescription(aux.Stringid(47535000,1))
@@ -170,11 +168,11 @@ function c47535000.atkop(e,tp,eg,ep,ev,re,r,rp)
         e2:SetReset(RESET_PHASE+PHASE_DAMAGE)
         tc:RegisterEffect(e2,true)
 end
-function c47535000.discon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():GetOverlayGroup():GetClassCount(Card.GetCode)>=5
+function c47535000.discon(e)
+    return e:GetHandler():GetOverlayGroup():GetClassCount(Card.GetCode)>=6
 end
 function c47535000.descon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():GetOverlayGroup():GetClassCount(Card.GetCode)>=6
+    return e:GetHandler():GetOverlayGroup():GetClassCount(Card.GetCode)>=5
 end
 function c47535000.destg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end

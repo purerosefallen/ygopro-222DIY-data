@@ -23,6 +23,7 @@ function c75646602.initial_effect(c)
 	e2:SetCost(c75646602.cost1)
 	e2:SetOperation(c75646602.operation1)
 	c:RegisterEffect(e2)
+	c75646602.key_effect=e2
 end
 c75646602.card_code_list={75646600}
 function c75646602.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -42,7 +43,7 @@ function c75646602.con1(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp and bit.band(r,REASON_BATTLE)==REASON_BATTLE
 end
 function c75646602.op1(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Recover(tp,700,REASON_EFFECT)
+	if Duel.GetLP(tp)>0 then Duel.Recover(tp,700,REASON_EFFECT) end
 end
 function c75646602.cfilter(c)
 	return aux.IsCodeListed(c,75646600) and c:IsDiscardable()
@@ -69,9 +70,10 @@ function c75646602.con2(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp 
 end
 function c75646602.op2(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Recover(tp,ev,REASON_EFFECT)
-	if Duel.SelectYesNo(tp,aux.Stringid(75646602,2)) then
-		Duel.Draw(tp,1,REASON_EFFECT)
+	if Duel.GetLP(tp)>0 then Duel.Recover(tp,ev,REASON_EFFECT)
+		if Duel.SelectYesNo(tp,aux.Stringid(75646602,2)) then
+			Duel.Draw(tp,1,REASON_EFFECT)
+		end
 	end
 end
 function c75646602.condition(e,tp,eg,ep,ev,re,r,rp)
