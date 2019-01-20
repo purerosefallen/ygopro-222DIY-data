@@ -119,8 +119,8 @@ function cm.rmon(e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.rmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD,1,2,nil)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,0,LOCATION_MZONE,1,2,nil)
 	if g:GetCount()>0 then
-		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+		Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)
 	end
 end
