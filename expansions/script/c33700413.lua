@@ -10,8 +10,8 @@ function s.initial_effect(c)
     aux.AddSynchroProcedure(
         c,
         aux.FilterBoolFunction(Card.IsAttackBelow, 500),
-        1,
-        1,
+        --1,
+        --1,
         aux.NonTuner(Card.IsAttackBelow, 500),
         1,
         99
