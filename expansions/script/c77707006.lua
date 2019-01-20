@@ -15,6 +15,7 @@ function cm.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCountLimit(1,m)
 	e1:SetTarget(Senya.multi_choice_target(m,
 		function(e,tp,eg,ep,ev,re,r,rp,chk)
 			local count=1
