@@ -2,11 +2,11 @@
 update/update-push.bat	686b01a51bba916202d61d951cd7fe3e
 update/update-server.sh	6f1cdc3e06ec58b37b14b5d9d167263c
 update/update-without-sound.bat	1c2cfda2a0501642c8bceae026a73d5b
-update/version.txt	d9ffa35a2cc34771b7e8bc1d229f98af
+update/version.txt	da5ad925bdf9ea74c40e0de6f061a1c3
 update/update-push.sh	d018a223f65feef3467b22e252468f53
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
 update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
-update/filelist.txt	8ace44a99cde1ed863421cb5d4902b34
+update/filelist.txt	53b0e5a3ef7585b66656548ae3ebc379
 deck/20190120_new_card5.ydk	1712b13a15290da4d9a1a31602b13bff
 deck/20190120_new_card8.ydk	05f95cf281eff10818a2e80cdb842b44
 deck/20190120_new_card2.ydk	0f77434540a2c9d6dda244c73ce63ede
@@ -444,7 +444,7 @@ sound/BGM/advantage/1.00adv.mp3	99c7a36c726926e19f76f4113e042f96
 sound/BGM/advantage/1.986adv.mp3	b918e66d696f2f2dd82df5f8e01e6d7e
 sound/BGM/advantage/Monosugoikuruttoru Furantyanga Monosugoi Uta.mp3	6b69e22257e027b8d3e1c0b17ec36786
 sound/BGM/advantage/1.962adv.mp3	6cff2bf4929eaae90785bfbd7f97b6fc
-expansions/lflist.conf	6c9e4a3da479eb425a25ad995e755374
+expansions/lflist.conf	3419978c9e515574bafa4aeae6b9194c
 expansions/222DIY.cdb	8bcdc11ab3044ac96b8fa97e989da4a2
 expansions/strings.conf	0251f503beae60b92abfd40817e7d0f6
 expansions/script/c10904011.lua	4c27dfcd69ed23dbc450cfc28a708a0e
