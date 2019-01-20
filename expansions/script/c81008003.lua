@@ -47,6 +47,7 @@ function c81008003.initial_effect(c)
 	e4:SetOperation(c81008003.penop)
 	c:RegisterEffect(e4)
 end
+c81008003.pendulum_level=4
 function c81008003.atkcfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsDiscardable()
 end

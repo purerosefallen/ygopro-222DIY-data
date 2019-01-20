@@ -38,6 +38,7 @@ function c81011025.initial_effect(c)
 	e3:SetOperation(c81011025.penop)
 	c:RegisterEffect(e3)
 end
+c81011025.pendulum_level=2
 function c81011025.cfilter(c)
 	return c:IsLevel(2) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 end

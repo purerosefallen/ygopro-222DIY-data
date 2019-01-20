@@ -1050,6 +1050,7 @@ function cm.PendOperationNanahira()
 				local lscale=c:GetLeftScale()
 				local rscale=rpz:GetRightScale()
 				if lscale>rscale then lscale,rscale=rscale,lscale end
+                                local eset={Duel.IsPlayerAffectedByEffect(tp,EFFECT_EXTRA_PENDULUM_SUMMON)}
 				local ft=Duel.GetUsableMZoneCount(tp)
 				local mft=Duel.GetMZoneCount(tp)
 				local eft=Duel.GetLocationCountFromEx(tp)

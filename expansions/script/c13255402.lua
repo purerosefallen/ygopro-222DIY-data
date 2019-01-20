@@ -36,15 +36,15 @@ function c13255402.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if rg:GetCount()>0 then
 		Duel.BreakEffect()
+		local dp=1
 		if Duel.Remove(rg,POS_FACEDOWN,REASON_EFFECT)>0 then
-			local dp=0
 			if rg:FilterCount(Card.GetControler,nil,tp)==0 then
 				dp=dp+1
 			end
 			if rg:FilterCount(Card.GetControler,nil,1-tp)>=3 then
 				dp=dp+1
 			end
-			Duel.Draw(tp,dp,REASON_EFFECT)
 		end
+		Duel.Draw(tp,dp,REASON_EFFECT)
 	end
 end

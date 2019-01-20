@@ -45,6 +45,7 @@ function c81007113.initial_effect(c)
 	e4:SetOperation(c81007113.penop)
 	c:RegisterEffect(e4)
 end
+c81007113.pendulum_level=8
 function c81007113.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroup(tp,Card.IsLevel,1,nil,8) end
 	local g=Duel.SelectReleaseGroup(tp,Card.IsLevel,1,1,nil,8)

@@ -39,6 +39,7 @@ function c75646609.initial_effect(c)
 	e5:SetTarget(c75646609.thtg)
 	e5:SetOperation(c75646609.thop)
 	c:RegisterEffect(e5)
+	c75646609.key_effect=e5
 end
 c75646609.card_code_list={75646600}
 function c75646609.dircon(e,tp,eg,ep,ev,re,r,rp)

@@ -17,6 +17,7 @@ function c75646608.initial_effect(c)
 	c:RegisterEffect(e2)
 	--negate
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(75646608,0))
 	e3:SetCategory(CATEGORY_DISABLE)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_FREE_CHAIN)
@@ -28,6 +29,7 @@ function c75646608.initial_effect(c)
 	e3:SetTarget(c75646608.target1)
 	e3:SetOperation(c75646608.operation1)
 	c:RegisterEffect(e3)
+	c75646608.key_effect=e3
 	--Equip limit
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
@@ -35,15 +37,15 @@ function c75646608.initial_effect(c)
 	e4:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e4:SetValue(c75646608.eqlimit)
 	c:RegisterEffect(e4)
-	--draw
+	--Actlimit
 	local e5=Effect.CreateEffect(c)
-	e5:SetCategory(CATEGORY_DRAW)
-	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e5:SetProperty(EFFECT_FLAG_DELAY)
-	e5:SetCode(EVENT_TO_GRAVE)
-	e5:SetCondition(c75646608.drcon)
-	e5:SetTarget(c75646608.drtg)
-	e5:SetOperation(c75646608.drop)
+	e5:SetType(EFFECT_TYPE_FIELD)
+	e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e5:SetRange(LOCATION_SZONE)
+	e5:SetCode(EFFECT_CANNOT_ACTIVATE)
+	e5:SetTargetRange(0,1)
+	e5:SetValue(c75646608.aclimit)
+	e5:SetCondition(c75646608.actcon)
 	c:RegisterEffect(e5)
 end
 c75646608.card_code_list={75646600}
@@ -104,18 +106,11 @@ function c75646608.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Equip(tp,e:GetHandler(),tc)
 	end
 end
-function c75646608.drcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local ec=c:GetPreviousEquipTarget()
-	return c:IsReason(REASON_LOST_TARGET) and ec:IsReason(REASON_DESTROY) and Duel.GetFlagEffect(tp,75646600)~=0
+function c75646608.aclimit(e,re,tp)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and not re:GetHandler():IsImmuneToEffect(e)
 end
-function c75646608.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
-	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(1)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
-end
-function c75646608.drop(e,tp,eg,ep,ev,re,r,rp)
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	Duel.Draw(p,d,REASON_EFFECT)
+function c75646608.actcon(e)
+	local tc=e:GetHandler():GetEquipTarget()
+	return Duel.GetAttacker()==tc or Duel.GetAttackTarget()==tc
+		and Duel.GetFlagEffect(tp,75646600)~=0
 end

@@ -73,7 +73,7 @@ function c81000030.valcheck(e,c)
 	end
 end
 function c81000030.descfilter(c,lg)
-	return c:IsFaceup() and c:IsType(TYPE_RITUAL) and c:IsType(TYPE_PENDULUM) and lg:IsContains(c)
+	return c:IsType(TYPE_PENDULUM) and c:IsSummonType(SUMMON_TYPE_RITUAL) and lg:IsContains(c)
 end
 function c81000030.descon(e,tp,eg,ep,ev,re,r,rp)
 	local lg=e:GetHandler():GetLinkedGroup()

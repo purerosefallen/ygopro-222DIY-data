@@ -19,6 +19,12 @@ function c12008010.initial_effect(c)
 	e2:SetOperation(c12008010.spop)
 	c:RegisterEffect(e2)   
 	e1:SetLabelObject(e2)
+	local e7=e2:Clone()
+	e7:SetType(EFFECT_TYPE_QUICK_O)
+	e7:SetCode(EVENT_FREE_CHAIN)
+	e7:SetHintTiming(TIMINGS_CHECK_MONSTER)
+	e7:SetCondition(c12008010.tdcon2)
+	c:RegisterEffect(e7)  
 	--tograve
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(12008010,2))
@@ -33,6 +39,9 @@ function c12008010.initial_effect(c)
 	local e5=e4:Clone()
 	e5:SetCode(EVENT_REMOVE)
 	c:RegisterEffect(e5)
+end
+function c12008010.tdcon2(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetFlagEffect(tp,12008029)>0
 end
 function c12008010.tgfilter(c)
 	return c:IsSetCard(0x1fb3) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()

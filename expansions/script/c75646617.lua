@@ -18,6 +18,7 @@ function c75646617.initial_effect(c)
 	e2:SetCost(aux.bfgcost)
 	e2:SetOperation(c75646617.op)
 	c:RegisterEffect(e2)
+	c75646617.key_effect=e2
 end
 c75646617.card_code_list={75646600}
 function c75646617.recfilter(c)

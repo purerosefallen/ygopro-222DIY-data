@@ -61,7 +61,7 @@ end
 function cm.matfilter2(c,syncard)
 	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) 
 		and c:IsSynchroType(TYPE_PENDULUM) 
-		and c:IsNotTuner(nil)(syncard)
+		and c:IsNotTuner(syncard)
 		and c:IsRace(RACE_FAIRY) 
 		and c:IsCanBeSynchroMaterial(syncard)
 end

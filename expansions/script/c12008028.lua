@@ -11,6 +11,12 @@ function c12008028.initial_effect(c)
 	e1:SetTarget(c12008028.target)
 	e1:SetOperation(c12008028.operation)
 	c:RegisterEffect(e1) 
+	local e4=e1:Clone()
+	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetCode(EVENT_FREE_CHAIN)
+	e4:SetHintTiming(TIMINGS_CHECK_MONSTER)
+	e4:SetCondition(c12008028.tdcon2)
+	c:RegisterEffect(e4)  
 	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(12008028,1))
@@ -24,23 +30,26 @@ function c12008028.initial_effect(c)
 	e2:SetOperation(c12008028.spop)
 	c:RegisterEffect(e2)   
 end
+function c12008028.tdcon2(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetFlagEffect(tp,12008029)>0
+end
 function c12008028.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not e:GetHandler():IsReason(REASON_DRAW)
 end
 function c12008028.spfilter(c)
-	return c:IsAttribute(ATTRIBUTE_EARTH+ATTRIBUTE_FIRE) and c:IsAbleToHand()
+	return c:IsAttribute(ATTRIBUTE_EARTH+ATTRIBUTE_FIRE) and c:IsAbleToHand() and c:IsFaceup()
 end
 function c12008028.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c12008028.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,LOCATION_GRAVE+LOCATION_REMOVED,1,nil) and e:GetHandler():IsAbleToDeck() end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE+LOCATION_REMOVED)
+		and Duel.IsExistingMatchingCard(c12008028.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_EXTRA,LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_EXTRA,1,nil) and e:GetHandler():IsAbleToDeck() end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_EXTRA)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,e:GetHandler(),1,tp,LOCATION_HAND)
 end
 function c12008028.spop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
 	Duel.SendtoDeck(c,nil,2,REASON_EFFECT)
-	local dg=Duel.GetMatchingGroup(c12008028.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,LOCATION_GRAVE+LOCATION_REMOVED,nil)
+	local dg=Duel.GetMatchingGroup(c12008028.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_EXTRA,LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_EXTRA,nil)
 	if dg:GetCount()>0 then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
@@ -72,7 +81,7 @@ function c12008028.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local tg=sg:FilterSelect(tp,Card.IsRace,1,1,nil,RACE_MACHINE)
 	Duel.DisableShuffleCheck()
-	Duel.SendtoHand(tg,nil,REASON_EFFECT)
+	Duel.SendtoHand(tg,tp,REASON_EFFECT)
 	Duel.ConfirmCards(1-tp,tg)
 	Duel.DiscardDeck(tp,3,REASON_EFFECT+REASON_REVEAL)
 	Duel.ShuffleDeck(tp)

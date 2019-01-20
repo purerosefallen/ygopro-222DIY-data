@@ -1,0 +1,122 @@
+--狩狼牙·罪
+function c47593334.initial_effect(c)
+    --xyz summon
+    aux.AddXyzProcedure(c,nil,5,2)
+    c:EnableReviveLimit()
+    local e1=Effect.CreateEffect(c)
+    e1:SetType(EFFECT_TYPE_FIELD)
+    e1:SetCode(EFFECT_IMMUNE_EFFECT)
+    e1:SetRange(LOCATION_MZONE)
+    e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+    e1:SetTargetRange(LOCATION_MZONE,0)
+    e1:SetCondition(c47593334.indcon)
+    e1:SetTarget(c47593334.target)
+    e1:SetValue(c47593334.efilter)
+    c:RegisterEffect(e1)
+    --summon success
+    local e2=Effect.CreateEffect(c)
+    e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+    e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+    e2:SetCondition(c47593334.sumcon)
+    e2:SetOperation(c47593334.sumsuc)
+    c:RegisterEffect(e2)    
+    --
+    local e3=Effect.CreateEffect(c)
+    e3:SetType(EFFECT_TYPE_QUICK_O)
+    e3:SetRange(LOCATION_MZONE)
+    e3:SetCode(EVENT_FREE_CHAIN)
+    e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+    e3:SetCountLimit(1)
+    e3:SetCondition(c47593334.atkcon)
+    e3:SetCost(c47593334.atkcost)
+    e3:SetOperation(c47593334.atkop)
+    c:RegisterEffect(e3)
+end
+function c47593334.indcon(e)
+    return e:GetHandler():GetOverlayCount()>0
+end
+function c47593334.target(e,c)
+    return c:IsRace(RACE_DRAGON) and c:IsRankAbove(8) and c:IsType(TYPE_XYZ) and c:IsAttribute(ATTRIBUTE_LIGHT)
+end
+function c47593334.efilter(e,te)
+    return te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+end
+function c47593334.sumcon(e,tp,eg,ep,ev,re,r,rp)
+    return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
+end
+function c47593334.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+    local e1=Effect.CreateEffect(e:GetHandler())
+    e1:SetType(EFFECT_TYPE_FIELD)
+    e1:SetCode(EFFECT_CANNOT_ACTIVATE)
+    e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+    e1:SetTargetRange(0,1)
+    e1:SetValue(c47593334.actlimit)
+    e1:SetReset(RESET_PHASE+PHASE_END)
+    Duel.RegisterEffect(e1,tp)
+    local e4=Effect.CreateEffect(e:GetHandler())
+    e4:SetType(EFFECT_TYPE_FIELD)
+    e4:SetCode(EFFECT_CANNOT_MSET)
+    e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+    e4:SetTargetRange(0,1)
+    e4:SetTarget(aux.TRUE)
+    e4:SetReset(RESET_PHASE+PHASE_END)
+    Duel.RegisterEffect(e4,tp)
+    local e5=e4:Clone()
+    e5:SetCode(EFFECT_CANNOT_SSET)
+    Duel.RegisterEffect(e5,tp)
+    local e6=e4:Clone()
+    e6:SetCode(EFFECT_CANNOT_TURN_SET)
+    Duel.RegisterEffect(e6,tp)
+    local e7=e4:Clone()
+    e7:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+    e7:SetTarget(c47593334.sumlimit)
+    Duel.RegisterEffect(e7,tp)
+end
+function c47593334.sumlimit(e,c,sump,sumtype,sumpos,targetp)
+    return bit.band(sumpos,POS_FACEDOWN)>0
+end
+function c47593334.actlimit(e,te,tp)
+    return te:GetHandler():IsFacedown()
+end
+function c47593334.atkcon(e)
+    local c=e:GetHandler()
+    local ph=Duel.GetCurrentPhase()
+    local tp=Duel.GetTurnPlayer()
+    return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE and c:IsDisabled()
+end
+function c47593334.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
+    if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
+    e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
+end
+function c47593334.atkop(e,tp,eg,ep,ev,re,r,rp)
+    local e1=Effect.CreateEffect(e:GetHandler())
+    e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+    e1:SetCode(EVENT_ATTACK_ANNOUNCE)
+    e1:SetCondition(c47593334.actcon)
+    e1:SetOperation(c47593334.atkop2)
+    e1:SetReset(RESET_PHASE+PHASE_END)
+    Duel.RegisterEffect(e1,tp)
+    local e2=e1:Clone()
+    e2:SetCode(EVENT_BE_BATTLE_TARGET)
+    Duel.RegisterEffect(e2,tp)
+end
+function c47593334.actcon(e,tp,eg,ep,ev,re,r,rp)
+    local tc=Duel.GetAttacker()
+    if tc:IsControler(1-tp) then tc=Duel.GetAttackTarget() end
+    return tc and tc:IsControler(tp) and tc:IsAttribute(ATTRIBUTE_LIGHT) and tc:IsRace(RACE_DRAGON) and tc:IsRankAbove(8)
+end
+function c47593334.atkop2(e,tp,eg,ep,ev,re,r,rp)
+    local c=e:GetHandler()
+    local tc=Duel.GetAttackTarget()
+    if not tc then return end
+    if tc:IsControler(tp) then tc=Duel.GetAttacker() end
+    Duel.ChangePosition(tc,POS_FACEUP_ATTACK,true)
+    local e1=Effect.CreateEffect(c)
+    e1:SetType(EFFECT_TYPE_SINGLE)
+    e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
+    e1:SetRange(LOCATION_MZONE)
+    e1:SetCode(EFFECT_SET_ATTACK_FINAL)
+    e1:SetValue(0)
+    e1:SetReset(RESET_PHASE+PHASE_DAMAGE)
+    tc:RegisterEffect(e1,true)
+end

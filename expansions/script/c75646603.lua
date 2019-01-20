@@ -14,6 +14,7 @@ function c75646603.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_SUMMON_SUCCESS)
+	e2:SetCondition(c75646603.recon)
 	e2:SetOperation(c75646603.recop)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
@@ -31,6 +32,7 @@ function c75646603.initial_effect(c)
 	e4:SetTarget(c75646603.target)
 	e4:SetOperation(c75646603.operation)
 	c:RegisterEffect(e4)
+	c75646603.key_effect=e4
 end
 c75646603.card_code_list={75646600}
 function c75646603.recop(e,tp,eg,ep,ev,re,r,rp)
@@ -38,6 +40,12 @@ function c75646603.recop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c75646603.con(e,tp,eg,ep,ev,re,r,rp)
 	return ep==tp
+end
+function c75646603.recfilter(c)
+	return c:IsFaceup()
+end
+function c75646603.recon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c75646603.recfilter,1,nil) and not eg:IsContains(e:GetHandler())
 end
 function c75646603.op(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())

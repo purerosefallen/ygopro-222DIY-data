@@ -41,7 +41,6 @@ function c47514896.initial_effect(c)
     e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
     e4:SetCode(EVENT_CHAINING)
     e4:SetRange(LOCATION_MZONE)
-    e4:SetCondition(c47514896.chaincon)
     e4:SetOperation(c47514896.chainop)
     c:RegisterEffect(e4)  
     --apply effect
@@ -72,12 +71,12 @@ function c47514896.pencon(e,tp,eg,ep,ev,re,r,rp)
     return Duel.IsExistingMatchingCard(c47514896.cfilter,tp,LOCATION_PZONE,0,1,e:GetHandler())
 end
 function c47514896.penfilter(c)
-    return c:IsSetCard(0x5da) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden() and not c:IsCode(47514896)
+    return c:IsType(TYPE_PENDULUM) and not c:IsForbidden()
 end
 function c47514896.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
     local sc=Duel.GetFirstMatchingCard(nil,tp,LOCATION_PZONE,0,e:GetHandler())
     if chk==0 then return e:GetHandler():IsDestructable()
-        and Duel.IsExistingMatchingCard(c47514896.penfilter,tp,LOCATION_DECK,0,1,nil) end
+        and Duel.IsExistingMatchingCard(c47514896.penfilter,tp,LOCATION_EXTRA,0,1,nil) end
     Duel.SetTargetCard(sc)
     Duel.SetOperationInfo(0,CATEGORY_DESTROY,sc,1,0,0)
 end
@@ -86,7 +85,7 @@ function c47514896.penop(e,tp,eg,ep,ev,re,r,rp)
     local tc=Duel.GetFirstTarget()
     if tc:IsRelateToEffect(e) and Duel.Destroy(tc,REASON_EFFECT)~=0 then
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-        local g=Duel.SelectMatchingCard(tp,c47514896.penfilter,tp,LOCATION_DECK,0,1,1,nil)
+        local g=Duel.SelectMatchingCard(tp,c47514896.penfilter,tp,LOCATION_EXTRA,0,1,1,nil)
         local tc=g:GetFirst()
         if tc then
             Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
@@ -97,25 +96,22 @@ function c47514896.thcon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end
 function c47514896.thfilter(c)
-    return (c:IsSetCard(0x5da) or c:IsSetCard(0x5de) or c:IsSetCard(0x5d0)) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
+    return (c:IsSetCard(0x5da) or c:IsSetCard(0x5de) or c:IsSetCard(0x5d0)) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand() and c:IsFaceup()
 end
 function c47514896.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(c47514896.thfilter,tp,LOCATION_DECK,0,1,nil) end
-    Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+    if chk==0 then return Duel.IsExistingMatchingCard(c47514896.thfilter,tp,LOCATION_EXTRA,0,1,nil) end
+    Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_EXTRA)
 end
 function c47514896.thop(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-    local g=Duel.SelectMatchingCard(tp,c47514896.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+    local g=Duel.SelectMatchingCard(tp,c47514896.thfilter,tp,LOCATION_EXTRA,0,1,1,nil)
     if g:GetCount()>0 then
         Duel.SendtoHand(g,nil,REASON_EFFECT)
         Duel.ConfirmCards(1-tp,g)
     end
 end
-function c47514896.chaincon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
-end
 function c47514896.chainop(e,tp,eg,ep,ev,re,r,rp)
-    if re:GetHandler():IsType(TYPE_PENDULUM) and (re:IsActiveType(TYPE_MONSTER) or re:IsActiveType(TYPE_SPELL)) and ep==tp then
+    if re:GetHandler():IsType(TYPE_PENDULUM) and re:IsActiveType(TYPE_SPELL) and ep==tp then
         Duel.SetChainLimit(c47514896.chainlm)
     end
 end

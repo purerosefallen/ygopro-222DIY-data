@@ -12,6 +12,12 @@ function c12008014.initial_effect(c)
 	e2:SetTarget(c12008014.sptg)
 	e2:SetOperation(c12008014.spop)
 	c:RegisterEffect(e2) 
+	local e4=e2:Clone()
+	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetCode(EVENT_FREE_CHAIN)
+	e4:SetHintTiming(TIMINGS_CHECK_MONSTER)
+	e4:SetCondition(c12008014.tdcon2)
+	c:RegisterEffect(e4) 
 	--tograve
 	local e4=Effect.CreateEffect(c)
 	e4:SetDescription(aux.Stringid(12008014,2))
@@ -26,6 +32,9 @@ function c12008014.initial_effect(c)
 	local e5=e4:Clone()
 	e5:SetCode(EVENT_REMOVE)
 	c:RegisterEffect(e5)	
+end
+function c12008014.tdcon2(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetFlagEffect(tp,12008029)>0
 end
 function c12008014.spfilter(c,e,tp)
 	return c:IsFaceup() and c:IsReason(REASON_EFFECT) and c:GetReasonEffect():GetHandler():IsSetCard(0x1fb3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(12008014)

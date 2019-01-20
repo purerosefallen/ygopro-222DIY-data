@@ -8,7 +8,6 @@ function cm.initial_effect(c)
 	c:EnableReviveLimit()
 	--reborn preparation
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(m,0))
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_CHAINING)
@@ -29,6 +28,7 @@ function cm.initial_effect(c)
 	e3:SetCode(EFFECT_SPSUMMON_PROC)
 	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e3:SetRange(LOCATION_HAND)
+	e3:SetCountLimit(1,m)
 	e3:SetCondition(cm.spcon)
 	e3:SetOperation(cm.spop)
 	c:RegisterEffect(e3)
@@ -43,10 +43,10 @@ function cm.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return e:GetHandler():GetFlagEffect(m)>9
-	and Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0,nil)==0
-		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function cm.spop(e,tp,eg,ep,ev,re,r,rp,c)
+	Duel.ConfirmCards(1-tp,e:GetHandler())
 	local op=Duel.SelectOption(tp,aux.Stringid(m,1),aux.Stringid(m,2))
 	e:SetLabel(op)
 	if op==0 then

@@ -37,6 +37,7 @@ function c81012046.initial_effect(c)
 	e4:SetOperation(c81012046.penop)
 	c:RegisterEffect(e4)
 end
+c81012046.pendulum_level=6
 function c81012046.filter(c)
 	local lv=c:GetLevel()
 	return c:IsFaceup() and not c:IsLevel(4)
