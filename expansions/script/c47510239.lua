@@ -32,7 +32,6 @@ function c47510239.initial_effect(c)
     e5:SetRange(LOCATION_PZONE)
     e5:SetCode(EVENT_FREE_CHAIN)
     e5:SetCountLimit(1,47510240)
-    e5:SetCondition(c47510239.sumcon)
     e5:SetTarget(c47510239.sumtg)
     e5:SetOperation(c47510239.sumop)
     c:RegisterEffect(e5) 
@@ -77,9 +76,6 @@ end
 function c47510239.sumfilter(c)
     return c:IsFacedown() or not c:IsRace(RACE_FAIRY)
 end
-function c47510239.sumcon(e,tp,eg,ep,ev,re,r,rp,chk)
-    return (Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)==0 or not Duel.IsExistingMatchingCard(c47510239.sumfilter,tp,LOCATION_MZONE,0,1,nil))
-end
 function c47510239.sumtg(e,tp,eg,ep,ev,re,r,rp,chk)
     local c=e:GetHandler()
     if chk==0 then return c:IsSummonable(true,nil,1) or c:IsMSetable(true,nil,1) end
@@ -102,8 +98,8 @@ function c47510239.chfilter(c)
     return c:IsRace(RACE_FAIRY) and c:IsLevelAbove(7)
 end
 function c47510239.chcost(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND+LOCATION_EXTRA,0,1,nil) end
-    Duel.SendtoGrave(tp,c47510239.chfilter,1,1,REASON_COST+REASON_DISCARD)
+    if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND+LOCATION_EXTRA,0,2,nil) end
+    Duel.SendtoGrave(tp,c47510239.chfilter,2,2,REASON_COST+REASON_DISCARD)
 end
 function c47510239.changetg(e,tp,eg,ep,ev,re,r,rp,chk)
     local c=e:GetHandler()

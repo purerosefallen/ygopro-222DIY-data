@@ -58,7 +58,7 @@ function c13257220.condition(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13257220.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	local ec=Duel.GetEquipTarget()
+	local ec=c:GetEquipTarget()
 	if ec and c:IsRelateToEffect(e) and ec:IsFaceup() then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)

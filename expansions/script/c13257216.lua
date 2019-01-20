@@ -1,95 +1,93 @@
---复仇之威诺姆（D）
+--宇宙战争兵器 小炮 电荷炮
 function c13257216.initial_effect(c)
-	--spsummon
+	c:EnableReviveLimit()
+	--equip limit
+	local e11=Effect.CreateEffect(c)
+	e11:SetType(EFFECT_TYPE_SINGLE)
+	e11:SetCode(EFFECT_EQUIP_LIMIT)
+	e11:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e11:SetValue(c13257216.eqlimit)
+	c:RegisterEffect(e11)
+	--immune
+	local e12=Effect.CreateEffect(c)
+	e12:SetType(EFFECT_TYPE_SINGLE)
+	e12:SetCode(EFFECT_IMMUNE_EFFECT)
+	e12:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e12:SetRange(LOCATION_SZONE)
+	e12:SetCondition(c13257216.econ)
+	e12:SetValue(c13257216.efilter)
+	c:RegisterEffect(e12)
+	--atk up
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e1:SetRange(LOCATION_HAND)
-	e1:SetCode(EVENT_DESTROYED)
-	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e1:SetCondition(c13257216.spcon)
-	e1:SetTarget(c13257216.sptg)
-	e1:SetOperation(c13257216.spop)
+	e1:SetType(EFFECT_TYPE_EQUIP)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetValue(500)
 	c:RegisterEffect(e1)
-	local e2=e1:Clone()
-	e2:SetCode(EVENT_REMOVE)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_EQUIP)
+	e2:SetCode(EFFECT_UPDATE_DEFENSE)
+	e2:SetValue(200)
 	c:RegisterEffect(e2)
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(13257216,0))
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_QUICK_O)
-	e3:SetCode(EVENT_CHAINING)
-	e3:SetRange(LOCATION_MZONE)
-	e3:SetCondition(c13257216.descon)
-	e3:SetCost(c13257216.descost)
+	e3:SetCode(EVENT_FREE_CHAIN)
+	e3:SetRange(LOCATION_SZONE)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e3:SetCountLimit(1)
+	e3:SetHintTiming(0,0x1e0)
+	e3:SetCondition(c13257216.econ)
 	e3:SetTarget(c13257216.destg)
 	e3:SetOperation(c13257216.desop)
 	c:RegisterEffect(e3)
-	local e4=Effect.CreateEffect(c)
-	e4:SetDescription(aux.Stringid(13257216,1))
-	e4:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
-	e4:SetType(EFFECT_TYPE_IGNITION)
-	e4:SetRange(LOCATION_GRAVE)
-	e4:SetCountLimit(1,13257216)
-	e4:SetCondition(aux.exccon)
-	e4:SetCost(c13257216.thcost)
-	e4:SetTarget(c13257216.thtg)
-	e4:SetOperation(c13257216.thop)
-	c:RegisterEffect(e4)
+	c:RegisterFlagEffect(13257201,0,0,0,2)
 	
 end
-function c13257216.cfilter(c,tp)
-	return c:GetPreviousControler()==tp and c:IsPreviousLocation(LOCATION_MZONE)
-		and c:GetReasonPlayer()~=tp and c:IsReason(REASON_EFFECT)
-end
-function c13257216.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c13257216.cfilter,1,nil,tp)
-end
-function c13257216.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
-end
-function c13257216.spop(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) then
-		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+function c13257216.eqlimit(e,c)
+	local eg=c:GetEquipGroup()
+	local lv=c:GetOriginalLevel()
+	if lv==nil then lv=0 end
+	if not eg:IsContains(e:GetHandler()) then
+		eg:AddCard(e:GetHandler())
 	end
+	local cl=c:GetFlagEffectLabel(13257200)
+	if cl==nil then
+		cl=0
+	end
+	local er=e:GetHandler():GetFlagEffectLabel(13257201)
+	if er==nil then
+		er=0
+	end
+	return not (er>cl) and not (eg:Filter(Card.IsSetCard,nil,0x354):GetSum(Card.GetLevel)>lv) and not c:GetEquipGroup():IsExists(Card.IsCode,1,e:GetHandler(),e:GetHandler():GetCode())
 end
-function c13257216.descon(e,tp,eg,ep,ev,re,r,rp)
-	return re:GetHandler():IsOnField() and re:GetHandler():IsFaceup() and (re:IsActiveType(TYPE_MONSTER)
-		or (re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and not re:IsHasType(EFFECT_TYPE_ACTIVATE)))
+function c13257216.econ(e)
+	return e:GetHandler():GetEquipTarget()
 end
-function c13257216.descost(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:GetFlagEffect(13257216)==0 end
-	c:RegisterFlagEffect(13257216,RESET_CHAIN,0,1)
+function c13257216.efilter(e,re)
+	return e:GetHandlerPlayer()~=re:GetOwnerPlayer()
 end
 function c13257216.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return re:GetHandler():IsDestructable() end
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
+	local ec=e:GetHandler():GetEquipTarget()
+	if chkc then return chkc:IsOnField() and chkc:IsFaceup() and chkc:IsControler(1-tp) end
+	if chk==0 then return Duel.IsExistingTarget(nil,tp,0,LOCATION_MZONE,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local g=Duel.SelectTarget(tp,nil,tp,0,LOCATION_MZONE,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
 end
 function c13257216.desop(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsRelateToEffect(re) then
-		Duel.Destroy(eg,REASON_EFFECT)
-	end
-end
-function c13257216.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() end
-	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
-end
-function c13257216.thfilter(c)
-	return c:IsSetCard(0x15) and c:IsAbleToHand()
-end
-function c13257216.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c13257216.thfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-end
-function c13257216.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c13257216.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
+	local tc=Duel.GetFirstTarget()
+	local c=e:GetHandler()
+	if e:GetHandler():IsRelateToEffect(e) and tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		local ct=c:GetEquipTarget():GetFlagEffectLabel(13257200)
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_LEVEL)
+		e1:SetValue(-ct)
+		e1:SetReset(RESET_EVENT+0x1fe0000)
+		tc:RegisterEffect(e1)
+		if tc:IsFaceup() and tc:GetLevel()==1 then
+			Duel.Destroy(tc,REASON_EFFECT)
+		end
 	end
 end

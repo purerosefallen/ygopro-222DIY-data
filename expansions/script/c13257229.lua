@@ -42,7 +42,7 @@ function c13257229.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return not e:GetHandler():IsPublic() end
 end
 function c13257229.filter(c)
-	return (c:IsRace(RACE_MACHINE) or c:IsRace(RACE_FAIRY)) and c:IsLevelAbove(6) c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return (c:IsRace(RACE_MACHINE) or c:IsRace(RACE_FAIRY)) and c:IsLevelAbove(6) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c13257229.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c13257229.filter,tp,LOCATION_DECK,0,1,nil) end
