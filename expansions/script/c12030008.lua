@@ -55,13 +55,13 @@ function c12030008.operation(e,tp,eg,ep,ev,re,r,rp)
 	   Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	   local e6=Effect.CreateEffect(c)
 	   e6:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	   e6:SetCode(EFFECT_DISABLE)
+	   e6:SetCode(EVENT_CHAIN_SOLVING)
 	   e6:SetReset(RESET_CHAIN)
-	   e6:SetOperation(c12030008.disop)
+	   e6:SetOperation(c12030008.disop1)
 	   Duel.RegisterEffect(e6,tp)
 	end
 end
-function c12030008.disop(e,tp,eg,ep,ev,re,r,rp)
+function c12030008.disop1(e,tp,eg,ep,ev,re,r,rp)
 	if re:GetHandler():GetLocation()==LOCATION_GRAVE
 	 then
 		Duel.NegateEffect(ev)
@@ -105,7 +105,7 @@ function c12030008.drop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c12030008.cfilter),tp,0,LOCATION_GRAVE,1,1,nil)
 	if g:GetCount()>0 then
 	   Duel.SendtoHand(g,tp,REASON_EFFECT)
-	   Duel.ConfirmCards(g)
+	   Duel.ConfirmCards(g,1-tp)
 	end
 	local ss=Duel.GetMatchingGroup(nil,tp,0,LOCATION_GRAVE,nil)
 	if  rp==1-tp and tp==e:GetLabel() then
