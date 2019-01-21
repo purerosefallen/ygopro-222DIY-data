@@ -105,7 +105,7 @@ function c12030008.drop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c12030008.cfilter),tp,0,LOCATION_GRAVE,1,1,nil)
 	if g:GetCount()>0 then
 	   Duel.SendtoHand(g,tp,REASON_EFFECT)
-	   Duel.ConfirmCards(g,1-tp)
+	   Duel.ConfirmCards(1-tp,g)
 	end
 	local ss=Duel.GetMatchingGroup(nil,tp,0,LOCATION_GRAVE,nil)
 	if  rp==1-tp and tp==e:GetLabel() then

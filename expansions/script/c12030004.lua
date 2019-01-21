@@ -11,6 +11,7 @@ function c12030004.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_DAMAGE)
 	e1:SetRange(LOCATION_HAND)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCondition(c12030004.condition)
 	e1:SetTarget(c12030004.target)
 	e1:SetOperation(c12030004.operation)
@@ -42,7 +43,7 @@ function c12030004.named_with_yatori(c)
 	return m and m.halo_yatori
 end
 function c12030004.condition(e,tp,eg,ep,ev,re,r,rp)
-	return ep==tp and 1-tp==rp
+	return ep==tp
 end
 function c12030004.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
