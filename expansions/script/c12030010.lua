@@ -36,17 +36,7 @@ function c12030010.initial_effect(c)
 	e2:SetOperation(c12030010.activate)
 	c:RegisterEffect(e2) 
 
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(12030010,2))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCode(EVENT_TO_GRAVE)
-	e2:SetCountLimit(1,12030010)
-	e2:SetCondition(c12030010.spcon)
-	e2:SetTarget(c12030010.sptg)
-	e2:SetOperation(c12030010.spop)
-	c:RegisterEffect(e2)
+	local e3=rsef.STO(c,EVENT_TO_GRAVE,{m,2},{1,m},"sp","tg,de",cm.spcon,nil,rstg.target({cm.spfilter,"sp",LOCATION_GRAVE }),cm.spop)
 end
 c12030010.halo_yatori=1
 function c12030010.named_with_yatori(c)
@@ -54,7 +44,7 @@ function c12030010.named_with_yatori(c)
 	return m and m.halo_yatori
 end
 function c12030010.splimit(e,se,sp,st)
-	return not ( se:IsHasType(EFFECT_TYPE_ACTIONS) and se:GetHandler():CheckSetCard("yatori") )
+	return ( se:IsHasType(EFFECT_TYPE_ACTIONS) and se:GetHandler():CheckSetCard("yatori") )
 end
 function c12030010.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) end
@@ -87,22 +77,16 @@ function c12030010.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	 Duel.NegateAttack() 
 end
-function c12030010.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsReason(REASON_COST) and re:IsHasType(0x7e0) and re:IsActiveType(TYPE_MONSTER)
+function cm.spcon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:IsReason(REASON_COST) and re:IsHasType(0x7e0) and re:IsActiveType(TYPE_MONSTER)
 end
-function c12030010.spfilter(c,e,tp)
+function cm.spfilter(c,e,tp)
 	return c:CheckSetCard("yatori") and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c12030010.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c12030010.spfilter(chkc,e,tp) end
-	if chk==0 then return true end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectTarget(tp,c12030010.spfilter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
-end
-function c12030010.spop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc and tc:IsRelateToEffect(e) then
-		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+function cm.spop(e,tp)
+	local tc=rscf.GetTargetCard()
+	if tc then
+		rssf.SpecialSummon(tc)
 	end
 end

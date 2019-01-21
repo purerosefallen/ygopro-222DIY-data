@@ -43,8 +43,9 @@ function c12030001.named_with_yatori(c)
 end
 function c12030001.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
+	local at=Duel.GetAttacker()
 	if chk==0 then
-		return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+		return at:GetControler()~=tp and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
 end
@@ -54,12 +55,14 @@ function c12030001.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.NegateAttack()
 	end
 end
-
+function c12030001.disfilter1(c)
+	return  c:IsType(TYPE_MONSTER) and not c:IsDisabled()
+end
 function c12030001.distg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and aux.disfilter1(chkc) end
+	if chkc then return chkc:IsOnField() and chkc:IsControler(1-tp) and c12030001.disfilter1(chkc) end
 	if chk==0 then return Duel.IsExistingTarget(aux.disfilter1,tp,0,LOCATION_ONFIELD,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
-	local g=Duel.SelectTarget(tp,aux.disfilter1,tp,0,LOCATION_ONFIELD,1,1,nil)
+	local g=Duel.SelectTarget(tp,c12030001.disfilter1,tp,0,LOCATION_ONFIELD,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
 end
 function c12030001.disop(e,tp,eg,ep,ev,re,r,rp)
@@ -76,6 +79,7 @@ function c12030001.disop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,nil)
 	if g:GetCount()>0 then
 	Duel.BreakEffect()
+	local ct=g:GetCount()
 	local hc=Duel.Damage(tp,ct*200,REASON_EFFECT)
 	Duel.Recover(tp,hc*2,REASON_EFFECT)
 	end

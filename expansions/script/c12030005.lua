@@ -36,7 +36,7 @@ function cm.lvop(e,tp)
 	if tc:IsLevelAbove(1) then lv=tc:GetLevel()
 	else lv=tc:GetRank()
 	end
-	local e1=rsef.SV_CHANGE({c,tc},"lv",lv,nil,rsreset.est+RESET_DISABLE)
+	local e1=rsef.SV_CHANGE(c,"lv",lv,nil,rsreset.est+RESET_DISABLE)
 	local g=Duel.GetMatchingGroup(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,nil,nil)
 	if #g>0 and Duel.SelectYesNo(tp,aux.Stringid(m,2)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)

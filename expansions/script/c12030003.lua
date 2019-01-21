@@ -50,7 +50,7 @@ end
 function c12030003.cfilter(c)
 	return c:GetSequence()<5
 end
-function c12030003.cfilter1(c)
+function c12030003.cfilter1(c,tp)
 	return c:GetSequence()>=5 and c:IsControler(1-tp)
 end
 function c12030003.condition(e,tp,eg,ep,ev,re,r,rp)
@@ -70,7 +70,7 @@ function c12030003.operation(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c12030003.condition1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c12030003.cfilter1,tp,0,LOCATION_MZONE,1,nil,tp)
+	return Duel.IsExistingMatchingCard(c12030003.cfilter1,tp,0,LOCATION_MZONE,1,nil,tp) and not Duel.IsExistingMatchingCard(c12030003.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c12030003.spfilter(c,e,tp)
 	return c:CheckSetCard("yatori") and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -149,7 +149,7 @@ function c12030003.drop(e,tp,eg,ep,ev,re,r,rp)
 		if tg:GetCount()>0 then
 		   Duel.SendtoHand(tg,nil,REASON_EFFECT)
 		   Duel.ConfirmCards(1-tp,tg)
-		   local hg=Duel.SelectMatchingCard(tp,c12030003.filter2,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+		   local hg=Duel.SelectMatchingCard(tp,c12030003.filter2,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 				 if hg:GetCount()>0 then
 				 local tc=hg:GetFirst()
 				 Duel.Summon(tp,tc,true,nil)

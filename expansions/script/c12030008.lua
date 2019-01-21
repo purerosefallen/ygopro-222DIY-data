@@ -55,9 +55,9 @@ function c12030008.operation(e,tp,eg,ep,ev,re,r,rp)
 	   Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	   local e6=Effect.CreateEffect(c)
 	   e6:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	   e6:SetCode(EVENT_CHAIN_SOLVING)
-	   e6:SetReset(RESET_EVENT+0x1fc0000)
-	   e6:SetOperation(c12004020.disop)
+	   e6:SetCode(EFFECT_DISABLE)
+	   e6:SetReset(RESET_CHAIN)
+	   e6:SetOperation(c12030008.disop)
 	   Duel.RegisterEffect(e6,tp)
 	end
 end
