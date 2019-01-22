@@ -59,7 +59,7 @@ function iCount(name,tp,m,id)
         or {(bit.band(iCount("get",tp,m,id),math.pow(2,id-1))==0 and {true} or {false})[1]})[1]
 end
 function cm.cfilter(c,tp)
-	return c:GetSummonPlayer()==tp
+	return c:IsLevelBelow(10) and c:GetSummonPlayer()==tp
 end
 function cm.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not eg:IsContains(e:GetHandler()) and eg:IsExists(cm.cfilter,1,nil,tp)
