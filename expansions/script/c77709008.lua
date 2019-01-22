@@ -55,7 +55,7 @@ function cm.hfilter(c)
 	return c:IsCode(m-8) and c:IsAbleToHand() and not c:IsHasEffect(EFFECT_NECRO_VALLEY)
 end
 function cm.target1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(cm.hfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,2,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(cm.hfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,3,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,3,tp,LOCATION_DECK+LOCATION_GRAVE)
 end
 function cm.activate1(e,tp,eg,ep,ev,re,r,rp)
