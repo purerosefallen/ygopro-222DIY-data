@@ -79,13 +79,13 @@ function c65011007.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RegisterFlagEffect(65011007,RESET_CHAIN,0,1)
 end
 function c65011007.thfilter2(c)
-	return c:IsSetCard(0xda2) and c:IsAbleToHand()
+	return c:IsSetCard(0x3da2) and c:IsAbleToHand()
 end
 function c65011007.thfilter1(c)
 	return bit.band(c:GetReason(),0x40008)==0x40008 and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c65011007.thtg1(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_HAND,0,1,nil,0xda2) and Duel.IsExistingMatchingCard(c65011007.thfilter1,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil) and e:GetHandler():GetFlagEffect(65011007)==0 end
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsSetCard,tp,LOCATION_HAND,0,1,nil,0x3da2) and Duel.IsExistingMatchingCard(c65011007.thfilter1,tp,LOCATION_GRAVE,LOCATION_GRAVE,1,nil) and e:GetHandler():GetFlagEffect(65011007)==0 end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_HAND)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,0,LOCATION_GRAVE)
 end
@@ -95,7 +95,7 @@ function c65011007.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c65011007.thop1(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local sg=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_HAND,0,1,1,nil,0xda2)
+	local sg=Duel.SelectMatchingCard(tp,Card.IsSetCard,tp,LOCATION_HAND,0,1,1,nil,0x3da2)
 	if Duel.SendtoGrave(sg,REASON_EFFECT)~=0 then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)

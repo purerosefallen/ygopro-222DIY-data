@@ -117,7 +117,7 @@ function c65011010.initial_effect(c)
 end
 
 function c65011010.recfilter(c)
-	return c:IsSetCard(0xda2) and c:IsAbleToGrave()
+	return c:IsSetCard(0x3da2) and c:IsAbleToGrave()
 end
 function c65011010.rectg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c65011010.recfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil) end
@@ -140,7 +140,7 @@ function c65011010.ephcon(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c65011010.thfilter(c)
-	return c:IsSetCard(0xda2) and c:IsAbleToHand()
+	return c:IsSetCard(0x3da2) and c:IsAbleToHand()
 end
 function c65011010.ephtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c65011010.thfilter,tp,LOCATION_DECK,0,1,nil) end

@@ -23,7 +23,7 @@ function c65011009.initial_effect(c)
 end
 
 function c65011009.thfilter(c)
-	return c:IsSetCard(0xda2) and c:IsAbleToHand()
+	return c:IsSetCard(0x3da2) and c:IsAbleToHand()
 end
 function c65011009.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c65011009.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
@@ -40,7 +40,7 @@ end
 
 
 function c65011009.chanfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsSetCard(0xda2) 
+	return c:IsFaceup() and c:IsType(TYPE_FUSION) and c:IsSetCard(0x3da2) 
 end
 
 function c65011009.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

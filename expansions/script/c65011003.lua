@@ -49,7 +49,7 @@ function c65011003.discost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function c65011003.disfilter(c)
-	return c:IsSetCard(0xda2) and c:IsAbleToGrave()
+	return c:IsSetCard(0x3da2) and c:IsAbleToGrave()
 end
 function c65011003.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c65011003.disfilter,tp,LOCATION_HAND,0,1,nil) and Duel.IsPlayerCanDraw(tp,2) end

@@ -27,7 +27,7 @@ function c65011008.filfilter1(c,e)
 	return not c:IsImmuneToEffect(e)
 end
 function c65011008.filfilter2(c,e,tp,m,f,chkf)
-	return c:IsType(TYPE_FUSION) and c:IsSetCard(0xda2) and (not f or f(c))
+	return c:IsType(TYPE_FUSION) and c:IsSetCard(0x3da2) and (not f or f(c))
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
 
@@ -104,7 +104,7 @@ function c65011008.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c65011008.filter1(c,tp)
-	return c.material and Duel.IsExistingMatchingCard(c65011008.filter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c) and c:IsSetCard(0xda2)
+	return c.material and Duel.IsExistingMatchingCard(c65011008.filter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c) and c:IsSetCard(0x3da2)
 end
 function c65011008.filter2(c,fc)
 	if c:IsForbidden() or not c:IsAbleToHand() then return false end
