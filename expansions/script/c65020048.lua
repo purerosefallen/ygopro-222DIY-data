@@ -1,5 +1,6 @@
 --暮色居城 空想
 function c65020048.initial_effect(c)
+	c:SetSPSummonOnce(65020048)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)

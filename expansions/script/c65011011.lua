@@ -146,7 +146,7 @@ function c65011011.ephcon(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c65011011.spfil(c,e,tp)
-	return c:IsSetCard(0xda2) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x3da2) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 
 function c65011011.ephtg(e,tp,eg,ep,ev,re,r,rp,chk)

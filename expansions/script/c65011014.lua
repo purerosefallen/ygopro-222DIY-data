@@ -31,7 +31,7 @@ function c65011014.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c65011014.thfilter(c)
-	return c:IsSetCard(0xda2) and c:IsAbleToHand()
+	return c:IsSetCard(0x3da2) and c:IsAbleToHand()
 end
 function c65011014.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c65011014.thfilter,tp,LOCATION_GRAVE,0,1,nil) end

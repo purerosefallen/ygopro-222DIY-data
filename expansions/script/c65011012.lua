@@ -122,7 +122,7 @@ function c65011012.initial_effect(c)
 end
 
 function c65011012.recfilter(c)
-	return c:IsSetCard(0xda2) and c:IsFaceup()
+	return c:IsSetCard(0x3da2) and c:IsFaceup()
 end
 function c65011012.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c65011012.recfilter,tp,LOCATION_MZONE,0,1,nil) end

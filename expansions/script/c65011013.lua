@@ -149,7 +149,7 @@ function c65011013.initial_effect(c)
 end
 
 function c65011013.namfil(c)
-	return c:IsSetCard(0xda2) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsSetCard(0x3da2) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end
 
 function c65011013.namtg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -205,7 +205,7 @@ function c65011013.filter1(c,e)
 end
 function c65011013.filter2(c,e,tp,m,f,chkf)
 	return c:IsType(TYPE_FUSION) and (not f or f(c))
-		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:IsSetCard(0xda2) and c:CheckFusionMaterial(m,nil,chkf)
+		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:IsSetCard(0x3da2) and c:CheckFusionMaterial(m,nil,chkf)
 end
 function c65011013.filter3(c,e)
 	return c:IsOnField() and not c:IsImmuneToEffect(e)

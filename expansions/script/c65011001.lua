@@ -29,7 +29,7 @@ function c65011001.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsReason(REASON_EFFECT)
 end
 function c65011001.thfilter(c)
-	return c:IsSetCard(0xda2) and c:IsAbleToHand()
+	return c:IsSetCard(0x3da2) and c:IsAbleToHand()
 end
 function c65011001.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c65011001.thfilter,tp,LOCATION_DECK,0,1,nil) end
@@ -73,5 +73,5 @@ function c65011001.disop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c65011001.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	local sc=se:GetHandler()
-	return not sc:IsSetCard(0xda2) or not (sc:IsSetCard(0x46) and sc:IsType(TYPE_SPELL))
+	return not sc:IsSetCard(0x3da2) or not (sc:IsSetCard(0x46) and sc:IsType(TYPE_SPELL))
 end
