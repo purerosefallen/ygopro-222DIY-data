@@ -36,7 +36,7 @@ function c12031011.cfilter(c,tp)
 	return c:IsType(TYPE_MONSTER)
 end
 function c12031011.checkop(e,tp,eg,ep,ev,re,r,rp)
-	if not eg and re and re:IsHasType(0x7e0) and re:GetHandler():IsReason(REASON_COST) and c: then return end
+	if not eg and re and re:IsHasType(0x7e0) and re:GetHandler():IsReason(REASON_COST) then return end
 	local sg=eg:Filter(c12031011.cfilter,nil,tp)
 	local tc=sg:GetFirst()
 	while tc do
