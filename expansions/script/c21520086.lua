@@ -42,33 +42,45 @@ end
 function c21520086.adop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if c:IsRelateToEffect(e) then
-		local g=Duel.GetMatchingGroup(Card.IsAttribute,tp,LOCATION_GRAVE,0,nil,ATTRIBUTE_LIGHT)
-		local atk,def=0,0
-		for ac in aux.Next(g) do
+		local g=Duel.GetMatchingGroup(Card.IsAttribute,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,ATTRIBUTE_LIGHT)
+--[[		local atk,def=0,0
+		local check={}
+		local tg=Group.CreateGroup()
+		for tc in aux.Next(g) do
+			for i,code in ipairs({tc:GetOriginalCode()}) do
+				if not check[code] then
+					check[code]=true
+					tg:AddCard(tc)
+				end
+			end
+		end
+		for ac in aux.Next(tg) do
 			atk=atk+ac:GetAttack()
 			def=def+ac:GetDefense()
-		end
+		end--]]
 		--atk & def
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_BASE_ATTACK)
-		e1:SetValue(atk)
+		e1:SetValue(g:GetCount()*500)
 		e1:SetReset(RESET_EVENT+0x1fe0000)
 		c:RegisterEffect(e1)
 		local e2=e1:Clone()
 		e2:SetCode(EFFECT_SET_BASE_DEFENSE)
-		e2:SetValue(def)
 		c:RegisterEffect(e2)
 	end
 end
+function c21520086.disfilter(c)
+	return not c:IsAttribute(ATTRIBUTE_LIGHT) and c:IsFaceup()
+end
 function c21520086.discon(e,tp,eg,ep,ev,re,r,rp)
-	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:GetHandler()~=e:GetHandler()
-		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:GetHandler()~=e:GetHandler() and re:GetHandler():GetAttack()>0 
+		and re:IsActiveType(TYPE_MONSTER) and Duel.IsChainDisablable(ev) and not Duel.IsExistingMatchingCard(c21520086.disfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c21520086.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rc=re:GetHandler()
-	if c:IsFacedown() or c:GetAttack()<rc:GetAttack() or c:IsStatus(STATUS_BATTLE_DESTROYED) then
+	if c:IsFacedown() or c:GetAttack()<rc:GetAttack() or c:GetDefense()<rc:GetDefense() or c:IsStatus(STATUS_BATTLE_DESTROYED) then
 		return
 	end
 	if Duel.SelectYesNo(tp,aux.Stringid(21520086,1)) then 
@@ -81,14 +93,21 @@ function c21520086.disop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-rc:GetAttack())
 		c:RegisterEffect(e1)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_SINGLE)
+		e2:SetProperty(EFFECT_FLAG_COPY_INHERIT)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
+		e2:SetCode(EFFECT_UPDATE_DEFENSE)
+		e2:SetValue(-rc:GetDefense())
+		c:RegisterEffect(e2)
 	end
 end
-function c21520086.dis2filter(c)
-	return c:IsFaceup() and not c:IsDisabled() and c:IsType(TYPE_EFFECT)
+function c21520086.dis2filter(c,ec)
+	return c:IsFaceup() and not c:IsDisabled() and c:IsType(TYPE_EFFECT) and c:GetAttack()<=ec:GetAttack() and c:GetDefense()<=ec:GetDefense()
 end
 function c21520086.dis2tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and c21520086.dis2filter(chkc) and e:GetHandler()~=chkc end
-	if chk==0 then return Duel.IsExistingTarget(c21520086.dis2filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler()) end
+	if chk==0 then return Duel.IsExistingTarget(c21520086.dis2filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,e:GetHandler(),e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
 	local g=Duel.SelectTarget(tp,c21520086.dis2filter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_DISABLE,g,1,0,0)
@@ -96,7 +115,7 @@ end
 function c21520086.dis2op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsFaceup() and tc:IsRelateToEffect(e) and not tc:IsDisabled() and c:GetAttack()>=tc:GetAttack() then
+	if tc:IsFaceup() and tc:IsRelateToEffect(e) and c:GetAttack()>=tc:GetAttack() and c:GetDefense()>=tc:GetDefense() then
 		local e0=Effect.CreateEffect(c)
 		e0:SetType(EFFECT_TYPE_SINGLE)
 		e0:SetProperty(EFFECT_FLAG_COPY_INHERIT)
@@ -104,6 +123,13 @@ function c21520086.dis2op(e,tp,eg,ep,ev,re,r,rp)
 		e0:SetCode(EFFECT_UPDATE_ATTACK)
 		e0:SetValue(-tc:GetAttack())
 		c:RegisterEffect(e0)
+		local e01=Effect.CreateEffect(c)
+		e01:SetType(EFFECT_TYPE_SINGLE)
+		e01:SetProperty(EFFECT_FLAG_COPY_INHERIT)
+		e01:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
+		e01:SetCode(EFFECT_UPDATE_DEFENSE)
+		e01:SetValue(-tc:GetDefense())
+		c:RegisterEffect(e01)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_DISABLE)

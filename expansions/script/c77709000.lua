@@ -61,11 +61,11 @@ function cm.initial_effect(c)
 			return bit.band(c:GetType(),0x81)==0x81
 		end)
 		e2:SetValue(function(e,c)
-			Debug.Message(0)
+			--Debug.Message(0)
 			if c:GetMaterial():IsExists(function(c)
 				return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsControler(1-tp)
 			end,1,nil) then
-				Debug.Message(1)
+			--	Debug.Message(1)
 				e:GetLabelObject():Reset()
 				e:Reset()
 			end

@@ -10,18 +10,21 @@ function c81000028.initial_effect(c)
 	e0:SetCondition(c81000028.sumcon)
 	e0:SetOperation(c81000028.sumsuc)
 	c:RegisterEffect(e0)
-	--material
+	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(81000028,2))
-	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e1:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,81000028)
+	e1:SetCondition(c81000028.mtcon)
 	e1:SetTarget(c81000028.mttg)
 	e1:SetOperation(c81000028.mtop)
 	c:RegisterEffect(e1)
 	--effect
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(81000028,4))
+	e2:SetDescription(aux.Stringid(81000028,3))
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)
@@ -33,7 +36,7 @@ function c81000028.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Search
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(81000028,3))
+	e3:SetDescription(aux.Stringid(81000028,4))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
@@ -56,19 +59,19 @@ function c81000028.xyzop(e,tp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,81000028)==0 end
 	Duel.RegisterFlagEffect(tp,81000028,RESET_PHASE+PHASE_END,0,1)
 end
-function c81000028.mtfilter(c,e)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsImmuneToEffect(e)
+function c81000028.mtfilter(c,tp)
+	return c:IsType(TYPE_RITUAL) and c:IsType(TYPE_SPELL) and c:IsControler(tp)
+end
+function c81000028.mtcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c81000028.mtfilter,1,nil,tp)
 end
 function c81000028.mttg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ)
-		and Duel.IsExistingMatchingCard(c81000028.mtfilter,tp,LOCATION_HAND,0,1,nil,e) end
+	if chk==0 then return e:GetHandler():IsType(TYPE_XYZ) end
 end
 function c81000028.mtop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_XMATERIAL)
-	local g=Duel.SelectMatchingCard(tp,c81000028.mtfilter,tp,LOCATION_HAND,0,1,1,nil,e)
-	if g:GetCount()>0 then
+	local g=eg:Filter(c81000028.mtfilter,nil,nil)
+	if c:IsRelateToEffect(e) then
 		Duel.Overlay(c,g)
 	end
 end

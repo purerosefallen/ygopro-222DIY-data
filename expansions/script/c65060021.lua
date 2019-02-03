@@ -3,7 +3,7 @@ function c65060021.initial_effect(c)
 	c:SetUniqueOnField(LOCATION_SZONE,0,65060021)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DRAW)
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetTarget(c65060021.target)
@@ -32,24 +32,19 @@ end
 function c65060021.sumfilter(e,c)
 	return c:IsSetCard(0x6da4) and c:GetSummonPlayer()==e:GetHandlerPlayer()
 end
+function c65060021.filter(c)
+	return c:IsSetCard(0x6da4) and c:IsAbleToHand() and c:IsType(TYPE_MONSTER)
+end
 function c65060021.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
-	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(1)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	if chk==0 then return Duel.IsExistingMatchingCard(c65060021.filter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function c65060021.activate(e,tp,eg,ep,ev,re,r,rp)
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	if Duel.Draw(p,d,REASON_EFFECT)~=0 then
-		local c=e:GetHandler()
-		local g=Duel.GetOperatedGroup()
-		local tc=g:GetFirst()
-		Duel.ConfirmCards(1-tp,tc)
-		Duel.BreakEffect()
-		if not tc:IsSetCard(0x6da4) then
-			Duel.SendtoGrave(g,REASON_EFFECT)
-		end
-		Duel.ShuffleHand(tp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectMatchingCard(tp,c65060021.filter,tp,LOCATION_DECK,0,1,1,nil)
+	if g:GetCount()>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
 	end
 end
 function c65060021.sumsuc(e,tp,eg,ep,ev,re,r,rp)

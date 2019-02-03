@@ -2,6 +2,7 @@
 local m=14000257
 local cm=_G["c"..m]
 cm.named_with_war=1
+cm.fit_monster={14000240}
 function cm.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
@@ -36,14 +37,14 @@ function cm.reop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function cm.tgfilter(c,e,tp)
+function cm.tgfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end
 function cm.spfilter(c,e,tp)
-	return cm.war(c) and bit.band(c:GetType(),0x81)==0x81 and c:IsCanBeSpecialSummoned(e,0,tp,false,true)
+	return c:IsCode(14000240) and bit.band(c:GetType(),0x81)==0x81 and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(cm.tgfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) and Duel.IsExistingMatchingCard(cm.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(cm.tgfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(cm.spfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_MZONE)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
 end

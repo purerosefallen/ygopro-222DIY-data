@@ -1,6 +1,4 @@
 --南南西的守护神 阿尼拉
-local m=47520001
-local cm=_G["c"..m]
 function c47520001.initial_effect(c)
     --fusion material
     c:EnableReviveLimit()
@@ -33,9 +31,19 @@ function c47520001.initial_effect(c)
     e2:SetTarget(c47520001.efftg)
     e2:SetOperation(c47520001.effop)
     c:RegisterEffect(e2)
+    --actlimit
+    local e3=Effect.CreateEffect(c)
+    e3:SetType(EFFECT_TYPE_FIELD)
+    e3:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+    e3:SetCode(EFFECT_CANNOT_ACTIVATE)
+    e3:SetRange(LOCATION_PZONE)
+    e3:SetTargetRange(0,1)
+    e3:SetValue(c47520001.aclimit)
+    e3:SetCondition(c47520001.actcon)
+    c:RegisterEffect(e3)
 end
 function c47520001.ffilter(c)
-    return (c:IsAttribute(ATTRIBUTE_FIRE) and c:IsType(TYPE_PENDULUM)) or (c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_BEASTWARRIOR))
+    return (c:IsAttribute(ATTRIBUTE_FIRE) and c:IsType(TYPE_PENDULUM)) or c:IsRace(RACE_BEASTWARRIOR)
 end
 function c47520001.spfilter(c,fc)
     return c47520001.ffilter(c) and c:IsCanBeFusionMaterial(fc)
@@ -50,7 +58,7 @@ function c47520001.spcon(e,c)
     if c==nil then return true end
     local tp=c:GetControler()
     local g=Duel.GetReleaseGroup(tp):Filter(c47520001.spfilter,nil,c)
-    return g:IsExists(c47520001.spfilter1,1,nil,tp,g) and c:IsFacedown()
+    return g:IsExists(c47520001.spfilter1,1,nil,tp,g)
 end
 function c47520001.spop(e,tp,eg,ep,ev,re,r,rp,c)
     local g=Duel.GetReleaseGroup(tp):Filter(c47520001.spfilter,nil,c)
@@ -115,11 +123,12 @@ function c47520001.effop(e,tp,eg,ep,ev,re,r,rp)
         local e1=Effect.CreateEffect(e:GetHandler())
         e1:SetType(EFFECT_TYPE_SINGLE)
         e1:SetCode(EFFECT_UPDATE_ATTACK)
-        e1:SetValue(1500)
+        e1:SetValue(500)
         e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
-        tc:RegisterEffect(e1)
+        tc:RegisterEffect(e1)  
         local e2=e1:Clone()
-        e2:SetCode(EFFECT_UPDATE_DEFENSE)
+        e2:SetCode(EFFECT_EXTRA_ATTACK_MONSTER)
+        e2:SetValue(1)
         tc:RegisterEffect(e2)
         local e3=Effect.CreateEffect(e:GetHandler())
         e3:SetType(EFFECT_TYPE_SINGLE)
@@ -132,4 +141,14 @@ function c47520001.effop(e,tp,eg,ep,ev,re,r,rp)
         tc:RegisterEffect(e4)
         tc=g:GetNext()
     end
+end
+function c47520001.actlimit(e,re,tp)
+    return not re:GetHandler():IsImmuneToEffect(e)
+end
+function c47520001.actcon(e,tp,eg,ep,ev,re,r,rp)
+    local at=Duel.GetAttacker()
+    local a=Duel.GetAttacker()
+    local d=a:GetBattleTarget()
+    if a:IsControler(1-tp) then a,d=d,a end
+    return a and a:IsFaceup() and a:IsRelateToBattle() and d and d:IsFaceup() and d:IsRelateToBattle() and a:GetControler()~=d:GetControler() and (at:IsRace(RACE_BEASTWARRIOR) or at:IsAttribute(ATTRIBUTE_FIRE))
 end

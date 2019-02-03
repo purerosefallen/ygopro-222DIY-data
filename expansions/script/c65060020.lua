@@ -40,7 +40,7 @@ function c65060020.splimit(e,c,tp,sumtp,sumpos)
 	return not (c:IsSetCard(0x6da4) or (c:IsRace(RACE_FAIRY) and c:IsType(TYPE_LINK)))
 end
 function c65060020.filter(c)
-	return c:IsSetCard(0x6da4) and c:IsAbleToHand()
+	return c:IsSetCard(0x6da4) and c:IsAbleToHand() and c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function c65060020.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c65060020.filter,tp,LOCATION_DECK,0,1,nil) end

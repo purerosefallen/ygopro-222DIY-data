@@ -39,7 +39,7 @@ function c65060015.spcos(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 
 function c65060015.spfil(c,e,tp)
-	return c:IsSetCard(0x6da4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(65060015)
+	return c:IsSetCard(0x6da4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 
 end
 function c65060015.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c65060015.spfil,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,nil,e,tp) end
