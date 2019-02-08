@@ -83,11 +83,13 @@ end
 function c47510307.condition(e,tp,eg,ep,ev,re,r,rp)
     return Duel.IsAbleToEnterBP()
 end
-function c47510307.mfilter(c)
+function c47510307.eafilter(c)
     return c:IsAttribute(ATTRIBUTE_DARK) and c:IsFaceup()
 end
-function c47510307.eacost(e,tp,eg,ep,ev,re,r,rp)
-    local g=Duel.SelectMatchingCard(tp,c47510307.mfilter,tp,LOCATION_EXTRA,0,3,3,nil)
+function c47510307.eacost(e,tp,eg,ep,ev,re,r,rp,chk)
+    if chk==0 then return Duel.IsExistingMatchingCard(c47510307.eafilter,tp,LOCATION_EXTRA,0,3,nil) end
+    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+    local g=Duel.SelectMatchingCard(tp,c47578916.cfilter,tp,LOCATION_EXTRA,0,3,3,nil)
     Duel.SendtoGrave(g,REASON_COST)
 end
 function c47510307.eafilter(c)

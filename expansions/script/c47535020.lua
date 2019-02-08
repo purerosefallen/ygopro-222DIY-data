@@ -82,8 +82,8 @@ end
 function c47535020.splimit(e,c)
     return not c:IsType(TYPE_SYNCHRO) and c:IsLocation(LOCATION_EXTRA)
 end
-function c47535020.scfilter(c)
-    return c:IsAttribute(ATTRIBUTE_WIND) and c:IsSynchroSummonable()
+function c47535020.scfilter(c,mg)
+    return c:IsAttribute(ATTRIBUTE_WIND) and c:IsSynchroSummonable(nil,mg)
 end
 function c47535020.sccon(e,tp,eg,ep,ev,re,r,rp)
     local ph=Duel.GetCurrentPhase()
@@ -107,6 +107,6 @@ function c47535020.scop(e,tp,eg,ep,ev,re,r,rp)
         e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
         e2:SetReset(RESET_EVENT+RESETS_REDIRECT)
         e2:SetValue(LOCATION_DECK)
-        tc:RegisterEffect(e2)
+        tc:RegisterEffect(e2,true)
     end
 end

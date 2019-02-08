@@ -127,8 +127,9 @@ function c47550001.ctop(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 function c47550001.atkcon(e)
+    local c=e:GetHandler()
     local ph=Duel.GetCurrentPhase()
-    local bc=e:GetHandler():GetBattleTarget()
+    local bc=c:GetBattleTarget()
     return (ph==PHASE_DAMAGE or ph==PHASE_DAMAGE_CAL) and bc:GetCounter(0x15d0)>0
 end
 function c47550001.distg(e,c)

@@ -86,6 +86,7 @@ end
 function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0xc99,1,REASON_COST) end
     Duel.RemoveCounter(tp,1,0,0xc99,1,REASON_COST)
+    Duel.RegisterFlagEffect(tp,20100053,RESET_PHASE+PHASE_END,0,1)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return true end

@@ -71,8 +71,9 @@ function c47510000.efffilter(c,e,tp,eg,ep,ev,re,r,rp)
     return c:IsSetCard(0x5da) and c:IsType(TYPE_PENDULUM) and (not tg or tg and tg(e,tp,eg,ep,ev,re,r,rp,0))
 end
 function c47510000.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+    local zone=bit.band(e:GetHandler():GetLinkedZone(tp),0x1f)
     if chkc then return chkc:IsLocation(LOCATION_HAND+LOCATION_EXTRA) and chkc:IsControler(tp) and c47510000.efffilter(chkc,e,tp,eg,ep,ev,re,r,rp) end
-    if chk==0 then return Duel.IsExistingTarget(c47510000.efffilter,tp,LOCATION_HAND+LOCATION_EXTRA,0,1,nil,e,tp,eg,ep,ev,re,r,rp) end
+    if chk==0 then return Duel.IsExistingTarget(c47510000.efffilter,tp,LOCATION_HAND+LOCATION_EXTRA,0,1,nil,e,tp,eg,ep,ev,re,r,rp) and (Duel.GetLocationCount(tp,LOCATION_MZONE)>0 or zone>0) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
     local g=Duel.SelectTarget(tp,c47510000.efffilter,tp,LOCATION_HAND+LOCATION_EXTRA,0,1,1,nil,e,tp,eg,ep,ev,re,r,rp)
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
@@ -82,16 +83,17 @@ function c47510000.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if tg then tg(e,tp,eg,ep,ev,re,r,rp,1) end
 end
 function c47510000.effop(e,tp,eg,ep,ev,re,r,rp,chk)
+    local zone=bit.band(e:GetHandler():GetLinkedZone(tp),0x1f)
+    if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or zone<=0 then return end
     local tc=Duel.GetFirstTarget()
     if tc:IsRelateToEffect(e) then
-        local m=_G["c"..tc:GetCode()]
-        local te=m.ss_effect
-        if not te then return end
-        local op=te:GetOperation()
-        if op then op(e,tp,eg,ep,ev,re,r,rp) end
         local zone=e:GetHandler():GetLinkedZone(tp)
-        if zone~=0 then
-            Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)
+        if zone~=0 and Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP,zone)~=0 then
+            local m=_G["c"..tc:GetCode()]
+            local te=m.ss_effect
+            if not te then return end
+            local op=te:GetOperation()
+            if op then op(e,tp,eg,ep,ev,re,r,rp) end
         end 
     end
 end

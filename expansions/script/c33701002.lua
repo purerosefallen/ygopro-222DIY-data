@@ -31,7 +31,7 @@ function cm.tgcon(e,tp)
 end
 function cm.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,e:GetHandler(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,e:GetHandler(),1,0,0)
 end
 function cm.tgop(e,tp)
 	local c=aux.ExceptThisCard(e)

@@ -50,7 +50,7 @@ function c13257221.initial_effect(c)
 	e8:SetCode(EVENT_FREE_CHAIN)
 	e8:SetRange(LOCATION_SZONE)
 	e8:SetCountLimit(1)
-	e8:SetCondition(c13257221.econ)
+	e8:SetCondition(c13257221.descon)
 	e8:SetTarget(c13257221.destg)
 	e8:SetOperation(c13257221.desop)
 	c:RegisterEffect(e8)
@@ -112,6 +112,9 @@ function c13257221.damop1(e,tp,eg,ep,ev,re,r,rp)
 			Duel.Damage(1-tp,ct*ct1,REASON_EFFECT)
 		end
 	end
+end
+function c13257221.descon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():GetEquipTarget() and Duel.GetCurrentPhase()==PHASE_MAIN1 or Duel.GetCurrentPhase()==PHASE_MAIN2
 end
 function c13257221.desfilter(c)
 	return c:GetSequence()==0 or c:GetSequence()==4

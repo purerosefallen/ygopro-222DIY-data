@@ -48,7 +48,7 @@ function c81006510.initial_effect(c)
 	c:RegisterEffect(e8)
 end
 function c81006510.ffilter(c)
-	return c:GetSequence()<5 and not c:IsType(TYPE_TOKEN)
+	return c:IsLocation(LOCATION_MZONE) and c:GetSequence()<5 and not c:IsType(TYPE_TOKEN)
 end
 function c81006510.efilter(e,te)
 	return te:IsActiveType(TYPE_SPELL+TYPE_TRAP)

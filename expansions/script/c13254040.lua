@@ -72,8 +72,8 @@ function c13254040.activate(e,tp,eg,ep,ev,re,r,rp)
 		--g=Duel.SelectMatchingCard(tp,c13254040.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
 		--local tc=g:GetFirst()
 		--if tc then
-		--	Duel.SendtoHand()
-		--	Duel.ConfirmCards(1-tp,tc)
+		--  Duel.SendtoHand()
+		--  Duel.ConfirmCards(1-tp,tc)
 		--end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local g=Duel.SelectMatchingCard(tp,c13254040.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
@@ -96,6 +96,8 @@ function c13254040.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.SendtoGrave(sg,REASON_EFFECT)
 		end
 	elseif code==13254035 then
+		Duel.Recover(tp,2000,REASON_EFFECT)
+	elseif code==13254036 then
 		local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
 		if g:GetCount()>=1 then
 			Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(13254040,0))
@@ -109,8 +111,6 @@ function c13254040.activate(e,tp,eg,ep,ev,re,r,rp)
 			e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END+RESET_OPPO_TURN)
 			tc:RegisterEffect(e2)
 		end
-	elseif code==13254036 then
-		Duel.Recover(tp,2000,REASON_EFFECT)
 	end
 end
 function c13254040.repfilter(c)

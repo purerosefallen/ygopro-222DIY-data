@@ -27,13 +27,14 @@ function c47551124.initial_effect(c)
     e3:SetCondition(c47551124.handcon)
     c:RegisterEffect(e3)
 end
+c47551124.card_code_list={47500000}
 function c47551124.filter(c)
     return c:IsType(TYPE_XYZ) and c:IsSetCard(0x5d0)
 end
 function c47551124.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    if chk==0 then return Duel.SetOperationInfo(0,CATEGORY_NEGATE,ng,ng:GetCount(),0,0) end
-    local ng=Group.CreateGroup()
+   if chk==0 then return true end
     for i=1,ev do
+        local ng=Group.CreateGroup()
         local te,tgp=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER)
         if tgp~=tp then
             local tc=te:GetHandler()

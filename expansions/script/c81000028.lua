@@ -45,6 +45,7 @@ function c81000028.initial_effect(c)
 	e3:SetTarget(c81000028.thtg)
 	e3:SetOperation(c81000028.thop)
 	c:RegisterEffect(e3)
+	--81007002
 end
 function c81000028.sumcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsPreviousLocation(LOCATION_EXTRA)
@@ -60,7 +61,7 @@ function c81000028.xyzop(e,tp,chk)
 	Duel.RegisterFlagEffect(tp,81000028,RESET_PHASE+PHASE_END,0,1)
 end
 function c81000028.mtfilter(c,tp)
-	return c:IsType(TYPE_RITUAL) and c:IsType(TYPE_SPELL) and c:IsControler(tp)
+	return c:IsType(TYPE_RITUAL) and c:IsType(TYPE_SPELL) and c:IsControler(tp) and c:IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c81000028.mtcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c81000028.mtfilter,1,nil,tp)

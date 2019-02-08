@@ -4,6 +4,7 @@ local cm=_G["c"..m]
 xpcall(function() require("expansions/script/c20100002") end,function() require("script/c20100002") end)
 function cm.initial_effect(c)
     c:EnableCounterPermit(0xc99)
+    Cirn9.ReLink(c)
     --link summon
     aux.AddLinkProcedure(c,nil,2,2,cm.lcheck)
     c:EnableReviveLimit()

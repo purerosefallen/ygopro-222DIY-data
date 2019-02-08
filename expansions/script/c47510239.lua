@@ -95,11 +95,12 @@ function c47510239.sumop(e,tp,eg,ep,ev,re,r,rp)
     end
 end
 function c47510239.chfilter(c)
-    return c:IsRace(RACE_FAIRY) and c:IsLevelAbove(7)
+    return c:IsRace(RACE_FAIRY) and c:IsLevelAbove(7) and c:IsAbleToGraveAsCost()
 end
 function c47510239.chcost(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND+LOCATION_EXTRA,0,2,nil) end
-    Duel.SendtoGrave(tp,c47510239.chfilter,2,2,REASON_COST+REASON_DISCARD)
+    if chk==0 then return Duel.IsExistingMatchingCard(c47510239.chfilter,tp,LOCATION_HAND+LOCATION_EXTRA,0,2,nil) end
+    local g=Duel.SelectMatchingCard(tp,c47510239.chfilter,tp,LOCATION_HAND+LOCATION_EXTRA,0,2,2,nil)
+    Duel.SendtoGrave(g,REASON_COST)
 end
 function c47510239.changetg(e,tp,eg,ep,ev,re,r,rp,chk)
     local c=e:GetHandler()
