@@ -1,12 +1,12 @@
-﻿ygopro.exe	8dbd67f859f6984e653c408a72243223
+﻿ygopro.exe	bad27190bc2644ab74ec2579c35bf0d8
 update/update-push.bat	686b01a51bba916202d61d951cd7fe3e
 update/update-server.sh	6f1cdc3e06ec58b37b14b5d9d167263c
 update/update-without-sound.bat	1c2cfda2a0501642c8bceae026a73d5b
-update/version.txt	8a84a31c912f8aa41e89df0dfeb09b07
+update/version.txt	545782be381723fd18f8c6364009e3c0
 update/update-push.sh	d018a223f65feef3467b22e252468f53
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
 update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
-update/filelist.txt	e8e35ad1343d709aad01f63213bb31ea
+update/filelist.txt	1ac1215a61ddbc91a4e4469d433e38d3
 deck/_new_card1.ydk	98ef9c2f71c1ecbbbdb775f5ee1e0abd
 deck/_new_card4.ydk	b9f809acb852ba7cff2a5fcf6cefdf40
 deck/_new_card6.ydk	276cf2198fc11906e94982d0682b4c0d
@@ -452,7 +452,7 @@ sound/BGM/advantage/1.986adv.mp3	b918e66d696f2f2dd82df5f8e01e6d7e
 sound/BGM/advantage/Monosugoikuruttoru Furantyanga Monosugoi Uta.mp3	6b69e22257e027b8d3e1c0b17ec36786
 sound/BGM/advantage/1.962adv.mp3	6cff2bf4929eaae90785bfbd7f97b6fc
 expansions/lflist.conf	7262b1883c49271db8b36c69154ac8ff
-expansions/222DIY.cdb	28d6a36d6cbc6a8d005f82a1944eae96
+expansions/222DIY.cdb	648976a859dd252cea769e1a904020fc
 expansions/strings.conf	3ba66f07500037bbb8de07eb6ce27e46
 expansions/script/c10904011.lua	4c27dfcd69ed23dbc450cfc28a708a0e
 expansions/script/c60159902.lua	575743e0eb9850e676f7061ff5f2dbe9
@@ -3233,7 +3233,7 @@ expansions/script/c11115007.lua	23a12656f5150f28dacac130ad1991dc
 expansions/script/c11113091.lua	5136b28773dc6dccb3a47e6a4002d9d3
 expansions/script/c60151423.lua	f9f351bc69306f199612afcae9279eb0
 expansions/script/c22261212.lua	c9a55cdb7005d590f0e3805ef915947f
-expansions/script/c12030006.lua	eade9387c1382b208f3fe84210b0e352
+expansions/script/c12030006.lua	5d6a570f9f7d323ca58e3488b1b18be7
 expansions/script/c5012604.lua	bd52a65c8b6f7fc127180bf9ed01f138
 expansions/script/c33700379.lua	6a551d1c2cdea31cbf8099d93ea55eb2
 expansions/script/c4210032.lua	ec1d6a94711b5028e9d036ce2fe35d0c
@@ -4891,7 +4891,7 @@ expansions/script/c10113063.lua	3d9ec3553f8802f02a4c113b1a7af8c8
 expansions/script/c10970005.lua	c5e56492ee238a497bd100b3049f59e1
 expansions/script/c46564766.lua	4f1abbee092efb8cea05236d33f20008
 expansions/script/c33700312.lua	17338b5b8d7ff31e1ab45a9f42849e07
-expansions/script/c77709005.lua	24e9e7621ae854488c2927fa85b8a1f1
+expansions/script/c77709005.lua	764b00983a743b0eae6b15c5f290aef4
 expansions/script/c10129002.lua	748bc43acac496bf5ff7bb66b2193865
 expansions/script/c1110142.lua	c386b9126595230e8636da50d364f8f7
 expansions/script/c62200023.lua	98a8229ed16a528b2291543254b469da

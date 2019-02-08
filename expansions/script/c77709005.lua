@@ -6,7 +6,7 @@ cm.Sekka_name_with_lap=true
 function cm.initial_effect(c)
 	c:EnableReviveLimit()
 	local function con(e,tp,eg,ep,ev,re,r,rp,chk)
-		return Duel.GetCurrentPhase()~=PHASE_DRAW and Duel.GetTurnPlayer()~=tp
+		return Duel.GetCurrentPhase()>PHASE_DRAW and Duel.GetTurnPlayer()~=tp
 	end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
