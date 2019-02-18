@@ -5,21 +5,26 @@ cm.named_with_Circlia=1
 function cm.initial_effect(c)
 	--activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(m,4))
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(m,0))
+	e2:SetDescription(aux.Stringid(m,5))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetType(EFFECT_TYPE_ACTIVATE)
 	e2:SetCode(EVENT_CHAINING)
-	e2:SetRange(LOCATION_SZONE)
-	e2:SetCountLimit(1)
 	e2:SetCondition(cm.sscon)
 	e2:SetTarget(cm.sstg)
 	e2:SetOperation(cm.ssop)
 	c:RegisterEffect(e2)
+	local ec=e2:Clone()
+	ec:SetDescription(aux.Stringid(m,0))
+	ec:SetType(EFFECT_TYPE_QUICK_O)
+	ec:SetRange(LOCATION_SZONE)
+	ec:SetCountLimit(1)
+	c:RegisterEffect(ec)
 	--by effect
 	local e3=Effect.CreateEffect(c)
 	e3:SetDescription(aux.Stringid(m,1))
@@ -43,8 +48,10 @@ function cm.ssfilter(c,e,tp)
 	return c:IsCode(14000131) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function cm.sstg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+	local c=e:GetHandler()
+	if chk==0 then return c:GetFlagEffect(m)==0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(cm.ssfilter,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,e,tp) end
+	c:RegisterFlagEffect(m,RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END,0,1)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE)
 end
 function cm.ssop(e,tp,eg,ep,ev,re,r,rp)
@@ -72,6 +79,7 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 	local ct=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if ct<1 then return end
 	if ct>=2 then ct1=2 else ct1=1 end
+	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ct1=1 end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,cm.spfilter,tp,LOCATION_DECK,0,1,ct1,nil,e,tp)
 	if g:GetCount()>0 then

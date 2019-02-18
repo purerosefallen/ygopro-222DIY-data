@@ -43,7 +43,9 @@ function c81008028.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c81008028.spfilter,tp,LOCATION_DECK,0,1,1,nil,tc,e,tp)
+	local tc=g:GetFirst()
 	if g:GetCount()>0 then
-		Duel.SpecialSummon(g,SUMMON_TYPE_RITUAL,tp,tp,true,false,POS_FACEUP)
+		Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,true,false,POS_FACEUP)
+		tc:CompleteProcedure()
 	end
 end

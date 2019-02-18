@@ -156,19 +156,20 @@ function cm.OR(c)
 	return mt and mt.named_with_Oxi
 end
 function cm.cfilter(c,e,tp)
-	return c:IsRace(RACE_PYRO)
+	return c:IsRace(RACE_PYRO) and c:IsAbleToRemoveAsCost()
 end
 function cm.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINGMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,cm.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
-	local tc=g:GetFirst()
-	if Duel.Remove(tc,POS_FACEUP,REASON_COST+REASON_TEMPORARY)~=0 then
+	if Duel.Remove(g,POS_FACEUP,REASON_COST+REASON_TEMPORARY)~=0 then
+		g:GetFirst():RegisterFlagEffect(m,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		g:KeepAlive()
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetReset(RESET_PHASE+PHASE_END)
-		e1:SetLabelObject(tc)
+		e1:SetLabelObject(g)
 		e1:SetCountLimit(1)
 		e1:SetOperation(cm.retop)
 		Duel.RegisterEffect(e1,tp)
@@ -179,32 +180,48 @@ function cm.rmcost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Hint(HINT_SELECTMSG,tp,HINGMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,cm.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	local tc=g:GetFirst()
-	if Duel.Remove(tc,POS_FACEUP,REASON_COST+REASON_TEMPORARY)~=0 then
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		e1:SetLabelObject(tc)
-		e1:SetCountLimit(1)
-		e1:SetOperation(cm.retop)
-		Duel.RegisterEffect(e1,tp)
-	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINGMSG_REMOVE)
 	local g1=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,0,LOCATION_MZONE,1,1,nil)
 	local tc1=g1:GetFirst()
-	if Duel.Remove(tc1,POS_FACEUP,REASON_COST+REASON_TEMPORARY)~=0 then
+	local rg=Group.FromCards(tc,tc1)
+	if Duel.Remove(rg,POS_FACEUP,REASON_COST+REASON_TEMPORARY)~=0 then
+		local rg=Duel.GetOperatedGroup()
+		local rc=rg:GetFirst()
+		while rc do
+			rc:RegisterFlagEffect(m,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+			rc=rg:GetNext()
+		end
+		rg:KeepAlive()
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetReset(RESET_PHASE+PHASE_END)
-		e1:SetLabelObject(tc1)
+		e1:SetLabelObject(rg)
 		e1:SetCountLimit(1)
 		e1:SetOperation(cm.retop)
 		Duel.RegisterEffect(e1,tp)
 	end
 end
+function cm.retfilter(c)
+	return c:GetFlagEffect(m)~=0
+end
 function cm.retop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ReturnToField(e:GetLabelObject())
+	local g=e:GetLabelObject()
+	local sg=g:Filter(cm.retfilter,nil)
+	if sg:GetCount()>0 or sg:GetClassCount(Card.GetPreviousControler)==1 then
+		local ft=Duel.GetLocationCount(sg:GetFirst():GetPreviousControler(),LOCATION_MZONE)
+		if ft==1 then
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELF)
+			local tc=sg:Select(tp,1,1,nil):GetFirst()
+			Duel.ReturnToField(tc)
+			sg:RemoveCard(tc)
+		end
+	end
+	local tc=sg:GetFirst()
+	while tc do
+		Duel.ReturnToField(tc)
+		tc=sg:GetNext()
+	end
 end
 function cm.rmcost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():GetEquipGroup():IsExists(Card.IsAbleToRemoveAsCost,1,nil,tp) end

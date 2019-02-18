@@ -140,7 +140,7 @@ function c13257225.tkop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e1,tp)
 end
 function c13257225.splimit(e,c,sump,sumtype,sumpos,targetp,se)
-	return c:IsLocation(LOCATION_EXTRA)
+	return true--c:IsLocation(LOCATION_EXTRA)
 end
 function c13257225.bgmop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(11,0,aux.Stringid(13257225,4))

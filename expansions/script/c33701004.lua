@@ -35,6 +35,6 @@ function cm.tgop(e,tp)
 	local bc=Duel.GetAttackTarget()
 	local tc=ac
 	if not cm.cfilter(ac,tp) then tc=bc end
-	Duel.SendtoGrave(ac,REASON_EFFECT)
+	Duel.SendtoGrave(tc,REASON_EFFECT)
 end
 

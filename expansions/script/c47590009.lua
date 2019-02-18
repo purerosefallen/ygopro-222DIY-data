@@ -95,17 +95,17 @@ end
 function c47590009.actlimit(e,re,tp)
     return not re:GetHandler():IsImmuneToEffect(e)
 end
+function c47590009.ovfilter(c)
+    return  c:IsAbleToChangeControler() and not c:IsType(TYPE_TOKEN) 
+end
 function c47590009.rmcost(e,tp,eg,ep,ev,re,r,rp,chk)
-    local c=e:GetHandler()
-    if not c:IsType(TYPE_XYZ) then return false end 
-    local g=Duel.SelectMatchingCard(tp,Card.IsFaceup,tp,0,LOCATION_ONFIELD,1,1,nil)
+    if chk==0 then return Duel.IsExistingMatchingCard(c47590009.ovfilter,tp,0,LOCATION_ONFIELD,1,e:GetHandler()) and e:GetHandler():IsType(TYPE_XYZ) end
+    local g=Duel.SelectMatchingCard(tp,c47590009.ovfilter,tp,0,LOCATION_ONFIELD,1,1,e:GetHandler())
     local tc=g:GetFirst()
-    if tc then
-        Duel.Hint(HINT_CARD,0,m)
-        Duel.HintSelection(g)
+    if tc and not tc:IsImmuneToEffect(e) then
         local og=tc:GetOverlayGroup()
         if og:GetCount()>0 then
-            Duel.SendtoGrave(og,REASON_COST)
+            Duel.SendtoGrave(og,REASON_RULE)
         end
         Duel.Overlay(e:GetHandler(),Group.FromCards(tc))
     end

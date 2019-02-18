@@ -36,20 +36,6 @@ if not RealSclVersion then
 	RealSclVersion.Property={} 
 	rsflag=RealSclVersion.Property
 
---  "Set Series Outsorced" 
-  --[[rsv.Series1={
-		"rsdka" =   "Dakyria"
-		"rsdio" =   "Diablo"
-		"rsnr"  =   "NightRaven"
-		"rsul"  =   "Utoland"
-		"rsxb"  =   "XB"
-				}--]]
-
---  "Set Other Variables" 
-  --[[rsv.Series2={
-		"rssg"  =   "SexGun"
-		"rslap" =   "Lapin"
-				}--]]
 
 -------------##########RSV variable###########----------------
 
@@ -93,11 +79,11 @@ if not RealSclVersion then
 function rsef.SV(cardtbl,code,val,range,con,resettbl,flag,desctbl,ctlimittbl)
 	local tc1,tc2=rsef.GetRegisterCard(cardtbl)
 	local flag2=rsef.GetRegisterProperty(flag)
-	local flagtbl1={ EFFECT_IMMUNE_EFFECT,EFFECT_CANNOT_BE_BATTLE_TARGET,EFFECT_CANNOT_BE_EFFECT_TARGET }
+	local flagtbl1={ EFFECT_IMMUNE_EFFECT,EFFECT_CANNOT_BE_BATTLE_TARGET,EFFECT_CANNOT_BE_EFFECT_TARGET,EFFECT_CHANGE_CODE,EFFECT_ADD_CODE,EFFECT_CHANGE_RACE,EFFECT_ADD_RACE,EFFECT_CHANGE_ATTRIBUTE,EFFECT_ADD_ATTRIBUTE }
 	local flagtbl2={ EFFECT_CHANGE_LEVEL,EFFECT_CHANGE_RANK,EFFECT_UPDATE_LEVEL,EFFECT_UPDATE_RANK }
 	local tf1=rsof.Table_List(flagtbl1,code)
 	local tf2=rsof.Table_List(flagtbl2,code)
-	if (tf1 or (tf2 and not resettbl)) and tc1~=tc2 then 
+	if (tf1 and tc1==tc2) or (tf2 and not resettbl and tc1~=tc2) then 
 		if not flag2 then flag2=EFFECT_FLAG_SINGLE_RANGE 
 		elseif flag2 and flag2&EFFECT_FLAG_SINGLE_RANGE ==0 then flag2=flag2+EFFECT_FLAG_SINGLE_RANGE 
 		end
@@ -269,7 +255,7 @@ end
 function rsef.FV(cardtbl,code,val,tg,tgrangetbl,range,con,resettbl,flag,desctbl,ctlimittbl)
 	local flag2=rsef.GetRegisterProperty(flag)
 	if desctbl and flag2&EFFECT_FLAG_CLIENT_HINT ==0 then flag2=flag2+EFFECT_FLAG_CLIENT_HINT end
-	return rsef.Register(cardtbl,EFFECT_TYPE_FIELD,code,desctbl,ctlimittbl,nil,flag2,range,con,nil,nil,nil,val,tgrangetbl,nil,resettbl)
+	return rsef.Register(cardtbl,EFFECT_TYPE_FIELD,code,desctbl,ctlimittbl,nil,flag2,range,con,nil,tg,nil,val,tgrangetbl,nil,resettbl)
 end
 --Field Val Effect: Updata some card attributes
 function rsef.FV_UPDATE(cardtbl,uptypetbl,valtbl,tg,tgrangetbl,con,resettbl,flag,desctbl)
@@ -281,7 +267,7 @@ function rsef.FV_UPDATE(cardtbl,uptypetbl,valtbl,tg,tgrangetbl,con,resettbl,flag
 	local range=rsef.GetRegisterRange(cardtbl)
 	for k,effectcode in ipairs(effectcodetbl) do 
 		if effectvaluetbl[k] and effectvaluetbl[k]~=0 then
-			local e1=rsef.SV(cardtbl,effectcode,effectvaluetbl[k],tg,tgrangetbl,range,con,resettbl,flag,desctbl)
+			local e1=rsef.FV(cardtbl,effectcode,effectvaluetbl[k],tg,tgrangetbl,range,con,resettbl,flag,desctbl)
 			table.insert(resulteffecttbl,e1)
 		end
 	end
@@ -531,7 +517,7 @@ function rsef.GetRegisterCard(cardtbl)
 		if #cardtbl==1 then
 			val2=tc1		  
 		elseif #cardtbl==2 then
-			if type(cardtbl[2]~="boolean") then
+			if type(cardtbl[2])~="boolean" then
 				val2=cardtbl[2]
 			else
 				val2=tc1
@@ -550,11 +536,11 @@ end
 function rsef.GetRegisterRange(cardtbl)
 	local range=nil
 	local tc1,tc2=rsef.GetRegisterCard(cardtbl)
-	if getmetatable(tc2)~="Card" then return nil end
+	if aux.GetValueType(tc2)~="Card" then return nil end
 	if tc2:IsType(TYPE_MONSTER) then range=LOCATION_MZONE 
 	elseif tc2:IsType(TYPE_PENDULUM) then range=LOCATION_PZONE 
-	elseif tc2:IsType(TYPE_SPELL+TYPE_TRAP) then range=LOCATION_SZONE
 	elseif tc2:IsType(TYPE_FIELD) then range=LOCATION_FZONE  
+	elseif tc2:IsType(TYPE_SPELL+TYPE_TRAP) then range=LOCATION_SZONE 
 	end
 	if tc2:IsLocation(LOCATION_GRAVE) then range=LOCATION_GRAVE end
 	return range 
@@ -1007,6 +993,16 @@ function rstg.target(...)
 		rstg.TargetSelect(e,tp,eg,ep,ev,re,r,rp,table.unpack(targetlist))
 	end
 end
+function rstg.target2(fun,...)
+	local targetlist={...}
+	return function(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+		if chkc or chk==0 then 
+			return rstg.TargetCheck(e,tp,eg,ep,ev,re,r,rp,chk,chkc,table.unpack(targetlist)) 
+		end
+		local targetgroup=rstg.TargetSelect(e,tp,eg,ep,ev,re,r,rp,table.unpack(targetlist))
+		if fun then fun(targetgroup) end
+	end
+end
 --target parameter table has card target 
 --rstg.list({ffunction,catelist,loc1,loc2,minct,maxct,exceptfun,selecthint,nottarget=false,notinfo=false})
 --default list , you can directly use {} equal to this function
@@ -1098,7 +1094,7 @@ function rstg.TargetSelectNoInfo(e,tp,eg,ep,ev,re,r,rp,valuetype,...)
 		local selectgroup=nil
 		local b1= nottarget and notinfo   --cost select
 		local b2= not nottarget and not notinfo --target select
-		local b3= nottarget and not notinfo  --operation select 
+		local b3= (nottarget and not notinfo) or not e:IsHasProperty(EFFECT_FLAG_CARD_TARGET)  --operation select 
 		local limitgroup=Group.CreateGroup()
 		if b1 or b2 then
 			if rsof.Table_List(catelist,CATEGORY_RELEASE) then
@@ -1230,6 +1226,16 @@ function rscost.cost(...)
 		rscost.CostSelect(e,tp,eg,ep,ev,re,r,rp,table.unpack(costlist))
 	end
 end
+--cost: togarve/remove/discard/release/tohand/todeck as cost, and set vartible
+function rscost.cost2(varfun,...)
+	local costlist={...}
+	return function(e,tp,eg,ep,ev,re,r,rp,chk)
+		if chk==0 then 
+			return rscost.CostCheck(e,tp,eg,ep,ev,re,r,rp,chk,table.unpack(costlist)) 
+		end
+		rscost.CostSelect2(e,tp,eg,ep,ev,re,r,rp,varfun,table.unpack(costlist))
+	end
+end
 --cost check
 function rscost.CostCheck(e,tp,eg,ep,ev,re,r,rp,chk,valuetype,...)
 	return rstg.TargetCheck(e,tp,eg,ep,ev,re,r,rp,chk,nil,rscost.list(valuetype,...))
@@ -1258,7 +1264,30 @@ function rscost.CostSelect(e,tp,eg,ep,ev,re,r,rp,valuetype,...)
 			ct=Duel.SendtoDeck(costgroup,nil,2,REASON_COST)
 		end
 	end
-	rsef[e]=ct
+	rscost[e]=ct
+	return costtotalgroup,ct
+end
+function rscost.CostSelect2(e,tp,eg,ep,ev,re,r,rp,varfun,valuetype,...)
+	local costtotalgroup,costinfolist,costinfoindexlist=rscost.CostSelectNoInfo(e,tp,eg,ep,ev,re,r,rp,valuetype,...)
+	if varfun then varfun(costtotalgroup,e,tp,eg,ep,ev,re,r,rp) end
+	local costcount=0
+	for _,indexcate in pairs(costinfoindexlist) do
+		local costgroup=costinfolist[indexcate][1]
+		if indexcate==CATEGORY_TOGRAVE then
+			ct=Duel.SendtoGrave(costgroup,REASON_COST)
+		elseif indexcate==CATEGORY_REMOVE then
+			ct=Duel.Remove(costgroup,POS_FACEUP,REASON_COST)
+		elseif indexcate==CATEGORY_HANDES then
+			ct=Duel.SendtoGrave(costgroup,REASON_COST+REASON_DISCARD)
+		elseif indexcate==CATEGORY_TOHAND then
+			ct=Duel.SendtoHand(costgroup,nil,REASON_COST)
+		elseif indexcate==CATEGORY_RELEASE then
+			ct=Duel.Release(costgroup,REASON_COST)
+		elseif indexcate==CATEGORY_TODECK or indexcate==CATEGORY_TOEXTRA then
+			ct=Duel.SendtoDeck(costgroup,nil,2,REASON_COST)
+		end
+	end
+	rscost[e]=ct
 	return costtotalgroup,ct
 end
 --cost self
@@ -1743,7 +1772,7 @@ function rscf.CheckSetCardMainSet(c,settype,series1,...)
 	end
 	for _,code in ipairs(codelist) do 
 		local mt=_G["c"..code]
-		if not mt and not mt.rssetcode then
+		if not mt or not mt.rssetcode then
 			if pcall(function() dofile("expansions/script/c"..code..".lua") end) or pcall(function() dofile("script/c"..code..".lua") end) then
 				mt=_G["c"..code]
 			end
@@ -1807,7 +1836,7 @@ function rscf.SetExtraLinkMaterial(c,materialfilter,loc1,loc2)
 		if f3 then
 			local f4=function(mc,mf,mlc)
 				if mc:IsLocation(LOCATION_ONFIELD) and not mc:IsFaceup() then return false end
-				return mc:IsCanBeLinkMaterial(mlc) and (not mf or mf(mc))
+				return (mc:IsCanBeLinkMaterial(mlc) or (mc:IsLocation(LOCATION_SZONE) and mc:GetOriginalType()&TYPE_SPELL+TYPE_TRAP ~=0 and not mc:IsHasEffect(EFFECT_CANNOT_BE_LINK_MATERIAL) and not mc:IsForbidden())) and (not mf or mf(mc))
 			end
 			local mg2=f3(lc)
 			mg2=mg2:Filter(f4,nil,f,lc)
@@ -2113,6 +2142,21 @@ end
 ------------########################-----------------
 if cm then
 function cm.initial_effect(c)
-	
+--  "Set Series Outsorced" 
+  --[[rsv.Series1={
+		"rsdka" =   "Dakyria"
+		"rsdio" =   "Diablo"
+		"rsnr"  =   "NightRaven"
+		"rsul"  =   "Utoland"
+		"rsxb"  =   "XB"
+				}--]]
+
+--  "Set Other Variables" 
+  --[[rsv.Series2={
+		"rssg"  =   "SexGun"
+		"rslap" =   "Lapin"
+		"rsss"  =   "Starspirit"
+		"rslrd" =   "LifeDeathRoundDance"
+				}--]]   
 end
 end
