@@ -47,7 +47,7 @@ function c33700919.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c33700919.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() and e:GetHandler():GetCounter(0x1b)>0 end
+	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() and e:GetHandler():GetCounter(0x1b)>2 end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 	e:SetLabel(e:GetLabelObject():GetLabel())
 end 

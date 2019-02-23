@@ -2,6 +2,7 @@
 local m=14090018
 local cm=_G["c"..m]
 function cm.initial_effect(c)
+	aux.EnableDualAttribute(c) 
 	--lvchange
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)

@@ -2,6 +2,7 @@
 local m=14090019
 local cm=_G["c"..m]
 function cm.initial_effect(c)
+	aux.EnableDualAttribute(c) 
 	--SpecialSummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(m,0))
