@@ -6,41 +6,50 @@ cm.Sekka_name_with_lap=true
 function cm.initial_effect(c)
     c:EnableReviveLimit()
     local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_IGNITION)
+    e1:SetType(EFFECT_TYPE_QUICK_O)
+    e1:SetCode(EVENT_FREE_CHAIN)
     e1:SetRange(LOCATION_MZONE)
     e1:SetCountLimit(1)
-    e1:SetCategory(CATEGORY_TODECK)
-    e1:SetTarget(cm.target)
-    e1:SetOperation(cm.activate)
-    c:RegisterEffect(e1)
-    local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-    e1:SetProperty(0x14000)
-    e1:SetCode(EVENT_DISCARD)
+    e1:SetCategory(CATEGORY_DESTROY+CATEGORY_TOHAND+CATEGORY_TOGRAVE)
+    e1:SetCost(function(e,tp,eg,ep,ev,re,r,rp,chk)
+        local function cf(c)
+            return c:IsAbleToHand() and c:IsType(TYPE_MONSTER)
+        end
+        if chk==0 then return Duel.IsExistingMatchingCard(cf,tp,0,LOCATION_GRAVE,1,nil) end
+        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+        local g=Duel.SelectMatchingCard(tp,cf,tp,0,LOCATION_GRAVE,1,1,nil)
+        Duel.SendtoHand(g,nil,REASON_COST)
+    end)
+    local function f(c,tp)
+        return c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_MZONE) or Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>1)
+    end
     e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
-        if chk==0 then return true end
+        local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
+        if chk==0 then return Duel.IsExistingMatchingCard(f,tp,LOCATION_HAND+LOCATION_MZONE,0,1,nil,tp)
+            and #g>0 and Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,LOCATION_GRAVE,0,#g+1,nil)
+        end
+        local tg=Duel.GetMatchingGroup(f,tp,LOCATION_HAND+LOCATION_MZONE,0,nil,tp)
+        Duel.SetOperationInfo(0,CATEGORY_DESTROY,tg,1,0,0)
+        Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,#g,0,0)
+        Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,#g+1,tp,LOCATION_GRAVE)
     end)
-	e1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD)
-		e1:SetCode(EFFECT_SKIP_M2)
-		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-		e1:SetTargetRange(0,1)
-		e1:SetReset(RESET_PHASE+PHASE_END+RESET_OPPO_TURN,Duel.GetTurnPlayer()==1-tp and Duel.GetCurrentPhase<HASE_MAIN2 and 1 or 2)
-		e1:SetValue(1)
-		Duel.RegisterEffect(e1,tp)
+    e1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
+        Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+        local g=Duel.SelectMatchingCard(tp,f,tp,LOCATION_HAND+LOCATION_MZONE,0,1,1,nil,tp)
+        if g:GetCount()>0 and Duel.Destroy(g,REASON_EFFECT)~=0 then
+            local tg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
+            Duel.BreakEffect()
+            local ct=Duel.SendtoGrave(tg,REASON_EFFECT+REASON_DISCARD)
+            if ct>0 then
+                Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+                local sg=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,LOCATION_GRAVE,0,ct+1,ct+1,nil)
+                if #sg>0 then
+                    Duel.BreakEffect()
+                    Duel.HintSelection(sg)
+                    Duel.SendtoHand(sg,nil,REASON_EFFECT)
+                end
+            end
+        end
     end)
-	c:RegisterEffect(e1)
-end
-function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and chkc:IsAbleToDeck() end
-	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToDeck,tp,0,LOCATION_GRAVE,2,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,0,LOCATION_GRAVE,2,2,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,1,2,0,0)
-end
-function cm.activate(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
-	Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+    c:RegisterEffect(e1)
 end

@@ -12,6 +12,7 @@ function c47580345.initial_effect(c)
 end
 function c47580345.pspcon(e,tp,eg,ep,ev,re,r,rp)
     local eset={Duel.IsPlayerAffectedByEffect(tp,EFFECT_EXTRA_PENDULUM_SUMMON)}
+    if PENDULUM_CHECKLIST&(0x1<<tp)~=0 and #eset==0 then return false end
     local lpz=Duel.GetFieldCard(tp,LOCATION_PZONE,0)
     local rpz=Duel.GetFieldCard(tp,LOCATION_PZONE,1)
     if rpz==nil or lpz==rpz then return false end

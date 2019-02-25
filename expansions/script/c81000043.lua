@@ -108,9 +108,7 @@ function c81000043.rpop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCountFromEx(tp)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c81000043.rpfilter,tp,LOCATION_EXTRA,0,1,1,nil,e,tp)
-	local tc=g:GetFirst()
 	if g:GetCount()>0 then
-		Duel.SpecialSummon(tc,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
-		tc:CompleteProcedure()
+		Duel.SpecialSummon(g,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
 	end
 end

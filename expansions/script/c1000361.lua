@@ -10,6 +10,7 @@ function c1000361.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e1:SetCountLimit(1,10003610)
 	e1:SetTarget(c1000361.thtg)
 	e1:SetOperation(c1000361.thop)
 	c:RegisterEffect(e1)
@@ -27,7 +28,7 @@ function c1000361.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c1000361.thfilter(c)
-	return c:IsSetCard(0xc200) and c:IsAbleToHand()
+	return c:IsSetCard(0xc200) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c1000361.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c1000361.thfilter,tp,LOCATION_DECK,0,1,nil) end

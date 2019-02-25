@@ -28,13 +28,12 @@ function c1000360.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e5:SetProperty(EFFECT_FLAG_DELAY)
 	e5:SetCode(EVENT_TO_GRAVE)
-	e5:SetCondition(c1000360.spcon2)
 	e5:SetTarget(c1000360.sptg2)
 	e5:SetOperation(c1000360.spop2)
 	c:RegisterEffect(e5)
 end
 function c1000360.filter(c,e,tp)
-	return c:IsSetCard(0xc200) and not c:IsCode(1000360) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:GetBaseDefense()==0  and not c:IsCode(1000360) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c1000360.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -67,9 +66,6 @@ function c1000360.tgop1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-end
-function c1000360.spcon2(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
 end
 function c1000360.spfilter(c,e,tp)
 	return c:IsSetCard(0xc200) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

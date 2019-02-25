@@ -10,6 +10,7 @@ function cm.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCondition(cm.sprcon)
+	e1:SetOperation(cm.sprop)
 	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
@@ -24,7 +25,7 @@ function cm.initial_effect(c)
 	e2:SetOperation(cm.spop)
 	c:RegisterEffect(e2)
 end
-function cm.sprcon(e,c)
+function cm.spcon(e,c)
 	if c==nil then return true end
 	return Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 		and (not Duel.IsExistingMatchingCard(aux.TRUE,c:GetControler(),LOCATION_GRAVE,0,1,nil) or not Duel.IsExistingMatchingCard(aux.TRUE,1-c:GetControler(),LOCATION_GRAVE,0,1,nil))
