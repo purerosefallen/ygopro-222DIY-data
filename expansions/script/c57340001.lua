@@ -82,7 +82,7 @@ function cm.disop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local zone=cm.GetSpellLinkedZones(c)
 	local rc=re:GetHandler()
-	if Duel.NegateActivation(ev) and rc:IsRelateToEffect(re) and zone>0 then
+    if rc:IsRelateToEffect(re) and zone>0 and rc:IsSSetable(true,tp,zone) and Duel.NegateActivation(ev) then
 		rc:CancelToGrave()
 		Duel.SSet(tp,rc,tp,false,zone)
 		Duel.ConfirmCards(1-tp,rc)
