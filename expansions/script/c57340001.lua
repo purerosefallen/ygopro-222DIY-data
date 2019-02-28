@@ -47,7 +47,7 @@ end
 function cm.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local zone=bit.band(c:GetLinkedZone(),0x1f)
-	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and zone>0 then
+    if re:GetHandler():IsRelateToEffect(re) and zone>0 and re:GetHandler():IsControlerCanBeChanged(false,zone) and Duel.NegateActivation(ev) then
 		Duel.GetControl(re:GetHandler(),tp,0,0,zone)
 	end
 end
