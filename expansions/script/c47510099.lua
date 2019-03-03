@@ -8,6 +8,7 @@ function c47510099.initial_effect(c)
     e1:SetType(EFFECT_TYPE_ACTIVATE)
     e1:SetCode(EVENT_FREE_CHAIN)
     e1:SetCountLimit(1,47510095)
+    e1:SetCost(c47510099.cost)
     e1:SetOperation(c47510099.activate)
     c:RegisterEffect(e1)  
     --act in hand

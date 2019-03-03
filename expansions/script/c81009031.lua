@@ -19,7 +19,7 @@ function c81009031.initial_effect(c)
 	e1:SetCost(c81009031.damcost)
 	e1:SetTarget(c81009031.damtg)
 	e1:SetOperation(c81009031.damop)
-	c:RegisterEffect(e)
+	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
