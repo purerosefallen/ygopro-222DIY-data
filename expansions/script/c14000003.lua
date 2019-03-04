@@ -87,5 +87,6 @@ end
 function cm.adtg(e,c)
 	local a=Duel.GetAttacker()
 	local d=Duel.GetAttackTarget()
+	local tp=e:GetHandlerPlayer()
 	return (a and a:IsControler(tp) and a:IsSetCard(0x1404) and c==a:GetBattleTarget()) or (d and d:IsControler(tp) and d:IsSetCard(0x1404) and c==d:GetBattleTarget())
 end

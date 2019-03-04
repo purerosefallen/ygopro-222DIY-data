@@ -35,7 +35,7 @@ function c47591009.cost(e,tp,eg,ep,ev,re,r,rp,chk)
     Duel.Remove(g,POS_FACEDOWN,REASON_COST)
 end     
 function c47591009.cfilter(c,tp)
-    return c:IsCode(47591299) 
+    return c:IsCode(47591299) and c:IsFaceup()
 end
 function c47591009.cod(e,tp,eg,ep,ev,re,r,rp)
     return Duel.IsExistingMatchingCard(c47591009.cfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil)
