@@ -47,7 +47,7 @@ function c47510239.initial_effect(c)
     c:RegisterEffect(e6)  
 end
 function c47510239.otfilter(c)
-    return c:IsType(TYPE_PENDULUM) and c:IsLevelAbove(5)
+    return c:IsType(TYPE_PENDULUM)
 end
 function c47510239.otcon(e,c,minc)
     if c==nil then return true end
