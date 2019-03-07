@@ -47,7 +47,7 @@ function c33700919.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c33700919.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() and e:GetHandler():GetCounter(0x1b)>0 end
+	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() and e:GetHandler():GetCounter(0x1b)>2 end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 	e:SetLabel(e:GetLabelObject():GetLabel())
 end 
@@ -55,7 +55,7 @@ function c33700919.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CODE)
 	local ac=Duel.AnnounceCard(tp)
-	e1:SetLabel(ac)
+	e:SetLabel(ac)
 	Duel.SetTargetParam(ac)
 	Duel.SetOperationInfo(0,CATEGORY_ANNOUNCE,nil,0,tp,ANNOUNCE_CARD)
 end

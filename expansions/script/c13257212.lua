@@ -39,7 +39,7 @@ function c13257212.ctcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp
 end
 function c13257212.rmfilter(c)
-	return c:IsAbleToRemove() and c:IsStatus(STATUS_BATTLE_DESTROYED)
+	return c:IsAbleToRemove() and not c:IsStatus(STATUS_BATTLE_DESTROYED)
 end
 function c13257212.ctop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

@@ -66,7 +66,7 @@ function c65020025.detg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c65020025.delimit(e,ep,tp)
-	return ep==tp 
+	return ep==tp and not e:IsHasType(EFFECT_TYPE_ACTIVATE)
 end
 function c65020025.deop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,Card.IsFacedown,tp,0,LOCATION_SZONE,1,1,nil)

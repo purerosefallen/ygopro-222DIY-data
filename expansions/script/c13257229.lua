@@ -12,7 +12,7 @@ function c13257229.initial_effect(c)
 	e1:SetOperation(c13257229.thop)
 	c:RegisterEffect(e1)
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_DRAW+CATEGORY_SPECIAL_SUMMON)
+	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
@@ -32,6 +32,11 @@ function c13257229.initial_effect(c)
 	e3:SetTarget(c13257229.destg)
 	e3:SetOperation(c13257229.desop)
 	c:RegisterEffect(e3)
+	local e12=Effect.CreateEffect(c)
+	e12:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e12:SetCode(EVENT_SUMMON_SUCCESS)
+	e12:SetOperation(c13257229.bgmop)
+	c:RegisterEffect(e12)
 	
 end
 function c13257229.thcon(e,tp,eg,ep,ev,re,r,rp)
@@ -68,6 +73,7 @@ function c13257229.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+		Duel.Hint(11,0,aux.Stringid(13257229,4))
 	end
 end
 function c13257229.descon(e,tp,eg,ep,ev,re,r,rp)
@@ -86,4 +92,7 @@ function c13257229.desop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Draw(tp,5,REASON_EFFECT)
 		Duel.Draw(1-tp,5,REASON_EFFECT)
 	end
+end
+function c13257229.bgmop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(11,0,aux.Stringid(13257229,4))
 end

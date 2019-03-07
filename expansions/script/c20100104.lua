@@ -77,5 +77,6 @@ function cm.sdop(e,tp,eg,ep,ev,re,r,rp)
     local revue=Cirn9.Climax(e,tp,eg,ep,ev,re,r,rp)
     if revue==0 then return
     elseif revue==1 then Cirn9.RevueBgm(tp) end 
+    Duel.ShuffleDeck(tp)
     Duel.SortDecktop(tp,tp,3)
 end

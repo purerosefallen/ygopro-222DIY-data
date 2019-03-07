@@ -75,6 +75,7 @@ function c47510025.tktg(e,tp,eg,ep,ev,re,r,rp,chk)
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c47510025.tkop(e,tp,eg,ep,ev,re,r,rp)
+    local c=e:GetHandler()
     local atk=2000
     if Duel.GetLocationCount(tp,LOCATION_MZONE)<=2
         or not Duel.IsPlayerCanSpecialSummonMonster(tp,47511001,0,0x5da,atk,atk,1,RACE_AQUA,ATTRIBUTE_WATER,POS_FACEUP_DEFENSE) then return end

@@ -77,7 +77,7 @@ function c47551100.hspcon(e,c)
     return ft>-1 and not Duel.IsExistingMatchingCard(nil,tp,LOCATION_PZONE,0,1,e:GetHandler()) and Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0)==0 and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end
 function c47551100.tefilter(c)
-    return c:IsType(TYPE_PENDULUM) and c:IsSetCard(0x5d0)
+    return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0x5d0)
 end
 function c47551100.hspop(e,tp,eg,ep,ev,re,r,rp)
     Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(47551100,0))

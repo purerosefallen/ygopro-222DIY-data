@@ -87,6 +87,7 @@ function c47511003.operation(e,tp,eg,ep,ev,re,r,rp)
         end
         local code=tc:GetOriginalCode()
         c:CopyEffect(code,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,1)
+        Duel.ConfirmCards(1-tp,tc)
         Card.RegisterEffect=f
     end
 end

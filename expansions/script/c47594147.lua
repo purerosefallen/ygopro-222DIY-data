@@ -27,9 +27,6 @@ function c47594147.initial_effect(c)
     e2:SetOperation(c47594147.atkop)
     c:RegisterEffect(e2)
 end
-function c47594147.splimit(e,c)
-    return not c:IsRace(RACE_MACHINE) and c:IsLocation(LOCATION_EXTRA)
-end
 function c47594147.spfilter(c,e,tp)
     return c:IsType(TYPE_XYZ) and c:IsRace(RACE_MACHINE) and Duel.IsExistingMatchingCard(c47594147.filter2,tp,LOCATION_DECK,0,1,nil,c)
 end
@@ -120,4 +117,7 @@ function c47594147.atkop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c47594147.eqlimit(e,c)
     return c:GetControler()==e:GetOwnerPlayer() and c:IsType(TYPE_XYZ)
+end
+function c47594147.splimit(e,c)
+    return not c:IsRace(RACE_MACHINE) and c:IsLocation(LOCATION_EXTRA)
 end

@@ -14,7 +14,7 @@ function cm.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1,m)
+	e1:SetCountLimit(1,m+EFFECT_COUNT_CODE_OATH)
 	e1:SetTarget(cm.postg)
 	e1:SetOperation(cm.posop)
 	c:RegisterEffect(e1)
@@ -39,12 +39,12 @@ function cm.cfilter(c,lg)
 	return c:IsFacedown() and lg:IsContains(c)
 end
 function cm.spfilter(c,e,tp)
-	return cm.ND(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+	return cm.ND(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEDOWN_DEFENSE)
 end
 function cm.postg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	local lg=c:GetLinkedGroup()
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and cm.cfilter(chkc,lg) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and cm.cfilter(chkc,lg) end
 	if chk==0 then return Duel.IsExistingTarget(cm.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil,lg) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g=Duel.SelectTarget(tp,cm.cfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil,lg)

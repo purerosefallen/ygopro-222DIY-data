@@ -5,8 +5,8 @@ xpcall(function() require("expansions/script/c37564765") end,function() require(
 cm.Sekka_name_with_lap=true
 function cm.initial_effect(c)
 	c:EnableReviveLimit()
-	local function con(e,tp,eg,ep,ev,re,r,rp,chk)
-		return Duel.GetCurrentPhase()~=PHASE_DRAW and Duel.GetTurnPlayer()~=tp
+	local function con()
+		return Duel.GetCurrentPhase()~=PHASE_DRAW
 	end
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -31,15 +31,15 @@ function cm.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
     e1:SetType(EFFECT_TYPE_IGNITION)
     e1:SetRange(LOCATION_MZONE)
-    e1:SetCountLimit(1,m)
+    e1:SetCountLimit(1)
     e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
     e1:SetTarget(cm.target)
 	e1:SetOperation(cm.activate)
 	c:RegisterEffect(e1)
 	local e1=Effect.CreateEffect(c)
-    e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+    e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
     e1:SetCode(EVENT_DISCARD)
-    e1:SetProperty(0x14000+EFFECT_FLAG_CARD_TARGET)
+    --e1:SetProperty(0x14000)
     e1:SetCategory(CATEGORY_TOHAND)
     e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsAbleToHand() end

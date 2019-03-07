@@ -2,6 +2,7 @@
 local m=14090019
 local cm=_G["c"..m]
 function cm.initial_effect(c)
+	aux.EnableDualAttribute(c) 
 	--SpecialSummon
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(m,0))
@@ -43,7 +44,7 @@ function cm.initial_effect(c)
 		e4:SetOperation(cm.op)
 		local e5=Effect.GlobalEffect()
 		e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-		e5:SetTargetRange(LOCATION_MZONE,0)
+		e5:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 		e5:SetTarget(cm.tg)
 		e5:SetLabelObject(e4)
 		Duel.RegisterEffect(e5,0)

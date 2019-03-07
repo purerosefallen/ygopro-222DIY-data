@@ -17,6 +17,7 @@ function c12018000.initial_effect(c)
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetRange(LOCATION_MZONE)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
 	e1:SetCountLimit(1,12018100)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetTarget(c12018000.target)
@@ -50,9 +51,10 @@ function c12018000.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c12018000.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	if g:GetCount()>0 and Duel.SendtoHand(g,nil,2,REASON_EFFECT)~=0 then
-	   local og=Duel.GetOperatedGroup()
-	   Duel.Destroy(og,REASON_EFFECT)
+	if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)~=0 then
+	   Duel.ShuffleHand(tp)
+	   Duel.ConfirmCards(1-tp,g)
+	   Duel.Destroy(g,REASON_EFFECT)
 	end
 end
 function c12018000.spfilter(c,tp)

@@ -6,6 +6,7 @@ function cm.initial_effect(c)
     Cirn9.ReLiveMonster(c)
     --link summon
     aux.AddLinkProcedure(c,nil,2,99,cm.lcheck)
+    Cirn9.ReLink(c)
     c:EnableReviveLimit()
     --indes
     local e1=Effect.CreateEffect(c)

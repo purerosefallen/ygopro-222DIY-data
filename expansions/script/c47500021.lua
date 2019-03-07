@@ -2,7 +2,7 @@
 function c47500021.initial_effect(c)
     --link summon
     c:EnableReviveLimit()
-    aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsType,TYPE_EFFECT),2,3,c47500021.lcheck)   
+    aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsType,TYPE_MONSTER),2,3,c47500021.lcheck)   
     --to extra
     local e1=Effect.CreateEffect(c)
     e1:SetDescription(aux.Stringid(47500021,0))
@@ -31,7 +31,7 @@ function c47500021.initial_effect(c)
 end
 c47500021.card_code_list={47500000}
 function c47500021.lfilter(c)
-    return c:IsAttribute(ATTRIBUTE_WIND) and c:IsCode(47500000)
+    return c:IsCode(47500000)
 end
 function c47500021.lcheck(g,lc)
     return g:IsExists(c47500021.lfilter,1,nil)

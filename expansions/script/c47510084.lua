@@ -144,7 +144,8 @@ end
 function c47510084.sumcon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetHandler():IsSummonType(SUMMON_TYPE_FUSION)
 end
-function c47510084.sumsuc(e,tp,eg,ep,ev,re,r,rp)    
+function c47510084.sumsuc(e,tp,eg,ep,ev,re,r,rp)  
+    local c=e:GetHandler()
     local e1=Effect.CreateEffect(c)
     e1:SetType(EFFECT_TYPE_FIELD)
     e1:SetCode(EFFECT_CANNOT_ACTIVATE)

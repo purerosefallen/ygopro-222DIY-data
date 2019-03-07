@@ -79,11 +79,11 @@ if not RealSclVersion then
 function rsef.SV(cardtbl,code,val,range,con,resettbl,flag,desctbl,ctlimittbl)
 	local tc1,tc2=rsef.GetRegisterCard(cardtbl)
 	local flag2=rsef.GetRegisterProperty(flag)
-	local flagtbl1={ EFFECT_IMMUNE_EFFECT,EFFECT_CANNOT_BE_BATTLE_TARGET,EFFECT_CANNOT_BE_EFFECT_TARGET }
+	local flagtbl1={ EFFECT_IMMUNE_EFFECT,EFFECT_CANNOT_BE_BATTLE_TARGET,EFFECT_CANNOT_BE_EFFECT_TARGET,EFFECT_CHANGE_CODE,EFFECT_ADD_CODE,EFFECT_CHANGE_RACE,EFFECT_ADD_RACE,EFFECT_CHANGE_ATTRIBUTE,EFFECT_ADD_ATTRIBUTE }
 	local flagtbl2={ EFFECT_CHANGE_LEVEL,EFFECT_CHANGE_RANK,EFFECT_UPDATE_LEVEL,EFFECT_UPDATE_RANK }
 	local tf1=rsof.Table_List(flagtbl1,code)
 	local tf2=rsof.Table_List(flagtbl2,code)
-	if (tf1 or (tf2 and not resettbl)) and tc1~=tc2 then 
+	if (tf1 and tc1==tc2) or (tf2 and not resettbl and tc1~=tc2) then 
 		if not flag2 then flag2=EFFECT_FLAG_SINGLE_RANGE 
 		elseif flag2 and flag2&EFFECT_FLAG_SINGLE_RANGE ==0 then flag2=flag2+EFFECT_FLAG_SINGLE_RANGE 
 		end
@@ -1772,7 +1772,7 @@ function rscf.CheckSetCardMainSet(c,settype,series1,...)
 	end
 	for _,code in ipairs(codelist) do 
 		local mt=_G["c"..code]
-		if not mt and not mt.rssetcode then
+		if not mt or not mt.rssetcode then
 			if pcall(function() dofile("expansions/script/c"..code..".lua") end) or pcall(function() dofile("script/c"..code..".lua") end) then
 				mt=_G["c"..code]
 			end

@@ -44,10 +44,10 @@ end
 function muxu.check_set_Soul(c)  --灵曲
 	return muxu.check_set(c,"Soul")
 end
-function muxu.check_set_Border(c)	--交界
+function muxu.check_set_Border(c)   --交界
 	return muxu.check_set(c,"Border")
 end
-function muxu.check_set_Legend(c)	--秘谈
+function muxu.check_set_Legend(c)   --秘谈
 	return muxu.check_set(c,"Legend")
 end
 function muxu.check_set_Urban(c)			 --灵都
@@ -70,6 +70,22 @@ function muxu.check_set_Poison(c)   --毒符
 end
 function muxu.check_set_Materdim(c)
 	return muxu.check_set(c,"Materdim")
+end
+--
+function muxu.check_set_NozaLeah(c)
+	return muxu.check_set(c,"NozaLeah")
+end
+function muxu.check_link_set_NozaLeah(c)
+	local codet={c:GetLinkCode()}
+	for j,code in pairs(codet) do
+		local mt=muxu.load_metatable(code)
+		if mt then
+			for str,v in pairs(mt) do
+				if type(str)=="string" and str:find("_NozaLeah") and v then return true end
+			end
+		end
+	end
+	return false
 end
 --
 function muxu.check_set_Tatara(c)   --小伞

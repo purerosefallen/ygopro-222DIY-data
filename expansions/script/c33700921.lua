@@ -88,8 +88,7 @@ end
 function c33700921.dop(e,tp,eg,ep,ev,re,r,rp) 
 	if Duel.SelectYesNo(tp,aux.Stringid(33700921,0)) then
 		Duel.Recover(tp,ev,REASON_EFFECT)
-	else
-		Duel.ChangeBattleDamage(ep,0)  
 	end
+	Duel.ChangeBattleDamage(ep,0)  
 end
 

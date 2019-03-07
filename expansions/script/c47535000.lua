@@ -33,7 +33,7 @@ function c47535000.initial_effect(c)
     c:RegisterEffect(e3)
     --dourinken
     local e4=Effect.CreateEffect(c)
-    e4:SetDescription(aux.Stringid(47535000,1))
+    e4:SetDescription(aux.Stringid(47535000,0))
     e4:SetCategory(CATEGORY_TOGRAVE)
     e4:SetType(EFFECT_TYPE_IGNITION)
     e4:SetRange(LOCATION_MZONE)
@@ -52,15 +52,15 @@ function c47535000.initial_effect(c)
     --disable
     local e6=Effect.CreateEffect(c)
     e6:SetType(EFFECT_TYPE_FIELD)
-    e6:SetRange(LOCATION_SZONE)
-    e6:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+    e6:SetRange(LOCATION_MZONE)
+    e6:SetTargetRange(0,LOCATION_MZONE)
     e6:SetCondition(c47535000.discon)
     e6:SetCode(EFFECT_DISABLE)
     c:RegisterEffect(e6)
     --destroy
     local e8=Effect.CreateEffect(c)
     e8:SetDescription(aux.Stringid(47535000,1))
-    e8:SetCategory(CATEGORY_DESTROY)
+    e8:SetCategory(CATEGORY_DESTROY+CATEGORY_REMOVE)
     e8:SetType(EFFECT_TYPE_QUICK_O)
     e8:SetCountLimit(1)
     e8:SetRange(LOCATION_MZONE)
@@ -129,18 +129,17 @@ function c47535000.tgcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c47535000.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,1,nil) end
-    local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_ONFIELD,nil)
+    local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_ONFIELD,1,1,nil)
     Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
 end
 function c47535000.tgop(e,tp,eg,ep,ev,re,r,rp)
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-    local sg=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
-    local tc=sg:GetFirst()
-    if tc then
-    local cg=tc:GetColumnGroup():Filter(Card.IsControler,nil,1-tp)
-        if cg:GetCount()>0 then
-            Duel.SendtoGrave(cg,REASON_RULE) 
-       end
+    local tc=Duel.GetFirstTarget()
+    local cg=tc:GetColumnGroup()
+    if tc:IsRelateToEffect(e) then
+        local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil,cg)
+        if g:GetCount()>0 then
+            Duel.SendtoGrave(g,REASON_RULE)
+        end
     end
 end
 function c47535000.atkcon(e,tp,eg,ep,ev,re,r,rp)
@@ -181,5 +180,5 @@ function c47535000.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c47535000.desop(e,tp,eg,ep,ev,re,r,rp)
     local g=Duel.GetMatchingGroup(aux.TRUE,tp,0,LOCATION_ONFIELD,nil)
-    Duel.Destroy(g,LOCATION_REMOVED,REASON_EFFECT)
+    Duel.Destroy(g,REASON_EFFECT,LOCATION_REMOVED)
 end

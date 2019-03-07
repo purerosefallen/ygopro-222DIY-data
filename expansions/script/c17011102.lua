@@ -5,6 +5,8 @@ function cm.initial_effect(c)
 	--xyz summon
 	c:EnableReviveLimit()
 	aux.AddXyzProcedureLevelFree(c,cm.mfilter,cm.xyzcheck,2,99,cm.ovfilter,aux.Stringid(m,0),cm.xyzop)
+	--pendulum summon
+	aux.EnablePendulumAttribute(c,false)
 	--atk up
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(m,1))

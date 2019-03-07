@@ -6,6 +6,8 @@ cm.named_with_Urban=true
 --
 function c1110151.initial_effect(c)
 --
+	c:EnableReviveLimit()
+--
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
@@ -95,45 +97,26 @@ function c1110151.op4(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not re:GetHandler():IsRelateToEffect(re) then return end
 	if Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)<1 then return end
-	if re:IsActiveType(TYPE_MONSTER) then
+	local mg=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_ONFIELD,0,nil)
+	if mg:GetCount()<1 then return end
+	local mc=mg:GetFirst()
+	while mc do
 		local e4_1=Effect.CreateEffect(c)
+		e4_1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e4_1:SetType(EFFECT_TYPE_SINGLE)
 		e4_1:SetCode(EFFECT_IMMUNE_EFFECT)
-		e4_1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 		e4_1:SetRange(LOCATION_MZONE)
+		e4_1:SetLabelObject(re)
 		e4_1:SetValue(c1110151.efilter4_1)
 		e4_1:SetReset(RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e4_1)
-	end
-	if re:IsActiveType(TYPE_SPELL) then
-		local e4_2=Effect.CreateEffect(c)
-		e4_2:SetType(EFFECT_TYPE_SINGLE)
-		e4_2:SetCode(EFFECT_IMMUNE_EFFECT)
-		e4_2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-		e4_2:SetRange(LOCATION_MZONE)
-		e4_2:SetValue(c1110151.efilter4_2)
-		e4_2:SetReset(RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e4_2)
-	end
-	if re:IsActiveType(TYPE_TRAP) then
-		local e4_3=Effect.CreateEffect(c)
-		e4_3:SetType(EFFECT_TYPE_SINGLE)
-		e4_3:SetCode(EFFECT_IMMUNE_EFFECT)
-		e4_3:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-		e4_3:SetRange(LOCATION_MZONE)
-		e4_3:SetValue(c1110151.efilter4_3)
-		e4_3:SetReset(RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e4_3)
+		mc:RegisterEffect(e4_1)
+		mc=mg:GetNext()
 	end
 end
 function c1110151.efilter4_1(e,te)
-	return te:IsActiveType(TYPE_MONSTER) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
-end
-function c1110151.efilter4_2(e,te)
-	return te:IsActiveType(TYPE_SPELL) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
-end
-function c1110151.efilter4_3(e,te)
-	return te:IsActiveType(TYPE_TRAP) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
+	local re=e:GetLabelObject()
+	return te:IsActiveType(re:GetActiveType())
+		and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
 --
 function c1110151.cfilter5(c)
@@ -145,7 +128,7 @@ end
 --
 function c1110151.op5(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectMatchingCard(tp,c1110151.cfilter5,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,c1110151.cfilter5,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,e:GetHandler())
 	Duel.SendtoGrave(g,REASON_COST)
 end
 --

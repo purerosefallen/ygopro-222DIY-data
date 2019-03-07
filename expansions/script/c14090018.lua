@@ -2,6 +2,7 @@
 local m=14090018
 local cm=_G["c"..m]
 function cm.initial_effect(c)
+	aux.EnableDualAttribute(c) 
 	--lvchange
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -54,7 +55,7 @@ function cm.initial_effect(c)
 		e5:SetOperation(cm.op)
 		local e6=Effect.GlobalEffect()
 		e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_GRANT)
-		e6:SetTargetRange(LOCATION_MZONE,0)
+		e6:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 		e6:SetTarget(cm.tg)
 		e6:SetLabelObject(e5)
 		Duel.RegisterEffect(e6,0)
@@ -87,7 +88,7 @@ function cm.lvop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.thfilter(c,lv)
-	return c:IsLevelBelow(lv) and c:IsAbleToGrave() and c:IsRace(RACE_PLANT) and c:IsType(TYPE_DUAL)
+	return c:IsLevelBelow(lv-1) and c:IsAbleToGrave() and c:IsRace(RACE_PLANT) and c:IsType(TYPE_DUAL)
 end
 function cm.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local lv=e:GetHandler():GetLevel()

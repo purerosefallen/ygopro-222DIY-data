@@ -26,7 +26,7 @@ end
 function cm.cfilter(c)
 	return c:IsFacedown() or not c:IsRace(RACE_PLANT)
 end
-function cm.con(e,c)
+function cm.con(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0 and not Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function cm.lvfilter(c)
@@ -40,20 +40,19 @@ function cm.thfilter(c,tp)
 		and not Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_MZONE,0,1,nil,c:GetAttribute())
 end
 function cm.lvtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(cm.lvfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(cm.lvfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 function cm.lvop(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetMatchingGroup(cm.lvfilter,tp,LOCATION_MZONE,0,nil)
 	if tg:GetCount()<1 then return end
 	local tc=tg:GetFirst()
-	local att=tc:GetAttribute()
 	while tc do
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_LEVEL)
 		e1:SetValue(1)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		tc=tg:GetNext()
 	end

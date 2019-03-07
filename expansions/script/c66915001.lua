@@ -20,13 +20,11 @@ function c66915001.initial_effect(c)
     e1:SetTarget(c66915001.target)
     e1:SetOperation(c66915001.spop)
     c:RegisterEffect(e1)
-    --remove
+    --move
     local e11=Effect.CreateEffect(c)
-    e11:SetDescription(aux.Stringid(66915001,0))
-    e11:SetCategory(CATEGORY_REMOVE)
-    e11:SetType(EFFECT_TYPE_QUICK_O)
+    e11:SetType(EFFECT_TYPE_IGNITION)
     e11:SetRange(LOCATION_MZONE)
-    e11:SetCode(EVENT_FREE_CHAIN)
+    e11:SetCountLimit(1)
     e11:SetCondition(c66915001.seqcon)
     e11:SetOperation(c66915001.seqop)
     local e5=Effect.CreateEffect(c)
@@ -35,6 +33,7 @@ function c66915001.initial_effect(c)
     e5:SetTargetRange(LOCATION_MZONE,0)
     e5:SetTarget(c66915001.eftg)
     e5:SetLabelObject(e11)
+    c:RegisterEffect(e5)
     --spsummon limit
     local e2=Effect.CreateEffect(c)
     e2:SetType(EFFECT_TYPE_FIELD)
@@ -96,13 +95,6 @@ function c66915001.seqop(e,tp,eg,ep,ev,re,r,rp)
         else nseq=4 end
         Duel.MoveSequence(c,nseq)
     end
-end
-function c66915001.retcon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetLabelObject():GetFlagEffect(66915001)~=0
-end
-function c66915001.retop(e,tp,eg,ep,ev,re,r,rp)
-    Duel.ReturnToField(e:GetLabelObject())
-    e:Reset()
 end
 function c66915001.eftg(e,c)
     local lg=e:GetHandler():GetLinkedGroup()

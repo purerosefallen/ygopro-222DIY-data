@@ -51,14 +51,14 @@ function c47500003.initial_effect(c)
 end
 c47500003.card_code_list={47500000}
 function c47500003.atkval(e,c)
-    return c:GetEquipCount()
+    return c:GetEquipCount()-1
 end
 function c47500003.eqfilter(c)
     return c:IsFaceup() and c:IsAbleToChangeControler()
 end
 function c47500003.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-        and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+        and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingTarget(c47500003.eqfilter,tp,0,LOCATION_MZONE,1,nil) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EQUIP)
     local g=Duel.SelectTarget(tp,c47500003.eqfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,e:GetHandler())
     Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)

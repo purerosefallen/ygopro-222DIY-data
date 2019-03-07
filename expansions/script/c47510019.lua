@@ -107,6 +107,7 @@ function c47510019.filter1(c)
     return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_EARTH) or c:IsSetCard(0x5da)
 end
 function c47510019.op(e,tp,eg,ep,ev,re,r,rp)
+    local c=e:GetHandler()
     local e1=Effect.CreateEffect(c)
     e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
     e1:SetCode(EVENT_CHAINING)

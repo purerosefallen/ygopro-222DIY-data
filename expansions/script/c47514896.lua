@@ -142,10 +142,11 @@ end
 function c47514896.effop(e,tp,eg,ep,ev,re,r,rp,chk)
     local tc=Duel.GetFirstTarget()
     if tc:IsRelateToEffect(e) then
+        Duel.ConfirmCards(1-tp,tc)
         local m=_G["c"..tc:GetCode()]
         local te=m.ss_effect
         if not te then return end
         local op=te:GetOperation()
         if op then op(e,tp,eg,ep,ev,re,r,rp) end 
-    end
+    end  
 end

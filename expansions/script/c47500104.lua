@@ -2,7 +2,7 @@
 function c47500104.initial_effect(c)
     --material
     c:EnableReviveLimit() 
-    aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsRace,RACE_SPELLCASTER),8,2)
+    aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsType,TYPE_PENDULUM),8,2)
     --pendulum summon
     aux.EnablePendulumAttribute(c,false)
     --splimit

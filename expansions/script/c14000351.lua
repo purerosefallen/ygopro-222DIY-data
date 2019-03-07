@@ -46,6 +46,13 @@ function cm.initial_effect(c)
 	e4:SetTargetRange(1,0)
 	e4:SetTarget(cm.sumlimit)
 	c:RegisterEffect(e4)
+	--general
+	local e5=Effect.CreateEffect(c)
+	e5:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e5:SetType(EFFECT_TYPE_SINGLE)
+	e5:SetRange(LOCATION_MZONE)
+	e5:SetCode(m)
+	c:RegisterEffect(e5)
 end
 function cm.Skay(c)
 	local m=_G["c"..c:GetCode()]
@@ -66,7 +73,7 @@ function cm.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(1-tp,sg)
 end
 function cm.cfilter(c)
-	return c:IsFaceup() and c:GetFlagEffect(m)==0 and c:IsCode(14000351)
+	return c:IsFaceup() and c:GetFlagEffect(m)==0 and c:IsHasEffect(14000351)
 end
 function cm.deckcon(e,c)
 	if c==nil then return true end

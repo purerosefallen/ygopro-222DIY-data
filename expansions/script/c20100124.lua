@@ -29,13 +29,13 @@ end
 function cm.acfilter(c)
     return c:IsFaceup() and c:IsCanAddCounter(0xc99,2)
 end
-function cm.filter(c,ec)
+function cm.filter(c)
     return c:IsFaceup() and c:IsCanRemoveCounter(tp,0xc99,1,REASON_EFFECT) 
-        and Duel.IsExistingMatchingCard(cm.acfilter,tp,LOCATION_MZONE,0,1,ec)
+        and Duel.IsExistingMatchingCard(cm.acfilter,tp,LOCATION_MZONE,0,1,c)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chkc then return chkc:IsOnField() and cm.filter(chkc) and chkc:IsControler(tp) end
-    if chk==0 then return Duel.IsExistingTarget(cm.filter,tp,LOCATION_MZONE,0,1,e:GetHandler()) end
+    if chk==0 then return Duel.IsExistingTarget(cm.filter,tp,LOCATION_MZONE,0,1,nil) end
     Duel.RegisterFlagEffect(tp,m,RESET_PHASE+PHASE_END,0,1)
     Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(m,0))
     Duel.SelectTarget(tp,cm.filter,tp,LOCATION_MZONE,0,1,1,nil)
@@ -45,6 +45,7 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
     local tc=Duel.GetFirstTarget()
     if tc and tc:IsFaceup() and tc:IsRelateToEffect(e) and tc:IsCanRemoveCounter(tp,0xc99,1,REASON_EFFECT) then
         tc:RemoveCounter(tp,0xc99,1,REASON_EFFECT)
+        Duel.RegisterFlagEffect(tp,20100053,RESET_PHASE+PHASE_END,0,1)
         if Duel.IsExistingMatchingCard(cm.acfilter,tp,LOCATION_MZONE,0,1,tc) then
             local ac=Duel.SelectMatchingCard(tp,cm.acfilter,tp,LOCATION_MZONE,0,1,1,tc)
             ac:GetFirst():AddCounter(0xc99,2)
