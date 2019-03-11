@@ -84,33 +84,34 @@ function rsef.SV(cardtbl,code,val,range,con,resettbl,flag,desctbl,ctlimittbl)
 	local tf1=rsof.Table_List(flagtbl1,code)
 	local tf2=rsof.Table_List(flagtbl2,code)
 	if (tf1 and tc1==tc2) or (tf2 and not resettbl and tc1~=tc2) then 
-		if not flag2 then flag2=EFFECT_FLAG_SINGLE_RANGE 
-		elseif flag2 and flag2&EFFECT_FLAG_SINGLE_RANGE ==0 then flag2=flag2+EFFECT_FLAG_SINGLE_RANGE 
-		end
+		flag2=flag2|EFFECT_FLAG_SINGLE_RANGE 
 	end
-	if desctbl and flag2&EFFECT_FLAG_CLIENT_HINT ==0 then flag2=flag2+EFFECT_FLAG_CLIENT_HINT end
+	if desctbl then flag2=flag2|EFFECT_FLAG_CLIENT_HINT end
 	return rsef.Register(cardtbl,EFFECT_TYPE_SINGLE,code,desctbl,ctlimittbl,nil,flag2,range,con,nil,nil,nil,val,nil,nil,resettbl)
 end
 --Single Val Effect: Cannot destroed 
-function rsef.SV_INDESTRUCTABLE(cardtbl,indstype,val,con,resettbl,flag,desctbl,ctlimittbl)
-	local effectcode=0
-	local codetbl1={"battle","effect","ct"}
-	local codetbl2={ EFFECT_INDESTRUCTABLE_BATTLE,EFFECT_INDESTRUCTABLE_EFFECT,EFFECT_INDESTRUCTABLE_COUNT }
-	for k,v in ipairs(codetbl1) do
-		if v==indstype then effectcode=codetbl2[k] break end
-	end
-	if not val then
-		if indstype~=EFFECT_INDESTRUCTABLE_COUNT then
-			val=1
-		else
-			val=rsval.indbae()
-		end
-	end
-	if indstype==EFFECT_INDESTRUCTABLE_COUNT and not ctlimittbl then
-		ctlimittbl=1
-	end
+function rsef.SV_INDESTRUCTABLE(cardtbl,indstbl,valtbl,con,resettbl,flag,desctbl,ctlimittbl)
+	local codetbl1={"battle","effect","ct","all"}
+	local codetbl2={ EFFECT_INDESTRUCTABLE_BATTLE,EFFECT_INDESTRUCTABLE_EFFECT,EFFECT_INDESTRUCTABLE_COUNT,EFFECT_INDESTRUCTABLE }
+	local effectcodetbl,effectvaluetbl=rsof.Table_Suit(indstbl,codetbl1,codetbl2,valtbl)
+	local resulteffecttbl={}
 	local range=rsef.GetRegisterRange(cardtbl)
-	return rsef.SV(cardtbl,effectcode,val,range,con,resettbl,flag,desctbl,ctlimittbl)
+	for k,effectcode in ipairs(effectcodetbl) do 
+		local val=effectvaluetbl[k]
+		if not val then
+			if effectcode~=EFFECT_INDESTRUCTABLE_COUNT then
+				val=1
+			else
+				val=rsval.indbae()
+			end
+		end
+		if indstype==EFFECT_INDESTRUCTABLE_COUNT and not ctlimittbl then
+			ctlimittbl=1
+		end
+		local e1=rsef.SV(cardtbl,effectcode,val,range,con,resettbl,flag,desctbl)
+		table.insert(resulteffecttbl,e1)
+	end
+	return table.unpack(resulteffecttbl)
 end
 --Single Val Effect: Immue effects
 function rsef.SV_IMMUNE_EFFECT(cardtbl,val,con,resettbl,flag,desctbl)
@@ -207,22 +208,25 @@ function rsef.SV_CANNOT_BE_MATERIAL(cardtbl,lmattypetbl,valtbl,con,resettbl,flag
 	return table.unpack(resulteffecttbl)
 end
 --Single Val Effect: Cannot be battle or card effect target
-function rsef.SV_CANNOT_BE_TARGET(cardtbl,tgtype,val,con,resettbl,flag,desctbl)
-	local effectcode=0
+function rsef.SV_CANNOT_BE_TARGET(cardtbl,tgtbl,valtbl,con,resettbl,flag,desctbl)
 	local codetbl1={"battle","effect"}
 	local codetbl2={ EFFECT_CANNOT_BE_BATTLE_TARGET,EFFECT_CANNOT_BE_EFFECT_TARGET }
-	for k,v in ipairs(codetbl1) do
-		if v==indstype then effectcode=codetbl2[k] break end
-	end
-	if not val then
-		if tgtype==EFFECT_CANNOT_BE_BATTLE_TARGET then
-			val=aux.imval1
-		else
-			val=1
+	local effectcodetbl,effectvaluetbl=rsof.Table_Suit(tgtbl,codetbl1,codetbl2,valtbl)
+	local resulteffecttbl={}
+	local range=rsef.GetRegisterRange(cardtbl) 
+	for k,effectcode in ipairs(effectcodetbl) do
+		local val=effectvaluetbl[k]
+		if not val then
+			if effectcode==EFFECT_CANNOT_BE_BATTLE_TARGET then
+				val=aux.imval1
+			else
+				val=1
+			end
 		end
+		local e1=rsef.SV(cardtbl,effectcode,val,range,con,resettbl,flag,desctbl)
+		table.insert(resulteffecttbl,e1)
 	end
-	local range=rsef.GetRegisterRange(cardtbl)
-	return rsef.SV(cardtbl,effectcode,val,range,con,resettbl,flag,desctbl,ctlimittbl)
+	return table.unpack(resulteffecttbl)
 end
 --Single Val Effect: Other Limit
 function rsef.SV_LIMIT(cardtbl,lotbl,valtbl,con,resettbl,flag,desctbl) 
@@ -254,7 +258,7 @@ end
 --Field Val Effect: Base set
 function rsef.FV(cardtbl,code,val,tg,tgrangetbl,range,con,resettbl,flag,desctbl,ctlimittbl)
 	local flag2=rsef.GetRegisterProperty(flag)
-	if desctbl and flag2&EFFECT_FLAG_CLIENT_HINT ==0 then flag2=flag2+EFFECT_FLAG_CLIENT_HINT end
+	if desctbl then flag2=flag2|EFFECT_FLAG_CLIENT_HINT end
 	return rsef.Register(cardtbl,EFFECT_TYPE_FIELD,code,desctbl,ctlimittbl,nil,flag2,range,con,nil,tg,nil,val,tgrangetbl,nil,resettbl)
 end
 --Field Val Effect: Updata some card attributes
@@ -273,45 +277,80 @@ function rsef.FV_UPDATE(cardtbl,uptypetbl,valtbl,tg,tgrangetbl,con,resettbl,flag
 	end
 	return table.unpack(resulteffecttbl)  
 end
+--Field Val Effect: Cannot Disable 
+function rsef.FV_CANNOT_DISABLE(cardtbl,distbl,valtbl,tg,tgrangetbl,con,resettbl,flag,desctbl) 
+	local codetbl1={"dis","dise","act","sum","sp"} 
+	local codetbl2={EFFECT_CANNOT_DISABLE,EFFECT_CANNOT_DISEFFECT,EFFECT_CANNOT_INACTIVATE,EFFECT_CANNOT_DISABLE_SUMMON,EFFECT_CANNOT_DISABLE_SPSUMMON }
+	local effectcodetbl,effectvaluetbl=rsof.Table_Suit(distbl,codetbl1,codetbl2,valtbl,true)
+	local resulteffecttbl={}
+	local range=rsef.GetRegisterRange(cardtbl) 
+	local flag2=rsef.GetRegisterProperty(flag)
+	if not tgrangetbl then tgrangetbl={ LOCATION_MZONE,0 } end
+	for k,effectcode in ipairs(effectcodetbl) do 
+		local tg2=tg
+		local tgrangetbl2=tgrangetbl 
+		local val=nil
+		if effectcode==EFFECT_CANNOT_DISABLE_SUMMON or EFFECT_CANNOT_DISABLE_SPSUMMON then
+			flag2=flag2|EFFECT_FLAG_IGNORE_RANGE+EFFECT_FLAG_SET_AVAILABLE 
+			tgrangetbl2=nil
+		end
+		if effectcode==EFFECT_CANNOT_DISEFFECT or effectcode==EFFECT_CANNOT_INACTIVATE then
+			tg2=nil
+			tgrangetbl2=nil
+			val=effectvaluetbl[k]
+			if not val then
+				val=rsval.cdisneg()
+			end
+		end
+		local e1=rsef.FV(cardtbl,effectcode,val,tg2,tgrangetbl2,range,con,resettbl,flag,desctbl)
+		table.insert(resulteffecttbl,e1)
+	end
+	return table.unpack(resulteffecttbl)
+end
 --Field Val Effect: Cannot be battle or card effect target
-function rsef.FV_CANNOT_BE_TARGET(cardtbl,tgtype,val,tg,tgrangetbl,con,resettbl,flag,desctbl)
-	local effectcode=0
+function rsef.FV_CANNOT_BE_TARGET(cardtbl,tgtbl,valtbl,tg,tgrangetbl,con,resettbl,flag,desctbl)
 	local codetbl1={"battle","effect"}
 	local codetbl2={ EFFECT_CANNOT_BE_BATTLE_TARGET,EFFECT_CANNOT_BE_EFFECT_TARGET }
-	for k,v in ipairs(codetbl1) do
-		if v==indstype then effectcode=codetbl2[k] break end
-	end
-	if not val then
-		if tgtype==EFFECT_CANNOT_BE_BATTLE_TARGET then
-			val=aux.imval1
-		else
-			val=1
-		end
-	end
-	local range=rsef.GetRegisterRange(cardtbl)
-	local flag2=rsef.GetRegisterProperty(flag)
-	if flag2&EFFECT_FLAG_IGNORE_IMMUNE ==0 then flag2=flag2+EFFECT_FLAG_IGNORE_IMMUNE end
+	local effectcodetbl,effectvaluetbl=rsof.Table_Suit(tgtbl,codetbl1,codetbl2,valtbl,true)
+	local resulteffecttbl={}
+	local range=rsef.GetRegisterRange(cardtbl) 
+	local flag2=rsef.GetRegisterProperty(flag)|EFFECT_FLAG_IGNORE_IMMUNE 
 	if not tgrangetbl then tgrangetbl={ LOCATION_MZONE,0 } end
-	return rsef.FV(cardtbl,effectcode,val,tg,tgrangetbl,range,con,resettbl,flag2,desctbl,ctlimittbl)
+	for k,effectcode in ipairs(effectcodetbl) do 
+		local val=effectvaluetbl[k]
+		if not val then
+			if effectcode==EFFECT_CANNOT_BE_BATTLE_TARGET then
+				val=aux.imval1
+			else
+				val=1
+			end
+		end
+		local e1=rsef.FV(cardtbl,effectcode,val,tg,tgrangetbl,range,con,resettbl,flag,desctbl)
+		table.insert(resulteffecttbl,e1)
+	end
+	return table.unpack(resulteffecttbl)
 end
 --Field Val Effect: Cannot destroed 
-function rsef.FV_INDESTRUCTABLE(cardtbl,indstype,val,tg,tgrangetbl,con,resettbl,flag,desctbl)
-	local effectcode=0
-	local codetbl1={"battle","effect","ct"}
-	local codetbl2={ EFFECT_INDESTRUCTABLE_BATTLE,EFFECT_INDESTRUCTABLE_EFFECT,EFFECT_INDESTRUCTABLE_COUNT }
-	for k,v in ipairs(codetbl1) do
-		if v==indstype then effectcode=codetbl2[k] break end
-	end
-	if not val then
-		if indstype~=EFFECT_INDESTRUCTABLE_COUNT then
-			val=1
-		else
-			val=rsval.indct()
-		end
-	end
-	local range=rsef.GetRegisterRange(cardtbl)
+function rsef.FV_INDESTRUCTABLE(cardtbl,indstbl,valtbl,tg,tgrangetbl,con,resettbl,flag,desctbl)
+	local codetbl1={"battle","effect","ct","all"}
+	local codetbl2={ EFFECT_INDESTRUCTABLE_BATTLE,EFFECT_INDESTRUCTABLE_EFFECT,EFFECT_INDESTRUCTABLE_COUNT,EFFECT_INDESTRUCTABLE }
+	local effectcodetbl,effectvaluetbl=rsof.Table_Suit(indstbl,codetbl1,codetbl2,valtbl,true)
+	local resulteffecttbl={}
+	local range=rsef.GetRegisterRange(cardtbl) 
 	if not tgrangetbl then tgrangetbl={ LOCATION_MZONE,0 } end
-	return rsef.FV(cardtbl,effectcode,val,tg,tgrangetbl,range,con,resettbl,flag,desctbl)
+	for k,effectcode in ipairs(effectcodetbl) do 
+		local val=effectvaluetbl[k]
+		if not val then
+			if effectcode~=EFFECT_INDESTRUCTABLE_COUNT then
+				val=1
+			else
+				val=rsval.indct()
+			end
+		end
+		local e1=rsef.FV(cardtbl,effectcode,val,tg,tgrangetbl,range,con,resettbl,flag,desctbl)
+		table.insert(resulteffecttbl,e1)
+	end
+	return table.unpack(resulteffecttbl)
 end
 --Field Val Effect: Other Limit
 function rsef.FV_LIMIT(cardtbl,lotbl,valtbl,tg,tgrangetbl,con,resettbl,flag,desctbl) 
@@ -323,6 +362,32 @@ function rsef.FV_LIMIT(cardtbl,lotbl,valtbl,tg,tgrangetbl,con,resettbl,flag,desc
 	if not tgrangetbl then tgrangetbl={ 0,LOCATION_MZONE } end
 	for k,effectcode in ipairs(effectcodetbl) do 
 		local e1=rsef.FV(cardtbl,effectcode,effectvaluetbl[k],tg,tgrangetbl,range,con,resettbl,flag,desctbl)
+		table.insert(resulteffecttbl,e1)
+	end
+	return table.unpack(resulteffecttbl)
+end
+--Field Val Effect: Other Limit (affect Player)
+function rsef.FV_LIMIT_PLAYER(cardtbl,lotbl,valtbl,tg,tgrangetbl,con,resettbl,flag,desctbl) 
+	local codetbl1={"act","sum","sp","th","dr","td","tg","res","rm","sbp","sm1","sm2","sdp","ssp","sset","mset","dish","disd"}
+	local codetbl2={ EFFECT_CANNOT_ACTIVATE,EFFECT_CANNOT_SUMMON,EFFECT_CANNOT_SPECIAL_SUMMON,EFFECT_CANNOT_TO_HAND,EFFECT_CANNOT_DRAW,EFFECT_CANNOT_TO_DECK,EFFECT_CANNOT_TO_GRAVE,EFFECT_CANNOT_RELEASE,EFFECT_CANNOT_REMOVE,EFFECT_CANNOT_BP,EFFECT_SKIP_M1,EFFECT_SKIP_M2,EFFECT_SKIP_DP,EFFECT_SKIP_SP,EFFECT_CANNOT_SSET,EFFECT_CANNOT_MSET,EFFECT_CANNOT_DISCARD_HAND,EFFECT_CANNOT_DISCARD_DECK }
+	local effectcodetbl,effectvaluetbl=rsof.Table_Suit(lotbl,codetbl1,codetbl2,valtbl)
+	local resulteffecttbl={}
+	local range=rsef.GetRegisterRange(cardtbl) 
+	if not tgrangetbl then tgrangetbl={ 0,1 } end
+	local flag2=rsef.GetRegisterProperty(flag)|EFFECT_FLAG_PLAYER_TARGET 
+	for k,effectcode in ipairs(effectcodetbl) do 
+		local tg2=tg
+		local val=nil
+		if effectcode==EFFECT_CANNOT_ACTIVATE then 
+			if effectvaluetbl[k] then val=effectvaluetbl[k] 
+			else 
+				val=function(e,re,rp)
+					return not re:GetHandler():IsImmuneToEffect(e)
+				end
+			end
+			tg2=nil
+		end
+		local e1=rsef.FV(cardtbl,effectcode,val,tg2,tgrangetbl,range,con,resettbl,flag2,desctbl)
 		table.insert(resulteffecttbl,e1)
 	end
 	return table.unpack(resulteffecttbl)
@@ -343,10 +408,7 @@ function rsef.FV_REDIRECT(cardtbl,redtbl,valtbl,tg,tgrangetbl,con,resettbl,flag,
 	local resulteffecttbl={}
 	local range=rsef.GetRegisterRange(cardtbl)
 	if not tgrangetbl then tgrangetbl={ 0,0xff } end
-	local flag2=rsef.GetRegisterProperty(flag)
-	if flag2&EFFECT_FLAG_IGNORE_IMMUNE ==0 then flag2=flag2+EFFECT_FLAG_IGNORE_IMMUNE end
-	if flag2&EFFECT_FLAG_SET_AVAILABLE ==0 then flag2=flag2+EFFECT_FLAG_SET_AVAILABLE end
-	if flag2&EFFECT_FLAG_IGNORE_RANGE ==0 then flag2=flag2+EFFECT_FLAG_IGNORE_RANGE end 
+	local flag2=rsef.GetRegisterProperty(flag)|EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SET_AVAILABLE+EFFECT_FLAG_IGNORE_RANGE 
 	for k,effectcode in ipairs(effectcodetbl) do
 		local e1=rsef.FV(cardtbl,effectcode,effectvaluetbl[k],tg,tgrangetbl,range,con,resettbl,flag2,desctbl)
 		table.insert(resulteffecttbl,e1)
@@ -361,7 +423,6 @@ function rsef.ACT(cardtbl,code,desctbl,ctlimittbl,cate,flag,con,cost,tg,op,timin
 		timingtbl={0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE }
 	end
 	if not desctbl then desctbl={m,0} end
-
 	if not code then code=EVENT_FREE_CHAIN end
 	return rsef.Register(cardtbl,EFFECT_TYPE_ACTIVATE,code,desctbl,ctlimittbl,cate,flag,nil,con,cost,tg,op,nil,nil,timingtbl,resettbl)
 end  
@@ -420,9 +481,7 @@ function rsef.QO(cardtbl,code,desctbl,ctlimittbl,cate,flag,range,con,cost,tg,op,
 end 
 function rsef.QO_NEGATE_ACT(cardtbl,ctlimittbl,waystring,range,con,cost,desctbl,cate,flag,resettbl)
 	if not desctbl then desctbl={m,5} end
-	local flag2=rsef.GetRegisterProperty(flag)
-	if flag2&EFFECT_FLAG_DAMAGE_CAL ==0 then flag2=flag2+EFFECT_FLAG_DAMAGE_CAL end 
-	if flag2&EFFECT_FLAG_DAMAGE_STEP ==0 then flag2=flag2+EFFECT_FLAG_DAMAGE_STEP end   
+	local flag2=rsef.GetRegisterProperty(flag)|EFFECT_FLAG_DAMAGE_CAL+EFFECT_FLAG_DAMAGE_STEP   
 	local cate2=rsef.GetRegisterCategory(cate)
 	if cate2&CATEGORY_NEGATE ==0 then cate2=cate2+CATEGORY_NEGATE end
 	local waylist={"des","rm","th","td","tg","set","nil"}
@@ -437,6 +496,17 @@ end
 function rsef.QF(cardtbl,code,desctbl,ctlimittbl,cate,flag,range,con,cost,tg,op,resettbl)
 	return rsef.Register(cardtbl,EFFECT_TYPE_QUICK_F,code,desctbl,ctlimittbl,cate,flag,range,con,cost,tg,op,nil,nil,nil,resettbl)
 end
+-----------########Field Continues Effect######---------------
+--Field Continues: Base set
+function rsef.FC(cardtbl,code,desctbl,ctlimittbl,flag,range,con,op,resettbl)
+	if not range then range=rsef.GetRegisterRange(cardtbl) end
+	return rsef.Register(cardtbl,EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS,code,desctbl,ctlimittbl,nil,flag,range,con,nil,nil,op,nil,nil,nil,resettbl)
+end 
+-----------########Single Continues Effect######---------------
+--Single Continues: Base set
+function rsef.SC(cardtbl,code,desctbl,ctlimittbl,flag,con,op,resettbl)
+	return rsef.Register(cardtbl,EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS,code,desctbl,ctlimittbl,nil,flag,nil,con,nil,nil,op,nil,nil,nil,resettbl)
+end 
 -------------######Main Quick Effect Set#####-----------------
 --Effect: Get default hint string for Duel.Hint ,use in effect target
 function rsef.GetDefaultHintString(pcatelist,loc1,loc2,hintstring)
@@ -476,6 +546,9 @@ function rsef.GetDefaultHintString(pcatelist,loc1,loc2,hintstring)
 		hint=aux.Stringid(m,3) 
 	end
 	if hintstring then 
+		if type(hintstring)=="table" then
+			hintstring=aux.Stringid(hintstring[1],hintstring[2])
+		end
 		hint=hintstring 
 	end
 	return hint 
@@ -924,6 +997,14 @@ function rsval.imntg2(e,re)
 	if re:GetHandlerPlayer()==e:GetHandlerPlayer() or ec:IsHasCardTarget(c) or (re:IsHasType(EFFECT_TYPE_ACTIONS) and re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) and c:IsRelateToEffect(re)) then return false
 	end
 	return true
+end
+--value: EFFECT_CANNOT_INACTIVATE,EFFECT_CANNOT_DISEFFECT
+function rsval.cdisneg(filter)
+	return function(e,ct)
+		local p=e:GetHandlerPlayer()
+		local te,tp,loc=Duel.GetChainInfo(ct,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TRIGGERING_PLAYER,CHAININFO_TRIGGERING_LOCATION)
+		return (not filter and p==tp) or filter(p,te,tp,loc)
+	end
 end
 -------------#########Quick Target###########-----------------
 --Card target: do not have an effect target it
@@ -1836,7 +1917,12 @@ function rscf.SetExtraLinkMaterial(c,materialfilter,loc1,loc2)
 		if f3 then
 			local f4=function(mc,mf,mlc)
 				if mc:IsLocation(LOCATION_ONFIELD) and not mc:IsFaceup() then return false end
-				return (mc:IsCanBeLinkMaterial(mlc) or (mc:IsLocation(LOCATION_SZONE) and mc:GetOriginalType()&TYPE_SPELL+TYPE_TRAP ~=0 and not mc:IsHasEffect(EFFECT_CANNOT_BE_LINK_MATERIAL) and not mc:IsForbidden())) and (not mf or mf(mc))
+				if mf and not mf(mc) then return false end
+				if mc:IsForbidden() then return false end
+				if mc:IsLocation(LOCATION_MZONE) then return mc:IsCanBeLinkMaterial(mlc) 
+				else
+				   return not mc:IsHasEffect(EFFECT_CANNOT_BE_LINK_MATERIAL)
+				end
 			end
 			local mg2=f3(lc)
 			mg2=mg2:Filter(f4,nil,f,lc)
@@ -2038,7 +2124,7 @@ function rsof.String_To_Table(value)
 	return table1
 end
 --suit 2 tables (for rsv_E_SV)
-function rsof.Table_Suit(value1,value2,value3,value4)
+function rsof.Table_Suit(value1,value2,value3,value4,value4nosuit)
 	local table1=rsof.String_To_Table(value1)
 	local table2=rsof.String_To_Table(value2)
 	local table3=value3
@@ -2051,7 +2137,7 @@ function rsof.Table_Suit(value1,value2,value3,value4)
 		for k2,v2 in ipairs(table2) do
 			if v1==v2 then
 				table.insert(resulttbl1,value3[k2]) 
-				if #table4==1 then
+				if #table4==1 and not value4nosuit then
 				   table.insert(resulttbl2,table4[1])
 				else
 				   table.insert(resulttbl2,table4[k1])
@@ -2101,7 +2187,7 @@ function rsof.Mix_Value_To_Table(valuelist1,stringlistindex,valuelistindex)
 	local valuenumlist=rsof.Table_Suit(stringlist,stringlistindex,valuelistindex) 
 	for _,value2 in ipairs(valuenumlist) do
 		if value&value2==0 then
-			value=value+value2
+			value=value|value2
 			table.insert(valuelist2,value2)
 		end
 	end
@@ -2136,7 +2222,13 @@ function rsof.SelectOption(p,...)
 		end
 	end
 end
-
+--Other function: HINT_SELECTMSG
+function rsof.SelectHint(p,cate)
+	local hintstring=nil
+	if type(cate)~="string" then hintstring=cate end
+	local hintmsg=rsef.GetDefaultHintString(cate,nil,hintstring)
+	Duel.Hint(HINT_SELECTMSG,p,hintmsg) 
+end
 -------------------E-----N-----D--------------------------
 end
 ------------########################-----------------
@@ -2157,6 +2249,7 @@ function cm.initial_effect(c)
 		"rslap" =   "Lapin"
 		"rsss"  =   "Starspirit"
 		"rslrd" =   "LifeDeathRoundDance"
+		"rsps"  =   "PseudoSoul"
 				}--]]   
 end
 end

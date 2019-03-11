@@ -29,7 +29,7 @@ function c13255201.initial_effect(c)
 	e3:SetCountLimit(1,13255201)
 	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e3:SetCost(c13255201.cost)
-	e3:SetCondition(c13255201.thcon)
+	--e3:SetCondition(c13255201.thcon)
 	e3:SetTarget(c13255201.thtg)
 	e3:SetOperation(c13255201.thop)
 	c:RegisterEffect(e3)
@@ -39,7 +39,10 @@ function c13255201.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_EQUIP)
+		and Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_EQUIP) and Duel.IsExistingMatchingCard(c13255201.cfilter,tp,LOCATION_GRAVE,0,1,nil)
+end
+function c13255201.cfilter(c)
+	return c:IsType(TYPE_MONSTER) and c:IsLevelBelow(1)
 end
 function c13255201.filter(c)
 	return c:IsType(TYPE_EQUIP) and c:IsAbleToDeck()

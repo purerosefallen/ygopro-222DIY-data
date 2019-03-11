@@ -22,13 +22,12 @@ function c47510241.initial_effect(c)
     --Change
     local e7=Effect.CreateEffect(c)
     e7:SetDescription(aux.Stringid(47510241,0))
-    e7:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
+    e7:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
     e7:SetRange(LOCATION_MZONE)
     e7:SetCode(EVENT_PHASE+PHASE_STANDBY)
     e7:SetTarget(c47510241.changetg)
     e7:SetOperation(c47510241.changeop)
     c:RegisterEffect(e7)      
-
 end
 function c47510241.efilter(e,te)
     return te:GetOwner()~=e:GetOwner()

@@ -61,7 +61,7 @@ function cm.eaop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
 		c:RegisterEffect(e1)
 		if not (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or c:GetAttackAnnouncedCount()==0 then return end
-		if c:IsChainAttackable(0,false) then
+		if Duel.GetAttacker()==c and c:IsChainAttackable(0,false) then
 			Duel.ChainAttack()
 		end
 	end

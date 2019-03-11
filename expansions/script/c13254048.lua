@@ -42,7 +42,7 @@ function c13254048.activate(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.IsExistingMatchingCard(c13254048.tgfilter2,tp,LOCATION_DECK,0,1,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(13254048,0)) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-		local g1=Duel.SelectMatchingCard(tp,c13254048.tgfilter2,tp,LOCATION_DECK,0,1,1,nil)
+		local g1=Duel.SelectMatchingCard(tp,c13254048.tgfilter2,tp,LOCATION_DECK,0,1,3,nil)
 		Duel.SendtoGrave(g1,REASON_EFFECT)
 	end
 end

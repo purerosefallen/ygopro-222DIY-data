@@ -82,6 +82,7 @@ function c47578922.thop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     if sg:GetCount()>0 then
         Duel.SendtoHand(sg,nil,REASON_EFFECT)
+        Duel.Destroy(c,REASON_EFFECT)
     end
 end
 function c47578922.thcon(e,tp,eg,ep,ev,re,r,rp)

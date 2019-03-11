@@ -1,6 +1,4 @@
 --天司长 路西菲尔
-local m=47590008
-local cm=_G["c"..m]
 function c47590008.initial_effect(c)
     c:SetSPSummonOnce(47590008)
     --synchro summon
@@ -16,15 +14,20 @@ function c47590008.initial_effect(c)
     --atk up
     local e1=Effect.CreateEffect(c)
     e1:SetCategory(CATEGORY_ATKCHANGE)
-    e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-    e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
-    e1:SetCountLimit(1)
+    e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
     e1:SetRange(LOCATION_PZONE)
     e1:SetTargetRange(LOCATION_MZONE,0)
-    e1:SetCondition(c47590008.atkcon)
-    e1:SetTarget(c47590008.atktg)
-    e1:SetOperation(c47590008.atkop)
+    e1:SetCode(EFFECT_UPDATE_ATTACK)
+    e1:SetTarget(aux.TargetBoolFunction(Card.IsRace,RACE_FAIRY))
+    e1:SetValue(1500)
     c:RegisterEffect(e1)
+    local e3=e1:Clone()
+    e3:SetCode(EFFECT_UPDATE_DEFENSE)
+    c:RegisterEffect(e3)
+    local e4=e1:Clone()
+    e4:SetCode(EFFECT_CANNOT_DISABLE)
+    e4:SetValue(0)
+    c:RegisterEffect()
     --Immunity
     local e2=Effect.CreateEffect(c)
     e2:SetType(EFFECT_TYPE_SINGLE)
@@ -56,6 +59,7 @@ function c47590008.initial_effect(c)
     c:RegisterEffect(e7)
         --pendulum
     local e8=Effect.CreateEffect(c)
+    e8:SetCategory(CATEGORY_SPECIAL_SUMMON)
     e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
     e8:SetCode(EVENT_LEAVE_FIELD)
     e8:SetProperty(EFFECT_FLAG_DELAY)
@@ -159,13 +163,22 @@ function c47590008.pencon(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
     return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0 and c:IsPreviousLocation(LOCATION_MZONE) and c:IsFaceup()
 end
+function c47590008.filter(c,e,tp)
+    return c:IsCode(47578913) and c:IsCanBeSpecialSummoned(e,0,tp,false,true)
+end
 function c47590008.pentg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1) end
+    if chk==0 then return Duel.GetLocationCountFromEx(tp)>0
+        and Duel.IsExistingMatchingCard(c47590008.filter,tp,LOCATION_EXTRA,0,1,nil,e,tp) and Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1) end
+    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
 function c47590008.penop(e,tp,eg,ep,ev,re,r,rp)
     if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) then return false end
     local c=e:GetHandler()
-    if c:IsRelateToEffect(e) then
-        Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+    if c:IsRelateToEffect(e) and Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true) then
+    if Duel.GetLocationCountFromEx(tp)<=0 then return end
+        local tg=Duel.GetFirstMatchingCard(c47590008.filter,tp,LOCATION_EXTRA,0,nil,e,tp)
+        if tg then
+            Duel.SpecialSummon(tg,0,tp,tp,false,true,POS_FACEUP)
+        end      
     end
 end

@@ -4,8 +4,17 @@ function c13254121.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCondition(c13254121.condition)
+	e1:SetCost(c13254121.cost)
+	--e1:SetCondition(c13254121.condition)
 	c:RegisterEffect(e1)
+	if not c13254121.global_check then
+		c13254121.global_check=true
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_CHAINING)
+		ge1:SetOperation(c13254121.checkop)
+		Duel.RegisterEffect(ge1,0)
+	end
 	--deckdes
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(13254121,0))
@@ -53,8 +62,28 @@ function c13254121.initial_effect(c)
 	c:RegisterEffect(e12)
 	
 end
+function c13254121.checkop(e,tp,eg,ep,ev,re,r,rp)
+	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL+TYPE_FIELD) and not re:GetHandler()==e:GetHandler() then
+		Duel.RegisterFlagEffect(rp,13254121,RESET_PHASE+PHASE_END,0,1)
+	end
+end
 function c13254121.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()==PHASE_MAIN1 and not Duel.CheckPhaseActivity()
+end
+function c13254121.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetFlagEffect(tp,13254121)==0 end
+	--oath effects
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
+	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
+	e1:SetTargetRange(1,0)
+	e1:SetValue(c13254121.aclimit)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+end
+function c13254121.aclimit(e,re,tp)
+	return re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL+TYPE_FIELD) and not re:GetHandler()==e:GetHandler()
 end
 function c13254121.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,5) and Duel.IsPlayerCanDiscardDeck(1-tp,5) end

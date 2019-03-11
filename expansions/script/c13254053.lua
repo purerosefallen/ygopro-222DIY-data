@@ -19,18 +19,24 @@ function c13254053.initial_effect(c)
 	e2:SetCondition(c13254053.sprcon)
 	e2:SetOperation(c13254053.sprop)
 	c:RegisterEffect(e2)
-	--special summon
+	--special summon from grave
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e3:SetType(EFFECT_TYPE_QUICK_O)
-	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetRange(LOCATION_GRAVE)
-	e3:SetCountLimit(1,13254053)
-	e3:SetCondition(c13254053.spcon)
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetRange(LOCATION_MZONE)
 	e3:SetTarget(c13254053.sptg)
 	e3:SetOperation(c13254053.spop)
 	c:RegisterEffect(e3)
+	--special summon from hand
+	local e4=Effect.CreateEffect(c)
+	e4:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
+	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e4:SetType(EFFECT_TYPE_IGNITION)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetTarget(c13254053.sptg1)
+	e4:SetOperation(c13254053.spop1)
+	c:RegisterEffect(e4)
 	
 end
 function c13254053.ffilter(c)
@@ -74,18 +80,21 @@ function c13254053.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	end
 	Duel.SendtoGrave(sg,REASON_COST)
 end
-function c13254053.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp
-end
 function c13254053.filter1(c)
 	return c:IsCode(13254032) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
 function c13254053.filter2(c)
 	return c:IsCode(13254033) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
+function c13254053.spfilter1(c,e,tp)
+	return c:IsLevelBelow(1) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingTarget(c13254053.filter1,tp,LOCATION_GRAVE,0,1,c) and Duel.IsExistingTarget(c13254053.filter2,tp,LOCATION_GRAVE,0,1,c)
+end
+function c13254053.spfilter2(c,e,tp)
+	return c:IsLevelBelow(1) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
 function c13254053.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c13254053.filter1(chkc) and c13254053.filter2(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c13254053.filter1,tp,LOCATION_GRAVE,0,1,nil) and Duel.IsExistingTarget(c13254053.filter2,tp,LOCATION_GRAVE,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c13254053.spfilter1,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 	local g1=Duel.SelectTarget(tp,c13254053.filter1,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
@@ -100,8 +109,35 @@ function c13254053.spop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	if Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)~=2 then return end
 	Duel.BreakEffect()
-	if c:IsRelateToEffect(e) then
-		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local sg1=Duel.SelectMatchingCard(tp,c13254053.spfilter2,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	if sg1:GetCount()>0 then
+		Duel.HintSelection(sg1)
+		Duel.SpecialSummon(sg1,0,tp,tp,false,false,POS_FACEUP)
+	end
+end
+function c13254053.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c13254053.filter1(chkc) and c13254053.filter2(chkc) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c13254053.spfilter1,tp,LOCATION_HAND,0,1,nil,e,tp) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g1=Duel.SelectTarget(tp,c13254053.filter1,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g2=Duel.SelectTarget(tp,c13254053.filter2,tp,LOCATION_GRAVE,0,1,1,nil)
+	g1:Merge(g2)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g1,2,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
+end
+function c13254053.spop1(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
+	if Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)~=2 then return end
+	Duel.BreakEffect()
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+	local sg1=Duel.SelectMatchingCard(tp,c13254053.spfilter2,tp,LOCATION_HAND,0,1,1,nil,e,tp)
+	if sg1:GetCount()>0 then
+		Duel.HintSelection(sg1)
+		Duel.SpecialSummon(sg1,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
 
