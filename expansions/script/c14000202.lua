@@ -13,7 +13,7 @@ function cm.initial_effect(c)
 	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(m,0))
-	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE+EFFECT_FLAG_CANNOT_INACTIVATE)
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetRange(LOCATION_ONFIELD)
@@ -66,7 +66,7 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return (Duel.GetLocationCount(tp,LOCATION_SZONE)>0 or eg:GetFirst():IsLocation(LOCATION_SZONE)) and eg:GetFirst():IsAbleToChangeControler() and c:GetFlagEffect(14000201)~=0 and re:GetHandler()~=c and c:GetFlagEffect(m)==0 and not c:IsStatus(STATUS_BATTLE_DESTROYED) end
+	if chk==0 then return (Duel.GetLocationCount(tp,LOCATION_SZONE)>0 or eg:GetFirst():IsLocation(LOCATION_SZONE)) and (eg:GetFirst():IsControler(tp) or (eg:GetFirst():IsAbleToChangeControler() and not c:IsLocation(LOCATION_SZONE))) and c:GetFlagEffect(14000201)~=0 and re:GetHandler()~=c and c:GetFlagEffect(m)==0 and not c:IsStatus(STATUS_BATTLE_DESTROYED) end
 end
 function cm.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

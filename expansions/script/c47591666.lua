@@ -1,9 +1,7 @@
 --觉醒十天众 西斯
-local m=47591666
-local cm=_G["c"..m]
 function c47591666.initial_effect(c)
     --xyz summon
-    aux.AddXyzProcedure(c,nil,6,3,c47591666.ovfilter,aux.Stringid(47591666,0),3,c47591666.xyzop)
+    aux.AddXyzProcedure(c,nil,6,2,c47591666.ovfilter,aux.Stringid(47591666,0),c47591666.xyzop)
     c:EnableReviveLimit()
     --serch
     local e1=Effect.CreateEffect(c)

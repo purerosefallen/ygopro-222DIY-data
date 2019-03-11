@@ -10,7 +10,7 @@ function cm.initial_effect(c)
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsSynchroType,TYPE_PENDULUM),1)
 	c:EnableReviveLimit()
 	--xyz summon
-	aux.AddXyzProcedure(c,nil,114,514,cm.ovfilter,aux.Stringid(m,0),1919,cm.xyzop)
+	aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsXyzType,TYPE_PENDULUM),8,3,cm.ovfilter,aux.Stringid(m,0),3,cm.xyzop)
 	c:EnableReviveLimit()
 	--remove
 	local e0=Effect.CreateEffect(c)
@@ -165,7 +165,7 @@ function cm.dessuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SOUND,0,aux.Stringid(m,10))
 end
 function cm.aclcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():IsSummonType(SUMMON_TYPE_SYNCHRO) 
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM) 
 end
 function cm.aclimit(e,re,tp)
 	return not re:GetHandler():IsLocation(LOCATION_ONFIELD)

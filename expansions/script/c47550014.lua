@@ -17,8 +17,8 @@ function c47550014.initial_effect(c)
     e2:SetCategory(CATEGORY_DESTROY)
     e2:SetType(EFFECT_TYPE_QUICK_O)
     e2:SetCode(EVENT_FREE_CHAIN)
+    e2:SetRange(LOCATION_MZONE)
     e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-    e2:SetCode(EVENT_SPSUMMON_SUCCESS)
     e2:SetCountLimit(1)
     e2:SetTarget(c47550014.destg)
     e2:SetOperation(c47550014.desop)
@@ -49,15 +49,16 @@ function c47550014.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chk==0 then return Duel.IsExistingTarget(c47550014.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
     local g=Duel.SelectTarget(tp,c47550014.desfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+    local tc=g:GetFirst()
     Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
-    if g:GetAttribute()==ATTRIBUTE_LIGHT then
+    if tc:GetAttribute()==ATTRIBUTE_LIGHT then
         e:SetCategory(CATEGORY_DESTROY+CATEGORY_TOGRAVE)
         e:SetLabel(1)
     else
         e:SetCategory(CATEGORY_DESTROY)
         e:SetLabel(0)
     end
-    Duel.SetChainLimit(c47550014.limit(g:GetFirst()))
+    Duel.SetChainLimit(c47550014.limit(tc))
 end
 function c47550014.limit(c)
     return  function (e,lp,tp)

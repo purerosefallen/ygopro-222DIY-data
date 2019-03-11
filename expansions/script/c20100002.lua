@@ -477,6 +477,12 @@ function Cirn9.ReLiveMonster(c)
         ge1:SetOperation(Cirn9.opop)
         Duel.RegisterEffect(ge1,0)
     end
+    --ac1
+    local e3=Effect.CreateEffect(c)
+    e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+    e3:SetCode(EVENT_ADD_COUNTER+0xc99)
+    e3:SetOperation(Cirn9.acop)
+    c:RegisterEffect(e3)
 end
 
 --ReLive field magic can not be setted
@@ -563,9 +569,10 @@ function Cirn9.rlcost(e,c,tp)
     local fa=Duel.GetFlagEffect(tp,20100050)    --Copy From THC Makai Deck
     local fb=Duel.GetFlagEffect(tp,20100051)    --Thanks Hiragi Sama
     local fc=fa-fb
-    return (fc<6) or (e:GetHandler():GetFlagEffect(20100070)~=0)
+    return (fc<6) or (e:GetHandler():GetFlagEffect(20100070)~=0) or Duel.IsPlayerAffectedByEffect(tp,20100134)
 end
 function Cirn9.rlop(e,tp,eg,ep,ev,re,r,rp)
+    if Duel.IsPlayerAffectedByEffect(tp,20100134) then return end
     if (e:GetHandler():GetFlagEffect(20100070)>0) then return end       
     Duel.RegisterFlagEffect(tp,20100050,RESET_PHASE+PHASE_END,0,1)
     local fa=Duel.GetFlagEffect(tp,20100050)
@@ -629,6 +636,9 @@ end
 function Cirn9.clcost(e,tp,eg,ep,ev,re,r,rp,chk)
     if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0xc99,3,REASON_COST) end
     e:GetHandler():RemoveCounter(tp,0xc99,3,REASON_COST)
+    Duel.RegisterFlagEffect(tp,20100053,RESET_PHASE+PHASE_END,0,1)
+    Duel.RegisterFlagEffect(tp,20100053,RESET_PHASE+PHASE_END,0,1)
+    Duel.RegisterFlagEffect(tp,20100053,RESET_PHASE+PHASE_END,0,1)
 end
 function Cirn9.RevueBgm(tp)
     local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
@@ -784,4 +794,9 @@ end
 function Cirn9.finalcon(e,tp,eg,ep,ev,re,r,rp)
     local tid=e:GetHandler():GetTurnID()
     return (Duel.GetTurnCount()==tid+1)
+end
+function Cirn9.acop(e,tp,eg,ep,ev,re,r,rp)
+    for i=1,ev do
+        Duel.RegisterFlagEffect(tp,20100052,RESET_PHASE+PHASE_END,0,1)
+    end
 end

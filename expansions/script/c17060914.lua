@@ -35,6 +35,10 @@ function cm.IsMa_Elf(c)
 	local m=_G["c"..c:GetCode()]
 	return m and m.is_named_with_Ma_Elf 
 end
+function cm.IsMillion_Arthur(c)
+    local m=_G["c"..c:GetCode()]
+    return m and m.is_named_with_Million_Arthur
+end
 function iCount(name,tp,m,id)
     return ((name=="get" or name=="set")
         and {(name=="get"
@@ -49,7 +53,7 @@ function cm.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function cm.filter(c)
-	return c:IsType(TYPE_PENDULUM) and c:IsAbleToGrave()
+	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsAbleToGrave()
 end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) 
@@ -67,7 +71,8 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.tgfilter(c)
-	return c:IsType(TYPE_PENDULUM) and (c:IsFaceup() or not c:IsLocation(LOCATION_EXTRA)) and c:IsAbleToHand()
+	return (c:IsType(TYPE_PENDULUM) and cm.IsMillion_Arthur or not c:IsLocation(LOCATION_DECK)) and c:IsAbleToGrave()
+		and (c:IsFaceup() and c:IsType(TYPE_PENDULUM) or not c:IsLocation(LOCATION_EXTRA)) and c:IsAbleToGrave()
 end
 function cm.thfilter(c)
 	return c:IsType(TYPE_PENDULUM) and cm.IsMa_Elf(c) and c:IsAbleToHand() and not c:IsCode(17060914)

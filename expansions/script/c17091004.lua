@@ -116,7 +116,7 @@ function cm.xyzop(e,tp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,m)==0 end
 	Duel.RegisterFlagEffect(tp,m,RESET_PHASE+PHASE_END,0,1)
 end
-function cm.filter(c,e,tp)
+function c88264978.filter(c,e,tp)
 	return c:IsRace(RACE_MACHINE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
@@ -128,7 +128,7 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 	local lg=e:GetHandler():GetOverlayGroup()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=lg:FilterSelect(tp,cm.filter,1,1,nil,e,tp)
+	local g=lg:FilterSelect(tp,cm.filter,1,1,nil,tp,e,tp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g:GetFirst(),0,tp,tp,false,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(e:GetHandler())

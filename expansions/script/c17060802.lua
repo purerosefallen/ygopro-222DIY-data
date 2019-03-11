@@ -4,15 +4,13 @@ local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
-	--draw and pendulum set
+	--
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(m,0))
-	e2:SetCategory(CATEGORY_DRAW)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_PZONE)
-	e2:SetCountLimit(1)
+	e2:SetCountLimit(1,m)
 	e2:SetCost(cm.pccost)
-	e2:SetTarget(cm.pctg)
 	e2:SetOperation(cm.pcop)
 	c:RegisterEffect(e2)
 	--spsummon
@@ -52,28 +50,18 @@ function cm.pccost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToDeckAsCost() end
 	Duel.SendtoDeck(e:GetHandler(),nil,2,REASON_COST)
 end
-function cm.pctg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return true end
-	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(1)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
-end
 function cm.pcop(e,tp,eg,ep,ev,re,r,rp)
-	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
-	if Duel.Draw(p,d,REASON_EFFECT)~=0 then
-		local tc=Duel.GetOperatedGroup():GetFirst()
-		Duel.ConfirmCards(1-tp,tc)
-		if tc:IsType(TYPE_MONSTER) and cm.IsMillion_Arthur(tc) then
-		if not (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) then return end
-			if tc:IsType(TYPE_PENDULUM) and Duel.SelectYesNo(tp,aux.Stringid(m,2)) then
-				Duel.BreakEffect()
-				Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-			end
-		else
-			Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
-		end
-		Duel.ShuffleHand(tp)
-	end
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_CHANGE_DAMAGE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e1:SetTargetRange(1,0)
+	e1:SetValue(cm.damval)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+end
+function cm.damval(e,re,val,r,rp,rc)
+	return val/2
 end
 
 function cm.spcon(e,tp,eg,ep,ev,re,r,rp)

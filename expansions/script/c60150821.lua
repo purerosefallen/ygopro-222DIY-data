@@ -13,12 +13,12 @@ function c60150821.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c60150821.cfilter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x3b23) and c:IsAbleToDeckOrExtraAsCost()
+	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x3b23) and c:IsAbleToDeckOrExtraAsCost()
 end
 function c60150821.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c60150821.cfilter2,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,c60150814.cfilter2,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c60150821.cfilter2,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
 	Duel.SendtoDeck(g,nil,2,REASON_COST)
 end
 function c60150821.atkop(e,tp,eg,ep,ev,re,r,rp)
@@ -27,13 +27,13 @@ function c60150821.atkop(e,tp,eg,ep,ev,re,r,rp)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
-		e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		e1:SetValue(c:GetBaseAttack()*2)
 		c:RegisterEffect(e1)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_CANNOT_DIRECT_ATTACK)
-		e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e2)
 	end
 end

@@ -1,27 +1,25 @@
 --双子天司 哈鲁特·玛鲁特
-local m=47590012
-local cm=_G["c"..m]
 function c47590012.initial_effect(c)
-    c:EnableCounterPermit(0x5d2)
+    c:EnableCounterPermit(0x85d9)
     --link summon
-    aux.AddLinkProcedure(c,nil,2,2,c47590012.lcheck)
+    aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkRace,RACE_FAIRY),2,2,c47590012.lcheck)
     c:EnableReviveLimit()
     local e1=Effect.CreateEffect(c)
     e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DEFCHANGE)
-    e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+    e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
     e1:SetCode(EVENT_SPSUMMON_SUCCESS)
     e1:SetRange(LOCATION_MZONE)
     e1:SetCountLimit(1)
     e1:SetCondition(c47590012.atkcon)
-    e1:SetTarget(c47590012.atktg)
     e1:SetOperation(c47590012.atkop)
     c:RegisterEffect(e1)
     --counter
     local e2=Effect.CreateEffect(c)
     e2:SetDescription(aux.Stringid(47590012,0))
     e2:SetCategory(CATEGORY_COUNTER)
-    e2:SetType(EFFECT_TYPE_IGNITION)
+    e2:SetType(EFFECT_TYPE_QUICK_O)
     e2:SetRange(LOCATION_MZONE)
+    e2:SetCode(EVENT_FREE_CHAIN)
     e2:SetCountLimit(1)
     e2:SetTarget(c47590012.cttg)
     e2:SetOperation(c47590012.ctop)
@@ -40,12 +38,6 @@ function c47590012.lcheck(g)
 end
 function c47590012.atkcon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
-end
-function c47590012.atktg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return true end
-    if not Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) then
-        Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,1500)
-    end
 end
 function c47590012.atkop(e,tp,eg,ep,ev,re,r,rp)
     local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
@@ -69,19 +61,19 @@ function c47590012.ctop(e,tp,eg,ep,ev,re,r,rp)
     local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
     local tc=g:GetFirst()
     while tc do
-        if not tc:IsCanAddCounter(0x5d2,1) then
-            tc:EnableCounterPermit(0x5d2)
+        if not tc:IsCanAddCounter(0x85d9,1) then
+            tc:EnableCounterPermit(0x85d9)
         end
-        tc:AddCounter(0x5d2,1)
+        tc:AddCounter(0x85d9,1)
     end
 end
 function c47590012.distg(e,c)
-    return c:GetCounter(0x5d2)>0
+    return c:GetCounter(0x85d9)>0
 end
 function c47590012.adcon(e)
     return Duel.GetCurrentPhase()==PHASE_DAMAGE_CAL and Duel.GetAttackTarget()
 end
 function c47590012.adtg(e,c)
     local bc=c:GetBattleTarget()
-    return bc and c:GetCounter(0x5d2)~=0
+    return bc and c:GetCounter(0x85d9)~=0
 end

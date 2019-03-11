@@ -8,7 +8,7 @@ function c13254037.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e1:SetCode(EVENT_TO_GRAVE)
 	e1:SetRange(LOCATION_GRAVE)
-	e1:SetCountLimit(1,13254037)
+	e1:SetCost(c13254037.spcost)
 	e1:SetCondition(c13254037.spcon)
 	e1:SetTarget(c13254037.sptg)
 	e1:SetOperation(c13254037.spop)
@@ -32,6 +32,10 @@ function c13254037.spfilter(c,tp)
 end
 function c13254037.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c13254037.spfilter,1,nil,tp)
+end
+function c13254037.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetFlagEffect(tp,13254037)<eg:FilterCount(c13254037.spfilter,nil,tp) end
+	Duel.RegisterFlagEffect(tp,13254037,RESET_CHAIN,0,1)
 end
 function c13254037.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
