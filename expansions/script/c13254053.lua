@@ -86,6 +86,9 @@ end
 function c13254053.filter2(c)
 	return c:IsCode(13254033) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
 end
+function c13254053.filter3(c)
+	return (c:IsCode(13254033) or c:IsCode(13254032)) and c:IsType(TYPE_MONSTER) and c:IsAbleToDeck()
+end
 function c13254053.spfilter1(c,e,tp)
 	return c:IsLevelBelow(1) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingTarget(c13254053.filter1,tp,LOCATION_GRAVE,0,1,c) and Duel.IsExistingTarget(c13254053.filter2,tp,LOCATION_GRAVE,0,1,c)
 end
@@ -118,20 +121,17 @@ function c13254053.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13254053.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c13254053.filter1(chkc) and c13254053.filter2(chkc) end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c13254053.spfilter1,tp,LOCATION_HAND,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(c13254053.spfilter2,tp,LOCATION_HAND,0,1,nil,e,tp) and Duel.IsExistingTarget(c13254053.filter3,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g1=Duel.SelectTarget(tp,c13254053.filter1,tp,LOCATION_GRAVE,0,1,1,nil)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g2=Duel.SelectTarget(tp,c13254053.filter2,tp,LOCATION_GRAVE,0,1,1,nil)
-	g1:Merge(g2)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g1,2,0,0)
+	local g1=Duel.SelectTarget(tp,c13254053.filter3,tp,LOCATION_GRAVE,0,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g1,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c13254053.spop1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
-	if Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)~=2 then return end
+	if Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)~=1 then return end
 	Duel.BreakEffect()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg1=Duel.SelectMatchingCard(tp,c13254053.spfilter2,tp,LOCATION_HAND,0,1,1,nil,e,tp)

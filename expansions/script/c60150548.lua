@@ -52,14 +52,17 @@ function c60150548.confilter2(c)
     return c:IsSetCard(0xcb20) and c:IsType(TYPE_XYZ)
 end
 function c60150548.e2con(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
     local g=Duel.GetMatchingGroup(c60150548.confilter,tp,LOCATION_SZONE,0,nil)
     return g:GetClassCount(Card.GetCode)>=2 and Duel.IsExistingMatchingCard(c60150548.confilter2,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function c60150548.e3con(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
     local g=Duel.GetMatchingGroup(c60150548.confilter,tp,LOCATION_SZONE,0,nil)
     return g:GetClassCount(Card.GetCode)>=3 and Duel.IsExistingMatchingCard(c60150548.confilter2,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function c60150548.e4con(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
     local g=Duel.GetMatchingGroup(c60150548.confilter,tp,LOCATION_SZONE,0,nil)
     return g:GetClassCount(Card.GetCode)>=4 and Duel.IsExistingMatchingCard(c60150548.confilter2,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
@@ -70,6 +73,7 @@ function c60150548.e5tgfilter(c)
     return c:IsFaceup() and c:IsSetCard(0xcb20) and c:IsType(TYPE_XYZ)
 end
 function c60150548.e5tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local c=e:GetHandler()
     local g=Duel.GetMatchingGroup(c60150548.confilter,tp,LOCATION_SZONE,0,nil)
     if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c60150548.e5tgfilter(chkc) end
     if chk==0 then return Duel.IsExistingTarget(c60150548.e5tgfilter,tp,LOCATION_MZONE,0,1,nil)
@@ -78,6 +82,7 @@ function c60150548.e5tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     Duel.SelectTarget(tp,c60150548.e5tgfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function c60150548.e5op(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
     if not e:GetHandler():IsRelateToEffect(e) then return end
     local g=Duel.GetMatchingGroup(c60150548.confilter,tp,LOCATION_SZONE,0,nil)
     local c=e:GetHandler()

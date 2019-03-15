@@ -6,9 +6,10 @@ function c81008001.initial_effect(c)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_SINGLE_RANGE)
 	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(aux.fuslimit)
+	e1:SetRange(LOCATION_EXTRA)
+	e1:SetValue(c81008001.splimit)
 	c:RegisterEffect(e1)
 	--cannot material
 	local e3=Effect.CreateEffect(c)
@@ -55,6 +56,9 @@ function c81008001.initial_effect(c)
 	e9:SetTarget(c81008001.target)
 	e9:SetOperation(c81008001.operation)
 	c:RegisterEffect(e9)
+end
+function c81008001.splimit(e,se,sp,st)
+	return not e:GetHandler():IsLocation(LOCATION_EXTRA) or bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
 function c81008001.afilter(c)
 	return c:GetSequence()<4 and c:IsOnField() and c:IsLocation(LOCATION_MZONE)
