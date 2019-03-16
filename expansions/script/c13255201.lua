@@ -29,7 +29,7 @@ function c13255201.initial_effect(c)
 	e3:SetCountLimit(1,13255201)
 	e3:SetHintTiming(0,TIMINGS_CHECK_MONSTER_E)
 	e3:SetCost(c13255201.cost)
-	--e3:SetCondition(c13255201.thcon)
+	e3:SetCondition(c13255201.thcon)
 	e3:SetTarget(c13255201.thtg)
 	e3:SetOperation(c13255201.thop)
 	c:RegisterEffect(e3)
@@ -70,7 +70,7 @@ function c13255201.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13255201.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local ph=Duel.GetCurrentPhase()
-	return Duel.GetTurnPlayer()~=tp and ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)
+	return Duel.GetTurnPlayer()~=tp and not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED)-- and ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function c13255201.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsType,tp,LOCATION_DECK,0,1,nil,TYPE_EQUIP) end

@@ -63,14 +63,17 @@ function c60150547.confilter2(c)
     return c:IsSetCard(0xcb20) and c:IsType(TYPE_XYZ)
 end
 function c60150547.e2con(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
     local g=Duel.GetMatchingGroup(c60150547.confilter,tp,LOCATION_SZONE,0,nil)
     return g:GetClassCount(Card.GetCode)>=2 and Duel.IsExistingMatchingCard(c60150547.confilter2,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function c60150547.e3con(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
     local g=Duel.GetMatchingGroup(c60150547.confilter,tp,LOCATION_SZONE,0,nil)
     return g:GetClassCount(Card.GetCode)>=3 and Duel.IsExistingMatchingCard(c60150547.confilter2,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function c60150547.e4con(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
     local g=Duel.GetMatchingGroup(c60150547.confilter,tp,LOCATION_SZONE,0,nil)
     return g:GetClassCount(Card.GetCode)>=4 and Duel.IsExistingMatchingCard(c60150547.confilter2,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
@@ -81,6 +84,7 @@ function c60150547.val(e,c)
     return Duel.GetOverlayCount(c:GetControler(),1,0)*800
 end
 function c60150547.e5con(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
     local g=Duel.GetMatchingGroup(c60150547.confilter,tp,LOCATION_SZONE,0,nil)
     return g:GetClassCount(Card.GetCode)>=1 and Duel.IsExistingMatchingCard(c60150547.confilter2,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end

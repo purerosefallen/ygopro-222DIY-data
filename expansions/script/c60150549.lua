@@ -64,14 +64,17 @@ function c60150549.confilter2(c)
     return c:IsSetCard(0xcb20) and c:IsType(TYPE_XYZ)
 end
 function c60150549.e2con(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
     local g=Duel.GetMatchingGroup(c60150549.confilter,tp,LOCATION_SZONE,0,nil)
     return g:GetClassCount(Card.GetCode)>=2 and Duel.IsExistingMatchingCard(c60150549.confilter2,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function c60150549.e3con(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
     local g=Duel.GetMatchingGroup(c60150549.confilter,tp,LOCATION_SZONE,0,nil)
     return g:GetClassCount(Card.GetCode)>=3 and Duel.IsExistingMatchingCard(c60150549.confilter2,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
 function c60150549.e4con(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
     local g=Duel.GetMatchingGroup(c60150549.confilter,tp,LOCATION_SZONE,0,nil)
     return g:GetClassCount(Card.GetCode)>=4 and Duel.IsExistingMatchingCard(c60150549.confilter2,c:GetControler(),LOCATION_MZONE,0,1,nil)
 end
@@ -79,6 +82,7 @@ function c60150549.e4filter(e,te)
     return te:GetOwnerPlayer()~=e:GetOwnerPlayer()
 end
 function c60150549.e5con(e,c)
+	local c=e:GetHandler()
     if c==nil then return true end
     local g=Duel.GetMatchingGroup(c60150549.confilter,tp,LOCATION_SZONE,0,nil)
     local tp=c:GetControler()

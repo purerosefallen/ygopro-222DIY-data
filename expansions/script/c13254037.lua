@@ -33,7 +33,7 @@ end
 function c13254037.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c13254037.spfilter,1,nil,tp)
 end
-function c13254037.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c13254037.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,13254037)<eg:FilterCount(c13254037.spfilter,nil,tp) end
 	Duel.RegisterFlagEffect(tp,13254037,RESET_CHAIN,0,1)
 end
