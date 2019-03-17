@@ -106,10 +106,11 @@ function cm.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(cm.cfilter,1,nil,tp)
 end
 function cm.thfilter(c)
-    return c:IsType(TYPE_PENDULUM)
+    return c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
 end
+
 function cm.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SendtoHand(eg,nil,REASON_EFFECT)
+	Duel.SendtoHand(eg:Filter(cm.thfilter,nil),nil,REASON_EFFECT)
 end
 function cm.atop(e,tp,eg,ep,ev,re,r,rp)
     local c=e:GetHandler()
