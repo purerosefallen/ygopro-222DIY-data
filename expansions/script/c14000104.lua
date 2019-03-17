@@ -9,6 +9,7 @@ function cm.initial_effect(c)
 	e0:SetCode(EFFECT_CANNOT_CHANGE_POS_E)
 	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
 	e0:SetRange(LOCATION_MZONE)
+	e0:SetCondition(cm.poscon)
 	c:RegisterEffect(e0)
 	--summon with s/t
 	local e1=Effect.CreateEffect(c)
@@ -16,7 +17,7 @@ function cm.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
 	e1:SetCode(EFFECT_ADD_EXTRA_TRIBUTE)
 	e1:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
-	e1:SetTarget(aux.TargetBoolFunction(Card.IsFacedown))
+	e1:SetTarget(function(e,rc) return rc~=e:GetHandler() and rc:IsFacedown() end)
 	e1:SetValue(POS_FACEUP_ATTACK)
 	c:RegisterEffect(e1)
 	--can not changepos
@@ -25,14 +26,17 @@ function cm.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_CHANGE_POSITION)
 	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
 	e2:SetRange(LOCATION_MZONE)
+	e2:SetCondition(cm.poscon)
 	c:RegisterEffect(e2)
-	--immune
+	--pos
 	local e3=Effect.CreateEffect(c)
-	e3:SetType(EFFECT_TYPE_SINGLE)
-	e3:SetCode(EFFECT_IMMUNE_EFFECT)
-	e3:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CANNOT_DISABLE)
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_SET_POSITION)
+	e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE+EFFECT_FLAG_IGNORE_IMMUNE)
+	e3:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetValue(cm.efilter)
+	e3:SetTarget(function(e,c) return c==e:GetHandler() end)
+	e3:SetValue(POS_FACEUP_ATTACK)
 	c:RegisterEffect(e3)
 	--activate
 	local e4=Effect.CreateEffect(c)
@@ -56,14 +60,14 @@ function cm.initial_effect(c)
 	e5:SetOperation(cm.setop)
 	c:RegisterEffect(e5)
 end
-function cm.efilter(e,re)
-	return re:IsHasCategory(CATEGORY_POSITION)
+function cm.poscon(e)
+	return e:GetHandler():IsAttackPos()
 end
 function cm.filter(c,e,tp)
-	return c:GetSummonPlayer()==1-tp and (not e or c:IsRelateToEffect(e))
+	return c:GetSummonPlayer()==1-tp and (not e or c:IsRelateToEffect(e)) and c:IsCanTurnSet()
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return eg:IsExists(cm.filter,1,nil,nil,tp) end
+	if chk==0 then return eg:IsExists(cm.filter,1,nil,e,tp) end
 	Duel.SetTargetCard(eg)
 	Duel.SetOperationInfo(0,CATEGORY_POSITION,eg,eg:GetCount(),0,0)
 end
