@@ -49,7 +49,7 @@ function c81013004.efilter(e,te)
 	return te:IsActiveType(TYPE_MONSTER) and te:GetHandler():IsRace(RACE_FAIRY)
 end
 function c81013004.condi(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,81008008)
+	return e:GetHandler():GetOverlayGroup():IsExists(Card.IsCode,1,nil,81013002)
 end
 function c81013004.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
