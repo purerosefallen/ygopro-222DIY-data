@@ -62,17 +62,17 @@ end
 function c60150551.e2con(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
     local g=Duel.GetMatchingGroup(c60150551.confilter,tp,LOCATION_SZONE,0,nil)
-    return g:GetClassCount(Card.GetCode)>=2 and Duel.IsExistingMatchingCard(c60150551.confilter2,c:GetControler(),LOCATION_MZONE,0,1,nil)
+    return g:GetClassCount(Card.GetCode)>=2 and Duel.IsExistingMatchingCard(c60150551.confilter2,tp,LOCATION_MZONE,0,1,nil)
 end
 function c60150551.e3con(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
     local g=Duel.GetMatchingGroup(c60150551.confilter,tp,LOCATION_SZONE,0,nil)
-    return g:GetClassCount(Card.GetCode)>=3 and Duel.IsExistingMatchingCard(c60150551.confilter2,c:GetControler(),LOCATION_MZONE,0,1,nil)
+    return g:GetClassCount(Card.GetCode)>=3 and Duel.IsExistingMatchingCard(c60150551.confilter2,tp,LOCATION_MZONE,0,1,nil)
 end
 function c60150551.e4con(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
     local g=Duel.GetMatchingGroup(c60150551.confilter,tp,LOCATION_SZONE,0,nil)
-    return g:GetClassCount(Card.GetCode)>=4 and Duel.IsExistingMatchingCard(c60150551.confilter2,c:GetControler(),LOCATION_MZONE,0,1,nil)
+    return g:GetClassCount(Card.GetCode)>=4 and Duel.IsExistingMatchingCard(c60150551.confilter2,tp,LOCATION_MZONE,0,1,nil)
 end
 function c60150551.e4filter(e,te)
     return te:GetOwnerPlayer()~=e:GetOwnerPlayer()
@@ -81,21 +81,20 @@ function c60150551.e5tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
     local g0=Duel.GetMatchingGroup(c60150551.confilter,tp,LOCATION_SZONE,0,nil)
     if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c60150551.confilter2(chkc) end
-    if chk==0 then return Duel.IsExistingTarget(c60150551.confilter2,tp,LOCATION_MZONE,0,1,nil) 
-		and g0:GetClassCount(Card.GetCode)>=1 and Duel.IsExistingMatchingCard(c60150551.confilter2,c:GetControler(),LOCATION_MZONE,0,1,nil) end
+    if chk==0 then return Duel.IsExistingTarget(c60150551.confilter2,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingTarget(c60150551.e5opfilter,tp,0,LOCATION_MZONE,1,nil) 
+		and g0:GetClassCount(Card.GetCode)>=1 and Duel.IsExistingMatchingCard(c60150551.confilter2,tp,LOCATION_MZONE,0,1,nil) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_FACEUP)
     local g=Duel.SelectTarget(tp,c60150551.confilter2,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function c60150551.e5opfilter(c)
-    return c:IsAbleToChangeControler() and not c:IsType(TYPE_TOKEN)
+    return c:IsAbleToChangeControler() and not c:IsType(TYPE_TOKEN) and c:IsFaceup()
 end
 function c60150551.e5op(e,tp,eg,ep,ev,re,r,rp)
     if not e:GetHandler():IsRelateToEffect(e) then return end
     local tc=Duel.GetFirstTarget()
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
     local g=Duel.SelectMatchingCard(tp,c60150551.e5opfilter,tp,0,LOCATION_MZONE,1,1,nil)
-	if tc:IsRelateToEffect(e) and g:GetFirst():IsRelateToEffect(e) and not g:GetFirst():IsImmuneToEffect(e) 
-		and g:GetFirst():IsLocation(LOCATION_MZONE) and tc:IsLocation(LOCATION_MZONE) then
+	if not g:GetFirst():IsImmuneToEffect(e) and g:GetFirst():IsLocation(LOCATION_MZONE) and tc:IsLocation(LOCATION_MZONE) then
         local og=g:GetFirst():GetOverlayGroup()
         if og:GetCount()>0 then
             Duel.SendtoGrave(og,REASON_RULE)
@@ -117,7 +116,7 @@ function c60150551.e6tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
     local g0=Duel.GetMatchingGroup(c60150551.confilter,tp,LOCATION_SZONE,0,nil)
     if chk==0 then return Duel.IsExistingTarget(c60150551.confilter2,tp,LOCATION_MZONE,0,1,nil) 
-		and g0:GetClassCount(Card.GetCode)==5 and Duel.IsExistingMatchingCard(c60150551.confilter2,c:GetControler(),LOCATION_MZONE,0,1,nil) end
+		and g0:GetClassCount(Card.GetCode)==5 and Duel.IsExistingMatchingCard(c60150551.confilter2,tp,LOCATION_MZONE,0,1,nil) end
 end
 function c60150551.e6opfilter(c,tp)
 	if c:IsLocation(LOCATION_MZONE) then

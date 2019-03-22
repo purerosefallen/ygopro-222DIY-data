@@ -64,7 +64,7 @@ function cm.poscon(e)
 	return e:GetHandler():IsAttackPos()
 end
 function cm.filter(c,e,tp)
-	return c:GetSummonPlayer()==1-tp and (not e or c:IsRelateToEffect(e)) and c:IsCanTurnSet()
+	return c:GetSummonPlayer()==1-tp and (not e or c:IsRelateToEffect(e))
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return eg:IsExists(cm.filter,1,nil,e,tp) end

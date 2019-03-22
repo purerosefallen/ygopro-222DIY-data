@@ -35,7 +35,7 @@ function c60150550.initial_effect(c)
     --disable and destroy
     local e5=Effect.CreateEffect(c)
     e5:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-    e5:SetRange(LOCATION_MZONE)
+    e5:SetRange(LOCATION_SZONE)
     e5:SetCode(EVENT_CHAIN_SOLVING)
     e5:SetOperation(c60150550.e5op)
     c:RegisterEffect(e5)
@@ -49,17 +49,17 @@ end
 function c60150550.e2con(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
     local g=Duel.GetMatchingGroup(c60150550.confilter,tp,LOCATION_SZONE,0,nil)
-    return g:GetClassCount(Card.GetCode)>=2 and Duel.IsExistingMatchingCard(c60150550.confilter2,c:GetControler(),LOCATION_MZONE,0,1,nil)
+    return g:GetClassCount(Card.GetCode)>=2 and Duel.IsExistingMatchingCard(c60150550.confilter2,tp,LOCATION_MZONE,0,1,nil)
 end
 function c60150550.e3con(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
     local g=Duel.GetMatchingGroup(c60150550.confilter,tp,LOCATION_SZONE,0,nil)
-    return g:GetClassCount(Card.GetCode)>=3 and Duel.IsExistingMatchingCard(c60150550.confilter2,c:GetControler(),LOCATION_MZONE,0,1,nil)
+    return g:GetClassCount(Card.GetCode)>=3 and Duel.IsExistingMatchingCard(c60150550.confilter2,tp,LOCATION_MZONE,0,1,nil)
 end
 function c60150550.e4con(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
     local g=Duel.GetMatchingGroup(c60150550.confilter,tp,LOCATION_SZONE,0,nil)
-    return g:GetClassCount(Card.GetCode)>=4 and Duel.IsExistingMatchingCard(c60150550.confilter2,c:GetControler(),LOCATION_MZONE,0,1,nil)
+    return g:GetClassCount(Card.GetCode)>=4 and Duel.IsExistingMatchingCard(c60150550.confilter2,tp,LOCATION_MZONE,0,1,nil)
 end
 function c60150550.e4filter(e,te)
     return te:GetOwnerPlayer()~=e:GetOwnerPlayer()
@@ -73,14 +73,15 @@ end
 function c60150550.e5op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
     local g=Duel.GetMatchingGroup(c60150550.confilter,tp,LOCATION_SZONE,0,nil)
-    if ep==tp or e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-    if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return false end
+    if ep==tp then return false end
+    if not re:IsActiveType(TYPE_EFFECT) then return end
+    if not re:IsHasProperty(EFFECT_FLAG_CARD_TARGET) then return end
     local tg=Duel.GetChainInfo(ev,CHAININFO_TARGET_CARDS)
-    if (g:GetClassCount(Card.GetCode)>=1 and Duel.IsExistingMatchingCard(c60150550.confilter2,c:GetControler(),LOCATION_MZONE,0,1,nil)) 
-		and tg and tg:IsExists(c60150550.e5opfilter,1,nil,tp) and Duel.IsChainNegatable(ev) then
+    if (g:GetClassCount(Card.GetCode)>=1 and Duel.IsExistingMatchingCard(c60150550.confilter2,tp,LOCATION_MZONE,0,1,nil)) 
+		and tg:IsExists(c60150550.e5opfilter,1,nil,tp) then
         Duel.NegateEffect(ev)
-    elseif (g:GetClassCount(Card.GetCode)==5 and Duel.IsExistingMatchingCard(c60150550.confilter2,c:GetControler(),LOCATION_MZONE,0,1,nil)) 
-		and tg and tg:IsExists(c60150550.e5opfilter2,1,nil,tp) and Duel.IsChainNegatable(ev) then
+    elseif (g:GetClassCount(Card.GetCode)==5 and Duel.IsExistingMatchingCard(c60150550.confilter2,tp,LOCATION_MZONE,0,1,nil)) 
+		and tg:IsExists(c60150550.e5opfilter2,1,nil,tp) then
         Duel.NegateEffect(ev)
     end
 end
