@@ -10,7 +10,7 @@ function cm.initial_effect(c)
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsSynchroType,TYPE_PENDULUM),1)
 	c:EnableReviveLimit()
 	--xyz summon
-	aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsXyzType,TYPE_PENDULUM),8,3,cm.ovfilter,aux.Stringid(m,0),3,cm.xyzop)
+	aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsXyzType,TYPE_PENDULUM),810,1919,cm.ovfilter,aux.Stringid(m,0),114514,cm.xyzop)
 	c:EnableReviveLimit()
 	--remove
 	local e0=Effect.CreateEffect(c)
@@ -110,7 +110,7 @@ function cm.setop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.ovfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_PENDULUM)
+	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsAttribute(ATTRIBUTE_LIGHT)
 end
 function cm.xyzop(e,tp,chk)
 	local c=e:GetHandler()
