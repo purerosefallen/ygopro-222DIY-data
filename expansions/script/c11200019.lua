@@ -52,7 +52,6 @@ function c11200019.op1(e,tp,eg,ep,ev,re,r,rp)
 	end
 	if dc==4 then Duel.Damage(tp,1100,REASON_EFFECT) end
 	if dc>4 then
-	elseif dc==4 or dc==5 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 		local sg=Duel.SelectMatchingCard(tp,c11200019.tfilter1,tp,LOCATION_DECK,0,1,1,nil)
 		if sg:GetCount()<1 then return end

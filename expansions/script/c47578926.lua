@@ -1,4 +1,5 @@
 --堕天司 阿萨谢尔
+function c47578926.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--splimit
@@ -56,9 +57,8 @@ end
 function c47578926.psplimit(e,c,tp,sumtp,sumpos)
 	return not c:IsRace(RACE_FAIRY) and bit.band(sumtp,SUMMON_TYPE_PENDULUM)==SUMMON_TYPE_PENDULUM
 end
-function c47578926.thcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:IsPreviousLocation(LOCATION_PZONE) and c:IsFaceup()
+function c47578926.tgcon(e,tp,eg,ep,ev,re,r,rp)
+	return bit.band(e:GetHandler():GetReason(),0x41)==0x41
 end
 function c47578926.tgfilter(c)
 	return (c:IsRace(RACE_FAIRY) or c:IsSetCard(0x95de)) and c:IsAbleToGrave() 

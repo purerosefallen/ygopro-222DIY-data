@@ -63,28 +63,23 @@ function c11200025.op1(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFlagEffect(tp,11200025)>0 then return end
 	if not Duel.IsPlayerCanSpecialSummonMonster(tp,c:GetCode(),0x132,0x21,1100,1100,4,RACE_BEAST,ATTRIBUTE_LIGHT) then return end
 	if Duel.SelectYesNo(tp,aux.Stringid(11200025,0)) then
-		c:CancelToGrave()
-		if c:IsCanBeSpecialSummoned(e,0,tp,false,false) then 
-			c:AddMonsterAttribute(TYPE_NORMAL,ATTRIBUTE_LIGHT,RACE_BEAST,4,1100,1100)
-			Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
-			c:AddMonsterAttributeComplete()
-			local e1_1=Effect.CreateEffect(c)
-			e1_1:SetType(EFFECT_TYPE_SINGLE)
-			e1_1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
-			e1_1:SetValue(1)
-			e1_1:SetReset(RESET_EVENT+0x1fe0000)
-			c:RegisterEffect(e1_1,true)
-			local e1_2=Effect.CreateEffect(c)
-			e1_2:SetType(EFFECT_TYPE_SINGLE)
-			e1_2:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-			e1_2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1_2:SetReset(RESET_EVENT+0x1fe0000)
-			e1_2:SetValue(LOCATION_REMOVED)
-			c:RegisterEffect(e1_2,true)
-			Duel.SpecialSummonComplete()
-		else
-			c:CancelToGrave(false)
-		end
+		c:AddMonsterAttribute(TYPE_NORMAL,ATTRIBUTE_LIGHT,RACE_BEAST,4,1100,1100)
+		Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
+		c:AddMonsterAttributeComplete()
+		local e1_1=Effect.CreateEffect(c)
+		e1_1:SetType(EFFECT_TYPE_SINGLE)
+		e1_1:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+		e1_1:SetValue(1)
+		e1_1:SetReset(RESET_EVENT+0x1fe0000)
+		c:RegisterEffect(e1_1,true)
+		local e1_2=Effect.CreateEffect(c)
+		e1_2:SetType(EFFECT_TYPE_SINGLE)
+		e1_2:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
+		e1_2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1_2:SetReset(RESET_EVENT+0x1fe0000)
+		e1_2:SetValue(LOCATION_REMOVED)
+		c:RegisterEffect(e1_2,true)
+		Duel.SpecialSummonComplete()
 	end
 end
 --

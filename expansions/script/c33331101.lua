@@ -31,7 +31,7 @@ function cm.cfilter2(c,e,tp,rc)
 	return c:IsAbleToGrave() and c:IsFaceup() and Duel.GetLocationCountFromEx(tp,tp,g)>0 and Duel.IsExistingMatchingCard(cm.spfilter,tp,LOCATION_EXTRA,0,1,nil,g,e,tp)
 end
 function cm.spfilter(c,g,e,tp)
-	return c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false) and (not g or g:FilterCount(Card.IsCanBeLinkMaterial,nil,c)==2) and c:IsSetCard(0x2553)
+	return c:IsType(TYPE_LINK) and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_LINK,tp,false,false) and (not g or g:FilterCount(Card.IsCanBeLinkMaterial,nil,c)==2) and c:IsSetCard(0x2553) and c:GetLink()==2
 end
 function cm.ltg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_MZONE,0,1,nil,e,tp) end

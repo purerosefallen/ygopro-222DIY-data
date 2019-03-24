@@ -25,9 +25,9 @@ function c47577904.inmfilter(c)
 	return c:IsSetCard(0x95de) and c:IsType(TYPE_PENDULUM) and c:IsFaceup()
 end
 function c47577904.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c47577900.inmfilter,tp,LOCATION_MZONE+LOCATION_EXTRA+LOCATION_GRAVE,0,1,nil) and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c47577904.inmfilter,tp,LOCATION_MZONE+LOCATION_EXTRA+LOCATION_GRAVE,0,1,nil) and (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g=Duel.SelectTarget(tp,c47577900.inmfilter,tp,LOCATION_MZONE+LOCATION_EXTRA+LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c47577904.inmfilter,tp,LOCATION_MZONE+LOCATION_EXTRA+LOCATION_GRAVE,0,1,1,nil)
 end
 function c47577904.activate(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
