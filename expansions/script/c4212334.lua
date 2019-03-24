@@ -56,7 +56,7 @@ function cm.cfilter(c,tp)
     return c:IsControler(1-tp) and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_DRAW) 
 end
 function cm.sgfilter(c,e,tp)
-    return c:IsDestructable(c) and not c:IsImmuneToEffect(e)
+    return c:IsDestructable(e) and not c:IsImmuneToEffect(e)
 end
 function cm.drcon1(e,tp,eg,ep,ev,re,r,rp)
     return eg:IsExists(cm.cfilter,1,nil,tp) 
