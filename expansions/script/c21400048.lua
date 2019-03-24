@@ -1,16 +1,19 @@
 --流雾麟 冰雹之鼓
+
+local m=21400048
+local cm=_G["c"..m]
 function c21400048.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 
 	c:EnableReviveLimit()
 	--cannot special summon
-	local e00=Effect.CreateEffect(c)
-	e00:SetType(EFFECT_TYPE_SINGLE)
-	e00:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e00:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e00:SetValue(aux.ritlimit)
-	c:RegisterEffect(e00)   
+	--local e00=Effect.CreateEffect(c)
+	--e00:SetType(EFFECT_TYPE_SINGLE)
+	--e00:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	--e00:SetCode(EFFECT_SPSUMMON_CONDITION)
+	--e00:SetValue(aux.ritlimit)
+	--c:RegisterEffect(e00)   
 	
 	local e0=Effect.CreateEffect(c)
 	e0:SetDescription(aux.Stringid(21400048,0))
@@ -115,10 +118,10 @@ function c21400048.op(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,c21400048.gtfl,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	local tc=g:GetFirst()
-	local ty
-	if tc:IsType(TYPE_MONSTER) then ty=TYPE_MONSTER end
-	if tc:IsType(TYPE_SPELL) then ty=TYPE_SPELL end
-	if tc:IsType(TYPE_TRAP) then ty=TYPE_TRAP end
+	--local ty
+	--if tc:IsType(TYPE_MONSTER) then ty=TYPE_MONSTER end
+	--if tc:IsType(TYPE_SPELL) then ty=TYPE_SPELL end
+	--if tc:IsType(TYPE_TRAP) then ty=TYPE_TRAP end
 	if tc and Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
 		tc:RegisterFlagEffect(21400048,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
 		local e1=Effect.CreateEffect(e:GetHandler())
@@ -132,20 +135,20 @@ function c21400048.op(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RegisterEffect(e1,tp)
 	end
 
-	g=Duel.SelectMatchingCard(tp,c21400048.gtfl2,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil,ty)
-	tc=g:GetFirst()
-	if tc and Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
-		tc:RegisterFlagEffect(21400048,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
-		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-		e1:SetCode(EVENT_PHASE+PHASE_END)
-		e1:SetReset(RESET_PHASE+PHASE_END)
-		e1:SetLabelObject(tc)
-		e1:SetCountLimit(1)
-		e1:SetCondition(c21400048.retcon)
-		e1:SetOperation(c21400048.retop)
-		Duel.RegisterEffect(e1,tp)
-	end  
+	--g=Duel.SelectMatchingCard(tp,c21400048.gtfl2,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil,ty)
+	--tc=g:GetFirst()
+	--if tc and Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
+	--	tc:RegisterFlagEffect(21400048,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+	--	local e1=Effect.CreateEffect(e:GetHandler())
+	 --   e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	--	e1:SetCode(EVENT_PHASE+PHASE_END)
+	--	e1:SetReset(RESET_PHASE+PHASE_END)
+	--	e1:SetLabelObject(tc)
+	--	e1:SetCountLimit(1)
+	--	e1:SetCondition(c21400048.retcon)
+	--	e1:SetOperation(c21400048.retop)
+	 --   Duel.RegisterEffect(e1,tp)
+	--end  
 end
 
 function c21400048.retcon(e,tp,eg,ep,ev,re,r,rp)
@@ -158,8 +161,8 @@ end
 function c21400048.dfilter(c)
 	return c:IsSetCard(0xc20) and c:IsAbleToHand()
 end
-function c21400048.dwfilter(c)
-	return c:IsType(TYPE_SYNCHRO) and c:GetLevel()<=6 and c:IsAbleToRemove()
+function cm.dwfilter(c)
+	return c:IsAttribute(ATTRIBUTE_FIRE) and c:IsAbleToRemove()
 end
 function c21400048.dtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c21400048.dfilter,tp,LOCATION_DECK,0,1,nil) and Duel.IsExistingMatchingCard(c21400048.dwfilter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,nil) end

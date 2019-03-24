@@ -1,7 +1,7 @@
 --炽天兵龙 加百列
 function c40008654.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0xbb7),2)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0xf11),2)
 	c:EnableReviveLimit() 
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -60,10 +60,10 @@ function c40008654.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:IsCode(40008654) and bit.band(sumtype,SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
 end
 function c40008654.desfilter(c,ft)
-	return c:IsFaceup() and c:IsSetCard(0xbb7) and (ft>0 or c:GetSequence()<5) 
+	return c:IsFaceup() and c:IsSetCard(0xf11) and (ft>0 or c:GetSequence()<5) 
 end
 function c40008654.spfilter(c,e,tp)
-	return c:IsSetCard(0xbb7) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xf11) and c:IsLevelBelow(4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c40008654.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsAbleToHand() end
@@ -90,7 +90,7 @@ function c40008654.efilter(e,te)
 	return (te:IsActiveType(TYPE_SPELL) or te:IsActiveType(TYPE_MONSTER) or te:IsActiveType(TYPE_TRAP)) and te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
 function c40008654.lkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xbb7)
+	return c:IsFaceup() and c:IsSetCard(0xf11)
 end
 function c40008654.indcon(e)
 	return e:GetHandler():GetLinkedGroup():IsExists(c40008654.lkfilter,1,nil)

@@ -1,15 +1,17 @@
 --流流雾麟 灰霾之敔
+local m=21400044
+local cm=_G["c"..m]
 function c21400044.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	c:EnableReviveLimit()
 	--cannot special summon
-	local e00=Effect.CreateEffect(c)
-	e00:SetType(EFFECT_TYPE_SINGLE)
-	e00:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e00:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e00:SetValue(aux.ritlimit)
-	c:RegisterEffect(e00)   
+--	local e00=Effect.CreateEffect(c)
+--	e00:SetType(EFFECT_TYPE_SINGLE)
+--	e00:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+--	e00:SetCode(EFFECT_SPSUMMON_CONDITION)
+--	e00:SetValue(aux.ritlimit)
+--	c:RegisterEffect(e00)   
 
 	local e0=Effect.CreateEffect(c)
 	e0:SetDescription(aux.Stringid(21400044,0))
@@ -22,6 +24,17 @@ function c21400044.initial_effect(c)
 	e0:SetTarget(c21400044.rltarget)
 	e0:SetOperation(c21400044.rloperation)
 	c:RegisterEffect(e0)
+
+
+	--hand synchro
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetCondition(c21400044.syncon)
+	e1:SetCode(EFFECT_HAND_SYNCHRO)
+	e1:SetTargetRange(0,1)
+	c:RegisterEffect(e1)
+
 
 	--synchro effect
 	local e2=Effect.CreateEffect(c)
@@ -36,6 +49,8 @@ function c21400044.initial_effect(c)
 	e2:SetTarget(c21400044.sctarg)
 	e2:SetOperation(c21400044.scop)
 	c:RegisterEffect(e2)
+
+
 
 	--break
 	local e3=Effect.CreateEffect(c)
@@ -52,6 +67,43 @@ function c21400044.initial_effect(c)
 	e4:SetCondition(c21400044.dtcon)
 	c:RegisterEffect(e4)
 
+
+	--set p
+	local e5=Effect.CreateEffect(c)
+	e5:SetDescription(aux.Stringid(21400044,5))
+	e5:SetCategory(CATEGORY_LEAVE_GRAVE+CATEGORY_REMOVE)
+	e5:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
+	e5:SetType(EFFECT_TYPE_IGNITION)
+	e5:SetRange(LOCATION_GRAVE)
+	e5:SetCountLimit(1)
+--	e5:SetCondition(c21400044.tgcon)
+	e5:SetTarget(c21400044.tgtg)
+	e5:SetOperation(c21400044.tgop)
+	c:RegisterEffect(e5)
+
+end
+
+function cm.dwfilter(c)
+	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsAbleToRemove()
+end
+
+function cm.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1)) and Duel.IsExistingMatchingCard(cm.dwfilter,tp,LOCATION_GRAVE+LOCATION_EXTRA,0,1,e:GetHandler()) end
+	--if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,e:GetHandler()) end
+	Duel.SetOperationInfo(0,CATEGORY_LEAVE_GRAVE,g,1,0,0)
+end
+function cm.tgop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_SZONE,POS_FACEUP,true)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local rg=Duel.SelectMatchingCard(tp,cm.dwfilter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,1,nil)
+	if rg:GetCount()>0 then
+		Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
+	end
+end
+
+
+function c21400044.syncon(e)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_RITUAL)
 end
 
 function c21400044.dtcon(e,tp,eg,ep,ev,re,r,rp)
@@ -64,7 +116,7 @@ function c21400044.mat_filter(c)
 end
 
 function c21400044.jffl(c)
-	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsType(TYPE_PENDULUM) and c:IsRace(RACE_WYRM) and not c:IsForbidden()
+	return (c:IsLocation(LOCATION_HAND) or c:IsFaceup()) and c:IsType(TYPE_PENDULUM) and c:IsRace(RACE_DRAGON) and not c:IsForbidden()
 end
 function c21400044.jflmt(e,ep,tp)
 	return tp==ep 
@@ -82,12 +134,12 @@ function c21400044.jfop(e,tp,eg,ep,ev,re,r,rp)
 	local pp=tc:GetControler()
 	if tc:IsRelateToEffect(e) then
 		local cntrn=Duel.Destroy(tc,nil,REASON_EFFECT)
-		if cntrn<=0 then return end
-		if(Duel.IsExistingTarget(c21400044.jffl,tp,LOCATION_EXTRA+LOCATION_HAND,0,1,nil) and ( Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(pp,LOCATION_PZONE,1) ) and Duel.SelectYesNo(pp,aux.Stringid(21400044,3))) then
-			local sg=Duel.SelectMatchingCard(tp,c21400044.jffl,tp,LOCATION_EXTRA+LOCATION_HAND,0,1,1,nil)
-			local sc=sg:GetFirst()
-			if sc then Duel.MoveToField(sc,tp,pp,LOCATION_SZONE,POS_FACEUP,true) end
-		end
+		--if cntrn<=0 then return end
+		--if( Duel.IsExistingTarget(c21400044.jffl,tp,LOCATION_EXTRA+LOCATION_HAND,0,1,nil) and ( Duel.CheckLocation(pp,LOCATION_PZONE,0) or Duel.CheckLocation(pp,LOCATION_PZONE,1) ) and Duel.SelectYesNo(tp,aux.Stringid(21400044,3)) ) then
+			--local sg=Duel.SelectMatchingCard(tp,c21400044.jffl,tp,LOCATION_EXTRA+LOCATION_HAND,0,1,1,nil)
+			--local sc=sg:GetFirst()
+			--if sc then Duel.MoveToField(sc,tp,pp,LOCATION_SZONE,POS_FACEUP,true) end
+		--end
 	end
 end
 
@@ -136,21 +188,21 @@ function c21400044.scop(e,tp,eg,ep,ev,re,r,rp)
 		if cntrn<=0 then return end
 		local c=e:GetHandler()
 		if c:GetControler()~=tp or not c:IsRelateToEffect(e) then return end
-		if not Duel.SelectYesNo(tp,aux.Stringid(21400044,4)) then return end
-		local e3=Effect.CreateEffect(e:GetHandler())
-		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-		e3:SetCode(EFFECT_HAND_SYNCHRO)
-		e3:SetTargetRange(0,1)
-		e:GetHandler():RegisterEffect(e3,true)
+		--if not Duel.SelectYesNo(tp,aux.Stringid(21400044,4)) then return end
+		--local e3=Effect.CreateEffect(e:GetHandler())
+		--e3:SetType(EFFECT_TYPE_SINGLE)
+		--e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		--e3:SetCode(EFFECT_HAND_SYNCHRO)
+		--e3:SetTargetRange(0,1)
+		--e:GetHandler():RegisterEffect(e3,true)
 		local mg=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_HAND+LOCATION_MZONE,0,nil)
 		local g=Duel.GetMatchingGroup(Card.IsSynchroSummonable,tp,LOCATION_EXTRA,0,nil,nil,mg)
-		if g:GetCount()>0 then
+		if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(21400044,4)) then
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 			local sg=g:Select(tp,1,1,nil)
 			Duel.SynchroSummon(tp,sg:GetFirst(),nil,mg)
 		end
-		Effect.Reset(e3)
+		--Effect.Reset(e3)
 	end
 end
 

@@ -16,6 +16,7 @@ function c65020056.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_TO_GRAVE)
+	e2:SetCountLimit(1,65020058)
 	e2:SetCost(c65020056.gvcost)
 	e2:SetTarget(c65020056.gvtg)
 	e2:SetOperation(c65020056.gvop)
@@ -69,13 +70,13 @@ end
 function c65020056.gavtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
-	if re:GetHandler():IsRelateToEffect(e) then
+	if re:GetHandler():IsRelateToEffect(re) then
 		Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,eg,1,0,0)
 	end
 end
 function c65020056.gavop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
-		Duel.SendtoGrave(eg,REASON_EFFECT)
+	if Duel.NegateActivation(ev)~=0 and re:GetHandler():IsRelateToEffect(re) then
+		Duel.SendtoGrave(re:GetHandler(),REASON_EFFECT)
 	end
 end
 

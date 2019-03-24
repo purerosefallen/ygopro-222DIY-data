@@ -28,7 +28,7 @@ function c40008655.initial_effect(c)
 	c:RegisterEffect(e3)	
 end
 function c40008655.chainop(e,tp,eg,ep,ev,re,r,rp)
-	if re:GetHandler():IsSetCard(0xbb7) and re:IsActiveType(TYPE_MONSTER) and ep==tp then
+	if re:GetHandler():IsSetCard(0xf11) and re:IsActiveType(TYPE_MONSTER) and ep==tp then
 		Duel.SetChainLimit(c40008655.chainlm)
 	end
 end
@@ -48,13 +48,13 @@ function c40008655.checkzone(tp)
 	return zone
 end
 function c40008655.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xbb7)
+	return c:IsFaceup() and c:IsSetCard(0xf11)
 end
 function c40008655.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xbb7) and c:IsType(TYPE_LINK)
+	return c:IsFaceup() and c:IsSetCard(0xf11) and c:IsType(TYPE_LINK)
 end
 function c40008655.spfilter2(c,e,tp,zone)
-	return c:IsSetCard(0xbb7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,zone)
+	return c:IsSetCard(0xf11) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE,zone)
 end
 function c40008655.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local rzone=c40008655.checkzone(tp)

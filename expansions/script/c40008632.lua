@@ -32,7 +32,7 @@ function c40008632.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c40008632.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c40008632.filter1(c)
-	return c:IsFaceup() and c:IsSetCard(0xbb8) and c:GetLevel()>0
+	return c:IsFaceup() and c:IsSetCard(0xf10) and c:GetLevel()>0
 end
 function c40008632.filter2(c)
 	return c:IsFaceup() and c:GetLevel()>0
@@ -65,10 +65,10 @@ function c40008632.activate(e,tp,eg,ep,ev,re,r,rp)
    end
 end
 function c40008632.thfilter(c)
-	return c:IsSetCard(0xbb8) and not c:IsCode(40008632) and c:IsAbleToHand()
+	return c:IsSetCard(0xf10) and not c:IsCode(40008632) and c:IsAbleToHand()
 end
 function c40008632.thfilter1(c)
-	return c:IsSetCard(0xbb8) and c:IsAbleToHand()
+	return c:IsSetCard(0xf10) and c:IsAbleToHand()
 end
 function c40008632.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return Duel.IsExistingMatchingCard(c40008632.thfilter,tp,LOCATION_DECK,0,1,nil) end

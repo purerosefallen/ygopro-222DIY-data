@@ -1,7 +1,7 @@
 --力天兵龙 拉斐尔
 function c40008653.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0xbb7),2,2,c40008653.lcheck)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0xf11),2,2,c40008653.lcheck)
 	c:EnableReviveLimit() 
 	--splimit
 	local e4=Effect.CreateEffect(c)
@@ -62,7 +62,7 @@ function c40008653.atlimit(e,c)
 	return c~=e:GetHandler()
 end
 function c40008653.lkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xbb7)
+	return c:IsFaceup() and c:IsSetCard(0xf11)
 end
 function c40008653.indcon(e)
 	return e:GetHandler():GetLinkedGroup():IsExists(c40008653.lkfilter,1,nil)
@@ -74,7 +74,7 @@ function c40008653.spcon(e)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c40008653.spfilter(c,e,tp)
-	return c:IsLevelBelow(4) and c:IsSetCard(0xbb7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLevelBelow(4) and c:IsSetCard(0xf11) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c40008653.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c40008653.spfilter(chkc,e,tp) end

@@ -34,7 +34,7 @@ function c40008647.spcon(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c40008647.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsDiscardable() and c:IsSetCard(0xbb7)
+	return c:IsType(TYPE_MONSTER) and c:IsDiscardable() and c:IsSetCard(0xf11)
 end
 function c40008647.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c40008647.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end

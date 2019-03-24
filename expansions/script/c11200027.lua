@@ -36,15 +36,14 @@ function c11200027.op1(e,tp,eg,ep,ev,re,r,rp)
 end
 --
 function c11200027.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return c:IsReleasable() end
-	Duel.Release(c,REASON_COST)
+	if chk==0 then return e:GetHandler():IsReleasable() end
+	Duel.Release(e:GetHandler(),REASON_COST)
 end
 --
 function c11200027.op2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local dc=Duel.TossDice(tp,1)
-	if dc==1 or dc==2 or dc==3 or dc==4 then
+	if dc>0 and dc<5 then
 		local e2_1=Effect.CreateEffect(c)
 		e2_1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 		e2_1:SetProperty(EFFECT_FLAG_DELAY)
@@ -67,7 +66,8 @@ function c11200027.op2(e,tp,eg,ep,ev,re,r,rp)
 		e2_3:SetOperation(c11200027.op2_3)
 		e2_3:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e2_3,tp)
-	elseif dc==5 or dc==6 then
+	end
+	if dc>4 then
 		local e2_4=Effect.CreateEffect(c)
 		e2_4:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 		e2_4:SetProperty(EFFECT_FLAG_DELAY)
@@ -90,7 +90,6 @@ function c11200027.op2(e,tp,eg,ep,ev,re,r,rp)
 		e2_6:SetOperation(c11200027.op2_6)
 		e2_6:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e2_6,tp)
-	else
 	end
 end
 --

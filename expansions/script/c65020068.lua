@@ -52,18 +52,28 @@ function c65020068.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return c:GetFlagEffect(65020068)==0 end
 	c:RegisterFlagEffect(65020068,RESET_CHAIN,0,1)
 end
-function c65020068.xyzfilter(c)
-	return c:IsXyzSummonable(nil)
+function c65020068.xyzfilter2(c,mg)
+	return c:IsXyzSummonable(mg) and c:IsType(TYPE_XYZ)
+end 
+
+function c65020068.xyzfilter1(c,tp)
+	return c:IsSetCard(0x9da3) and c:IsFaceup() and not c:IsType(TYPE_TOKEN) and Duel.GetLocationCountFromEx(tp,tp,c)>0
 end
 function c65020068.xyztg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c65020068.xyzfilter,tp,LOCATION_EXTRA,0,1,nil) end
+	if chk==0 then 
+		  local g=Duel.GetMatchingGroup(c65020068.xyzfilter1,tp,LOCATION_MZONE,0,nil,tp)
+		  return Duel.IsExistingMatchingCard(c65020068.xyzfilter2,tp,LOCATION_EXTRA,0,1,nil,g) 
+	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
 end
+
 function c65020068.xyzop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c65020068.xyzfilter,tp,LOCATION_EXTRA,0,nil)
-	if g:GetCount()>0 then
+	local g=Duel.GetMatchingGroup(c65020068.xyzfilter1,tp,LOCATION_MZONE,0,nil,tp)
+	if g:GetCount()<=0 then return end
+	local xyzg=Duel.GetMatchingGroup(c65020068.xyzfilter2,tp,LOCATION_EXTRA,0,nil,g)
+	if xyzg:GetCount()>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local tg=g:Select(tp,1,1,nil)
-		Duel.XyzSummon(tp,tg:GetFirst(),nil)
+		local xyz=xyzg:Select(tp,1,1,nil):GetFirst()
+		Duel.XyzSummon(tp,xyz,g,1,10)
 	end
 end

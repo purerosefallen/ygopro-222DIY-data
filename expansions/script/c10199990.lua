@@ -35,7 +35,7 @@ if not RealSclVersion then
 	rsreset=RealSclVersion.Reset
 	RealSclVersion.Property={} 
 	rsflag=RealSclVersion.Property
-
+	
 
 -------------##########RSV variable###########----------------
 
@@ -73,7 +73,7 @@ if not RealSclVersion then
 
 	rscf.fieldinfo={} --field information for surrounding zones
 	rsef.rssetcode={} --set code value for inside series
-
+	rscost.costinfo={} --Cost information 
 -----------######Quick Effect Value Effect######---------------
 --Single Val Effect: Base set
 function rsef.SV(cardtbl,code,val,range,con,resettbl,flag,desctbl,ctlimittbl)
@@ -630,6 +630,40 @@ function rsef.GetRegisterCategory(mixcategory)
 	return rsof.Mix_Value_To_Table(mixcategory,catestringlist,rscate.catelist)
 end
 rscate.GetRegisterCategory=rsef.GetRegisterCategory
+--Effect: Clone Effect 
+function rsef.RegisterClone(cardtbl,e1,...)
+	local clonelist={...}
+	local e2=e1:Clone()
+	for k,value1 in pairs(clonelist) do 
+		if k&1==1 and type(value1)=="string" then
+			local value2=clonelist[k+1]
+			local clonetypelist1={"code","type","loc","con","cost","tg","op","label","labobj","value"}
+			local effecttypelist1={Effect.SetCode,Effect.SetType,Effect.SetRange,Effect.SetCondition,Effect.SetCost,Effect.SetTarget,Effect.SetOperation,Effect.SetLabel,Effect.SetLabelObject,Effect.SetValue}
+			local bool,k=rsof.Table_List(clonetypelist1,value1)
+			if bool and k then
+				local f=effecttypelist1[k]
+				f(e2,value2)
+			end
+			if value=="flag" then e2:SetProperty(rsflag.GetRegisterProperty(value2)) end
+			if value=="cate" then e2:SetCategory(rscate.GetRegisterCategory(value2)) end
+			if value=="reset" then rsef.RegisterReset(e2,value2) end
+			if value=="timing" then rsef.RegisterTiming(e2,value2) end
+			if value=="tgrange" then rsef.RegisterTargetRange(e2,value2) end
+		end
+	end
+	local _,fid=rsef.RegisterEffect(cardtbl,e2)
+	return e2,fid
+end
+function rsef.RegisterOPTurn(cardtbl,e1,con2,timingtbl)
+	if not timingtbl then timingtbl={0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE } end
+	local e2,fid=rsef.RegisterClone(cardtbl,e1,"type",EFFECT_TYPE_QUICK_O,"code",EVENT_FREE_CHAIN,"timing",timingtbl)
+	local con1=e1:GetCondition()
+	if not con1 then con1=aux.TRUE end
+	e1:SetCondition(aux.AND(con1,aux.NOT(con2)))
+	e2:SetCondition(aux.AND(con1,con2))
+	return e2,fid
+end 
+rsef.QO_OPPONENT_TURN=rsef.RegisterOPTurn
 --Effect: Register Condition, Cost, Target and Operation 
 function rsef.RegisterSolve(e,con,cost,tg,op)
 	if con then
@@ -646,23 +680,33 @@ function rsef.RegisterSolve(e,con,cost,tg,op)
 	end
 end
 Effect.RegisterSolve=rsef.RegisterSolve
---Effect: Register Effect Attributes
-function rsef.Register(cardtbl,effecttype,effectcode,desctbl,ctlimittbl,cate,flag,range,con,cost,tg,op,val,tgrangetbl,timingtbl,resettbl)
-	local tc1,val2,ignore=rsef.GetRegisterCard(cardtbl)
-	local e=Effect.CreateEffect(tc1)
-	if effecttype then
-		e:SetType(effecttype)
+--Effect: Register Property and Category
+function rsef.RegisterCateFlag(e,cate,flag)
+	if cate then
+		local cate2=rsef.GetRegisterCategory(cate)
+		if cate2>0 then
+			e:SetCategory(cate2) 
+		end
 	end
-	if effectcode then
-		e:SetCode(effectcode)
+	if flag then
+		local flag2=rsef.GetRegisterProperty(flag)
+		if flag2>0 then
+			e:SetProperty(flag2) 
+		end
 	end
+end
+--Effect: Register Effect Description
+function rsef.RegisterDescription(e,desctbl)
 	if desctbl then
 		if type(desctbl)=="table" then
 			e:SetDescription(aux.Stringid(desctbl[1],desctbl[2]))
 		else
 			e:SetDescription(desctbl)
 		end
-	end
+	end 
+end
+--Effect: Register Effect Count limit
+function rsef.RegisterCountLimit(e,ctlimittbl)
 	if ctlimittbl then
 		local limitcount,limitcode=0,0
 		if type(ctlimittbl)=="table" then
@@ -702,25 +746,9 @@ function rsef.Register(cardtbl,effecttype,effectcode,desctbl,ctlimittbl,cate,fla
 		end
 		e:SetCountLimit(limitcount,limitcode)
 	end
-	if cate then
-		local cate2=rsef.GetRegisterCategory(cate)
-		if cate2>0 then
-			e:SetCategory(cate2) 
-		end
-	end
-	if flag then
-		local flag2=rsef.GetRegisterProperty(flag)
-		if flag2>0 then
-			e:SetProperty(flag2) 
-		end
-	end
-	if range then
-		e:SetRange(range)
-	end
-	rsef.RegisterSolve(e,con,cost,tg,op)
-	if val then
-		e:SetValue(val)
-	end
+end
+--Effect: Register Effect Target range
+function rsef.RegisterTargetRange(e,tgrangetbl)
 	if tgrangetbl then
 		if type(tgrangetbl)=="table" then
 			if #tgrangetbl==1 then
@@ -732,6 +760,9 @@ function rsef.Register(cardtbl,effecttype,effectcode,desctbl,ctlimittbl,cate,fla
 			e:SetTargetRange(tgrangetbl) 
 		end
 	end
+end
+--Effect: Register Effect Timing 
+function rsef.RegisterTiming(e,timingtbl)
 	if timingtbl then
 		if type(timingtbl)=="table" then
 			if #timingtbl==1 then
@@ -743,6 +774,9 @@ function rsef.Register(cardtbl,effecttype,effectcode,desctbl,ctlimittbl,cate,fla
 			e:SetHintTiming(timingtbl) 
 		end
 	end
+end
+--Effect: Register Effect Reset way 
+function rsef.RegisterReset(e,resettbl)
 	if resettbl then
 		if type(resettbl)=="table" then
 			if #resettbl==1 then
@@ -754,12 +788,42 @@ function rsef.Register(cardtbl,effecttype,effectcode,desctbl,ctlimittbl,cate,fla
 			e:SetReset(resettbl) 
 		end
 	end
+end
+--Effect: Register Effect Final
+function rsef.RegisterEffect(cardtbl,e)
+	local tc1,val2,ignore=rsef.GetRegisterCard(cardtbl)
 	if type(val2)=="number" and (val2==0 or val2==1) then
 		Duel.RegisterEffect(e,val2)
 	else
 		val2:RegisterEffect(e,ignore)
 	end
 	local fid=e:GetFieldID()
+	return e,fid
+end
+--Effect: Register Effect Attributes
+function rsef.Register(cardtbl,effecttype,effectcode,desctbl,ctlimittbl,cate,flag,range,con,cost,tg,op,val,tgrangetbl,timingtbl,resettbl)
+	local tc1,val2,ignore=rsef.GetRegisterCard(cardtbl)
+	local e=Effect.CreateEffect(tc1)
+	if effecttype then
+		e:SetType(effecttype)
+	end
+	if effectcode then
+		e:SetCode(effectcode)
+	end
+	rsef.RegisterDescription(e,desctbl)
+	rsef.RegisterCountLimit(e,ctlimittbl)
+	rsef.RegisterCateFlag(e,cate,flag)
+	if range then
+		e:SetRange(range)
+	end
+	rsef.RegisterSolve(e,con,cost,tg,op)
+	if val then
+		e:SetValue(val)
+	end
+	rsef.RegisterTargetRange(e,tgrangetbl)
+	rsef.RegisterTiming(e,timingtbl)
+	rsef.RegisterReset(e,resettbl)
+	local _,fid=rsef.RegisterEffect(cardtbl,e)
 	return e,fid
 end
 -------------#######Summon Function#########-----------------
@@ -1081,7 +1145,7 @@ function rstg.target2(fun,...)
 			return rstg.TargetCheck(e,tp,eg,ep,ev,re,r,rp,chk,chkc,table.unpack(targetlist)) 
 		end
 		local targetgroup=rstg.TargetSelect(e,tp,eg,ep,ev,re,r,rp,table.unpack(targetlist))
-		if fun then fun(targetgroup) end
+		if fun then fun(targetgroup,e,tp,eg,ep,ev,re,r,rp) end
 	end
 end
 --target parameter table has card target 
@@ -1164,14 +1228,15 @@ function rstg.TargetSelectNoInfo(e,tp,eg,ep,ev,re,r,rp,valuetype,...)
 	local costinfoindexlist={} --cost must apply in sequence,operation info mustn't
 	local targettotalgroup=Group.CreateGroup()
 	local costtotalgroup=Group.CreateGroup()
+	local usingg=Group.CreateGroup()
 	for i=1,#targetlist do
 		local targetlistfollow={}
-		local usingg=Group.CreateGroup()
 		for k,targetvalue in pairs(targetlist) do
 			if k>i then table.insert(targetlistfollow,targetvalue) end
 		end 
 		local ffunction,catelist,loc1,loc2,minct,maxct,exceptfun,isoptional,selecthint,nottarget,notinfo = rstg.GetTargetAttribute(targetlist[i])
 		local exceptg=rsgf.GetExceptGroup(e,tp,eg,ep,ev,re,r,rp,exceptfun)
+		exceptg:Merge(usingg)
 		local selectgroup=nil
 		local b1= nottarget and notinfo   --cost select
 		local b2= not nottarget and not notinfo --target select
@@ -1223,7 +1288,6 @@ function rstg.TargetSelectNoInfo(e,tp,eg,ep,ev,re,r,rp,valuetype,...)
 				targettotalgroup:Merge(selectgroup)
 			end
 			usingg:Merge(selectgroup)
-			exceptg:Merge(usingg)
 		end
 		-- black hole (no target but operationinfo need group)
 		if (b1 or b3) and type(maxct)~="number" then
@@ -1345,7 +1409,7 @@ function rscost.CostSelect(e,tp,eg,ep,ev,re,r,rp,valuetype,...)
 			ct=Duel.SendtoDeck(costgroup,nil,2,REASON_COST)
 		end
 	end
-	rscost[e]=ct
+	rscost.costinfo[e]=ct
 	return costtotalgroup,ct
 end
 function rscost.CostSelect2(e,tp,eg,ep,ev,re,r,rp,varfun,valuetype,...)
@@ -1368,7 +1432,7 @@ function rscost.CostSelect2(e,tp,eg,ep,ev,re,r,rp,varfun,valuetype,...)
 			ct=Duel.SendtoDeck(costgroup,nil,2,REASON_COST)
 		end
 	end
-	rscost[e]=ct
+	rscost.costinfo[e]=ct
 	return costtotalgroup,ct
 end
 --cost self
@@ -1434,7 +1498,7 @@ function rscost.rmxyzs(...)
 		 if chk==0 then return c:CheckRemoveOverlayCard(tp,ct1,REASON_COST) end
 		 c:RemoveOverlayCard(tp,ct1,ct2,REASON_COST)
 		 local rct=Duel.GetOperatedGroup():GetCount()
-		 rscost[e]=rct
+		 rscost.costinfo[e]=rct
 		 if issetlabel then
 			e:SetLabel(rct)
 		 end
@@ -1458,7 +1522,7 @@ function rscost.lpcost(lp,isdirectly,islabel)
 			return lp>0 and Duel.CheckLPCost(tp,lp)
 		end
 		Duel.PayLPCost(tp,lp)   
-		rscost[e]=lp
+		rscost.costinfo[e]=lp
 		if islabel then
 			e:SetLabel(lp)
 		end
@@ -1480,7 +1544,7 @@ function rscost.lpcost2(lp,max,islabel)
 		end
 		local cost=Duel.AnnounceNumber(tp,table.unpack(t))
 		Duel.PayLPCost(tp,cost)
-		rscost[e]=cost
+		rscost.costinfo[e]=cost
 		if islabel then
 			e:SetLabel(cost)
 		end
@@ -1618,9 +1682,10 @@ function rsop.negop(waystring)
 	end
 end
 --Operation: Equip 
-function rsop.eqop(e,eqc,eqtc,pos)
+function rsop.eqop(e,eqc,eqtc,pos,opside)
 	local c=e:GetHandler()
 	local tp=e:GetHandlerPlayer()
+	if opside then tp=1-tp end
 	if type(pos)=="nil" then pos=true end
 	local vtype=aux.GetValueType(eqlist1)
 	if vtype=="boolean" and eqlist1 then 
@@ -1636,7 +1701,7 @@ function rsop.eqop(e,eqc,eqtc,pos)
 	end
 	if eqc==eqtc then return false end
 	if eqc then
-		if not (eqc:IsLocation(LOCATION_SZONE) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0) or (eqc:IsFacedown() and not pos) or not eqtc or eqtc:IsFacedown() then
+		if not ((eqc:IsLocation(LOCATION_SZONE) and eqc:IsControler(tp)) or Duel.GetLocationCount(tp,LOCATION_SZONE)>0) or (eqc:IsFacedown() and not pos) or not eqtc or eqtc:IsFacedown() then
 			Duel.SendtoGrave(eqc,REASON_EFFECT)
 		return false
 		end
@@ -1948,17 +2013,24 @@ function rscf.SetNoLevelSynchro(c,lv)
 	mt.rsnlsynlv=lv
 	if rscf.SetNoLevelSynchro_Switch then return end
 	rscf.SetNoLevelSynchro_Switch=true
-	local f=aux.SynMixCheckGoal
+	rscf.SynMixCheckGoal=aux.SynMixCheckGoal
 	aux.SynMixCheckGoal=function(tp,sg,minc,ct,syncard,sg1,smat,gc)
-		local f2=Card.GetLevel
+		rscf.GetLevel=Card.GetLevel
 		Card.GetLevel=function(sc)
 			if sc.rsnlsynlv then return sc.rsnlsynlv
-			else return f2(sc)
+			else return rscf.GetLevel(sc)
 			end
 		end
-		local bool=f(tp,sg,minc,ct,syncard,sg1,smat,gc)
-		Card.GetLevel=f
+		local bool=rscf.SynMixCheckGoal(tp,sg,minc,ct,syncard,sg1,smat,gc)
+		Card.GetLevel=rscf.GetLevel
 		return bool
+	end
+	rscf.SynMixCondition=aux.SynMixCondition
+	aux.SynMixCondition=function(f1,f2,f3,f4,minc,maxc,gc)
+		return function(e,c,smat,mg1)
+			if mg1 and aux.GetValueType(mg1)~="Group" then return false end
+			return rscf.SynMixCondition(f1,f2,f3,f4,minc,maxc,gc)(e,c,smat,mg1)
+		end
 	end
 end
 rssf.SetNoLevelSynchro=rscf.SetNoLevelSynchro
@@ -2240,7 +2312,9 @@ function cm.initial_effect(c)
 		"rsdio" =   "Diablo"
 		"rsnr"  =   "NightRaven"
 		"rsul"  =   "Utoland"
+		"rsem"  =   "Eridiument"
 		"rsxb"  =   "XB"
+		"rsos"  =   "OracleSmith"
 				}--]]
 
 --  "Set Other Variables" 
@@ -2250,6 +2324,8 @@ function cm.initial_effect(c)
 		"rsss"  =   "Starspirit"
 		"rslrd" =   "LifeDeathRoundDance"
 		"rsps"  =   "PseudoSoul"
+		"rslf"  =   "LittleFox"
+		"rsdcc" =   "DragonChessCorps"
 				}--]]   
 end
 end

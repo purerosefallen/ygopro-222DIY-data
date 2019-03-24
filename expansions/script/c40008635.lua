@@ -40,13 +40,13 @@ function c40008635.splimit(e,c,sump,sumtype,sumpos,targetp)
 	return c:IsLocation(LOCATION_EXTRA) and not c:IsType(TYPE_XYZ)
 end
 function c40008635.cfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xbb8)
+	return c:IsFaceup() and c:IsSetCard(0xf10)
 end
 function c40008635.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c40008635.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
 function c40008635.filter(c,e,tp)
-	return c:IsSetCard(0xbb8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xf10) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c40008635.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>1

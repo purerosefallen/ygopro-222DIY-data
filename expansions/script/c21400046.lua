@@ -1,4 +1,7 @@
 --流雾麟 台风之篪
+
+local m=21400046
+local cm=_G["c"..m]
 function c21400046.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
@@ -24,15 +27,16 @@ function c21400046.initial_effect(c)
 	e0:SetOperation(c21400046.rloperation)
 	c:RegisterEffect(e0)
 
-	--e wai dui mu
+
+	--tian shi de shi she
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(21400046,1))
-	e1:SetCategory(CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1,21400046)
+	--e1:SetCountLimit(1,21400046)
 	e1:SetCost(c21400046.thcost)
+	e1:SetTarget(c21400046.thtg)
 	e1:SetOperation(c21400046.op)
 	c:RegisterEffect(e1)
 
@@ -74,16 +78,18 @@ function c21400046.jffilter(c)
 	return c:IsReleasable() and ( c:GetSequence()==0 or c:GetSequence()==4 )
 end
 
-function c21400046.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then  
+
+
+function cm.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then 
 		if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) 
-			then return Duel.IsExistingMatchingCard(c21400046.jffilter,tp,LOCATION_SZONE,0,1,e:GetHandler()) and Duel.IsExistingMatchingCard(Card.IsFacedown,1-tp,0,LOCATION_EXTRA,1,nil) 
-		else return Duel.IsExistingMatchingCard(Card.IsReleasable,tp,LOCATION_ONFIELD,0,1,e:GetHandler()) and Duel.IsExistingMatchingCard(Card.IsFacedown,1-tp,0,LOCATION_EXTRA,1,nil) end
+			then return Duel.IsExistingMatchingCard(cm.jffilter,tp,LOCATION_SZONE,0,1,e:GetHandler()) 
+		else return Duel.IsExistingMatchingCard(Card.IsReleasable,tp,LOCATION_ONFIELD,0,1,e:GetHandler()) end
 	end
 
 	local g
 	if not Duel.CheckLocation(tp,LOCATION_PZONE,0) and not Duel.CheckLocation(tp,LOCATION_PZONE,1) 
-		then g=Duel.SelectMatchingCard(tp,c21400046.jffilter,tp,LOCATION_SZONE,0,1,1,e:GetHandler())
+		then g=Duel.SelectMatchingCard(tp,cm.jffilter,tp,LOCATION_SZONE,0,1,1,e:GetHandler())
 	else 
 		g=Duel.SelectMatchingCard(tp,Card.IsReleasable,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler()) 
 	end
@@ -92,27 +98,30 @@ function c21400046.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.MoveToField(e:GetHandler(),tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 end
 
-function c21400046.gravefl(c,atb)
-	return c:IsAbleToGrave() and c:GetAttribute()~=atb
+function cm.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) end
+	Duel.SetTargetPlayer(tp)
+	Duel.SetTargetParam(1)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
+	Duel.SetOperationInfo(0,CATEGORY_HANDES,nil,0,tp,1)
+end
+function cm.op(e,tp,eg,ep,ev,re,r,rp)
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	if Duel.Draw(p,d,REASON_EFFECT)==1 then
+		Duel.ShuffleHand(p)
+		Duel.BreakEffect()
+		Duel.DiscardHand(p,nil,1,1,REASON_EFFECT+REASON_DISCARD)
+	end
 end
 
-function c21400046.op(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetFieldGroup(tp,LOCATION_EXTRA,LOCATION_EXTRA)
-	Duel.ConfirmCards(tp,g)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local sg1=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_EXTRA,LOCATION_EXTRA,1,1,nil)
-	local csg=sg1:GetFirst()
-	local atb=csg:GetAttribute()
-	local sg2=Duel.SelectMatchingCard(tp,c21400046.gravefl,tp,LOCATION_EXTRA,LOCATION_EXTRA,1,1,nil,atb)
-	Duel.SendtoGrave(sg1,REASON_EFFECT)
-	Duel.SendtoGrave(sg2,REASON_EFFECT)
-end
+
+
 
 function c21400046.dfilter(c)
 	return c:IsSetCard(0xc20) and c:IsAbleToHand()
 end
-function c21400046.dwfilter(c)
-	return c:IsType(TYPE_SYNCHRO) and c:GetLevel()<=6 and c:IsAbleToRemove()
+function cm.dwfilter(c)
+	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsAbleToRemove()
 end
 function c21400046.dtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c21400046.dfilter,tp,LOCATION_DECK,0,1,nil) and Duel.IsExistingMatchingCard(c21400046.dwfilter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1,nil) end

@@ -26,7 +26,7 @@ function c40008633.indcon(e)
 	return e:GetHandler():IsPosition(POS_FACEUP_DEFENSE)
 end
 function c40008633.filter(c,e,tp)
-	return c:IsSetCard(0xbb8) and not c:IsCode(40008633) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xf10) and not c:IsCode(40008633) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c40008633.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

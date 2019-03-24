@@ -89,13 +89,13 @@ end
 
 
 function c21400041.tefilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and not c:IsForbidden() and c:IsRace(RACE_WYRM)
+	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and not c:IsForbidden() and c:IsRace(RACE_DRAGON)
 end
 
 function c21400041.tetg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_ONFIELD) and chkc:IsControler(tp) and c21400041.tefilter(chkc) end
 
-	if chk==0 then return Duel.IsExistingTarget(c21400041.tefilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0  and Duel.IsPlayerCanSpecialSummonMonster(tp,21499999,0xc21,0x4011,0,0,3,RACE_WYRM,ATTRIBUTE_WATER) end
+	if chk==0 then return Duel.IsExistingTarget(c21400041.tefilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0  and Duel.IsPlayerCanSpecialSummonMonster(tp,21499999,0xc21,0x4011,0,0,3,RACE_DRAGON,ATTRIBUTE_WATER) end
 --  Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(21400041,1))
 
 	local g=Duel.SelectTarget(tp,c21400041.tefilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,99,nil)
@@ -122,7 +122,7 @@ function c21400041.teop(e,tp,eg,ep,ev,re,r,rp)
 	if cntrn<=0 then return end
 
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	if not Duel.IsPlayerCanSpecialSummonMonster(tp,21499999,0xc21,0x4011,0,0,3,RACE_WYRM,ATTRIBUTE_WATER) then return end
+	if not Duel.IsPlayerCanSpecialSummonMonster(tp,21499999,0xc21,0x4011,0,0,3,RACE_DRAGON,ATTRIBUTE_WATER) then return end
 
 	local atkn=g:Filter(c21400041.atkfl,nil):GetSum(Card.GetAttack)
 	local defn=g:Filter(c21400041.deffl,nil):GetSum(Card.GetDefense)

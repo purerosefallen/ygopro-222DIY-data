@@ -36,7 +36,7 @@ function c40008650.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Release(e:GetHandler(),REASON_COST)
 end
 function c40008650.thfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xbb7) and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xf11) and c:IsAbleToHand()
 end
 function c40008650.activate(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
@@ -57,7 +57,7 @@ function c40008650.spcon(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c40008650.filter(c,e,tp)
-	return c:IsSetCard(0xbb7) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xf11) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c40008650.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -74,7 +74,7 @@ function c40008650.spop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c40008650.setcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and re:IsActiveType(TYPE_MONSTER)
-		and re:GetHandler():IsSetCard(0xbb7) and re:GetHandler():IsControler(tp) 
+		and re:GetHandler():IsSetCard(0xf11) and re:GetHandler():IsControler(tp) 
 end
 function c40008650.setfilter(c)
 	return c:IsSpecialSummonable(SUMMON_TYPE_LINK)

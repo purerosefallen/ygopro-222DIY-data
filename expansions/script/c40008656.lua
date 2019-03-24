@@ -41,7 +41,8 @@ function c40008656.initial_effect(c)
 	local e6=Effect.CreateEffect(c)
 	e6:SetDescription(aux.Stringid(40008656,0))
 	e6:SetCategory(CATEGORY_TOHAND)
-	e6:SetType(EFFECT_TYPE_IGNITION)
+	e6:SetType(EFFECT_TYPE_QUICK_O)
+	e6:SetCode(EVENT_FREE_CHAIN)
 	e6:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e6:SetRange(LOCATION_GRAVE)
 	e6:SetCountLimit(1,40008656)
@@ -51,10 +52,10 @@ function c40008656.initial_effect(c)
 	c:RegisterEffect(e6) 
 end
 function c40008656.eqlimit(e,c)
-	return c:IsSetCard(0xbb7)
+	return c:IsSetCard(0xf11)
 end
 function c40008656.filter(c)
-	return c:IsFaceup() and c:IsSetCard(0xbb7)
+	return c:IsFaceup() and c:IsSetCard(0xf11)
 end
 function c40008656.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:GetLocation()==LOCATION_MZONE and c40008656.filter(chkc) end
@@ -86,7 +87,7 @@ function c40008656.defval(e,c)
 	return c:GetBaseDefense()*2
 end
 function c40008656.cfilter(c)
-	return c:IsSetCard(0xbb7) and c:IsAbleToRemoveAsCost() and c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsSetCard(0xf11) and c:IsAbleToRemoveAsCost() and c:IsType(TYPE_SPELL+TYPE_TRAP)
 end
 function c40008656.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
@@ -97,7 +98,7 @@ function c40008656.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c40008656.thfilter(c)
-	return c:IsSetCard(0xbb7) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
+	return c:IsSetCard(0xf11) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 end
 function c40008656.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then

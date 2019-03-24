@@ -15,23 +15,23 @@ function c21400051.initial_effect(c)
 	c:RegisterEffect(e1)
 
 	--summon
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(21400051,1))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetCountLimit(1,21400051)
-	e2:SetRange(LOCATION_GRAVE)
-	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCode(EVENT_FREE_CHAIN)
-	e2:SetCost(aux.bfgcost)
-	e2:SetTarget(c21400051.sstarget)
-	e2:SetOperation(c21400051.ssactivate)
-	c:RegisterEffect(e2)
+--  local e2=Effect.CreateEffect(c)
+--  e2:SetDescription(aux.Stringid(21400051,1))
+--  e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
+--  e2:SetType(EFFECT_TYPE_QUICK_O)
+--  e2:SetCountLimit(1,21400051)
+--  e2:SetRange(LOCATION_GRAVE)
+--  e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+--  e2:SetCode(EVENT_FREE_CHAIN)
+--  e2:SetCost(aux.bfgcost)
+--  e2:SetTarget(c21400051.sstarget)
+--  e2:SetOperation(c21400051.ssactivate)
+--  c:RegisterEffect(e2)
 
 end
 
 function c21400051.kfilter(c)
-	return (c:IsLocation(LOCATION_HAND) or (c:IsPosition(POS_FACEUP)  and c:IsType(TYPE_PENDULUM) ) ) and c:IsAbleToGraveAsCost() and (c:IsRace(RACE_PLANT) or c:IsRace(RACE_WYRM))
+	return (c:IsLocation(LOCATION_HAND) or (c:IsPosition(POS_FACEUP)  and c:IsType(TYPE_PENDULUM) ) ) and c:IsAbleToGraveAsCost() and (c:IsRace(RACE_PLANT) or c:IsRace(RACE_DRAGON))
 end
 
 function c21400051.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -61,7 +61,7 @@ function c21400051.operation(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local flg=0
 	if tc:IsRelateToEffect(e) then
-		if (Duel.IsExistingMatchingCard(c21400051.cfilter,tp,LOCATION_MZONE,0,1,nil) and tc:IsPosition(POS_FACEUP) and  Duel.SelectYesNo(tp,aux.Stringid(m,3)) ) then
+		if (Duel.IsExistingMatchingCard(c21400051.cfilter,tp,LOCATION_MZONE,0,1,nil) and tc:IsPosition(POS_FACEUP) and  Duel.SelectYesNo(tp,aux.Stringid(m,2)) ) then
 			Duel.NegateRelatedChain(tc,RESET_TURN_SET)
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_SINGLE)

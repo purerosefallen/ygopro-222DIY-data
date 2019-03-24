@@ -20,9 +20,7 @@ end
 function c65020071.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
-	local num=2
-	if Duel.GetLocationCount(tp,LOCATION_SZONE)<2 then num=1 end
-	local g=Duel.SelectMatchingCard(tp,c65020071.thfil,tp,LOCATION_GRAVE,0,1,num,nil)
+	local g=Duel.SelectMatchingCard(tp,c65020071.thfil,tp,LOCATION_GRAVE,0,1,1,nil)
 	if g:GetCount()>0 and Duel.SSet(tp,g)~=0 then
 	Duel.ConfirmCards(1-tp,g)
 	Duel.BreakEffect()

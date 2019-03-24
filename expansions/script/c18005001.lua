@@ -55,7 +55,7 @@ end
 function rsps.FieldToHandFun(c)
 	local e1=rsef.STO(c,EVENT_TO_HAND,{m,0},nil,"th","de",rsps.mthcon,nil,rstg.target(rsop.list(Card.IsAbleToHand,"th",0,LOCATION_ONFIELD,1)),rsps.mthop)
 end
-function rsps.mthop(e)
+function rsps.mthop(e,tp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
 	local tg=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,1,nil)
 	if #tg>0 then

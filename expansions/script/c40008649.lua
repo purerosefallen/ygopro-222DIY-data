@@ -34,7 +34,7 @@ function c40008649.spcon(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c40008649.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsDiscardable() and c:IsSetCard(0xbb7)
+	return c:IsType(TYPE_MONSTER) and c:IsDiscardable() and c:IsSetCard(0xf11)
 end
 function c40008649.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c40008649.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
@@ -51,7 +51,7 @@ function c40008649.spop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 end
 function c40008649.cfilter1(c)
-	return c:IsFaceup() and c:IsSetCard(0xbb7)
+	return c:IsFaceup() and c:IsSetCard(0xf11)
 end
 function c40008649.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp and Duel.IsExistingMatchingCard(c40008649.cfilter1,tp,LOCATION_MZONE,0,1,e:GetHandler())

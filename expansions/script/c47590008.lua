@@ -1,6 +1,7 @@
 --天司长 路西菲尔
 function c47590008.initial_effect(c)
 	c:SetSPSummonOnce(47590008)
+	c:SetUniqueOnField(1,0,47590008)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c,false)
 	--synchro summon

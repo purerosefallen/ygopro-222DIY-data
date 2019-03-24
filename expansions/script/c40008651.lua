@@ -36,13 +36,13 @@ function c40008651.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c40008651.lkfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xbb7)
+	return c:IsFaceup() and c:IsSetCard(0xf11)
 end
 function c40008651.indcon(e)
 	return e:GetHandler():GetLinkedGroup():IsExists(c40008651.lkfilter,1,nil)
 end
 function c40008651.matfilter(c)
-	return c:IsLevelBelow(4) and c:IsLinkSetCard(0xbb7)
+	return c:IsLevelBelow(4) and c:IsLinkSetCard(0xf11)
 end
 function c40008651.regcon(e,tp,eg,ep,ev,re,r,rp)
 	return bit.band(e:GetHandler():GetSummonType(),SUMMON_TYPE_LINK)==SUMMON_TYPE_LINK
@@ -65,13 +65,13 @@ function c40008651.spcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function c40008651.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,40008652,0xbb7,0x4011,1700,0,2,RACE_FAIRY,ATTRIBUTE_LIGHT,POS_FACEUP) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,40008652,0xf11,0x4011,1700,0,2,RACE_FAIRY,ATTRIBUTE_LIGHT,POS_FACEUP) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
 function c40008651.spop(e,tp,eg,ep,ev,re,r,rp)
 	local zone=e:GetHandler():GetLinkedZone(tp)
-	if zone==0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,40008652,0xbb7,0x4011,1700,0,2,RACE_FAIRY,ATTRIBUTE_LIGHT,POS_FACEUP) then return end
+	if zone==0 or not Duel.IsPlayerCanSpecialSummonMonster(tp,40008652,0xf11,0x4011,1700,0,2,RACE_FAIRY,ATTRIBUTE_LIGHT,POS_FACEUP) then return end
 	local token=Duel.CreateToken(tp,40008652)
 	Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP,zone)
 end

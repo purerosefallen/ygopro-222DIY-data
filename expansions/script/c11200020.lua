@@ -3,7 +3,7 @@ function c11200020.initial_effect(c)
 --
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(11200020,0))
-	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DICE)
+	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DICE+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,11200020)
@@ -15,20 +15,19 @@ function c11200020.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(11200020,1))
 	e2:SetCategory(CATEGORY_TODECK)
-	e2:SetType(EFFECT_TYPE_QUICK_F)
-	e2:SetCode(EVENT_CHAINING)
-	e2:SetRange(LOCATION_MZONE)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e2:SetRange(LOCATION_HAND+LOCATION_MZONE)
 	e2:SetCondition(c11200020.con2)
-	e2:SetTarget(c11200020.tg2)
+	e2:SetCost(c11200020.cost2)
 	e2:SetOperation(c11200020.op2)
 	c:RegisterEffect(e2)
 --
 end
 --
 function c11200020.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return not c:IsPublic() end
-	Duel.ConfirmCards(1-tp,c)
+	if chk==0 then return not e:GetHandler():IsPublic() end
+	Duel.ConfirmCards(1-tp,e:GetHandler())
 end
 --
 function c11200020.tfilter1(c,e,tp)
@@ -36,68 +35,52 @@ function c11200020.tfilter1(c,e,tp)
 end
 function c11200020.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.GetLocationCount(tp,LOCATION_MZONE)>1
-		and Duel.IsExistingMatchingCard(c11200020.tfilter1,tp,LOCATION_DECK,0,1,nil,e,tp) end
+	if chk==0 then return true end
 	Duel.SetOperationInfo(0,CATEGORY_DICE,nil,0,tp,1)
 end
 --
 function c11200020.op1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local dc=Duel.TossDice(tp,1)
-	if dc==1 or dc==2 or dc==3 then
+	if dc>0 and dc<4 then
+		if Duel.GetMZoneCount(tp)<1 then return end
 		if not c:IsRelateToEffect(e) then return end
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
-	elseif dc==4 or dc==5 then
-		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	end
+	if dc==4 then Duel.Damage(tp,1100,REASON_EFFECT) end
+	if dc>4 then
+		if Duel.GetMZoneCount(tp)<1 then return end
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 		local sg=Duel.SelectMatchingCard(tp,c11200020.tfilter1,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
 		if sg:GetCount()<1 then return end
-		local sc=sg:GetFirst()
-		sc:AddMonsterAttribute(TYPE_EFFECT,ATTRIBUTE_LIGHT,RACE_BEAST,4,1100,1100)
-		Duel.SpecialSummonStep(sc,0,tp,tp,true,false,POS_FACEUP)
-		sc:AddMonsterAttributeComplete()
+		local tc=sg:GetFirst()
+		tc:AddMonsterAttribute(TYPE_NORMAL,ATTRIBUTE_LIGHT,RACE_BEAST,4,1100,1100)
+		Duel.SpecialSummonStep(tc,0,tp,tp,true,false,POS_FACEUP)
+		tc:AddMonsterAttributeComplete()
 		Duel.SpecialSummonComplete()
-	elseif dc==6 then
-		if c:IsRelateToEffect(e) then
-			if Duel.GetLocationCount(tp,LOCATION_MZONE)<2 then return end
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sg=Duel.SelectMatchingCard(tp,c11200020.tfilter1,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
-			if sg:GetCount()<1 then return end
-			local sc=sg:GetFirst()
-			sc:AddMonsterAttribute(TYPE_EFFECT,ATTRIBUTE_LIGHT,RACE_BEAST,4,1100,1100)
-			Duel.SpecialSummonStep(sc,0,tp,tp,true,false,POS_FACEUP)
-			sc:AddMonsterAttributeComplete()
-			Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
-			Duel.SpecialSummonComplete()
-		else
-			if Duel.GetLocationCount(tp,LOCATION_MZONE)<1 then return end
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-			local sg=Duel.SelectMatchingCard(tp,c11200020.tfilter1,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,e,tp)
-			if sg:GetCount()<1 then return end
-			local sc=sg:GetFirst()
-			sc:AddMonsterAttribute(TYPE_EFFECT,ATTRIBUTE_LIGHT,RACE_BEAST,4,1100,1100)
-			Duel.SpecialSummonStep(sc,0,tp,tp,true,false,POS_FACEUP)
-			sc:AddMonsterAttributeComplete()
-			Duel.SpecialSummonComplete()
-		end
-	else
 	end
 end
 --
 function c11200020.con2(e,tp,eg,ep,ev,re,r,rp)
-	return not re:GetHandler():IsSetCard(0x132)
+	return Duel.GetAttacker():GetControler()~=tp
 end
 --
-function c11200020.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
+function c11200020.cfilter2(c)
+	return c:IsAbleToRemoveAsCost()
+		and c:IsType(TYPE_SPELL) and c:IsSetCard(0x132)
+end
+function c11200020.cost2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,c,1,0,0)
+	if chk==0 then return c:IsReleasable()
+		and Duel.IsExistingMatchingCard(c11200020.cfilter2,tp,LOCATION_GRAVE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local sg=Duel.SelectMatchingCard(tp,c11200020.cfilter2,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	Duel.Remove(sg,POS_FACEUP,REASON_COST)
+	Duel.Release(c,REASON_COST)
 end
 --
 function c11200020.op2(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end
-	Duel.SendtoDeck(c,nil,1,REASON_EFFECT)
+	if not Duel.NegateAttack() then return end
+	Duel.SkipPhase(1-tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)
 end
 --

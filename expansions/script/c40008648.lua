@@ -33,7 +33,7 @@ function c40008648.spcon(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c40008648.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsDiscardable() and c:IsSetCard(0xbb7)
+	return c:IsType(TYPE_MONSTER) and c:IsDiscardable() and c:IsSetCard(0xf11)
 end
 function c40008648.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c40008648.cfilter,tp,LOCATION_HAND,0,1,e:GetHandler()) end
@@ -53,7 +53,7 @@ function c40008648.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnPlayer()~=tp
 end
 function c40008648.thfilter(c,tp)
-	return c:IsSetCard(0xbb7) and (c:GetType()==0x20004 or c:GetType()==0x20002) and c:GetActivateEffect():IsActivatable(tp)
+	return c:IsSetCard(0xf11) and (c:GetType()==0x20004 or c:GetType()==0x20002) and c:GetActivateEffect():IsActivatable(tp)
 end
 function c40008648.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c40008648.thfilter,tp,LOCATION_GRAVE,0,1,nil,tp) end

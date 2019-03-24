@@ -9,6 +9,13 @@ function c21400054.initial_effect(c)
 	e0:SetCountLimit(1,21400054+EFFECT_COUNT_CODE_OATH)
 	c:RegisterEffect(e0)
 
+	--act in hand
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_TRAP_ACT_IN_HAND)
+	e1:SetCondition(c21400054.handcon)
+	c:RegisterEffect(e1)
+
 	--spsummon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(21400054,2))
@@ -21,13 +28,70 @@ function c21400054.initial_effect(c)
 	e2:SetOperation(cm.activate)
 	c:RegisterEffect(e2)
 
-	--act in hand
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
-	e2:SetCondition(c21400054.handcon)
-	c:RegisterEffect(e2)
+	--grave
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(m,3))
+	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetCode(EVENT_FREE_CHAIN)
+	e3:SetRange(LOCATION_GRAVE)
+	e3:SetCost(cm.cpcost)
+	e3:SetTarget(cm.target)
+	e3:SetOperation(cm.activate)
+	c:RegisterEffect(e3)
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(m,4))
+	--e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetCode(EVENT_FREE_CHAIN)
+	e4:SetRange(LOCATION_GRAVE)
+	e4:SetCondition(cm.condition)
+	e4:SetCost(cm.cpcost)
+	e4:SetTarget(cm.cptg)
+	e4:SetOperation(cm.cpop)
+	c:RegisterEffect(e4)
+
 end
+
+function cm.condition(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.IsExistingMatchingCard(Card.IsSummonType,tp,LOCATION_MZONE,0,1,nil,SUMMON_TYPE_ADVANCE) and Duel.GetTurnCount()~=e:GetHandler():GetTurnID() or e:GetHandler():IsReason(REASON_RETURN)
+end
+
+function cm.cpcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	e:SetLabel(1)
+	return true
+end
+function cm.cpfilter(c)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSetCard(0xc20) and c:CheckActivateEffect(false,true,false)~=nil
+end
+function cm.cptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then
+		if e:GetLabel()==0 then return false end
+		e:SetLabel(0)
+		return Duel.IsExistingMatchingCard(cm.cpfilter,tp,LOCATION_GRAVE,0,1,nil) and e:GetHandler():IsAbleToRemoveAsCost()
+	end
+	e:SetLabel(0)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
+	local g=Duel.SelectMatchingCard(tp,cm.cpfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local te,ceg,cep,cev,cre,cr,crp=g:GetFirst():CheckActivateEffect(false,true,true)
+	Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
+	e:SetCategory(te:GetCategory())
+	e:SetProperty(te:GetProperty())
+	local tg=te:GetTarget()
+	if tg then tg(e,tp,ceg,cep,cev,cre,cr,crp,1) end
+	te:SetLabelObject(e:GetLabelObject())
+	e:SetLabelObject(te)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,nil,0,0,0)
+end
+function cm.cpop(e,tp,eg,ep,ev,re,r,rp)
+	local te=e:GetLabelObject()
+	if not te then return end
+	e:SetLabelObject(te:GetLabelObject())
+	local op=te:GetOperation()
+	if op then op(e,tp,eg,ep,ev,re,r,rp) end
+end
+
+
 
 function cm.spfilter(c,e,tp,mc,rg0)
 	return bit.band(c:GetOriginalType(),0x81)==0x81 and (not c.mat_filter or c.mat_filter(mc) or (rg0 and rg0:IsContains(c)))
@@ -53,7 +117,18 @@ function cm.filter(c,e,tp)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	local mg=Duel.GetRitualMaterial(tp)
-	if chk==0 then return mg:IsExists(cm.filter,1,nil,e,tp) end
+	if chk==0 then 
+		if e:GetLabel()==1 then
+			e:SetLabel(0)
+			return e:GetHandler():IsAbleToRemoveAsCost() and mg:IsExists(cm.filter,1,nil,e,tp)
+		end
+		return mg:IsExists(cm.filter,1,nil,e,tp) 
+	end
+
+	if e:GetLabel()==1 then 
+		e:SetLabel(0)
+		Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_COST)
+	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_HAND+LOCATION_PZONE+LOCATION_EXTRA)
 end
 function cm.rfilter2(c,sg,mlv)

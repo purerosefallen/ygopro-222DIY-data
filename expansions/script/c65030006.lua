@@ -55,7 +55,7 @@ function c65030006.negcon(e,tp,eg,ep,ev,re,r,rp)
 	return ep~=tp and Duel.IsChainNegatable(ev)
 end
 function c65030006.spcfil(c)
-	return c:IsType(TYPE_FUSION) and c:GetEquipCount()>0 and c:IsAbleToRemoveAsCost()
+	return c:IsSetCard(0x6da1) and c:GetEquipCount()>0 and c:IsAbleToRemoveAsCost()
 end
 
 function c65030006.negcost(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -66,9 +66,12 @@ function c65030009.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Equip(tp,c,tc)
 	end
 end
+function c65030009.costfil(c)
+	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+end
 function c65030009.recost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemoveAsCost,tp,LOCATION_ONFIELD,0,1,e:GetHandler()) end
-	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemoveAsCost,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler())
+	if chk==0 then return Duel.IsExistingMatchingCard(c65030009.costfil,tp,LOCATION_ONFIELD,0,1,e:GetHandler()) end
+	local g=Duel.SelectMatchingCard(tp,c65030009.costfil,tp,LOCATION_ONFIELD,0,1,1,e:GetHandler())
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 
