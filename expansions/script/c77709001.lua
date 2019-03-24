@@ -26,9 +26,9 @@ function cm.initial_effect(c)
         if ct==3 then
             Duel.BreakEffect()
             if Duel.Draw(tp,2,REASON_EFFECT)>1 then
-                Duel.ShuffleHand(p)
+                Duel.ShuffleHand(tp)
                 Duel.BreakEffect()
-                Duel.DiscardHand(p,nil,2,2,REASON_EFFECT+REASON_DISCARD)
+                Duel.DiscardHand(tp,nil,2,2,REASON_EFFECT+REASON_DISCARD)
             end
         end
     end)
