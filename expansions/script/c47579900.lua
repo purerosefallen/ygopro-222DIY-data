@@ -76,10 +76,10 @@ function c47579900.rmtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,LOCATION_MZONE)
 end
 function c47579900.rmop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,nil,TYPE_MONSTER)
+	local g=Duel.GetMatchingGroup(Card.IsType,tp,LOCATION_MZONE,LOCATION_MZONE,nil,TYPE_MONSTER,e:GetHandler())
 	local tg=g:GetMaxGroup(Card.GetAttack)
 	if tg:GetCount()>0 then
-		Duel.Remove(tg,POS_FACEUP,REASON_RULE)
+		Duel.Remove(tg,POS_FACEDOWN,REASON_RULE)
 	end
 end
 function c47579900.ovop(e,tp,eg,ep,ev,re,r,rp)

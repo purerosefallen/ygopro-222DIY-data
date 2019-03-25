@@ -47,6 +47,7 @@ function c1110113.CheckRecursive1(c,mg,sg,exg,tp,fc,chkf)
 	if exg and exg:IsContains(c) and not sg:IsExists(Card.IsLocation,1,nil,LOCATION_HAND) then return false end
 	if sg:GetCount()>0 and not sg:IsExists(c1110113.CheckFusionFilter1,1,nil,sg,c) then return false end
 	sg:AddCard(c)
+	if Duel.GetLocationCountFromEx(tp,tp,sg,c)<1 then return false end
 	local res=false
 	if sg:GetCount()==2 then
 		res=(chkf==PLAYER_NONE or Duel.GetLocationCountFromEx(chkf,tp,sg,fc)>0)

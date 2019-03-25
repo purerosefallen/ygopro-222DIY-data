@@ -43,7 +43,7 @@ function c1110161.initial_effect(c)
 --
 end
 --
-function c1110161.cfilter1(c)
+function c1110161.filter1(c)
 	return c:IsLevel(3)
 end
 function c1110161.Linkfilter(c)
