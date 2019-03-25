@@ -63,7 +63,7 @@ end
 function c1111501.op1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetMZoneCount(tp)<1 then return end
-	if Duel.IsPlayerCanSpecialSummonMonster(tp,1110199,0,0x4011,100,100,3,RACE_FAIRY,ATTRIBUTE_LIGHT) and Duel.SelectYesNo(tp,aux.Stringid(1111501,0)) then
+	if Duel.IsPlayerCanSpecialSummonMonster(tp,1110199,0,0x4011,100,100,3,RACE_FAIRY,ATTRIBUTE_LIGHT) and Duel.SelectYesNo(tp,aux.Stringid(1111501,3)) then
 		local token=Duel.CreateToken(tp,1110199)
 		Duel.SpecialSummon(token,0,tp,tp,false,false,POS_FACEUP)
 	end
@@ -73,8 +73,8 @@ function c1111501.tfilter2(c)
 	return c:IsCode(1110004) and c:IsAbleToHand()
 end
 function c1111501.tg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c1111501.tfilter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+	if chk==0 then return Duel.IsExistingMatchingCard(c1111501.tfilter2,tp,LOCATION_DECK,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
 --
 function c1111501.op2(e,tp,eg,ep,ev,re,r,rp)

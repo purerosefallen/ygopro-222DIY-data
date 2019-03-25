@@ -100,7 +100,7 @@ function c1111001.op1_1(e,tp,eg,ep,ev,re,r,rp)
 		e1_1_1:SetValue(5)
 		e1_1_1:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e1_1_1)
-		tc=g:GetNext()
+		tc=tg:GetNext()
 	end
 end
 --
@@ -134,12 +134,12 @@ function c1111001.op2(e,tp,eg,ep,ev,re,r,rp)
 			local ops={}
 			local opval={}
 			if b1 then
-				ops[off]=aux.Stringid(1110131,0)
+				ops[off]=aux.Stringid(1111001,0)
 				opval[off-1]=1
 				off=off+1
 			end
 			if b2 then
-				ops[off]=aux.Stringid(1110131,1)
+				ops[off]=aux.Stringid(1111001,1)
 				opval[off-1]=2
 				off=off+1
 			end

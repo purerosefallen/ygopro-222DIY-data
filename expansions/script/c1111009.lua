@@ -59,11 +59,16 @@ function c1111009.op1(e,tp,eg,ep,ev,re,r,rp)
 	local lg=Group.CreateGroup()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local sg1=Duel.SelectMatchingCard(tp,c1111009.tfilter1_1,tp,LOCATION_DECK,0,1,1,nil)
-	if sg1:GetCount()<0 then return end
-	lg:AddCard(sg1:GetFirst())
-	local sg2=Duel.SelectMatchingCard(tp,c1111009.tfilter1_2,tp,LOCATION_DECK,0,1,1,nil,sg1:GetFirst())
-	if sg2:GetCount()<0 then return end
-	lg:AddCard(sg2:GetFirst())
+	if sg1:GetCount()>0 then
+		local tc1=sg1:GetFirst()
+		lg:AddCard(tc1)
+	end
+	local sg2=Duel.SelectMatchingCard(tp,c1111009.tfilter1_2,tp,LOCATION_DECK,0,1,1,nil,tc1)
+	if sg2:GetCount()>0 then
+		local tc2=sg2:GetFirst()
+		lg:AddCard(tc2)
+	end
+	if lg:GetCount()<1 then return end
 	Duel.SendtoGrave(lg,REASON_EFFECT)
 end
 --

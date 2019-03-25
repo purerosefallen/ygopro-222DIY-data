@@ -4,19 +4,14 @@ function c9980143.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(9980143,0))
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCountLimit(1,EFFECT_COUNT_CODE_SINGLE)
-	e2:SetCondition(c9980143.indcon)
+	e2:SetCountLimit(1)
+	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e2:SetTarget(c9980143.indtg)
 	e2:SetOperation(c9980143.indop)
 	c:RegisterEffect(e2)
-	local e5=e2:Clone()
-	e5:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_QUICK_O)
-	e5:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e5:SetCode(EVENT_FREE_CHAIN)
-	e5:SetHintTiming(TIMING_DAMAGE_STEP+TIMINGS_CHECK_MONSTER)
-	c:RegisterEffect(e5)
 	--fusion substitute
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
@@ -44,9 +39,6 @@ function c9980143.initial_effect(c)
 end
 function c9980143.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0x1bc9)
-end
-function c9980143.indcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp
 end
 function c9980143.indtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c9980143.filter(chkc) end
