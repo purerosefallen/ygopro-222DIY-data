@@ -76,12 +76,13 @@ end
 function c1111025.cfilter1_1(c,tp)
 	return c:IsFaceup() and muxu.check_set_Urban(c)
 		and c:GetPreviousLocation()~=LOCATION_EXTRA 
-		and Duel.IsExistingMatchingCard(c1111025.cfilter1_2,tp,LOCATION_MZONE,0,1,nil,c)
+		and Duel.IsExistingMatchingCard(c1111025.cfilter1_2,tp,LOCATION_MZONE,0,1,c,c)
 end
 function c1111025.cfilter1_2(c,tc)
+	local att=tc:GetAttribute()
 	return c:IsFaceup() and muxu.check_set_Urban(c)
 		and c:GetPreviousLocation()~=LOCATION_EXTRA
-		and c:IsAttribute(tc:GetAttribute())
+		and c:IsAttribute(att)
 end
 function c1111025.con1_1(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c1111025.cfilter1_1,tp,LOCATION_MZONE,0,1,nil,tp)
