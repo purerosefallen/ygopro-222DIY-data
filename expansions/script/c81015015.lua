@@ -1,4 +1,5 @@
 --迫真奥运火炬手·北上丽花
+require("expansions/script/c81000000")
 function c81015015.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -15,7 +16,7 @@ function c81015015.initial_effect(c)
 	e2:SetCategory(CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_BATTLE_CONFIRM)
-	e2:SetCondition(c81015015.descon)
+	e2:SetCondition(Tenka.ReikaCon)
 	e2:SetTarget(c81015015.destg)
 	e2:SetOperation(c81015015.desop)
 	c:RegisterEffect(e2)
@@ -45,15 +46,6 @@ function c81015015.spop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(LOCATION_REMOVED)
 		c:RegisterEffect(e1,true)
 	end
-end
-function c81015015.distg(e,c)
-	return c==e:GetHandler():GetBattleTarget()
-end
-function c81015015.descfilter(c)
-	return c:GetSequence()<5
-end
-function c81015015.descon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c81015015.descfilter,tp,LOCATION_SZONE,0,1,nil)
 end
 function c81015015.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local t=Duel.GetAttackTarget()

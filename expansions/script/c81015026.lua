@@ -1,4 +1,5 @@
 --一头六臂·北上丽花
+require("expansions/script/c81000000")
 function c81015026.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,c81015026.matfilter,2,2)
@@ -9,7 +10,7 @@ function c81015026.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetCountLimit(1,81015026)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCondition(c81015026.thcon)
+	e1:SetCondition(Tenka.ReikaCon)
 	e1:SetTarget(c81015026.target)
 	e1:SetOperation(c81015026.operation)
 	c:RegisterEffect(e1)
@@ -49,12 +50,6 @@ function c81015026.cbop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and not Duel.GetAttacker():IsImmuneToEffect(e) then
 		Duel.ChangeAttackTarget(c)
 	end
-end
-function c81015026.descfilter(c)
-	return c:GetSequence()<5
-end
-function c81015026.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c81015026.descfilter,tp,LOCATION_SZONE,0,1,nil)
 end
 function c81015026.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsPlayerCanDiscardDeck(tp,5)

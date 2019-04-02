@@ -1,4 +1,5 @@
 --织女·北上丽花
+require("expansions/script/c81000000")
 function c81015021.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
@@ -13,7 +14,6 @@ function c81015021.initial_effect(c)
 	c:RegisterEffect(e1)
 	--atk up
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(47946130,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
@@ -37,10 +37,10 @@ function c81015021.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 function c81015021.cfilter(c)
-	return c:GetSequence()<5 and (c:IsFacedown() or c:IsFaceup())
+	return c:GetSequence()<5
 end
 function c81015021.atkup(e,c)
-	return Duel.GetMatchingGroupCount(c81015018.cfilter,tp,LOCATION_SZONE,0,nil)*(-200)
+	return Duel.GetMatchingGroupCount(c81015021.cfilter,tp,LOCATION_SZONE,0,nil)*(-200)
 end
 function c81015021.askcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

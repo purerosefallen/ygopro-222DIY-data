@@ -1,4 +1,5 @@
 --北上丽花家的空调房
+require("expansions/script/c81000000")
 function c81015013.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -27,7 +28,7 @@ function c81015013.initial_effect(c)
 	e4:SetCode(EFFECT_CANNOT_ACTIVATE)
 	e4:SetRange(LOCATION_FZONE)
 	e4:SetTargetRange(0,1)
-	e4:SetCondition(c81015013.condition)
+	e4:SetCondition(Tenka.ReikaCon)
 	e4:SetValue(c81015013.aclimit)
 	e4:SetCondition(c81015013.actcon)
 	c:RegisterEffect(e4)
@@ -46,9 +47,6 @@ function c81015013.actop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.Destroy(g,REASON_EFFECT)
 	end
-end
-function c81015013.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c81015013.desfilter,tp,LOCATION_SZONE,0,1,nil)
 end
 function c81015013.aclimit(e,re,tp)
 	return not re:GetHandler():IsImmuneToEffect(e)

@@ -1,4 +1,5 @@
 --北上丽花的自驾游
+require("expansions/script/c81000000")
 function c81015014.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -13,7 +14,7 @@ function c81015014.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
-	e2:SetCondition(c81015014.condition)
+	e2:SetCondition(Tenka.ReikaCon)
 	c:RegisterEffect(e2)
 end
 function c81015014.filter(c,e,tp)
@@ -42,10 +43,4 @@ function c81015014.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2,true)
 		Duel.SpecialSummonComplete()
 	end
-end
-function c81015014.cfilter(c)
-	return c:GetSequence()<5
-end
-function c81015014.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c81015014.cfilter,tp,LOCATION_SZONE,0,1,nil)
 end

@@ -43,7 +43,6 @@ function cm.LoadMetatable(code)
 	end
 end
 function cm.check_link_set_SPO(c)
-	if c:IsLinkType(TYPE_LINK) then return end
 	local codet={c:GetLinkCode()}
 	for j,code in pairs(codet) do
 		local mt=cm.LoadMetatable(code)

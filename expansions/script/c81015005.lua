@@ -1,4 +1,5 @@
 --完美老师·北上丽花
+require("expansions/script/c81000000")
 function c81015005.initial_effect(c)
 	--summon with s/t
 	local e0=Effect.CreateEffect(c)
@@ -16,7 +17,7 @@ function c81015005.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetCountLimit(1,81015005)
-	e1:SetCondition(c81015005.spcon)
+	e1:SetCondition(Tenka.ReikaCon)
 	e1:SetTarget(c81015005.sptg)
 	e1:SetOperation(c81015005.spop)
 	c:RegisterEffect(e1)
@@ -43,12 +44,6 @@ function c81015005.initial_effect(c)
 end
 function c81015005.rellimit(e,c,tp,sumtp)
 	return c==e:GetHandler()
-end
-function c81015005.cfilter(c)
-	return c:GetSequence()<5
-end
-function c81015005.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c81015005.cfilter,tp,LOCATION_SZONE,0,1,nil)
 end
 function c81015005.filter(c,e,tp)
 	return c:IsLevel(6) and c:IsRace(RACE_FAIRY) and c:IsAttribute(ATTRIBUTE_EARTH)

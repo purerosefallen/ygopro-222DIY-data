@@ -30,17 +30,21 @@ function c11200105.initial_effect(c)
 	e3:SetCondition(c11200105.actcon)
 	c:RegisterEffect(e3)
 end
+function c11200105.filter(c)
+	return c:IsFaceup()
+end
 function c11200105.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_REMOVED) end
-	if chk==0 then return Duel.IsExistingTarget(nil,tp,LOCATION_REMOVED,0,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectTarget(tp,nil,tp,LOCATION_REMOVED,0,1,2,nil)
+	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and c11200105.filter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c11200105.filter,tp,LOCATION_REMOVED,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(11200105,0))
+	local g=Duel.SelectTarget(tp,c11200105.filter,tp,LOCATION_REMOVED,0,1,2,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,g:GetCount(),0,0)
 end
 function c11200105.activate(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) then
-		Duel.SendtoGrave(tc,REASON_EFFECT+REASON_RETURN)
+	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	local sg=tg:Filter(Card.IsRelateToEffect,nil,e)
+	if sg:GetCount()>0 then
+		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_RETURN)
 	end
 end
 function c11200105.cfilter(c,tp)

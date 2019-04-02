@@ -1,4 +1,5 @@
 --悠闲假日·北上丽花
+require("expansions/script/c81000000")
 function c81015025.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,nil,6,2,nil,nil,4)
@@ -28,7 +29,7 @@ function c81015025.initial_effect(c)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetCountLimit(1,81015925)
-	e4:SetCondition(c81015025.mtcon)
+	e4:SetCondition(Tenka.ReikaCon)
 	e4:SetTarget(c81015025.mttg)
 	e4:SetOperation(c81015025.mtop)
 	c:RegisterEffect(e4)
@@ -37,10 +38,10 @@ function c81015025.cfilter(c)
 	return c:GetSequence()<5
 end
 function c81015025.descon1(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsExistingMatchingCard(c81015025.cfilter,tp,LOCATION_SZONE,0,1,nil)
+	return not Tenka.ReikaCon(e)
 end
 function c81015025.descon2(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c81015025.cfilter,tp,LOCATION_SZONE,0,1,nil)
+	return Tenka.ReikaCon(e)
 end
 function c81015025.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
@@ -58,12 +59,6 @@ function c81015025.desop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
-end
-function c81015025.dcfilter(c)
-	return c:GetSequence()<5
-end
-function c81015025.mtcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c81015025.dcfilter,tp,LOCATION_SZONE,0,1,nil) and aux.exccon(e)
 end
 function c81015025.mtfilter(c,e)
 	return c:IsType(TYPE_SPELL) and c:IsSetCard(0x81a)

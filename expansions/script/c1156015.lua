@@ -20,7 +20,6 @@ function c1156015.initial_effect(c)
 --
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(1156015,0))
-	e2:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
@@ -124,6 +123,7 @@ end
 --
 function c1156015.con2(e,tp,eg,ep,ev,re,r,rp)
 	return ep==1-tp and re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE)
+		and not bit.band(re:GetHandler():GetOriginalType(),TYPE_PENDULUM)~=0
 end
 --
 function c1156015.tg2(e,tp,eg,ep,ev,re,r,rp,chk)

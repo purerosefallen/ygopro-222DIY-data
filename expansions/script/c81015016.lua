@@ -1,4 +1,5 @@
 --上课小动作·北上丽花
+require("expansions/script/c81000000")
 function c81015016.initial_effect(c)
 	--link summon
 	aux.AddLinkProcedure(c,c81015016.matfilter,2,2)
@@ -22,7 +23,7 @@ function c81015016.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,81015916)
-	e2:SetCondition(c81015016.thcon1)
+	e2:SetCondition(Tenka.ReikaCon)
 	e2:SetTarget(c81015016.thtg1)
 	e2:SetOperation(c81015016.thop1)
 	c:RegisterEffect(e2)
@@ -61,12 +62,6 @@ function c81015016.spop2(e,tp,eg,ep,ev,re,r,rp)
 end
 function c81015016.splimit(e,c)
 	return not c:IsSetCard(0x81a)
-end
-function c81015016.descfilter(c)
-	return c:GetSequence()<5
-end
-function c81015016.thcon1(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c81015016.descfilter,tp,LOCATION_SZONE,0,1,nil)
 end
 function c81015016.thfilter1(c)
 	return c:IsSetCard(0x81a) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()

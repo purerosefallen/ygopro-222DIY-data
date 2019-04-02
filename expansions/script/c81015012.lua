@@ -1,4 +1,5 @@
 --思想者·北上丽花
+require("expansions/script/c81000000")
 function c81015012.initial_effect(c)
 	--summon with no tribute
 	local e1=Effect.CreateEffect(c)
@@ -15,7 +16,7 @@ function c81015012.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,81015012)
-	e2:SetCondition(c81015012.condition)
+	e2:SetCondition(Tenka.ReikaCon)
 	e2:SetCost(c81015012.spcost)
 	e2:SetTarget(c81015012.sptg)
 	e2:SetOperation(c81015012.spop)
@@ -27,14 +28,8 @@ function c81015012.cfilter(c)
 end
 function c81015012.ntcon(e,c,minc)
 	if c==nil then return true end
-	return minc==0 and c:IsLevelAbove(5) and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+	return minc==0 and c:IsLevelAbove(5) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c81015012.cfilter,c:GetControler(),LOCATION_MZONE,0,1,nil)
-end
-function c81015012.sfilter(c)
-	return c:GetSequence()<5
-end
-function c81015012.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c81015012.sfilter,tp,LOCATION_SZONE,0,1,nil)
 end
 function c81015012.counterfilter(c)
 	return c:IsSetCard(0x81a)

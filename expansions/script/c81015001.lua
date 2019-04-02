@@ -1,4 +1,5 @@
 --偶像·北上丽花
+require("expansions/script/c81000000")
 function c81015001.initial_effect(c)
 	c:SetUniqueOnField(1,0,81015001)
 	c:EnableReviveLimit()
@@ -16,7 +17,7 @@ function c81015001.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetCondition(c81015001.atkcon)
+	e2:SetCondition(Tenka.ReikaCon)
 	e2:SetValue(3000)
 	c:RegisterEffect(e2)
 	--destroy
@@ -32,18 +33,15 @@ function c81015001.initial_effect(c)
 	e3:SetOperation(c81015001.desop)
 	c:RegisterEffect(e3)
 end
-function c81015001.spfilter1(c)
-	return c:GetSequence()<5
-end
-function c81015001.spfilter2(c)
+function c81015001.spfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x81a)
 end
 function c81015001.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0
-		or Duel.IsExistingMatchingCard(c81015001.spfilter1,tp,LOCATION_SZONE,0,1,nil) then return false end
-	return Duel.IsExistingMatchingCard(c81015001.spfilter2,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
+		or not Tenka.ReikaCon(e) then return false end
+	return Duel.IsExistingMatchingCard(c81015001.spfilter,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil)
 end
 function c81015001.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)
@@ -70,10 +68,4 @@ function c81015001.desop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
 	end
-end
-function c81015001.cfilter(c)
-	return c:GetSequence()<5
-end
-function c81015001.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c81015001.cfilter,tp,LOCATION_SZONE,0,1,nil)
 end

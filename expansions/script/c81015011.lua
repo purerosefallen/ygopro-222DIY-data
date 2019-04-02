@@ -1,4 +1,5 @@
 --MS-765改·北上丽花
+require("expansions/script/c81000000")
 function c81015011.initial_effect(c)
 	--synchro summon
 	aux.AddSynchroProcedure(c,aux.FilterBoolFunction(Card.IsCode,81015010),aux.NonTuner(Card.IsLevel,6),1,1)
@@ -11,7 +12,7 @@ function c81015011.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_NO_TURN_RESET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
-	e1:SetCondition(c81015011.condition)
+	e1:SetCondition(Tenka.ReikaCon)
 	e1:SetTarget(c81015011.sptg)
 	e1:SetOperation(c81015011.spop)
 	c:RegisterEffect(e1)
@@ -24,12 +25,6 @@ function c81015011.initial_effect(c)
 	e2:SetTarget(c81015011.settg)
 	e2:SetOperation(c81015011.setop)
 	c:RegisterEffect(e2)
-end
-function c81015011.cfilter(c)
-	return c:GetSequence()<5
-end
-function c81015011.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c81015011.cfilter,tp,LOCATION_SZONE,0,1,nil)
 end
 function c81015011.spfilter(c,e,tp)
 	return c:IsSetCard(0x81a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

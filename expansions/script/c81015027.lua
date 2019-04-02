@@ -1,4 +1,5 @@
 --圣诞夜·北上丽花
+require("expansions/script/c81000000")
 function c81015027.initial_effect(c)
 	--salvage
 	local e1=Effect.CreateEffect(c)
@@ -46,13 +47,10 @@ function c81015027.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,sg)
 	end
 end
-function c81015027.descfilter(c)
-	return c:GetSequence()<5
-end
 function c81015027.rmcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return c:IsRelateToBattle() and c:GetBattleTarget():IsType(TYPE_MONSTER)
-		and not Duel.IsExistingMatchingCard(c81015027.descfilter,tp,LOCATION_SZONE,0,1,nil)
+		and Tenka.ReikaCon(e)
 end
 function c81015027.drtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

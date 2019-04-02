@@ -1,4 +1,5 @@
 --新曲录音·北上丽花
+require("expansions/script/c81000000")
 function c81015009.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddXyzProcedure(c,nil,6,2,nil,nil,99)
@@ -24,7 +25,7 @@ function c81015009.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetHintTiming(0,TIMINGS_CHECK_MONSTER)
 	e2:SetCountLimit(1)
-	e2:SetCondition(c81015009.condition)
+	e2:SetCondition(Tenka.ReikaCon)
 	e2:SetCost(c81015009.cost)
 	e2:SetTarget(c81015009.target)
 	e2:SetOperation(c81015009.operation)
@@ -49,12 +50,6 @@ function c81015009.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.SendtoGrave(tc,REASON_EFFECT)
 	end
-end
-function c81015009.cfilter(c)
-	return c:GetSequence()<5
-end
-function c81015009.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c81015009.cfilter,tp,LOCATION_SZONE,0,1,nil)
 end
 function c81015009.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsOnField() and aux.disfilter1(chkc) end

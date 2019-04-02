@@ -79,6 +79,6 @@ function c13257348.desop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257348.value(e,c)
-	if c:IsCode(13257347) return 1000 end
-	else return 500 end
+	if c:IsCode(13257347) then return 1000
+	else return end
 end

@@ -1,4 +1,5 @@
 --北上丽花的爬山日
+require("expansions/script/c81000000")
 function c81015019.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -80,11 +81,8 @@ function c81015019.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:CompleteProcedure()
 	end
 end
-function c81015019.dcfilter(c)
-	return c:GetSequence()<5
-end
 function c81015019.dspcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c81015019.dcfilter,tp,LOCATION_SZONE,0,1,nil) and aux.exccon(e)
+	return Tenka.ReikaCon(e) and aux.exccon(e)
 end
 function c81015019.dspfilter(c,e,tp)
 	return c:IsSetCard(0x81a) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

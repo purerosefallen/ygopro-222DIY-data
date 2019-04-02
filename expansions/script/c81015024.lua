@@ -1,4 +1,5 @@
 --硬核摇滚·北上丽花
+require("expansions/script/c81000000")
 function c81015024.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddFusionProcFunRep(c,c81015024.matfilter,2,true)
@@ -64,7 +65,7 @@ function c81015024.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	local g=Duel.GetReleaseGroup(tp):Filter(c81015024.spfilter,nil,c)
-	return g:IsExists(c81015024.spfilter1,1,nil,tp,g) and not Duel.IsExistingMatchingCard(c81015024.cfilter,tp,LOCATION_SZONE,0,1,nil)
+	return g:IsExists(c81015024.spfilter1,1,nil,tp,g) and Tenka.ReikaCon(e)
 end
 function c81015024.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local g=Duel.GetReleaseGroup(tp):Filter(c81015024.spfilter,nil,c)

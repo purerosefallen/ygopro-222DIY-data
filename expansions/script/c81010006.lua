@@ -78,6 +78,7 @@ function c81010006.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c81010006.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+	if not Duel.IsExistingMatchingCard(c81010006.dfilter,tp,LOCATION_MZONE,0,1,nil) then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local g=Duel.SelectMatchingCard(tp,c81010006.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()

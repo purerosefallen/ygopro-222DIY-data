@@ -1,4 +1,5 @@
 --实习魔法少女·北上丽花
+require("expansions/script/c81000000")
 function c81015003.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -22,9 +23,6 @@ function c81015003.initial_effect(c)
 	e2:SetOperation(c81015003.tkop)
 	c:RegisterEffect(e2)
 end
-function c81015003.cfilter(c)
-	return c:GetSequence()<5
-end
 function c81015003.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
@@ -32,7 +30,7 @@ function c81015003.spcon(e,c)
 	if g:GetCount()==0 then return false end
 	local tg=g:GetMaxGroup(Card.GetAttack)
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and not Duel.IsExistingMatchingCard(c81015003.cfilter,tp,LOCATION_SZONE,0,1,nil)
+		and Tenka.ReikaCon(e)
 		and tg:IsExists(Card.IsControler,1,nil,1-tp)
 end
 function c81015003.tkcon(e,tp,eg,ep,ev,re,r,rp)

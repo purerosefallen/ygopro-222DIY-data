@@ -1,4 +1,5 @@
 --萨克斯手·北上丽花
+require("expansions/script/c81000000")
 function c81015004.initial_effect(c)
 	--summon with s/t
 	local e1=Effect.CreateEffect(c)
@@ -11,13 +12,12 @@ function c81015004.initial_effect(c)
 	c:RegisterEffect(e1)
 	--to grave
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(81015004,1))
 	e2:SetCategory(CATEGORY_TOGRAVE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1,81015004)
-	e2:SetTarget(c81015004.tgtg)
-	e2:SetOperation(c81015004.tgop)
+	e2:SetTarget(c81015004.tstg)
+	e2:SetOperation(c81015004.tsop)
 	c:RegisterEffect(e2)
 	--draw
 	local e3=Effect.CreateEffect(c)
@@ -30,12 +30,12 @@ function c81015004.initial_effect(c)
 	e3:SetOperation(c81015004.tgop)
 	c:RegisterEffect(e3)
 end
-function c81015004.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c81015004.tstg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)>0
 		and Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>0 end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,2,0,0)
 end
-function c81015004.tgop(e,tp,eg,ep,ev,re,r,rp)
+function c81015004.tsop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)==0 or Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g1=Duel.SelectMatchingCard(tp,nil,tp,LOCATION_ONFIELD,0,1,1,nil)
@@ -44,14 +44,11 @@ function c81015004.tgop(e,tp,eg,ep,ev,re,r,rp)
 	g1:Merge(g2)
 	Duel.SendtoGrave(g1,REASON_EFFECT)
 end
-function c81015004.cfilter(c)
-	return c:GetSequence()<5
-end
 function c81015004.drcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return (c:IsReason(REASON_BATTLE)
 		or rp==1-tp and c:IsReason(REASON_DESTROY) and c:GetPreviousControler()==tp)
-		and not Duel.IsExistingMatchingCard(c81015004.cfilter,tp,LOCATION_SZONE,0,1,nil)
+		and Tenka.ReikaCon(e)
 end
 function c81015004.tgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_SZONE)>0 end

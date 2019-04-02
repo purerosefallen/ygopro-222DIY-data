@@ -1,4 +1,5 @@
 --绘梦少女·北上丽花
+require("expansions/script/c81000000")
 function c81015008.initial_effect(c)
 		--link summon
 	c:EnableReviveLimit()
@@ -9,7 +10,7 @@ function c81015008.initial_effect(c)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetTargetRange(0,LOCATION_MZONE)
 	e1:SetCode(EFFECT_CANNOT_SELECT_BATTLE_TARGET)
-	e1:SetCondition(c81015008.condition)
+	e1:SetCondition(Tenka.ReikaCon)
 	e1:SetValue(c81015008.atlimit)
 	c:RegisterEffect(e1)
 	--destroy
@@ -37,12 +38,6 @@ function c81015008.initial_effect(c)
 end
 function c81015008.matfilter(c)
 	return c:IsLinkAttribute(ATTRIBUTE_EARTH) and c:IsLinkRace(RACE_FAIRY)
-end
-function c81015008.cfilter(c)
-	return c:GetSequence()<5
-end
-function c81015008.condition(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c81015008.cfilter,tp,LOCATION_SZONE,0,1,nil)
 end
 function c81015008.atlimit(e,c)
 	return c:IsFaceup() and c:IsSetCard(0x81a) and c~=e:GetHandler()

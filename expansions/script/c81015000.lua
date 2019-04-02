@@ -1,4 +1,5 @@
 --北上丽花
+require("expansions/script/c81000000")
 function c81015000.initial_effect(c)
 	--special summon
 	local e1=Effect.CreateEffect(c)
@@ -7,7 +8,7 @@ function c81015000.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,81015000)
-	e1:SetCondition(c81015000.spcon)
+	e1:SetCondition(Tenka.ReikaCon)
 	c:RegisterEffect(e1)
 	--destroy
 	local e2=Effect.CreateEffect(c)
@@ -29,7 +30,7 @@ end
 function c81015000.spcon(e,c)
 	if c==nil then return true end
 	return not Duel.IsExistingMatchingCard(c81015000.cfilter,tp,LOCATION_SZONE,0,1,nil)
-		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 end
 function c81015000.desfilter(c)
 	return c:GetSequence()<5

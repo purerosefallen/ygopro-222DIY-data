@@ -1,4 +1,5 @@
 --北上丽花的极限挑战
+require("expansions/script/c81000000")
 function c81015018.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -14,7 +15,7 @@ function c81015018.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE)
 	e2:SetCode(EFFECT_TRAP_ACT_IN_HAND)
-	e2:SetCondition(c81015018.accon)
+	e2:SetCondition(Tenka.ReikaCon)
 	c:RegisterEffect(e2)
 end
 function c81015018.cfilter(c)
@@ -35,10 +36,4 @@ function c81015018.activate(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
 		Duel.Destroy(eg,REASON_EFFECT)
 	end
-end
-function c81015018.cfilter(c)
-	return c:GetSequence()<5
-end
-function c81015018.accon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c81015018.cfilter,tp,LOCATION_SZONE,0,1,nil)
 end

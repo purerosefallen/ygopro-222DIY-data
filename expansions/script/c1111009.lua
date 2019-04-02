@@ -37,16 +37,16 @@ function c1111009.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if sc:IsLocation(LOCATION_EXTRA) then e:SetLabel(100) end
 end
 --
-function c1111009.tfilter1_1(c,tp)
+function c1111009.tfilter1_1(c)
 	return muxu.check_set_Butterfly(c) and c:IsAbleToGrave() 
-		and Duel.IsExistingMatchingCard(c1111009.tfilter1_2,tp,LOCATION_DECK,0,1,nil,c)
 end
-function c1111009.tfilter1_2(c,tc)
-	return muxu.check_set_Soul(c) and c:IsAbleToGrave() and c~=tc
+function c1111009.tfilter1_2(c)
+	return muxu.check_set_Soul(c) and c:IsAbleToGrave()
 end
 function c1111009.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsExistingMatchingCard(c1111009.tfilter1_1,tp,LOCATION_DECK,0,1,nil,tp) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c1111009.tfilter1_1,tp,LOCATION_DECK,0,1,nil,tp)
+		and Duel.IsExistingMatchingCard(c1111009.tfilter1_2,tp,LOCATION_DECK,0,1,nil,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,2,tp,LOCATION_DECK)
 end
 --
@@ -63,7 +63,7 @@ function c1111009.op1(e,tp,eg,ep,ev,re,r,rp)
 		local tc1=sg1:GetFirst()
 		lg:AddCard(tc1)
 	end
-	local sg2=Duel.SelectMatchingCard(tp,c1111009.tfilter1_2,tp,LOCATION_DECK,0,1,1,nil,tc1)
+	local sg2=Duel.SelectMatchingCard(tp,c1111009.tfilter1_2,tp,LOCATION_DECK,0,1,1,tc1)
 	if sg2:GetCount()>0 then
 		local tc2=sg2:GetFirst()
 		lg:AddCard(tc2)

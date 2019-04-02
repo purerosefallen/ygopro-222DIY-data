@@ -22,10 +22,11 @@ end
 --Kitakami Reika, 81015xxx(81015028~ ), 0x81a
 --Reika effect condition
 function Tenka.ReikaCon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(Tenka.zfilter,tp,LOCATION_SZONE,0,1,nil)
-end
-function Tenka.zfilter(c)
-	return c:GetSequence()<5
+    local tp=e:GetHandlerPlayer()
+    for i=0,4 do
+        if Duel.GetFieldCard(tp,LOCATION_SZONE,i) then return false end
+    end
+    return true
 end
 --Shibuya Rin
 function Tenka.Shibuya(c)

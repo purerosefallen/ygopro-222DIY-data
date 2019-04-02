@@ -1,4 +1,5 @@
 --北上丽花的休日
+require("expansions/script/c81000000")
 function c81015006.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -19,7 +20,7 @@ function c81015006.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,81015906)
-	e2:SetCondition(c81015006.drcon)
+	e2:SetCondition(Tenka.ReikaCon)
 	e2:SetCost(aux.bfgcost)
 	e2:SetTarget(c81015006.drtg)
 	e2:SetOperation(c81015006.drop)
@@ -41,12 +42,6 @@ end
 function c81015006.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Draw(p,d,REASON_EFFECT)
-end
-function c81015006.cfilter(c)
-	return c:GetSequence()<5
-end
-function c81015006.drcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c81015006.cfilter,tp,LOCATION_SZONE,0,1,nil)
 end
 function c81015006.tdfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0x81a) and c:IsAbleToDeck() and not c:IsCode(81015006)
