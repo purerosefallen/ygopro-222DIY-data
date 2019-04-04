@@ -27,6 +27,8 @@ function c1111301.initial_effect(c)
 --
 end
 --
+c1111301.fit_monster={1110151}
+--
 function c1111301.filter(c,e,tp,m)
 	if bit.band(c:GetType(),0x81)~=0x81 or not c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_RITUAL,tp,false,true) then return false end
 	if c.mat_filter then
