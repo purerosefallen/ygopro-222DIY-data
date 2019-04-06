@@ -43,7 +43,7 @@ function cm.imval(e,re)
 	return re:GetOwnerPlayer()~=e:GetOwnerPlayer() and re:IsActiveType(TYPE_MONSTER)
 end
 function cm.dfilter(c,tp)
-	return c:IsControler(tp) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsControler(tp) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsSetCard(0x2553)
 end
 function cm.repfilter(c)
 	return c:IsSetCard(0x2553) and c:IsAbleToDeck() and c:IsFaceup()
@@ -54,7 +54,7 @@ function cm.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
 function cm.value(e,c)
-	return c:IsControler(e:GetHandlerPlayer()) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+	return c:IsControler(e:GetHandlerPlayer()) and c:IsReason(REASON_BATTLE+REASON_EFFECT) and c:IsSetCard(0x2553)
 end
 function cm.desop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
