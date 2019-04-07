@@ -29,7 +29,6 @@ function c13257349.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e1:SetCode(EVENT_CHAIN_SOLVED)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1)
 	e1:SetCondition(c13257349.accon)
 	e1:SetOperation(c13257349.acop)
 	c:RegisterEffect(e1)
@@ -61,6 +60,11 @@ function c13257349.initial_effect(c)
 	e4:SetCondition(c13257349.pccon)
 	e4:SetOperation(c13257349.pcop)
 	c:RegisterEffect(e4)
+	local e11=Effect.CreateEffect(c)
+	e11:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e11:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e11:SetOperation(c13257349.bgmop)
+	c:RegisterEffect(e11)
 	eflist={"power_capsule",e4}
 	c13257349[c]=eflist
 	
@@ -106,13 +110,14 @@ function c13257349.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 	e1:SetCode(EVENT_CHAINING)
 	e1:SetReset(RESET_PHASE+PHASE_END)
+	e1:SetCountLimit(val)
 	e1:SetOperation(c13257349.disop)
 	Duel.RegisterEffect(e1,tp)
 end
 function c13257349.disop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if ep~=tp then
-		if eg then eg=re:GetHandler() end
+		if not eg then eg=re:GetHandler() end
 		if not eg:IsImmuneToEffect(e) then
 			Duel.NegateRelatedChain(eg,RESET_TURN_SET)
 			local fid=c:GetFieldID()
@@ -171,10 +176,13 @@ end
 function c13257349.efilter(e,te)
 	return eg:GetFlagEffect(23257349)
 end
+function c13257349.desfilter(c,fid)
+	return c:GetFlagEffectLabel(23257349)==fid
+end
 function c13257349.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	if Duel.GetTurnPlayer()==tp then return false end
-	if not tc:GetFlagEffectLabel(23257349)==fid then
+	if not c13257349.desfilter(e:GetHandler(),e:GetLabel()) then
 		e:Reset()
 		return false
 	else return true end

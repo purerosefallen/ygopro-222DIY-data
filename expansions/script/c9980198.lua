@@ -45,13 +45,13 @@ end
 function c9980198.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_XYZ)
 end
-function c9980198.thfilter(c,tp)
+function c9980198.thfilter2(c,tp)
 	return c:IsCode(9980197) and c:GetActivateEffect():IsActivatable(tp,true,true)
 end
 function c9980198.thop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if not c:IsRelateToEffect(e) then return end
-	local g=Duel.GetMatchingGroup(c9980198.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,tp)
+	local g=Duel.GetMatchingGroup(c9980198.thfilter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,nil,tp)
 	if g:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(9980198,1)) then
 		Duel.BreakEffect()
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)

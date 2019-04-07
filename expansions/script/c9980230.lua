@@ -72,18 +72,23 @@ end
 function c9980230.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980230,0))
 end 
-function c9980230.cfilter2(c)
-	return c:IsFaceup() and c:IsSetCard(0x1bc4) and c:IsType(TYPE_PENDULUM)
+function c9980230.cfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x1bc4) and c:IsType(TYPE_PENDULUM) and c:IsAbleToGraveAsCost()
 end
 function c9980230.drawtg2(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1)
-		and Duel.IsExistingMatchingCard(c9980230.cfilter2,tp,LOCATION_EXTRA,0,1,nil) end
+	if chk==0 then
+		local ct=Duel.GetMatchingGroupCount(c9980230.cfilter,tp,LOCATION_EXTRA,0,nil)
+		if ct==1 and Duel.GetFieldGroupCount(tp,LOCATION_EXTRA,0)==1 then return false end
+		return Duel.IsPlayerCanDraw(tp,1) and ct>=1 end
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_EXTRA)
 	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
 end
 function c9980230.drawop2(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.DiscardHand(tp,c9980230.cfilter2,1,1,REASON_EFFECT)>0 then
+	 Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,c9980230.cfilter,tp,LOCATION_EXTRA,0,1,1,nil)
+	if g:GetCount()>0 then
+		Duel.SendtoGrave(g,REASON_EFFECT)
+		Duel.BreakEffect()
 		Duel.Draw(tp,1,REASON_EFFECT)
 	end
 end

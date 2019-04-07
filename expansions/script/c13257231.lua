@@ -113,7 +113,7 @@ function c13257231.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	g:Merge(g2)
 	Duel.SendtoGrave(g,REASON_COST)
 end
-function c13257201.eqfilter(c,ec)
+function c13257231.eqfilter(c,ec)
 	return c:IsSetCard(0x354) and c:IsType(TYPE_MONSTER) and c:CheckEquipTarget(ec)
 end
 function c13257231.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)

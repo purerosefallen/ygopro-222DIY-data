@@ -40,7 +40,7 @@ function c65030089.op(e,tp,eg,ep,ev,re,r,rp)
 	local b2=Duel.IsExistingMatchingCard(c65030089.b2fil,tp,LOCATION_EXTRA,0,1,nil)
 	if m==0 and b1 then
 		local g1=Duel.SelectMatchingCard(tp,c65030089.b1fil,tp,LOCATION_HAND+LOCATION_GRAVE,0,1,1,nil,e,tp)
-		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(g1,0,tp,tp,false,false,POS_FACEUP)
 	elseif m==1 and b2 then
 		local g2=Duel.SelectMatchingCard(tp,c65030089.b2fil,tp,LOCATION_EXTRA,0,1,1,nil)
 		Duel.MoveToField(g2:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,true)

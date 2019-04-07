@@ -102,7 +102,9 @@ function c60151906.e1op(e,tp,eg,ep,ev,re,r,rp)
 				rsc2:RegisterFlagEffect(60151901,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,aux.Stringid(60151903,0))
 			end
 			Duel.Hint(HINT_CARD,0,60151906)
-			Duel.Damage(1-tp,kds2*500,REASON_EFFECT)
+			for i=1,kds2 do
+				Duel.Damage(1-tp,500,REASON_EFFECT)
+			end
 		end
     end
 	Duel.SkipPhase(tp,PHASE_BATTLE,RESET_PHASE+PHASE_BATTLE_STEP,1)

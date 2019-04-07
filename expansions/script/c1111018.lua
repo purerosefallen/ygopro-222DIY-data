@@ -60,6 +60,7 @@ function c1111018.op1(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Hint(HINT_SELECTMSG,tp,aux.Stringid(1111018,1))
 		local tg=Duel.SelectMatchingCard(tp,c1111018.ofilter1,tp,LOCATION_DECK,0,1,1,nil,tp)
 		if tg:GetCount()<1 then return end
+		local tc=tg:GetFirst()
 		local fc=Duel.GetFieldCard(tp,LOCATION_SZONE,5)
 		if fc then
 			Duel.SendtoGrave(fc,REASON_RULE)

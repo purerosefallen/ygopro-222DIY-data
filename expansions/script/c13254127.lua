@@ -18,13 +18,15 @@ function c13254127.spfilter(c,e,tp,maru)
 	return ((c:IsSetCard(0x356) and maru==1) or (not c:IsSetCard(0x356) and maru==2)) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c13254127.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	--check tama
 	local t1=Duel.IsExistingTarget(c13254127.filter,tp,LOCATION_MZONE,0,1,nil,e,tp,1)
+	--check non-tama
 	local t2=Duel.IsExistingTarget(c13254127.filter,tp,LOCATION_MZONE,0,1,nil,e,tp,2)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and (c13254127.filter(chkc,e,tp,1) or c13254127.filter(chkc,e,tp,2)) end
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and (t1 or t2) end
 	local op=0
-	if t1 or t2 or t3 then
+	if t1 or t2 then
 		local m={}
 		local n={}
 		local ct=1
@@ -39,7 +41,7 @@ function c13254127.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
 end
 function c13254127.spop(e,tp,eg,ep,ev,re,r,rp)
-	local op=2-(e:GetLabel())
+	local op=3-(e:GetLabel())
 	local tc=Duel.GetFirstTarget()
 	local sg=Group.CreateGroup()
 	if tc:IsRelateToEffect(e) then

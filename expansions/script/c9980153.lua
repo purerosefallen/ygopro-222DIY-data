@@ -71,7 +71,7 @@ function c9980153.refcon(e,re,val,r,rp,rc)
 	return bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0 and rp==1-e:GetHandler():GetControler()  and e:GetHandler():IsAttackPos()
 end
 function c9980153.thfilter(c)
-	return c:IsSetCard(0xbc9) and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xbc9) and c:IsAbleToHand()
 end
 function c9980153.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c9980153.thfilter,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,nil) end

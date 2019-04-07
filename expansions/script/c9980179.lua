@@ -81,33 +81,28 @@ function c9980179.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980179,5))
 end 
 function c9980179.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToDeckAsCost() end
-	Duel.SendtoDeck(e:GetHandler(),nil,2,REASON_COST)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToDeckOrExtraAsCost() end
+	Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
+	Duel.SendtoDeck(c,nil,2,REASON_COST)
 end
-function c9980179.filter(c,sc,cd)
+function c9980179.thfilter(c,sc,cd)
 	return c:IsFaceup() and c:IsSetCard(0x1bc4) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
-end
-function c9980179.filter2(c,tp)
-	return c:IsFaceup() and c:IsSetCard(0x1bc4) and c:IsType(TYPE_PENDULUM) and c:IsAbleToHand()
-		and Duel.IsExistingMatchingCard(c9980179.filter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,1)
 end
 function c9980179.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		local g=Duel.GetMatchingGroup(c9980179.filter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,nil)
-		return g:IsExists(c9980179.filter2,1,nil,g)
-	end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,2,tp,LOCATION_EXTRA+LOCATION_GRAVE)
+	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE+LOCATION_EXTRA) and c9980179.thfilter(chkc) end
+	if chk==0 then return Duel.IsExistingTarget(c9980179.thfilter,tp,LOCATION_GRAVE+LOCATION_EXTRA,0,2,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectTarget(tp,c9980179.thfilter,tp,LOCATION_GRAVE+LOCATION_EXTRA,0,2,2,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,2,0,0)
 end
 function c9980179.thop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c9980179.filter,tp,LOCATION_EXTRA+LOCATION_GRAVE,0,nil)
-	local sg=g:Filter(c9980179.filter2,nil,g)
-	if sg:GetCount()==0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local hg1=sg:Select(tp,1,1,nil)
-	local hg2=sg:Filter(Card.IsCode,hg1:GetFirst(),hg1:GetFirst():GetCode())
-	hg1:AddCard(hg2:GetFirst())
-	Duel.SendtoHand(hg1,nil,REASON_EFFECT)
-	Duel.ConfirmCards(1-tp,hg1)
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
+	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
+	if sg:GetCount()>0 then
+		Duel.SendtoHand(sg,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,sg)
+	end
 end
 function c9980179.tdcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE)
