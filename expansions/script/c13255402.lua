@@ -38,10 +38,10 @@ function c13255402.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.BreakEffect()
 		local dp=1
 		if Duel.Remove(rg,POS_FACEDOWN,REASON_EFFECT)>0 then
-			if rg:FilterCount(Card.GetControler,nil,tp)==0 then
+			if rg:FilterCount(Card.IsControler,nil,tp)==0 then
 				dp=dp+1
 			end
-			if rg:FilterCount(Card.GetControler,nil,1-tp)>=3 then
+			if rg:FilterCount(Card.IsControler,nil,1-tp)>=3 then
 				dp=dp+1
 			end
 		end
