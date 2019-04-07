@@ -44,6 +44,12 @@ function cm.thop1(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,cm.thfilter1,tp,LOCATION_GRAVE,0,1,1,nil)
 	if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0 then
 		local mg=Duel.GetMatchingGroup(Auxiliary.RitualExtraFilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,aux.TRUE)
+        if Duel.IsPlayerAffectedByEffect(EFFECT_MAP_OF_HEAVEN) then
+            local exg=Duel.GetMatchingGroup(function(c)
+                return c:IsLevelAbove(1)
+            end,tp,LOCATION_EXTRA,0,nil)
+            mg:Merge(exg)
+        end
 		local sg=Duel.GetMatchingGroup(Auxiliary.RitualUltimateFilter,tp,LOCATION_HAND,0,nil,nil,e,tp,Group.CreateGroup(),mg,Card.GetLevel,"Equal")
 		Duel.ShuffleHand(tp)
 		if #sg>0 and Duel.SelectYesNo(tp,m*16) then
