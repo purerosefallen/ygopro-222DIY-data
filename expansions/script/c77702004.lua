@@ -22,6 +22,9 @@ function cm.initial_effect(c)
 	e1:SetOperation(cm.activate)
 	c:RegisterEffect(e1)
 end
+function cm.DiscardHandCostFilter(c,f,ext_params)
+	return c:IsDiscardable() and (not f or f(c,table.unpack(ext_params)))
+end
 function cm.DiscardHandCost(ct,f,...)
 	local ext_params={...}
 	return function(e,tp,eg,ep,ev,re,r,rp,chk)
