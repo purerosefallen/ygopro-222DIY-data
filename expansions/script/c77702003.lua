@@ -44,7 +44,7 @@ function cm.thop1(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.SelectMatchingCard(tp,cm.thfilter1,tp,LOCATION_GRAVE,0,1,1,nil)
 	if g:GetCount()>0 and Duel.SendtoHand(g,nil,REASON_EFFECT)>0 then
 		local mg=Duel.GetMatchingGroup(Auxiliary.RitualExtraFilter,tp,LOCATION_GRAVE,LOCATION_GRAVE,nil,aux.TRUE)
-        if Duel.IsPlayerAffectedByEffect(EFFECT_MAP_OF_HEAVEN) then
+        if Duel.IsPlayerAffectedByEffect(tp,EFFECT_MAP_OF_HEAVEN) then
             local exg=Duel.GetMatchingGroup(function(c)
                 return c:IsLevelAbove(1)
             end,tp,LOCATION_EXTRA,0,nil)
