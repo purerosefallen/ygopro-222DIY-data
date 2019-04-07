@@ -53,8 +53,13 @@ function c9980164.acop(e,tp,eg,ep,ev,re,r,rp)
 		e:GetHandler():AddCounter(0x1,1)
 	end
 end
+function c9980164.ctfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0xbc4)
+end
 function c9980164.ctop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x1,1)
+	if eg:IsExists(c9980164.ctfilter,1,nil) then
+		e:GetHandler():AddCounter(0x1,1)
+	end
 end
 function c9980164.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x1,3,REASON_COST) end

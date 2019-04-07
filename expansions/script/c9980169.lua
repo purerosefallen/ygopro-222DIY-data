@@ -22,6 +22,16 @@ function c9980169.initial_effect(c)
 	e2:SetTarget(c9980169.settg)
 	e2:SetOperation(c9980169.setop)
 	c:RegisterEffect(e2)
+	--act in set turn
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
+	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+	e2:SetCondition(c9980169.actcon)
+	c:RegisterEffect(e2)
+end
+function c9980169.actcon(e)
+	return not Duel.IsExistingMatchingCard(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,TYPE_TRAP)
 end
 function c9980169.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x1,2,REASON_COST) end
@@ -39,6 +49,7 @@ function c9980169.activate(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()~=0 then
 		Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
 	end
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980169,1))
 end
 function c9980169.setcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x1,1,REASON_COST) end

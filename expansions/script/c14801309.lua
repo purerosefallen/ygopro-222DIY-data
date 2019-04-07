@@ -2,92 +2,66 @@
 local m=14801309
 local cm=_G["c"..m]
 function cm.initial_effect(c)
-    --end battle phase
-    local e1=Effect.CreateEffect(c)
-    e1:SetDescription(aux.Stringid(m,0))
-    e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-    e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-    e1:SetCode(EVENT_ATTACK_ANNOUNCE)
-    e1:SetRange(LOCATION_GRAVE)
-    e1:SetCountLimit(1,m)
-    e1:SetCondition(cm.condition)
-    e1:SetTarget(cm.target)
-    e1:SetOperation(cm.operation)
-    c:RegisterEffect(e1)
-    --atk/def
-    local e2=Effect.CreateEffect(c)
-    e2:SetType(EFFECT_TYPE_FIELD)
-    e2:SetCode(EFFECT_UPDATE_ATTACK)
-    e2:SetRange(LOCATION_MZONE)
-    e2:SetTargetRange(0,LOCATION_MZONE)
-    e2:SetValue(-500)
-    e2:SetCondition(cm.tgcon)
-    c:RegisterEffect(e2)
-    local e3=e2:Clone()
-    e3:SetCode(EFFECT_UPDATE_DEFENSE)
-    c:RegisterEffect(e3)
-    --cannot target
-    local e4=Effect.CreateEffect(c)
-    e4:SetType(EFFECT_TYPE_SINGLE)
-    e4:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
-    e4:SetRange(LOCATION_MZONE)
-    e4:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
-    e4:SetValue(aux.tgoval)
-    c:RegisterEffect(e4)
-    
+	--spirit return
+	aux.EnableSpiritReturn(c,EVENT_SUMMON_SUCCESS,EVENT_FLIP)
+	--cannot special summon
+	local e0=Effect.CreateEffect(c)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e0:SetType(EFFECT_TYPE_SINGLE)
+	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e0:SetValue(aux.FALSE)
+	c:RegisterEffect(e0)
+	--summon
+	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(m,0))
+	e1:SetCategory(CATEGORY_SUMMON)
+	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e1:SetProperty(EFFECT_FLAG_DELAY)
+	e1:SetCode(EVENT_SUMMON_SUCCESS)
+	e1:SetCountLimit(1,m)
+	e1:SetTarget(cm.thtg)
+	e1:SetOperation(cm.thop)
+	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EVENT_FLIP_SUMMON_SUCCESS)
+	c:RegisterEffect(e2)
+	--effect gain
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e3:SetCode(EVENT_BE_MATERIAL)
+	e3:SetCondition(cm.efcon)
+	e3:SetOperation(cm.efop)
+	c:RegisterEffect(e3)
 end
-function cm.condition(e,tp,eg,ep,ev,re,r,rp)
-    local at=Duel.GetAttacker()
-    return at:GetControler()~=tp and Duel.GetAttackTarget()==nil
+function cm.thfilter(c)
+	return c:IsSetCard(0x4808) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
-function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
-    local c=e:GetHandler()
-    if chk==0 then
-        return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-    end
-    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
+function cm.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chk==0 then return Duel.IsExistingMatchingCard(cm.thfilter,tp,LOCATION_DECK,0,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
 end
-function cm.operation(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
-    if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)>0 then
-    c:RegisterFlagEffect(m,RESET_EVENT+0x1fe0000,0,1)
-        local e1=Effect.CreateEffect(e:GetHandler())
-        e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-        e1:SetCode(EVENT_PHASE+PHASE_END)
-        e1:SetCountLimit(1)
-        e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-        e1:SetLabelObject(c)
-        e1:SetCondition(cm.descon)
-        e1:SetOperation(cm.desop)
-        Duel.RegisterEffect(e1,tp)
-        local atk=c:GetBaseAttack()
-        local def=c:GetBaseDefense()
-        local e2=Effect.CreateEffect(c)
-        e2:SetType(EFFECT_TYPE_SINGLE)
-        e2:SetCode(EFFECT_SET_BASE_ATTACK)
-        e2:SetValue(atk/2)
-        e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
-        c:RegisterEffect(e2)
-        local e3=e2:Clone()
-        e3:SetCode(EFFECT_SET_BASE_DEFENSE)
-        e3:SetValue(def/2)
-        c:RegisterEffect(e3)
-        Duel.SpecialSummonComplete()
-    end
+function cm.thop(e,tp,eg,ep,ev,re,r,rp,chk)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectMatchingCard(tp,cm.thfilter,tp,LOCATION_DECK,0,1,1,nil)
+	if g:GetCount()>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
+	end
 end
-function cm.descon(e,tp,eg,ep,ev,re,r,rp)
-    local tc=e:GetLabelObject()
-    if tc:GetFlagEffect(m)~=0 then
-        return true
-    else
-        e:Reset()
-        return false
-    end
+function cm.efcon(e,tp,eg,ep,ev,re,r,rp)
+	return bit.band(r,REASON_SYNCHRO+REASON_XYZ+REASON_LINK)~=0
+		and e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD) and e:GetHandler():GetReasonCard():IsSetCard(0x4808)
 end
-function cm.desop(e,tp,eg,ep,ev,re,r,rp)
-    local tc=e:GetLabelObject()
-    Duel.SendtoGrave(tc,nil,REASON_EFFECT)
-end
-function cm.tgcon(e)
-    return e:GetHandler():IsSummonType(SUMMON_TYPE_SPECIAL)
+function cm.efop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local rc=c:GetReasonCard()
+	local e1=Effect.CreateEffect(rc)
+	e1:SetDescription(aux.Stringid(m,1))
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+	e1:SetValue(1)
+	rc:RegisterEffect(e1,true)
 end

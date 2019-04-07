@@ -71,8 +71,13 @@ function c9980162.acop(e,tp,eg,ep,ev,re,r,rp)
 		e:GetHandler():AddCounter(0x1,1)
 	end
 end
+function c9980162.ctfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0xbc4)
+end
 function c9980162.ctop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x1,1)
+	if eg:IsExists(c9980162.ctfilter,1,nil) then
+		e:GetHandler():AddCounter(0x1,1)
+	end
 end
 function c9980162.spcon1(ce,tp,eg,ep,ev,re,r,rp)
 	return not Duel.IsExistingMatchingCard(aux.FilterEqualFunction(Card.GetSummonLocation,LOCATION_EXTRA),tp,0,LOCATION_MZONE,1,nil)

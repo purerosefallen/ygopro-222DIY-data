@@ -76,5 +76,9 @@ function c13254099.spoperation(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.ConfirmCards(p,g)
 		Duel.ShuffleHand(1-p)
+		if Duel.IsExistingMatchingCard(Card.IsAbleToDeck,p,0,LOCATION_ONFIELD,1,nil) and Duel.SelectYesNo(p,aux.Stringid(13254099,2)) then
+			local sg=Duel.SelectMatchingCard(p,Card.IsAbleToDeck,p,0,LOCATION_ONFIELD,1,1,nil)
+			Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)
+		end
 	end
 end

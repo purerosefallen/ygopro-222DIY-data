@@ -1,11 +1,20 @@
 --吸血姬-狂暴
 function c9980015.initial_effect(c)
-	--activate
+	--act in set turn
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
+	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+	e2:SetCondition(c9980015.actcon)
+	c:RegisterEffect(e2)
+	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_REMOVE)
+	e1:SetCategory(CATEGORY_DESTROY)
+	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,9980015)
+	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
+	e1:SetCost(c9980015.cost)
 	e1:SetTarget(c9980015.target)
 	e1:SetOperation(c9980015.activate)
 	c:RegisterEffect(e1)
@@ -24,37 +33,55 @@ function c9980015.initial_effect(c)
 	e2:SetOperation(c9980015.desop)
 	c:RegisterEffect(e2)
 end
-function c9980015.rmfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xbc2) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
+function c9980015.actcon(e)
+	return not Duel.IsExistingMatchingCard(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,TYPE_TRAP)
 end
-function c9980015.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c9980015.rmfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_MZONE,0,1,nil)
-		and Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_MZONE)
-	local g=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
+function c9980015.filter(c)
+	return c:IsSetCard(0xbc2) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end
-function c9980015.rescon(sg,e,tp,mg)
-	return sg:GetClassCount(Card.GetLevel)==sg:GetCount()
+function c9980015.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	e:SetLabel(1)
+	return true
+end
+function c9980015.desfilter(c,tc,ec)
+	return c:GetEquipTarget()~=tc and c~=ec
+end
+function c9980015.costfilter(c,ec,tp)
+	if not c:IsSetCard(0xbc2) and c:IsType(TYPE_MONSTER) then return false end
+	return Duel.IsExistingTarget(c9980015.desfilter,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,c,c,ec)
+end
+function c9980015.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	local c=e:GetHandler()
+	if chkc then return chkc:IsOnField() and chkc~=c end
+	if chk==0 then
+		if e:GetLabel()==1 then
+			e:SetLabel(0)
+			return Duel.CheckReleaseGroupEx(tp,c9980015.costfilter,1,c,c,tp)
+				and Duel.IsExistingMatchingCard(c9980015.filter,tp,LOCATION_DECK,0,1,nil)
+		else
+			return Duel.IsExistingTarget(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,c)
+				and Duel.IsExistingMatchingCard(c9980015.filter,tp,LOCATION_DECK,0,1,nil)
+		end
+	end
+	if e:GetLabel()==1 then
+		e:SetLabel(0)
+		local sg=Duel.SelectReleaseGroupEx(tp,c9980015.costfilter,1,1,c,c,tp)
+		Duel.Release(sg,REASON_COST)
+	end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+	local g=Duel.SelectTarget(tp,nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,2,2,c)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,2,0,0)
+	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function c9980015.activate(e,tp,eg,ep,ev,re,r,rp)
-	local dg=Duel.GetMatchingGroup(nil,tp,0,LOCATION_ONFIELD,nil)
-	local ct=dg:GetCount()
-	local g=Duel.GetMatchingGroup(c9980015.rmfilter,tp,LOCATION_HAND+LOCATION_GRAVE+LOCATION_MZONE,0,nil)
-	if ct==0 or g:GetCount()==0 then return end
-	local rg=Group.CreateGroup()
-	repeat
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local sg=g:Select(tp,1,1,nil)
-		rg:Merge(sg)
-		g:Remove(Card.IsLevel,nil,sg:GetFirst():GetLevel())
-		ct=ct-1
-	until ct==0 or g:GetCount()==0 or not Duel.SelectYesNo(tp,aux.Stringid(9980015,0))
-	local rc=Duel.Remove(rg,POS_FACEUP,REASON_EFFECT)
-	if rc>0 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-		local sg=dg:Select(tp,rc,rc,nil)
-		Duel.Destroy(sg,REASON_EFFECT)
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	if Duel.Destroy(g,REASON_EFFECT)~=0 then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+		local rg=Duel.SelectMatchingCard(tp,c9980015.filter,tp,LOCATION_DECK,0,1,1,nil)
+		if rg:GetCount()>0 then
+			Duel.BreakEffect()
+			Duel.SendtoGrave(rg,REASON_EFFECT)
+		end
 	end
 end
 function c9980015.cfilter(c)

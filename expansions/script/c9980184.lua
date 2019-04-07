@@ -1,11 +1,12 @@
 --刻刻帝女神 四之弹·Dalet
 function c9980184.initial_effect(c)
-	  --Activate
+	 --Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCountLimit(1,9980184+EFFECT_COUNT_CODE_OATH)
+	e1:SetCost(c9980184.cost)
 	e1:SetTarget(c9980184.target)
 	e1:SetOperation(c9980184.activate)
 	c:RegisterEffect(e1)
@@ -21,42 +22,24 @@ function c9980184.initial_effect(c)
 	e1:SetOperation(c9980184.spop)
 	c:RegisterEffect(e1)
 end
-function c9980184.thfilter(c,tp)
-	return c:IsSetCard(0x2bc8) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
-		and Duel.IsExistingMatchingCard(c9980184.plfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode())
+function c9980184.filter(c)
+	return c:IsFaceup() and c:IsSetCard(0x2bc8) and c:IsAbleToGraveAsCost()
 end
-function c9980184.plfilter(c,code)
-	return c:IsSetCard(0x2bc8) and c:IsType(TYPE_MONSTER) and not c:IsCode(code) and not c:IsForbidden()
+function c9980184.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c9980184.filter,tp,LOCATION_SZONE,0,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+	local g=Duel.SelectMatchingCard(tp,c9980184.filter,tp,LOCATION_SZONE,0,1,1,nil)
+	Duel.SendtoGrave(g,REASON_COST)
 end
 function c9980184.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	local ft=0
-	if e:GetHandler():IsLocation(LOCATION_HAND) then ft=1 end
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>ft
-		and Duel.IsExistingMatchingCard(c9980184.thfilter,tp,LOCATION_DECK,0,1,nil,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,2) end
+	Duel.SetTargetPlayer(tp)
+	Duel.SetTargetParam(2)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
 end
 function c9980184.activate(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g1=Duel.SelectMatchingCard(tp,c9980184.thfilter,tp,LOCATION_DECK,0,1,1,nil,tp)
-	if g1:GetCount()>0 and Duel.SendtoHand(g1,nil,REASON_EFFECT)~=0
-		and g1:GetFirst():IsLocation(LOCATION_HAND) then
-		Duel.ConfirmCards(1-tp,g1)
-		if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
-		local g2=Duel.SelectMatchingCard(tp,c9980184.plfilter,tp,LOCATION_DECK,0,1,1,nil,g1:GetFirst():GetCode())
-		local tc=g2:GetFirst()
-		if tc then
-			Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
-			local e1=Effect.CreateEffect(e:GetHandler())
-			e1:SetType(EFFECT_TYPE_SINGLE)
-			e1:SetCode(EFFECT_CHANGE_TYPE)
-			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-			e1:SetValue(TYPE_SPELL+TYPE_CONTINUOUS)
-			e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TURN_SET)
-			tc:RegisterEffect(e1)
-			Duel.RaiseEvent(tc,EVENT_CUSTOM+47408488,e,0,tp,0,0)
-		end
-	end
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	Duel.Draw(p,d,REASON_EFFECT)
 end
 function c9980184.filter1(c,e,tp)
 	local rk=c:GetRank()

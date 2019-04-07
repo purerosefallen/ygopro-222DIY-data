@@ -35,23 +35,32 @@ function c9980151.initial_effect(c)
 	e1:SetCategory(CATEGORY_HANDES+CATEGORY_DAMAGE)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1,9980151)
-	e1:SetCondition(c9980151.condition1)
+	e1:SetCountLimit(1,99801510)
 	e1:SetCost(c9980151.cost)
 	e1:SetTarget(c9980151.target)
 	e1:SetOperation(c9980151.operation)
 	c:RegisterEffect(e1)
-	local e5=e1:Clone()
-	e5:SetType(EFFECT_TYPE_QUICK_O)
-	e5:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DAMAGE_STEP)
-	e5:SetCode(EVENT_FREE_CHAIN)
-	e5:SetHintTiming(TIMING_DAMAGE_STEP,TIMING_DAMAGE_STEP+TIMINGS_CHECK_MONSTER)
-	e5:SetCondition(c9980151.condition2)
-	c:RegisterEffect(e5)
+	--draw
+	local e2=Effect.CreateEffect(c)
+	e2:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW)
+	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCost(aux.bfgcost)
+	e2:SetCountLimit(1,9980151)
+	e2:SetTarget(c9980151.drtg)
+	e2:SetOperation(c9980151.drop)
+	c:RegisterEffect(e2)
+	--spsummon bgm
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e8:SetOperation(c9980151.sumsuc)
+	c:RegisterEffect(e8)
 end
 c9980151.material_setcode=0xbc9
 function c9980151.ffilter(c)
-	return c:IsFusionSetCard(0x2bc9) or c:IsFusionCode(9980144)
+	return c:IsFusionSetCard(0x3bc9) or c:IsFusionCode(9980144)
 end
 function c9980151.atkval(e,c)
 	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_ONFIELD,LOCATION_ONFIELD)*400
@@ -62,12 +71,6 @@ function c9980151.atcost(e,c,tp)
 end
 function c9980151.atop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.DiscardDeck(tp,1,REASON_COST)
-end
-function c9980151.condition1(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsPlayerAffectedByEffect(tp,9980152)
-end
-function c9980151.condition2(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()) and Duel.IsPlayerAffectedByEffect(tp,9980152)
 end
 function c9980151.cfilter(c)
 	return c:IsFaceup() and c:IsAttribute(ATTRIBUTE_DARK) and c:IsAbleToRemoveAsCost()
@@ -94,3 +97,31 @@ function c9980151.operation(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
+function c9980151.tdfilter(c)
+	return c:IsFaceup() and c:IsType(TYPE_MONSTER) 
+		and c:IsSetCard(0xbc9) and c:IsAbleToDeck()
+end
+function c9980151.drtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c9980151.tdfilter(chkc) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp,2)
+		and Duel.IsExistingTarget(c9980151.tdfilter,tp,LOCATION_REMOVED,0,5,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g=Duel.SelectTarget(tp,c9980151.tdfilter,tp,LOCATION_REMOVED,0,3,5,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,2)
+end
+function c9980151.drop(e,tp,eg,ep,ev,re,r,rp)
+	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
+	if tg:GetCount()<=0 then return end
+	Duel.SendtoDeck(tg,nil,0,REASON_EFFECT)
+	local g=Duel.GetOperatedGroup()
+	if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
+	local ct=g:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
+	if ct>0 then
+		Duel.BreakEffect()
+		Duel.Draw(tp,1,REASON_EFFECT)
+	end
+end
+function c9980151.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980151,1))
+end 

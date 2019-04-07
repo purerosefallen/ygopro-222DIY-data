@@ -25,26 +25,24 @@ function c9980150.initial_effect(c)
 	e2:SetTarget(c9980150.indtg)
 	e2:SetValue(c9980150.indct)
 	c:RegisterEffect(e2)
-	--discard
-	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(9980150,0))
-	e5:SetCategory(CATEGORY_HANDES)
-	e5:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e5:SetCode(EVENT_BATTLE_DESTROYING)
-	e5:SetRange(LOCATION_SZONE)
-	e5:SetCondition(c9980150.descon)
-	e5:SetTarget(c9980150.destg)
-	e5:SetOperation(c9980150.desop)
-	c:RegisterEffect(e5)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCountLimit(1,9980150)
 	e3:SetTarget(c9980150.sptg)
 	e3:SetOperation(c9980150.spop)
 	c:RegisterEffect(e3)
+	--Activate
+	local e1=Effect.CreateEffect(c)
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
+	e1:SetType(EFFECT_TYPE_IGNITION)
+	e1:SetRange(LOCATION_GRAVE)
+	e1:SetCost(aux.bfgcost)
+	e1:SetCountLimit(1,9980150)
+	e1:SetTarget(c9980150.thtg)
+	e1:SetOperation(c9980150.thop)
+	c:RegisterEffect(e1)
 end
 function c9980150.eqlimit(e,c)
 	return c:IsRace(RACE_BEAST+RACE_BEASTWARRIOR)
@@ -86,21 +84,6 @@ function c9980150.indct(e,re,r,rp)
 	e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 	tc:RegisterEffect(e1)
 	return 1
-end
-function c9980150.descon(e,tp,eg,ep,ev,re,r,rp)
-	local ec=e:GetHandler():GetEquipTarget()
-	return ec and eg:IsContains(ec)
-end
-function c9980150.destg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)>0 end
-	Duel.SetOperationInfo(0,CATEGORY_HANDES,0,0,1-tp,1)
-end
-function c9980150.desop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
-	local g=Duel.GetFieldGroup(tp,0,LOCATION_HAND,nil)
-	if g:GetCount()==0 then return end
-	local sg=g:RandomSelect(1-tp,1)
-	Duel.SendtoGrave(sg,REASON_DISCARD+REASON_EFFECT)
 end
 function c9980150.filter1(c,e)
 	return not c:IsImmuneToEffect(e)
@@ -164,5 +147,39 @@ function c9980150.spop(e,tp,eg,ep,ev,re,r,rp)
 			fop(ce,e,tp,tc,mat2)
 		end
 		tc:CompleteProcedure()
+	end
+end
+function c9980150.filter4(c,tp)
+	return c.material and c:IsSetCard(0xbc9) and Duel.IsExistingMatchingCard(c9980150.filter5,tp,LOCATION_DECK,0,1,nil,c)
+end
+function c9980150.filter5(c,fc)
+	if c:IsForbidden() or not c:IsAbleToHand() then return false end
+	return c:IsCode(table.unpack(fc.material))
+end
+function c9980150.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c9980150.filter4,tp,LOCATION_EXTRA,0,1,nil,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
+end
+function c9980150.filter3(c)
+	return c:IsCode(24094653,9980146) and c:IsAbleToHand()
+end
+function c9980150.thop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
+	local cg=Duel.SelectMatchingCard(tp,c9980150.filter4,tp,LOCATION_EXTRA,0,1,1,nil,tp)
+	if cg:GetCount()==0 then return end
+	Duel.ConfirmCards(1-tp,cg)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectMatchingCard(tp,c9980150.filter5,tp,LOCATION_DECK,0,1,1,nil,cg:GetFirst())
+	if g:GetCount()>0 then
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,g)
+		local tg=Duel.GetMatchingGroup(aux.NecroValleyFilter(c9980150.filter3),tp,LOCATION_GRAVE,0,nil)
+		if tg:GetCount()>0 and Duel.SelectYesNo(tp,aux.Stringid(9980150,0)) then
+			Duel.BreakEffect()
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+			local sg=tg:Select(tp,1,1,nil)
+			Duel.SendtoHand(sg,nil,REASON_EFFECT)
+			Duel.ConfirmCards(1-tp,sg)
+		end
 	end
 end

@@ -52,8 +52,20 @@ function c9980172.initial_effect(c)
 	e2:SetValue(c9980172.value)
 	e2:SetOperation(c9980172.desop)
 	c:RegisterEffect(e2)
+	--spsummon bgm
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e8:SetOperation(c9980172.sumsuc)
+	c:RegisterEffect(e8)
+	local e9=e8:Clone()
+	e9:SetCode(EVENT_SUMMON_SUCCESS)
+	c:RegisterEffect(e9)
 end
 c9980172.counter_add_list={0x1}
+function c9980172.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980172,2))
+end
 function c9980172.matfilter(c)
 	return c:IsLinkSetCard(0xbc4) and not c:IsLinkCode(9980172)
 end

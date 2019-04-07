@@ -53,8 +53,13 @@ function c9980165.acop(e,tp,eg,ep,ev,re,r,rp)
 		e:GetHandler():AddCounter(0x1,1)
 	end
 end
+function c9980165.ctfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0xbc4)
+end
 function c9980165.ctop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x1,1)
+	if eg:IsExists(c9980165.ctfilter,1,nil) then
+		e:GetHandler():AddCounter(0x1,1)
+	end
 end
 function c9980165.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x1,2,REASON_COST) end

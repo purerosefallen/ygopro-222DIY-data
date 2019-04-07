@@ -97,6 +97,7 @@ function c9980181.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
 		tc:RegisterEffect(e3)
 	end
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980181,0))
 end
 function c9980181.cfilter2(c,tp)
 	return c:IsAbleToGraveAsCost() 

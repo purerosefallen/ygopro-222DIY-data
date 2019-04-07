@@ -71,6 +71,7 @@ function c9980192.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_UPDATE_DEFENSE)
 		tc:RegisterEffect(e2)
 	end
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980192,0))
 end
 function c9980192.cfilter(c,tp)
 	return c:IsFaceup() and c:IsSetCard(0x2bc8) and c:IsControler(tp)
@@ -101,6 +102,7 @@ function c9980192.tfop(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e1)
 		Duel.RaiseEvent(tc,EVENT_CUSTOM+47408488,e,0,tp,0,0)
 	end
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980192,0))
 end
 function c9980192.repfilter(c,tp)
 	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE) and c:IsRace(RACE_DRAGON) and c:IsControler(tp) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
@@ -120,4 +122,5 @@ function c9980192.desrepop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 	local g=Duel.SelectMatchingCard(tp,c9980192.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
 	Duel.SendtoGrave(g,REASON_EFFECT)
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980192,0))
 end

@@ -7,7 +7,7 @@ function cm.initial_effect(c)
 	c:EnableReviveLimit()
 	--spsummon
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(m,0))
+	e1:SetDescription(aux.Stringid(17060908,0))
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -15,7 +15,6 @@ function cm.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,m)
-	e1:SetCondition(cm.spcon)
 	e1:SetTarget(cm.sptg)
 	e1:SetOperation(cm.spop)
 	c:RegisterEffect(e1)
@@ -40,11 +39,7 @@ function cm.filter1(c)
 	return cm.IsOpera_type(c)
 end
 function cm.lcheck(g,lc)
-	return g:IsExists(cm.filter1,1,nil,tp)
-end
-function cm.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local ph=Duel.GetCurrentPhase()
-	return ph==PHASE_MAIN1 or (ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE) or ph==PHASE_MAIN2
+	return g:IsExists(Card.IsLinkType,1,nil,TYPE_RITUAL)
 end
 function cm.filter(c,e,tp,m)
 	if bit.band(c:GetOriginalType(),0x81)~=0x81

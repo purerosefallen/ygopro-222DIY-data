@@ -3,11 +3,11 @@ local m=17011101
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,nil,2,99,cm.lcheck)
+	aux.AddLinkProcedure(c,nil,3,99,cm.lcheck)
 	c:EnableReviveLimit()
 	--search
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(m,0))
+	e1:SetDescription(aux.Stringid(17011101,0))
 	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e1:SetProperty(EFFECT_FLAG_DELAY)
@@ -19,7 +19,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e1)
 	--atk up
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(m,1))
+	e2:SetDescription(aux.Stringid(17011101,1))
 	e2:SetCategory(CATEGORY_ATKCHANGE)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e2:SetRange(LOCATION_MZONE)
@@ -30,13 +30,14 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e2)
 	--change lp
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(m,2))
+	e3:SetDescription(aux.Stringid(17011101,2))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)
 	e3:SetCondition(cm.locon)
-	e3:SetOperation(cm.damop)
+	e3:SetTarget(cm.lptg)
+	e3:SetOperation(cm.lpop)
 	c:RegisterEffect(e3)
 end
 function cm.lcheck(g)
@@ -75,7 +76,7 @@ function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
-		e1:SetValue(500)
+		e1:SetValue(300)
 		tc:RegisterEffect(e1)
 		--immune
 		local e2=Effect.CreateEffect(c)
@@ -92,8 +93,16 @@ function cm.efilter(e,re)
 	return e:GetOwnerPlayer()~=re:GetOwnerPlayer()
 end
 function cm.locon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()==tp and Duel.GetLP(tp)<=4000
+	return Duel.GetTurnPlayer()==tp and Duel.GetLP(tp)<=2000
+end
+function cm.lptg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetTargetPlayer(tp)
+	Duel.SetTargetParam(2000)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,2000)
 end
 function cm.lpop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SetLP(tp,6000)
+	if not e:GetHandler():IsRelateToEffect(e) then return end
+	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
+	Duel.Recover(p,d,REASON_EFFECT)
 end

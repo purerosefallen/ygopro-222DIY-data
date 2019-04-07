@@ -37,6 +37,7 @@ function c9980147.activate(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.GetMatchingGroup(nil,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,e:GetHandler())
 		if g:GetCount()==0 then return end
 		Duel.BreakEffect()
+		Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980147,2))
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 		local sg=g:Select(tp,1,1,nil)
 		Duel.Destroy(sg,REASON_EFFECT)
@@ -55,5 +56,6 @@ function c9980147.setop(e,tp,eg,ep,ev,re,r,rp)
 	if c:IsRelateToEffect(e) and c:IsSSetable() then
 		Duel.SSet(tp,c)
 		Duel.ConfirmCards(1-tp,c)
+		Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980147,2))
 	end
 end

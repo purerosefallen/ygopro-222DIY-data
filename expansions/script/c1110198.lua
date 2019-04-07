@@ -50,9 +50,24 @@ end
 function muxu.check_set_Legend(c)   --秘谈
 	return muxu.check_set(c,"Legend")
 end
+--
 function muxu.check_set_Urban(c)			 --灵都
 	return muxu.check_set(c,"Urban")
 end
+function muxu.check_fusion_set_Urban(c)
+	if c:IsHasEffect(6205579) then return false end
+	local codet={c:GetFusionCode()}
+	for j,code in pairs(codet) do
+		local mt=muxu.load_metatable(code)
+		if mt then
+			for str,v in pairs(mt) do
+				if type(str)=="string" and str:find("_Urban") and v then return true end
+			end
+		end
+	end
+	return false
+end
+--
 function muxu.check_set_Butterfly(c)		 --蝶舞
 	return muxu.check_set(c,"Butterfly")
 end
@@ -119,18 +134,5 @@ end
 --
 function muxu.check_set_Umbrella(c)   --伞符
 	return muxu.check_set(c,"Umbrella")
-end
---
-function muxu.check_link_set_Urban(c)
-	local codet={c:GetLinkCode()}
-	for j,code in pairs(codet) do
-		local mt=muxu.load_metatable(code)
-		if mt then
-			for str,v in pairs(mt) do
-				if type(str)=="string" and str:find("_Urban") and v then return true end
-			end
-		end
-	end
-	return false
 end
 --

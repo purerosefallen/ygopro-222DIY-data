@@ -161,5 +161,5 @@ function c13254065.sgtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c13254065.sgop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToRemove,tp,0,LOCATION_ONFIELD+LOCATION_GRAVE,nil)
-	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+	Duel.Remove(g,POS_FACEDOWN,REASON_EFFECT)
 end

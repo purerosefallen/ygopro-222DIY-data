@@ -26,6 +26,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e2)
 	--spsummon
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(m,0))
 	e3:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetProperty(EFFECT_FLAG_DELAY)
@@ -38,7 +39,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e4)
 	--Destroy
 	local e5=Effect.CreateEffect(c)
-	e5:SetDescription(aux.Stringid(m,0))
+	e5:SetDescription(aux.Stringid(m,1))
 	e5:SetType(EFFECT_TYPE_IGNITION)
 	e5:SetCountLimit(1)
 	e5:SetRange(LOCATION_MZONE)
@@ -47,6 +48,26 @@ function cm.initial_effect(c)
 	e5:SetTarget(cm.destg)
 	e5:SetOperation(cm.desop)
 	c:RegisterEffect(e5)
+	--atk voice
+	local e8=Effect.CreateEffect(c)
+	e8:SetCategory(CATEGORY_ATKCHANGE)
+	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e8:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e8:SetOperation(cm.atksuc)
+	c:RegisterEffect(e8)
+	--summon voice
+	local e6=Effect.CreateEffect(c)
+	e6:SetCategory(CATEGORY_SPECIAL_SUMMON)
+	e6:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e6:SetCode(EVENT_SUMMON_SUCCESS)
+	e6:SetRange(LOCATION_MZONE)
+	e6:SetProperty(EFFECT_FLAG_DELAY)
+	e6:SetCondition(cm.spcon)
+	e6:SetOperation(cm.sumvoice)
+	c:RegisterEffect(e6)
+	local e7=e6:Clone()
+	e7:SetCode(EVENT_SPSUMMON_SUCCESS)
+	c:RegisterEffect(e7)
 end
 function cm.penfilter(c,att)
 	return c:IsSetCard(0x5de) and c:IsType(TYPE_PENDULUM) and not c:IsForbidden() and c:IsAttribute(att)
@@ -81,10 +102,14 @@ function cm.hspcon(e,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	return ft>-1 and Duel.CheckReleaseGroup(tp,cm.hspfilter,1,nil,ft,tp)
 end
+function cm.rccfilter(c)
+	return c:IsFaceup() and c:IsCode(17045001,47500000)
+end
 function cm.hspop(e,tp,eg,ep,ev,re,r,rp,c)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local g=Duel.SelectReleaseGroup(tp,cm.hspfilter,1,1,nil,ft,tp)
 	Duel.Release(g,REASON_COST)
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17011103,5))
 end
 function cm.spfilter(c,e,tp)
 	return c:IsLevel(8) and c:IsRace(RACE_FAIRY) and not c:IsCode(m) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -101,6 +126,7 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17011103,4))
 end
 function cm.desfilter(c)
 	return c:IsRace(RACE_FAIRY)
@@ -113,6 +139,13 @@ function cm.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g1=Duel.SelectTarget(tp,cm.desfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
 	local g2=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
+	if g2:GetFirst():IsType(TYPE_MONSTER) then
+		Duel.Hint(HINT_SOUND,0,aux.Stringid(17011103,9))
+	elseif g2:GetFirst():IsType(TYPE_SPELL) then
+		Duel.Hint(HINT_SOUND,0,aux.Stringid(17011103,8))
+	else
+		Duel.Hint(HINT_SOUND,0,aux.Stringid(17011103,7))
+	end
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g1,2,0,0)
 end
@@ -122,4 +155,17 @@ function cm.desop(e,tp,eg,ep,ev,re,r,rp)
 	if tg:GetCount()>0 then
 		Duel.Destroy(tg,REASON_EFFECT)
 	end
+end
+function cm.atksuc(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetFieldGroupCount(e:GetHandlerPlayer(),LOCATION_MZONE,0)>1 then 
+		Duel.Hint(HINT_SOUND,0,aux.Stringid(m,2))
+	else
+		Duel.Hint(HINT_SOUND,0,aux.Stringid(m,12))
+	end
+end
+function cm.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(cm.rccfilter,1,nil,tp)
+end
+function cm.sumvoice(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(m,6))
 end

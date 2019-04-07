@@ -2,116 +2,67 @@
 local m=14801312
 local cm=_G["c"..m]
 function cm.initial_effect(c)
-    --end battle phase
-    local e1=Effect.CreateEffect(c)
-    e1:SetDescription(aux.Stringid(m,0))
-    e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
-    e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-    e1:SetCode(EVENT_ATTACK_ANNOUNCE)
-    e1:SetRange(LOCATION_HAND)
-    e1:SetCondition(cm.condition)
-    e1:SetTarget(cm.target)
-    e1:SetOperation(cm.operation)
-    c:RegisterEffect(e1)
-    --recycle
-    local e2=Effect.CreateEffect(c)
-    e2:SetDescription(aux.Stringid(m,1))
-    e2:SetCategory(CATEGORY_TOGRAVE)
-    e2:SetType(EFFECT_TYPE_IGNITION)
-    e2:SetRange(LOCATION_HAND)
-    e2:SetCountLimit(1,m)
-    e2:SetCost(cm.cost)
-    e2:SetTarget(cm.sptg)
-    e2:SetOperation(cm.spop)
-    c:RegisterEffect(e2)
-
-    --tohand
-    local e3=Effect.CreateEffect(c)
-    e3:SetDescription(aux.Stringid(m,2))
-    e3:SetCategory(CATEGORY_TOHAND)
-    e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-    e3:SetCode(EVENT_TO_GRAVE)
-    e3:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_DELAY)
-    e3:SetCountLimit(1,m)
-    e3:SetCondition(cm.thcon)
-    e3:SetTarget(cm.thtg)
-    e3:SetOperation(cm.thop)
-    c:RegisterEffect(e3)
+	--spirit return
+	aux.EnableSpiritReturn(c,EVENT_SPSUMMON_SUCCESS)
+	--xyz summon
+	aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x4808),4,2)
+	c:EnableReviveLimit()
+	--indes
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetCondition(cm.indcon)
+	e1:SetValue(1)
+	c:RegisterEffect(e1)
+	--cannot target
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
+	e2:SetCondition(cm.indcon)
+	e2:SetValue(aux.tgoval)
+	c:RegisterEffect(e2)
+	--to hand
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(m,0))
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCountLimit(1,m)
+	e3:SetCost(cm.cost)
+	e3:SetTarget(cm.settg)
+	e3:SetOperation(cm.setop)
+	c:RegisterEffect(e3)
 end
-function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
-    local c=e:GetHandler()
-    if chk==0 then
-        return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-    end
-    Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
-end
-function cm.operation(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
-    if c:IsRelateToEffect(e) and Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP_DEFENSE)>0 then
-    c:RegisterFlagEffect(m,RESET_EVENT+0x1fe0000,0,1)
-        local e1=Effect.CreateEffect(e:GetHandler())
-        e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-        e1:SetCode(EVENT_PHASE+PHASE_END)
-        e1:SetCountLimit(1)
-        e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
-        e1:SetLabelObject(c)
-        e1:SetCondition(cm.descon)
-        e1:SetOperation(cm.desop)
-        Duel.RegisterEffect(e1,tp)
-    end
-end
-function cm.descon(e,tp,eg,ep,ev,re,r,rp)
-    local tc=e:GetLabelObject()
-    if tc:GetFlagEffect(m)~=0 then
-        return true
-    else
-        e:Reset()
-        return false
-    end
-end
-function cm.desop(e,tp,eg,ep,ev,re,r,rp)
-    local tc=e:GetLabelObject()
-    Duel.SendtoHand(tc,nil,REASON_EFFECT)
-end
-function cm.condition(e,tp,eg,ep,ev,re,r,rp)
-    local at=Duel.GetAttacker()
-    return at:GetControler()~=tp and Duel.GetAttackTarget()==nil
+function cm.indcon(e)
+	return e:GetHandler():GetOverlayCount()>0
 end
 function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return e:GetHandler():IsDiscardable() end
-    Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
+	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
+	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
-function cm.tgfilter(c,e,tp)
-    return c:IsSetCard(0x4808) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+function cm.setfilter(c)
+	return c:IsSetCard(0x4808) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
 end
-function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-    if chk==0 then return Duel.IsExistingMatchingCard(cm.tgfilter,tp,LOCATION_DECK,0,1,nil) end
-    Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
+function cm.settg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+		and Duel.IsExistingMatchingCard(cm.setfilter,tp,LOCATION_DECK,0,1,nil) end
 end
-function cm.spop(e,tp,eg,ep,ev,re,r,rp)
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-    local g=Duel.SelectMatchingCard(tp,cm.tgfilter,tp,LOCATION_DECK,0,1,1,nil)
-    if g:GetCount()>0 then
-        Duel.SendtoGrave(g,REASON_EFFECT)
-    end
-end
-
-function cm.thcon(e,tp,eg,ep,ev,re,r,rp)
-    return e:GetHandler():IsPreviousLocation(LOCATION_ONFIELD)
-end
-function cm.thfilter(c)
-    return c:IsSetCard(0x4808) and not c:IsCode(m) and c:IsAbleToHand()
-end
-function cm.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and cm.thfilter(chkc) end
-    if chk==0 then return Duel.IsExistingTarget(cm.thfilter,tp,LOCATION_GRAVE,0,1,nil) end
-    Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-    local g=Duel.SelectTarget(tp,cm.thfilter,tp,LOCATION_GRAVE,0,1,1,nil)
-    Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
-end
-function cm.thop(e,tp,eg,ep,ev,re,r,rp)
-    local tc=Duel.GetFirstTarget()
-    if tc:IsRelateToEffect(e) then
-        Duel.SendtoHand(tc,nil,REASON_EFFECT)
-    end
+function cm.setop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
+	local g=Duel.SelectMatchingCard(tp,cm.setfilter,tp,LOCATION_DECK,0,1,1,nil)
+	local tc=g:GetFirst()
+	if tc then
+		Duel.SSet(tp,tc)
+		Duel.ConfirmCards(1-tp,tc)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
+		e1:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
+		tc:RegisterEffect(e1)
+	end
 end

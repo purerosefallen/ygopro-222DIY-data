@@ -34,6 +34,15 @@ function c9980191.initial_effect(c)
 	e1:SetTarget(c9980191.sptg)
 	e1:SetOperation(c9980191.spop)
 	c:RegisterEffect(e1)
+	--spsummon bgm
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e8:SetOperation(c9980191.sumsuc)
+	c:RegisterEffect(e8)
+end
+function c9980191.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980191,1))
 end
 function c9980191.cfilter(c)
 	return c:IsSetCard(0x95) and c:IsDiscardable()
