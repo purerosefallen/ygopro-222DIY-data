@@ -1037,12 +1037,14 @@ function cm.PendConditionNanahira()
 				return #g>0
 			end
 end
-function cm.PendCheckNanahira(g,mft,maxlist)
-	if mft>0 and g:IsExists(Card.IsLocation,mft+1,nil,0xbf) then return false end
-	for loc,lct in pairs(maxlist) do
-		if lct>0 and g:IsExists(Card.IsLocation,lct+1,nil,loc) then return false end
+function cm.PendCheckAdditionalNanahira(mft,maxlist)
+	return function(g)
+		if mft>0 and g:IsExists(Card.IsLocation,mft+1,nil,0xbf) then return false end
+		for loc,lct in pairs(maxlist) do
+			if lct>0 and g:IsExists(Card.IsLocation,lct+1,nil,loc) then return false end
+		end
+		return true
 	end
-	return true
 end
 function cm.PendOperationNanahira()
 	return  function(e,tp,eg,ep,ev,re,r,rp,c,sg,og)
@@ -1122,7 +1124,9 @@ function cm.PendOperationNanahira()
 				if ce then
 					tg=tg:Filter(aux.PConditionExtraFilterSpecific,nil,e,tp,lscale,rscale,ce)
 				end
-				local g=cm.SelectGroupWithCancel(tp,HINTMSG_SPSUMMON,tg,cm.PendCheckNanahira,nil,1,ft,mft,maxlist)
+				Auxiliary.GCheckAdditional=cm.PendCheckAdditionalNanahira(mft,maxlist)
+				local g=cm.SelectGroupWithCancel(tp,HINTMSG_SPSUMMON,tg,aux.TRUE,nil,1,ft)
+				Auxiliary.GCheckAdditional=nil
 				if not g then return end
 				if ce then
 					Duel.Hint(HINT_CARD,0,ce:GetOwner():GetOriginalCode())
@@ -2470,7 +2474,7 @@ end
 function cm.CheckRitualMaterialGoal(g,c,tp,lv,f,gt)
 	return cm.CheckSummonLocation(c,tp,g) and (g:CheckWithSumEqual(f,lv,#g,#g,c) or (gt and cm.CheckGreaterExact(g,f,lv,c)))
 end
-function cm.DivideValueMax(f,...)
+--[[function cm.DivideValueMax(f,...)
 	local ext_params={...}
 	return function(c)
 		local v=f(c,table.unpack(ext_params))
@@ -2499,17 +2503,49 @@ function cm.CheckGreaterExactCounterCheck(c,g,f,lv,...)
 	local res=g:GetSum(cm.DivideValueMin(f,...))>=lv
 	g:AddCard(c)
 	return res
-end
+end]]
 function cm.CheckGreaterExact(g,f,lv,...)
-	return g:GetSum(cm.DivideValueMax(f,...))>=lv and not g:IsExists(cm.CheckGreaterExactCounterCheck,1,nil,g,f,lv,...)
+	Duel.SetSelectedCard(g)
+	return g:CheckWithSumGreater(f,lv,...)
+end
+function cm.RitualCheckAdditionalLevel(c,f,...)
+	local raw_level=f(c,...)
+	local lv1=raw_level&0xffff
+	local lv2=raw_level>>16
+	if lv2>0 then
+		return math.min(lv1,lv2)
+	else
+		return lv1
+	end
+end
+function cm.RitualCheckAdditional(c,lv,f,gt)
+	if not gt then		
+		return	function(g)
+					return g:GetSum(cm.RitualCheckAdditionalLevel,f,c)<=lv
+				end
+	else
+		return	function(g,ec)
+					if ec then
+						return g:GetSum(cm.RitualCheckAdditionalLevel,f,c)-cm.RitualCheckAdditionalLevel(ec,f,c)<=lv
+					else
+						return true
+					end
+				end
+	end
 end
 function cm.CheckRitualMaterial(c,g,tp,lv,f,gt)
 	local f=f or Card.GetRitualLevel
-	return cm.CheckGroup(g,cm.CheckRitualMaterialGoal,nil,1,lv,c,tp,lv,f,gt)
+	Auxiliary.GCheckAdditional=cm.RitualCheckAdditional(c,lv,f,gt)
+	local res=cm.CheckGroup(g,cm.CheckRitualMaterialGoal,nil,1,lv,c,tp,lv,f,gt)
+	Auxiliary.GCheckAdditional=nil
+	return res
 end
 function cm.SelectRitualMaterial(c,g,tp,lv,f,gt)
 	local f=f or Card.GetRitualLevel
-	return cm.SelectGroup(tp,HINTMSG_RELEASE,g,cm.CheckRitualMaterialGoal,nil,1,lv,c,tp,lv,f,gt)
+	Auxiliary.GCheckAdditional=cm.RitualCheckAdditional(c,lv,f,gt)
+	local res=cm.SelectGroup(tp,HINTMSG_RELEASE,g,cm.CheckRitualMaterialGoal,nil,1,lv,c,tp,lv,f,gt)
+	Auxiliary.GCheckAdditional=nil
+	return res
 end
 --for anifriends sound effects
 function cm.AddSummonSE(c,desc)
