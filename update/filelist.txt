@@ -2,11 +2,11 @@
 update/update-push.bat	686b01a51bba916202d61d951cd7fe3e
 update/update-server.sh	6f1cdc3e06ec58b37b14b5d9d167263c
 update/update-without-sound.bat	1c2cfda2a0501642c8bceae026a73d5b
-update/version.txt	9347be068cb93a92a5f2a1e10105873b
+update/version.txt	ea05e28019ce2d587860678201953197
 update/update-push.sh	d018a223f65feef3467b22e252468f53
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
 update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
-update/filelist.txt	97433205fe25f67b1b60d8b8c9d34136
+update/filelist.txt	23aa7e0c73327618c40091af3b667c62
 deck/2019.4.7_new_card4.ydk	e930af4c04a3ef57df477aeb90c02bff
 deck/2019.4.7_new_card8.ydk	554c126a87b86b6e834a2ef67e58d433
 deck/2019.4.7_new_card6.ydk	97d7260e5dc80923be03eecf35b48d05
@@ -500,7 +500,7 @@ sound/BGM/advantage/1.00adv.mp3	99c7a36c726926e19f76f4113e042f96
 sound/BGM/advantage/1.986adv.mp3	b918e66d696f2f2dd82df5f8e01e6d7e
 sound/BGM/advantage/Monosugoikuruttoru Furantyanga Monosugoi Uta.mp3	6b69e22257e027b8d3e1c0b17ec36786
 sound/BGM/advantage/1.962adv.mp3	6cff2bf4929eaae90785bfbd7f97b6fc
-expansions/lflist.conf	8609051f0b2a620c87bf68c53e76a85f
+expansions/lflist.conf	6f747078443dee6b1f2c911eee4ea7b2
 expansions/222DIY.cdb	1062b4c064fb578c88a6dee1de6d4a22
 expansions/strings.conf	2be95b17887b416f15449d0b0876f028
 expansions/script/c10904011.lua	4c27dfcd69ed23dbc450cfc28a708a0e
@@ -1772,7 +1772,7 @@ expansions/script/c50218380.lua	cf3163c2605142226577a51832363a17
 expansions/script/c47510241.lua	1895e167468af39569d7e08cabb6d30c
 expansions/script/c65071060.lua	c5e71f7e6e8342876b59a05708fb29ea
 expansions/script/c65011007.lua	e7990a66bdb6ed4a4b736dfba3ee7a90
-expansions/script/c9980171.lua	25b987754606e3ba47c685432fe6dba0
+expansions/script/c9980171.lua	040209dc8cea4a6d697f4ff01677404a
 expansions/script/c73205008.lua	b77c3190014f9045f4338252ea319699
 expansions/script/c88880001.lua	2179edb40da76d8d33e69ae376db264a
 expansions/script/c47578904.lua	2fc73f5b6f2eb5275ffc60866b850add
@@ -3182,7 +3182,7 @@ expansions/script/c37564509.lua	5e355a51360f6ef3308f15f573de5cbc
 expansions/script/c65080044.lua	ddf523f54279eb22e9d9360351bdcd5a
 expansions/script/c10162002.lua	bd026be9e4e3eaee55e36dbfd22363e4
 expansions/script/c21520087.lua	69445c7920e08d2facab31c1b1b2ec43
-expansions/script/c17011107.lua	ab770effb6a0d552b973542e81b72725
+expansions/script/c17011107.lua	28a5a18fb3cbf2863e7ec0f198aeaa4b
 expansions/script/c60151002.lua	d7cf7d88094e32f16f04e092b38da4dd
 expansions/script/c16060825.lua	3e5094af64944b2d98a06fa18c9e6cbe
 expansions/script/c65040014.lua	0f37d71e5e1d731a701b6016a6de115d
@@ -4278,7 +4278,7 @@ expansions/script/c17060825.lua	f60fe9135c59257e0d19634d0555ac4d
 expansions/script/c18004006.lua	d5b931488f52dd598cf0b9c0652810aa
 expansions/script/c60159909.lua	6dadeb569b2d18d30a89ee605b0fd7f6
 expansions/script/c10126008.lua	5b8b28125575999231af2092a95e8256
-expansions/script/c17091004.lua	3ff3004345e29e2b31dbce8350027d74
+expansions/script/c17091004.lua	9b01bf9da088656c780f4e7d7312e822
 expansions/script/c17060884.lua	d98980d1b8ab6eb0b6449128dafe2439
 expansions/script/c11115008.lua	b64de14e708bca9ce5768e14042d6661
 expansions/script/c33330206.lua	a16955e6a3b6b6091c6f176cf58f9582
@@ -4741,7 +4741,7 @@ expansions/script/c47578922.lua	6921c5790cbf9db522d52f9d9664e1f3
 expansions/script/c88880002.lua	8970972e45d3475c5eb2ff6810b8d301
 expansions/script/c13255206.lua	04f1b54f4307da8f7384cd43a8f2ed9d
 expansions/script/c65060026.lua	7cbb3f42bfce02be47d67d0f477f2575
-expansions/script/c9980234.lua	0b15f69296ab17497087716d140af801
+expansions/script/c9980234.lua	ef51740aacfff93fe95d952cf600b236
 expansions/script/c60151197.lua	03324a3a4c958eae026480b347b8c92a
 expansions/script/c77777765.lua	ff32eff5d97ed2c4251966f9e15f572d
 expansions/script/c37564537.lua	304095dab102fe75a1c3aafc556d0309
@@ -4823,7 +4823,7 @@ expansions/script/c9980168.lua	00c18e75553b09868b329405842676c2
 expansions/script/c81009008.lua	f0d2ef1881a18ac65956acb7c2fdde43
 expansions/script/c11113147.lua	5e0f6dc14aaa844fbd2a15f8187209a4
 expansions/script/c22600008.lua	df30ca902ef2027ccb5772b8a18adf48
-expansions/script/c17011104.lua	084369d72f385b475898549107fbe3b8
+expansions/script/c17011104.lua	cb0b0192b9aa1288c90fdfa226d084d5
 expansions/script/c60159912.lua	2b813749fd7346e9356c1bdfa90cdee4
 expansions/script/c77702003.lua	64e467f2f05fcc142f70def0c48dfc4f
 expansions/script/c81009004.lua	c6879c75696e5999995ea69e3f7ca5f6
