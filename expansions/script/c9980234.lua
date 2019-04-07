@@ -4,13 +4,6 @@ function c9980234.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.EnablePendulumAttribute(c,false)
 	aux.AddFusionProcFun2(c,c9980234.matfilter1,aux.FilterBoolFunction(Card.IsFusionSetCard,0x1bc4),true)
-	--spsummon condition
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_SINGLE)
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e1:SetValue(c9980234.splimit)
-	c:RegisterEffect(e1)
 	--special summon rule
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -73,9 +66,6 @@ function c9980234.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 end
 function c9980234.matfilter1(c)
 	return c:IsFusionType(TYPE_LINK) and c:IsFusionSetCard(0x1bc4)
-end
-function c9980234.splimit(e,se,sp,st)
-	return bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
 end
 function c9980234.rfilter(c,fc)
 	return (c:IsFusionType(TYPE_LINK) and c:IsFusionSetCard(0x1bc4)) or c:IsFusionSetCard(0x1bc4)

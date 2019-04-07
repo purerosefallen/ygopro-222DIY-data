@@ -67,7 +67,7 @@ function c9980171.lcheck(g,lc)
 	return g:IsExists(c9980171.mzfilter,1,nil)
 end
 function c9980171.mzfilter(c)
-	return c:IsSetCard(0xbc4) and c:IsType(TYPE_TUNER)
+	return c:IsSetCard(0x2bc4) and c:IsType(TYPE_TUNER)
 end
 function c9980171.addcc(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
@@ -103,7 +103,7 @@ function c9980171.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c9980171.cfilter,1,nil,1-tp)
 end
 function c9980171.spfilter(c,e,tp)
-	return c:IsSetCard(0xbc4) and c:IsType(TYPE_SYNCHRO) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0xbc4) and c:IsType(TYPE_SYNCHRO+TYPE_FUSION) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c9980171.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

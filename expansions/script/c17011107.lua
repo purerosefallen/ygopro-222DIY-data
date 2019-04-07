@@ -19,13 +19,12 @@ function cm.initial_effect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_RECOVER)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e2:SetCondition(cm.atkcon)
 	e2:SetOperation(cm.atkop)
 	c:RegisterEffect(e2)
 	--spsummon voice
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
-	e3:SetCode(EVENT_SUMMON_SUCCESS)
+	e3:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e3:SetOperation(cm.sumsuc)
 	c:RegisterEffect(e3)
 	--atk voice
@@ -46,9 +45,6 @@ function cm.initial_effect(c)
 end
 function cm.atlimit(e,c)
 	return c~=e:GetHandler()
-end
-function cm.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	return cm.rcfilter(e:GetHandler()) or Duel.IsExistingMatchingCard(cm.rcfilter,tp,0,LOCATION_MZONE,1,nil)
 end
 function cm.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

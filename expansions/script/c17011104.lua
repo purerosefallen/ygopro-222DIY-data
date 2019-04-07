@@ -73,7 +73,7 @@ function cm.sptg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(cm.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
-	Duel.Hint(HINT_SOUND,0,aux.Stringid(17011104,5))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17011104,4))
 end
 function cm.spop1(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
@@ -125,7 +125,7 @@ function cm.atksuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SOUND,0,aux.Stringid(17011104,3))
 end
 function cm.dessuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SOUND,0,aux.Stringid(17011104,4))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17011104,5))
 end
 function cm.descon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
