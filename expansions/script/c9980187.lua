@@ -68,6 +68,7 @@ function c9980187.spop(e,tp,eg,ep,ev,re,r,rp)
 		ft=ft-1
 		until ft==0 or not Duel.SelectYesNo(tp,210)
 	end
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980187,0))
 end
 function c9980187.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsFaceup() end
@@ -98,4 +99,5 @@ function c9980187.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e4:SetCode(EFFECT_INDESTRUCTABLE_BATTLE)
 		tc:RegisterEffect(e4)
 	end
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980187,0))
 end

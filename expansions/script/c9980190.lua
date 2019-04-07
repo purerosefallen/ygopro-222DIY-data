@@ -2,6 +2,7 @@
 function c9980190.initial_effect(c)
 	--xyz summon
 	aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x2bc8),4,2,nil,nil,99)
+	c:EnableReviveLimit()
 	--atkup
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
@@ -41,6 +42,15 @@ function c9980190.initial_effect(c)
 	e2:SetTarget(c9980190.tktg)
 	e2:SetOperation(c9980190.tkop)
 	c:RegisterEffect(e2)
+	--spsummon bgm
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e8:SetOperation(c9980190.sumsuc)
+	c:RegisterEffect(e8)
+end
+function c9980190.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980190,0))
 end
 function c9980190.atkval(e,c)
 	return c:GetOverlayCount()*300
@@ -50,7 +60,7 @@ function c9980190.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c9980190.thfilter(c)
-	return c:IsSetCard(0x95) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSetCard(0x2bc8) and c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsAbleToHand()
 end
 function c9980190.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c9980190.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil) end

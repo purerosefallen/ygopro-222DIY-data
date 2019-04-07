@@ -25,7 +25,6 @@ function c9980143.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_BECOME_TARGET)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,9980143)
 	e2:SetCondition(c9980143.spcon1)
 	e2:SetTarget(c9980143.sptg)
@@ -34,6 +33,7 @@ function c9980143.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetDescription(aux.Stringid(9980143,2))
 	e3:SetCode(EVENT_BE_BATTLE_TARGET)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCondition(c9980143.spcon2)
 	c:RegisterEffect(e3)
 end
@@ -100,9 +100,11 @@ function c9980143.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		return res
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_POSITION,e:GetHandler(),1,0,0)
 end
 function c9980143.spop(e,tp,eg,ep,ev,re,r,rp)
-	  local c=e:GetHandler()
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) or Duel.ChangePosition(c,POS_FACEUP_DEFENSE,POS_FACEUP_DEFENSE,POS_FACEUP_ATTACK,POS_FACEUP_ATTACK)==0 then return end
 	local chkf=tp
 	local mg1=Duel.GetFusionMaterial(tp):Filter(c9980143.filter1,nil,e)
 	local mg2=Duel.GetMatchingGroup(c9980143.filter0,tp,LOCATION_DECK,0,nil)
@@ -136,18 +138,6 @@ function c9980143.spop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		tc:CompleteProcedure()
 		tc:RegisterFlagEffect(9980143,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,2)
-		local e1=Effect.CreateEffect(c)
-		e1:SetDescription(aux.Stringid(9980143,1))
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE+EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_CLIENT_HINT)
-		e1:SetRange(LOCATION_ONFIELD)
-		e1:SetCode(EFFECT_INDESTRUCTABLE_COUNT)
-		e1:SetCountLimit(2)
-		e1:SetValue(c9980143.indct)
-		e1:SetReset(RESET_PHASE+PHASE_END,2)
-		e1:SetLabel(Duel.GetTurnCount())
-		e1:SetLabelObject(tc)
-		Duel.RegisterEffect(e1,tp)
 	end
 	if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 	local e2=Effect.CreateEffect(c)
@@ -158,11 +148,6 @@ function c9980143.spop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetTarget(c9980143.splimit)
 	e2:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e2,tp)
-end
-function c9980143.indct(e,re,r,rp)
-	if bit.band(r,REASON_BATTLE+REASON_EFFECT)~=0 then
-		return 1
-	else return 0 end
 end
 function c9980143.splimit(e,c)
 	return not c:IsAttribute(ATTRIBUTE_DARK) 

@@ -1,4 +1,5 @@
 --冬马雪菜冰激凌·北上丽花
+require("expansions/script/c81000000")
 function c81015023.initial_effect(c)
 	--summon
 	local e1=Effect.CreateEffect(c)
@@ -25,23 +26,20 @@ end
 function c81015023.ntcon(e,c,minc)
 	if c==nil then return true end
 	return minc==0 and c:IsLevelAbove(5)
-		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
-		and not Duel.IsExistingMatchingCard(c81015023.cfilter,tp,LOCATION_SZONE,0,1,nil)
-end
-function c81015023.cfilter(c)
-	return c:GetSequence()<5
+		and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+		and Tenka.ReikaCon(e)
 end
 function c81015023.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c81015023.cfilter,tp,LOCATION_SZONE,0,1,nil) and aux.exccon(e)
+	return Tenka.ReikaCon(e) and aux.exccon(e)
 end
 function c81015023.thfilter(c)
 	return c:IsSetCard(0x81a) and c:IsAbleToHand()
 end
 function c81015023.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c81015023.thfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c81015023.thfilter,tp,LOCATION_REMOVED,0,1,nil) end
+	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c81015023.thfilter(chkc) and chkc~=e:GetHandler()  end
+	if chk==0 then return Duel.IsExistingTarget(c81015023.thfilter,tp,LOCATION_REMOVED,0,1,e:GetHandler()) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local sg=Duel.SelectTarget(tp,c81015023.thfilter,tp,LOCATION_REMOVED,0,1,1,nil)
+	local sg=Duel.SelectTarget(tp,c81015023.thfilter,tp,LOCATION_REMOVED,0,1,1,e:GetHandler())
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,sg,1,0,0)
 end
 function c81015023.thop(e,tp,eg,ep,ev,re,r,rp)

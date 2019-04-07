@@ -67,6 +67,7 @@ function c9980168.operation(e,tp,eg,ep,ev,re,r,rp)
 		c:RegisterEffect(e1)
 		Duel.SpecialSummonComplete()
 	end
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980168,0))
 end
 function c9980168.eqlimit(e,c)
 	return e:GetOwner()==c

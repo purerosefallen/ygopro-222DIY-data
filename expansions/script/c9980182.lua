@@ -69,6 +69,7 @@ function c9980182.operation(e,tp,eg,ep,ev,re,r,rp)
 	e1:SetTarget(c9980182.splimit)
 	e1:SetReset(RESET_PHASE+PHASE_END)
 	Duel.RegisterEffect(e1,tp)
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980182,0))
 end
 function c9980182.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not (c:IsRace(RACE_FAIRY) or c:IsAttribute(ATTRIBUTE_DARK))

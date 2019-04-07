@@ -1,4 +1,5 @@
 --北上丽花的大祭游行
+require("expansions/script/c81000000")
 function c81015022.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
@@ -22,6 +23,12 @@ function c81015022.initial_effect(c)
 	e2:SetTarget(c81015022.thtg)
 	e2:SetOperation(c81015022.thop)
 	c:RegisterEffect(e2)
+	--act in hand
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_TRAP_ACT_IN_HAND)
+	e3:SetCondition(Tenka.ReikaCon)
+	c:RegisterEffect(e3)
 end
 function c81015022.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():IsControler(1-tp) and Duel.GetAttackTarget()==nil
@@ -46,14 +53,11 @@ function c81015022.activate(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function c81015022.dcfilter(c)
-	return c:GetSequence()<5
-end
 function c81015022.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c81015022.dcfilter,tp,LOCATION_SZONE,0,1,nil) and aux.exccon(e)
+	return Tenka.ReikaCon(e) and aux.exccon(e)
 end
 function c81015022.thfilter(c)
-	return c:IsSetCard(0x815) and c:IsType(TYPE_MONSTER+TYPE_SPELL) and c:IsAbleToHand()
+	return c:IsSetCard(0x81a) and c:IsType(TYPE_MONSTER+TYPE_SPELL) and c:IsAbleToHand()
 end
 function c81015022.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_REMOVED) and chkc:IsControler(tp) and c81015022.thfilter(chkc) end

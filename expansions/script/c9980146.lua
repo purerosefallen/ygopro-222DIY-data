@@ -10,13 +10,12 @@ function c9980146.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_SPECIAL_SUMMON+CATEGORY_FUSION_SUMMON)
-	e1:SetType(EFFECT_TYPE_QUICK_O)
+	e1:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e1:SetRange(LOCATION_GRAVE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCost(aux.bfgcost)
-	e1:SetTarget(c9980146.sptg)
-	e1:SetOperation(c9980146.spop)
+	e1:SetCountLimit(1,9980146)
+	e1:SetCost(c9980146.drcost)
+	e1:SetTarget(c9980146.thtg)
+	e1:SetOperation(c9980146.thop)
 	c:RegisterEffect(e1)
 end
 function c9980146.filter0(c)
@@ -90,67 +89,57 @@ function c9980146.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:CompleteProcedure()
 	end
 end
-function c9980146.spfilter1(c)
-	return c:IsType(TYPE_MONSTER) and c:IsCanBeFusionMaterial() and c:IsAbleToRemove()
+function c9980146.drcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return e:GetHandler():IsAbleToDeckAsCost() end
+	Duel.SendtoDeck(e:GetHandler(),nil,2,REASON_COST)
 end
-function c9980146.spfilter2(c,e,tp,m,f,chkf)
-	return c:IsType(TYPE_FUSION) and (not f or f(c))
-		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
+function c9980146.thfilter1(c,tp)
+	return aux.IsMaterialListSetCard(c,0xbc9) and Duel.IsExistingMatchingCard(c9980146.filter2,tp,LOCATION_DECK+LOCATION_GRAVE,0,1,nil,c)
 end
-function c9980146.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then
-		local chkf=tp
-		local mg1=Duel.GetMatchingGroup(c9980146.spfilter1,tp,LOCATION_GRAVE,0,nil)
-		local res=Duel.IsExistingMatchingCard(c9980146.spfilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)
-		if not res then
-			local ce=Duel.GetChainMaterial(tp)
-			if ce~=nil then
-				local fgroup=ce:GetTarget()
-				local mg2=fgroup(ce,e,tp)
-				local mf=ce:GetValue()
-				res=Duel.IsExistingMatchingCard(c9980146.spfilter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg2,mf,chkf)
-			end
-		end
-		return res
-	end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_GRAVE)
+function c9980146.thfilter2(c,fc)
+	if c:IsForbidden() or not c:IsAbleToHand() then return false end
+	return c:IsCode(table.unpack(fc.material))
 end
-function c9980146.spop(e,tp,eg,ep,ev,re,r,rp)
-	local chkf=tp
-	local mg1=Duel.GetMatchingGroup(aux.NecroValleyFilter(c9980146.spfilter1),tp,LOCATION_GRAVE,0,nil)
-	local sg1=Duel.GetMatchingGroup(c9980146.spfilter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
-	local mg2=nil
-	local sg2=nil
-	local ce=Duel.GetChainMaterial(tp)
-	if ce~=nil then
-		local fgroup=ce:GetTarget()
-		mg2=fgroup(ce,e,tp)
-		local mf=ce:GetValue()
-		sg2=Duel.GetMatchingGroup(c9980146.spfilter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg2,mf,chkf)
-	end
-	if sg1:GetCount()>0 or (sg2~=nil and sg2:GetCount()>0) then
-		local sg=sg1:Clone()
-		if sg2 then sg:Merge(sg2) end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-		local tg=sg:Select(tp,1,1,nil)
-		local tc=tg:GetFirst()
-		if sg1:IsContains(tc) and (sg2==nil or not sg2:IsContains(tc) or not Duel.SelectYesNo(tp,ce:GetDescription())) then
-			local mat1=Duel.SelectFusionMaterial(tp,tc,mg1,nil,chkf)
-			tc:SetMaterial(mat1)
-			Duel.Remove(mat1,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
-			Duel.BreakEffect()
-			Duel.SpecialSummon(tc,SUMMON_TYPE_FUSION,tp,tp,false,false,POS_FACEUP)
-		else
-			local mat2=Duel.SelectFusionMaterial(tp,tc,mg2,nil,chkf)
-			local fop=ce:GetOperation()
-			fop(ce,e,tp,tc,mat2)
-		end
+function c9980146.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c9980146.thfilter1,tp,LOCATION_EXTRA,0,1,nil,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE)
+end
+function c9980146.thop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
+	local cg=Duel.SelectMatchingCard(tp,c9980146.thfilter1,tp,LOCATION_EXTRA,0,1,1,nil,tp)
+	if cg:GetCount()==0 then return end
+	Duel.ConfirmCards(1-tp,cg)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c9980146.filter2),tp,LOCATION_DECK+LOCATION_GRAVE,0,1,1,nil,cg:GetFirst())
+	local tc=g:GetFirst()
+	if not tc then return end
+	if Duel.SendtoHand(tc,nil,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_HAND) then
+		Duel.ConfirmCards(1-tp,tc)
+		if not e:IsHasType(EFFECT_TYPE_ACTIVATE) then return end
 		local e1=Effect.CreateEffect(e:GetHandler())
-		e1:SetType(EFFECT_TYPE_SINGLE)
-		e1:SetCode(EFFECT_CANNOT_ATTACK)
-		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		tc:RegisterEffect(e1,true)
-		tc:CompleteProcedure()
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_CANNOT_SUMMON)
+		e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e1:SetTargetRange(1,0)
+		e1:SetTarget(c9980146.sumlimit)
+		e1:SetLabel(tc:GetCode())
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
+		local e2=e1:Clone()
+		e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+		Duel.RegisterEffect(e2,tp)
+		local e3=e1:Clone()
+		e3:SetCode(EFFECT_CANNOT_MSET)
+		Duel.RegisterEffect(e3,tp)
+		local e4=e1:Clone()
+		e4:SetCode(EFFECT_CANNOT_ACTIVATE)
+		e4:SetValue(c9980146.aclimit)
+		Duel.RegisterEffect(e4,tp)
 	end
+end
+function c9980146.sumlimit(e,c)
+	return c:IsCode(e:GetLabel())
+end
+function c9980146.aclimit(e,re,tp)
+	return re:GetHandler():IsCode(e:GetLabel()) and re:IsActiveType(TYPE_MONSTER) and not re:GetHandler():IsImmuneToEffect(e)
 end

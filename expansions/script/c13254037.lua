@@ -72,12 +72,15 @@ function c13254037.spop(e,tp,eg,ep,ev,re,r,rp)
 		local e15=e13:Clone()
 		e15:SetCode(EFFECT_CANNOT_BE_XYZ_MATERIAL)
 		c:RegisterEffect(e15)
-		local e16=Effect.CreateEffect(e:GetHandler())
-		e16:SetDescription(aux.Stringid(13254037,2))
-		e16:SetProperty(EFFECT_FLAG_CLIENT_HINT)
-		e16:SetType(EFFECT_TYPE_SINGLE)
-		e16:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		local e16=e13:Clone()
+		e16:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 		c:RegisterEffect(e16)
+		local e17=Effect.CreateEffect(e:GetHandler())
+		e17:SetDescription(aux.Stringid(13254037,2))
+		e17:SetProperty(EFFECT_FLAG_CLIENT_HINT)
+		e17:SetType(EFFECT_TYPE_SINGLE)
+		e17:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+		c:RegisterEffect(e17)
 	end
 end
 function c13254037.cost(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -89,14 +92,14 @@ function c13254037.filter(c,e,tp)
 end
 function c13254037.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c13254037.filter,tp,LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+		and Duel.IsExistingMatchingCard(c13254037.filter,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,nil,e,tp) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_DECK)
 end
 function c13254037.operation(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,c13254037.filter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c13254037.spfilter),tp,LOCATION_GRAVE+LOCATION_DECK,0,1,1,nil,e,tp)
 	local tc=g:GetFirst()
 	if tc:IsCode(13254039) then
 		Duel.SpecialSummon(tc,0,tp,tp,true,false,POS_FACEUP)

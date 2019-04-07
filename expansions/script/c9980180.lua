@@ -80,6 +80,7 @@ function c9980180.atkop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetValue(c9980180.efilter)
 		tc:RegisterEffect(e2)
 	end
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980180,0))
 end
 function c9980180.efilter(e,te)
 	return te:IsActiveType(TYPE_SPELL+TYPE_TRAP) and te:GetOwner()~=e:GetOwner()

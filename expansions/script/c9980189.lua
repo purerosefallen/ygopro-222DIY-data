@@ -67,6 +67,7 @@ function c9980189.activate(e,tp,eg,ep,ev,re,r,rp)
 		e3:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e3,tp)
 	end
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980189,0))
 end
 function c9980189.retcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetTurnCount()~=e:GetLabel()

@@ -46,6 +46,28 @@ function c65020115.thop(e,tp,eg,ep,ev,re,r,rp)
 	if not tc then return end
 	Duel.SendtoHand(tc,tp,REASON_EFFECT)
 	Duel.ConfirmCards(1-tp,tc)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
+	e1:SetCode(EFFECT_CANNOT_ACTIVATE)
+	e1:SetTargetRange(1,0)
+	e1:SetValue(c65020115.aclimit)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+	local e2=Effect.CreateEffect(e:GetHandler())
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
+	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetTargetRange(1,0)
+	e2:SetTarget(c65020115.splimit)
+	Duel.RegisterEffect(e2,tp)
+end
+function c65020115.aclimit(e,re,tp)
+	return not re:GetHandler():IsSetCard(0xcda4)
+end
+function c65020115.splimit(e,c,sump,sumtype,sumpos,targetp,se)
+	return not c:IsSetCard(0xcda4)
 end
 
 function c65020115.filter0(c)

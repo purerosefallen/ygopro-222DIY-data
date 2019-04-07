@@ -80,6 +80,7 @@ function c9980166.op2(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980166,2))
 end
 function c9980166.cost3(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x1,4,REASON_COST) end
@@ -104,4 +105,5 @@ function c9980166.op3(e,tp,eg,ep,ev,re,r,rp)
 	if tc and tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980166,2))
 end

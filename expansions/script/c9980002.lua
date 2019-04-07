@@ -41,7 +41,16 @@ function c9980002.initial_effect(c)
 	e3:SetTarget(c9980002.thtg)
 	e3:SetOperation(c9980002.thop)
 	c:RegisterEffect(e3)
+	--spsummon bgm
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e8:SetOperation(c9980002.sumsuc)
+	c:RegisterEffect(e8)
 end
+function c9980002.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980002,1))
+end 
 function c9980002.lcheck(g)
 	return g:IsExists(Card.IsLinkSetCard,1,nil,0xbc2)
 end

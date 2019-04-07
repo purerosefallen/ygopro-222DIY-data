@@ -1,14 +1,5 @@
 --人狼姬·萌狼赫萝
 function c9980141.initial_effect(c)
-	 --destroy replace
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e2:SetCode(EFFECT_DESTROY_REPLACE)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetTarget(c9980141.reptg)
-	e2:SetValue(c9980141.repval)
-	e2:SetOperation(c9980141.repop)
-	c:RegisterEffect(e2)
 	  --indes
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_SINGLE)
@@ -18,6 +9,14 @@ function c9980141.initial_effect(c)
 	e3:SetValue(c9980141.indct)
 	e3:SetCountLimit(1)
 	c:RegisterEffect(e3)
+	--gain ATK
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e2:SetRange(LOCATION_MZONE)
+	e2:SetCode(EFFECT_UPDATE_ATTACK)
+	e2:SetValue(c9980141.atkval)
+	c:RegisterEffect(e2)
 	--search
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(9980141,2))
@@ -25,7 +24,6 @@ function c9980141.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCode(EVENT_BECOME_TARGET)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCountLimit(1,9980141)
 	e2:SetCondition(c9980141.thcon1)
 	e2:SetTarget(c9980141.thtg)
@@ -34,6 +32,7 @@ function c9980141.initial_effect(c)
 	local e3=e2:Clone()
 	e3:SetDescription(aux.Stringid(9980141,2))
 	e3:SetCode(EVENT_BE_BATTLE_TARGET)
+	e3:SetProperty(EFFECT_FLAG_DELAY)
 	e3:SetCondition(c9980141.thcon2)
 	c:RegisterEffect(e3)
 	--replace
@@ -48,22 +47,18 @@ function c9980141.initial_effect(c)
 	e1:SetTarget(c9980141.target)
 	e1:SetOperation(c9980141.operation)
 	c:RegisterEffect(e1)
+	--spsummon bgm
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e8:SetOperation(c9980141.sumsuc)
+	c:RegisterEffect(e8)
+	local e9=e8:Clone()
+	e9:SetCode(EVENT_SUMMON_SUCCESS)
+	c:RegisterEffect(e9)
 end
-function c9980141.filter(c,tp)
-	return c:IsFaceup() and c:IsControler(tp) and c:IsLocation(LOCATION_ONFIELD) and c:IsSetCard(0xbc9)
-		and c:IsReason(REASON_BATTLE+REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
-end
-function c9980141.reptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return eg:IsExists(c9980141.filter,1,c,tp)
-		and c:IsDestructable(e) and not c:IsStatus(STATUS_DESTROY_CONFIRMED) end
-	return Duel.SelectEffectYesNo(tp,c,96)
-end
-function c9980141.repval(e,c)
-	return c9980141.filter(c,e:GetHandlerPlayer())
-end
-function c9980141.repop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Destroy(e:GetHandler(),REASON_EFFECT+REASON_REPLACE)
+function c9980141.atkval(e,c)
+	return Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)*500
 end
 function c9980141.indct(e,re,r,rp)
 	if bit.band(r,REASON_BATTLE+REASON_EFFECT)~=0 then
@@ -135,3 +130,6 @@ function c9980141.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ChangeTargetCard(ev,Group.FromCards(tc))
 	end
 end
+function c9980141.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980141,0))
+end 

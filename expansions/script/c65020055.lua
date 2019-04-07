@@ -43,6 +43,7 @@ function c65020055.gvop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetType(EFFECT_TYPE_IGNITION)
 		e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 		e1:SetRange(LOCATION_MZONE)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		e1:SetCountLimit(1)
 		e1:SetTarget(c65020055.gavtg)
 		e1:SetOperation(c65020055.gavop)
@@ -67,6 +68,15 @@ function c65020055.gavop(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsRelateToEffect(e) then
 		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 	end
+	--cannot be link material
+	local e3=Effect.CreateEffect(e:GetHandler())
+	e3:SetType(EFFECT_TYPE_FIELD)
+	e3:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
+	e3:SetTargetRange(LOCATION_MZONE,0)
+	e3:SetTarget(aux.TargetBoolFunction(Card.IsType,TYPE_LINK))
+	e3:SetReset(RESET_PHASE+PHASE_END)
+	e3:SetValue(1)
+	Duel.RegisterEffect(e3,tp)
 end
 
 function c65020055.cost(e,tp,eg,ep,ev,re,r,rp,chk)

@@ -1,6 +1,13 @@
 --吸血姬-冲动
 function c9980014.initial_effect(c)
-  --Activate
+	--act in set turn
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE)
+	e2:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
+	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+	e2:SetCondition(c9980014.actcon)
+	c:RegisterEffect(e2)
+	--Activate
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_TOGRAVE)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
@@ -24,6 +31,9 @@ function c9980014.initial_effect(c)
 	e2:SetTarget(c9980014.sptarget)
 	e2:SetOperation(c9980014.spoperation)
 	c:RegisterEffect(e2)
+end
+function c9980014.actcon(e)
+	return not Duel.IsExistingMatchingCard(Card.IsType,e:GetHandlerPlayer(),LOCATION_GRAVE,0,1,nil,TYPE_TRAP)
 end
 function c9980014.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()

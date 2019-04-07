@@ -51,6 +51,7 @@ function c9980167.operation(e,tp,eg,ep,ev,re,r,rp)
 	if tc:IsFaceup() and tc:IsRelateToEffect(e) and ct>0 then
 		tc:AddCounter(0x1,ct)
 	end
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980167,0))
 end
 function c9980167.cfilter(c)
 	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xbc4) and c:IsAbleToRemoveAsCost()

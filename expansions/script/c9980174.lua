@@ -36,8 +36,20 @@ function c9980174.initial_effect(c)
 	e5:SetTarget(c9980174.exptg)
 	e5:SetOperation(c9980174.expop)
 	c:RegisterEffect(e5)
+	--spsummon bgm
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e8:SetOperation(c9980174.sumsuc)
+	c:RegisterEffect(e8)
+	local e9=e8:Clone()
+	e9:SetCode(EVENT_SUMMON_SUCCESS)
+	c:RegisterEffect(e9)
 end
 c9980174.counter_add_list={0x1}
+function c9980174.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980174,4))
+end 
 function c9980174.lcheck(g,lc)
 	return g:IsExists(c9980174.mzfilter,1,nil)
 end
@@ -53,8 +65,8 @@ function c9980174.ctop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c9980174.expcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x1,3,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x1,3,REASON_COST)
+	 if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x1,6,REASON_COST) end
+	Duel.RemoveCounter(tp,1,0,0x1,6,REASON_COST)
 end
 function c9980174.exptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,9980174)==0 end
