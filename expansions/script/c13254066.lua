@@ -31,7 +31,7 @@ function c13254066.initial_effect(c)
 	e4:SetDescription(aux.Stringid(13254066,2))
 	e4:SetCategory(CATEGORY_TODECK+CATEGORY_DECKDES)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
-	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e4:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
 	e4:SetCode(EVENT_TO_DECK)
 	e2:SetRange(LOCATION_FZONE)
 	e4:SetCondition(c13254066.tdcon1)
@@ -60,8 +60,21 @@ function c13254066.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_DECK)
 end
 function c13254066.tdop(e,tp,eg,ep,ev,re,r,rp)
-	local g=eg:Filter(c13254066.tdfilter1,nil,e)
-	local ct=Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+	local ct1=0
+	local ct2=0
+	local rg=eg:Filter(c13254066.tdfilter1,nil,e)
+	local ct=Duel.SendtoDeck(rg,nil,2,REASON_EFFECT)
+	rg=Duel.GetOperatedGroup()
+	local tc=rg:GetFirst()
+	while tc do
+		if tc:IsLocation(LOCATION_DECK) and tc:IsType(TYPE_MONSTER) then
+			if tc:GetControler()==tp then ct1=ct1+1
+			else ct2=ct2+1 end
+		end
+		tc=rg:GetNext()
+	end
+	if ct1>0 then Duel.ShuffleDeck(tp) end
+	if ct2>0 then Duel.ShuffleDeck(1-tp) end
 	if ct>0 then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
 		local g=Duel.SelectMatchingCard(tp,c13254066.tgfilter,tp,LOCATION_DECK,0,ct,ct,nil)
@@ -72,7 +85,7 @@ function c13254066.tdop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c13254066.cfilter(c)
-	return bit.band(c:GetPreviousLocation(),LOCATION_GRAVE+LOCATION_DECK)
+	return bit.band(c:GetPreviousLocation(),LOCATION_GRAVE+LOCATION_DECK)>0
 end
 function c13254066.tdfilter11(c,e)
 	return c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsRelateToEffect(e)
@@ -96,6 +109,7 @@ function c13254066.tdop1(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)<=0 then return end
 	local ct=Duel.SendtoDeck(tg,nil,2,REASON_EFFECT)
+	Duel.ShuffleDeck(tp)
 	if ct>0 then
 		Duel.BreakEffect()
 		Duel.DiscardDeck(tp,ct,REASON_EFFECT)
