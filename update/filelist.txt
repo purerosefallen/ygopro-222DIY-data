@@ -2,11 +2,11 @@
 update/update-push.bat	686b01a51bba916202d61d951cd7fe3e
 update/update-server.sh	6f1cdc3e06ec58b37b14b5d9d167263c
 update/update-without-sound.bat	1c2cfda2a0501642c8bceae026a73d5b
-update/version.txt	82e8ebf9a9cc5cb077482595d6e20d77
+update/version.txt	14b486e1848db9a381144ae1a4c144e8
 update/update-push.sh	d018a223f65feef3467b22e252468f53
 update/delete.txt	bcae307f6039207f11b4daa83f17c0ec
 update/rename.txt	c4625b442bf8f5c2e7ce4deb512d4671
-update/filelist.txt	b7a75cbb95915feaa506dd8efc33729a
+update/filelist.txt	99bd62bb5cef4d70d968137aa6424d8e
 deck/2019.4.7_new_card4.ydk	e930af4c04a3ef57df477aeb90c02bff
 deck/2019.4.7_new_card8.ydk	554c126a87b86b6e834a2ef67e58d433
 deck/2019.4.7_new_card6.ydk	97d7260e5dc80923be03eecf35b48d05
@@ -248,6 +248,7 @@ sound/BGM/custom/border_of_life.mp3	ad78fff1571cc33cf9428589cae35807
 sound/BGM/custom/(Maru)TWINBEE'S HOME TOWN SONG.mp3	a5aeb68bf50f30d418e456b83c838c9b
 sound/BGM/custom/ReLive-99 ILLUSION!.mp3	6f3b815cbb56ab32590ad5e6a51bc538
 sound/BGM/custom/(Maru)Cirno.mp3	cb0a38d187e7ffcef697a9117c5e7089
+sound/BGM/custom/koi1.mp3	afe3742d36d8affb47ab49e920534da9
 sound/BGM/custom/(Maru)Star Soldier.mp3	35b29d31705ae95f5a02b6f317884784
 sound/BGM/custom/(Maru)Challenger 1985.mp3	5f2cf00a758daf588959c53b2caf5370
 sound/BGM/custom/(Maru)Space Traveler.mp3	1132deebfa9cc48da6f6cbf01fe47c87
@@ -376,6 +377,7 @@ sound/BGM/custom/サカナクション - 新宝島.mp3	4a2a8fe3c4d1ca8a328dd7ef5
 sound/BGM/custom/(Maru)Tragedy flame.mp3	9bd9f5f672e3f7e4021844ab5f260468
 sound/BGM/custom/Gaiden BossRush1.mp3	ffa70918b9a6dbbf519dce9ad3b5ff7d
 sound/BGM/custom/Universal Nemesis.mp3	0bba7836bc2fc8fcdd25a20f87588f84
+sound/BGM/custom/koi2.mp3	9f6b249dc1c5d795656be5abc0dc9a58
 sound/BGM/custom/(Maru)Stage1.mp3	82736f3ed3f4f301a8a2a6a884dabaff
 sound/BGM/custom/SawanoHiroyuki[nZk]：Gemie - X.U (TV size).mp3	0999f4a0d189a5e5f394f70cdc3c9f4a
 sound/BGM/custom/pastel.mp3	ff898d6cc2206f93834a45a8101449fd
@@ -501,7 +503,7 @@ sound/BGM/advantage/1.986adv.mp3	b918e66d696f2f2dd82df5f8e01e6d7e
 sound/BGM/advantage/Monosugoikuruttoru Furantyanga Monosugoi Uta.mp3	6b69e22257e027b8d3e1c0b17ec36786
 sound/BGM/advantage/1.962adv.mp3	6cff2bf4929eaae90785bfbd7f97b6fc
 expansions/lflist.conf	e1105980ae1e9b35b81e4d9621033c45
-expansions/222DIY.cdb	7cb969eeda8e299654a0213fd7a5f907
+expansions/222DIY.cdb	6169be59a1266bf7e98927d87eb1b9fd
 expansions/strings.conf	2be95b17887b416f15449d0b0876f028
 expansions/script/c10904011.lua	4c27dfcd69ed23dbc450cfc28a708a0e
 expansions/script/c9980185.lua	2069c768e37f0fa391f50eb080b183c4
@@ -3015,7 +3017,7 @@ expansions/script/c12007000.lua	151d2ccc62ebd03fded3a48db5e9f991
 expansions/script/c14801348.lua	22279cd74127b11bf2b6a9cd05363b07
 expansions/script/c69696918.lua	6031fd7c0cabc762b8194f287d0f038d
 expansions/script/c13255401.lua	ca86828ba8a3a6abab784d1c0e1a50ef
-expansions/script/c77702002.lua	41b471efaddfa3fbdd2817559ad66efb
+expansions/script/c77702002.lua	020eda7331560985e50e4cc193804216
 expansions/script/c14801307.lua	d5f0df20f31428085b1d3920ebf3f721
 expansions/script/c77707031.lua	93052a695be59c6548e69f9fe49403ff
 expansions/script/c33700389.lua	c646fd9f9d28ade9babd4ff5dfa415e1
