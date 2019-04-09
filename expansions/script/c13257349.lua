@@ -177,7 +177,7 @@ function c13257349.disop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13257349.efilter(e,te)
-	return eg:GetFlagEffect(23257349)
+	return te:GetFlagEffect(23257349)>0
 end
 function c13257349.desfilter(c,fid)
 	return c:GetFlagEffectLabel(23257349)==fid

@@ -80,7 +80,7 @@ function c81012027.dacost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
 function c81012027.filter(c)
-	return c:IsFaceup() and c:IsLevel(1) and c:GetEffectCount(EFFECT_DIRECT_ATTACK)==0
+	return c:IsFaceup() and c:IsType(TYPE_RITUAL) and c:IsType(TYPE_PENDULUM) and c:GetEffectCount(EFFECT_DIRECT_ATTACK)==0
 end
 function c81012027.datg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_MZONE) and c81012027.filter(chkc) end
