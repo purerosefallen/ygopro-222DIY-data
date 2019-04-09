@@ -13,7 +13,7 @@ function c9980019.initial_effect(c)
 	e2:SetProperty(EFFECT_FLAG_IGNORE_IMMUNE)
 	e2:SetRange(LOCATION_SZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
-	e2:SetTarget(c9980019.cfilter)
+	e2:SetTarget(c9980019.cfilter2)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	--
@@ -72,14 +72,17 @@ function c9980019.activate(e,tp,eg,ep,ev,re,r,rp)
 	end
 	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980019,1))
 end
+function c9980019.cfilter2(c)
+	return c:IsFaceup() and c:IsSetCard(0xbc2) and c:IsType(TYPE_MONSTER)
+end
 function c9980019.cfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xbc2)
 end
 function c9980019.discon1(e,tp,eg,ep,ev,re,r,rp)
-	return not Duel.IsExistingMatchingCard(c9980019.cfilter,tp,LOCATION_REMOVED,0,6,nil)
+	return not Duel.IsExistingMatchingCard(c9980019.cfilter,tp,LOCATION_REMOVED,0,3,nil)
 end
 function c9980019.discon2(e,tp,eg,ep,ev,re,r,rp)
-	return (Duel.GetCurrentPhase()~=PHASE_DAMAGE or not Duel.IsDamageCalculated()) and Duel.IsExistingMatchingCard(c9980019.cfilter,tp,LOCATION_REMOVED,0,6,nil)
+	return  Duel.IsExistingMatchingCard(c9980019.cfilter,tp,LOCATION_REMOVED,0,3,nil)
 end
 function c9980019.rmtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsAbleToRemove() and chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) end

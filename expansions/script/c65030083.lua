@@ -8,6 +8,7 @@ function c65030083.initial_effect(c)
 	e1:SetCategory(CATEGORY_TODECK+CATEGORY_DRAW+CATEGORY_NEGATE+CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_CHAINING)
+	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1)
 	e1:SetCondition(c65030083.negcon)
@@ -39,7 +40,7 @@ function c65030083.synfil(c)
 	return aux.IsCodeListed(c,65030086) and c:IsType(TYPE_SYNCHRO)
 end
 function c65030083.negcon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.IsChainNegatable(ev)
+	return Duel.IsChainNegatable(ev) and rp~=tp
 end
 function c65030083.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_HAND,0,nil)
