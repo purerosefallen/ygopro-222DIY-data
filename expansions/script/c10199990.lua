@@ -156,7 +156,7 @@ end
 --Single Val Effect: Directly set other card attribute,except ATK & DEF
 function rsef.SV_CHANGE(cardtbl,changetypetbl,valtbl,con,resettbl,flag,desctbl)
 	local codetbl1={"lv","lvf","rk","rkf","code","att","race","type","fusatt","ls","rs"}
-	local codetbl2={ EFFECT_CHANGE_LEVEL,EFFECT_CHANGE_LEVEL_FINAL,EFFECT_CHANGE_RANK,EFFECT_CHANGE_RANK_FINAL,EFFECT_CHANGE_CODE,EFFECT_CHANGE_ATTRIBUTE,EFFECT_CHANGE_RACE,EFFECT_CHANGE_TYPE,EFFECT_CHANGE_FUSION_ATTRIBUTE,EFFECT_CHANGE_LSCALE,EFFECT_CHANGE_RSCALE } 
+	local codetbl2={ EFFECT_CHANGE_LEVEL,EFFECT_CHANGE_LEVEL,EFFECT_CHANGE_RANK,EFFECT_CHANGE_RANK,EFFECT_CHANGE_CODE,EFFECT_CHANGE_ATTRIBUTE,EFFECT_CHANGE_RACE,EFFECT_CHANGE_TYPE,EFFECT_CHANGE_FUSION_ATTRIBUTE,EFFECT_CHANGE_LSCALE,EFFECT_CHANGE_RSCALE } 
 	local effectcodetbl,effectvaluetbl=rsof.Table_Suit(changetypetbl,codetbl1,codetbl2,valtbl)
 	local resulteffecttbl={}
 	local range=nil

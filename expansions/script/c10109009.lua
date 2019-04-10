@@ -77,7 +77,7 @@ function c10109009.activate(e,tp,eg,ep,ev,re,r,rp)
 	if e:GetHandler():IsRelateToEffect(e) then
 	   local e1=Effect.CreateEffect(c)
 	   e1:SetType(EFFECT_TYPE_FIELD)
-	   e1:SetCode(EFFECT_CHANGE_LEVEL_FINAL)
+	   e1:SetCode(EFFECT_CHANGE_LEVEL)
 	   e1:SetReset(RESET_EVENT+0x1fe0000)
 	   e1:SetRange(LOCATION_FZONE)
 	   e1:SetTargetRange(LOCATION_HAND+LOCATION_MZONE,0)

@@ -38,7 +38,7 @@ function c10173079.activate(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetValue(def)
 	tc:RegisterEffect(e2)
 	local e3=e1:Clone()
-	e3:SetCode(EFFECT_CHANGE_LEVEL_FINAL)
+	e3:SetCode(EFFECT_CHANGE_LEVEL)
 	e3:SetValue(lv)
 	tc:RegisterEffect(e3)
 	if tc:IsImmuneToEffect(e) or not Duel.IsPlayerCanSpecialSummonMonster(tp,86871615,0,0x4011,atk,def,lv,tc:GetRace(),tc:GetAttribute()) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end

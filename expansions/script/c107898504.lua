@@ -64,7 +64,7 @@ function c107898504.operation(e,tp,eg,ep,ev,re,r,rp)
 		--lv change
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_FIELD)
-		e2:SetCode(EFFECT_CHANGE_LEVEL_FINAL)
+		e2:SetCode(EFFECT_CHANGE_LEVEL)
 		e2:SetRange(LOCATION_MZONE)
 		e2:SetTargetRange(LOCATION_HAND,0)
 		e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x575b))
