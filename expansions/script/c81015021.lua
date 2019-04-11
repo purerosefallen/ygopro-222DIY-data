@@ -40,7 +40,7 @@ function c81015021.cfilter(c)
 	return c:GetSequence()<5
 end
 function c81015021.atkup(e,c)
-	return Duel.GetMatchingGroupCount(c81015021.cfilter,tp,LOCATION_SZONE,0,nil)*(-200)
+	return Duel.GetMatchingGroupCount(c81015021.cfilter,c:GetControler(),LOCATION_SZONE,0,nil)*(-200)
 end
 function c81015021.askcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

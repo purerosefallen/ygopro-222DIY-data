@@ -60,5 +60,5 @@ function c81015002.filter(c)
 	return c:GetSequence()<5
 end
 function c81015002.atkval(e,c)
-	return Duel.GetMatchingGroupCount(c81015002.filter,e:GetHandlerPlayer(),0,LOCATION_SZONE,nil,nil)*500
+	return Duel.GetMatchingGroupCount(c81015002.filter,c:GetControler(),0,LOCATION_SZONE,nil,nil)*500
 end

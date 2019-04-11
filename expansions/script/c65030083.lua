@@ -54,11 +54,12 @@ end
 function c65030083.negop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_HAND,0,nil)
 	if g:GetCount()>0 then 
-		local tgg=Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
-		if tgg:GetCount()>0 then
-			Duel.Draw(tp,tgg:GetCount()-1,REASON_EFFECT)
+		local num=Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+		if num>0 then
+			Duel.Draw(tp,num-1,REASON_EFFECT)
 			if Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummon(tp) then
 				Duel.BreakEffect()
+				local tgg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 				local tc=tgg:RandomSelect(1-tp,1)
 				if c65030083.checkfil(tc,e,tp) then
 					Duel.NegateActivation(ev)
@@ -85,8 +86,8 @@ function c65030083.op(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_HAND,nil)
 	if g:GetCount()>0 then 
 		local tgg=Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
-		if tgg:GetCount()>0 then
-			Duel.Draw(1-tp,tgg:GetCount()+1,REASON_EFFECT)
+		if tgg>0 then
+			Duel.Draw(1-tp,tgg+1,REASON_EFFECT)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)
