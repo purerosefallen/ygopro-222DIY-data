@@ -17,7 +17,7 @@ function c1150007.initial_effect(c)
 	c:RegisterEffect(e1)	
 --
 	local e2=Effect.CreateEffect(c)
-	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_FLIP)
+    e2:SetCategory(CATEGORY_TOHAND)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetCode(EVENT_BECOME_TARGET)
