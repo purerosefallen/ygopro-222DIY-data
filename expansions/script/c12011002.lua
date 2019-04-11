@@ -65,7 +65,7 @@ function c12011002.efop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c12011002.setfilter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP) and c:IsSSetable()
+	return c:IsType(TYPE_SPELL) and c:IsSSetable()
 end
 function c12011002.settg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c12011002.setfilter(chkc) end
