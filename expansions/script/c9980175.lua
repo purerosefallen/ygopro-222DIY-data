@@ -82,8 +82,8 @@ function c9980175.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFlagEffect(tp,9980175)==0 end
 	Duel.RegisterFlagEffect(tp,9980175,RESET_CHAIN,0,1)
 end
-function c9980175.spfilter(c,e,tp)
-	return c:IsFaceup() and c:IsSetCard(0x1bc4) and c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_GRAVE) or (c:IsLocation(LOCATION_EXTRA)and Duel.GetLocationCountFromEx(tp,tp,c)>0))
+function c9980175.spfilter(c,e,sp)
+	return c:IsFaceup() and c:IsSetCard(0x1bc4) and c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_GRAVE) or (c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,c)>0))
 		and IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c9980175.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)

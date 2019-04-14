@@ -42,6 +42,13 @@ function c9980197.initial_effect(c)
 	e1:SetOperation(c9980197.activate)
 	c:RegisterEffect(e1)
 end
+function c9980197.cfilter2(c,tp)
+	return c:IsSetCard(0x2bc8) and c:IsReason(REASON_BATTLE+REASON_EFFECT)
+		and c:IsPreviousPosition(POS_FACEUP) and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
+end
+function c9980197.spcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c9980197.cfilter2,1,nil,tp)
+end
 function c9980197.filter3(c,e,tp)
 	return c:IsFaceup() and c:IsSetCard(0x2bc8) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end

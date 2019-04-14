@@ -1,7 +1,7 @@
 --光之救世主 蓬莱寺九霄
 function c75646062.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,nil,2,2,c75646063.lcheck)
+	aux.AddLinkProcedure(c,nil,2,2,c75646062.lcheck)
 	c:EnableReviveLimit()
 	--apply effect
 	local e1=Effect.CreateEffect(c)
@@ -30,7 +30,7 @@ function c75646062.IsKYUUSYOU(c)
 	local m=_G["c"..c:GetCode()]
 	return m and m.is_named_with_Kyuusyou
 end
-function c75646063.lcheck(g,lc)
+function c75646062.lcheck(g,lc)
 	return g:IsExists(Card.IsLinkSetCard,1,nil,0x2c0)
 end
 function c75646062.counterfilter(c)
@@ -90,6 +90,13 @@ function c75646062.chainop(e,tp,eg,ep,ev,re,r,rp)
 	local es=re:GetHandler()
 	if es:IsSetCard(0x2c0) and es:IsType(TYPE_EQUIP) 
 		and es:GetEquipTarget()==e:GetHandler() and re:IsActiveType(TYPE_SPELL) and ep==tp then
-		Duel.SetChainLimit(aux.FALSE)
+		if Duel.IsPlayerAffectedByEffect(e:GetHandler():GetControler(),75646210) then
+			Duel.SetChainLimit(c75646062.chainlm)
+		else
+			Duel.SetChainLimit(aux.FALSE)
+		end		
 	end
+end
+function c75646062.chainlm(e,rp,tp)
+	return tp==rp
 end

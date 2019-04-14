@@ -2,7 +2,7 @@
 function c47501112.initial_effect(c)
 	--link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,nil,3,3,47501112.lcheck)  
+	aux.AddLinkProcedure(c,nil,3,3,c47501112.lcheck)  
 	--cannot link material
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -40,7 +40,7 @@ function c47501112.spop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c47501112.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,nil)
 	local tg=g:RandomSelect(tp,2)
 	if #tg>0 then
-		Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)	 
+		Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)	
 	end
 end
 function c47501112.sumsuc(e,tp,eg,ep,ev,re,r,rp)

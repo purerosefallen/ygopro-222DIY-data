@@ -74,7 +74,7 @@ function c13257231.initial_effect(c)
 	Duel.AddCustomActivityCounter(13257231,ACTIVITY_NORMALSUMMON,c13257231.counterfilter)
 	c:RegisterFlagEffect(13257200,0,0,0,1)
 	eflist={"deck_equip",e5}
-	c13257201[c]=eflist
+	c13257231[c]=eflist
 	
 end
 function c13257231.counterfilter(c)
