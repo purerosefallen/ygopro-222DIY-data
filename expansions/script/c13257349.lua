@@ -121,7 +121,7 @@ function c13257349.disop(e,tp,eg,ep,ev,re,r,rp)
 		while tc do
 			if not tc:IsImmuneToEffect(e) then
 				Duel.NegateRelatedChain(tc,RESET_TURN_SET)
-				local fid=c:GetFieldID()
+				local fid=e:GetOwner():GetFieldID()
 				tc:RegisterFlagEffect(23257349,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1,fid)
 				local e1=Effect.CreateEffect(c)
 				e1:SetType(EFFECT_TYPE_SINGLE)
