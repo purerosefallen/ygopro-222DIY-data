@@ -84,17 +84,17 @@ function c13254066.tdop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 
-function c13254066.cfilter(c)
-	return bit.band(c:GetPreviousLocation(),LOCATION_GRAVE+LOCATION_DECK)>0
+function c13254066.cfilter(c,e)
+	return bit.band(c:GetPreviousLocation(),LOCATION_GRAVE+LOCATION_REMOVED)>0 and c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER) and c:GetReasonCard()~=e:GetHandler()
 end
-function c13254066.tdfilter11(c,e)
+function c13254066.tdfilter11(c)
 	return true
 end
 function c13254066.tdcon1(e,tp,eg,ep,ev,re,r,rp)
-	return eg:GetFirst():GetReasonCard()~=e:GetHandler() and eg:IsExists(c13254066.cfilter,1,nil)
+	return eg:IsExists(c13254066.cfilter,1,nil,e)
 end
 function c13254066.tdtg1(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local ct=eg:FilterCount(c13254066.cfilter,nil)
+	local ct=eg:FilterCount(c13254066.cfilter,nil,e)
 	if chkc then return false end
 	if chk==0 then return Duel.IsExistingTarget(c13254066.tdfilter11,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,ct,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
