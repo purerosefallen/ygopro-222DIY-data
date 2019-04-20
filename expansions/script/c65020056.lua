@@ -35,11 +35,10 @@ function c65020056.gvtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,c65020056.gvfilter,tp,LOCATION_MZONE,0,1,1,nil)
 end
 function c65020056.gvop(e,tp,eg,ep,ev,re,r,rp)
-	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		local e1=Effect.CreateEffect(tc)
-		e1:SetDescription(aux.Stringid(65020056,1))
+		e1:SetDescription(aux.Stringid(65020056,0))
 		e1:SetCategory(CATEGORY_NEGATE+CATEGORY_TOGRAVE)
 		e1:SetType(EFFECT_TYPE_QUICK_O)
 		e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)

@@ -23,7 +23,6 @@ function cm.initial_effect(c)
     e2:SetRange(LOCATION_MZONE)
     e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
     e2:SetCountLimit(1)
-    e2:SetCondition(c60151328.e2con)
     e2:SetTarget(c60151328.e2tg)
     e2:SetOperation(c60151328.e2op)
     c:RegisterEffect(e2)
@@ -35,13 +34,11 @@ function cm.initial_effect(c)
     c:RegisterEffect(e3)
     --equip
     local e4=Effect.CreateEffect(c)
-    e4:SetDescription(aux.Stringid(60151328,1))
     e4:SetCategory(CATEGORY_EQUIP)
     e4:SetType(EFFECT_TYPE_IGNITION)
     e4:SetProperty(EFFECT_FLAG_CARD_TARGET+EFFECT_FLAG_NO_TURN_RESET)
     e4:SetRange(LOCATION_MZONE)
     e4:SetCountLimit(1)
-    e4:SetCondition(c60151328.e4con)
     e4:SetTarget(c60151328.e4tg)
     e4:SetOperation(c60151328.e4op)
     c:RegisterEffect(e4)
@@ -94,17 +91,12 @@ end
 function c60151328.e2filter2(c)
     return c:IsType(TYPE_XYZ)
 end
-function c60151328.e2con(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
-    local g=c:GetMaterial():FilterCount(c60151328.e2filter2,nil)
-    return g==0
-end
 function c60151328.e2filter(c,e,tp)
     return c:IsSetCard(0xcb23) and c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c60151328.e2tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and c60151328.e2filter(chkc,e,tp) end
-    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
+    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():GetMaterial():FilterCount(Card.IsLinkType,nil,TYPE_XYZ)<1
         and Duel.IsExistingTarget(c60151328.e2filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
     local g=Duel.SelectTarget(tp,c60151328.e2filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
@@ -116,18 +108,13 @@ function c60151328.e2op(e,tp,eg,ep,ev,re,r,rp)
         Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
     end
 end
-function c60151328.e4con(e,tp,eg,ep,ev,re,r,rp)
-    local c=e:GetHandler()
-    local g=c:GetMaterial():FilterCount(c60151328.e2filter2,nil)
-    return g==2
-end
 function c60151328.e4filter(c)
     return c:IsSetCard(0xcb23) and c:IsType(TYPE_XYZ) and not c:IsForbidden()
 end
 function c60151328.e4tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
     local c=e:GetHandler()
     if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c60151328.e4filter(chkc,e) end
-    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0
+    if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0 and e:GetHandler():GetMaterial():FilterCount(Card.IsLinkType,nil,TYPE_XYZ)>1
         and Duel.IsExistingMatchingCard(c60151328.e4filter,tp,LOCATION_GRAVE,0,1,nil,e) end
     local ft=Duel.GetLocationCount(tp,LOCATION_SZONE)
     local ft2=Duel.GetMatchingGroupCount(c60151328.e4filter,tp,LOCATION_GRAVE,0,nil,e)

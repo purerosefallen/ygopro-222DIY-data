@@ -2,13 +2,6 @@
 function c9980175.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
-	--Activate
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(1160)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetRange(LOCATION_SZONE)
-	c:RegisterEffect(e1)
 	--special summon
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(9980175,0))
@@ -19,7 +12,6 @@ function c9980175.initial_effect(c)
 	e2:SetHintTiming(0,TIMING_END_PHASE)
 	e2:SetRange(LOCATION_PZONE)
 	e2:SetCountLimit(1,9980175)
-	e2:SetCost(c9980175.cost)
 	e2:SetTarget(c9980175.sptg)
 	e2:SetOperation(c9980175.spop)
 	c:RegisterEffect(e2)
@@ -83,7 +75,7 @@ function c9980175.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RegisterFlagEffect(tp,9980175,RESET_CHAIN,0,1)
 end
 function c9980175.spfilter(c,e,sp)
-	return c:IsFaceup() and c:IsSetCard(0x1bc4) and c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_GRAVE) or (c:IsLocation(LOCATION_EXTRA) and Duel.GetLocationCountFromEx(tp,tp,c)>0))
+	return c:IsFaceup() and c:IsSetCard(0x1bc4) and c:IsType(TYPE_MONSTER) and (c:IsLocation(LOCATION_GRAVE) or (c:IsLocation(LOCATION_EXTRA)and Duel.GetLocationCountFromEx(tp,tp,c)>0))
 		and IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
 end
 function c9980175.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
