@@ -2462,6 +2462,7 @@ function cm.DFCBackSideCommonEffect(c)
 	--	end
 		c:ReplaceEffect(tcode,0,0)
 		Duel.SetMetatable(c,_G["c"..tcode])
+		Duel.RaiseSingleEvent(c,EVENT_CUSTOM+37564777,c:GetReasonEffect(),c:GetReason(),c:GetReasonPlayer(),c:GetReasonPlayer(),0)
 	end)
 	c:RegisterEffect(e2)	
 	local e3=e2:Clone()
