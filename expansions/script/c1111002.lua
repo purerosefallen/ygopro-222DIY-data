@@ -32,16 +32,16 @@ function c1111002.tfilter1_1(c,tp)
 		and c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
 		and Duel.GetLocationCountFromEx(tp,tp,c)>0
 end
-function c1111002.tfilter1_2(c,e,tp,tc)
+function c1111002.tfilter1_2(c,e,tp)
 	return muxu.check_set_Urban(c) and c:IsType(TYPE_MONSTER)
 		and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c1111002.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chkc then
-		return chkc:IsControler(tp) and c1111002.tfilter1_1(chkc)
+		return chkc:IsControler(tp) and c1111002.tfilter1_1(chkc,tp)
 	end
 	if chk==0 then
-		return Duel.IsExistingTarget(c1111002.tfilter1_1,tp,LOCATION_MZONE,0,1,nil,c,tp)
+		return Duel.IsExistingTarget(c1111002.tfilter1_1,tp,LOCATION_MZONE,0,1,nil,tp)
 			and Duel.IsExistingTarget(c1111002.tfilter1_2,tp,LOCATION_EXTRA,0,1,nil,e,tp)
 	end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SELECT)
