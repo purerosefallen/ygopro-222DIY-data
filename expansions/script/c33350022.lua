@@ -1,49 +1,117 @@
---传说之魂 缜密
-if not pcall(function() require("expansions/script/c10199990") end) then require("script/c10199990") end
 local m=33350022
 local cm=_G["c"..m]
+cm.name="传说的「G」"
 function cm.initial_effect(c)
-	aux.AddXyzProcedure(c,nil,1,2)
 	c:EnableReviveLimit()
-	local e1=rsef.I(c,{m,0},1,"se,th",nil,LOCATION_MZONE,nil,rscost.rmxyz(1),rstg.target2(cm.fun,rsop.list(cm.thfilter,"th",LOCATION_DECK)),cm.thop)
-	local e2=rsef.SC(c,EVENT_SPSUMMON_SUCCESS,nil,nil,"cd",rscon.sumtype("xyz",cm.cfilter),cm.op)
+	--Xyz Summon
+	aux.AddXyzProcedure(c,nil,1,3,nil,nil,99)
+	--Atk & Def
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetValue(cm.adval)
+	c:RegisterEffect(e1)
+	local e2=e1:Clone()
+	e2:SetCode(EFFECT_UPDATE_DEFENSE)
+	e2:SetValue(cm.adval)
+	c:RegisterEffect(e2)
+	--Move
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(m,0))
+	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SPECIAL_SUMMON)
+	e3:SetType(EFFECT_TYPE_IGNITION)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCountLimit(2,EFFECT_COUNT_CODE_SINGLE)
+	e3:SetCondition(cm.condition)
+	e3:SetTarget(cm.mvtg)
+	e3:SetOperation(cm.mvop)
+	c:RegisterEffect(e3)
+	--Return Hand
+	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(m,2))
+	e4:SetCategory(CATEGORY_TOHAND)
+	e4:SetType(EFFECT_TYPE_IGNITION)
+	e4:SetRange(LOCATION_MZONE)
+	e4:SetCountLimit(2,EFFECT_COUNT_CODE_SINGLE)
+	e4:SetCondition(cm.condition)
+	e4:SetTarget(cm.thtg)
+	e4:SetOperation(cm.thop)
+	c:RegisterEffect(e4)
 end
-cm.setname="TaleSouls"
-function cm.cfilter(e,tp,re,rp,mat)
-	return #mat>0 and mat:IsExists(Card.IsCode,1,nil,33350016)
+--Atk & Def
+function cm.adval(e,c)
+	local g=e:GetHandler():GetOverlayGroup()
+	return g:GetSum(Card.GetLevel)*300
 end
-function cm.op(e,tp)
-	local e3=rsef.I({e:GetHandler()},{m,1},1,"rm","tg",LOCATION_MZONE,nil,nil,rstg.target(Card.IsFaceup,nil,LOCATION_ONFIELD,LOCATION_ONFIELD),cm.tgop)
-	e3:SetReset(rsreset.est)
+--Effect
+function cm.condition(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return not c:IsHasEffect(EFFECT_REVERSE_UPDATE) and c:IsAttackAbove(500)
 end
-function cm.tgop(e,tp)
-	local tc=rscf.GetTargetCard()
-	if not tc then return end
-	if (tc:IsType(TYPE_PENDULUM) and tc:IsLocation(LOCATION_SZONE)) or not tc:IsCanTurnSet() then
-		Duel.Remove(tc,POS_FACEUP,REASON_RULE)
-	else
-		Duel.ChangePosition(tc,POS_FACEDOWN_DEFENSE)
+--Move
+function cm.spfilter(c,e,tp)
+	return (c:IsLocation(LOCATION_GRAVE) or c:IsFaceup()) and c:GetAttack()==500
+		and (Duel.GetMZoneCount(tp)>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) or c:IsAbleToHand())
+end
+function cm.mvtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE,tp,LOCATION_REASON_CONTROL)>0 end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_GRAVE+LOCATION_REMOVED)
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_REMOVED)
+end
+function cm.mvop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) or c:IsControler(1-tp) or c:IsImmuneToEffect(e)
+		or Duel.GetMZoneCount(tp)<1 or c:GetAttack()< 500 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
+	local s=Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0)
+	local nseq=math.log(s,2)
+	Duel.MoveSequence(c,nseq)
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
+	e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
+	e1:SetValue(-500)
+	c:RegisterEffect(e1)
+	if Duel.IsExistingMatchingCard(cm.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,nil,e,tp)
+		and Duel.SelectYesNo(tp,aux.Stringid(m,1)) then
+		Duel.BreakEffect()
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
+		local g=Duel.SelectMatchingCard(tp,cm.spfilter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil,e,tp)
+		local tc=g:GetFirst()
+		if tc then
+			local b1=tc:IsAbleToHand()
+			local b2=Duel.GetMZoneCount(tp)>0 and tc:IsCanBeSpecialSummoned(e,0,tp,false,false)
+			if b1 and (not b2 or Duel.SelectOption(tp,1190,1152)==0) then
+				Duel.SendtoHand(tc,nil,REASON_EFFECT)
+				Duel.ConfirmCards(1-tp,tc)
+			else
+				Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
+			end
+		end
 	end
 end
-function cm.fun(g,e,tp)
-	rsof.SelectHint(tp,"tg")
-	local tg=Duel.SelectMatchingCard(tp,cm.tgfilter,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	Duel.SendtoGrave(tg,REASON_COST)
+--Return Hand
+function cm.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,1-tp,LOCATION_ONFIELD)
 end
-function cm.thfilter(c,e,tp)
-	return c:IsAbleToHand() and c.setname=="TaleSouls" and Duel.IsExistingMatchingCard(cm.tgfilter,tp,LOCATION_DECK,0,1,c,e,tp)
-end
-function cm.tgfilter(c,e,tp)
-	return c.setname=="TaleSouls" and c:IsType(TYPE_MONSTER) and c:IsAbleToGraveAsCost() and Duel.IsExistingMatchingCard(cm.thfilter2,tp,LOCATION_DECK,0,1,c)
-end
-function cm.thfilter2(c,e,tp)
-	return c:IsAbleToHand() and c.setname=="TaleSouls" 
-end
-function cm.thop(e,tp)
-	rsof.SelectHint(tp,"th")
-	local tg=Duel.SelectMatchingCard(tp,cm.thfilter2,tp,LOCATION_DECK,0,1,1,nil,e,tp)
-	if #tg>0 then
-		Duel.SendtoHand(tg,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,tg)
+function cm.thop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	if not c:IsRelateToEffect(e) or c:GetAttack()< 500 then return end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,1,nil)
+	if g:GetCount()>0 then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_UPDATE_ATTACK)
+		e1:SetProperty(EFFECT_FLAG_COPY_INHERIT)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE)
+		e1:SetValue(-500)
+		c:RegisterEffect(e1)
+		Duel.HintSelection(g)
+		Duel.SendtoHand(g,nil,REASON_EFFECT)
 	end
 end

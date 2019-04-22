@@ -46,7 +46,7 @@ function c33350019.sptg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SetOperationInfo(0,CATEGORY_SUMMON,nil,1,tp,LOCATION_HAND)
 end
 function c33350019.sumfilter(c)
-	return c:IsCode(44330001) and c:IsSummonable(true,nil)
+	return c:IsCode(33351001) and c:IsSummonable(true,nil)
 end
 function c33350019.spop2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
