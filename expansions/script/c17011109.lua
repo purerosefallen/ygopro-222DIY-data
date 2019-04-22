@@ -54,12 +54,12 @@ function cm.descon(e)
     return e:GetHandler():GetMutualLinkedGroupCount()>0
 end
 function cm.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-    if chkc then return chkc:IsOnField() and chkc:IsFaceup() end
-    if chk==0 then return Duel.IsExistingTarget(Card.IsFaceup,tp,0,LOCATION_ONFIELD,1,nil) end
+    if chkc then return chkc:IsOnField() end
+    if chk==0 then return Duel.IsExistingTarget(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) end
     Duel.Hint(HINT_SOUND,0,aux.Stringid(17011109,4))
     Duel.Hint(HINT_OPSELECTED,1-tp,e:GetDescription())
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-    local g=Duel.SelectTarget(tp,Card.IsFaceup,tp,0,LOCATION_ONFIELD,1,1,nil)
+    local g=Duel.SelectTarget(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
     Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,1,0,0)
     Duel.SetOperationInfo(0,CATEGORY_DAMAGE,nil,0,1-tp,800)
 end
