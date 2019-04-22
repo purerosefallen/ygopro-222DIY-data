@@ -19,23 +19,25 @@ function c13254053.initial_effect(c)
 	e2:SetCondition(c13254053.sprcon)
 	e2:SetOperation(c13254053.sprop)
 	c:RegisterEffect(e2)
-	--special summon from grave
+	--special summon from hand
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(13254053,0))
 	e3:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
-	e3:SetTarget(c13254053.sptg)
-	e3:SetOperation(c13254053.spop)
+	e3:SetTarget(c13254053.sptg1)
+	e3:SetOperation(c13254053.spop1)
 	c:RegisterEffect(e3)
-	--special summon from hand
+	--special summon from grave
 	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(13254053,1))
 	e4:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
-	e4:SetTarget(c13254053.sptg1)
-	e4:SetOperation(c13254053.spop1)
+	e4:SetTarget(c13254053.sptg)
+	e4:SetOperation(c13254053.spop)
 	c:RegisterEffect(e4)
 	
 end

@@ -23,6 +23,7 @@ function c33350006.initial_effect(c)
 	e2:SetOperation(c33350006.spop)
 	c:RegisterEffect(e2) 
 end
+c33350006.setname="TaleSouls"
 function c33350006.spcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetAttacker():GetControler()~=tp and Duel.GetAttackTarget()==nil
 end

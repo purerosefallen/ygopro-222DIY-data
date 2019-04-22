@@ -40,20 +40,20 @@ function c13254066.initial_effect(c)
 	c:RegisterEffect(e4)
 	
 end
-function c13254066.tdfilter(c)
-	return c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsAbleToDeck()
+function c13254066.tdfilter(c,e)
+	return c:IsRace(RACE_FAIRY) and c:IsLevelBelow(1) and c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsAbleToDeck() and (not c:IsReason(REASON_EFFECT) or c:GetReasonEffect():GetHandler()~=e:GetHandler())
 end
 function c13254066.tdfilter1(c,e)
-	return c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsRelateToEffect(e)
+	return c:IsRace(RACE_FAIRY) and c:IsLevelBelow(1) and c:IsType(TYPE_MONSTER) and c:IsPreviousLocation(LOCATION_ONFIELD) and c:IsRelateToEffect(e)
 end
 function c13254066.tgfilter(c)
-	return c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
+	return c:IsSetCard(0x3356) and c:IsType(TYPE_MONSTER) and c:IsAbleToGrave()
 end
 function c13254066.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:GetFirst():GetReasonCard()~=e:GetHandler() and eg:IsExists(c13254066.tdfilter,1,nil)
+	return eg:IsExists(c13254066.tdfilter,1,nil,e)
 end
 function c13254066.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local g=eg:Filter(c13254066.tdfilter,nil)
+	local g=eg:Filter(c13254066.tdfilter,nil,e)
 	if chk==0 then return Duel.IsExistingMatchingCard(c13254066.tgfilter,tp,LOCATION_DECK,0,g:GetCount(),nil) end
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
@@ -85,7 +85,7 @@ function c13254066.tdop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c13254066.cfilter(c,e)
-	return bit.band(c:GetPreviousLocation(),LOCATION_GRAVE+LOCATION_REMOVED)>0 and c:IsSetCard(0x356) and c:IsType(TYPE_MONSTER) and c:GetReasonCard()~=e:GetHandler()
+	return bit.band(c:GetPreviousLocation(),LOCATION_GRAVE+LOCATION_REMOVED)>0 and c:IsRace(RACE_FAIRY) and c:IsLevelBelow(1) and (not c:IsReason(REASON_EFFECT) or c:GetReasonEffect():GetHandler()~=e:GetHandler())
 end
 function c13254066.tdfilter11(c)
 	return true

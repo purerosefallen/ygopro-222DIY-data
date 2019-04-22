@@ -28,6 +28,7 @@ function c33350004.initial_effect(c)
 	e21:SetCondition(c33350004.condition3)
 	c:RegisterEffect(e21)   
 end
+c33350004.setname="TaleSouls"
 function c33350004.target2(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(1-tp,LOCATION_MZONE)
 	if chk==0 then return (not Duel.IsPlayerAffectedByEffect(tp,59822133) or ft==1)

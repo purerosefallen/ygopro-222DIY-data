@@ -9,7 +9,7 @@ function cm.initial_effect(c)
 	e1:SetTarget(cm.target)
 	e1:SetOperation(cm.operation)
 	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
+	--[[local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetRange(LOCATION_REMOVED)
 	e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
@@ -19,7 +19,34 @@ function cm.initial_effect(c)
 		return e:GetHandler():GetFlagEffect(m)>0
 	end)
 	e2:SetValue(1)
-	c:RegisterEffect(e2)
+	c:RegisterEffect(e2)]]
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_IGNITION)
+	e2:SetRange(LOCATION_GRAVE)
+	e2:SetCost(aux.bfgcost)
+	e2:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk)
+		if chk==0 then return Duel.GetFlagEffect(tp,m)==0 end
+	end)
+	e2:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
+		local c=e:GetHandler()
+		Duel.RegisterFlagEffect(tp,m,RESET_PHASE+PHASE_END,0,1)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_FIELD)
+		e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
+		e2:SetTargetRange(LOCATION_EXTRA,0)
+		e2:SetCode(EFFECT_MAP_OF_HEAVEN)
+		e2:SetValue(1)
+		e2:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e2,tp)
+		--[[local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_FIELD)
+		e2:SetCode(EFFECT_CANNOT_TO_HAND)
+		e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+		e2:SetTargetRange(1,0)
+		e2:SetTarget(aux.TargetBoolFunction(Card.IsLocation,LOCATION_DECK))
+		e2:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e2,tp)]]
+	end)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>4 and e:GetHandler():IsAbleToRemove() end
@@ -40,9 +67,9 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 		res=Duel.SendtoHand(sg,nil,REASON_EFFECT)
 	end
 	Duel.ShuffleDeck(tp)
-	if res>0 then
+	--[[if res>0 then
 		Duel.BreakEffect()
 		Duel.Remove(e:GetHandler(),POS_FACEUP,REASON_EFFECT)
 		e:GetHandler():RegisterFlagEffect(m,0x1fe1000,0,1)
-	end
+	end]]
 end

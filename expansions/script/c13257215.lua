@@ -13,7 +13,7 @@ function c13257215.initial_effect(c)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetTarget(c13257215.etarget)
-	e2:SetValue(1)
+	e2:SetValue(c13257215.efilter)
 	c:RegisterEffect(e2)
 	--roll and destroy
 	local e3=Effect.CreateEffect(c)
@@ -45,6 +45,9 @@ function c13257215.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13257215.etarget(e,c)
 	return c:IsAttribute(ATTRIBUTE_EARTH)
+end
+function c13257215.efilter(e,re)
+	return re:GetHandler()==e:GetHandler()
 end
 function c13257215.rdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end

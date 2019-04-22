@@ -36,6 +36,7 @@ function scard.initial_effect(c)
 	e1:SetOperation(scard.activate)
 	c:RegisterEffect(e1)
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(m*16+2)
 	e1:SetCategory(CATEGORY_DRAW)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e1:SetCode(EVENT_PHASE+PHASE_END)
@@ -72,6 +73,16 @@ function scard.initial_effect(c)
 		Duel.RegisterEffect(e1,tp)
 	end)
 	c:RegisterEffect(e1)
+	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(m*16+4)
+	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e2:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_CANNOT_DISABLE)
+	e2:SetRange(LOCATION_FZONE)
+	e2:SetCountLimit(1)
+	e2:SetCode(EVENT_PHASE+PHASE_END)
+	e2:SetCondition(cm.descon)
+	e2:SetOperation(cm.desop)
+	c:RegisterEffect(e2)
 	if scard.counter==nil then
 		scard.counter=true
 		scard[0]=0
@@ -128,6 +139,7 @@ function scard.regtg(e, tp, eg, ep, ev, re, r, rp, chk)
 	local c = e:GetHandler()
 	--to grave
 	local e1 = Effect.CreateEffect(c)
+	e1:SetDescription(m*16+3)
 	e1:SetType(EFFECT_TYPE_FIELD + EFFECT_TYPE_CONTINUOUS)
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetCode(EVENT_PHASE + PHASE_END)
@@ -150,4 +162,14 @@ function scard.gyop(e, tp, eg, ep, ev, re, r, rp)
 	if ct == 7 then
 		Duel.SendtoGrave(c, REASON_RULE)
 	end
+end
+function cm.descon(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetTurnPlayer()==tp
+end
+function cm.desop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	Duel.HintSelection(Group.FromCards(c))
+	if Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) and Duel.SelectYesNo(tp,aux.Stringid(m,5)) then
+		Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD,e:GetHandler())
+	else Duel.SendtoGrave(c,REASON_COST) end
 end

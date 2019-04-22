@@ -41,5 +41,4 @@ end
 function c81010016.handcon(e)
 	local tp=e:GetHandlerPlayer()
 	return not Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_MZONE,1,nil)
-		and Duel.IsExistingMatchingCard(nil,tp,0,LOCATION_FZONE,1,nil)
 end

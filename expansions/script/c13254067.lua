@@ -51,7 +51,7 @@ function c13254067.initial_effect(c)
 	c:RegisterEffect(e5)
 	--to grave
 	local e6=Effect.CreateEffect(c)
-	e6:SetCategory(CATEGORY_TOGRAVE)
+	e6:SetCategory(CATEGORY_REMOVE)
 	e6:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e6:SetProperty(EFFECT_FLAG_DELAY)
 	e6:SetCode(EVENT_RELEASE)
@@ -163,9 +163,10 @@ function c13254067.operation3(e,tp,eg,ep,ev,re,r,rp)
 	end
 	local ct=Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
 	if ct>=5 then
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISCARD)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 		local g1=Duel.SelectMatchingCard(1-tp,nil,1-tp,LOCATION_HAND,0,ct-4,ct-4,nil)
-		Duel.SendtoGrave(g1,REASON_DISCARD)
+		--Duel.SendtoGrave(g1,REASON_DISCARD)
+		Duel.Remove(g1,POS_FACEDOWN,REASON_EFFECT)
 	end
 end
 

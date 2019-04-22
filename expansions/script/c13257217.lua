@@ -13,7 +13,7 @@ function c13257217.initial_effect(c)
 	e2:SetRange(LOCATION_FZONE)
 	e2:SetTargetRange(LOCATION_ONFIELD,LOCATION_ONFIELD)
 	e2:SetTarget(c13257217.etarget)
-	e2:SetValue(1)
+	e2:SetValue(c13257217.efilter)
 	c:RegisterEffect(e2)
 	--roll and destroy
 	local e3=Effect.CreateEffect(c)
@@ -44,6 +44,9 @@ function c13257217.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13257217.etarget(e,c)
 	return c:IsType(TYPE_SPELL) and c:IsType(TYPE_FIELD) and c:IsFaceup()
+end
+function c13257217.efilter(e,re)
+	return re:GetHandler()==e:GetHandler()
 end
 function c13257217.rdop(e,tp,eg,ep,ev,re,r,rp)
 	local sg=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)

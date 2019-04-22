@@ -7,7 +7,6 @@ function c65090062.initial_effect(c)
 	e1:SetRange(LOCATION_HAND)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetCountLimit(1,65090062)
-	e1:SetCost(c65090062.cost)
 	e1:SetTarget(c65090062.tg)
 	e1:SetOperation(c65090062.op)
 	c:RegisterEffect(e1)
@@ -21,10 +20,6 @@ function c65090062.initial_effect(c)
 	e2:SetTarget(c65090062.thtg)
 	e2:SetOperation(c65090062.thop)
 	c:RegisterEffect(e2)
-end
-function c65090062.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsDiscardable() end
-	Duel.SendtoGrave(e:GetHandler(),REASON_COST+REASON_DISCARD)
 end
 function c65090062.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) end
@@ -48,7 +43,7 @@ end
 
 function c65090062.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_EFFECT) and re:GetHandler():IsSetCard(0x9da7) and re:IsActiveType(TYPE_MONSTER)
+	return c:IsReason(REASON_EFFECT) and re:GetHandler():IsSetCard(0x9da7) 
 end
 function c65090062.filter(c)
 	return c:IsSetCard(0x9da7) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

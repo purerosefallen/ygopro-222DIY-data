@@ -37,7 +37,7 @@ end
 
 function c65090063.thcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	return c:IsReason(REASON_EFFECT) and re:GetHandler():IsSetCard(0x9da7) and re:IsActiveType(TYPE_MONSTER)
+	return c:IsReason(REASON_EFFECT) and re:GetHandler():IsSetCard(0x9da7) 
 end
 function c65090063.filter(c)
 	return c:IsSetCard(0x9da7) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()

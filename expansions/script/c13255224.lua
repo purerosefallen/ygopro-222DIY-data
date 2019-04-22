@@ -59,11 +59,11 @@ function c13255224.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
 	return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c13255224.spfilter,tp,LOCATION_GRAVE,0,1,nil)
+		and Duel.IsExistingMatchingCard(c13255224.spfilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,nil)
 end
 function c13255224.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(tp,c13255224.spfilter,tp,LOCATION_GRAVE,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,c13255224.spfilter,tp,LOCATION_GRAVE+LOCATION_ONFIELD,0,1,1,nil)
 	Duel.SendtoDeck(g,nil,2,REASON_COST)
 end
 function c13255224.discon(e,tp,eg,ep,ev,re,r,rp)
@@ -79,9 +79,20 @@ function c13255224.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	end
 end
 function c13255224.disop(e,tp,eg,ep,ev,re,r,rp)
-	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
-		Duel.SendtoDeck(eg,nil,2,REASON_EFFECT)
+	local cc=Duel.GetChainInfo(0,CHAININFO_CHAIN_COUNT)-1
+	local g=Group.CreateGroup()
+	for i=1,cc do
+		local te=Duel.GetChainInfo(i,CHAININFO_TRIGGERING_EFFECT)
+		if te:GetOwnerPlayer()~=tp and Duel.NegateActivation(i) and te:GetHandler():IsRelateToEffect(re) then
+			g:AddCard(te:GetHandler())
+		end
 	end
+	if g:GetCount()>0
+		Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
+	end
+	--if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
+	--	Duel.SendtoDeck(eg,nil,2,REASON_EFFECT)
+	--end
 end
 function c13255224.repval(e,c)
 	return c:IsLocation(LOCATION_ONFIELD)
@@ -111,10 +122,10 @@ function c13255224.repop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.Destroy(g,REASON_EFFECT)
 	end
 	--if tc:IsCode(13255219) then
-	--	local dg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
-	--	if dg:GetCount()>0 then
-	--		Duel.Destroy(dg,REASON_EFFECT)
-	--	end
+	--  local dg=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_MZONE,nil)
+	--  if dg:GetCount()>0 then
+	--	  Duel.Destroy(dg,REASON_EFFECT)
+	--  end
 	--end
 end
 

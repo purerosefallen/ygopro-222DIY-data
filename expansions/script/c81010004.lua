@@ -4,6 +4,7 @@ function c81010004.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetOperation(c81010004.sumsuc)
 	c:RegisterEffect(e1)
 	--cannot attack
 	local e2=Effect.CreateEffect(c)
@@ -102,3 +103,6 @@ end
 function c81010004.splimit(e,c)
 	return not c:IsAttribute(ATTRIBUTE_WIND) and c:IsLocation(LOCATION_EXTRA)
 end
+function c81010004.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(81010004,2))
+end 
