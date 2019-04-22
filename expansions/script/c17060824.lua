@@ -104,13 +104,17 @@ function cm.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function cm.tgop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SendtoGrave(Group.FromCards(tc,e:GetHandler()),REASON_EFFECT)~=0 then
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(cm.filter),tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
-	if g:GetCount()>0 then
-		Duel.SpecialSummon(g,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
+	if tc:IsRelateToEffect(e) then
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+		local g=Duel.SelectMatchingCard(tp,cm.filter,tp,LOCATION_HAND+LOCATION_DECK,0,1,1,nil,e,tp)
+		local tc1=g:GetFirst()
+		local mat=Group.FromCards(tc,e:GetHandler())
+		tc1:SetMaterial(mat)
+		if g:GetCount()>0 and Duel.SendtoGrave(mat,REASON_EFFECT)~=0 then
+		if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
+			Duel.SpecialSummon(tc1,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
+			tc1:CompleteProcedure()
 		end
 	end
 end

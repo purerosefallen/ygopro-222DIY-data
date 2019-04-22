@@ -81,8 +81,6 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.SelectYesNo(tp,aux.Stringid(m,1)) then
 		local c=e:GetHandler()
 		c:SetMaterial(eg)
-		Duel.ReleaseRitualMaterial(eg)
-		Duel.BreakEffect()
 		Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)
 		Duel.SpecialSummon(c,SUMMON_TYPE_RITUAL,tp,tp,false,true,POS_FACEUP)
 		c:CompleteProcedure()

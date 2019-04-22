@@ -28,6 +28,13 @@ function c13254128.initial_effect(c)
 	c:RegisterEffect(e3)
 	
 end
+function c13254128.cfilter0(c)
+	return c:IsType(TYPE_SPELL) and c:IsDiscardable()
+end
+function c13254128.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c13254128.cfilter0,tp,LOCATION_HAND,0,1,nil) end
+	Duel.DiscardHand(tp,c13254128.cfilter0,1,1,REASON_COST+REASON_DISCARD,nil)
+end
 function c13254128.thfilter(c)
 	return c:IsSetCard(0x356) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
 end
@@ -44,7 +51,7 @@ function c13254128.thop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c13254128.cfilter(c)
-	return c:IsCode(13254049) or c:IsCode(13254050) or c:IsCode(13254052)
+	return (c:IsCode(13254049) or c:IsCode(13254050) or c:IsCode(13254052)) and c:IsFaceup()
 end
 function c13254128.condition(e,tp,eg,ep,ev,re,r,rp)
 	return re:GetHandler():IsType(TYPE_SPELL) and Duel.IsExistingMatchingCard(c13254128.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
@@ -65,7 +72,7 @@ function c13254128.activate(e,tp,eg,ep,ev,re,r,rp)
 	fop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c13254128.tgfilter(c)
-	return c:IsFaceup() and c:IsCode(13254049) or c:IsCode(13254050) and c:IsAbleToGrave() and Duel.IsExistingMatchingCard(c13254128.tgfilter1,tp,LOCATION_EXTRA,0,1,nil,c)
+	return c:IsFaceup() and (c:IsCode(13254049) or c:IsCode(13254050)) and c:IsAbleToGrave() and Duel.IsExistingMatchingCard(c13254128.tgfilter1,tp,LOCATION_EXTRA,0,1,nil,c)
 end
 function c13254128.tgfilter1(c,tc)
 	return c:IsCode(13254049) or c:IsCode(13254050) and not c:IsCode(tc:GetCode()) and c:IsAbleToGrave()

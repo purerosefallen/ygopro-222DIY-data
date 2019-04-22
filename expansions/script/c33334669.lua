@@ -56,7 +56,7 @@ function c33334669.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return c:GetSummonType()~=SUMMON_TYPE_RITUAL 
 end
 function c33334669.filter(c,tp)
-	return c:IsType(TYPE_MONSTER) and c:GetSummonLocation()==LOCATION_EXTRA and c:IsPlayerCanSendtoDeck(1-tp,c)
+	return c:IsType(TYPE_MONSTER) and c:GetSummonLocation()==LOCATION_EXTRA and Duel.IsPlayerCanSendtoDeck(1-tp,c)
 end
 function c33334669.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c33334669.filter,tp,0,LOCATION_MZONE,1,nil,tp) end
