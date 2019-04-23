@@ -23,7 +23,7 @@ function cm.initial_effect(c)
     e1:SetTarget(function(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 		if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and aux.disfilter1(chkc) end
 		if chk==0 then return Duel.IsExistingTarget(aux.disfilter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,nil) end
-		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DISABLE)
+		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 		local g=Duel.SelectTarget(tp,aux.disfilter1,tp,LOCATION_ONFIELD,LOCATION_ONFIELD,1,1,nil)
 	end)
 	e1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
