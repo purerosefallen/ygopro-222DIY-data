@@ -2,6 +2,7 @@
 function c13254128.initial_effect(c)
 	--Activate
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(13254128,0))
 	e1:SetCategory(CATEGORY_SEARCH+CATEGORY_TOHAND)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -11,6 +12,7 @@ function c13254128.initial_effect(c)
 	c:RegisterEffect(e1)
 	--Arcane Copy
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(13254128,1))
 	e2:SetType(EFFECT_TYPE_ACTIVATE)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetCondition(c13254128.condition)
@@ -19,6 +21,7 @@ function c13254128.initial_effect(c)
 	c:RegisterEffect(e2)
 	--Arcane Fusion
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(13254128,2))
 	e3:SetCategory(CATEGORY_TOGRAVE+CATEGORY_SPECIAL_SUMMON)
 	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetType(EFFECT_TYPE_ACTIVATE)
