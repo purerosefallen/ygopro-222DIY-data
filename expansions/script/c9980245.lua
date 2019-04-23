@@ -7,7 +7,6 @@ function c9980245.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
-	e1:SetCountLimit(1,9980245)
 	e1:SetCondition(c9980245.spcon)
 	c:RegisterEffect(e1)
 	--add counter
@@ -50,8 +49,8 @@ function c9980245.acop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c9980245.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsCanRemoveCounter(tp,0x1,2,REASON_COST) end
-	e:GetHandler():RemoveCounter(tp,0x1,2,REASON_COST)
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,1,0,0x1,2,REASON_COST) end
+	Duel.RemoveCounter(tp,1,0,0x1,2,REASON_COST)
 end
 function c9980245.spfilter(c,e,tp)
 	return c:IsCode(9980246) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)

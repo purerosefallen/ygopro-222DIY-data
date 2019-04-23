@@ -24,14 +24,14 @@ function c9980249.initial_effect(c)
 	c:RegisterEffect(e1)
 	 --Search
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(47349116,1))
+	e2:SetDescription(aux.Stringid(9980249,1))
 	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
-	e2:SetCost(c47349116.thcost)
-	e2:SetTarget(c47349116.thtg)
-	e2:SetOperation(c47349116.thop)
+	e2:SetCost(c9980249.thcost)
+	e2:SetTarget(c9980249.thtg)
+	e2:SetOperation(c9980249.thop)
 	c:RegisterEffect(e2)
 	--pendulum
 	local e8=Effect.CreateEffect(c)
@@ -77,21 +77,21 @@ function c9980249.ctcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
-function c47349116.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
+function c9980249.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end
 	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
 end
-function c47349116.thfilter(c)
+function c9980249.thfilter(c)
 	return c:IsSetCard(0xbc4) and c:IsType(TYPE_MONSTER)
 		and (c:IsFaceup() or not c:IsLocation(LOCATION_EXTRA)) and c:IsAbleToHand()
 end
-function c47349116.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c47349116.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,1,nil) end
+function c9980249.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c9980249.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,1,nil) end
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA)
 end
-function c47349116.thop(e,tp,eg,ep,ev,re,r,rp)
+function c9980249.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c47349116.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c9980249.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_EXTRA,0,1,1,nil)
 	local tc=g:GetFirst()
 	if not tc then return end
 	Duel.SendtoHand(tc,nil,REASON_EFFECT)

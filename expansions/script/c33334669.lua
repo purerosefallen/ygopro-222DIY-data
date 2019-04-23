@@ -28,7 +28,7 @@ function c33334669.counterfilter(c)
 	return c:IsSummonType(SUMMON_TYPE_RITUAL)
 end
 function c33334669.costfil(c)
-	return c:IsType(TYPE_SPELL) and c:IsAbleToGraveAsCost()
+	return c:IsType(TYPE_SPELL) and c:IsType(TYPE_RITUAL) and c:IsAbleToGraveAsCost()
 end
 function c33334669.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c33334669.costfil,tp,LOCATION_HAND,0,1,e:GetHandler()) and e:GetHandler():IsAbleToGraveAsCost() and Duel.GetActivityCount(tp,ACTIVITY_SPSUMMON)<=1 and Duel.GetCustomActivityCount(33334669,tp,ACTIVITY_SPSUMMON)==0 end
@@ -66,7 +66,7 @@ end
 function c33334669.activate(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(c33334669.filter,tp,0,LOCATION_MZONE,nil,tp)
 	if g:GetCount()>0 then
-		Duel.SendtoGrave(g,nil,2,REASON_RULE)
+		Duel.SendtoDeck(g,nil,2,REASON_RULE)
 	end
 end
 

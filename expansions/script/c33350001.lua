@@ -67,7 +67,7 @@ function cm.cfilter(c)
 	return c:IsFaceup() and c.setname=="TaleSouls"
 end
 function cm.cfilter2(c)
-	return c:IsCode(44330001) and c:IsAbleToGraveAsCost()
+	return c:IsCode(33351001) and c:IsAbleToGraveAsCost()
 end
 function cm.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.cfilter2,tp,LOCATION_HAND+LOCATION_DECK,0,1,nil) end
