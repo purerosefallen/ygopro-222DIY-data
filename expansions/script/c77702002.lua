@@ -1,5 +1,7 @@
 local scard = c77702002
 local id = 77702002
+local m=id
+local cm=scard
 function scard.initial_effect(c)
 	local e1 = Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)

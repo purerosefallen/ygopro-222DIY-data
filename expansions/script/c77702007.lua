@@ -47,6 +47,7 @@ function cm.initial_effect(c)
 		e2:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e2,tp)]]
 	end)
+	c:RegisterEffect(e2)
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetFieldGroupCount(tp,LOCATION_DECK,0)>4 and e:GetHandler():IsAbleToRemove() end
