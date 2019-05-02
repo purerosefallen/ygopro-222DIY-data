@@ -12,6 +12,12 @@ function c21520087.initial_effect(c)
 	e0:SetCondition(c21520087.sprcon)
 	e0:SetOperation(c21520087.sprop)
 	c:RegisterEffect(e0)
+	local e01=Effect.CreateEffect(c)
+	e01:SetType(EFFECT_TYPE_SINGLE)
+	e01:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e01:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e01:SetValue(c21520087.splimit)
+	c:RegisterEffect(e01)
 	--indes
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -78,11 +84,14 @@ function c21520087.initial_effect(c)
 	e5:SetOperation(c21520087.op4)
 	c:RegisterEffect(e5)
 end
+function c21520087.splimit(e,se,sp,st)
+	return bit.band(st,SUMMON_TYPE_FUSION)==SUMMON_TYPE_FUSION
+end
 function c21520087.fsfilter(c)
 	return (c:GetBaseAttack()>=2400 and c:GetBaseDefense()>=1000) and c:IsCanBeFusionMaterial()
 end
 function c21520087.spfilter(c)
-	return (c:GetBaseAttack()>=2400 and c:GetBaseDefense()>=1000) and c:IsCanBeFusionMaterial() and c:IsAbleToDeckOrExtraAsCost()
+	return c21520087.fsfilter(c) and c:IsAbleToDeckOrExtraAsCost()
 end
 function c21520087.fselect(c,tp,mg,sg)
 	sg:AddCard(c)

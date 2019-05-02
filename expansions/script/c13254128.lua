@@ -78,10 +78,10 @@ function c13254128.tgfilter(c)
 	return c:IsFaceup() and (c:IsCode(13254049) or c:IsCode(13254050)) and c:IsAbleToGrave() and Duel.IsExistingMatchingCard(c13254128.tgfilter1,tp,LOCATION_EXTRA,0,1,nil,c)
 end
 function c13254128.tgfilter1(c,tc)
-	return c:IsCode(13254049) or c:IsCode(13254050) and not c:IsCode(tc:GetCode()) and c:IsAbleToGrave()
+	return (c:IsCode(13254049) or c:IsCode(13254050)) and not c:IsCode(tc:GetCode()) and c:IsAbleToGrave()
 end
 function c13254128.spfilter(c,e,tp)
-	return c:IsRace(13254052) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
+	return c:IsCode(13254052) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
 end
 function c13254128.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and c13254128.tgfilter(chkc) end
