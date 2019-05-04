@@ -35,6 +35,7 @@ function c9980293.operation(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	if sg:GetCount()>0 then
+		Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980293,0))
 		Duel.SendtoHand(sg,nil,REASON_EFFECT)
 	end
 end

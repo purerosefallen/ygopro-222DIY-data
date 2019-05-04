@@ -67,7 +67,7 @@ function c9980172.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980172,2))
 end
 function c9980172.matfilter(c)
-	return c:IsLinkSetCard(0xbc4) and not c:IsLinkCode(9980172)
+	return c:IsLinkSetCard(0x2bc4) and not c:IsLinkCode(9980172)
 end
 function c9980172.acop(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
@@ -87,7 +87,7 @@ function c9980172.atkval(e,c)
 	return e:GetHandler():GetCounter(0x1)*-100
 end
 function c9980172.dfilter(c)
-	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0xbc4)
+	return c:IsLocation(LOCATION_MZONE) and c:IsFaceup() and c:IsSetCard(0x2bc4)
 end
 function c9980172.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
@@ -98,7 +98,7 @@ function c9980172.destg(e,tp,eg,ep,ev,re,r,rp,chk)
 	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
 end
 function c9980172.value(e,c)
-	return c:IsFaceup() and c:GetLocation()==LOCATION_MZONE and c:IsSetCard(0xbc4)
+	return c:IsFaceup() and c:GetLocation()==LOCATION_MZONE and c:IsSetCard(0x2bc4)
 end
 function c9980172.desop(e,tp,eg,ep,ev,re,r,rp)
 	local count=e:GetLabel()

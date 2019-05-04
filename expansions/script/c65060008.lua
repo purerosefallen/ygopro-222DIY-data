@@ -18,6 +18,7 @@ function c65060008.initial_effect(c)
 	e2:SetCode(EFFECT_IMMUNE_EFFECT)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
+	e2:SetCondition(c65060008.conb)
 	e2:SetTarget(c65060008.tgtg)
 	e2:SetValue(c65060008.efilter)
 	c:RegisterEffect(e2) 
@@ -28,6 +29,7 @@ function c65060008.initial_effect(c)
 	e4:SetRange(LOCATION_MZONE)
 	e4:SetTargetRange(LOCATION_MZONE,0)
 	e4:SetCode(EFFECT_UNRELEASABLE_SUM)
+	e4:SetCondition(c65060008.cona)
 	e4:SetTarget(c65060008.tgtg)
 	e4:SetValue(1)
 	c:RegisterEffect(e4)
@@ -35,12 +37,22 @@ function c65060008.initial_effect(c)
 	e5:SetCode(EFFECT_UNRELEASABLE_NONSUM)
 	c:RegisterEffect(e5)
 end
+function c65060008.cona(e,c)
+	local tp=e:GetHandlerPlayer()
+	local cc=e:GetHandler()
+	return cc:GetMutualLinkedGroupCount()>=1 or Duel.GetFlagEffect(tp,65060031)~=0
+end
+function c65060008.conb(e,c)
+	local tp=e:GetHandlerPlayer()
+	local cc=e:GetHandler()
+	return cc:GetMutualLinkedGroupCount()>=2 or (cc:GetMutualLinkedGroupCount()>=1 and Duel.GetFlagEffect(tp,65060031)~=0)
+end
 
 function c65060008.tgtg(e,c)
 	return c:GetMutualLinkedGroupCount()>0
 end
 function c65060008.efilter(e,re,rp)
-	return (re:GetActivateLocation()==LOCATION_GRAVE or (re:GetActivateLocation()==LOCATION_HAND and re:IsActiveType(TYPE_MONSTER))) and rp~=e:GetHandlerPlayer()
+	return rp~=e:GetHandlerPlayer() and not (re:GetActivateLocation()==LOCATION_HAND or re:GetActivateLocation()==LOCATION_ONFIELD)
 end
 function c65060008.spfil(c,e,tp)
    return c:IsCode(65060008) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) 

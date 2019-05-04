@@ -19,14 +19,26 @@ function c65060007.initial_effect(c)
 	e2:SetCode(EFFECT_CANNOT_BE_EFFECT_TARGET)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetTargetRange(LOCATION_MZONE,0)
+	e2:SetCondition(c65060007.cona)
 	e2:SetTarget(c65060007.tgtg)
 	e2:SetValue(1)
 	c:RegisterEffect(e2)
 	local e3=e2:Clone()
 	e3:SetCode(EFFECT_INDESTRUCTABLE_EFFECT)
+	e3:SetCondition(c65060007.conb)
 	c:RegisterEffect(e3)
 end
 
+function c65060007.cona(e,c)
+	local tp=e:GetHandlerPlayer()
+	local cc=e:GetHandler()
+	return cc:GetMutualLinkedGroupCount()>=1 or Duel.GetFlagEffect(tp,65060031)~=0
+end
+function c65060007.conb(e,c)
+	local tp=e:GetHandlerPlayer()
+	local cc=e:GetHandler()
+	return cc:GetMutualLinkedGroupCount()>=2 or (cc:GetMutualLinkedGroupCount()>=1 and Duel.GetFlagEffect(tp,65060031)~=0)
+end
 function c65060007.tgtg(e,c)
 	return c:GetMutualLinkedGroupCount()>0
 end

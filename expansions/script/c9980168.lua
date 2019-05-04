@@ -40,7 +40,7 @@ function c9980168.initial_effect(c)
 	c:RegisterEffect(e4)
 end
 function c9980168.spfilter(c,e,tp)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0xbc4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2bc4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c9980168.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_EXTRA) and chkc:IsControler(tp) and c9980168.spfilter(chkc,e,tp) end

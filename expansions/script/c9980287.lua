@@ -46,12 +46,24 @@ function c9980287.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1)
+	e1:SetCountLimit(1,9980287)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetTarget(c9980287.thtg)
 	e1:SetOperation(c9980287.thop)
 	c:RegisterEffect(e1)
+	--spsummon bgm
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e8:SetOperation(c9980287.sumsuc)
+	c:RegisterEffect(e8)
+	local e9=e8:Clone()
+	e9:SetCode(EVENT_SUMMON_SUCCESS)
+	c:RegisterEffect(e9)
+end
+function c9980287.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980287,1))
 end
 function c9980287.lcheck(g,lc)
 	return g:IsExists(Card.IsLinkSetCard,1,nil,0xbc4)
@@ -89,6 +101,7 @@ function c9980287.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.RemoveCounter(tp,1,1,0x1,1,REASON_EFFECT)
 		local tc=Duel.GetFirstTarget()
 		if tc:IsRelateToEffect(e) then
+			Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980287,1))
 			Duel.SendtoHand(tc,nil,REASON_EFFECT)
 		end
 	end

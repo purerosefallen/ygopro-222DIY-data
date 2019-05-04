@@ -177,8 +177,13 @@ function c1140011.SynMixCheckRecursive(c,tp,sg,mg,ct,minc,maxc,syncard,sg1,smat,
 	return res
 end
 --
-function c1140011.GetSynchroLevelCheck(c,syncard,num)
-	return c:GetSynchroLevel(syncard)==num and not c:IsCode(1140901)
+function c1140011.GetSynchroLevelCheck1(c,syncard)
+	return c:GetSynchroLevel(syncard)<1 or c:IsCode(1140901)
+end
+function c1140011.GetSynchroLevelCheck2(c,syncard,num,tc)
+	return c:GetSynchroLevel(syncard)==num
+		or (syncard:GetLevel()==num and tc:IsCode(1140901)
+			and c:GetSynchroLevel(syncard)==(num-1))
 end
 --
 function c1140011.SynMixCheckGoal(tp,sg,minc,ct,syncard,sg1,smat,gc)
@@ -193,15 +198,16 @@ function c1140011.SynMixCheckGoal(tp,sg,minc,ct,syncard,sg1,smat,gc)
 	local checknum=0
 	if g:GetCount()<1 then return false end
 	local tc=g:GetFirst()
-	while tc do   
-		local num=syncard:GetLevel()
+	while tc do
 		local lv=0
+		local num=syncard:GetLevel()
 		if not tc:IsCode(1140901) then 
 			lv=tc:GetSynchroLevel(syncard)
 		end
 		num=syncard:GetLevel()-lv
-		if num==0 and g:IsExists(Card.IsCode,1,tc,1140901) then checknum=1 end
-		if num~=0 and g:IsExists(c1140011.GetSynchroLevelCheck,1,tc,syncard,num) then checknum=1 end
+		local b1=(num==0 and g:IsExists(c1140011.GetSynchroLevelCheck1,1,tc,syncard) end
+		local b2=(num~=0 and g:IsExists(c1140011.GetSynchroLevelCheck2,1,tc,syncard,tc,num))
+		if b1 or b2 then checknum=1 end
 		tc=g:GetNext()
 	end
 	if checknum~=1 then return false end

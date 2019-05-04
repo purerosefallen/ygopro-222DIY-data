@@ -50,6 +50,18 @@ function c9980282.initial_effect(c)
 	e2:SetTarget(c9980282.damtg)
 	e2:SetOperation(c9980282.damop)
 	c:RegisterEffect(e2)
+	--spsummon bgm
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e8:SetOperation(c9980282.sumsuc)
+	c:RegisterEffect(e8)
+	local e9=e8:Clone()
+	e9:SetCode(EVENT_SUMMON_SUCCESS)
+	c:RegisterEffect(e9)
+end
+function c9980282.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980282,0))
 end
 function c9980282.tgtg(e,c)
 	return c~=e:GetHandler()

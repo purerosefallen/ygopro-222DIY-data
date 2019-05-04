@@ -34,30 +34,30 @@ end
 function c65060012.efftg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
 	if chk==0 then return true end
-	if c:GetMutualLinkedGroupCount()>=1 then
+	if c:GetMutualLinkedGroupCount()>=1 or Duel.GetFlagEffect(tp,65060031)~=0 then
 		Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
 	end
-	if re:GetHandler():IsAbleToRemove() and re:GetHandler():IsRelateToEffect(re) and c:GetMutualLinkedGroupCount()>=2 then
+	if re:GetHandler():IsAbleToRemove() and re:GetHandler():IsRelateToEffect(re) and (c:GetMutualLinkedGroupCount()>=2 or (c:GetMutualLinkedGroupCount()>=1 and Duel.GetFlagEffect(tp,65060031)~=0)) then
 		Duel.SetOperationInfo(0,CATEGORY_REMOVE,eg,1,0,0)
 	end
 end
 
 function c65060012.effop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:GetMutualLinkedGroupCount()>=1 then
-		if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and c:GetMutualLinkedGroupCount()>=2 then
+	if c:GetMutualLinkedGroupCount()>=1 or Duel.GetFlagEffect(tp,65060031)~=0 then
+		if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) and (c:GetMutualLinkedGroupCount()>=2 or (c:GetMutualLinkedGroupCount()>=1 and Duel.GetFlagEffect(tp,65060031)~=0)) then
 			Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)
 		end
 	end
-	if c:GetMutualLinkedGroupCount()>=3 then
-		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_REMOVED,LOCATION_REMOVED,nil)
+	if c:GetMutualLinkedGroupCount()>=3 or (c:GetMutualLinkedGroupCount()>=2 or (c:GetMutualLinkedGroupCount()>=2 and Duel.GetFlagEffect(tp,65060031)~=0)) then
+		local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,0,LOCATION_REMOVED,nil)
 		local tc=g:GetFirst()
 		while tc do
 			local e1=Effect.CreateEffect(c)
 			e1:SetType(EFFECT_TYPE_FIELD)
 			e1:SetCode(EFFECT_CANNOT_ACTIVATE)
 			e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-			e1:SetTargetRange(1,1)
+			e1:SetTargetRange(0,1)
 			e1:SetValue(c65060012.aclimit)
 			e1:SetLabel(tc:GetCode())
 			e1:SetReset(RESET_PHASE+PHASE_END)

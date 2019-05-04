@@ -34,14 +34,39 @@ function c65060011.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local ct=c:GetMutualLinkedGroupCount()
 	if chkc then return chkc:IsLocation(LOCATION_ONFIELD) and chkc:IsControler(1-tp) and chkc:IsAbleToHand() end
 	if chk==0 then return ct>0 and Duel.IsExistingTarget(Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,nil) end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,1,nil)
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Group.CreateGroup()
+	if Duel.GetFlagEffect(tp,65060031)~=0 then
+		g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,ct+1,nil)
+	else
+		g=Duel.SelectTarget(tp,Card.IsAbleToHand,tp,0,LOCATION_ONFIELD,1,ct,nil)
+	end
+	if c:GetMutualLinkedGroupCount()>=2 or (c:GetMutualLinkedGroupCount()>=1 and Duel.GetFlagEffect(tp,65060031)~=0) then
+		e:SetCategory(CATEGORY_ATKCHANGE)
+	end
+	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,g:GetCount(),0,0)
+	if c:GetMutualLinkedGroupCount()>=3 or (c:GetMutualLinkedGroupCount()>=2 and Duel.GetFlagEffect(tp,65060031)~=0) then
+		Duel.SetChainLimit(c65060011.chlimit)
+	end
 end
-
+function c65060011.chlimit(e,ep,tp)
+	return tp==ep
+end
 function c65060011.effop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	Duel.SendtoHand(g,nil,REASON_EFFECT)
+	local c=e:GetHandler()
+	local num=Duel.SendtoHand(g,nil,REASON_EFFECT)
+	if num~=0 and (c:GetMutualLinkedGroupCount()>=2 or (c:GetMutualLinkedGroupCount()>=1 and Duel.GetFlagEffect(tp,65060031)~=0)) then
+		--atk
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_FIELD)
+		e2:SetCode(EFFECT_UPDATE_ATTACK)
+		e2:SetTargetRange(LOCATION_MZONE,0)
+		e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x6da3))
+		e2:SetValue(num*800)
+		e2:SetReset(RESET_PHASE+PHASE_END)
+		c:RegisterEffect(e2)
+	end
 end
 
 function c65060011.spfil(c,e,tp)
@@ -71,4 +96,5 @@ function c65060011.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(tgg,REASON_EFFECT)
 	end
 end
+
 

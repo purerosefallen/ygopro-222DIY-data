@@ -80,9 +80,21 @@ function c9980280.initial_effect(c)
 	e6:SetTarget(c9980280.pentg)
 	e6:SetOperation(c9980280.penop)
 	c:RegisterEffect(e6)
+	--spsummon bgm
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e8:SetOperation(c9980280.sumsuc)
+	c:RegisterEffect(e8)
+	local e9=e8:Clone()
+	e9:SetCode(EVENT_SUMMON_SUCCESS)
+	c:RegisterEffect(e9)
 end
 c9980280.counter_add_list={0x1}
 c9980280.pendulum_level=4
+function c9980280.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980280,7))
+end
 function c9980280.ddcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetCurrentPhase()~=PHASE_DRAW
 end

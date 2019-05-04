@@ -27,7 +27,7 @@ function c9980167.initial_effect(c)
 end
 c9980167.counter_add_list={0x1}
 function c9980167.cosfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xbc4) and c:IsAbleToGraveAsCost()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2bc4) and c:IsAbleToGraveAsCost()
 end
 function c9980167.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	 if chk==0 then return Duel.IsExistingMatchingCard(c9980167.cosfilter,tp,LOCATION_DECK+LOCATION_HAND,0,1,nil) end
@@ -54,7 +54,7 @@ function c9980167.operation(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980167,0))
 end
 function c9980167.cfilter(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xbc4) and c:IsAbleToRemoveAsCost()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2bc4) and c:IsAbleToRemoveAsCost()
 end
 function c9980167.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
@@ -65,7 +65,7 @@ function c9980167.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
 function c9980167.spfilter(c,e,tp)
-	return c:IsSetCard(0xbc4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x2bc4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c9980167.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

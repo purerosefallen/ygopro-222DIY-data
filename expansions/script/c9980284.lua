@@ -1,6 +1,7 @@
 --外传纪录·塔鲁特
 function c9980284.initial_effect(c)
 	c:EnableCounterPermit(0x1)
+	c:SetCounterLimit(0x1,2)
 	--add counter
 	local e0=Effect.CreateEffect(c)
 	e0:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
@@ -45,6 +46,7 @@ function c9980284.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_IGNITION)
 	e5:SetRange(LOCATION_MZONE)
 	e5:SetProperty(EFFECT_FLAG_CARD_TARGET)
+	e5:SetCountLimit(1,99802840)
 	e5:SetCost(c9980284.descost)
 	e5:SetTarget(c9980284.destg)
 	e5:SetOperation(c9980284.desop)

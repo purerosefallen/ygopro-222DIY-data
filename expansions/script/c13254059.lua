@@ -46,6 +46,32 @@ function c13254059.initial_effect(c)
 	e10:SetRange(LOCATION_MZONE+LOCATION_GRAVE)
 	e10:SetValue(1)
 	c:RegisterEffect(e10)
+	--Tama Start
+	local e100=Effect.CreateEffect(c)
+	e100:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e100:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
+	e100:SetCode(EVENT_PHASE_START+PHASE_MAIN1)
+	e100:SetRange(LOCATION_EXTRA+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_OVERLAY)
+	e100:SetCountLimit(1)
+	e100:SetOperation(c13254059.start)
+	c:RegisterEffect(e100)
+	--Tama Advantage
+	local e101=Effect.CreateEffect(c)
+	e101:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e101:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
+	e101:SetCode(EVENT_ADJUST)
+	e101:SetRange(LOCATION_EXTRA+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_OVERLAY)
+	e101:SetOperation(c13254059.advantage)
+	c:RegisterEffect(e101)
+	--Tama Counter
+	local e102=Effect.CreateEffect(c)
+	e102:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e102:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_CANNOT_NEGATE)
+	e102:SetCode(EVENT_PHASE_START+PHASE_MAIN1)
+	e102:SetRange(LOCATION_EXTRA+LOCATION_ONFIELD+LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_OVERLAY)
+	e102:SetCountLimit(1)
+	e102:SetOperation(c13254059.counter)
+	c:RegisterEffect(e102)
 	
 end
 function c13254059.spfilter(c)
@@ -150,4 +176,37 @@ function c13254059.thop(e,tp,eg,ep,ev,re,r,rp)
 	local g=eg:Filter(c13254059.thfilter,nil)
 	Duel.ConfirmCards(1-tp,g)
 	Duel.ShuffleHand(tp)
+end
+
+function c13254059.start(e,tp,eg,ep,ev,re,r,rp,c)
+	local realtp=e:GetHandler():GetOwner()
+	if Duel.GetTurnPlayer()==realtp and Duel.GetFlagEffect(tp,23254059)==0 end
+	Duel.Hint(11,0,aux.Stringid(13254059,4))
+	Duel.RegisterFlagEffect(realtp,23254059,0,0,0)
+end
+function c13254059.advantage_filter(c)
+	return c:IsLevelAbove(2) or c:IsLinkAbove(2)
+end
+function c13254059.advantage(e,tp,eg,ep,ev,re,r,rp,c)
+	local realtp=e:GetHandler():GetOwner()
+	if Duel.GetTurnPlayer()==realtp and Duel.GetCurrentPhase()>=PHASE_MAIN1 and (Duel.GetMatchingGroupCount(Card.IsSetCard,realtp,LOCATION_ONFIELD,0,nil,0x356)>=Duel.GetFieldGroupCount(1-realtp,LOCATION_ONFIELD) and Duel.GetMatchingGroupCount(c13254059.advantage_filter,realtp,LOCATION_MZONE,0,nil)>=2) and Duel.GetFlagEffect(realtp,33254059)==0 end
+	Duel.Hint(11,0,aux.Stringid(13254059,5))
+	Duel.RegisterFlagEffect(realtp,33254059,RESET_PHASE+PHASE_END,0,1)
+end
+function c13254059.counter(e,tp,eg,ep,ev,re,r,rp,c)
+	local realtp=e:GetHandler():GetOwner()
+	if Duel.GetTurnPlayer()==realtp and Duel.GetCurrentPhase()>=PHASE_MAIN1 and Duel.GetFieldGroupCount(realtp,LOCATION_HAND+LOCATION_ONFIELD)<=Duel.GetFieldGroupCount(1-realtp,LOCATION_HAND+LOCATION_ONFIELD)+6 and Duel.GetFlagEffect(realtp,33254059)==0 end
+	Duel.RegisterFlagEffect(realtp,33254059,RESET_PHASE+PHASE_END,0,1)
+	local e1=Effect.CreateEffect(e:GetHandler())
+	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
+	e1:SetCode(EVENT_ADJUST)
+	e1:SetOperation(c13254059.counter_avtivate)
+	e1:SetReset(RESET_PHASE+PHASE_END)
+	Duel.RegisterEffect(e1,tp)
+end
+function c13254059.counter_avtivate(e,tp,eg,ep,ev,re,r,rp,c)
+	local realtp=e:GetHandler():GetOwner()
+	if Duel.GetTurnPlayer()==realtp and Duel.GetCurrentPhase()>=PHASE_MAIN1 and (Duel.GetMatchingGroupCount(Card.IsSetCard,realtp,LOCATION_HAND+LOCATION_ONFIELD,0,nil,0x356)>=Duel.GetFieldGroupCount(1-realtp,LOCATION_HAND+LOCATION_ONFIELD) or Duel.GetFieldGroupCount(1-realtp,LOCATION_ONFIELD)==0) Duel.GetFlagEffect(realtp,33254059)>0 and Duel.GetFlagEffect(realtp,43254059)==0 end
+	Duel.Hint(11,0,aux.Stringid(13254059,6))
+	Duel.RegisterFlagEffect(realtp,43254059,RESET_PHASE+PHASE_END,0,1)
 end

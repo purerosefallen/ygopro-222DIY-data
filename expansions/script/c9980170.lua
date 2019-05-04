@@ -51,7 +51,7 @@ function c9980170.eqcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
 function c9980170.eqfilter(c,tp)
-	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0xbc4) and c:CheckUniqueOnField(tp) and not c:IsForbidden()
+	return c:IsFaceup() and c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2bc4) and c:CheckUniqueOnField(tp) and not c:IsForbidden()
 end
 function c9980170.eqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_SZONE)>0

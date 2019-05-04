@@ -1,6 +1,7 @@
 --魔法纪录·美国织莉子
 function c9980245.initial_effect(c)
 	c:EnableCounterPermit(0x1,LOCATION_MZONE)
+	c:SetCounterLimit(0x1,2)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -29,12 +30,25 @@ function c9980245.initial_effect(c)
 	e4:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e4:SetType(EFFECT_TYPE_IGNITION)
 	e4:SetRange(LOCATION_MZONE)
+	e4:SetCountLimit(1,9980245)
 	e4:SetCost(c9980245.spcost)
 	e4:SetTarget(c9980245.sptg)
 	e4:SetOperation(c9980245.spop)
 	c:RegisterEffect(e4)
+	--spsummon bgm
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e8:SetOperation(c9980245.sumsuc)
+	c:RegisterEffect(e8)
+	local e9=e8:Clone()
+	e9:SetCode(EVENT_SUMMON_SUCCESS)
+	c:RegisterEffect(e9)
 end
 c9980245.counter_add_list={0x1}
+function c9980245.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980245,0))
+end
 function c9980245.filter(c)
 	return c:IsFaceup() and c:IsSetCard(0xbc4) and c:GetCode()~=9980245
 end

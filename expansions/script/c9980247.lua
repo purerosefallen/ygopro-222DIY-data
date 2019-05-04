@@ -1,6 +1,7 @@
 --魔法纪录·粘着之千岁由麻
 function c9980247.initial_effect(c)
 	c:EnableCounterPermit(0x1,LOCATION_MZONE+LOCATION_PZONE)
+	c:SetCounterLimit(0x1,4)
 	--xyz summon
 	aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xbc4),3,2)
 	c:EnableReviveLimit()
@@ -46,9 +47,21 @@ function c9980247.initial_effect(c)
 	e4:SetTarget(c9980247.pentg)
 	e4:SetOperation(c9980247.penop)
 	c:RegisterEffect(e4)
+	 --spsummon bgm
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e8:SetOperation(c9980247.sumsuc)
+	c:RegisterEffect(e8)
+	local e9=e8:Clone()
+	e9:SetCode(EVENT_SUMMON_SUCCESS)
+	c:RegisterEffect(e9)
 end
 c9980247.counter_add_list={0x1}
 c9980247.pendulum_level=3
+function c9980247.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980247,0))
+end
 function c9980247.atktg(e,c)
 	return not c:IsRace(RACE_SPELLCASTER) 
 end
