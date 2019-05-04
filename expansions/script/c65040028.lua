@@ -1,73 +1,72 @@
---水天的空流
-function c65040033.initial_effect(c)
-	--xyz summon
-	aux.AddXyzProcedure(c,nil,5,2,nil,nil,99)
-	c:EnableReviveLimit()
-	--cannot special summon
-	local e0=Effect.CreateEffect(c)
-	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
-	e0:SetType(EFFECT_TYPE_SINGLE)
-	e0:SetCode(EFFECT_SPSUMMON_CONDITION)
-	e0:SetValue(aux.FALSE)
-	c:RegisterEffect(e0)
-	--burst!!!
+--星葬的禁果
+function c65040028.initial_effect(c)
+	c:SetSPSummonOnce(65040028)
+	--special summon
 	local e1=Effect.CreateEffect(c)
-	e1:SetCategory(CATEGORY_REMOVE+CATEGORY_ATKCHANGE)
-	e1:SetType(EFFECT_TYPE_QUICK_O)
-	e1:SetRange(LOCATION_MZONE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetCost(c65040033.cost)
-	e1:SetTarget(c65040033.tg)
-	e1:SetOperation(c65040033.op)
+	e1:SetType(EFFECT_TYPE_FIELD)
+	e1:SetCode(EFFECT_SPSUMMON_PROC)
+	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+	e1:SetRange(LOCATION_HAND+LOCATION_GRAVE)
+	e1:SetCondition(c65040028.spcon)
+	e1:SetOperation(c65040028.spop)
 	c:RegisterEffect(e1)
-end
-function c65040033.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) and e:GetHandler():GetFlagEffect(65040033)==0 end
-	e:GetHandler():RemoveOverlayCard(tp,1,1,REASON_COST)
-	e:GetHandler():RegisterFlagEffect(65040033,RESET_CHAIN,0,1)
-end
-function c65040033.refil(c)
-	return c:IsType(TYPE_MONSTER) and c:IsAbleToRemove()
-end
-function c65040033.tg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c65040033.refil,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,e:GetHandler()) end
-	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,LOCATION_MZONE+LOCATION_GRAVE)
-	Duel.SetChainLimit(c65040033.chlimit)
-end
-function c65040033.chlimit(e,ep,tp)
-	return tp==ep
-end
-function c65040033.op(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	local num=Duel.GetMatchingGroupCount(c65040033.refil,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,e:GetHandler())
-	local g=Duel.SelectMatchingCard(tp,c65040033.refil,tp,LOCATION_MZONE+LOCATION_GRAVE,LOCATION_MZONE+LOCATION_GRAVE,1,num,e:GetHandler())
-	local tc=g:GetFirst()
-	while tc do
-	if Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then 
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PHASE+PHASE_STANDBY)
-	e1:SetCountLimit(1)
-	e1:SetLabelObject(tc)
-	e1:SetCondition(c65040033.retcon)
-	e1:SetOperation(c65040033.retop)
-	e1:SetReset(RESET_PHASE+PHASE_STANDBY+RESET_SELF_TURN)
-	Duel.RegisterEffect(e1,tp)
-	local atk=tc:GetBaseAttack()
+	--remove
 	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_SINGLE)
-	e2:SetCode(EFFECT_UPDATE_ATTACK)
-	e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,2)
-	e2:SetValue(atk)
+	e2:SetCategory(CATEGORY_REMOVE)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetCode(EVENT_REMOVE)
+	e2:SetCondition(c65040028.con)
+	e2:SetTarget(c65040028.tg)
+	e2:SetOperation(c65040028.op)
 	c:RegisterEffect(e2)
-	tc=g:GetNext()
-	end
+end
+function c65040028.spcon(e,c)
+	if c==nil then return true end
+	return Duel.GetFieldGroupCount(c:GetControler(),LOCATION_REMOVED,0)>Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_REMOVED) and Duel.GetFieldGroupCount(c:GetControler(),0,LOCATION_MZONE)>0
+		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
+end
+function c65040028.spop(e,tp,eg,ep,ev,re,r,rp,c)
+	--remove
+	local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+		e1:SetReset(RESET_EVENT+RESETS_REDIRECT)
+		e1:SetValue(LOCATION_REMOVED)
+		c:RegisterEffect(e1,true)
+end
+
+function c65040028.con(e,tp,eg,ep,ev,re,r,rp)
+	local ph=Duel.GetCurrentPhase()
+	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE 
+end
+function c65040028.tg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,1,nil) end
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,0,LOCATION_MZONE)
+end
+function c65040028.op(e,tp,eg,ep,ev,re,r,rp)
+	local g=Duel.SelectMatchingCard(tp,Card.IsAbleToRemove,tp,LOCATION_MZONE,LOCATION_MZONE,1,1,nil)
+	local tc=g:GetFirst()
+	if tc then
+		Duel.HintSelection(g)
+		if Duel.Remove(tc,0,REASON_EFFECT+REASON_TEMPORARY)~=0 then
+		tc:RegisterFlagEffect(65040028,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,0,1)
+		local e1=Effect.CreateEffect(e:GetHandler())
+		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e1:SetCode(EVENT_PHASE+PHASE_BATTLE)
+		e1:SetReset(RESET_PHASE+PHASE_BATTLE)
+		e1:SetLabelObject(tc)
+		e1:SetCountLimit(1)
+		e1:SetCondition(c65040028.retcon)
+		e1:SetOperation(c65040028.retop)
+		Duel.RegisterEffect(e1,tp)
+		end
 	end
 end
-function c65040033.retcon(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetLabelObject()
-	return Duel.GetTurnPlayer()==tp and tc:IsPreviousLocation(LOCATION_MZONE)
+function c65040028.retcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetLabelObject():GetFlagEffect(65040028)~=0
 end
-function c65040033.retop(e,tp,eg,ep,ev,re,r,rp)
+function c65040028.retop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ReturnToField(e:GetLabelObject())
 end

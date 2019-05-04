@@ -46,6 +46,32 @@ function cm.initial_effect(c)
 		e2:SetTarget(aux.TargetBoolFunction(Card.IsLocation,LOCATION_DECK))
 		e2:SetReset(RESET_PHASE+PHASE_END)
 		Duel.RegisterEffect(e2,tp)]]
+		local e3=Effect.CreateEffect(e:GetHandler())
+		e3:SetType(EFFECT_TYPE_FIELD)
+		e3:SetCode(EFFECT_MATERIAL_CHECK)
+		e3:SetLabelObject(e2)
+		e3:SetProperty(EFFECT_FLAG_IGNORE_RANGE)
+		e3:SetTargetRange(0xff,0xff)
+		e3:SetReset(RESET_PHASE+PHASE_END)
+		e3:SetTarget(function(e,c)
+			return bit.band(c:GetType(),0x81)==0x81
+		end)
+		e3:SetValue(function(e,c)
+			--Debug.Message(0)
+			if c:GetMaterial():IsExists(function(c)
+				if not c:IsLocation(LOCATION_EXTRA) then return false end
+				local eset={c:IsHasEffect(EFFECT_MAP_OF_HEAVEN)}
+				for _,te in ipairs(eset) do
+					if te==e:GetLabelObject() then return true end
+				end
+				return false
+			end,1,nil) then
+				--Debug.Message(1)
+				e:GetLabelObject():Reset()
+				e:Reset()
+			end
+		end)
+		Duel.RegisterEffect(e3,tp)
 	end)
 	c:RegisterEffect(e2)
 end

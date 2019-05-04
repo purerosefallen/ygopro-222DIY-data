@@ -3,7 +3,7 @@ function c9980173.initial_effect(c)
 	c:EnableCounterPermit(0x1)
    --link summon
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0xbc4),2,2)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkSetCard,0x2bc4),2,2)
 	--Add counter
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(9980173,0))

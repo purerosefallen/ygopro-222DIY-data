@@ -1,6 +1,7 @@
 --魔法纪录·小丘比
 function c9980160.initial_effect(c)
 	c:EnableCounterPermit(0x1,LOCATION_MZONE)
+	c:SetCounterLimit(0x1,4)
 	--
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(9980160,0))
@@ -88,7 +89,7 @@ function c9980160.acop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c9980160.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xbc4)
+	return c:IsFaceup() and c:IsSetCard(0x2bc4)
 end
 function c9980160.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c9980160.ctfilter,1,nil) then
@@ -106,7 +107,7 @@ function c9980160.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RemoveCounter(tp,1,0,0x1,2,REASON_COST)
 end
 function c9980160.spfilter(c,e,tp)
-	return c:IsSetCard(0xbc4) and not c:IsCode(9980160)
+	return c:IsSetCard(0x2bc4) and not c:IsCode(9980160)
 		and c:IsType(TYPE_EFFECT) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c9980160.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

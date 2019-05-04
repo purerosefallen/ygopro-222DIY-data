@@ -18,30 +18,79 @@ function c65060010.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e2:SetCountLimit(1)
+	e2:SetCountLimit(1,65060010)
 	e2:SetCondition(c65060010.effcon)
 	e2:SetTarget(c65060010.efftg)
 	e2:SetOperation(c65060010.effop)
 	c:RegisterEffect(e2)
+	local e3=e2:Clone()
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetCode(EVENT_FREE_CHAIN)
+	e3:SetCondition(c65060010.effcon2)
+	c:RegisterEffect(e3)
 end
 
 function c65060010.effcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetMutualLinkedGroupCount()>0
+	local c=e:GetHandler()
+	return c:GetMutualLinkedGroupCount()>0 and (c:GetMutualLinkedGroupCount()<=1 and Duel.GetFlagEffect(tp,65060031)==0)
 end
-
+function c65060010.effcon2(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c:GetMutualLinkedGroupCount()>=2 or (c:GetMutualLinkedGroupCount()>=1 and Duel.GetFlagEffect(tp,65060031)~=0)
+end
 function c65060010.efftg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local c=e:GetHandler()
 	local ct=c:GetMutualLinkedGroupCount()
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(1-tp) and chkc:IsAbleToRemove() end
 	if chk==0 then return ct>0 and Duel.IsExistingTarget(Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,ct,nil)
+	local g=Group.CreateGroup()
+	if Duel.GetFlagEffect(tp,65060031)~=0 then
+		g=Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,ct+1,nil)
+	else
+		g=Duel.SelectTarget(tp,Card.IsAbleToRemove,tp,0,LOCATION_GRAVE,1,ct,nil)
+	end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,g:GetCount(),0,0)
 end
 
 function c65060010.effop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(Card.IsRelateToEffect,nil,e)
-	Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
+	local c=e:GetHandler()
+	if Duel.Remove(g,POS_FACEUP,REASON_EFFECT)~=0 and (c:GetMutualLinkedGroupCount()>=3 or (c:GetMutualLinkedGroupCount()>=2 and Duel.GetFlagEffect(tp,65060031)~=0)) then
+		local tc=g:GetFirst()
+		while tc do
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_FIELD)
+		e1:SetCode(EFFECT_DISABLE)
+		e1:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
+		e1:SetTarget(c65060010.distg)
+		e1:SetLabel(tc:GetOriginalCode())
+		e1:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e1,tp)
+		local e2=Effect.CreateEffect(c)
+		e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		e2:SetCode(EVENT_CHAIN_SOLVING)
+		e2:SetCondition(c65060010.discon)
+		e2:SetOperation(c65060010.disop)
+		e2:SetLabel(tc:GetOriginalCode())
+		e2:SetReset(RESET_PHASE+PHASE_END)
+		Duel.RegisterEffect(e2,tp)
+		tc=g:GetNext()
+		end
+	end
+end
+function c65060010.distg(e,c)
+	local code=e:GetLabel()
+	local code1,code2=c:GetOriginalCodeRule()
+	return code1==code or code2==code
+end
+function c65060010.discon(e,tp,eg,ep,ev,re,r,rp)
+	local code=e:GetLabel()
+	local code1,code2=re:GetHandler():GetOriginalCodeRule()
+	return re:IsActiveType(TYPE_MONSTER) and (code1==code or code2==code)
+end
+function c65060010.disop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.NegateEffect(ev)
 end
 
 function c65060010.spfil(c,e,tp)
@@ -71,3 +120,4 @@ function c65060010.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(tgg,REASON_EFFECT)
 	end
 end
+

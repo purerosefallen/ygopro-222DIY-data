@@ -1,6 +1,7 @@
 --魔法纪录·由比鹤乃
 function c9980163.initial_effect(c)
 	c:EnableCounterPermit(0x1,LOCATION_MZONE+LOCATION_PZONE)
+	c:SetCounterLimit(0x1,3)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--
@@ -112,7 +113,7 @@ function c9980163.acop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c9980163.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xbc4)
+	return c:IsFaceup() and c:IsSetCard(0x2bc4)
 end
 function c9980163.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c9980163.ctfilter,1,nil) then

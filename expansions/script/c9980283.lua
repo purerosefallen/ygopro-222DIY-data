@@ -42,7 +42,7 @@ function c9980283.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetRange(LOCATION_MZONE)
-	e1:SetCountLimit(1)
+	e1:SetCountLimit(1,9980283)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_END_PHASE)
 	e1:SetCost(c9980283.cost)
@@ -59,9 +59,21 @@ function c9980283.initial_effect(c)
 	e6:SetTarget(c9980283.pentg)
 	e6:SetOperation(c9980283.penop)
 	c:RegisterEffect(e6)
+	--spsummon bgm
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e8:SetOperation(c9980283.sumsuc)
+	c:RegisterEffect(e8)
+	local e9=e8:Clone()
+	e9:SetCode(EVENT_SUMMON_SUCCESS)
+	c:RegisterEffect(e9)
 end
 c9980283.counter_add_list={0x1}
 c9980283.pendulum_level=4
+function c9980283.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980283,0))
+end
 function c9980283.cfilter(c)
 	return c:IsSetCard(0xbc4) and c:IsAbleToGraveAsCost()
 end
@@ -80,6 +92,7 @@ function c9980283.desop(e,tp,eg,ep,ev,re,r,rp)
 	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980283,0))
 		Duel.Destroy(tc,REASON_EFFECT)
 	end
 end
@@ -107,6 +120,7 @@ function c9980283.operation(e,tp,eg,ep,ev,re,r,rp)
 		if og:GetCount()>0 then
 			Duel.SendtoGrave(og,REASON_RULE)
 		end
+   Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980283,0))
 		Duel.Overlay(c,Group.FromCards(tc))
 	end
 end

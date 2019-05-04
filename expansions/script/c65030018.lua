@@ -39,9 +39,8 @@ function c65030018.disconfil(c)
 	return not c:IsType(TYPE_SPELL)
 end
 function c65030018.discon(e,tp,eg,ep,ev,re,r,rp)
-	local loc,pos=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION,CHAININFO_TRIGGERING_POSITION)
-	return e:GetHandler():IsDefensePos()
-		and re:IsActiveType(TYPE_MONSTER) and loc==LOCATION_MZONE and bit.band(pos,POS_DEFENSE)~=0 and e:GetHandler():GetControler()~=tp and Duel.GetMatchingGroupCount(c65030018.disconfil,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)==0 
+	return Duel.GetMatchingGroupCount(c65030018.disconfil,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil)==0 and Duel.GetMatchingGroupCount(Card.IsAttackPos,tp,0,LOCATION_MZONE,nil)==0
+	and re:IsActiveType(TYPE_MONSTER) and not (re:IsHasCategory(CATEGORY_SUMMON) or re:IsHasCategory(CATEGORY_SPECIAL_SUMMON))
 end
 function c65030018.disop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.NegateEffect(ev)
@@ -73,3 +72,4 @@ function c65030018.edop(e,tp,eg,ep,ev,re,r,rp)
 		if i==num or not Duel.SelectYesNo(tp,aux.Stringid(65030018,0))  or g:GetCount()==0 then check=1 end
 	end
 end
+

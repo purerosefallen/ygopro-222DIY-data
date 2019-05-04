@@ -21,43 +21,41 @@ function c65030014.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
-	e2:SetCode(EVENT_ATTACK_ANNOUNCE)
+	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
+	e2:SetHintTiming(TIMING_DAMAGE_STEP)
 	e2:SetRange(LOCATION_SZONE)
+	e2:SetCondition(c65030014.atkcon)
 	e2:SetCost(c65030014.atkcost)
 	e2:SetOperation(c65030014.atkop)
 	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EVENT_FREE_CHAIN)
-	e3:SetHintTiming(TIMING_DAMAGE_STEP)
-	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP)
-	e3:SetCondition(c65030014.atkcon)
-	c:RegisterEffect(e3)
 end
 c65030014.card_code_list={65030020}
 function c65030014.atkcon(e,tp,eg,ep,ev,re,r,rp)
-	local phase=Duel.GetCurrentPhase()
-	if phase~=PHASE_DAMAGE or Duel.IsDamageCalculated() then return false end
-	return Duel.GetAttackTarget()==nil and Duel.GetAttacker():GetControler()~=tp 
+	  local b=Duel.GetAttacker()
+	local ph=Duel.GetCurrentPhase()
+	return ph==PHASE_DAMAGE and b and b:IsControler(1-tp) and Duel.GetAttackTarget()==nil
+		and not Duel.IsDamageCalculated()
 end
 function c65030014.atkcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,65030014)==0 end
-	Duel.RegisterFlagEffect(tp,65030014,RESET_CHAIN,0,1)
+	if chk==0 then return e:GetHandler():GetFlagEffect(65030014)==0 end
+	e:GetHandler():RegisterFlagEffect(65030014,RESET_PHASE+PHASE_DAMAGE,0,1)
 end
 function c65030014.atkop(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetAttacker()
 	if tc and not tc:IsImmuneToEffect(e) then
 		local preatk=tc:GetAttack()
+		if preatk<=1200 then
+			local dam=1200-preatk
+			Duel.SendtoGrave(tc,REASON_EFFECT)
+			Duel.Damage(1-tp,dam,REASON_EFFECT)
+		end
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_UPDATE_ATTACK)
 		e1:SetValue(-1200)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_BATTLE)
 		tc:RegisterEffect(e1)
-		if preatk~=0 and tc:IsAttack(0) then 
-			Duel.SendtoGrave(tc,REASON_EFFECT)
-			Duel.Damage(1-tp,tc:GetBaseAttack(),REASON_EFFECT)
-		end
-		Duel.BreakEffect()
 		Duel.Destroy(e:GetHandler(),REASON_EFFECT)
 	end
 end
@@ -79,3 +77,4 @@ function c65030014.operation(e,tp,eg,ep,ev,re,r,rp)
 		Duel.ConfirmCards(1-tp,g)
 	end
 end
+

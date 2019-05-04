@@ -1,6 +1,7 @@
 --魔法纪录·和美
 function c9980248.initial_effect(c)
 	c:EnableCounterPermit(0x1,LOCATION_MZONE+LOCATION_PZONE)
+	c:SetCounterLimit(0x1,2)
    --pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--to hand
@@ -8,7 +9,7 @@ function c9980248.initial_effect(c)
 	e3:SetDescription(aux.Stringid(9980248,0))
 	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH)
 	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetCountLimit(1)
+	e3:SetCountLimit(1,9980248)
 	e3:SetRange(LOCATION_PZONE)
 	e3:SetTarget(c9980248.thtg)
 	e3:SetOperation(c9980248.thop)
@@ -41,7 +42,7 @@ function c9980248.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_QUICK_O)
 	e2:SetCode(EVENT_CHAINING)
 	e2:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
-	e2:SetCountLimit(1)
+	e2:SetCountLimit(1,99802480)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCondition(c9980248.negcon)
 	e2:SetTarget(c9980248.negtg)
@@ -55,8 +56,20 @@ function c9980248.initial_effect(c)
 	e2:SetTarget(c9980248.sumtg)
 	e2:SetOperation(c9980248.sumop)
 	c:RegisterEffect(e2)
+   --spsummon bgm
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e8:SetOperation(c9980248.sumsuc)
+	c:RegisterEffect(e8)
+	local e9=e8:Clone()
+	e9:SetCode(EVENT_SUMMON_SUCCESS)
+	c:RegisterEffect(e9)
 end
 c9980248.counter_add_list={0x1}
+function c9980248.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980248,4))
+end
 function c9980248.thfilter1(c,tp)
 	local lv=c:GetLevel()
 	return (c:IsLocation(LOCATION_DECK) or (c:IsFaceup() and c:IsType(TYPE_PENDULUM))) and lv>0 and c:IsSetCard(0xbc4)
@@ -92,6 +105,7 @@ function c9980248.thop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
 	local g=Duel.SelectMatchingCard(tp,c9980248.thfilter2,tp,LOCATION_DECK+LOCATION_EXTRA,0,1,1,nil,lv)
 	if g:GetCount()>0 then
+		Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980248,4))
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
@@ -134,6 +148,7 @@ function c9980248.negop(e,tp,eg,ep,ev,re,r,rp)
 		and re:GetHandler():IsRelateToEffect(re) and Duel.Destroy(eg,REASON_EFFECT)>0 then
 		if c:IsRelateToEffect(e) and Duel.SelectYesNo(tp,aux.Stringid(9980248,3)) then
 			Duel.BreakEffect()
+		Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980248,4))
 			c:AddCounter(0x1,count)
 		end
 	end

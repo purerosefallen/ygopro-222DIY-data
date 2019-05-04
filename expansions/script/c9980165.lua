@@ -1,6 +1,7 @@
 --魔法纪录·深月菲莉希亚
 function c9980165.initial_effect(c)
 	c:EnableCounterPermit(0x1,LOCATION_MZONE+LOCATION_PZONE)
+	c:SetCounterLimit(0x1,2)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--add counter
@@ -54,7 +55,7 @@ function c9980165.acop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c9980165.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xbc4)
+	return c:IsFaceup() and c:IsSetCard(0x2bc4)
 end
 function c9980165.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c9980165.ctfilter,1,nil) then

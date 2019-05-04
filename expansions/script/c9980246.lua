@@ -2,6 +2,7 @@
 function c9980246.initial_effect(c)
 	c:SetUniqueOnField(1,0,9980246)
 	c:EnableCounterPermit(0x1,LOCATION_MZONE)
+	c:SetCounterLimit(0x1,5)
 	--add counter
 	local e2=Effect.CreateEffect(c)
 	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
@@ -16,13 +17,6 @@ function c9980246.initial_effect(c)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetOperation(c9980246.acop)
 	c:RegisterEffect(e3)
-	 --add counter
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
-	e2:SetOperation(c9980246.ctop)
-	c:RegisterEffect(e2)
 	--special summon
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
@@ -50,15 +44,24 @@ function c9980246.initial_effect(c)
 	e3:SetTarget(c9980246.target)
 	e3:SetOperation(c9980246.operation)
 	c:RegisterEffect(e3)
+	--spsummon bgm
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e8:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e8:SetOperation(c9980246.sumsuc)
+	c:RegisterEffect(e8)
+	local e9=e8:Clone()
+	e9:SetCode(EVENT_SUMMON_SUCCESS)
+	c:RegisterEffect(e9)
 end
 c9980246.counter_add_list={0x1}
+function c9980246.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980246,0))
+end
 function c9980246.acop(e,tp,eg,ep,ev,re,r,rp)
 	if re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL) and e:GetHandler():GetFlagEffect(1)>0 then
 		e:GetHandler():AddCounter(0x1,1)
 	end
-end
-function c9980246.ctop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():AddCounter(0x1,1)
 end
 function c9980246.spfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xbc4)

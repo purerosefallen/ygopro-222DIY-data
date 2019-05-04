@@ -4,6 +4,7 @@ local cm=_G["c"..m]
 function cm.initial_effect(c)
 	--reborn preparation
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(m,0))
 	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EVENT_CHAINING)
@@ -26,19 +27,10 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e3)
 	--direct attack
 	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(m,3))
 	e4:SetType(EFFECT_TYPE_SINGLE)
 	e4:SetCode(EFFECT_DIRECT_ATTACK)
 	c:RegisterEffect(e4)
-	--actlimit
-	local e5=Effect.CreateEffect(c)
-	e5:SetType(EFFECT_TYPE_FIELD)
-	e5:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e5:SetCode(EFFECT_CANNOT_ACTIVATE)
-	e5:SetRange(LOCATION_MZONE)
-	e5:SetTargetRange(0,1)
-	e5:SetValue(cm.aclimit)
-	e5:SetCondition(cm.actcon)
-	c:RegisterEffect(e5)
 	--back
 	local e8=Effect.CreateEffect(c)
 	e8:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -69,10 +61,4 @@ function cm.backop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ConfirmCards(tp,Group.FromCards(c))
 	Duel.ConfirmCards(1-tp,Group.FromCards(c))
 	c:ReplaceEffect(tcode,0,0)
-end
-function cm.aclimit(e,re,tp)
-	return not re:GetHandler():IsImmuneToEffect(e)
-end
-function cm.actcon(e)
-	return Duel.GetAttacker()==e:GetHandler() or Duel.GetAttackTarget()==e:GetHandler()
 end

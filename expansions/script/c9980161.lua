@@ -1,6 +1,7 @@
 --沉默的魔法纪录·环伊吕波
 function c9980161.initial_effect(c)
 	c:EnableCounterPermit(0x1,LOCATION_MZONE+LOCATION_PZONE)
+	c:SetCounterLimit(0x1,4)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--add counter
@@ -74,7 +75,7 @@ function c9980161.acop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c9980161.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xbc4)
+	return c:IsFaceup() and c:IsSetCard(0x2bc4)
 end
 function c9980161.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c9980161.ctfilter,1,nil) then
@@ -86,7 +87,7 @@ function c9980161.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RemoveCounter(tp,1,0,0x1,2,REASON_COST)
 end
 function c9980161.thfilter1(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0xbc4) and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x2bc4) and c:IsAbleToHand()
 end
 function c9980161.thtg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c9980161.thfilter1,tp,LOCATION_DECK,0,1,nil) end
@@ -112,7 +113,7 @@ function c9980161.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RemoveCounter(tp,1,0,0x1,2,REASON_COST)
 end
 function c9980161.thfilter(c)
-	return aux.IsCounterAdded(c,0x1) and c:IsSetCard(0xbc4) and c:IsAbleToHand()
+	return aux.IsCounterAdded(c,0x1) and c:IsSetCard(0x2bc4) and c:IsAbleToHand()
 end
 function c9980161.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	 if chk==0 then return Duel.IsExistingMatchingCard(c9980161.thfilter,tp,LOCATION_DECK,0,1,nil) end

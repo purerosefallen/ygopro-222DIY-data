@@ -14,7 +14,7 @@ function c65060005.initial_effect(c)
 	c:RegisterEffect(e2)
 	--linked
 	local e3=Effect.CreateEffect(c)
-	e3:SetCategory(CATEGORY_TODECK)
+	e3:SetCategory(CATEGORY_TODECK+CATEGORY_SPECIAL_SUMMON)
 	e3:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_BE_MATERIAL)
 	e3:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_CARD_TARGET)
@@ -29,17 +29,15 @@ function c65060005.tgcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsLocation(LOCATION_GRAVE) and r==REASON_LINK 
 end
 
-function c65060005.tgfil(c)
-	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x6da3)
-end
-
 function c65060005.tgtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and chkc:IsType(TYPE_MONSTER) and chkc:IsSetCard(0x6da3) end
-	if chk==0 then return Duel.IsExistingTarget(c65060005.tgfil,tp,LOCATION_GRAVE,0,1,nil) end
-	local g=Duel.SelectTarget(tp,c65060005.tgfil,tp,LOCATION_GRAVE,0,1,1,nil)
+	if chkc then return chkc:IsLocation(LOCATION_GRAVE) and chkc:IsControler(tp) and chkc:IsType(TYPE_MONSTER) end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsType,tp,LOCATION_GRAVE,0,1,nil,TYPE_MONSTER) end
+	local g=Duel.SelectTarget(tp,Card.IsType,tp,LOCATION_GRAVE,0,1,1,nil,TYPE_MONSTER)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,tp,LOCATION_GRAVE)
 end
-
+function c65060005.tgspfil(c,e,tp)
+	return c:IsSetCard(0x6da3) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+end
 function c65060005.tgop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local sp=tc:GetControler()
@@ -47,10 +45,16 @@ function c65060005.tgop(e,tp,eg,ep,ev,re,r,rp)
 		local code=tc:GetCode()
 		local g=Duel.GetMatchingGroup(Card.IsCode,tp,LOCATION_ONFIELD+LOCATION_GRAVE,0,nil,code)
 		if g:GetCount()>0 then
-			if Duel.SendtoDeck(g,nil,2,REASON_EFFECT)~=0 and Duel.SelectYesNo(tp,aux.Stringid(65060005,0)) then
-				Duel.BreakEffect()
-				local sg=Duel.SelectMatchingCard(sp,Card.IsCanBeSpecialSummoned,sp,LOCATION_DECK,0,1,1,nil,e,0,sp,false,false)
-				Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+			if Duel.SendtoDeck(g,nil,2,REASON_EFFECT)~=0 then
+				if sp==tp and Duel.IsExistingMatchingCard(c65060005.tgspfil,sp,LOCATION_DECK,0,1,nil,e,tp) and Duel.SelectYesNo(sp,aux.Stringid(65060005,0)) then
+					Duel.BreakEffect()
+					local sg=Duel.SelectMatchingCard(sp,c65060005.tgspfil,sp,LOCATION_DECK,0,1,1,nil,e,tp)
+					Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+				elseif sp~=tp and Duel.IsExistingMatchingCard(Card.IsCanBeSpecialSummoned,sp,LOCATION_DECK,0,1,nil,e,0,sp,false,false) and Duel.SelectYesNo(sp,aux.Stringid(65060005,0)) then
+					 Duel.BreakEffect()
+					local sg=Duel.SelectMatchingCard(sp,Card.IsCanBeSpecialSummoned,sp,LOCATION_DECK,0,1,1,nil,e,0,sp,false,false)
+					Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
+				end
 			end
 		end
 	end

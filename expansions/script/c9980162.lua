@@ -1,6 +1,7 @@
 --魔法纪录·七海八千代
 function c9980162.initial_effect(c)
 	c:EnableCounterPermit(0x1,LOCATION_MZONE+LOCATION_PZONE)
+	c:SetCounterLimit(0x1,4)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c)
 	--add counter
@@ -72,7 +73,7 @@ function c9980162.acop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c9980162.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xbc4)
+	return c:IsFaceup() and c:IsSetCard(0x2bc4)
 end
 function c9980162.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c9980162.ctfilter,1,nil) then
@@ -90,7 +91,7 @@ function c9980162.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.RemoveCounter(tp,1,0,0x1,2,REASON_COST)
 end
 function c9980162.filter(c,e,tp)
-	return c:IsSetCard(0xbc4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsSetCard(0x2bc4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function c9980162.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_PZONE+LOCATION_GRAVE) and chkc:IsControler(tp) and c9980162.filter(chkc,e,tp) end

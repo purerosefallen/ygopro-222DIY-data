@@ -1,6 +1,7 @@
 --魔法纪录·元气之深月菲莉希亚
 function c9980174.initial_effect(c)
 	c:EnableCounterPermit(0x1)
+	c:SetCounterLimit(0x1,6)
 	--link summon
 	c:EnableReviveLimit()
 	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),2,99,c9980174.lcheck)
@@ -54,10 +55,10 @@ function c9980174.lcheck(g,lc)
 	return g:IsExists(c9980174.mzfilter,1,nil)
 end
 function c9980174.mzfilter(c)
-	return c:IsSetCard(0xbc4) 
+	return c:IsSetCard(0x2bc4) 
 end
 function c9980174.ctfilter(c)
-	return c:IsFaceup() and c:IsSetCard(0xbc4)
+	return c:IsFaceup() and c:IsSetCard(0x2bc4)
 end
 function c9980174.ctop(e,tp,eg,ep,ev,re,r,rp)
 	if eg:IsExists(c9980174.ctfilter,1,nil) then
