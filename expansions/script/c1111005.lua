@@ -29,7 +29,7 @@ function c1111005.ofilter1_3(c)
 	return muxu.check_set_Legend(c) and c:IsAbleToHand()
 end
 function c1111005.ofilter1_4(c)
-	return c:IsType(TYPE_MONSTER) and c:GetLevel()<4 and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and c:GetLevel()<4 and c:GetLevel()>0 and c:IsAbleToHand()
 end
 function c1111005.op1(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
