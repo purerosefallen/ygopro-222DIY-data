@@ -77,17 +77,22 @@ function c81014033.dircon(e)
 	local tp=e:GetHandlerPlayer()
 	return not Duel.IsExistingMatchingCard(c81014033.cfilter,tp,LOCATION_MZONE,0,1,nil)
 end
+function c81014033.filter(c,tp)
+	return c:GetSummonPlayer()==tp
+end
 function c81014033.discon(e,tp,eg,ep,ev,re,r,rp)
-	return tp~=ep and Duel.GetCurrentChain()==0
+	return Duel.GetCurrentChain()==0 and eg:IsExists(c81014033.filter,1,nil,1-tp)
 end
 function c81014033.distg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1) end
-	Duel.SetOperationInfo(0,CATEGORY_DISABLE_SUMMON,eg,eg:GetCount(),0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,eg:GetCount(),0,0)
+	local g=eg:Filter(c81014033.filter,nil,1-tp)
+	Duel.SetOperationInfo(0,CATEGORY_DISABLE_SUMMON,g,g:GetCount(),0,0)
+	Duel.SetOperationInfo(0,CATEGORY_DESTROY,g,g:GetCount(),0,0)
 end
 function c81014033.disop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.NegateSummon(eg)
-	Duel.Destroy(eg,REASON_EFFECT)
+	local g=eg:Filter(c81014033.filter,nil,1-tp)
+	Duel.NegateSummon(g)
+	Duel.Destroy(g,REASON_EFFECT)
 	if (Duel.CheckLocation(tp,LOCATION_PZONE,0) or Duel.CheckLocation(tp,LOCATION_PZONE,1))
 		and c:IsRelateToEffect(e) then
 		Duel.MoveToField(c,tp,tp,LOCATION_SZONE,POS_FACEUP,true)

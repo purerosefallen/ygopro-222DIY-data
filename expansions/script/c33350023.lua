@@ -1,6 +1,6 @@
 --传说之魂 缜密
 if not pcall(function() require("expansions/script/c10199990") end) then require("script/c10199990") end
-local m=33350022
+local m=33350023
 local cm=_G["c"..m]
 function cm.initial_effect(c)
 	aux.AddXyzProcedure(c,nil,1,2)
