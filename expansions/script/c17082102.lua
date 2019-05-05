@@ -10,11 +10,20 @@ function cm.initial_effect(c)
 	aux.AddSynchroProcedure(c,nil,aux.NonTuner(Card.IsSynchroType,TYPE_PENDULUM),1)
 	c:EnableReviveLimit()
 	--xyz summon
-	aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsXyzType,TYPE_PENDULUM),810,1919,cm.ovfilter,aux.Stringid(m,0),114514,cm.xyzop)
-	c:EnableReviveLimit()
+    local e_0=Effect.CreateEffect(c)
+    e_0:SetDescription(aux.Stringid(17082102,0))
+    e_0:SetCategory(CATEGORY_SPECIAL_SUMMON)
+    e_0:SetType(EFFECT_TYPE_FIELD)
+    e_0:SetCode(EFFECT_SPSUMMON_PROC)
+    e_0:SetProperty(EFFECT_FLAG_UNCOPYABLE)
+    e_0:SetRange(LOCATION_EXTRA)
+    e_0:SetValue(SUMMON_TYPE_XYZ)
+    e_0:SetCondition(cm.exyzcon)
+    e_0:SetOperation(cm.exyzop)
+    c:RegisterEffect(e_0)
 	--remove
 	local e0=Effect.CreateEffect(c)
-	e0:SetDescription(aux.Stringid(m,1))
+	e0:SetDescription(aux.Stringid(17082102,1))
 	e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e0:SetCode(EVENT_PHASE+PHASE_END)
 	e0:SetRange(LOCATION_PZONE)
@@ -24,7 +33,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e0)
 	--Activate
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(m,2))
+	e1:SetDescription(aux.Stringid(17082102,2))
 	e1:SetCategory(CATEGORY_CONTROL)
 	e1:SetType(EFFECT_TYPE_QUICK_O)
 	e1:SetCode(EVENT_FREE_CHAIN)
@@ -47,7 +56,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e2)
 	--recover
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(m,3))
+	e3:SetDescription(aux.Stringid(17082102,3))
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e3:SetCode(EVENT_PHASE+PHASE_END)
 	e3:SetRange(LOCATION_MZONE)
@@ -76,6 +85,64 @@ function cm.initial_effect(c)
 	e7:SetCondition(cm.descon)
 	e7:SetOperation(cm.dessuc)
 	c:RegisterEffect(e7)
+	--summon success
+	local e9=Effect.CreateEffect(c)
+	e9:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e9:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e9:SetOperation(cm.sumsuc)
+	c:RegisterEffect(e9)
+end
+function cm.ovfilter(c)
+	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsAttribute(ATTRIBUTE_LIGHT)
+end
+function cm.exyzfilter(c)
+	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsLevel(8) and not c:IsType(TYPE_TOKEN)
+end
+function cm.exyzcon(e,c)    
+    if c==nil then return true end
+    local tp=c:GetControler()
+    local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
+    return ft>0 and Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD)>Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)
+	and (Duel.IsExistingMatchingCard(cm.exyzfilter,tp,LOCATION_MZONE,0,3,nil) or Duel.IsExistingMatchingCard(cm.ovfilter,tp,LOCATION_MZONE,0,1,nil)) and Duel.GetFlagEffect(tp,17082102)==0
+		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false,POS_FACEUP,tp) and Duel.GetLocationCountFromEx(tp)>0
+end
+function cm.exyzop(e,tp,eg,ep,ev,re,r,rp,c)
+	local c=e:GetHandler()
+	local tcode=c.dfc_back_side
+	c:SetEntityCode(tcode,true)
+	c:ReplaceEffect(tcode,0,0)
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
+	e2:SetReset(RESET_PHASE+PHASE_END)
+	e2:SetTargetRange(1,0)
+	e2:SetTarget(cm.splimit1)
+	Duel.RegisterEffect(e2,tp)
+	Duel.RegisterFlagEffect(tp,17082102,RESET_PHASE+PHASE_END,0,1)
+	if Duel.IsExistingMatchingCard(cm.ovfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(cm.exyzfilter,tp,LOCATION_MZONE,0,3,nil)
+		and Duel.SelectYesNo(tp,aux.Stringid(17082102,0)) then
+		local sg1=Duel.SelectMatchingCard(tp,cm.ovfilter,tp,LOCATION_MZONE,0,1,1,nil)
+		c:SetMaterial(sg1)
+		Duel.Overlay(c,sg1)
+		Duel.MoveToField(c,tp,tp,LOCATION_MZONE,POS_FACEUP,false)
+		c:RegisterFlagEffect(0,RESET_EVENT+RESET_LEAVE,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(17082102,4))
+	elseif Duel.IsExistingMatchingCard(cm.ovfilter,tp,LOCATION_MZONE,0,1,nil) 
+		and Duel.GetMatchingGroupCount(cm.exyzfilter,c:GetControler(),LOCATION_MZONE,0,nil)<3 then 
+		local sg1=Duel.SelectMatchingCard(tp,cm.ovfilter,tp,LOCATION_MZONE,0,1,1,nil)
+		c:SetMaterial(sg1)
+		Duel.Overlay(c,sg1)
+		Duel.MoveToField(c,tp,tp,LOCATION_MZONE,POS_FACEUP,false)
+		c:RegisterFlagEffect(0,RESET_EVENT+RESET_LEAVE,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(17082102,4))
+	else
+		local sg=Duel.SelectMatchingCard(tp,cm.exyzfilter,tp,LOCATION_MZONE,0,3,3,nil)
+		c:SetMaterial(sg)
+		Duel.Overlay(c,sg)
+		Duel.MoveToField(c,tp,tp,LOCATION_MZONE,POS_FACEUP,false)
+	end
+end
+function cm.splimit1(e,c,sump,sumtype,sumpos,targetp,se)
+	return not c:IsType(TYPE_PENDULUM)
 end
 function cm.filter(c)
 	return c:IsType(TYPE_SPELL+TYPE_TRAP)
@@ -109,30 +176,6 @@ function cm.setop(e,tp,eg,ep,ev,re,r,rp)
 		end
 	end
 end
-function cm.ovfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsAttribute(ATTRIBUTE_LIGHT)
-end
-function cm.xyzop(e,tp,chk)
-	local c=e:GetHandler()
-	if chk==0 then return Duel.GetFlagEffect(tp,m)==0 and Duel.GetFieldGroupCount(tp,LOCATION_ONFIELD,0)<Duel.GetFieldGroupCount(tp,0,LOCATION_ONFIELD) end
-	local tcode=c.dfc_back_side
-	c:SetEntityCode(tcode,true)
-	c:ReplaceEffect(tcode,0,0)
-	Duel.ShuffleExtra(tp)
-	local e2=Effect.CreateEffect(e:GetHandler())
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e2:SetCode(EFFECT_CANNOT_SPECIAL_SUMMON)
-	e2:SetReset(RESET_PHASE+PHASE_END)
-	e2:SetTargetRange(1,0)
-	e2:SetTarget(cm.splimit1)
-	Duel.RegisterEffect(e2,tp)
-	Duel.RegisterFlagEffect(tp,m,RESET_PHASE+PHASE_END,0,1)
-	c:RegisterFlagEffect(0,RESET_EVENT+RESET_LEAVE,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(m,4))
-end
-function cm.splimit1(e,c,sump,sumtype,sumpos,targetp,se)
-	return not c:IsType(TYPE_PENDULUM)
-end
 function cm.remop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(aux.TRUE,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_RULE)
@@ -145,7 +188,7 @@ function cm.remcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.recop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Recover(tp,1600,REASON_EFFECT)
-	Duel.Hint(HINT_SOUND,0,aux.Stringid(m,11))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17082102,11))
 end
 function cm.repfilter(c,tp)
 	return c:IsFaceup() and c:IsLocation(LOCATION_MZONE)
@@ -156,13 +199,13 @@ function cm.descon(e,tp,eg,ep,ev,re,r,rp)
 	return c:IsPreviousLocation(LOCATION_MZONE+LOCATION_SZONE) and c:IsFaceup()
 end
 function cm.sumsuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SOUND,0,aux.Stringid(m,8))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17082102,8))
 end	
 function cm.atksuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SOUND,0,aux.Stringid(m,9))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17082102,9))
 end
 function cm.dessuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SOUND,0,aux.Stringid(m,10))
+	Duel.Hint(HINT_SOUND,0,aux.Stringid(17082102,10))
 end
 function cm.aclcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_PENDULUM) 
