@@ -4,6 +4,16 @@ local cm=_G["c"..m]
 function cm.initial_effect(c)
 	cm.AddLinkProcedure(c,nil,2,99,cm.lcheck)
 	c:EnableReviveLimit()
+	--extra link
+    local e0=Effect.CreateEffect(c)
+    e0:SetType(EFFECT_TYPE_FIELD)
+    e0:SetProperty(EFFECT_FLAG_SINGLE_RANGE+EFFECT_FLAG_IGNORE_IMMUNE)
+    e0:SetRange(LOCATION_EXTRA)
+    e0:SetTarget(cm.mattg)
+    e0:SetCode(EFFECT_EXTRA_LINK_MATERIAL)
+    e0:SetTargetRange(LOCATION_EXTRA,0)
+    e0:SetValue(cm.matval)
+    c:RegisterEffect(e0)
 	--destroy
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(m,0))
@@ -28,77 +38,14 @@ function cm.initial_effect(c)
 	e2:SetOperation(cm.spop)
 	c:RegisterEffect(e2)
 end
+function cm.mattg(e,c)
+    return c:IsRace(RACE_SPELLCASTER) and c:IsFaceup()
+end
+function cm.matval(e,c,mg)
+    return c:IsCode(69696918)
+end
 function cm.lcheck(g,lc)
 	return g:IsExists(Card.IsRace,1,nil,RACE_SPELLCASTER)
-end
-function cm.efilter(c,sc)
-	return c:IsFaceup() and c:IsLocation(LOCATION_EXTRA) and c:IsCanBeLinkMaterial(sc) and c:IsRace(RACE_SPELLCASTER)
-end
-function cm.AddLinkProcedure(c,f,min,max,gf)
-	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_SPSUMMON_PROC)
-	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
-	e1:SetRange(LOCATION_EXTRA)
-	if max==nil then max=c:GetLink() end
-	e1:SetCondition(cm.LinkCondition(f,min,max,gf))
-	e1:SetTarget(cm.LinkTarget(f,min,max,gf))
-	e1:SetOperation(Auxiliary.LinkOperation(f,min,max,gf))
-	e1:SetValue(SUMMON_TYPE_LINK)
-	c:RegisterEffect(e1)
-end
-function cm.LinkCondition(f,minc,maxc,gf)
-	return  function(e,c)
-				if c==nil then return true end
-				if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
-				local tp=c:GetControler()
-				local mg=Duel.GetMatchingGroup(Auxiliary.LConditionFilter,tp,LOCATION_MZONE,0,nil,f,c)
-				local emg=Duel.GetMatchingGroup(cm.efilter,tp,LOCATION_EXTRA,0,nil,f,c)
-				mg:Merge(emg)
-				local sg=Auxiliary.GetMustMaterialGroup(tp,EFFECT_MUST_BE_LMATERIAL)
-				if sg:IsExists(Auxiliary.MustMaterialCounterFilter,1,nil,mg) then return false end
-				local ct=sg:GetCount()
-				if ct>maxc then return false end
-				return Auxiliary.LCheckGoal(tp,sg,c,minc,ct,gf)
-					or mg:IsExists(Auxiliary.LCheckRecursive,1,sg,tp,sg,mg,c,ct,minc,maxc,gf)
-			end
-end
-function cm.LinkTarget(f,minc,maxc,gf)
-	return  function(e,tp,eg,ep,ev,re,r,rp,chk,c)
-				local mg=Duel.GetMatchingGroup(Auxiliary.LConditionFilter,tp,LOCATION_MZONE,0,nil,f,c)
-				local emg=Duel.GetMatchingGroup(cm.efilter,tp,LOCATION_EXTRA,0,nil,f,c)
-				mg:Merge(emg)
-				local bg=Auxiliary.GetMustMaterialGroup(tp,EFFECT_MUST_BE_LMATERIAL)
-				if #bg>0 then
-					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LMATERIAL)
-					bg:Select(tp,#bg,#bg,nil)
-				end
-				local sg=Group.CreateGroup()
-				sg:Merge(bg)
-				while #sg<maxc do
-					local cg=mg:Filter(Auxiliary.LCheckRecursive,sg,tp,sg,mg,c,#sg,minc,maxc,gf)
-					if #cg==0 then break end
-					local finish=Auxiliary.LCheckGoal(tp,sg,c,minc,#sg,gf)
-					local cancel=(#sg==0 or finish)
-					Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_LMATERIAL)
-					local tc=cg:SelectUnselect(sg,tp,finish,cancel,minc,maxc)
-					if not tc then break end
-					if not bg:IsContains(tc) then
-						if not sg:IsContains(tc) then
-							sg:AddCard(tc)
-						else
-							sg:RemoveCard(tc)
-						end
-					elseif #bg>0 and #sg<=#bg then
-						return false
-					end
-				end
-				if #sg>0 then
-					sg:KeepAlive()
-					e:SetLabelObject(sg)
-					return true
-				else return false end
-			end
 end
 function cm.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return false end

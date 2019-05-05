@@ -65,7 +65,7 @@ function c65060011.effop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x6da3))
 		e2:SetValue(num*800)
 		e2:SetReset(RESET_PHASE+PHASE_END)
-		c:RegisterEffect(e2)
+		Duel.RegisterEffect(e2,tp)
 	end
 end
 

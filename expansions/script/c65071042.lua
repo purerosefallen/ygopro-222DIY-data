@@ -31,6 +31,7 @@ function c65071042.atktg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c65071042.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) then 
 	local atk=tc:GetDefense()
 	local g=Duel.GetFieldGroup(tp,LOCATION_MZONE,LOCATION_MZONE)
 	local dg=Group.CreateGroup()
@@ -47,6 +48,7 @@ function c65071042.atkop(e,tp,eg,ep,ev,re,r,rp)
 		mc=g:GetNext()
 	end
 	Duel.Destroy(dg,REASON_EFFECT)
+	end
 end
 function c65071042.destg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsType(TYPE_MONSTER) and chkc:IsOnField() end
