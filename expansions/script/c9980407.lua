@@ -61,7 +61,7 @@ function c9980407.initial_effect(c)
 	e1:SetOperation(c9980407.desop)
 	c:RegisterEffect(e1)
 end
-c9980407.card_code_list={99800400}
+c9980407.card_code_list={9980400}
 function c9980407.eqlimit(e,c)
 	return c:IsRace(RACE_WARRIOR)
 end
@@ -92,7 +92,7 @@ function c9980407.damop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(ep,ev*2)
 end
 function c9980407.cfilter(c)
-	return c:IsFaceup() and c:IsCode(99800400)
+	return c:IsFaceup() and c:IsCode(9980400)
 end
 function c9980407.descon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(c9980407.cfilter,tp,LOCATION_ONFIELD,0,1,nil)

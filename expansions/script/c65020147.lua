@@ -61,10 +61,10 @@ end
 function c65020147.sprcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return Duel.IsExistingMatchingCard(c65020147.sprfilter,tp,LOCATION_MZONE,0,2,nil,tp,c) and Duel.GetLocationCountFromEx(tp)>0
+	return Duel.IsExistingMatchingCard(c65020147.sprfilter,tp,LOCATION_MZONE,0,2,nil,tp,c) 
 end
 function c65020147.sprfilter(c,tp,fc)
-	return c:IsFusionType(TYPE_FLIP) and c:IsAbleToGraveAsCost() and c:IsCanBeFusionMaterial(fc)
+	return c:IsFusionType(TYPE_FLIP) and c:IsAbleToGraveAsCost() and c:IsCanBeFusionMaterial(fc) and Duel.GetLocationCountFromEx(tp,tp,c)>0
 end
 function c65020147.sprop(e,tp,eg,ep,ev,re,r,rp,c)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)

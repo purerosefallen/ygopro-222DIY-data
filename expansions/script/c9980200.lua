@@ -79,7 +79,8 @@ function c9980200.activate(e,tp,eg,ep,ev,re,r,rp)
 			Duel.BreakEffect()
 			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
 			local sg=g:Select(tp,1,1,e:GetHandler())
-			Duel.Remove(sg,REASON_EFFECT)
+			Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
+			Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 		end
 	end
 end
