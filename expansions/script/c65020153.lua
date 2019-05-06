@@ -43,7 +43,7 @@ function c65020153.op(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c65020153.thconfil(c)
-	return c:IsSetCard(0x3da7) and c:GetSummonLocation(LOCATION_EXTRA)
+	return c:IsSetCard(0x3da7) and c:GetSummonLocation()==LOCATION_EXTRA 
 end
 function c65020153.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return eg:IsExists(c65020153.thconfil,1,nil)

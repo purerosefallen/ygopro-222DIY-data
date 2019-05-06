@@ -95,8 +95,11 @@ end
 function cm.ovfilter(c)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsAttribute(ATTRIBUTE_LIGHT)
 end
-function cm.exyzfilter(c)
+function cm.exyzfilter(c,xyzcard)
 	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and c:IsLevel(8) and not c:IsType(TYPE_TOKEN)
+end
+function cm.exyzfilter1(c,xyzcard)
+	return c:IsFaceup() and c:IsType(TYPE_PENDULUM) and not c:IsType(TYPE_TOKEN)
 end
 function cm.exyzcon(e,c)    
     if c==nil then return true end
@@ -106,8 +109,11 @@ function cm.exyzcon(e,c)
 	and (Duel.IsExistingMatchingCard(cm.exyzfilter,tp,LOCATION_MZONE,0,3,nil) or Duel.IsExistingMatchingCard(cm.ovfilter,tp,LOCATION_MZONE,0,1,nil)) and Duel.GetFlagEffect(tp,17082102)==0
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_XYZ,tp,false,false,POS_FACEUP,tp) and Duel.GetLocationCountFromEx(tp)>0
 end
+function cm.ndcfilter(c,code)
+	local code1,code2=c:GetOriginalCodeRule()
+	return c:IsFaceup() and (code1==code or code2==code)
+end
 function cm.exyzop(e,tp,eg,ep,ev,re,r,rp,c)
-	local c=e:GetHandler()
 	local tcode=c.dfc_back_side
 	c:SetEntityCode(tcode,true)
 	c:ReplaceEffect(tcode,0,0)
@@ -120,7 +126,22 @@ function cm.exyzop(e,tp,eg,ep,ev,re,r,rp,c)
 	e2:SetTarget(cm.splimit1)
 	Duel.RegisterEffect(e2,tp)
 	Duel.RegisterFlagEffect(tp,17082102,RESET_PHASE+PHASE_END,0,1)
-	if Duel.IsExistingMatchingCard(cm.ovfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(cm.exyzfilter,tp,LOCATION_MZONE,0,3,nil)
+	if Duel.IsExistingMatchingCard(cm.ovfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(cm.ndcfilter,tp,LOCATION_MZONE+LOCATION_EXTRA,0,1,nil,47500007)
+		and Duel.IsExistingMatchingCard(cm.exyzfilter1,tp,LOCATION_MZONE,0,3,nil)
+		and Duel.SelectYesNo(tp,aux.Stringid(17082102,0)) then
+		local sg1=Duel.SelectMatchingCard(tp,cm.ovfilter,tp,LOCATION_MZONE,0,1,1,nil)
+		c:SetMaterial(sg1)
+		Duel.Overlay(c,sg1)
+		Duel.MoveToField(c,tp,tp,LOCATION_MZONE,POS_FACEUP,false)
+		c:RegisterFlagEffect(0,RESET_EVENT+RESET_LEAVE,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(17082102,4))
+	elseif Duel.IsExistingMatchingCard(cm.ndcfilter,tp,LOCATION_MZONE+LOCATION_EXTRA,0,1,nil,47500007)
+		and Duel.IsExistingMatchingCard(cm.exyzfilter1,tp,LOCATION_MZONE,0,3,nil) then
+		local sg2=Duel.SelectMatchingCard(tp,cm.exyzfilter1,tp,LOCATION_MZONE,0,3,3,nil)
+		c:SetMaterial(sg2)
+		Duel.Overlay(c,sg2)
+		Duel.MoveToField(c,tp,tp,LOCATION_MZONE,POS_FACEUP,false)
+		sg2:DeleteGroup()
+	elseif Duel.IsExistingMatchingCard(cm.ovfilter,tp,LOCATION_MZONE,0,1,nil) and Duel.IsExistingMatchingCard(cm.exyzfilter,tp,LOCATION_MZONE,0,3,nil)
 		and Duel.SelectYesNo(tp,aux.Stringid(17082102,0)) then
 		local sg1=Duel.SelectMatchingCard(tp,cm.ovfilter,tp,LOCATION_MZONE,0,1,1,nil)
 		c:SetMaterial(sg1)
@@ -139,6 +160,7 @@ function cm.exyzop(e,tp,eg,ep,ev,re,r,rp,c)
 		c:SetMaterial(sg)
 		Duel.Overlay(c,sg)
 		Duel.MoveToField(c,tp,tp,LOCATION_MZONE,POS_FACEUP,false)
+		sg:DeleteGroup()
 	end
 end
 function cm.splimit1(e,c,sump,sumtype,sumpos,targetp,se)

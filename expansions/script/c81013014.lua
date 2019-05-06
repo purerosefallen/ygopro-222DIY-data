@@ -20,7 +20,7 @@ function c81013014.initial_effect(c)
 	e2:SetRange(LOCATION_PZONE)
 	e2:SetTargetRange(LOCATION_MZONE,LOCATION_MZONE)
 	e2:SetTarget(c81013014.efilter)
-	e2:SetValue(200)
+	e2:SetValue(500)
 	c:RegisterEffect(e2)
 	--avoid battle damage
 	local e3=Effect.CreateEffect(c)
