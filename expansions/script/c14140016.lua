@@ -123,31 +123,19 @@ function cm.operation1(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function cm.CheckGroup(g,f,cg,min,max,...)
+	if cg then Duel.SetSelectedCard(cg) end
+	return g:CheckSubGroup(f,min,max,...)
+end
+function cm.SelectGroupNew(tp,desc,cancelable,g,f,cg,min,max,...)
 	local min=min or 1
-	local max=max or g:GetCount()
-	if min>max then return false end
+	local max=max or #g
 	local ext_params={...}
-	local sg=Group.CreateGroup()
-	if cg then sg:Merge(cg) end
-	local ct=sg:GetCount()
-	if ct>=min and ct<max and f(sg,...) then return true end
-	return g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params)
+	if cg then Duel.SetSelectedCard(cg) end
+	Duel.Hint(tp,HINT_SELECTMSG,desc)
+	return g:SelectSubGroup(tp,f,cancelable,min,max,...)
 end
 function cm.SelectGroup(tp,desc,g,f,cg,min,max,...)
-	local min=min or 1
-	local max=max or g:GetCount()
-	local ext_params={...}
-	local sg=Group.CreateGroup()
-	if cg then sg:Merge(cg) end
-	local ct=sg:GetCount()
-	while ct<max and not (ct>=min and f(sg,...) and not (g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params) and Duel.SelectYesNo(tp,210))) do
-		Duel.Hint(HINT_SELECTMSG,tp,desc)
-		local tg=g:FilterSelect(tp,cm.CheckGroupRecursive,1,1,sg,sg,g,f,min,max,ext_params)
-		if tg:GetCount()==0 then error("Incorrect Group Filter",2) end
-		sg:Merge(tg)
-		ct=sg:GetCount()
-	end
-	return sg
+	return cm.SelectGroupNew(tp,desc,false,g,f,cg,min,max,...)
 end
 function cm.matfilter1(c,syncard,tp)
 	if c:IsFacedown() then return false end
