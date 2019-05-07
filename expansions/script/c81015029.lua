@@ -48,7 +48,7 @@ function c81015029.cfilter(c)
 end
 function c81015029.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetMatchingGroupCount(c81015029.cfilter,tp,0,LOCATION_SZONE,nil)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,81015999,0,0x4011,0,0,6,RACE_FAIRY,ATTRIBUTE_EARTH) end
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,81015999,0x81a,0x4011,0,0,6,RACE_FAIRY,ATTRIBUTE_EARTH) end
 	Duel.SetOperationInfo(0,CATEGORY_TOKEN,nil,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,0,0)
 end
@@ -58,7 +58,7 @@ function c81015029.spop(e,tp,eg,ep,ev,re,r,rp)
 	if ft>ct then ft=ct end
 	if ft<=0 then return end
 	if Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end
-	if not Duel.IsPlayerCanSpecialSummonMonster(tp,81015999,0,0x4011,0,0,6,RACE_FAIRY,ATTRIBUTE_EARTH) then return end
+	if not Duel.IsPlayerCanSpecialSummonMonster(tp,81015999,0x81a,0x4011,0,0,6,RACE_FAIRY,ATTRIBUTE_EARTH) then return end
 	local ctn=true
 	while ft>0 and ctn do
 		local token=Duel.CreateToken(tp,81015999)

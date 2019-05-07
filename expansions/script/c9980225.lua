@@ -129,7 +129,7 @@ function c9980225.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,1000)
 end
 function c9980225.thop(e,tp,eg,ep,ev,re,r,rp)
- c  local c=e:GetHandler()
+	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	if tc:IsRelateToEffect(e) then

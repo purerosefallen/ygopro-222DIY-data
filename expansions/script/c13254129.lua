@@ -16,9 +16,9 @@ function c13254129.filter(c)
 end
 function c13254129.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:GetControler()==tp and chkc:GetLocation()==LOCATION_GRAVE and c13254129.filter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c13254129.filter,tp,0,LOCATION_GRAVE,1,nil) end
+	if chk==0 then return Duel.IsExistingTarget(c13254129.filter,tp,LOCATION_GRAVE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,c13254129.filter,tp,0,LOCATION_GRAVE,1,1,nil)
+	local g=Duel.SelectTarget(tp,c13254129.filter,tp,LOCATION_GRAVE,0,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
 end
 function c13254129.rfilter(c)
@@ -29,7 +29,7 @@ function c13254129.cfilter(c)
 end
 function c13254129.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,POS_FACEUP,REASON_EFFECT)>0 then
+	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,tp,2,REASON_EFFECT)>0 then
 		local t1=Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) and Duel.IsPlayerCanDraw(tp,1)
 		local t2=Duel.IsExistingMatchingCard(c13254129.rfilter,tp,0,LOCATION_GRAVE+LOCATION_EXTRA,1,nil) and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_DECK,0,1,nil)
 		local t=Duel.IsExistingMatchingCard(c13254129.cfilter,tp,LOCATION_ONFIELD,0,1,nil)

@@ -205,7 +205,7 @@ function c1140011.SynMixCheckGoal(tp,sg,minc,ct,syncard,sg1,smat,gc)
 			lv=tc:GetSynchroLevel(syncard)
 		end
 		num=syncard:GetLevel()-lv
-		local b1=(num==0 and g:IsExists(c1140011.GetSynchroLevelCheck1,1,tc,syncard) end
+		local b1=(num==0 and g:IsExists(c1140011.GetSynchroLevelCheck1,1,tc,syncard))
 		local b2=(num~=0 and g:IsExists(c1140011.GetSynchroLevelCheck2,1,tc,syncard,tc,num))
 		if b1 or b2 then checknum=1 end
 		tc=g:GetNext()

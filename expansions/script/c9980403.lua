@@ -77,10 +77,10 @@ end
 function c9980403.spop(e,tp,eg,ep,ev,re,r,rp,c)
 	local b1=Duel.GetLocationCount(tp,LOCATION_MZONE)>0
 		and Duel.IsExistingMatchingCard(c9980403.spfilter,tp,LOCATION_DECK+LOCATION_HAND+LOCATION_GRAVE,0,1,nil)
-	local b2=Duel.IsExistingMatchingCard(c9980403.spfilter2,tp,\LOCATION_GRAVE,0,1,nil,tp)
+	local b2=Duel.IsExistingMatchingCard(c9980403.spfilter2,tp,LOCATION_GRAVE,0,1,nil,tp)
 	if b2 and (not b1 or Duel.SelectYesNo(tp,aux.Stringid(9980404,0))) then
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-		local tg=Duel.SelectMatchingCard(tp,c9980403.spfilter2,tp,\LOCATION_GRAVE,0,1,1,nil,tp)
+		local tg=Duel.SelectMatchingCard(tp,c9980403.spfilter2,tp,LOCATION_GRAVE,0,1,1,nil,tp)
 		local te=tg:GetFirst():IsHasEffect(9980404,tp)
 		te:UseCountLimit(tp)
 		Duel.Remove(tg,POS_FACEUP,REASON_COST)

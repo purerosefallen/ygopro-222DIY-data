@@ -61,19 +61,17 @@ function c13254114.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chk==0 then return ft>0 and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and Duel.IsExistingTarget(c13254114.thfilter,tp,0,LOCATION_ONFIELD,1,nil) and cc2>=2 and cc2-cc1>=1+2-ft end--non green maru count>=3-limit
 	local cg=Group.CreateGroup()
 	local sg=Group.CreateGroup()
-	local tc=c
-	local i=0
 	repeat
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-		sg=cg2:FilterSelect(tp,c13254114.cfilter3,1,1,nil,e,tp,ft-1,sg)--select maru to confirm
-		if i==0 then
-			tc=sg:GetFirst()
-			i=1
+		cg=cg2:FilterSelect(tp,c13254114.cfilter3,1,1,nil,e,tp,ft-1,sg)--select maru to confirm
+		if cg:GetCount()>0 then 
+			sg:Merge(cg)--add to sg
+			if cg:GetFirst():IsAttribute(ATTRIBUTE_WIND) then
+				ft=ft-1 
+			end
 		end
-		if tc and tc:IsAttribute(ATTRIBUTE_WIND) then ft=ft-1 end
-		tc=sg:GetNext()
-	until tc
-	local cg=sg:Clone()--selected maru
+	until cg:GetCount()==0
+	cg=sg:Clone()--selected maru
 	Duel.ConfirmCards(1-tp,cg)
 	Duel.ShuffleHand(tp)
 	cg:KeepAlive()
@@ -93,17 +91,15 @@ end
 function c13254114.spfilter(c,e,tp)
 	return c:IsAttribute(ATTRIBUTE_WIND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
+function c13254114.ckfilter(c)
+	return c:GetFlagEffect(13254114)==0
+end
 function c13254114.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	local cg=e:GetLabelObject()
-	local cc=cg:GetCount()
 	local c=e:GetHandler()
 	if tc and tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)~=0 then
-		local sc=cg:GetFirst()
-		local g=Group.CreateGroup()
-		repeat
-			if sc:GetFlagEffect(13254114)==0 then g:AddCard(sc) else sc=cg:GetNext() end
-		until sc
+		local g=cg:Filter(c13254114.ckfilter,nil)
 		cg:Sub(g)--remove non relatetoeffect card
 		local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 		if ft>0 and Duel.IsPlayerAffectedByEffect(tp,59822133) then ft=1 end--limit spsummon count

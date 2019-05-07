@@ -1,4 +1,4 @@
---神祭小狐 狐说草
+--神祭小狐 狐说草 
 if not pcall(function() require("expansions/script/c33331100") end) then require("script/c33331100") end
 local m=33331106
 local cm=_G["c"..m]
@@ -19,7 +19,7 @@ end
 function cm.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetLabel()==100 and Duel.IsExistingMatchingCard(cm.cfilter,tp,LOCATION_HAND,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_CONFIRM)
-	local g=Duel.SelectMatchingCard(tp,cm.cfilter,tp,LOCATION_HAND,0,1,1,nil)
+	local g=Duel.SelectMatchingCard(tp,cm.cfilter,tp,LOCATION_HAND,0,1,1,nil,tp)
 	Duel.ConfirmCards(1-tp,g)
 	Duel.SetTargetCard(g)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)

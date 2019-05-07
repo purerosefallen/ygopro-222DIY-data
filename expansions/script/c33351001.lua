@@ -52,8 +52,10 @@ function c33351001.recost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.ShuffleHand(tp)
 end
 function c33351001.retg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemove() and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) end
+	local c=e:GetHandler()
+	if chk==0 then return e:GetHandler():IsAbleToRemove() and Duel.IsExistingMatchingCard(Card.IsFaceup,tp,0,LOCATION_MZONE,1,nil) and c:GetFlagEffect(33351001)==0 end
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,e:GetHandler(),1,tp,LOCATION_MZONE)
+	c:RegisterFlagEffect(33351001,RESET_CHAIN,0,1)
 end
 function c33351001.reop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.Remove(e:GetHandler(),0,REASON_EFFECT+REASON_TEMPORARY)~=0 then

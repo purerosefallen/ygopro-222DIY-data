@@ -28,7 +28,7 @@ function c9980213.initial_effect(c)
 	e2:SetCode(EFFECT_UPDATE_ATTACK)
 	e2:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
 	e2:SetRange(LOCATION_MZONE)
-	e2:SetValue(c40418351.atkval2)
+	e2:SetValue(c9980213.atkval2)
 	c:RegisterEffect(e2)
 	local e2=e3:Clone()
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
@@ -123,7 +123,7 @@ end
 function c9980213.atkval(e,c)
 	return Duel.GetMatchingGroupCount(c9980213.atkfilter,tp,LOCATION_GRAVE,0,nil)*500
 end
-function c40418351.atkval2(e,c)
+function c9980213.atkval2(e,c)
 	local tp=e:GetHandlerPlayer()
 	return Duel.GetMatchingGroupCount(Card.IsType,tp,LOCATION_EXTRA,0,nil,TYPE_MONSTER)*200
 end
