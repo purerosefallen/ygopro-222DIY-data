@@ -76,7 +76,7 @@ function c12013011.spfilter2(c,e,tp,m,f,chkf)
 		and c:IsCanBeSpecialSummoned(e,SUMMON_TYPE_FUSION,tp,false,false) and c:CheckFusionMaterial(m,nil,chkf)
 end
 function c12013011.spfilter3(c)
-	return c:IsCanBeFusionMaterial() and c:IsSetCard(0x10f3)
+	return c:IsCanBeFusionMaterial() and c:IsSetCard(0xfb3)
 end
 function c12013011.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
