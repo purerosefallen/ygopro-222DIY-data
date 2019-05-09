@@ -25,26 +25,36 @@ end
 function c13254130.spfilter(c,code,e,tp)
 	return c:IsSetCard(0x356) and c:IsCode(code) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
-function c13254130.filter(c,e,tp)
-	return c:IsAbleToDeck() and Duel.IsExistingMatchingCard(c13254130.spfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode(),e,tp)
+function c13254130.tdfilter(c,e,tp)
+	return c:IsAbleToDeck() and Duel.IsExistingMatchingCard(c13254130.spfilter,tp,LOCATION_DECK,0,1,nil,c:GetCode(),e,tp) and c:IsCanBeEffectTarget(e)
 end
-function c13254130.chkfilter(c,code)
-	return c:IsAbleToDeck() and c:IsCode(code)
+function c13254130.tdfilter2(c,g)
+	return g:IsExists(Card.IsCode,1,c,c:GetCode())
 end
 function c13254130.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and c13254130.chkfilter(chkc,e:GetLabel()) end
-	if chk==0 then return Duel.IsExistingTarget(c13254130.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chkc then return true end
+	if chk==0 then
+		local g=Duel.GetMatchingGroup(c13254130.tdfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
+	return g:IsExists(c13254130.tdfilter2,1,nil,g) end
+	local g=Duel.GetMatchingGroup(c13254130.tdfilter,tp,LOCATION_GRAVE,0,nil,e,tp)
+	local dg=g:Filter(c13254130.tdfilter2,nil,g)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
-	local g=Duel.SelectTarget(tp,c13254130.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
-	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
+	local sg1=dg:Select(tp,1,1,nil)
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local sg2=dg:FilterSelect(tp,Card.IsCode,1,1,sg1:GetFirst(),sg1:GetFirst():GetCode())
+	sg1:Merge(sg2)
+	Duel.SetTargetCard(sg1)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,sg1,2,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
-	e:SetLabel(g:GetFirst():GetCode())
+end
+function c13254130.filter2(c,e)
+	return c:IsRelateToEffect(e)
 end
 function c13254130.activate(e,tp,eg,ep,ev,re,r,rp)
-	local tc=Duel.GetFirstTarget()
-	if not tc:IsRelateToEffect(e) then return end
-	local code=tc:GetCode()
-	if Duel.SendtoDeck(tc,tp,2,REASON_EFFECT)==0 then return end
+	local g=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS):Filter(c13254130.filter2,nil,e)
+	if g:GetCount()<2 then return end
+	local code=g:GetFirst():GetCode()
+	if Duel.SendtoDeck(g,tp,2,REASON_EFFECT)==0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
 	local sg=Duel.SelectMatchingCard(tp,c13254130.spfilter,tp,LOCATION_DECK,0,1,1,nil,code,e,tp)
 	if sg:GetCount()>0 then

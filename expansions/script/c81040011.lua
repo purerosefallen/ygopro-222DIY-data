@@ -22,6 +22,7 @@ function c81040011.initial_effect(c)
 	e2:SetCondition(c81040011.tdcon)
 	e2:SetTarget(c81040011.tdtg)
 	e2:SetOperation(c81040011.tdop)
+	c:RegisterEffect(e2)
 end
 function c81040011.cfilter(c)
 	return c:IsType(TYPE_RITUAL) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()

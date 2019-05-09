@@ -51,8 +51,9 @@ function c13254129.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 			local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
 			if g:GetCount()>0 then
 				Duel.Destroy(g,REASON_EFFECT)
+
+				Duel.Draw(tp,1,REASON_EFFECT)
 			end
-			Duel.Draw(tp,1,REASON_EFFECT)
 		end
 		if op==2 or t then
 			Duel.Damage(1-tp,1000,REASON_EFFECT)
@@ -63,11 +64,12 @@ function c13254129.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 			local g=Duel.SelectMatchingCard(tp,c13254129.rfilter,tp,0,LOCATION_GRAVE+LOCATION_EXTRA,1,1,nil)
 			if g:GetCount()>0 then
 				Duel.Remove(g,POS_FACEUP,REASON_EFFECT)
-			end
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-			local g1=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_DECK,0,1,1,nil)
-			if g1:GetCount()>0 then
-				Duel.SendtoGrave(g1,REASON_EFFECT)
+
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
+				local g1=Duel.SelectMatchingCard(tp,Card.IsAbleToGrave,tp,LOCATION_DECK,0,1,1,nil)
+				if g1:GetCount()>0 then
+					Duel.SendtoGrave(g1,REASON_EFFECT)
+				end
 			end
 		end
 	end

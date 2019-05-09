@@ -35,7 +35,7 @@ function c13254128.cfilter0(c)
 	return c:IsType(TYPE_SPELL) and c:IsDiscardable()
 end
 function c13254128.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c13254128.cfilter0,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsExistingMatchingCard(c13254128.cfilter0,tp,LOCATION_HAND,0,1,e:GetHandler()) end
 	Duel.DiscardHand(tp,c13254128.cfilter0,1,1,REASON_COST+REASON_DISCARD,nil)
 end
 function c13254128.thfilter(c)

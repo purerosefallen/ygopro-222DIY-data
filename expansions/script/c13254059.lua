@@ -197,7 +197,7 @@ function c13254059.advantage(e,tp,eg,ep,ev,re,r,rp,c)
 end
 function c13254059.counter(e,tp,eg,ep,ev,re,r,rp,c)
 	local realtp=e:GetHandler():GetOwner()
-	if Duel.GetTurnPlayer()==realtp and Duel.GetCurrentPhase()>=PHASE_MAIN1 and Duel.GetFieldGroupCount(realtp,LOCATION_HAND+LOCATION_ONFIELD,0)<=Duel.GetFieldGroupCount(realtp,0,LOCATION_HAND+LOCATION_ONFIELD)+6 and Duel.GetFieldGroupCount(realtp,0,LOCATION_ONFIELD)>0 and Duel.GetFlagEffect(realtp,33254059)==0 then
+	if Duel.GetTurnPlayer()==realtp and Duel.GetCurrentPhase()>=PHASE_MAIN1 and Duel.GetFieldGroupCount(realtp,LOCATION_HAND+LOCATION_ONFIELD,0)+6<=Duel.GetFieldGroupCount(realtp,0,LOCATION_HAND+LOCATION_ONFIELD) and Duel.GetFieldGroupCount(realtp,0,LOCATION_ONFIELD)>0 and Duel.GetFlagEffect(realtp,33254059)==0 then
 		Duel.RegisterFlagEffect(realtp,33254059,RESET_PHASE+PHASE_END,0,1)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
