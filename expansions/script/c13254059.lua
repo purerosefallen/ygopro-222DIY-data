@@ -186,7 +186,7 @@ function c13254059.start(e,tp,eg,ep,ev,re,r,rp,c)
 	end
 end
 function c13254059.advantage_filter(c)
-	return c:IsLevelAbove(2) or c:IsLinkAbove(2)
+	return c:GetOriginalLevel()>=2 or c:IsLinkAbove(2)
 end
 function c13254059.advantage(e,tp,eg,ep,ev,re,r,rp,c)
 	local realtp=e:GetHandler():GetOwner()

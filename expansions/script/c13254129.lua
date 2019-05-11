@@ -30,6 +30,7 @@ end
 function c13254129.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) and Duel.SendtoDeck(tc,tp,2,REASON_EFFECT)>0 then
+		Duel.ShuffleDeck(tp)
 		local t1=Duel.IsExistingMatchingCard(aux.TRUE,tp,0,LOCATION_ONFIELD,1,nil) and Duel.IsPlayerCanDraw(tp,1)
 		local t2=Duel.IsExistingMatchingCard(c13254129.rfilter,tp,0,LOCATION_GRAVE+LOCATION_EXTRA,1,nil) and Duel.IsExistingMatchingCard(Card.IsAbleToGrave,tp,LOCATION_DECK,0,1,nil)
 		local t=Duel.IsExistingMatchingCard(c13254129.cfilter,tp,LOCATION_ONFIELD,0,1,nil)

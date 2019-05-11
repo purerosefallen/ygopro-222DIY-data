@@ -52,30 +52,24 @@ function Tenka.Shibuya(c)
 	e8:SetCode(EFFECT_CANNOT_BE_LINK_MATERIAL)
 	c:RegisterEffect(e8)
 end
---tsubasa 1
-function Tenka.Tsubasa(c)
+--Reverse
+function Tenka.Reverse(c)
 	local e0=Effect.CreateEffect(c)
-	e0:SetCategory(CATEGORY_TOGRAVE)
-	e0:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
-	e0:SetProperty(EFFECT_FLAG_DELAY)
-	e0:SetCode(EVENT_REMOVE)
-	e0:SetTarget(Tenka.otg)
-	e0:SetOperation(Tenka.osp)
+	e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+	e0:SetCode(EVENT_ADJUST)
+	e0:SetRange(LOCATION_DECK+LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_HAND+LOCATION_EXTRA)
+	e0:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_SET_AVAILABLE)
+	e0:SetCondition(Tenka.backon)
+	e0:SetOperation(Tenka.backop)
 	c:RegisterEffect(e0)
 end
-function Tenka.otg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chk==0 then return true end
-	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,e:GetHandler(),1,0,0)
+function Tenka.backon(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	return c.dfc_front_side and c:GetOriginalCode()==c.dfc_back_side
 end
-function Tenka.oop(e,tp,eg,ep,ev,re,r,rp)
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_PHASE+PHASE_END)
-	e1:SetCountLimit(1)
-	e1:SetOperation(Tenka.otgop)
-	e1:SetReset(RESET_PHASE+PHASE_END)
-	Duel.RegisterEffect(e1,tp)  
-end
-function Tenka.otgop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.SendtoGrave(e:GetHandler(),REASON_EFFECT+REASON_RETURN)
+function Tenka.backop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	local tcode=c.dfc_front_side
+	c:SetEntityCode(tcode)
+	c:ReplaceEffect(tcode,0,0)
 end
