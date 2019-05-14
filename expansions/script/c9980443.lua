@@ -74,6 +74,7 @@ function c9980443.spop(e,tp,eg,ep,ev,re,r,rp)
 	e2:SetCode(EFFECT_UPDATE_DEFENSE)
 	Duel.RegisterEffect(e2,tp)
 end
+end
 function c9980443.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	if tc:GetFlagEffect(9980443)~=0 then
