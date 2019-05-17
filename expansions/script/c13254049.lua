@@ -136,5 +136,6 @@ function c13254049.operation1(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	if Duel.SendtoDeck(sg,nil,2,REASON_EFFECT)~=2 then return end
 	Duel.BreakEffect()
+	Duel.ShuffleDeck(tp)
 	Duel.Draw(tp,1,REASON_EFFECT)
 end

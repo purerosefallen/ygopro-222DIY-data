@@ -42,7 +42,7 @@ function c33700037.op(e,tp,eg,ep,ev,re,r,rp)
 	g:RemoveCard(e:GetHandler())
 	if g:GetCount()==0 then return end
 	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
-	Duel.ShuffleDeck(p)
+	Duel.ShuffleDeck(tp)
 	Duel.BreakEffect()
 	Duel.Draw(tp,g:GetCount(),REASON_EFFECT)
 end
@@ -57,7 +57,7 @@ function c33700037.slop(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 	if not Duel.IsExistingMatchingCard(c33700037.filter,tp,LOCATION_HAND,0,1,nil) then return end
    Duel.ConfirmCards(1-tp,g)
-     local op=Duel.SelectOption(1-tp,aux.Stringid(33700037,0),aux.Stringid(33700037,1))
+	 local op=Duel.SelectOption(1-tp,aux.Stringid(33700037,0),aux.Stringid(33700037,1))
 	if op==0 then
 	if g:GetCount()==0 then return end
 	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
@@ -68,15 +68,15 @@ function c33700037.slop(e,tp,eg,ep,ev,re,r,rp)
 		 local e1=Effect.CreateEffect(e:GetHandler())
 		  e1:SetType(EFFECT_TYPE_SINGLE)
 		  e1:SetCode(EFFECT_UPDATE_ATTACK)
-		  	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-     		  e1:SetValue(1000)
-		       e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+			e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+			  e1:SetValue(1000)
+			   e1:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		  e:GetHandler():RegisterEffect(e1)
 		local e2=Effect.CreateEffect(e:GetHandler())
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetCode(EFFECT_DIRECT_ATTACK)
-		    e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
+			e2:SetReset(RESET_EVENT+0x1fe0000+RESET_PHASE+PHASE_END)
 		e:GetHandler():RegisterEffect(e2)
 end
 end

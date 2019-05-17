@@ -6,23 +6,6 @@ cm.dfc_back_side1=m+1
 cm.dfc_back_side2=m+2
 function cm.initial_effect(c)
 	c:EnableReviveLimit()
-	--reborn preparation
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(m,0))
-	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
-	e1:SetCode(EVENT_CHAINING)
-	e1:SetRange(LOCATION_DECK+LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_OVERLAY+LOCATION_SZONE)
-	e1:SetOperation(aux.chainreg)
-	c:RegisterEffect(e1)
-	local e2=Effect.CreateEffect(c)
-	e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-	e2:SetCode(EVENT_CHAIN_SOLVING)
-	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetRange(LOCATION_DECK+LOCATION_HAND+LOCATION_MZONE+LOCATION_GRAVE+LOCATION_REMOVED+LOCATION_OVERLAY+LOCATION_SZONE)
-	e2:SetCondition(cm.accon)
-	e2:SetOperation(cm.acop)
-	c:RegisterEffect(e2)
 	--special summon
 	local e3=Effect.CreateEffect(c)
 	e3:SetType(EFFECT_TYPE_FIELD)
@@ -32,17 +15,29 @@ function cm.initial_effect(c)
 	e3:SetCondition(cm.spcon)
 	e3:SetOperation(cm.spop)
 	c:RegisterEffect(e3)
+	if not cm.global_flag then
+		cm.global_flag=true
+		local ge1=Effect.CreateEffect(c)
+		ge1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
+		ge1:SetCode(EVENT_CHAIN_SOLVING)
+		ge1:SetCondition(cm.regcon)
+		ge1:SetOperation(cm.regop)
+		Duel.RegisterEffect(ge1,0)
+	end
+end
+function cm.regcon(e,tp,eg,ep,ev,re,r,rp)
+	return rp==tp and re:IsHasType(EFFECT_TYPE_ACTIVATE) and re:IsActiveType(TYPE_SPELL)
+end
+function cm.regop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.RegisterFlagEffect(tp,17061155,0,0,0)
 end
 function cm.accon(e,tp,eg,ep,ev,re,r,rp)
 	return re:IsActiveType(TYPE_SPELL) and re:IsHasType(EFFECT_TYPE_ACTIVATE) and rp==tp
 end
-function cm.acop(e,tp,eg,ep,ev,re,r,rp)
-	e:GetHandler():RegisterFlagEffect(m,nil,0,0)
-end
 function cm.spcon(e,c)
 	if c==nil then return true end
 	local tp=c:GetControler()
-	return e:GetHandler():GetFlagEffect(m)>9
+	return Duel.GetFlagEffect(tp,17061155)>9
 	and Duel.GetFieldGroupCount(c:GetControler(),LOCATION_MZONE,0,nil)==0
 		and Duel.GetLocationCount(c:GetControler(),LOCATION_MZONE)>0
 end

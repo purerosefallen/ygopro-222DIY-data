@@ -3,7 +3,7 @@ function c81006005.initial_effect(c)
 	--set
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
-	e1:SetRange(LOCATION_MZONE)
+	e1:SetRange(LOCATION_HAND)
 	e1:SetCountLimit(1,81006005)
 	e1:SetCost(c81006005.setcost)
 	e1:SetTarget(c81006005.settg)

@@ -93,7 +93,14 @@ end
 function c11200018.op2(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local rcount=e:GetLabelObject():GetLabel()
-	local dc=Duel.TossDice(tp,rcount)
+	local dc1,dc2,dc3,dc4,dc5,dc6=Duel.TossDice(tp,rcount)
+	local dc=0
+	if dc1 and dc1>0 then dc=dc+dc1 end
+	if dc2 and dc2>0 then dc=dc+dc2 end
+	if dc3 and dc3>0 then dc=dc+dc3 end
+	if dc4 and dc4>0 then dc=dc+dc4 end
+	if dc5 and dc5>0 then dc=dc+dc5 end
+	if dc6 and dc6>0 then dc=dc+dc6 end
 	if dc%2==1 then
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
