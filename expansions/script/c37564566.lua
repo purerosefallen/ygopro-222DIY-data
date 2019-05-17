@@ -45,8 +45,8 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 	if not cm.target(e,tp,eg,ep,ev,re,r,rp,0) then return end
 	local g=Duel.GetMatchingGroup(cm.filter,tp,LOCATION_DECK,0,nil)
 	local tg=Senya.SelectGroup(tp,HINTMSG_SET,g,cm.check,nil,5,5)
+	Duel.SSet(tp,tg)
 	for tc in aux.Next(tg) do
-		Duel.SSet(tp,tc)
 		local e1=Effect.CreateEffect(e:GetHandler())
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_CANNOT_TRIGGER)
@@ -69,7 +69,6 @@ function cm.operation(e,tp,eg,ep,ev,re,r,rp)
 			e:GetHandler():SetCardTarget(tc)
 		end
 	end
-	Duel.ConfirmCards(1-tp,tg)
 end
 function cm.rfilter(c,ec)
 	return cm[c] and c:IsType(TYPE_TRAP) and ec:IsHasCardTarget(c)
