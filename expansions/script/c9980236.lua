@@ -22,6 +22,20 @@ function c9980236.initial_effect(c)
 	e2:SetCost(c9980236.cost)
 	e2:SetOperation(c9980236.operation)
 	c:RegisterEffect(e2)
+	--summon success
+	local e2=Effect.CreateEffect(c)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_CONTINUOUS)
+	e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
+	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
+	e2:SetCondition(c9980236.regcon)
+	e2:SetOperation(c9980236.regop)
+	c:RegisterEffect(e2)
+	local e3=Effect.CreateEffect(c)
+	e3:SetType(EFFECT_TYPE_SINGLE)
+	e3:SetCode(EFFECT_MATERIAL_CHECK)
+	e3:SetValue(c9980236.valcheck)
+	e3:SetLabelObject(e2)
+	c:RegisterEffect(e3)
 	--extra attack
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_SINGLE)
@@ -90,6 +104,22 @@ function c9980236.pcop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.MoveToField(g:GetFirst(),tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 	end
 end
+function c9980236.regcon(e,tp,eg,ep,ev,re,r,rp)
+	return e:GetHandler():IsSummonType(SUMMON_TYPE_ADVANCE) and e:GetLabel()==1
+end
+function c9980236.regop(e,tp,eg,ep,ev,re,r,rp)
+	local c=e:GetHandler()
+	c:RegisterFlagEffect(9980236,RESET_EVENT+RESETS_STANDARD,0,1)
+	c:RegisterFlagEffect(0,RESET_EVENT+RESETS_STANDARD,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(9980236,3))
+end
+function c9980236.valcheck(e,c)
+	local g=c:GetMaterial()
+	if g:IsExists(Card.IsSummonType,1,nil,SUMMON_TYPE_ADVANCE) then
+		e:GetLabelObject():SetLabel(1)
+	else
+		e:GetLabelObject():SetLabel(0)
+	end
+end
 function c9980236.effcon(e)
 	return e:GetHandler():GetFlagEffect(9980236)>0
 end
@@ -113,14 +143,6 @@ function c9980236.desop(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetValue(ct*200)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_DISABLE+RESET_PHASE+PHASE_END)
 		c:RegisterEffect(e1)
-	end
-end
-function c9980236.valcheck(e,c)
-	local g=c:GetMaterial()
-	if g:IsExists(Card.IsSummonType,1,nil,SUMMON_TYPE_ADVANCE) then
-		e:GetLabelObject():SetLabel(1)
-	else
-		e:GetLabelObject():SetLabel(0)
 	end
 end
 function c9980236.pencon(e,tp,eg,ep,ev,re,r,rp)
