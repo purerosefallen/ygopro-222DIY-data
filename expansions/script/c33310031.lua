@@ -1,4 +1,5 @@
 --泰拉魔物 世纪之花
+if not pcall(function() require("expansions/script/c33310023") end) then require("script/c33310023") end
 local m=33310031
 local cm=_G["c"..m]
 function cm.initial_effect(c)
@@ -58,6 +59,7 @@ function cm.initial_effect(c)
 		Duel.RegisterEffect(ge1,0)
 	end   
 end
+cm.setcard="terraria"
 function cm.atkcon(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.GetFlagEffect(e:GetHandlerPlayer(),m)>=3 
 end

@@ -3,7 +3,7 @@ function c9980236.initial_effect(c)
 	--xyzlimit
 	c:EnableReviveLimit()
 	aux.EnablePendulumAttribute(c,false)
-	aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0x1bc4),7,2)
+	aux.AddXyzProcedure(c,aux.FilterBoolFunction(Card.IsSetCard,0xbc4),7,2)
 	--pendulum set
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_IGNITION)
@@ -72,6 +72,7 @@ function c9980236.initial_effect(c)
 	e8:SetOperation(c9980236.sumsuc)
 	c:RegisterEffect(e8)
 end
+c9980236.pendulum_level=7
 function c9980236.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980236,2))
 end
