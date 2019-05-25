@@ -5,7 +5,6 @@ function c65070010.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON+CATEGORY_DESTROY)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetHintTiming(0,TIMINGS_CHECK_MONSTER+TIMING_MAIN_END)
 	e1:SetTarget(c65070010.tg)
 	e1:SetOperation(c65070010.op)
 	c:RegisterEffect(e1)
@@ -46,6 +45,7 @@ end
 function c65070010.confil(c,tp)
 	return c:GetOwner()==tp 
 end
-function c65070010.hdcon(c,e,tp)
+function c65070010.hdcon(c,e)
+	local tp=e:GetHandlerPlayer()
 	return Duel.GetMatchingGroupCount(c65070010.confil,tp,LOCATION_MZONE,0,nil,tp)<=0 
 end
