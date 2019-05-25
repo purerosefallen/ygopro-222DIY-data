@@ -9,8 +9,8 @@ function c47550012.initial_effect(c)
     e2:SetCode(EFFECT_IMMUNE_EFFECT)
     e2:SetRange(LOCATION_MZONE)
     e2:SetCondition(c47550012.inmcon)
-    e2:SetTarget(c47550012.target)
-    e2:SetValue(c47550012.efilter)
+    e2:SetTarget(c47550012.inmtg)
+    e2:SetValue(c47550012.efilter2)
     c:RegisterEffect(e2)  
     --cannot be target
     local e2=Effect.CreateEffect(c)
@@ -51,11 +51,11 @@ end
 function c47550012.inmcon(e,tp,eg,ep,ev,re,r,rp)
     return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)
 end
-function c47550012.target(e,c)
+function c47550012.inmtg(e,c)
     local te,g=Duel.GetChainInfo(0,CHAININFO_TRIGGERING_EFFECT,CHAININFO_TARGET_CARDS)
     return not te or not te:IsHasProperty(EFFECT_FLAG_CARD_TARGET) or not g or not g:IsContains(c)
 end
-function c47550012.efilter(e,te)
+function c47550012.efilter2(e,te)
     return te:GetOwnerPlayer()~=e:GetHandlerPlayer()
 end
 function c47550012.spfilter(c,e,tp,zone)
@@ -76,10 +76,10 @@ function c47550012.mdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c47550012.mdop(e,tp,eg,ep,ev,re,r,rp)
     local zone=bit.band(e:GetHandler():GetLinkedZone(tp),0x1f)
-    if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 or zone<=0 then return end
     Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
     local g=Duel.SelectMatchingCard(tp,aux.TRUE,tp,0,LOCATION_ONFIELD,1,1,nil)
     if #g>0 and Duel.Destroy(g,REASON_EFFECT)~=0 then
+        if zone<=0 then return end
         Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
         local g=Duel.SelectMatchingCard(tp,c47550012.spfilter,tp,LOCATION_HAND,0,1,1,nil,e,tp,zone)
         if g:GetCount()>0 then

@@ -44,7 +44,7 @@ function c81010004.atkcon(e)
 	return Duel.IsExistingMatchingCard(c81010004.atkfilter,e:GetHandlerPlayer(),LOCATION_MZONE,0,3,nil)
 end
 function c81010004.cfilter(c)
-	return c:IsFaceup() and c:IsType(TYPE_TUNER) and c:IsAbleToDeckAsCost()
+	return c:IsFaceup() and c:IsType(TYPE_TUNER) and c:IsAbleToDeckOrExtraAsCost()
 end
 function c81010004.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c81010004.cfilter,tp,LOCATION_MZONE,0,1,nil) end

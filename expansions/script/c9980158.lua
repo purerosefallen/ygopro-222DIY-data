@@ -13,7 +13,7 @@ function c9980158.initial_effect(c)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
 	e1:SetTargetRange(1,0)
 	e1:SetRange(LOCATION_FZONE)
-	e1:SetValue(1)
+	e1:SetValue(c9980158.revval)
 	c:RegisterEffect(e1)
 	--to hand
 	local e2=Effect.CreateEffect(c)
@@ -38,6 +38,9 @@ function c9980158.initial_effect(c)
 	e2:SetTarget(c9980158.tgtg)
 	e2:SetOperation(c9980158.tgop)
 	c:RegisterEffect(e2)
+end
+function c9980158.revval(e,re,r,rp,rc)
+	return bit.band(r,REASON_EFFECT)~=0
 end
 function c9980158.thfilter(c)
 	return c:IsFaceup() and c:IsSetCard(0xbc9) and c:IsType(TYPE_MONSTER) and c:IsAbleToHand()
