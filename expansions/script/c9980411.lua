@@ -46,7 +46,7 @@ function c9980411.initial_effect(c)
 	e8:SetOperation(c9980411.sumsuc)
 	c:RegisterEffect(e8)
 end
-function c99800400.sumsuc(e,tp,eg,ep,ev,re,r,rp)
+function c9980411.sumsuc(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980411,0))
 end 
 function c9980411.synfilter(c)

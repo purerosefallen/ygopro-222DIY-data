@@ -69,6 +69,7 @@ end
 --  return Duel.IsExistingMatchingCard(c11200083.filter,tp,LOCATION_REMOVED,0,1,nil) and ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 --end
 function c11200083.con(e)
+	local ph=Duel.GetCurrentPhase()
 	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE
 end
 function c11200083.cfilter(c)

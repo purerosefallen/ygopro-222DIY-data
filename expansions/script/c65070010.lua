@@ -45,7 +45,7 @@ end
 function c65070010.confil(c,tp)
 	return c:GetOwner()==tp 
 end
-function c65070010.hdcon(c,e)
+function c65070010.hdcon(e)
 	local tp=e:GetHandlerPlayer()
 	return Duel.GetMatchingGroupCount(c65070010.confil,tp,LOCATION_MZONE,0,nil,tp)<=0 
 end
