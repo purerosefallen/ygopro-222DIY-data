@@ -6,6 +6,7 @@ function c75646006.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_SUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
+	e1:SetCountLimit(1,75646006)
 	e1:SetTarget(c75646006.eqtg)
 	e1:SetOperation(c75646006.eqop)
 	c:RegisterEffect(e1)
@@ -48,6 +49,13 @@ function c75646006.chainop(e,tp,eg,ep,ev,re,r,rp)
 	local es=re:GetHandler()
 	if es:IsSetCard(0x2c0) and es:IsType(TYPE_EQUIP) 
 		and es:GetEquipTarget()==e:GetHandler() and re:IsActiveType(TYPE_SPELL) and ep==tp then
-		Duel.SetChainLimit(aux.FALSE)
+		if Duel.IsPlayerAffectedByEffect(e:GetHandler():GetControler(),75646210) then
+			Duel.SetChainLimit(c75646006.chainlm)
+		else
+			Duel.SetChainLimit(aux.FALSE)
+		end		
 	end
+end
+function c75646006.chainlm(e,rp,tp)
+	return tp==rp
 end

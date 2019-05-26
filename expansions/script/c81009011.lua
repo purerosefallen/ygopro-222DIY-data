@@ -12,6 +12,7 @@ function c81009011.initial_effect(c)
 	c:RegisterEffect(e1)
 	--battle
 	local e4=Effect.CreateEffect(c)
+	e4:SetDescription(aux.Stringid(81009011,0))
 	e4:SetType(EFFECT_TYPE_XMATERIAL+EFFECT_TYPE_CONTINUOUS)
 	e4:SetCode(EVENT_BATTLED)
 	e4:SetOperation(c81009011.baop)

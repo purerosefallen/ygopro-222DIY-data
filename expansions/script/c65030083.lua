@@ -46,7 +46,7 @@ function c65030083.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,LOCATION_HAND,0,nil)
 	if chk==0 then return g:GetCount()>0 and Duel.IsPlayerCanDraw(tp) and Duel.IsPlayerCanSpecialSummon(tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,0,0,tp,g:GetCount()-1)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,0,0,tp,g:GetCount()+1)
 end
 function c65030083.checkfil(c,e,tp)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false) and aux.IsCodeListed(c,65030086)
@@ -56,7 +56,7 @@ function c65030083.negop(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then 
 		local num=Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 		if num>0 then
-			Duel.Draw(tp,num-1,REASON_EFFECT)
+			Duel.Draw(tp,num+1,REASON_EFFECT)
 			if Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)>0 and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsPlayerCanSpecialSummon(tp) then
 				Duel.BreakEffect()
 				local tgg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
@@ -77,7 +77,7 @@ function c65030083.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(Card.IsAbleToDeck,tp,0,LOCATION_HAND,nil)
 	if chk==0 then return g:GetCount()>0 and Duel.IsPlayerCanDraw(1-tp) end
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,g:GetCount(),0,0)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,0,0,tp,g:GetCount()+1)
+	Duel.SetOperationInfo(0,CATEGORY_DRAW,0,0,tp,g:GetCount())
 end
 function c65030083.optg(e,c)
 	return aux.IsCodeListed(c,65030086)
@@ -87,7 +87,7 @@ function c65030083.op(e,tp,eg,ep,ev,re,r,rp)
 	if g:GetCount()>0 then 
 		local tgg=Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 		if tgg>0 then
-			Duel.Draw(1-tp,tgg+1,REASON_EFFECT)
+			Duel.Draw(1-tp,tgg,REASON_EFFECT)
 			local e1=Effect.CreateEffect(e:GetHandler())
 			e1:SetType(EFFECT_TYPE_FIELD)
 			e1:SetCode(EFFECT_UPDATE_ATTACK)

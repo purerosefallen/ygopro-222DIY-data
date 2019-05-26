@@ -30,6 +30,7 @@ function c81009015.initial_effect(c)
 	c:RegisterEffect(e2)
 	--material
 	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(81009015,0))
 	e3:SetType(EFFECT_TYPE_XMATERIAL+EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCountLimit(1)

@@ -136,3 +136,7 @@ function muxu.check_set_Umbrella(c)   --伞符
 	return muxu.check_set(c,"Umbrella")
 end
 --
+function muxu.check_set_Scenersh(c)   --景愿
+	return muxu.check_set(c,"Scenersh")
+end
+--

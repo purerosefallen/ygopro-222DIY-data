@@ -4,120 +4,97 @@ function c11200107.initial_effect(c)
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_ACTIVATE)
 	e1:SetCode(EVENT_FREE_CHAIN)
+	e1:SetCost(c11200107.cost)
 	c:RegisterEffect(e1)
-	--search
+	--Effect Draw
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(11200107,0))
-	e2:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DRAW)
-	e2:SetType(EFFECT_TYPE_IGNITION)
-	e2:SetRange(LOCATION_SZONE)
-	e2:SetCountLimit(1,11200107)
-	e2:SetCost(c11200107.thcost)
-	e2:SetTarget(c11200107.thtg)
-	e2:SetOperation(c11200107.thop)
+	e2:SetType(EFFECT_TYPE_FIELD)
+	e2:SetCode(EFFECT_DRAW_COUNT)
+	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
+	e2:SetRange(LOCATION_SZONE) 
+	e2:SetTargetRange(1,0)
+	e2:SetValue(2)
+	e2:SetCondition(c11200107.drawcon)
 	c:RegisterEffect(e2)
-	--search
+	--to hand
 	local e3=Effect.CreateEffect(c)
-	e3:SetDescription(aux.Stringid(11200107,1))
-	e3:SetCategory(CATEGORY_TOHAND+CATEGORY_SEARCH+CATEGORY_DRAW)
+	e3:SetCategory(CATEGORY_TODECK)
+	e3:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_SZONE)
-	e3:SetCountLimit(1,11200107)
-	e3:SetCost(c11200107.tscost)
-	e3:SetTarget(c11200107.tstg)
-	e3:SetOperation(c11200107.tsop)
+	e3:SetCountLimit(1)
+	e3:SetTarget(c11200107.tdtg)
+	e3:SetOperation(c11200107.tdop)
 	c:RegisterEffect(e3)
-	--token
+	--
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_RECOVER)
-	e4:SetType(EFFECT_TYPE_IGNITION)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
+	e4:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
+	e4:SetCode(EVENT_REMOVE)
 	e4:SetRange(LOCATION_GRAVE)
-	e4:SetCountLimit(1,11209107)
-	e4:SetCondition(aux.exccon)
-	e4:SetCost(c11200107.spcost)
-	e4:SetTarget(c11200107.sptg)
-	e4:SetOperation(c11200107.spop)
+	e4:SetCountLimit(1,11200107)
+	e4:SetCondition(c11200107.damcon)
+	e4:SetCost(c11200107.damcost)
+	e4:SetTarget(c11200107.damtg)
+	e4:SetOperation(c11200107.damop)
 	c:RegisterEffect(e4)
 end
-function c11200107.bfilter(c)
-	return c:IsSetCard(0x46) and c:IsType(TYPE_SPELL) and c:IsDiscardable()
-end
-function c11200107.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c11200107.bfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,c11200107.bfilter,1,1,REASON_COST+REASON_DISCARD)
-end
-function c11200107.thfilter(c)
-	return c:IsType(TYPE_RITUAL) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
-end
-function c11200107.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsExistingMatchingCard(c11200107.thfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
-end
-function c11200107.thop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c11200107.thfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
-		Duel.BreakEffect()
-		Duel.Draw(tp,1,REASON_EFFECT)
-	end
-end
-function c11200107.dfilter(c)
-	return c:IsType(TYPE_RITUAL) and c:IsType(TYPE_SPELL) and c:IsDiscardable()
-end
-function c11200107.tscost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsExistingMatchingCard(c11200107.dfilter,tp,LOCATION_HAND,0,1,nil) end
-	Duel.DiscardHand(tp,c11200107.dfilter,1,1,REASON_COST+REASON_DISCARD)
-end
-function c11200107.tsfilter(c)
-	return c:IsSetCard(0x46) and c:IsType(TYPE_SPELL) and c:IsAbleToHand()
-end
-function c11200107.tstg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp,1) and Duel.IsExistingMatchingCard(c11200107.tsfilter,tp,LOCATION_DECK,0,1,nil) end
-	Duel.SetOperationInfo(0,CATEGORY_TOHAND,nil,1,tp,LOCATION_DECK)
-	Duel.SetOperationInfo(0,CATEGORY_DRAW,nil,0,tp,1)
-end
-function c11200107.tsop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_ATOHAND)
-	local g=Duel.SelectMatchingCard(tp,c11200107.tsfilter,tp,LOCATION_DECK,0,1,1,nil)
-	if g:GetCount()>0 then
-		Duel.SendtoHand(g,nil,REASON_EFFECT)
-		Duel.ConfirmCards(1-tp,g)
-		Duel.BreakEffect()
-		Duel.Draw(tp,1,REASON_EFFECT)
-	end
-end
 function c11200107.cfilter(c)
-	return (c:IsType(TYPE_RITUAL) or c:IsType(TYPE_FUSION)) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
+	return c:IsLevelAbove(7) and c:IsAbleToRemoveAsCost() and not c:IsSummonableCard()
 end
-function c11200107.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost()
-		and Duel.IsExistingMatchingCard(c11200107.cfilter,tp,LOCATION_GRAVE,0,1,e:GetHandler()) end
+function c11200107.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c11200107.cfilter,tp,LOCATION_MZONE,0,1,nil) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
-	local g=Duel.SelectMatchingCard(tp,c11200107.cfilter,tp,LOCATION_GRAVE,0,1,1,e:GetHandler())
-	g:AddCard(e:GetHandler())
+	local g=Duel.SelectMatchingCard(tp,c11200107.cfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	Duel.Remove(g,POS_FACEUP,REASON_COST)
 end
-function c11200107.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c11200107.filter(c)
+	return c:IsCode(11200107) and c:IsFaceup()
+end
+function c11200107.drawcon(e)
+	return Duel.IsExistingMatchingCard(c11200107.filter,e:GetHandlerPlayer(),LOCATION_SZONE,0,1,e:GetHandler())
+end
+function c11200107.tdtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+	if chkc then return chkc:IsLocation(LOCATION_REMOVED+LOCATION_GRAVE) and chkc:IsAbleToDeck() end
+	if chk==0 then return Duel.IsExistingTarget(Card.IsAbleToDeck,tp,LOCATION_REMOVED+LOCATION_GRAVE,LOCATION_REMOVED+LOCATION_GRAVE,1,nil) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
+	local g=Duel.SelectTarget(tp,Card.IsAbleToDeck,tp,LOCATION_REMOVED+LOCATION_GRAVE,LOCATION_REMOVED+LOCATION_GRAVE,1,1,nil)
+	Duel.SetOperationInfo(0,CATEGORY_TODECK,g,1,0,0)
+end
+function c11200107.tdop(e,tp,eg,ep,ev,re,r,rp)
+	local tc=Duel.GetFirstTarget()
+	if tc:IsRelateToEffect(e) then
+		Duel.SendtoDeck(tc,nil,2,REASON_EFFECT)
+	end
+end
+function c11200107.nfilter(c,e,tp)
+	return c:IsPreviousPosition(POS_FACEUP) and c:IsType(TYPE_RITUAL) and c:IsType(TYPE_MONSTER)
+		and c:IsPreviousLocation(LOCATION_MZONE) and c:GetPreviousControler()==tp
+end
+function c11200107.damcon(e,tp,eg,ep,ev,re,r,rp)
+	return eg:IsExists(c11200107.cfilter,1,nil,e,tp)
+end
+function c11200107.damfilter(c)
+	return c:IsType(TYPE_RITUAL) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost() and c:GetRank()>0
+end
+function c11200107.damcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	if chk==0 then return c:IsAbleToRemoveAsCost()
+		and Duel.IsExistingMatchingCard(c11200107.damfilter,tp,LOCATION_GRAVE,0,1,c) end
+	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_REMOVE)
+	local g=Duel.SelectMatchingCard(tp,c11200107.damfilter,tp,LOCATION_GRAVE,0,1,1,c)
+	e:SetLabel(g:GetFirst():GetRank())
+	g:AddCard(c)
+	Duel.Remove(g,POS_FACEUP,REASON_COST)
+end
+function c11200107.damtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	Duel.SetTargetPlayer(tp)
-	Duel.SetTargetParam(1000)
-	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,1000)
+	Duel.SetTargetParam(e:GetLabel()*500)
+	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,1-tp,e:GetLabel()*500)
 end
-function c11200107.spop(e,tp,eg,ep,ev,re,r,rp)
+function c11200107.damop(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	Duel.Recover(p,d,REASON_EFFECT)
-	local e1=Effect.CreateEffect(e:GetHandler())
-	e1:SetType(EFFECT_TYPE_FIELD)
-	e1:SetCode(EFFECT_CHANGE_DAMAGE)
-	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e1:SetTargetRange(1,0)
-	e1:SetValue(c11200107.damval)
-	e1:SetReset(RESET_PHASE+PHASE_END,2)
-	Duel.RegisterEffect(e1,tp)
-end
-function c11200107.damval(e,re,val,r,rp,rc)
-	return val/2
 end

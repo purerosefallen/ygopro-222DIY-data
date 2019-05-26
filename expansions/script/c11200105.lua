@@ -12,13 +12,12 @@ function c11200105.initial_effect(c)
 	c:RegisterEffect(e1)
 	--spsummon
 	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(11200105,0))
 	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
+	e2:SetProperty(EFFECT_FLAG_DELAY)
 	e2:SetCode(EVENT_REMOVE)
-	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCountLimit(1,11209105)
-	e2:SetCondition(c11200105.spcon)
+	e2:SetCondition(aux.exccon)
 	e2:SetTarget(c11200105.sptg)
 	e2:SetOperation(c11200105.spop)
 	c:RegisterEffect(e2)
@@ -47,23 +46,19 @@ function c11200105.activate(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoGrave(sg,REASON_EFFECT+REASON_RETURN)
 	end
 end
-function c11200105.cfilter(c,tp)
-	return c:GetPreviousControler()==tp
-end
-function c11200105.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c11200105.cfilter,1,nil,tp) and aux.exccon(e,tp,eg,ep,ev,re,r,rp)
+function c11200105.actcon(e)
+	return Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_REMOVED,0,1,nil,11200103) or Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_REMOVED,0,1,nil,11200104)
 end
 function c11200105.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	local c=e:GetHandler()
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsPlayerCanSpecialSummonMonster(tp,11200105,0,0x21,2000,2000,8,RACE_PYRO,ATTRIBUTE_FIRE) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,c,1,0,0)
+		and Duel.IsPlayerCanSpecialSummonMonster(tp,11200105,0,0x11,2000,2000,8,RACE_ROCK,ATTRIBUTE_FIRE) end
+	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function c11200105.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	local c=e:GetHandler()
-	if c:IsRelateToEffect(e) and Duel.IsPlayerCanSpecialSummonMonster(tp,11200105,0,0x21,2000,2000,8,RACE_PYRO,ATTRIBUTE_FIRE) then
-		c:AddMonsterAttribute(TYPE_EFFECT)
+	if c:IsRelateToEffect(e) and Duel.IsPlayerCanSpecialSummonMonster(tp,11200105,0,0x11,2000,2000,8,RACE_ROCK,ATTRIBUTE_FIRE) then
+		c:AddMonsterAttribute(TYPE_NORMAL)
 		Duel.SpecialSummonStep(c,0,tp,tp,true,false,POS_FACEUP)
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
@@ -77,16 +72,6 @@ function c11200105.spop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e2,true)
-		local e3=Effect.CreateEffect(c)
-		e3:SetType(EFFECT_TYPE_SINGLE)
-		e3:SetCode(EFFECT_LEAVE_FIELD_REDIRECT)
-		e3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e3:SetReset(RESET_EVENT+RESETS_REDIRECT)
-		e3:SetValue(LOCATION_REMOVED)
-		c:RegisterEffect(e3,true)
 		Duel.SpecialSummonComplete()
 	end
-end
-function c11200105.actcon(e)
-	return Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_REMOVED,0,1,nil,11200103) or Duel.IsExistingMatchingCard(Card.IsCode,e:GetHandlerPlayer(),LOCATION_REMOVED,0,1,nil,11200104)
 end

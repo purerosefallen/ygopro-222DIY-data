@@ -17,17 +17,20 @@ function c9980176.initial_effect(c)
 	e1:SetCode(EVENT_FREE_CHAIN)
 	e1:SetRange(LOCATION_SZONE)
 	c:RegisterEffect(e1)
-	--spsummon
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(9980176,3))
-	e2:SetCategory(CATEGORY_SPECIAL_SUMMON)
-	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
-	e2:SetProperty(EFFECT_FLAG_DELAY+EFFECT_FLAG_DAMAGE_STEP)
-	e2:SetCode(EVENT_LEAVE_FIELD)
-	e2:SetCondition(c9980176.spcon)
-	e2:SetTarget(c9980176.sptg)
-	e2:SetOperation(c9980176.spop)
-	c:RegisterEffect(e2)
+	 --negate
+	local e3=Effect.CreateEffect(c)
+	e3:SetDescription(aux.Stringid(9980176,1))
+	e3:SetCategory(CATEGORY_NEGATE+CATEGORY_DESTROY)
+	e3:SetType(EFFECT_TYPE_QUICK_O)
+	e3:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DAMAGE_CAL)
+	e3:SetCode(EVENT_CHAINING)
+	e3:SetRange(LOCATION_MZONE)
+	e3:SetCountLimit(1,99801760)
+	e3:SetCondition(c9980176.negcon)
+	e3:SetCost(c9980176.negcost)
+	e3:SetTarget(c9980176.negtg)
+	e3:SetOperation(c9980176.negop)
+	c:RegisterEffect(e3)
 	--destory and atk & def down
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(9980176,0))
@@ -133,17 +136,28 @@ function c9980176.val(e,re,dam,r,rp,rc)
 		return math.ceil(dam/2)
 	else return dam end
 end
-function c9980176.spcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return c:IsPreviousPosition(POS_FACEUP) and c:IsSummonType(SUMMON_TYPE_ADVANCE)
+function c9980176.negcon(e,tp,eg,ep,ev,re,r,rp)
+	return not e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) and re:IsActiveType(TYPE_SPELL+TYPE_TRAP) and Duel.IsChainNegatable(ev)
 end
-function c9980176.spfilter(c,e,tp)
-	return c:IsSetCard(0x1bc4) and c:IsCanBeSpecialSummoned(e,0,tp,false,false,POS_FACEUP_DEFENSE)
+function c9980176.costfilter(c)
+	return c:IsFaceup() and c:IsSetCard(0x1bc4) and c:IsType(TYPE_MONSTER) and (c:IsControler(tp) or c:IsFaceup())
 end
-function c9980176.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c9980176.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end
-	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_DECK)
+function c9980176.negcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.CheckReleaseGroup(tp,c9980176.costfilter,1,nil) end
+	local sg=Duel.SelectReleaseGroup(tp,c9980176.costfilter,1,1,nil)
+	Duel.Release(sg,REASON_COST)
+end
+function c9980176.negtg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return true end
+	Duel.SetOperationInfo(0,CATEGORY_NEGATE,eg,1,0,0)
+	if re:GetHandler():IsDestructable() and re:GetHandler():IsRelateToEffect(re) then
+		Duel.SetOperationInfo(0,CATEGORY_DESTROY,eg,1,0,0)
+	end
+end
+function c9980176.negop(e,tp,eg,ep,ev,re,r,rp)
+	if Duel.NegateActivation(ev) and re:GetHandler():IsRelateToEffect(re) then
+		Duel.Destroy(eg,REASON_EFFECT)
+	end
 end
 function c9980176.spop(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end

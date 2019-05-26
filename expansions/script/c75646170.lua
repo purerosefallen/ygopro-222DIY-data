@@ -49,8 +49,15 @@ function c75646170.initial_effect(c)
 	e5:SetTarget(c75646170.thtg)
 	e5:SetOperation(c75646170.thop)
 	c:RegisterEffect(e5)
+	--add code
+	local e6=Effect.CreateEffect(c)
+	e6:SetType(EFFECT_TYPE_SINGLE)
+	e6:SetCode(EFFECT_ADD_CODE)
+	e6:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e6:SetValue(75646202)
+	c:RegisterEffect(e6)
 end
-c75646170.card_code_list={75646000,75646152,75646202}
+c75646170.card_code_list={75646000,75646152}
 function c75646170.eqlimit(e,c)
 	return c:IsSetCard(0x2c0)
 end

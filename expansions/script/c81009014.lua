@@ -6,6 +6,7 @@ function c81009014.initial_effect(c)
 	c:EnableReviveLimit()
 	--direct attack
 	local e1=Effect.CreateEffect(c)
+	e1:SetDescription(aux.Stringid(81009014,1))
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)
 	e1:SetCountLimit(1,81009014)

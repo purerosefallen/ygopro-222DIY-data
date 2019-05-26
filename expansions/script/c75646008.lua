@@ -15,8 +15,7 @@ function c75646008.initial_effect(c)
 	--
 	local e2=Effect.CreateEffect(c)
 	e2:SetCategory(CATEGORY_ATKCHANGE)
-	e2:SetType(EFFECT_TYPE_QUICK_O)
-	e2:SetCode(EVENT_FREE_CHAIN)
+	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCountLimit(1)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCost(c75646008.atkcost)
@@ -82,6 +81,13 @@ function c75646008.chainop(e,tp,eg,ep,ev,re,r,rp)
 	local es=re:GetHandler()
 	if es:IsSetCard(0x2c0) and es:IsType(TYPE_EQUIP) 
 		and es:GetEquipTarget()==e:GetHandler() and re:IsActiveType(TYPE_SPELL) and ep==tp then
-		Duel.SetChainLimit(aux.FALSE)
+		if Duel.IsPlayerAffectedByEffect(e:GetHandler():GetControler(),75646210) then
+			Duel.SetChainLimit(c75646008.chainlm)
+		else
+			Duel.SetChainLimit(aux.FALSE)
+		end		
 	end
+end
+function c75646008.chainlm(e,rp,tp)
+	return tp==rp
 end

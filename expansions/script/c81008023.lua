@@ -20,6 +20,7 @@ function c81008023.initial_effect(c)
 	c:RegisterEffect(e1)
 	--material
 	local e2=Effect.CreateEffect(c)
+	e2:SetDescription(aux.Stringid(81008023,0))
 	e2:SetType(EFFECT_TYPE_XMATERIAL+EFFECT_TYPE_IGNITION)
 	e2:SetProperty(EFFECT_FLAG_CARD_TARGET)
 	e2:SetRange(LOCATION_MZONE)

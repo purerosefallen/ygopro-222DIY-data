@@ -84,6 +84,13 @@ function c75646060.chainop(e,tp,eg,ep,ev,re,r,rp)
 	local es=re:GetHandler()
 	if es:IsSetCard(0x2c0) and es:IsType(TYPE_EQUIP) 
 		and es:GetEquipTarget()==e:GetHandler() and re:IsActiveType(TYPE_SPELL) and ep==tp then
-		Duel.SetChainLimit(aux.FALSE)
+		if Duel.IsPlayerAffectedByEffect(e:GetHandler():GetControler(),75646210) then
+			Duel.SetChainLimit(c75646060.chainlm)
+		else
+			Duel.SetChainLimit(aux.FALSE)
+		end		
 	end
+end
+function c75646060.chainlm(e,rp,tp)
+	return tp==rp
 end

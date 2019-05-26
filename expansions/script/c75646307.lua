@@ -1,7 +1,7 @@
 --逐火之蛾 光之救世主
 function c75646307.initial_effect(c)
 	--link summon
-	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),2,99,c75646307.lcheck)
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),1,99,c75646307.lcheck)
 	c:EnableReviveLimit()
 	--code
 	local e1=Effect.CreateEffect(c)
@@ -21,9 +21,14 @@ function c75646307.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetType(EFFECT_TYPE_IGNITION)
 	e2:SetCountLimit(1,5646307)
+	e2:SetCondition(c75646307.effcon1)
 	e2:SetTarget(c75646307.efftg)
 	e2:SetOperation(c75646307.effop)
 	c:RegisterEffect(e2)
+	local e3=e2:Clone()
+	e3:SetCountLimit(3,5646307)
+	e3:SetCondition(c75646307.effcon2)
+	c:RegisterEffect(e3)
 end
 function c75646307.lcheck(g)
 	return g:IsExists(Card.IsLinkSetCard,1,nil,0x62c1)
@@ -42,6 +47,12 @@ function c75646307.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
+end
+function c75646307.effcon1(e,tp,eg,ep,ev,re,r,rp)
+	return not Duel.GetFlagEffect(tp,75646307)
+end
+function c75646307.effcon2(e,tp,eg,ep,ev,re,r,rp)
+	return Duel.GetFlagEffect(tp,75646307)
 end
 function c75646307.efffilter(c,e,tp,eg,ep,ev,re,r,rp)
 	if not (c:IsSetCard(0x62c1) and c:IsFaceup()) then return false end

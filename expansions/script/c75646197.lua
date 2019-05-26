@@ -14,8 +14,9 @@ function c75646197.initial_effect(c)
 	e3:SetCategory(CATEGORY_ATKCHANGE+CATEGORY_DISABLE)
 	e3:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_O)
 	e3:SetCode(EVENT_ATTACK_ANNOUNCE)
-	e3:SetRange(LOCATION_SZONE)
+	e3:SetRange(LOCATION_SZONE)	
 	e3:SetCondition(c75646197.con)
+	e3:SetTarget(c75646197.tg)
 	e3:SetOperation(c75646197.op)
 	c:RegisterEffect(e3)   
 	--equip limit
@@ -61,6 +62,12 @@ function c75646197.con(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetHandler():GetEquipTarget()
 	return (Duel.GetAttacker()==tc or Duel.GetAttackTarget()==tc)
 		and e:GetHandler():GetCounter(0x1b)>0
+end
+function c75646197.gfilter(c,g)
+	return g:IsContains(c) 
+end
+function c75646197.tg(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(c75646197.gfilter,tp,0,LOCATION_ONFIELD,1,nil,e:GetHandler():GetColumnGroup()) end
 end
 function c75646197.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()

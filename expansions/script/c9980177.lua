@@ -2,14 +2,6 @@
 function c9980177.initial_effect(c)
 	--pendulum summon
 	aux.EnablePendulumAttribute(c,false)
-	--Activate
-	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(1160)
-	e1:SetType(EFFECT_TYPE_ACTIVATE)
-	e1:SetCode(EVENT_FREE_CHAIN)
-	e1:SetRange(LOCATION_HAND)
-	e1:SetCost(c9980177.reg)
-	c:RegisterEffect(e1)
 	--to hand
 	local e5=Effect.CreateEffect(c)
 	e5:SetDescription(aux.Stringid(9980177,7))
@@ -17,7 +9,7 @@ function c9980177.initial_effect(c)
 	e5:SetType(EFFECT_TYPE_IGNITION)
 	e5:SetRange(LOCATION_PZONE)
 	e5:SetCountLimit(1,9980177)
-	e5:SetCondition(c9980177.thcon)
+	e5:SetCost(c9980177.thcost)
 	e5:SetTarget(c9980177.thtg)
 	e5:SetOperation(c9980177.thop)
 	c:RegisterEffect(e5)
@@ -80,11 +72,12 @@ function c9980177.reg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
 	e:GetHandler():RegisterFlagEffect(9980177,RESET_PHASE+PHASE_END,EFFECT_FLAG_OATH,1)
 end
-function c9980177.thcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetFlagEffect(9980177)~=0
+function c9980177.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
+	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function c9980177.thfilter(c)
-	return c:IsAttribute(ATTRIBUTE_DARK) and c:IsSetCard(0x1bc4) and c:IsAbleToHand()
+	return c:IsType(TYPE_MONSTER) and c:IsSetCard(0x1bc4) and c:IsAbleToHand()
 end
 function c9980177.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c9980177.thfilter,tp,LOCATION_DECK,0,1,nil) end
