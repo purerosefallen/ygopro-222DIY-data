@@ -6,7 +6,7 @@ function c81009012.initial_effect(c)
 	c:EnableReviveLimit()
 	--destroy
 	local e1=Effect.CreateEffect(c)
-	e1:SetDescription(aux.Stringid(81009012,0))
+	e1:SetDescription(aux.Stringid(81009012,1))
 	e1:SetCategory(CATEGORY_DESTROY+CATEGORY_DECKDES)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_MZONE)

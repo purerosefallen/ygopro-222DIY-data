@@ -25,6 +25,7 @@ function c75646057.initial_effect(c)
 	e2:SetTarget(c75646057.tg)
 	e2:SetOperation(c75646057.op)
 	c:RegisterEffect(e2)
+	c75646057.xyz_effect=e2
 	--act limit
 	local e4=Effect.CreateEffect(c)
 	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
@@ -73,13 +74,17 @@ function c75646057.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c75646057.filter,tp,0,LOCATION_ONFIELD,1,nil,cg) end
 	local g=Duel.GetMatchingGroup(c75646057.filter,tp,0,LOCATION_ONFIELD,nil,cg)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,g,g:GetCount(),0,0)
-	Duel.SetChainLimit(c75646057.limit(cg))
+	local sc=cg:GetFirst()
+	while sc do
+		sc:RegisterFlagEffect(5646057,RESET_CHAIN,0,1)
+		sc=cg:GetNext()
+	end
+	Duel.SetChainLimit(c75646057.chainlimit)
 end
-function c75646057.limit(c)
-	return  function (e,lp,tp)
-				return tp==ep or not c:IsContains(e:GetHandler())
-			end
+function c75646057.chainlimit(e,rp,tp)
+	return tp==ep and e:GetHandler():GetFlagEffect(5646057)==0
 end
+
 function c75646057.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local cg=c:GetColumnGroup()
@@ -98,6 +103,13 @@ function c75646057.chainop(e,tp,eg,ep,ev,re,r,rp)
 	local es=re:GetHandler()
 	if es:IsSetCard(0x2c0) and es:IsType(TYPE_EQUIP) 
 		and es:GetEquipTarget()==e:GetHandler() and re:IsActiveType(TYPE_SPELL) and ep==tp then
-		Duel.SetChainLimit(aux.FALSE)
+		if Duel.IsPlayerAffectedByEffect(e:GetHandler():GetControler(),75646210) then
+			Duel.SetChainLimit(c75646057.chainlm)
+		else
+			Duel.SetChainLimit(aux.FALSE)
+		end	 
 	end
+end
+function c75646057.chainlm(e,rp,tp)
+	return tp==rp
 end

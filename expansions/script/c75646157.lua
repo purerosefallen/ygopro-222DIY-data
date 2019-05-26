@@ -46,7 +46,7 @@ function c75646157.initial_effect(c)
 	c:RegisterEffect(e5)
 end
 --75646000(shenge) 75646027(huizhang)
-c75646157.card_code_list={75646000,75646155}
+c75646157.card_code_list={75646000,75646155,75646157}
 function c75646157.eqlimit(e,c)
 	return c:IsSetCard(0x2c0)
 end

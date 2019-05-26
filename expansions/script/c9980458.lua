@@ -116,32 +116,12 @@ end
 function c9980458.filter3(c)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeFusionMaterial() and c:IsAbleToRemove()
 end
-function c9980458.exfilter0(c)
-	return c:IsSetCard(0x2bca) and c:IsCanBeFusionMaterial() and c:IsAbleToGrave()
-end
-function c9980458.exfilter1(c,e)
-	return c:IsSetCard(0x2bca) and c:IsCanBeFusionMaterial() and c:IsAbleToGrave() and not c:IsImmuneToEffect(e)
-end
-function c9980458.fcheck(tp,sg,fc)
-	return sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)<=2
-end
-function c9980458.gcheck(sg)
-	return sg:FilterCount(Card.IsLocation,nil,LOCATION_EXTRA)<=2
-end
 function c9980458.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then
 		local chkf=tp
 		local mg1=Duel.GetFusionMaterial(tp):Filter(c9980458.filter0,nil)
-		local mg2=Duel.GetMatchingGroup(c9980458.filter3,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+		local mg2=Duel.GetMatchingGroup(c9980458.filter3,tp,LOCATION_GRAVE,0,nil)
 		mg1:Merge(mg2)
-		if Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>1 then
-			local sg=Duel.GetMatchingGroup(c9980458.exfilter0,tp,LOCATION_EXTRA,0,nil)
-			if sg:GetCount()>0 then
-				mg1:Merge(sg)
-				Auxiliary.FCheckAdditional=c9980458.fcheck
-				Auxiliary.GCheckAdditional=c9980458.gcheck
-			end
-		end
 		local res=Duel.IsExistingMatchingCard(c9980458.filter2,tp,LOCATION_EXTRA,0,1,nil,e,tp,mg1,nil,chkf)
 		if not res then
 			local ce=Duel.GetChainMaterial(tp)
@@ -155,24 +135,13 @@ function c9980458.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 		return res
 	end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)
+	Duel.SetOperationInfo(0,CATEGORY_REMOVE,nil,1,tp,LOCATION_ONFIELD+LOCATION_GRAVE)
 end
 function c9980458.spop(e,tp,eg,ep,ev,re,r,rp)
-	local chkf=tp
+	 local chkf=tp
 	local mg1=Duel.GetFusionMaterial(tp):Filter(c9980458.filter1,nil,e)
-	local mg2=Duel.GetMatchingGroup(c9980458.filter3,tp,LOCATION_MZONE+LOCATION_GRAVE,0,nil)
+	local mg2=Duel.GetMatchingGroup(c9980458.filter3,tp,LOCATION_GRAVE,0,nil)
 	mg1:Merge(mg2)
-	local exmat=false
-	if Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>1 then
-		local sg=Duel.GetMatchingGroup(c9980458.exfilter1,tp,LOCATION_EXTRA,0,nil,e)
-		if sg:GetCount()>0 then
-			mg1:Merge(sg)
-			exmat=true
-		end
-	end
-	if exmat then
-		Auxiliary.FCheckAdditional=c9980458.fcheck
-		Auxiliary.GCheckAdditional=c9980458.gcheck
-	end
 	local sg1=Duel.GetMatchingGroup(c9980458.filter2,tp,LOCATION_EXTRA,0,nil,e,tp,mg1,nil,chkf)
 	local mg3=nil
 	local sg2=nil
@@ -190,13 +159,7 @@ function c9980458.spop(e,tp,eg,ep,ev,re,r,rp)
 		local tg=sg:Select(tp,1,1,nil)
 		local tc=tg:GetFirst()
 		if sg1:IsContains(tc) and (sg2==nil or not sg2:IsContains(tc) or not Duel.SelectYesNo(tp,ce:GetDescription())) then
-		   if exmat then
-				Auxiliary.FCheckAdditional=c9980458.fcheck
-				Auxiliary.GCheckAdditional=c9980458.gcheck
-			end
 			local mat1=Duel.SelectFusionMaterial(tp,tc,mg1,nil,chkf)
-			Auxiliary.FCheckAdditional=nil
-			Auxiliary.GCheckAdditional=nil
 			tc:SetMaterial(mat1)
 			Duel.Remove(mat1,POS_FACEUP,REASON_EFFECT+REASON_MATERIAL+REASON_FUSION)
 			Duel.BreakEffect()

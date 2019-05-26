@@ -52,7 +52,7 @@ function c75646165.initial_effect(c)
 	e6:SetCondition(c75646165.piccon)
 	c:RegisterEffect(e6)
 end
-c75646165.card_code_list={75646000,c75646165}
+c75646165.card_code_list={75646000,75646165}
 function c75646165.eqlimit(e,c)
 	return c:IsSetCard(0x2c0)
 end

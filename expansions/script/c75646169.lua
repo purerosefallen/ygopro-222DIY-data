@@ -58,6 +58,13 @@ function c75646169.initial_effect(c)
 	c:RegisterEffect(e6)
 	local e7=e6:Clone()
 	e7:SetCode(EFFECT_NO_EFFECT_DAMAGE)
+	--add code
+	local e8=Effect.CreateEffect(c)
+	e8:SetType(EFFECT_TYPE_SINGLE)
+	e8:SetCode(EFFECT_ADD_CODE)
+	e8:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e8:SetValue(75646202)
+	c:RegisterEffect(e8)
 end
 c75646169.card_code_list={75646000,75646152,75646202}
 function c75646169.eqlimit(e,c)

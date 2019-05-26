@@ -1,22 +1,16 @@
 --物语纪录·重力之战场原绯多木
 function c9980231.initial_effect(c)
+	--link summon
+	aux.AddLinkProcedure(c,aux.FilterBoolFunction(Card.IsLinkType,TYPE_EFFECT),2,2,c9980231.lcheck)
 	c:EnableReviveLimit()
-	aux.AddLinkProcedure(c,c9980231.matfilter,1)
-	--summon with 1 tribute
-	local e2=Effect.CreateEffect(c)
-	e2:SetDescription(aux.Stringid(9980231,0))
-	e2:SetType(EFFECT_TYPE_FIELD)
-	e2:SetRange(LOCATION_MZONE)
-	e2:SetTargetRange(LOCATION_HAND,0)
-	e2:SetCode(EFFECT_SUMMON_PROC)
-	e2:SetCondition(c9980231.otcon)
-	e2:SetTarget(c9980231.ottg)
-	e2:SetOperation(c9980231.otop)
-	e2:SetValue(SUMMON_TYPE_ADVANCE)
-	c:RegisterEffect(e2)
-	local e3=e2:Clone()
-	e3:SetCode(EFFECT_SET_PROC)
-	c:RegisterEffect(e3)
+	--atkup
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_SINGLE_RANGE)
+	e1:SetCode(EFFECT_UPDATE_ATTACK)
+	e1:SetRange(LOCATION_MZONE)
+	e1:SetValue(c9980231.atkval)
+	c:RegisterEffect(e1)
 	--search
 	local e1=Effect.CreateEffect(c)
 	e1:SetDescription(aux.Stringid(9980231,2))
@@ -47,32 +41,12 @@ function c9980231.initial_effect(c)
 	e8:SetOperation(c9980231.sumsuc)
 	c:RegisterEffect(e8)
 end
-function c9980231.sumsuc(e,tp,eg,ep,ev,re,r,rp)
-	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980231,2))
+function c9980231.lcheck(g,lc)
+	return g:IsExists(Card.IsLinkSetCard,1,nil,0x1bc4)
 end
-function c9980231.matfilter(c)
-	return c:IsSetCard(0x1bc4) and c:IsSummonType(SUMMON_TYPE_ADVANCE)
-end
-function c9980231.otfilter(c,tp)
-	return (c:GetAttack()>=1500 or c:IsLevelAbove(5)) and (c:IsControler(tp) or c:IsFaceup())
-end
-function c9980231.otcon(e,c,minc)
-	if c==nil then return true end
-	local tp=c:GetControler()
-	local mg=Duel.GetMatchingGroup(c9980231.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	return minc<=1 and Duel.CheckTribute(c,1,1,mg)
-end
-function c9980231.ottg(e,c)
-	return c:IsLevelAbove(7)
-end
-function c9980231.otop(e,tp,eg,ep,ev,re,r,rp,c)
-	local mg=Duel.GetMatchingGroup(c9980231.otfilter,tp,LOCATION_MZONE,LOCATION_MZONE,nil,tp)
-	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then
-		mg=mg:Filter(Card.IsControler,nil,tp)
-	end
-	local sg=Duel.SelectTribute(tp,c,1,1,mg)
-	c:SetMaterial(sg)
-	Duel.Release(sg,REASON_SUMMON+REASON_MATERIAL)
+function c9980231.atkval(e,c)
+	local g=e:GetHandler():GetLinkedGroup():Filter(Card.IsFaceup,nil)
+	return g:GetSum(Card.GetBaseAttack)
 end
 function c9980231.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return e:GetHandler():IsSummonType(SUMMON_TYPE_LINK)

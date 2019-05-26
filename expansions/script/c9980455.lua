@@ -2,7 +2,7 @@
 function c9980455.initial_effect(c)
 	--fusion material
 	c:EnableReviveLimit()
-	aux.AddFusionProcCodeFun(c,9980455,c9980455.matfilter1,1,true)
+	aux.AddFusionProcCodeFun(c,c9980455.matfilter2,c9980455.matfilter1,1,true)
 	--spsummon condition
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE)
@@ -80,16 +80,19 @@ end
 function c9980455.matfilter1(c)
 	return (c:IsFusionAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_WARRIOR)) or c:IsRace(RACE_FAIRY)
 end
+function c9980455.matfilter2(c)
+	return c:IsFusionSetCard(0x2bca)
+end
 function c9980455.spfilter(c,fc)
-	return (c:IsFusionCode(9980455) or ((c:IsFusionAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_WARRIOR)) or c:IsRace(RACE_FAIRY)))
+	return (c:IsFusionSetCard(0x2bca) or ((c:IsFusionAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_WARRIOR)) or c:IsRace(RACE_FAIRY)))
 		and c:IsCanBeFusionMaterial(fc) 
 end
 function c9980455.spfilter1(c,tp,g)
 	return g:IsExists(c9980455.spfilter2,1,c,tp,c)
 end
 function c9980455.spfilter2(c,tp,mc)
-	return (c:IsFusionCode(9980455) and ((mc:IsFusionAttribute(ATTRIBUTE_DARK) and mc:IsRace(RACE_WARRIOR)) or mc:IsRace(RACE_FAIRY)))
-		or (((c:IsFusionAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_WARRIOR)) or c:IsRace(RACE_FAIRY)) and mc:IsFusionCode(9980455))
+	return (c:IsFusionSetCard(0x2bca) and ((mc:IsFusionAttribute(ATTRIBUTE_DARK) and mc:IsRace(RACE_WARRIOR)) or mc:IsRace(RACE_FAIRY)))
+		or (((c:IsFusionAttribute(ATTRIBUTE_DARK) and c:IsRace(RACE_WARRIOR)) or c:IsRace(RACE_FAIRY)) and mc:IsFusionSetCard(0x2bca))
 		and Duel.GetLocationCountFromEx(tp,tp,Group.FromCards(c,mc))>0
 end
 function c9980455.sprcon(e,c)
@@ -127,7 +130,7 @@ function c9980455.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	Duel.SendtoDeck(c,nil,0,REASON_COST)
 end
 function c9980455.spfilter0(c,e,tp)
-	return c:IsCode(9980455) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
+	return c:IsSetCard(0x2bca) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)
 end
 function c9980455.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	if chkc then return chkc:IsLocation(LOCATION_GRAVE+LOCATION_EXTRA) and chkc:IsControler(tp) and c9980455.spfilter0(chkc,e,tp) end

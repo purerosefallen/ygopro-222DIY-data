@@ -40,7 +40,7 @@ function c75646193.initial_effect(c)
 	e5:SetOperation(c75646193.thop)
 	c:RegisterEffect(e5)
 end
-c75646193.card_code_list={75646000,75646152}
+c75646193.card_code_list={75646000,75646152,75646208}
 function c75646193.eqlimit(e,c)
 	return c:IsSetCard(0x2c0)
 end

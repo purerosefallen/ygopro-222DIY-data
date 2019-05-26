@@ -26,13 +26,11 @@ function c75646159.initial_effect(c)
 	c:RegisterEffect(e3)
 	--
 	local e4=Effect.CreateEffect(c)
-	e4:SetType(EFFECT_TYPE_FIELD)
-	e4:SetCode(EFFECT_CANNOT_ACTIVATE)
+	e4:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e4:SetRange(LOCATION_SZONE)
-	e4:SetProperty(EFFECT_FLAG_PLAYER_TARGET)
-	e4:SetTargetRange(0,1)
+	e4:SetCode(EVENT_CHAINING)
 	e4:SetCondition(c75646159.accon)
-	e4:SetValue(c75646159.aclimit)
+	e4:SetOperation(c75646159.chainop)
 	c:RegisterEffect(e4)
 	--search
 	local e5=Effect.CreateEffect(c)
@@ -77,7 +75,7 @@ function c75646159.operation(e,tp,eg,ep,ev,re,r,rp)
 end
 function c75646159.valcon(e,re,r,rp)
 	local res=false
-	if bit.band(r,REASON_EFFECT+REASON_BATTLE)~=0 then
+	if bit.band(r,REASON_BATTLE)~=0 or (rp==1-e:GetHandlerPlayer() and bit.band(r,REASON_EFFECT)~=0) then
 		res=true
 		e:GetHandler():RegisterFlagEffect(75646159,RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(75646159,1))
 	end
@@ -86,8 +84,11 @@ end
 function c75646159.accon(e)
 	return e:GetHandler():GetFlagEffect(75646159)~=0
 end
-function c75646159.aclimit(e,re,tp)
-	return not re:GetHandler():IsImmuneToEffect(e)
+function c75646159.chainop(e,tp,eg,ep,ev,re,r,rp)
+	Duel.SetChainLimit(c75646159.chlimit)
+end
+function c75646159.chlimit(e,ep,tp)
+	return tp==ep
 end
 function c75646159.cfilter(c)
 	return aux.IsCodeListed(c,75646000) and c:IsAbleToRemoveAsCost()

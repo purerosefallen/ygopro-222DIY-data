@@ -9,7 +9,6 @@ function c65060012.initial_effect(c)
 	e1:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e1:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e1:SetProperty(EFFECT_FLAG_DAMAGE_STEP+EFFECT_FLAG_DELAY)
-	e1:SetCountLimit(1,65060012)
 	e1:SetTarget(c65060012.sptg)
 	e1:SetOperation(c65060012.spop)
 	c:RegisterEffect(e1)
@@ -28,7 +27,7 @@ function c65060012.initial_effect(c)
 end
 
 function c65060012.effcon(e,tp,eg,ep,ev,re,r,rp)
-	return e:GetHandler():GetMutualLinkedGroupCount()>0 and Duel.IsChainNegatable(ev)
+	return e:GetHandler():GetMutualLinkedGroupCount()>0 and Duel.IsChainNegatable(ev) and not (re:GetHandler():IsSetCard(0x6da3) and re:GetHandler():IsType(TYPE_MONSTER))
 end
 
 function c65060012.efftg(e,tp,eg,ep,ev,re,r,rp,chk)

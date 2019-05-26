@@ -80,13 +80,6 @@ function c9980453.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local g=Duel.SelectTarget(tp,c9980453.filter,tp,0,LOCATION_MZONE,1,1,nil)
 	Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,g:GetFirst():GetBaseAttack())
 end
-function c9980453.dcon(e,tp,eg,ep,ev,re,r,rp)
-	local c=e:GetHandler()
-	return ep~=tp and (c==Duel.GetAttacker() or c==Duel.GetAttackTarget())
-end
-function c9980453.dop(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ChangeBattleDamage(ep,ev*2)
-end
 function c9980453.operation(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
@@ -98,17 +91,6 @@ function c9980453.operation(e,tp,eg,ep,ev,re,r,rp)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD)
 		tc:RegisterEffect(e1)
 		Duel.Recover(tp,tc:GetBaseAttack(),REASON_EFFECT)
-	end
-	if c:IsRelateToEffect(e) then
-		local e2=Effect.CreateEffect(c)
-		e2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
-		e2:SetRange(LOCATION_MZONE)
-		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
-		e2:SetCode(EVENT_PRE_BATTLE_DAMAGE)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		e2:SetCondition(c9980453.dcon)
-		e2:SetOperation(c9980453.dop)
-		c:RegisterEffect(e2)
 	end
 	Duel.Hint(HINT_MUSIC,0,aux.Stringid(9980453,2)) 
 end

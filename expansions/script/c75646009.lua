@@ -46,7 +46,7 @@ function c75646009.immop(e,tp,eg,ep,ev,re,r,rp)
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetCode(EFFECT_IMMUNE_EFFECT)
-	e1:SetTargetRange(LOCATION_MZONE,0)
+	e1:SetTargetRange(LOCATION_ONFIELD,0)
 	e1:SetTarget(aux.TargetBoolFunction(Card.IsSetCard,0x2c0))
 	e1:SetValue(c75646009.efilter)
 	if Duel.GetCurrentPhase()==PHASE_MAIN1 then
@@ -67,6 +67,13 @@ function c75646009.chainop(e,tp,eg,ep,ev,re,r,rp)
 	local es=re:GetHandler()
 	if es:IsSetCard(0x2c0) and es:IsType(TYPE_EQUIP) 
 		and es:GetEquipTarget()==e:GetHandler() and re:IsActiveType(TYPE_SPELL) and ep==tp then
-		Duel.SetChainLimit(aux.FALSE)
+		if Duel.IsPlayerAffectedByEffect(e:GetHandler():GetControler(),75646210) then
+			Duel.SetChainLimit(c75646009.chainlm)
+		else
+			Duel.SetChainLimit(aux.FALSE)
+		end	 
 	end
+end
+function c75646009.chainlm(e,rp,tp)
+	return tp==rp
 end

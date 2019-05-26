@@ -6,13 +6,14 @@ function c75646007.initial_effect(c)
 	e1:SetCode(EFFECT_SPSUMMON_PROC)
 	e1:SetProperty(EFFECT_FLAG_UNCOPYABLE)
 	e1:SetRange(LOCATION_HAND)
+	e1:SetCountLimit(1,75646007)
 	e1:SetCondition(c75646007.spcon)
 	c:RegisterEffect(e1)
 	--Destroy
 	local e3=Effect.CreateEffect(c)
 	e3:SetCategory(CATEGORY_DESTROY)
 	e3:SetType(EFFECT_TYPE_IGNITION)
-	e3:SetCountLimit(1,75646007)
+	e3:SetCountLimit(1,5646007)
 	e3:SetRange(LOCATION_MZONE)
 	e3:SetCost(c75646007.descost)
 	e3:SetTarget(c75646007.destg)
@@ -67,6 +68,13 @@ function c75646007.chainop(e,tp,eg,ep,ev,re,r,rp)
 	local es=re:GetHandler()
 	if es:IsSetCard(0x2c0) and es:IsType(TYPE_EQUIP) 
 		and es:GetEquipTarget()==e:GetHandler() and re:IsActiveType(TYPE_SPELL) and ep==tp then
-		Duel.SetChainLimit(aux.FALSE)
+		if Duel.IsPlayerAffectedByEffect(e:GetHandler():GetControler(),75646210) then
+			Duel.SetChainLimit(c75646007.chainlm)
+		else
+			Duel.SetChainLimit(aux.FALSE)
+		end		
 	end
+end
+function c75646007.chainlm(e,rp,tp)
+	return tp==rp
 end

@@ -38,7 +38,7 @@ function c75646180.initial_effect(c)
 	e5:SetOperation(c75646180.thop)
 	c:RegisterEffect(e5)
 end
-c75646180.card_code_list={75646000,75646180}
+c75646180.card_code_list={75646000,75646180,75646208}
 function c75646180.eqlimit(e,c)
 	return c:IsSetCard(0x2c0)
 end
@@ -66,7 +66,7 @@ function c75646180.con(e,tp,eg,ep,ev,re,r,rp)
 end
 function c75646180.op(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if not c:IsRelateToEffect(e) then return end  
+	if not c:IsRelateToEffect(e) then return end 
 	local g=Duel.GetMatchingGroup(Card.IsFaceup,tp,LOCATION_MZONE,0,nil)
 	local tc=g:GetFirst()
 	c:RemoveCounter(tp,0x1b,1,REASON_EFFECT)

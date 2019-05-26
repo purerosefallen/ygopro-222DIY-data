@@ -2,6 +2,13 @@
 function c9980456.initial_effect(c)
 	c:EnableReviveLimit()
 	aux.AddFusionProcFun2(c,c9980456.matfilter1,aux.FilterBoolFunction(Card.IsFusionType,TYPE_LINK),true)
+	--spsummon condition
+	local e1=Effect.CreateEffect(c)
+	e1:SetType(EFFECT_TYPE_SINGLE)
+	e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+	e1:SetCode(EFFECT_SPSUMMON_CONDITION)
+	e1:SetValue(aux.fuslimit)
+	c:RegisterEffect(e1)
 	--activate from hand
 	local e1=Effect.CreateEffect(c)
 	e1:SetType(EFFECT_TYPE_FIELD)
