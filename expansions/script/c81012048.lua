@@ -38,10 +38,11 @@ function c81012048.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_EFFECT)
 	if g:GetFirst():IsLevel(4) then
 		op=Duel.SelectOption(tp,aux.Stringid(81012048,1))
-	else if g:GetFirst():IsLevel(8) then
-		op=Duel.SelectOption(tp,aux.Stringid(81012048,2))
-	else
-		op=Duel.SelectOption(tp,aux.Stringid(81012048,1),aux.Stringid(81012048,2))
+		else if g:GetFirst():IsLevel(8) then
+			op=Duel.SelectOption(tp,aux.Stringid(81012048,2))
+		else
+			op=Duel.SelectOption(tp,aux.Stringid(81012048,1),aux.Stringid(81012048,2))
+		end
 	end
 	e:SetLabel(op)
 end

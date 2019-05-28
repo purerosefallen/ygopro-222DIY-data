@@ -22,7 +22,6 @@ function cm.initial_effect(c)
 	e3:SetType(EFFECT_TYPE_IGNITION)
 	e3:SetRange(LOCATION_GRAVE)
 	e3:SetCountLimit(1,17050905)
-	e3:SetCost(cm.spcost)
 	e3:SetTarget(cm.gsptg)
 	e3:SetOperation(cm.gspop)
 	c:RegisterEffect(e3)
@@ -43,20 +42,22 @@ function cm.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
+function cm.thfilter(c,tp)
+	return c:IsAbleToHand() and Duel.GetMZoneCount(tp,c)
+end
 function cm.gsptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(tp) and cm.thfilter(chkc,tp) end
 	if chk==0 then return e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and Duel.IsExistingTarget(cm.aux.TRUE,tp,LOCATION_MZONE,0,1,nil,tp) end
+		and Duel.IsExistingTarget(cm.thfilter,tp,LOCATION_MZONE,0,1,nil,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_RTOHAND)
-	local g=Duel.SelectTarget(tp,aux.TRUE,tp,LOCATION_MZONE,0,1,1,nil,tp)
+	local g=Duel.SelectTarget(tp,cm.thfilter,tp,LOCATION_MZONE,0,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOHAND,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,e:GetHandler(),1,0,0)
 end
 function cm.gspop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=Duel.GetFirstTarget()
-	if tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_HAND) 
-		and c:IsRelateToEffect(e) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 then
+	if tc:IsRelateToEffect(e) and Duel.SendtoHand(tc,nil,REASON_EFFECT)~=0 and tc:IsLocation(LOCATION_HAND) and c:IsRelateToEffect(e) then
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end

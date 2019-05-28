@@ -36,6 +36,9 @@ function c13254129.operation(e,tp,eg,ep,ev,re,r,rp,chk)
 		local t=Duel.IsExistingMatchingCard(c13254129.cfilter,tp,LOCATION_ONFIELD,0,1,nil)
 
 		local op=0
+		if t then
+			t=Duel.SelectYesNo(tp,aux.Stringid(13254129,3))
+		end
 		if not t then
 			local m={}
 			local n={}

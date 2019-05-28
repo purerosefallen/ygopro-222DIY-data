@@ -74,7 +74,7 @@ function c13254128.activate(e,tp,eg,ep,ev,re,r,rp)
 	local fop=re:GetOperation()
 	fop(e,tp,eg,ep,ev,re,r,rp)
 end
-function c13254128.tgfilter(c)
+function c13254128.tgfilter(c,tp)
 	return c:IsFaceup() and (c:IsCode(13254049) or c:IsCode(13254050)) and c:IsAbleToGrave() and Duel.IsExistingMatchingCard(c13254128.tgfilter1,tp,LOCATION_EXTRA,0,1,nil,c)
 end
 function c13254128.tgfilter1(c,tc)
@@ -84,10 +84,10 @@ function c13254128.spfilter(c,e,tp)
 	return c:IsCode(13254052) and c:IsCanBeSpecialSummoned(e,0,tp,true,true)
 end
 function c13254128.sptg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and c13254128.tgfilter(chkc) end
-	if chk==0 then return Duel.IsExistingTarget(c13254128.tgfilter,tp,LOCATION_ONFIELD,0,1,nil) and Duel.IsExistingMatchingCard(c13254128.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
+	if chkc then return chkc:IsOnField() and chkc:IsControler(tp) and c13254128.tgfilter(chkc,tp) end
+	if chk==0 then return Duel.IsExistingTarget(c13254128.tgfilter,tp,LOCATION_ONFIELD,0,1,nil,tp) and Duel.IsExistingMatchingCard(c13254128.spfilter,tp,LOCATION_EXTRA,0,1,nil,e,tp) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local g=Duel.SelectTarget(tp,c13254128.tgfilter,tp,LOCATION_ONFIELD,0,1,1,nil)
+	local g=Duel.SelectTarget(tp,c13254128.tgfilter,tp,LOCATION_ONFIELD,0,1,1,nil,tp)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,g,1,0,0)
 	Duel.SetOperationInfo(0,CATEGORY_TOGRAVE,nil,1,tp,LOCATION_EXTRA)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_EXTRA)

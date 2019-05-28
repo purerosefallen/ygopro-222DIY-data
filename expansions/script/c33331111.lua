@@ -12,7 +12,7 @@ function cm.initial_effect(c)
 	e1:SetTarget(cm.target)
 	e1:SetOperation(cm.activate)
 	c:RegisterEffect(e1)
-	local e2=rsef.FTO(c,EVENT_TO_GRAVE,{m,0},nil,"td,dr","de",LOCATION_GRAVE,cm.tdcon,rscost.costself(Card.IsAbleToRemoveAsCost,"rm"),rstg.target2(cm.fun,rsop.list(Card.IsAbleToDeck,"td",LOCATION_GRAVE+LOCATION_REMOVED,0,1,true,c)),cm.tdop)
+	local e2=rsef.FTO(c,EVENT_TO_GRAVE,{m,0},nil,"td,dr","de",LOCATION_GRAVE,cm.tdcon,rscost.cost(Card.IsAbleToRemoveAsCost,"rm"),rstg.target2(cm.fun,rsop.list(Card.IsAbleToDeck,"td",LOCATION_GRAVE+LOCATION_REMOVED,0,1,true,c)),cm.tdop)
 	local e3=rsef.RegisterClone(c,e2,"code",EVENT_REMOVE)
 end
 function cm.fun(g,e,tp)

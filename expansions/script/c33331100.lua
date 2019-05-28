@@ -16,9 +16,11 @@ function rslf.filter2(c)
 end
 function rslf.SpecialSummonFunction(c,code,con,op,buff)
 	aux.EnablePendulumAttribute(c)
-	local mt=getmetatable(c)
-	if not mt.lflist then
-		mt.lflist=buff
+	if not c:IsStatus(STATUS_COPYING_EFFECT) then
+		local mt=getmetatable(c)
+		if not mt.lflist then
+			mt.lflist=buff
+		end
 	end
 	local e1=rscf.SetSpecialSummonProduce(c,LOCATION_PZONE,rslf.sscon(con),rslf.ssop(op,buff))
 	if code then
@@ -40,9 +42,11 @@ function rslf.ssop(op,buff)
 	end
 end
 function rslf.buffop(c1,c2,buff,bool)
-	if buff then
+	--just optimize,no problem there. if crash, must have other problems
+	if buff and type(buff)=="function" then
 		local reset=not bool and RESET_EVENT+RESETS_STANDARD-RESET_LEAVE-RESET_TOFIELD+RESET_OVERLAY or RESET_EVENT+RESETS_STANDARD 
 		local list={buff(c2)}
+		if #list==0 then return end
 		for k,buffeffect in pairs(list) do
 			buffeffect:SetRange(LOCATION_MZONE)
 			buffeffect:SetReset(reset)
@@ -51,6 +55,7 @@ function rslf.buffop(c1,c2,buff,bool)
 		if not c2:IsType(TYPE_EFFECT) then
 			local e2=Effect.CreateEffect(c1)
 			e2:SetType(EFFECT_TYPE_SINGLE)
+			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e2:SetCode(EFFECT_ADD_TYPE)
 			e2:SetValue(TYPE_EFFECT)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD)

@@ -18,9 +18,9 @@ function cm.op(e,tp)
 	Duel.SendtoDeck(g,nil,2,REASON_EFFECT)
 end
 function cm.buff(c)
-	local e1=rsef.SV_INDESTRUCTABLE(c,"battle,effect")
-	local e2=rsef.I(c,{m,0},1,"dr,td",nil,LOCATION_MZONE,cm.drcon,nil,cm.drtg,cm.drop)
-	return e1,e2
+	local e1,e2=rsef.SV_INDESTRUCTABLE({c,true},"battle,effect")
+	local e3=rsef.I({c,true},{m,0},1,"dr,td",nil,LOCATION_MZONE,cm.drcon,nil,cm.drtg,cm.drop)
+	return e1,e2,e3
 end
 function cm.drcon(e,tp)
 	return Duel.GetFieldGroupCount(tp,LOCATION_HAND,0)<Duel.GetFieldGroupCount(tp,0,LOCATION_HAND)
