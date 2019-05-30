@@ -17,9 +17,9 @@ function cm.op(e,tp)
 	Duel.MoveToField(tc,tp,tp,LOCATION_SZONE,POS_FACEUP,true)
 end
 function cm.buff(c)
-	local e1=rsef.FV_LIMIT_PLAYER(c,"rm",nil,cm.tg,{1,0})
-	local e2=rsef.FV_LIMIT(c,"dis",nil,cm.distg,{0,LOCATION_EXTRA },cm.discon)
-	local e3=rsef.FV_LIMIT_PLAYER(c,"sp",nil,cm.distg,{0,1},cm.discon)
+	local e1=rsef.FV_LIMIT_PLAYER({c,true},"rm",nil,cm.tg,{1,0})
+	local e2=rsef.FV_LIMIT({c,true},"dis",nil,cm.distg,{0,LOCATION_EXTRA },cm.discon)
+	local e3=rsef.FV_LIMIT_PLAYER({c,true},"sp",nil,cm.distg,{0,1},cm.discon)
 	return e1,e2,e3
 end
 function cm.tg(e,c)

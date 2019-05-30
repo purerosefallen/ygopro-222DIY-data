@@ -71,6 +71,8 @@ function cm.rkuop(e,tp,eg,ep,ev,re,r,rp)
 		end
 		sc:SetMaterial(Group.FromCards(tc))
 		Duel.Overlay(sc,Group.FromCards(tc))
+		Duel.SpecialSummon(sc,SUMMON_TYPE_XYZ,tp,tp,false,false,POS_FACEUP)
+		sc:CompleteProcedure()
 	end
 end
 function cm.filter(c)
@@ -100,14 +102,17 @@ function cm.activate(e,tp,eg,ep,ev,re,r,rp)
 		tc:RegisterEffect(e2)
 	end
 end
+function cm.spcfilter(c,ft,tp)
+	return ft>0 or (c:IsControler(tp) and c:GetSequence()<5)
+end
 function cm.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	if chk==0 then return ft>-1 and Duel.CheckReleaseGroup(tp,cm.spcfilter,1,nil,ft,tp) end
-	local sg=Duel.SelectReleaseGroup(tp,cm.spcfilter,1,1,nil,ft,tp)
+	local sg=Duel.SelectReleaseGroup(tp,cm.spcfilter,1,1,e:GetHandler(),ft,tp)
 	Duel.Release(sg,REASON_COST)
 end
 function cm.spfilter(c,e,tp)
-	return c:IsRace(RACE_REPTILE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_REPTILE) and not c:IsCode(17050902) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
 end
 function cm.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(cm.spfilter,tp,LOCATION_DECK,0,1,nil,e,tp) end

@@ -17,8 +17,8 @@ function cm.op(e,tp,c)
 	Duel.SendtoHand(tg,nil,REASON_EFFECT)
 end
 function cm.buff(c)
-	local e1=rsef.SV_IMMUNE_EFFECT(c,cm.imval)
-	local e2=rsef.I(c,{m,0},nil,"des",nil,LOCATION_MZONE,cm.descon,nil,cm.destg,cm.desop)
+	local e1=rsef.SV_IMMUNE_EFFECT({c,true},cm.imval)
+	local e2=rsef.I({c,true},{m,0},nil,"des",nil,LOCATION_MZONE,cm.descon,nil,cm.destg,cm.desop)
 	return e1,e2
 end
 function cm.imval(e,re)

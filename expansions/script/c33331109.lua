@@ -20,9 +20,10 @@ function cm.damcon(e,tp,eg,ep,ev,re,r,rp)
 end
 function cm.damop(e,tp,eg,ep,ev,re,r,rp)
 	local bc=Duel.GetAttackTarget()
+	local lp=Duel.GetLP(1-tp)
 	if bc and bc:IsRelateToBattle() and bc:IsFaceup() then
 		Duel.Hint(HINT_CARD,0,m)
-		Duel.SetLP(1-tp,Duel.GetLP(1-tp)-bc:GetBaseAttack())
+		Duel.SetLP(1-tp,math.max(0,lp-bc:GetBaseAttack()))
 	end
 end
 function cm.op(e,tp)

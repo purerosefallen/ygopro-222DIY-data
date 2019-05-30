@@ -30,7 +30,7 @@ function c65060029.initial_effect(c)
 	e3:SetCondition(c65060029.hdcon)
 	c:RegisterEffect(e3)
 end
-function c65060029.hdcon(c,e,tp)
+function c65060029.hdcon(e)
 	local ph=Duel.GetCurrentPhase()
 	return ph>=PHASE_BATTLE_START and ph<=PHASE_BATTLE 
 end
@@ -98,6 +98,6 @@ function c65060029.ac(e,tp,eg,ep,ev,re,r,rp)
 	Duel.RegisterEffect(e3,tp)
 end
 function c65060029.desop(e,tp,eg,ep,ev,re,r,rp)
-	local g=Duel.GetMatchingGroup(c65060029.filter,tp,LOCATION_MZONE,0,nil)
+	local g=Duel.GetMatchingGroup(Card.IsRace,tp,LOCATION_MZONE,0,nil,RACE_DRAGON)
 	Duel.SendtoHand(g,nil,REASON_EFFECT)
 end

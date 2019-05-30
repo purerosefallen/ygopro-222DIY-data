@@ -13,8 +13,8 @@ function cm.op(e,tp)
 	Duel.Release(g,REASON_COST)
 end
 function cm.buff(c)
-	local e1=rsef.SV_IMMUNE_EFFECT(c,cm.efilter)
-	local e2=rsef.I(c,{m,0},nil,"tg,sp",nil,LOCATION_MZONE,cm.lcon,nil,cm.ltg,cm.lop)
+	local e1=rsef.SV_IMMUNE_EFFECT({c,true},cm.efilter)
+	local e2=rsef.I({c,true},{m,0},nil,"tg,sp",nil,LOCATION_MZONE,cm.lcon,nil,cm.ltg,cm.lop)
 	return e1,e2
 end
 function cm.efilter(e,te)

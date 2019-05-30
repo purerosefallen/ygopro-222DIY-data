@@ -61,7 +61,8 @@ function c65030083.negop(e,tp,eg,ep,ev,re,r,rp)
 				Duel.BreakEffect()
 				local tgg=Duel.GetFieldGroup(tp,LOCATION_HAND,0)
 				local tc=tgg:RandomSelect(1-tp,1)
-				if c65030083.checkfil(tc,e,tp) then
+				Duel.HintSelection(tc)
+				if c65030083.checkfil(tc:GetFirst(),e,tp) then
 					Duel.NegateActivation(ev)
 					Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 				end

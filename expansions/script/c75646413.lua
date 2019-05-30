@@ -58,7 +58,6 @@ function c75646413.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function c75646413.filter(c)
 	return c:IsSetCard(0x32c4) and (c:IsLocation(LOCATION_GRAVE) and c:IsAbleToDeck() or c:IsFaceup())
-	   and Duel.IsExistingTarget(c75646413.filter2,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,2,c)
 end
 function c75646413.filter2(c)
 	return c:IsLocation(LOCATION_GRAVE) and c:IsAbleToDeck() or c:IsFaceup()
@@ -69,7 +68,7 @@ function c75646413.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
 	local g1=Duel.SelectTarget(tp,c75646413.filter,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,1,1,nil)
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TARGET)
-	local g2=Duel.SelectTarget(tp,c75646413.filter2,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,2,2,g1:GetFirst())
+	local g2=Duel.SelectTarget(tp,c75646413.filter2,tp,LOCATION_GRAVE+LOCATION_REMOVED,0,0,2,g1:GetFirst())
 	g1:Merge(g2)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,g1,g1:GetCount(),0,0)
 	if e:GetLabel()==1 and Duel.IsPlayerCanDraw(tp,2) then
@@ -79,19 +78,17 @@ function c75646413.tg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c75646413.op(e,tp,eg,ep,ev,re,r,rp)
 	local tg=Duel.GetChainInfo(0,CHAININFO_TARGET_CARDS)
-	if not tg or tg:FilterCount(Card.IsRelateToEffect,nil,e)~=3 then return end
-	if tg:Filter(Card.IsLocation,nil,LOCATION_GRAVE):GetCount()>0 then
+	if not tg then return end
+	if tg:Filter(Card.IsLocation,nil,LOCATION_GRAVE):GetCount()>0	  then
 		Duel.SendtoDeck(tg:Filter(Card.IsLocation,nil,LOCATION_GRAVE),nil,2,REASON_EFFECT)
+		local g=Duel.GetOperatedGroup()
+		if g:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) 
+		end
 	end
-	local g1=Duel.GetOperatedGroup()
 	if tg:Filter(Card.IsLocation,nil,LOCATION_REMOVED):GetCount()>0 then
 		Duel.SendtoGrave(tg:Filter(Card.IsLocation,nil,LOCATION_REMOVED),REASON_EFFECT+REASON_RETURN)
 	end
-	local g2=Duel.GetOperatedGroup()
-	if g1:IsExists(Card.IsLocation,1,nil,LOCATION_DECK) then Duel.ShuffleDeck(tp) end
-	local ct1=g1:FilterCount(Card.IsLocation,nil,LOCATION_DECK+LOCATION_EXTRA)
-	local ct2=g2:FilterCount(Card.IsLocation,nil,LOCATION_GRAVE)
-	if ct1+ct2==3 and e:GetLabel()==1 and Duel.IsPlayerCanDraw(tp,2) and Duel.SelectYesNo(tp,aux.Stringid(75646413,0)) then
+	if e:GetLabel()==1 and Duel.IsPlayerCanDraw(tp,2) and Duel.SelectYesNo(tp,aux.Stringid(75646413,0)) then
 		Duel.BreakEffect()
 		Duel.Draw(tp,2,REASON_EFFECT)
 	end

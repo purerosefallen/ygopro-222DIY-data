@@ -188,8 +188,9 @@ function c47570400.repop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.Hint(HINT_SELECTMSG,tp,HINGMSG_REMOVE)
 	local g=Duel.SelectMatchingCard(tp,c47570400.ccfilter,tp,LOCATION_MZONE,0,1,1,nil)
 	local tc=g:GetFirst()
-	if Duel.Remove(tc,POS_FACEUP,REASON_COST+REASON_TEMPORARY)~=0 then
-		local e1=Effect.CreateEffect(e:GetHandler())
+	if tc then
+		Duel.Remove(tc,POS_FACEUP,REASON_COST+REASON_TEMPORARY)~=0
+		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 		e1:SetCode(EVENT_PHASE+PHASE_END)
 		e1:SetReset(RESET_PHASE+PHASE_END)
