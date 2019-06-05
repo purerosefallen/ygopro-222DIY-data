@@ -16,14 +16,14 @@ function c65020012.initial_effect(c)
 	e2:SetTarget(c65020012.tg)
 	e2:SetOperation(c65020012.op)
 	c:RegisterEffect(e2)
-	local e3=Effect.CreateEffect(c)
+	local e3=e2:Clone()
 	e3:SetProperty(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetCondition(c65020012.ccon)
 	c:RegisterEffect(e3)
 end
 function c65020012.ccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and ep~=tp
+	return Duel.GetTurnPlayer()~=tp and re:GetHandlerPlayer()~=tp
 end
 function c65020012.tg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingTarget(Card.IsFacedown,tp,LOCATION_SZONE,0,1,nil) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and e:GetHandler():IsCanBeSpecialSummoned(e,0,tp,false,false) end

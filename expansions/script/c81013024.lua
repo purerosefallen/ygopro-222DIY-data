@@ -22,8 +22,7 @@ function c81013024.initial_effect(c)
 	c:RegisterEffect(e2)
 end
 function c81013024.condition1(e,tp,eg,ep,ev,re,r,rp)
-	local loc=Duel.GetChainInfo(ev,CHAININFO_TRIGGERING_LOCATION)
-	return loc~=LOCATION_ONFIELD and Duel.IsChainNegatable(ev)
+	return re:GetActivateLocation()~=LOCATION_ONFIELD and not re:IsHasType(EFFECT_TYPE_ACTIVATE) and Duel.IsChainNegatable(ev)
 end
 function c81013024.cost1(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckLPCost(tp,2500)

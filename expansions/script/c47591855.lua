@@ -13,8 +13,8 @@ function c47591855.initial_effect(c)
 	e0:SetCode(EFFECT_SPSUMMON_PROC)
 	e0:SetProperty(EFFECT_FLAG_UNCOPYABLE+EFFECT_FLAG_IGNORE_IMMUNE)
 	e0:SetRange(LOCATION_EXTRA)
-	e0:SetCondition(c47591855.spcon)
-	e0:SetOperation(c47591855.spop)
+	e0:SetCondition(c47591855.linkcon)
+	e0:SetOperation(c47591855.linkop)
 	e0:SetValue(SUMMON_TYPE_SYNCHRO)
 	c:RegisterEffect(e0)
 	--检索
@@ -71,4 +71,4 @@ function c47591855.thop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SendtoHand(g,nil,REASON_EFFECT)
 		Duel.ConfirmCards(1-tp,g)
 	end
-end	 
+end  

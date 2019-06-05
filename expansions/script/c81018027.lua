@@ -43,21 +43,21 @@ end
 function c81018027.atkop(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	local tc=c:GetBattleTarget()
-	if c:IsFaceup() and c:IsRelateToBattle() and not tc:IsImmuneToEffect(e) then
-		local atk=c:GetAttack()
+	if c:IsRelateToEffect(e) and c:IsFaceup() then
+		local atk=c:GetAttack()/2
 		local e1=Effect.CreateEffect(c)
 		e1:SetType(EFFECT_TYPE_SINGLE)
 		e1:SetCode(EFFECT_SET_ATTACK_FINAL)
 		e1:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-		e1:SetValue(math.ceil(atk/2))
+		e1:SetValue(atk)
 		c:RegisterEffect(e1)
-		if tc:IsRelateToEffect(e) and tc:IsFaceup() then
+		if tc:IsFaceup() and tc:IsRelateToBattle() and not tc:IsImmuneToEffect(e) then
 			local e2=Effect.CreateEffect(c)
 			e2:SetType(EFFECT_TYPE_SINGLE)
 			e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 			e2:SetCode(EFFECT_UPDATE_ATTACK)
 			e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
-			e2:SetValue(math.ceil(atk/2))
+			e2:SetValue(atk)
 			tc:RegisterEffect(e2)
 		end
 	end

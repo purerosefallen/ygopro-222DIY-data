@@ -27,7 +27,8 @@ function c60151551.initial_effect(c)
 	local e4=Effect.CreateEffect(c)
 	e4:SetCategory(CATEGORY_REMOVE)
 	e4:SetProperty(EFFECT_FLAG_CARD_TARGET)
-	e4:SetType(EFFECT_TYPE_IGNITION)
+	e4:SetType(EFFECT_TYPE_QUICK_O)
+	e4:SetCode(EVENT_FREE_CHAIN)
 	e4:SetRange(LOCATION_SZONE)
 	e4:SetCountLimit(1)
 	e4:SetTarget(c60151551.thtg)
@@ -74,7 +75,7 @@ function c60151551.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_REMOVE,g,1,0,0)
 end
 function c60151551.thop(e,tp,eg,ep,ev,re,r,rp)
-    if not e:GetHandler():IsRelateToEffect(e) then return end
+	if not e:GetHandler():IsRelateToEffect(e) then return end
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		Duel.Remove(tc,POS_FACEUP,REASON_EFFECT)
@@ -82,7 +83,7 @@ function c60151551.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 function c60151551.descost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(Card.IsDiscardable,tp,LOCATION_HAND,0,1,e:GetHandler()) end
-    Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
+	Duel.DiscardHand(tp,Card.IsDiscardable,1,1,REASON_COST+REASON_DISCARD)
 end
 function c60151551.filter2(c)
 	return c:IsCode(60151501) and c:IsSSetable(true)
@@ -95,20 +96,20 @@ function c60151551.activate(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SET)
-    local g=Duel.SelectMatchingCard(tp,c60151551.filter2,tp,LOCATION_DECK,0,1,1,nil)
-    if g:GetCount()>0 then
+	local g=Duel.SelectMatchingCard(tp,c60151551.filter2,tp,LOCATION_DECK,0,1,1,nil)
+	if g:GetCount()>0 then
 		local tc=g:GetFirst()
-        Duel.SSet(tp,tc)
-        Duel.ConfirmCards(1-tp,g)
+		Duel.SSet(tp,tc)
+		Duel.ConfirmCards(1-tp,g)
 		local e2=Effect.CreateEffect(c)
 		e2:SetType(EFFECT_TYPE_SINGLE)
 		e2:SetCode(EFFECT_TRAP_ACT_IN_SET_TURN)
 		e2:SetProperty(EFFECT_FLAG_SET_AVAILABLE)
-        e2:SetReset(RESET_EVENT+0x47e0000)
+		e2:SetReset(RESET_EVENT+0x47e0000)
 		tc:RegisterEffect(e2)
 		if c:IsRelateToEffect(e) then
 			Duel.SendtoHand(c,nil,REASON_EFFECT)
 			Duel.ConfirmCards(1-tp,c)
 		end
-    end
+	end
 end

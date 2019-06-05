@@ -34,6 +34,23 @@ function c81007032.initial_effect(c)
 	e3:SetTarget(c81007032.sctg)
 	e3:SetOperation(c81007032.scop)
 	c:RegisterEffect(e3)
+	--double tuner check
+	local e4=Effect.CreateEffect(c)
+	e4:SetType(EFFECT_TYPE_SINGLE)
+	e4:SetCode(EFFECT_MATERIAL_CHECK)
+	e4:SetValue(c81007032.valcheck)
+	c:RegisterEffect(e4)
+end
+function c81007032.valcheck(e,c)
+	local g=c:GetMaterial()
+	if g:IsExists(Card.IsType,2,nil,TYPE_TUNER) then
+		local e1=Effect.CreateEffect(c)
+		e1:SetType(EFFECT_TYPE_SINGLE)
+		e1:SetProperty(EFFECT_FLAG_CANNOT_DISABLE+EFFECT_FLAG_UNCOPYABLE)
+		e1:SetCode(21142671)
+		e1:SetReset(RESET_EVENT+RESETS_STANDARD-RESET_TOFIELD+RESET_PHASE+PHASE_END)
+		c:RegisterEffect(e1)
+	end
 end
 function c81007032.synfilter(c)
 	return c:IsAttribute(ATTRIBUTE_EARTH) and c:IsRace(RACE_WARRIOR)

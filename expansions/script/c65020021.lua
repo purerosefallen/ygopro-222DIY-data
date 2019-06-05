@@ -63,6 +63,7 @@ function c65020021.spop(e,tp,eg,ep,ev,re,r,rp)
 		if g2:GetCount()>0 then
 			Duel.HintSelection(g2)
 			Duel.Remove(g2,POS_FACEDOWN,REASON_EFFECT)
+			Duel.ShuffleHand(1-tp)
 		end
 	end
 	if Duel.GetMatchingGroupCount(Card.IsCode,tp,LOCATION_FZONE,0,1,nil,65020025)==0 and Duel.IsExistingMatchingCard(Card.IsCode,tp,LOCATION_HAND+LOCATION_DECK+LOCATION_GRAVE,0,1,nil,65020025) then

@@ -19,8 +19,8 @@ function c9980198.initial_effect(c)
 	e2:SetRange(LOCATION_MZONE)
 	e2:SetCountLimit(1)
 	e2:SetCost(c9980198.thcost)
-	e2:SetTarget(c9980198.thtg)
-	e2:SetOperation(c9980198.thop)
+	e2:SetTarget(c9980198.thtg2)
+	e2:SetOperation(c9980198.thop2)
 	c:RegisterEffect(e2)
    --Activate
 	local e1=Effect.CreateEffect(c)
@@ -82,11 +82,11 @@ end
 function c9980198.thfilter(c)
 	return c:IsSetCard(0x2bc8) and c:IsType(TYPE_MONSTER) and not c:IsForbidden() 
 end
-function c9980198.thtg(e,tp,eg,ep,ev,re,r,rp,chk)
+function c9980198.thtg2(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.IsExistingMatchingCard(c9980198.thfilter,tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_HAND,0,1,nil)
 		and Duel.GetLocationCount(tp,LOCATION_SZONE)>0 end
 end
-function c9980198.thop(e,tp,eg,ep,ev,re,r,rp)
+function c9980198.thop2(e,tp,eg,ep,ev,re,r,rp)
 	if Duel.GetLocationCount(tp,LOCATION_SZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOFIELD)
 	local g=Duel.SelectMatchingCard(tp,aux.NecroValleyFilter(c9980198.thfilter),tp,LOCATION_DECK+LOCATION_GRAVE+LOCATION_HAND,0,1,1,nil)

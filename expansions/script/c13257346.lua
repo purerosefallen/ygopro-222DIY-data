@@ -126,6 +126,7 @@ function c13257346.bombop(e,tp,eg,ep,ev,re,r,rp)
 	e5:SetValue(700)
 	c:RegisterEffect(e5)
 	if g:GetCount()>0 then
+		local tc=g:GetFirst()
 		while tc do
 			if tc:IsFaceup() and not tc:IsDisabled() then
 				Duel.NegateRelatedChain(tc,RESET_TURN_SET)

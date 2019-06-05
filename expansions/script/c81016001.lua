@@ -72,5 +72,6 @@ function c81016001.repop(e,tp,eg,ep,ev,re,r,rp)
 	end
 end
 function c81016001.atkcon(e)
+	local tp=e:GetHandlerPlayer()
 	return Duel.GetFieldGroupCount(tp,LOCATION_EXTRA,0)==0
 end

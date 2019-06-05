@@ -62,10 +62,10 @@ function c81018031.cfilter(c)
 	return c:IsSetCard(0x81b) and c:IsType(TYPE_MONSTER) and c:IsAbleToRemoveAsCost()
 end
 function c81018031.tgfilter(c,e)
-	return c:IsFaceup() and c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanBeEffectTarget(e)
+	return c:IsFaceup() and c:IsPosition(POS_FACEUP_ATTACK) and c:IsCanBeEffectTarget(e) and c:IsCanAddCounter(0x1810,1)
 end
 function c81018031.countertg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and chkc:IsFaceup() end
+	if chkc then return chkc:IsLocation(LOCATION_MZONE) and chkc:IsControler(1-tp) and c81018031.tgfilter(chkc,e) end
 	local tg=Duel.GetMatchingGroup(c81018031.tgfilter,tp,0,LOCATION_MZONE,nil,e)
 	if chk==0 then return e:GetHandler():IsAbleToRemoveAsCost() and tg:GetCount()>0
 		and Duel.IsExistingMatchingCard(c81018031.cfilter,tp,LOCATION_GRAVE,0,1,nil) end
@@ -93,6 +93,7 @@ function c81018031.counterop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetCode(EFFECT_MUST_ATTACK)
 		tc:RegisterEffect(e2)
 		tc:RegisterFlagEffect(81018031,RESET_EVENT+RESETS_STANDARD,0,0)
+		tc=g:GetNext()
 	end
 end
 function c81018031.condition(e)

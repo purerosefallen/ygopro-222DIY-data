@@ -70,7 +70,7 @@ function c13254114.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 				ft=ft-1 
 			end
 		end
-	until cg:GetCount()==0
+	until sg:GetCount()>=2 or cg:GetCount()==0
 	cg=sg:Clone()--selected maru
 	Duel.ConfirmCards(1-tp,cg)
 	Duel.ShuffleHand(tp)

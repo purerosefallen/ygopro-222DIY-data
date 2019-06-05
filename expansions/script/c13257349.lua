@@ -185,15 +185,15 @@ end
 function c13257349.descon(e,tp,eg,ep,ev,re,r,rp)
 	local tc=e:GetLabelObject()
 	if Duel.GetTurnPlayer()==tp then return false end
-	if not c13257349.desfilter(e:GetHandler(),e:GetLabel()) then
+	if not c13257349.desfilter(tc,e:GetLabel()) then
 		e:Reset()
 		return false
 	else return true end
 end
 function c13257349.desop(e,tp,eg,ep,ev,re,r,rp)
 	local g=e:GetLabelObject()
-	local tg=g:Filter(c13257349.desfilter,nil,e:GetLabel())
-	Duel.Destroy(tg,REASON_EFFECT)
+	--local tg=g:Filter(c13257349.desfilter,nil,e:GetLabel())
+	Duel.Destroy(g,REASON_EFFECT)
 end
 function c13257349.filter2(c,e)
 	return not c:IsImmuneToEffect(e)

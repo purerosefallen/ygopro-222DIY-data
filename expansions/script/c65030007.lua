@@ -32,7 +32,7 @@ function c65030007.initial_effect(c)
 	Duel.AddCustomActivityCounter(65030007,ACTIVITY_SPSUMMON,c65030007.counterfilter)
 end
 function c65030007.counterfilter(c)
-	return not (c:GetSummonLocation()==LOCATION_HAND or not c:GetSummonLocation()==LOCATION_DECK) 
+	return c:GetSummonLocation(LOCATION_EXTRA) 
 end
 function c65030007.thcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsDiscardable() end
@@ -55,7 +55,7 @@ function c65030007.thop(e,tp,eg,ep,ev,re,r,rp)
 end
 
 function c65030007.cost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetCustomActivityCount(65030007,tp,ACTIVITY_SPSUMMON)==0 end
+	if chk==0 then return Duel.GetCustomActivityCount(65030007,tp,ACTIVITY_SPSUMMON)==0 and Duel.GetActivityCount(tp,ACTIVITY_SUMMON)==0 end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)
 	e1:SetProperty(EFFECT_FLAG_PLAYER_TARGET+EFFECT_FLAG_OATH)
@@ -64,7 +64,7 @@ function c65030007.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	e1:SetTargetRange(1,0)
 	e1:SetTarget(c65030007.splimit)
 	Duel.RegisterEffect(e1,tp)
-	local e2=Effect.CreateEffect(c)
+	local e2=Effect.CreateEffect(e:GetHandler())
 	e2:SetType(EFFECT_TYPE_FIELD)
 	e2:SetCode(EFFECT_CANNOT_SUMMON)
 	e2:SetProperty(EFFECT_FLAG_PLAYER_TARGET)

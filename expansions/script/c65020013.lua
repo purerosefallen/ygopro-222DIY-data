@@ -16,14 +16,14 @@ function c65020013.initial_effect(c)
 	e2:SetTarget(c65020013.tg)
 	e2:SetOperation(c65020013.op)
 	c:RegisterEffect(e2)
-	local e3=Effect.CreateEffect(c)
+	local e3=e2:Clone()
 	e3:SetProperty(EFFECT_TYPE_QUICK_O)
 	e3:SetCode(EVENT_CHAINING)
 	e3:SetCondition(c65020013.ccon)
 	c:RegisterEffect(e3)
 end
 function c65020013.ccon(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetTurnPlayer()~=tp and ep~=tp
+	return Duel.GetTurnPlayer()~=tp and re:GetHandlerPlayer()~=tp
 end
 
 function c65020013.tg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -46,7 +46,7 @@ function c65020013.op(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
 	if tc:IsRelateToEffect(e) then
 		if Duel.Destroy(tc,REASON_EFFECT)~=0 and e:GetHandler():IsLocation(LOCATION_HAND+LOCATION_GRAVE) then
-			if Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP) and Duel.IsExistingMatchingCard(c65020013.thfil,tp,LOCATION_GRAVE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(65020013,0)) then
+			if Duel.SpecialSummon(e:GetHandler(),0,tp,tp,false,false,POS_FACEUP)~=0 and Duel.IsExistingMatchingCard(c65020013.thfil,tp,LOCATION_GRAVE,0,1,nil) and Duel.SelectYesNo(tp,aux.Stringid(65020013,0)) then
 				Duel.BreakEffect()
 				local g=Duel.SelectMatchingCard(tp,c65020013.thfil,tp,LOCATION_GRAVE,0,1,1,nil)
 				Duel.SendtoHand(g,tp,REASON_EFFECT)

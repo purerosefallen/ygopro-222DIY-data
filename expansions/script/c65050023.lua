@@ -64,19 +64,23 @@ end
 function c65050023.splimit(e,c,sump,sumtype,sumpos,targetp,se)
 	return not c:IsLocation(LOCATION_HAND) and not se:IsActiveType(TYPE_SPELL+TYPE_TRAP)
 end
-function c65050023.limitcon1(e,tp,eg,ep,ev,re,r,rp)
+function c65050023.limitcon1(e,c)
+	local tp=e:GetHandlerPlayer()
 	return Duel.GetMatchingGroupCount(c65050023.limfil,tp,LOCATION_MZONE,0,nil)==0 and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0 and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)<1
 end
-function c65050023.limitcon12(e,tp,eg,ep,ev,re,r,rp)
+function c65050023.limitcon12(e,c)
+	local tp=e:GetHandlerPlayer()
 	return Duel.GetMatchingGroupCount(c65050023.limfil,tp,LOCATION_MZONE,0,nil)==0 and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0 and Duel.GetFieldGroupCount(1-tp,LOCATION_MZONE,0)<1
 end
 function c65050023.limit1(e,c)
 	return c:IsLevelAbove(5)
 end
-function c65050023.limitcon2(e,tp,eg,ep,ev,re,r,rp)
+function c65050023.limitcon2(e,c)
+	local tp=e:GetHandlerPlayer()
 	return Duel.GetMatchingGroupCount(c65050023.limfil,tp,LOCATION_MZONE,0,nil)==0 and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0 and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)<2
 end
-function c65050023.limitcon22(e,tp,eg,ep,ev,re,r,rp)
+function c65050023.limitcon22(e,c)
+	local tp=e:GetHandlerPlayer()
 	return Duel.GetMatchingGroupCount(c65050023.limfil,tp,LOCATION_MZONE,0,nil)==0 and Duel.GetFieldGroupCount(tp,LOCATION_MZONE,0)>0 and Duel.GetFieldGroupCount(1-tp,LOCATION_MZONE,0)<2
 end
 function c65050023.limit2(e,c)

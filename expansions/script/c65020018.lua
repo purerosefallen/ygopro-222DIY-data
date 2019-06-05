@@ -61,8 +61,10 @@ function c65020018.thtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 end
 function c65020018.thop(e,tp,eg,ep,ev,re,r,rp)
 	local tc=Duel.GetFirstTarget()
-	Duel.SendtoHand(tc,tp,REASON_EFFECT)
-	Duel.ConfirmCards(1-tp,tc)
+	if tc:IsRelateToEffect(e) then
+		Duel.SendtoHand(tc,tp,REASON_EFFECT)
+		Duel.ConfirmCards(1-tp,tc)
+	end
 end
 
 function c65020018.aclimit(e,re,tp)

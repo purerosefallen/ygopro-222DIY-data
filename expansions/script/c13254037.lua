@@ -26,15 +26,15 @@ function c13254037.initial_effect(c)
 	e2:SetOperation(c13254037.operation)
 	c:RegisterEffect(e2)
 end
-function c13254037.spfilter(c,tp)
+function c13254037.spcfilter(c,tp)
 	return c:IsType(TYPE_MONSTER) and c:GetPreviousControler()==tp
 		and c:IsLevelBelow(1) and c:IsRace(RACE_FAIRY) and not c:IsCode(13254037)
 end
 function c13254037.spcon(e,tp,eg,ep,ev,re,r,rp)
-	return eg:IsExists(c13254037.spfilter,1,nil,tp)
+	return eg:IsExists(c13254037.spcfilter,1,nil,tp)
 end
 function c13254037.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.GetFlagEffect(tp,13254037)<eg:FilterCount(c13254037.spfilter,nil,tp) end
+	if chk==0 then return Duel.GetFlagEffect(tp,13254037)<eg:FilterCount(c13254037.spcfilter,nil,tp) end
 	Duel.RegisterFlagEffect(tp,13254037,RESET_CHAIN,0,1)
 end
 function c13254037.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
@@ -87,12 +87,12 @@ function c13254037.cost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():IsAbleToGraveAsCost() end
 	Duel.SendtoGrave(e:GetHandler(),REASON_COST)
 end
-function c13254037.filter(c,e,tp)
+function c13254037.spfilter(c,e,tp)
 	return (c:IsCode(13254039) and c:IsCanBeSpecialSummoned(e,0,tp,true,false)) or (c:IsRace(RACE_ZOMBIE) and c:IsLevelBelow(1) and c:IsCanBeSpecialSummoned(e,0,tp,false,false))
 end
 function c13254037.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0
-		and Duel.IsExistingMatchingCard(c13254037.filter,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,nil,e,tp) end
+		and Duel.IsExistingMatchingCard(c13254037.spfilter,tp,LOCATION_GRAVE+LOCATION_DECK,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE+LOCATION_DECK)
 end
 function c13254037.operation(e,tp,eg,ep,ev,re,r,rp)
