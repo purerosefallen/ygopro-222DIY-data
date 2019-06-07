@@ -1,0 +1,91 @@
+[string "./script/utility.lua"]:44: attempt to perform arithmetic on a table value (local 'code')
+[string "./script/c9980188.lua"]:40: Parameter 2 should be "Function".
+[string "./script/c10121001.lua"]:6: attempt to call a nil value (field 'DiabloDMSpecialSummonEffect')
+[string "./script/c10121002.lua"]:6: attempt to call a nil value (field 'DiabloDMSpecialSummonEffect')
+[string "./script/c10121003.lua"]:7: attempt to call a nil value (field 'DiabloXyzEffect')
+[string "./script/c10121004.lua"]:6: attempt to call a nil value (field 'DiabloDMSpecialSummonEffect')
+[string "./script/c10121005.lua"]:7: attempt to call a nil value (field 'DiabloXyzEffect')
+[string "./script/c10121006.lua"]:7: attempt to call a nil value (field 'DiabloXyzEffect')
+[string "./script/c10121007.lua"]:7: attempt to call a nil value (field 'DiabloXyzEffect')
+[string "./script/c10121008.lua"]:4: attempt to call a nil value (field 'DiabloAngelHandXyzEffect')
+[string "./script/c10121009.lua"]:4: attempt to call a nil value (field 'DiabloDMSpecialSummonEffect')
+[string "./script/c10121011.lua"]:6: attempt to call a nil value (field 'DiabloAngelHandXyzEffect')
+[string "./script/c10121012.lua"]:6: attempt to call a nil value (field 'DiabloAngelHandXyzEffect')
+[string "./script/c10121013.lua"]:56: attempt to call a nil value (field 'DiabloAngelHandXyzEffect')
+[string "./script/c10121015.lua"]:7: attempt to call a nil value (field 'DiabloXyzEffect')
+[string "./script/c10121016.lua"]:7: attempt to call a nil value (field 'DiabloXyzEffect')
+[string "./script/c10122017.lua"]:35: Parameter 2 should be "Function".
+[string "./script/c10125012.lua"]:23: unexpected symbol near '+'
+"CallCardFunction"(c10125012.initial_effect): attempt to call an error function
+[string "./script/c11200109.lua"]:37: Parameter 2 should be "Function".
+[string "./script/c12006010.lua"]:50: malformed number near '08fbd'
+"CallCardFunction"(c12006010.initial_effect): attempt to call an error function
+[string "./script/c12008030.lua"]:55: unexpected symbol near 'and'
+"CallCardFunction"(c12008030.initial_effect): attempt to call an error function
+[string "./script/c12009043.lua"]:60: unexpected symbol near '~='
+"CallCardFunction"(c12009043.initial_effect): attempt to call an error function
+[string "./script/c12031010.lua"]:62: attempt to index a nil value (global 'c12031001')
+[string "./script/c13255224.lua"]:91: 'then' expected near 'Duel'
+"CallCardFunction"(c13255224.initial_effect): attempt to call an error function
+[string "./script/c15415173.lua"]:15: attempt to index a nil value (global 'c15415158')
+[string "./script/c15415173.lua"]:10: Parameter 2 should be "Function".
+"CallCardFunction"(c16080031.initial_effect): attempt to call an error function
+[string "./script/c18001002.lua"]:33: unexpected symbol near '+'
+"CallCardFunction"(c18001002.initial_effect): attempt to call an error function
+[string "./script/c18001003.lua"]:33: unexpected symbol near '+'
+"CallCardFunction"(c18001003.initial_effect): attempt to call an error function
+[string "./script/c18001004.lua"]:33: unexpected symbol near '+'
+"CallCardFunction"(c18001004.initial_effect): attempt to call an error function
+[string "./script/c18001005.lua"]:33: unexpected symbol near '+'
+"CallCardFunction"(c18001005.initial_effect): attempt to call an error function
+[string "./script/c18713104.lua"]:19: 2 Parameters are needed.
+[string "./script/c18713106.lua"]:17: 2 Parameters are needed.
+"CallCardFunction"(c21400050.initial_effect): attempt to call an error function
+"CallCardFunction"(c21400120.initial_effect): attempt to call an error function
+"CallCardFunction"(c21400121.initial_effect): attempt to call an error function
+"CallCardFunction"(c21400140.initial_effect): attempt to call an error function
+"CallCardFunction"(c21400141.initial_effect): attempt to call an error function
+[string "./script/c21499999.lua"]:2: attempt to index a nil value (global 'c2149999')
+"CallCardFunction"(c21499999.initial_effect): attempt to call an error function
+[string "./script/c21520085.lua"]:37: unexpected symbol near '+'
+"CallCardFunction"(c21520085.initial_effect): attempt to call an error function
+[string "./script/c22600016.lua"]:8: unexpected symbol near '+'
+"CallCardFunction"(c22600016.initial_effect): attempt to call an error function
+[string "./script/c22600024.lua"]:5: attempt to index a nil value (global 'c22600018')
+[string "./script/c32912372.lua"]:9: attempt to call a nil value (method 'SetChainLimit')
+[string "./script/c33700345.lua"]:9: attempt to index a nil value (global 'e1')
+[string "./script/c33700349.lua"]:13: attempt to index a nil value (global 'e')
+"CallCardFunction"(c33700351.initial_effect): attempt to call an error function
+[string "./script/c33700937.lua"]:12: attempt to call a nil value (field 'rmxyzs')
+./expansions/script/c33700990.lua:170: attempt to call a nil value (field 'costself')
+./expansions/script/c33700990.lua:170: attempt to call a nil value (field 'costself')
+./expansions/script/c33700990.lua:170: attempt to call a nil value (field 'costself')
+[string "./script/c47500033.lua"]:28: <name> expected near 'end'
+"CallCardFunction"(c47500033.initial_effect): attempt to call an error function
+"CallCardFunction"(c47510300.initial_effect): attempt to call an error function
+[string "./script/c47570400.lua"]:192: unexpected symbol near '~='
+"CallCardFunction"(c47570400.initial_effect): attempt to call an error function
+[string "./script/c50218133.lua"]:24: attempt to index a nil value (global 'c13331639')
+[string "./script/c50218133.lua"]:17: attempt to index a nil value (global 'c13331639')
+"CallCardFunction"(c50218134.initial_effect): attempt to call an error function
+"CallCardFunction"(c50218135.initial_effect): attempt to call an error function
+"CallCardFunction"(c50218136.initial_effect): attempt to call an error function
+"CallCardFunction"(c50218137.initial_effect): attempt to call an error function
+"CallCardFunction"(c50218138.initial_effect): attempt to call an error function
+"CallCardFunction"(c50218141.initial_effect): attempt to call an error function
+"CallCardFunction"(c50218142.initial_effect): attempt to call an error function
+"CallCardFunction"(c50218143.initial_effect): attempt to call an error function
+"CallCardFunction"(c50218144.initial_effect): attempt to call an error function
+"CallCardFunction"(c50218145.initial_effect): attempt to call an error function
+"CallCardFunction"(c50218146.initial_effect): attempt to call an error function
+"CallCardFunction"(c50218147.initial_effect): attempt to call an error function
+"CallCardFunction"(c50218148.initial_effect): attempt to call an error function
+"CallCardFunction"(c62200000.initial_effect): attempt to call an error function
+[string "./script/c65010013.lua"]:7: attempt to call a nil value (field 'costself')
+[string "./script/c65090038.lua"]:28: attempt to index a nil value (global 'c65090033')
+[string "./script/c65090038.lua"]:12: attempt to index a nil value (global 'c65090033')
+[string "./script/c69696918.lua"]:5: attempt to call a nil value (field 'AddLinkProcedure')
+[string "./script/c75646718.lua"]:100: syntax error near <eof>
+"CallCardFunction"(c75646718.initial_effect): attempt to call an error function
+[string "./script/c81040003.lua"]:17: unexpected symbol near ')'
+"CallCardFunction"(c81040003.initial_effect): attempt to call an error function
