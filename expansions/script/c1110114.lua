@@ -51,7 +51,7 @@ function c1110114.op1(e,tp,eg,ep,ev,re,r,rp)
 	if fg:GetCount()<1 then return end
 	local fc=fg:GetFirst()
 	while fc do
-		if bit.band(fc:GetOriginalType(),TYPE_MONSTER)~=0 and fc:IsType(TYPE_EFFECT) then
+		if bit.band(fc:GetOriginalType(),TYPE_MONSTER)~=0 and bit.band(fc:GetOriginalType(),TYPE_EFFECT)~=0 then
 			local code=fc:GetOriginalCode()
 			c:CopyEffect(code,RESET_EVENT+0x1fe0000,0,1)
 		end
