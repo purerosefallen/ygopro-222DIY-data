@@ -57,7 +57,7 @@ function c1110112.tfilter1_1(c,e,tp)
 	return muxu.check_set_Urban(c) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:IsType(TYPE_MONSTER)
 end
 function c1110112.tfilter1_2(c)
-	return c:IsAbleToDeck() and bit.band(c:GetSummonType(),TYPE_SPSUMMON)~=0 and not c:IsPreviousLocation(LOCATION_EXTRA)
+	return c:IsAbleToDeck() and c:IsSummonType(SUMMON_TYPE_SPECIAL) and not c:IsPreviousLocation(LOCATION_EXTRA)
 end
 function c1110112.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local b1=Duel.IsExistingMatchingCard(c1110112.tfilter1_1,tp,LOCATION_GRAVE,0,1,nil,e,tp) and Duel.GetLocationCount(tp,LOCATION_MZONE)>0
@@ -98,7 +98,7 @@ function c1110112.op1(e,tp,eg,ep,ev,re,r,rp)
 		local g=Duel.SelectMatchingCard(tp,c1110112.tfilter1_1,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 		if g:GetCount()<1 then return end
 		local tc=g:GetFirst()
-		Duel.SpecialSummonStep(tc,0,tp,tp,false,false,POS_FACEUP)
+		Duel.SpecialSummon(tc,0,tp,tp,false,false,POS_FACEUP)
 		local e1_3=Effect.CreateEffect(c)
 		e1_3:SetType(EFFECT_TYPE_SINGLE)
 		e1_3:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
@@ -107,7 +107,6 @@ function c1110112.op1(e,tp,eg,ep,ev,re,r,rp)
 		e1_3:SetReset(RESET_EVENT+0x1fe0000)
 		tc:RegisterEffect(e1_3,true)
 		tc:RegisterFlagEffect(1110112,RESET_EVENT+0x1fe0000,EFFECT_FLAG_CLIENT_HINT,1,0,aux.Stringid(1110112,6))
-		Duel.SpecialSummonComplete()
 	else
 		Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TODECK)
 		local g=Duel.SelectMatchingCard(tp,c1110112.tfilter1_2,tp,0,LOCATION_MZONE,1,1,nil)
