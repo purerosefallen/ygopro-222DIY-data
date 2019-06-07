@@ -115,7 +115,8 @@ function c1140101.op2(e,tp,eg,ep,ev,re,r,rp)
 	local p,d=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER,CHAININFO_TARGET_PARAM)
 	if Duel.Draw(p,d,REASON_EFFECT)~=0 then
 		local tc=Duel.GetOperatedGroup():GetFirst()
-		Duel.ConfirmCards(1-tp,tc)
+		Duel.ConfirmCards(1-p,tc)
+		Duel.ShuffleHand(p)
 		if tc:IsType(TYPE_TRAP) and muxu.check_set_Poison(tc) then
 			if Duel.Damage(1-tp,800,REASON_EFFECT)>0 then
 				Duel.RegisterFlagEffect(tp,1140101,0,0,0)
@@ -126,19 +127,19 @@ function c1140101.op2(e,tp,eg,ep,ev,re,r,rp)
 				e2_1:SetCode(EVENT_SPSUMMON_SUCCESS)
 				e2_1:SetCondition(c1140101.con2_1)
 				e2_1:SetOperation(c1140101.op2_1)
-				Duel.RegisterEffect(e2_1,tp)
+				Duel.RegisterEffect(e2_1,p)
 				local e2_2=Effect.CreateEffect(c)
 				e2_2:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 				e2_2:SetCode(EVENT_SPSUMMON_SUCCESS)
 				e2_2:SetCondition(c1140101.con2_2)
 				e2_2:SetOperation(c1140101.op2_2)
-				Duel.RegisterEffect(e2_2,tp)
+				Duel.RegisterEffect(e2_2,p)
 				local e2_3=Effect.CreateEffect(c)
 				e2_3:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_FIELD)
 				e2_3:SetCode(EVENT_CHAIN_SOLVED)
 				e2_3:SetCondition(c1140101.con2_3)
 				e2_3:SetOperation(c1140101.op2_3)
-				Duel.RegisterEffect(e2_3,tp)
+				Duel.RegisterEffect(e2_3,p)
 			end
 		end
 	end
@@ -153,9 +154,9 @@ function c1140101.con2_1(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetFlagEffect(tp,1140101)>0
 end
 function c1140101.op2_1(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ResetFlagEffect(tp,1140101)
-	local sg=eg:Filter(c1140101.cfilter2_1,1,nil,1-tp)
+	local sg=eg:Filter(c1140101.cfilter2_1,nil,1-tp)
 	Duel.Destroy(sg,REASON_EFFECT)
+	Duel.ResetFlagEffect(tp,1140101)
 	e:Reset()
 end
 --
@@ -165,12 +166,14 @@ function c1140101.con2_2(e,tp,eg,ep,ev,re,r,rp)
 		and Duel.GetFlagEffect(tp,1140101)>0
 end
 function c1140101.op2_2(e,tp,eg,ep,ev,re,r,rp)
-	local sg=eg:Filter(c1140101.cfilter2_1,1,nil,1-tp)
+	local sg=eg:Filter(c1140101.cfilter2_1,nil,1-tp)
 	local sc=sg:GetFirst()
 	while sc do
 		sc:RegisterFlagEffect(1140101,RESET_EVENT+0x1fe0000,0,0)
 		sc=sg:GetNext()
 	end
+	Duel.RegisterFlagEffect(tp,1140102,RESET_CHAIN,0,1)
+	Duel.ResetFlagEffect(tp,1140101)
 	e:Reset()
 end
 --
@@ -178,12 +181,18 @@ function c1140101.ofilter2_3(c)
 	return c:GetFlagEffect(1140101)>0
 end
 function c1140101.con2_3(e,tp,eg,ep,ev,re,r,rp)
-	return Duel.GetFlagEffect(tp,1140101)>0
+	return Duel.GetFlagEffect(tp,1140102)>0
 end
 function c1140101.op2_3(e,tp,eg,ep,ev,re,r,rp)
-	Duel.ResetFlagEffect(tp,1140101)
 	local sg=Duel.GetMatchingGroup(c1140101.ofilter2_3,tp,LOCATION_MZONE,LOCATION_MZONE,nil)
 	Duel.Destroy(sg,REASON_EFFECT)
+	local sc=sg:GetFirst()
+	while sc do
+		if sc:GetFlagEffect(1140101)>0 then
+			sc:ResetFlagEffect(1140101)
+		end
+		sc=sg:GetNext()
+	end
 	e:Reset()
 end
 --
