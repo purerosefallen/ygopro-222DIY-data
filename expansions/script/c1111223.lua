@@ -7,10 +7,12 @@ cm.named_with_Soul=true
 function c1111223.initial_effect(c)
 --
 	local e1=Effect.CreateEffect(c)
-	e1:SetType(EFFECT_TYPE_CONTINUOUS+EFFECT_TYPE_CONTINUOUS)
+	e1:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e1:SetCode(EFFECT_DESTROY_REPLACE)
 	e1:SetRange(LOCATION_SZONE)
 	e1:SetTarget(c1111223.tg1)
+	e1:SetValue(c1111223.val1)
+	e1:SetOperation(c1111223.op1)
 	c:RegisterEffect(e1)
 --
 	local e2=Effect.CreateEffect(c)
@@ -56,15 +58,17 @@ function c1111223.initial_effect(c)
 --
 end
 --
-function c1111223.tfilter1(c,tp)
-	return c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE)
+function c1111223.tfilter1(c,e,tp)
+	return c:IsLocation(LOCATION_ONFIELD) and c:IsReason(REASON_EFFECT) and not c:IsReason(REASON_REPLACE) and c~=e:GetHandler() 
 end
 function c1111223.tg1(e,tp,eg,ep,ev,re,r,rp,chk)
 	local c=e:GetHandler()
-	if chk==0 then return Duel.IsCanRemoveCounter(tp,LOCATION_ONFIELD,LOCATION_ONFIELD,0x1111,1,REASON_EFFECT) and eg:IsExists(c1111223.tfilter1,1,c,tp) end
-	if Duel.SelectEffectYesNo(tp,c,96) then
-		return true
-	else return false end
+	if chk==0 then return Duel.IsCanRemoveCounter(tp,LOCATION_ONFIELD,LOCATION_ONFIELD,0x1111,1,REASON_EFFECT) and eg:IsExists(c1111223.tfilter1,1,c,e,tp) end
+	return Duel.SelectEffectYesNo(tp,e:GetHandler(),96)
+end
+--
+function c1111223.val1(e,c)
+	return c1111223.tfilter1(c,e,e:GetHandlerPlayer())
 end
 --
 function c1111223.op1(e,tp,eg,ep,ev,re,r,rp)
@@ -111,13 +115,13 @@ end
 --
 function c1111223.op3(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:GetFlagEffect(1111223)<1 then return false end
+	if c:GetFlagEffect(1111223)<1 then return end
 	Duel.SetChainLimitTillChainEnd(aux.FALSE)
 end
 --
 function c1111223.op4(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
-	if c:GetFlagEffect(1111224)<1 then return false end
+	if c:GetFlagEffect(1111224)<1 then return end
 	Duel.SetChainLimit(aux.FALSE)
 end
 --
